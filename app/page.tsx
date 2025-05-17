@@ -303,7 +303,7 @@ export default function Home() {
 
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="flex flex-wrap justify-between items-start mb-2">
-                <h3 className="text-xl font-bold text-teal-700">Chief Editor</h3>
+                <h3 className="text-xl font-bold text-teal-700">Convenor: Board of Editors</h3>
                 <span className="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-medium">
                   July 2022 - Present
                 </span>
