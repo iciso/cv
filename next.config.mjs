@@ -8,7 +8,16 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    domains: ['blob.v0.dev'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'blob.v0.dev',
+        pathname: '**',
+      },
+    ],
   },
+  output: 'standalone',
 };
 
 export default nextConfig;
