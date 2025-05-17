@@ -14,6 +14,7 @@ import {
   Globe,
   ExternalLink,
   FileText,
+  Book,
 } from "lucide-react"
 
 export default function Home() {
@@ -25,7 +26,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             <div className="md:col-span-2">
               <h1 className="text-4xl md:text-5xl font-bold mb-2">Dr. Essa Mohamed Rafique</h1>
-              <p className="text-xl md:text-2xl mb-6 text-teal-100">M.B., B.S., D.V., D.T.D., Dip Web Media., D.I.S.</p>
+              <p className="text-xl md:text-2xl mb-6 text-teal-100">M.B.,B.S., D.V., D.T.D., Dip Web Media., D.I.S., (B.M.A.I.S.,)</p>
               <p className="text-lg mb-6 text-teal-50">
                 Dermatologist, Public Health Specialist, and Medical Officer with extensive experience in healthcare
                 management, HIV/AIDS initiatives, and senior care services.
@@ -42,6 +43,12 @@ export default function Home() {
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
                   Education
+                </Link>
+                <Link
+                  href="#books"
+                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
+                >
+                  Books
                 </Link>
                 <Link
                   href="#publications"
@@ -149,6 +156,91 @@ export default function Home() {
             Additionally, Rafique works voluntarily as a voting member of The Constellation, the Grace Kennet
             Foundation, and as the Convener of the Editorial Board of the Thanjavur Medical Journal.
           </p>
+        </section>
+
+        {/* Books Section */}
+        <section id="books" className="mb-16 scroll-mt-20">
+          <div className="flex items-center mb-6">
+            <Book className="mr-2 text-teal-600" size={28} />
+            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+              Books & Chapters
+            </h2>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h3 className="text-2xl font-bold text-teal-700 mb-6">Books</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+              {books.map((book, index) => (
+                <div
+                  key={index}
+                  className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div className="p-6">
+                    <h4 className="text-xl font-bold text-teal-700 mb-4">{book.title}</h4>
+                    <p className="text-gray-600 mb-6">{book.description}</p>
+                    <a
+                      href={book.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                    >
+                      Access Book <ExternalLink className="ml-2" size={16} />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <h3 className="text-2xl font-bold text-teal-700 mb-6">Chapters in Books</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {bookChapters.map((chapter, index) => (
+                <div
+                  key={index}
+                  className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div className="p-6">
+                    <h4 className="text-xl font-bold text-teal-700 mb-4">{chapter.title}</h4>
+                    <p className="text-gray-600 mb-2">
+                      <span className="font-medium">Book:</span> {chapter.book}
+                    </p>
+                    <p className="text-gray-600 mb-6">{chapter.description}</p>
+                    <div className="flex flex-wrap gap-3">
+                      {chapter.readUrl && (
+                        <a
+                          href={chapter.readUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                        >
+                          Read Chapter <ExternalLink className="ml-2" size={16} />
+                        </a>
+                      )}
+                      {chapter.buyUrl && (
+                        <a
+                          href={chapter.buyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition-colors"
+                        >
+                          Buy Book <ExternalLink className="ml-2" size={16} />
+                        </a>
+                      )}
+                      {chapter.url && (
+                        <a
+                          href={chapter.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                        >
+                          Access Chapter <ExternalLink className="ml-2" size={16} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* Blogs Section */}
@@ -385,7 +477,7 @@ export default function Home() {
               </div>
               <h4 className="text-lg font-medium text-gray-700 mb-2">Thanjavur Medical Journal (TMJ)</h4>
               <p className="text-gray-600">
-                Convenor of the Editorial Board of about twenty section editors of the Multi-specialty Medical Journal,
+                Convenor of the Editorial Board of the Multi-specialty Medical Journal,
                 for, of, and by the Thanjavur Medical College Alumni and Community.
               </p>
             </div>
@@ -399,8 +491,8 @@ export default function Home() {
               </div>
               <h4 className="text-lg font-medium text-gray-700 mb-2">WHO – India Office</h4>
               <p className="text-gray-600">
-                CVHO, In charge of Non-Communicable Diseases (NCD) & COVID-19 knowledge networks, data analysis &
-                reporting in webpages for the districts of Wayanad and Kozhikode in Kerala State
+                Cardio-Vascular Health Officer (CVHO), In charge of Non-Communicable Diseases (NCD) & COVID-19 knowledge networks, data analysis & visualization for
+                reports in webpages from the districts of Wayanad and Kozhikode in Kerala State
               </p>
             </div>
 
@@ -413,8 +505,8 @@ export default function Home() {
               </div>
               <h4 className="text-lg font-medium text-gray-700 mb-2">Champion Care Homes Pvt. Ltd.</h4>
               <p className="text-gray-600">
-                Plan, design, build, expand and manage Champion Care Homes to provide the best of Geriatric Care,
-                Gerontology, and Palliative Care to Senior Citizens as per or surpassing the UK Care Homes guidelines.
+                Plan, design, build, expand and manage Champion Care Homes to provide the best of Geriatric,
+                Gerontology, and Palliative Care Services to Senior Citizens as per or surpassing the UK Care Homes guidelines.
               </p>
             </div>
 
@@ -453,7 +545,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold text-teal-700 mb-2">M.B., B.S.</h3>
+              <h3 className="text-xl font-bold text-teal-700 mb-2">M.B.,B.S.</h3>
               <h4 className="text-lg font-medium text-gray-700 mb-1">Tanjore Medical College, Tanjore, India</h4>
               <p className="text-gray-600 mb-2">August 1977 - August 1984</p>
               <p className="text-gray-600">Medicine</p>
@@ -473,6 +565,24 @@ export default function Home() {
               </h4>
               <p className="text-gray-600 mb-2">April 1986 - October 1988</p>
               <p className="text-gray-600">Personnel Management, Training & Development</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold text-teal-700 mb-2">Dip. Web Media</h3>
+              <h4 className="text-lg font-medium text-gray-700 mb-1">
+                Pentasoft Technologies, Chennai, India
+              </h4>
+              <p className="text-gray-600 mb-2">January 2002	March 2002</p>
+              <p className="text-gray-600">XML, HTML, FLASH, ASP, JavaScript & Adobe Photoshop</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold text-teal-700 mb-2">D.I.S.</h3>
+              <h4 className="text-lg font-medium text-gray-700 mb-1">
+                International Open University, Banjul, The Gambia
+              </h4>
+              <p className="text-gray-600 mb-2">January 2012	April 2012</p>
+              <p className="text-gray-600">Diploma Course in Islamic Studies</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -698,6 +808,41 @@ export default function Home() {
     </div>
   )
 }
+
+const books = [
+  {
+    title: "Nine Essays and a Poem by a Student: A collection of Islamic Essays",
+    description:
+      "A compilation of thoughtful essays exploring various aspects of Islamic philosophy, ethics, and spirituality, alongside a poem reflecting on the journey of faith and understanding.",
+    url: "https://tinyurl.com/y7er26zv",
+  },
+  {
+    title: "The Kattoo-Yamani Stories",
+    description:
+      "A collection of stories weaving together cultural narratives, personal experiences, and insights from the Kattoo-Yamani perspective, offering readers a unique lens through which to view the world.",
+    url: "https://tinyurl.com/mmn25tkp",
+  },
+]
+
+const bookChapters = [
+  {
+    title: "Monitoring & Evaluation in Community-Led Development",
+    book: "Community-Led Development in Practice: We Power Our Own Change",
+    description:
+      "As lead author of this final chapter, Dr. Rafique provides comprehensive insights on monitoring and evaluation methodologies specifically tailored for community-led development initiatives, emphasizing participatory approaches and sustainable assessment frameworks.",
+    readUrl: "https://tinyurl.com/y7sj9z4w",
+    buyUrl: "https://tinyurl.com/yzxybkps",
+    isbn: "ISBN 9781032456263",
+    publisher: "Routledge",
+  },
+  {
+    title: "Barriers to Inclusion for those Living with HIV and Non-Discriminatory or Inclusion Strategies",
+    book: "Finding Pathways: Social Inclusion in Rural Development",
+    description:
+      "This chapter examines the social, cultural, and structural barriers faced by individuals living with HIV, particularly in rural settings, and proposes comprehensive strategies to foster inclusion and combat discrimination at various levels of society and healthcare systems.",
+    url: "http://hivstigma.blogspot.com/",
+  },
+]
 
 const blogs = [
   {
