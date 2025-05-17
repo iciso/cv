@@ -13,6 +13,7 @@ import {
   Users,
   Globe,
   ExternalLink,
+  FileText,
 } from "lucide-react"
 
 export default function Home() {
@@ -49,11 +50,38 @@ export default function Home() {
                   Publications
                 </Link>
                 <Link
+                  href="#blogs"
+                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
+                >
+                  Blogs
+                </Link>
+                <Link
                   href="#apps"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
                   Apps
                 </Link>
+                <a
+                  href="/dr-essa-rafique-cv.pdf"
+                  download
+                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors flex items-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  Download CV
+                </a>
               </div>
             </div>
             <div className="flex justify-center md:justify-end">
@@ -121,6 +149,53 @@ export default function Home() {
             Additionally, Rafique works voluntarily as a voting member of The Constellation, the Grace Kennet
             Foundation, and as the Convener of the Editorial Board of the Thanjavur Medical Journal.
           </p>
+        </section>
+
+        {/* Blogs Section */}
+        <section id="blogs" className="mb-16 scroll-mt-20">
+          <div className="flex items-center mb-6">
+            <FileText className="mr-2 text-teal-600" size={28} />
+            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+              Blogs & Reflections
+            </h2>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <p className="text-lg text-gray-700 mb-8">
+              A collection of reflections, experiences, and insights from my work in healthcare, public health, and
+              international development.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {blogs.slice(0, 4).map((blog, index) => (
+                <div
+                  key={index}
+                  className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div className="p-4">
+                    <h3 className="text-xl font-bold text-teal-700 mb-2">{blog.title}</h3>
+                    <p className="text-gray-600 mb-4 line-clamp-2">{blog.description}</p>
+                    <a
+                      href={blog.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                    >
+                      Read Blog <ExternalLink className="ml-1" size={16} />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 text-center">
+              <Link
+                href="/blogs"
+                className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
+              >
+                View All Blogs <ChevronRight className="ml-1" size={16} />
+              </Link>
+            </div>
+          </div>
         </section>
 
         {/* Apps Section */}
@@ -596,6 +671,99 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      {/* Floating Download Button */}
+      <div className="fixed bottom-8 right-8 z-50">
+        <a
+          href="/dr-essa-rafique-cv.pdf"
+          download
+          className="bg-teal-700 text-white p-4 rounded-full shadow-lg hover:bg-teal-800 transition-colors flex items-center justify-center"
+          aria-label="Download CV as PDF"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
+        </a>
+      </div>
     </div>
   )
 }
+
+const blogs = [
+  {
+    title: "AIDS 2002: A Catalonian Experience",
+    description: "Reflections on the XIV International AIDS Conference held in Barcelona, Spain.",
+    url: "http://2002aids.blogspot.com/",
+  },
+  {
+    title: "Critical Reflection On The Macarthur Foundation",
+    description: "Insights and experiences from my MacArthur Foundation Fellowship for Leadership Development.",
+    url: "http://arthmac.blogspot.com/",
+  },
+  {
+    title: "Munnar to Melbourne: the 6 ICAAP",
+    description: "Journey and observations from the 6th International Congress on AIDS in Asia and the Pacific.",
+    url: "http://6icaap.blogspot.com/",
+  },
+  {
+    title: "On the Telephone",
+    description: "Personal reflections on communication and connection in healthcare and community work.",
+    url: "http://rafime.blogspot.com/",
+  },
+  {
+    title: "Rambling Roads",
+    description: "Travel narratives and observations from field work across different regions.",
+    url: "http://emrafi.blogspot.com/",
+  },
+  {
+    title: "Beyond Knowledge Fairs",
+    description: "Exploring knowledge management and sharing in public health initiatives.",
+    url: "http://emrafikm.blogspot.com/",
+  },
+  {
+    title: "Barriers to inclusion for those living with HIV",
+    description: "Analysis of stigma and discrimination faced by people living with HIV/AIDS.",
+    url: "http://hivstigma.blogspot.com/",
+  },
+  {
+    title: "Global Health Council Interview",
+    description: "Insights from discussions with the Global Health Council on HIV/AIDS strategies.",
+    url: "http://ghcclm.blogspot.com/",
+  },
+  {
+    title: "Chiang Mai 2001: A Key Correspondent's Report",
+    description: "Coverage of the 5th International Home and Community Care Conference for People with HIV/AIDS.",
+    url: "http://5hcc.blogspot.com/",
+  },
+  {
+    title: "NACP III and Avahan - An Interview",
+    description:
+      "Discussion on India's National AIDS Control Program Phase III and the Gates Foundation's Avahan initiative.",
+    url: "http://nacp3.blogspot.com/",
+  },
+  {
+    title: "Book Review: AIDS and Maternity in India",
+    description: "Critical analysis of literature on HIV/AIDS and maternal health in the Indian context.",
+    url: "http://matbook.blogspot.com/",
+  },
+  {
+    title: "Selamat Datang Ke Kuala Lumpur",
+    description: "Experiences from the 5th International Congress on AIDS in Asia and the Pacific in Kuala Lumpur.",
+    url: "http://5icaap.blogspot.com/",
+  },
+  {
+    title: "CLCP was there before the Facilitators!",
+    description: "History and development of the Community Life Competence Process methodology.",
+    url: "http://tinyurl.com/25lf9k5",
+  },
+]
