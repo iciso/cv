@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ArrowLeft, ExternalLink } from "lucide-react"
+import Image from "next/image"
 
 export default function AppsPage() {
   return (
@@ -29,10 +30,14 @@ export default function AppsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {apps.map((app, index) => (
               <div key={index} className="border rounded-lg overflow-hidden shadow-md">
-                <div className={`h-64 relative ${app.bgColor}`}>
-                  <div className="flex items-center justify-center h-full">
-                    <span className={app.textColor || "text-teal-700 font-medium"}>{app.name}</span>
-                  </div>
+                <div className="h-64 relative">
+                  <Image
+                    src={app.imagePath || "/placeholder.svg"}
+                    alt={`${app.name} App Preview`}
+                    fill
+                    className="object-contain"
+                    style={{ backgroundColor: app.bgColor }}
+                  />
                 </div>
                 <div className="p-6">
                   <h3 className="text-2xl font-bold text-teal-700 mb-2">{app.name}</h3>
@@ -73,7 +78,8 @@ const apps = [
     name: "IQRA",
     description:
       "An Islamic Quiz Rivalry App designed to engage users in educational competitions about Islamic knowledge. The app provides an interactive platform for testing and expanding understanding of Islamic teachings through friendly competition.",
-    bgColor: "bg-[#e8f5ee]",
+    imagePath: "/iqra-app.png",
+    bgColor: "#e8f5ee",
     url: "https://iqrar.vercel.app/",
     tags: ["Islamic", "Educational", "Quiz", "Competition"],
   },
@@ -81,8 +87,8 @@ const apps = [
     name: "KALAM",
     description:
       "Know Allah by Lighting up Activities of Mirth - an Islamic spiritual development application that breaks down its purpose through its acronym: K (Know), A (Allah), L (Lighting up), A (Activities), M (Mirth). The app provides a structured approach to spiritual growth through joyful activities.",
-    bgColor: "bg-[#0a6e4a]",
-    textColor: "text-white font-medium",
+    imagePath: "/kalam-app.png",
+    bgColor: "#0a6e4a",
     url: "https://v0-kalam.vercel.app/",
     tags: ["Islamic", "Spiritual Growth", "Activities", "Education"],
   },
@@ -90,8 +96,8 @@ const apps = [
     name: "Barzaq",
     description:
       "An Islamic Journey Through the Afterlife - an educational application that explores Islamic teachings about the afterlife. Barzaq provides resources, reflections, and educational content on Islamic eschatology and spiritual preparation in an accessible digital format.",
-    bgColor: "bg-[#1a2235]",
-    textColor: "text-white font-medium",
+    imagePath: "/barzaq-app.png",
+    bgColor: "#1a2235",
     url: "https://v0-barzaq.vercel.app/",
     tags: ["Islamic", "Afterlife", "Educational", "Spiritual Journey"],
   },
@@ -99,7 +105,8 @@ const apps = [
     name: "Noor",
     description:
       "Natural Open Objective Resource - an interactive platform for exploring comparative religious perspectives and the Community Life Competence Process (CLCP). Users can ask questions about religions and community life competence to gain insights and understanding.",
-    bgColor: "bg-[#f0faf5]",
+    imagePath: "/noor-app.png",
+    bgColor: "#f0faf5",
     url: "https://v0-noor-liard.vercel.app/",
     tags: ["Comparative Religion", "CLCP", "Interactive", "Educational"],
   },
@@ -107,7 +114,8 @@ const apps = [
     name: "Islamic Ethical Quandary",
     description:
       "An interactive game that presents players with ethical dilemmas and financial decisions in Islamic contexts. The game invites users to begin a journey exploring Islamic ethics and principles as they apply to real-world situations and financial choices.",
-    bgColor: "bg-[#e8f7f0]",
+    imagePath: "/islamic-finance-game.png",
+    bgColor: "#e8f7f0",
     url: "https://v0-twine-ten.vercel.app/",
     tags: ["Islamic Ethics", "Interactive Game", "Decision Making", "Financial Literacy"],
   },
@@ -115,7 +123,8 @@ const apps = [
     name: "ACLS Protocol Trainer",
     description:
       "An interactive training application for cardiac emergency management based on Advanced Cardiac Life Support (ACLS) protocols. This medical education tool helps healthcare professionals practice and improve their skills in responding to cardiac emergencies through realistic scenarios.",
-    bgColor: "bg-[#e6f0fa]",
+    imagePath: "/acls-trainer-app.png",
+    bgColor: "#e6f0fa",
     url: "https://v0-syndromic.vercel.app/",
     tags: ["Medical", "ACLS", "Emergency Training", "Healthcare Education"],
   },

@@ -141,10 +141,8 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Iqrar App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative bg-[#e8f5ee]">
-                  <div className="flex items-center justify-center h-full">
-                    <span className="text-teal-700 font-medium">IQRA App</span>
-                  </div>
+                <div className="h-48 relative">
+                  <Image src="/iqra-app.png" alt="IQRA App Preview" fill className="object-contain bg-[#e8f5ee]" />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-teal-700 mb-2">IQRA</h3>
@@ -164,10 +162,8 @@ export default function Home() {
 
               {/* Kalam App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative bg-[#0a6e4a]">
-                  <div className="flex items-center justify-center h-full">
-                    <span className="text-white font-medium">KALAM App</span>
-                  </div>
+                <div className="h-48 relative">
+                  <Image src="/kalam-app.png" alt="KALAM App Preview" fill className="object-contain bg-[#0a6e4a]" />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-teal-700 mb-2">KALAM</h3>
@@ -187,10 +183,8 @@ export default function Home() {
 
               {/* Barzaq App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative bg-[#1a2235]">
-                  <div className="flex items-center justify-center h-full">
-                    <span className="text-white font-medium">Barzaq App</span>
-                  </div>
+                <div className="h-48 relative">
+                  <Image src="/barzaq-app.png" alt="Barzaq App Preview" fill className="object-contain bg-[#1a2235]" />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-teal-700 mb-2">Barzaq</h3>
@@ -210,10 +204,8 @@ export default function Home() {
 
               {/* Noor App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative bg-[#f0faf5]">
-                  <div className="flex items-center justify-center h-full">
-                    <span className="text-teal-700 font-medium">Noor App</span>
-                  </div>
+                <div className="h-48 relative">
+                  <Image src="/noor-app.png" alt="Noor App Preview" fill className="object-contain bg-[#f0faf5]" />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-teal-700 mb-2">Noor</h3>
@@ -233,10 +225,13 @@ export default function Home() {
 
               {/* Islamic Ethical Quandary App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative bg-[#e8f7f0]">
-                  <div className="flex items-center justify-center h-full">
-                    <span className="text-teal-700 font-medium">Islamic Ethical Quandary</span>
-                  </div>
+                <div className="h-48 relative">
+                  <Image
+                    src="/islamic-finance-game.png"
+                    alt="Islamic Ethical Quandary Game Preview"
+                    fill
+                    className="object-contain bg-[#e8f7f0]"
+                  />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-teal-700 mb-2">Islamic Ethical Quandary</h3>
@@ -256,10 +251,13 @@ export default function Home() {
 
               {/* ACLS Trainer App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative bg-[#e6f0fa]">
-                  <div className="flex items-center justify-center h-full">
-                    <span className="text-teal-700 font-medium">ACLS Protocol Trainer</span>
-                  </div>
+                <div className="h-48 relative">
+                  <Image
+                    src="/acls-trainer-app.png"
+                    alt="ACLS Trainer App Preview"
+                    fill
+                    className="object-contain bg-[#e6f0fa]"
+                  />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-teal-700 mb-2">ACLS Protocol Trainer</h3>
