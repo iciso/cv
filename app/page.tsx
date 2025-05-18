@@ -1,11 +1,9 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
 import {
   ChevronRight,
   Mail,
-  MapPin,
+  MapPin, 
   Phone,
   Linkedin,
   Briefcase,
@@ -83,8 +81,7 @@ export default function Home() {
                 </Link>
                 <a
                   href="https://docs.google.com/document/d/1h2A_pw48gVhvmMk3RXiyLtKxgu3-5vHl/export?format=pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  download
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors flex items-center"
                 >
                   <svg
@@ -985,8 +982,7 @@ export default function Home() {
       <div className="fixed bottom-8 right-8 z-50">
         <a
           href="https://docs.google.com/document/d/1h2A_pw48gVhvmMk3RXiyLtKxgu3-5vHl/export?format=pdf"
-          target="_blank"
-          rel="noopener noreferrer"
+          download
           className="bg-teal-700 text-white p-4 rounded-full shadow-lg hover:bg-teal-800 transition-colors flex items-center justify-center"
           aria-label="Download CV"
         >
