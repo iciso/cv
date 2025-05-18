@@ -127,7 +127,7 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <Linkedin className="text-teal-600" />
               <a
-                href="https://www.linkedin.com/in/mohamed-essa-rafique-96b64b15/"
+                href="https://www.linkedin.com/in/dr-mohamed-essa-rafique-96b64b15/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-teal-600"
