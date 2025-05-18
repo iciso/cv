@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, ExternalLink } from "lucide-react"
+import { ArrowLeft, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code } from "lucide-react"
 
 export default function SkillsPage() {
   return (
@@ -49,8 +49,58 @@ export default function SkillsPage() {
       </main>
 
       <footer className="bg-teal-800 text-white py-6">
-        <div className="container mx-auto px-4 text-center">
-          <p>&copy; {new Date().getFullYear()} Dr. Essa Mohamed Rafique. All rights reserved.</p>
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-6 mb-4">
+            <a
+              href="mailto:rafique@the-constellation.org"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Mail size={16} /> Email
+            </a>
+            <a
+              href="https://www.linkedin.com/in/mohamed-essa-rafique-96b64b15/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Linkedin size={16} /> LinkedIn
+            </a>
+            <a
+              href="https://github.com/iciso"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Github size={16} /> GitHub
+            </a>
+            <a
+              href="https://www.facebook.com/emrafi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Facebook size={16} /> Facebook
+            </a>
+            <a
+              href="https://twitter.com/tmc7784"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Twitter size={16} /> Twitter
+            </a>
+            <a
+              href="https://www.sololearn.com/Profile/19469613"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Code size={16} /> SoloLearn
+            </a>
+          </div>
+          <div className="text-center">
+            <p>&copy; {new Date().getFullYear()} Dr. Essa Mohamed Rafique. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </div>

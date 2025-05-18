@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, ExternalLink } from "lucide-react"
+import { ArrowLeft, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Globe } from "lucide-react"
 
 export default function BlogsPage() {
   return (
@@ -48,8 +48,58 @@ export default function BlogsPage() {
       </main>
 
       <footer className="bg-teal-800 text-white py-6">
-        <div className="container mx-auto px-4 text-center">
-          <p>&copy; {new Date().getFullYear()} Dr. Essa Mohamed Rafique. All rights reserved.</p>
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-6 mb-4">
+            <a
+              href="mailto:rafique@the-constellation.org"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Mail size={16} /> Email
+            </a>
+            <a
+              href="https://www.linkedin.com/in/mohamed-essa-rafique-96b64b15/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Linkedin size={16} /> LinkedIn
+            </a>
+            <a
+              href="https://github.com/iciso"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Github size={16} /> GitHub
+            </a>
+            <a
+              href="https://www.facebook.com/emrafi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Facebook size={16} /> Facebook
+            </a>
+            <a
+              href="https://twitter.com/tmc7784"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Twitter size={16} /> Twitter
+            </a>
+            <a
+              href="https://emrafi.wordpress.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-teal-200 flex items-center gap-1"
+            >
+              <Globe size={16} /> Blog
+            </a>
+          </div>
+          <div className="text-center">
+            <p>&copy; {new Date().getFullYear()} Dr. Essa Mohamed Rafique. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </div>
@@ -77,7 +127,8 @@ const blogs = [
   },
   {
     title: "Memoirs of Campion High School-1975 Batch",
-    description: "Relive the fun and adventure tales of a schoolboy's early jaunt at Campion, where youthful chaos met the first steps of a lifelong journey. Prepare for chuckles and a nostalgic trip down memory lane!",
+    description:
+      "Relive the fun and adventure tales of a schoolboy's early jaunt at Campion, where youthful chaos met the first steps of a lifelong journey. Prepare for chuckles and a nostalgic trip down memory lane!",
     url: "https://campion75.wordpress.com/author/emrafi/",
   },
   {

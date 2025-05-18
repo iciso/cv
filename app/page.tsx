@@ -15,6 +15,15 @@ import {
   ExternalLink,
   FileText,
   Book,
+  Github,
+  Twitter,
+  Facebook,
+  MessageCircle,
+  MessageSquare,
+  Send,
+  Code2,
+  Layers,
+  Rss,
 } from "lucide-react"
 
 export default function Home() {
@@ -26,7 +35,9 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             <div className="md:col-span-2">
               <h1 className="text-4xl md:text-5xl font-bold mb-2">Dr. Essa Mohamed Rafique</h1>
-              <p className="text-xl md:text-2xl mb-6 text-teal-100">M.B.,B.S., D.V., D.T.D., Dip Web Media., D.I.S., (B.M.A.I.S.,)</p>
+              <p className="text-xl md:text-2xl mb-6 text-teal-100">
+                M.B.,B.S., D.V., D.T.D., Dip Web Media., D.I.S., (B.M.A.I.S.,)
+              </p>
               <p className="text-lg mb-6 text-teal-50">
                 Dermatologist, Public Health Specialist, and Medical Officer with extensive experience in healthcare
                 management, HIV/AIDS initiatives, and senior care services.
@@ -477,8 +488,8 @@ export default function Home() {
               </div>
               <h4 className="text-lg font-medium text-gray-700 mb-2">Thanjavur Medical Journal (TMJ)</h4>
               <p className="text-gray-600">
-                Convenor of the Editorial Board of the Multi-specialty Medical Journal,
-                for, of, and by the Thanjavur Medical College Alumni and Community.
+                Convenor of the Editorial Board of the Multi-specialty Medical Journal, for, of, and by the Thanjavur
+                Medical College Alumni and Community.
               </p>
             </div>
 
@@ -491,8 +502,9 @@ export default function Home() {
               </div>
               <h4 className="text-lg font-medium text-gray-700 mb-2">WHO – India Office</h4>
               <p className="text-gray-600">
-                Cardio-Vascular Health Officer (CVHO), In charge of Non-Communicable Diseases (NCD) & COVID-19 knowledge networks, data analysis & visualization for
-                reports in webpages from the districts of Wayanad and Kozhikode in Kerala State
+                Cardio-Vascular Health Officer (CVHO), In charge of Non-Communicable Diseases (NCD) & COVID-19 knowledge
+                networks, data analysis & visualization for reports in webpages from the districts of Wayanad and
+                Kozhikode in Kerala State
               </p>
             </div>
 
@@ -506,7 +518,8 @@ export default function Home() {
               <h4 className="text-lg font-medium text-gray-700 mb-2">Champion Care Homes Pvt. Ltd.</h4>
               <p className="text-gray-600">
                 Plan, design, build, expand and manage Champion Care Homes to provide the best of Geriatric,
-                Gerontology, and Palliative Care Services to Senior Citizens as per or surpassing the UK Care Homes guidelines.
+                Gerontology, and Palliative Care Services to Senior Citizens as per or surpassing the UK Care Homes
+                guidelines.
               </p>
             </div>
 
@@ -569,10 +582,8 @@ export default function Home() {
 
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold text-teal-700 mb-2">Dip. Web Media</h3>
-              <h4 className="text-lg font-medium text-gray-700 mb-1">
-                Pentasoft Technologies, Chennai, India
-              </h4>
-              <p className="text-gray-600 mb-2">January 2002	March 2002</p>
+              <h4 className="text-lg font-medium text-gray-700 mb-1">Pentasoft Technologies, Chennai, India</h4>
+              <p className="text-gray-600 mb-2">January 2002 March 2002</p>
               <p className="text-gray-600">XML, HTML, FLASH, ASP, JavaScript & Adobe Photoshop</p>
             </div>
 
@@ -581,7 +592,7 @@ export default function Home() {
               <h4 className="text-lg font-medium text-gray-700 mb-1">
                 International Open University, Banjul, The Gambia
               </h4>
-              <p className="text-gray-600 mb-2">January 2012	April 2012</p>
+              <p className="text-gray-600 mb-2">January 2012 April 2012</p>
               <p className="text-gray-600">Diploma Course in Islamic Studies</p>
             </div>
 
@@ -754,13 +765,17 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-teal-800 text-white py-8">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-8">
             <div className="mb-4 md:mb-0">
               <h3 className="text-xl font-bold">Dr. Essa Mohamed Rafique</h3>
               <p className="text-teal-200">Medical Officer & Public Health Specialist</p>
             </div>
             <div className="flex gap-4">
-              <a href="mailto:rafique@the-constellation.org" className="text-white hover:text-teal-200">
+              <a
+                href="mailto:rafique@the-constellation.org"
+                className="text-white hover:text-teal-200"
+                aria-label="Email"
+              >
                 <Mail size={20} />
               </a>
               <a
@@ -768,15 +783,187 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-teal-200"
+                aria-label="LinkedIn"
               >
                 <Linkedin size={20} />
               </a>
-              <a href="tel:+917558845528" className="text-white hover:text-teal-200">
+              <a href="tel:+917558845528" className="text-white hover:text-teal-200" aria-label="Phone">
                 <Phone size={20} />
               </a>
             </div>
           </div>
-          <div className="mt-6 text-center text-teal-200">
+
+          {/* Social and Professional Profiles */}
+          <div className="border-t border-teal-700 pt-6 pb-4">
+            <h4 className="text-lg font-semibold mb-4 text-center">Connect & Follow</h4>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {/* Developer Profiles */}
+              <div className="space-y-3">
+                <h5 className="text-teal-300 font-medium">Developer Profiles</h5>
+                <div className="space-y-2">
+                  <a
+                    href="https://www.sololearn.com/Profile/19469613"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Code2 size={16} />
+                    <span>SoloLearn</span>
+                  </a>
+                  <a
+                    href="https://github.com/iciso"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Github size={16} />
+                    <span>GitHub</span>
+                  </a>
+                  <a
+                    href="https://www.upwork.com/freelancers/~013d84a8c53b0ecc2a"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Layers size={16} />
+                    <span>Upwork</span>
+                  </a>
+                  <a
+                    href="https://meta.stackexchange.com/users/1013906/rafique"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Code size={16} />
+                    <span>Stack Overflow</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Social Media */}
+              <div className="space-y-3">
+                <h5 className="text-teal-300 font-medium">Social Media</h5>
+                <div className="space-y-2">
+                  <a
+                    href="https://www.facebook.com/emrafi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Facebook size={16} />
+                    <span>Facebook</span>
+                  </a>
+                  <a
+                    href="https://twitter.com/tmc7784"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Twitter size={16} />
+                    <span>Twitter</span>
+                  </a>
+                  <a
+                    href="https://international-qtn7112.slack.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <MessageSquare size={16} />
+                    <span>Slack</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Messaging & Groups */}
+              <div className="space-y-3">
+                <h5 className="text-teal-300 font-medium">Messaging & Groups</h5>
+                <div className="space-y-2">
+                  <a
+                    href="https://t.me/zmerafi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Send size={16} />
+                    <span>Telegram</span>
+                  </a>
+                  <a
+                    href="https://msngr.com/jfsEnAiMiKz3mweA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <MessageCircle size={16} />
+                    <span>Messenger Room</span>
+                  </a>
+                  <a
+                    href="https://tinyurl.com/ybnhl9c3"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Users size={16} />
+                    <span>Islam & Hijri (WhatsApp)</span>
+                  </a>
+                  <a
+                    href="https://tinyurl.com/yy9exzty"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Users size={16} />
+                    <span>Interfaith Group (WhatsApp)</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Blogs */}
+              <div className="space-y-3">
+                <h5 className="text-teal-300 font-medium">Additional Blogs</h5>
+                <div className="space-y-2">
+                  <a
+                    href="https://www.blogger.com/profile/16421051685766047459"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Rss size={16} />
+                    <span>Blogger Profile</span>
+                  </a>
+                  <a
+                    href="https://emrafi.wordpress.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Globe size={16} />
+                    <span>WordPress Site</span>
+                  </a>
+                  <a
+                    href="https://chat.whatsapp.com/EAiL7HEkiOjF1rzNwSU7to"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Users size={16} />
+                    <span>TMC Case Conference (WhatsApp)</span>
+                  </a>
+                  <a
+                    href="https://t.me/islamophob"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
+                  >
+                    <Send size={16} />
+                    <span>Islamophob (Telegram)</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 text-center text-teal-200 border-t border-teal-700 pt-6">
             <p>&copy; {new Date().getFullYear()} Dr. Essa Mohamed Rafique. All rights reserved.</p>
           </div>
         </div>
@@ -862,7 +1049,8 @@ const blogs = [
   },
   {
     title: "Memoirs of Campion High School-1975 Batch",
-    description: "Relive the fun and adventure tales of a schoolboy's early jaunt at Campion, where youthful chaos met the first steps of a lifelong journey. Prepare for chuckles and a nostalgic trip down memory lane!",
+    description:
+      "Relive the fun and adventure tales of a schoolboy's early jaunt at Campion, where youthful chaos met the first steps of a lifelong journey. Prepare for chuckles and a nostalgic trip down memory lane!",
     url: "https://campion75.wordpress.com/author/emrafi/",
   },
   {
