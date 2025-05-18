@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -81,8 +83,19 @@ export default function Home() {
                 </Link>
                 <a
                   href="https://tinyurl.com/4jtyneu5"
-                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors flex items-center"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    window.open("https://tinyurl.com/4jtyneu5", "_blank")
+                    const link = document.createElement("a")
+                    link.href = "https://tinyurl.com/4jtyneu5"
+                    link.setAttribute("download", "dr-essa-rafique-cv.pdf")
+                    document.body.appendChild(link)
+                    link.click()
+                    document.body.removeChild(link)
+                  }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -982,9 +995,20 @@ export default function Home() {
       <div className="fixed bottom-8 right-8 z-50">
         <a
           href="https://tinyurl.com/4jtyneu5"
-          download
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-teal-700 text-white p-4 rounded-full shadow-lg hover:bg-teal-800 transition-colors flex items-center justify-center"
           aria-label="Download CV"
+          onClick={(e) => {
+            e.preventDefault()
+            window.open("https://tinyurl.com/4jtyneu5", "_blank")
+            const link = document.createElement("a")
+            link.href = "https://tinyurl.com/4jtyneu5"
+            link.setAttribute("download", "dr-essa-rafique-cv.pdf")
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
