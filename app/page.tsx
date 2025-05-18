@@ -981,10 +981,10 @@ export default function Home() {
       {/* Floating Download Button */}
       <div className="fixed bottom-8 right-8 z-50">
         <a
-          href="/dr-essa-rafique-cv.pdf"
+          href="https://docs.google.com/document/d/1h2A_pw48gVhvmMk3RXiyLtKxgu3-5vHl/edit?usp=sharing&ouid=102592244746336019638&rtpof=true&sd=true"
           download
           className="bg-teal-700 text-white p-4 rounded-full shadow-lg hover:bg-teal-800 transition-colors flex items-center justify-center"
-          aria-label="Download CV as PDF"
+          aria-label="Download CV"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
