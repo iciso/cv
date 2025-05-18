@@ -982,8 +982,8 @@ export default function Home() {
       <div className="fixed bottom-8 right-8 z-50">
         <a
           href="https://tinyurl.com/4jtyneu5"
-          download
-          className="bg-teal-700 text-white p-4 rounded-full shadow-lg hover:bg-teal-800 transition-colors flex items-center justify-center"
+          download>
+          <div className="bg-teal-700 text-white p-4 rounded-full shadow-lg hover:bg-teal-800 transition-colors flex items-center justify-center"
           aria-label="Download CV"
         >
           <svg
