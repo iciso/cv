@@ -861,8 +861,14 @@ const blogs = [
     url: "http://6icaap.blogspot.com/",
   },
   {
+    title: "Memoirs of Campion High School-1975 Batch",
+    description: "Relive the fun and adventure tales of a schoolboy's early jaunt at Campion, where youthful chaos met the first steps of a lifelong journey. Prepare for chuckles and a nostalgic trip down memory lane!",
+    url: "https://campion75.wordpress.com/author/emrafi/",
+  },
+  {
     title: "On the Telephone",
-    description: "Personal reflections on communication and connection in healthcare and community work.",
+    description:
+      "Step back into the hilarious hallways of college and hostel life! This blog offers a lighthearted peek at the funny side of connections and communication forged within those unforgettable years.",
     url: "http://rafime.blogspot.com/",
   },
   {
