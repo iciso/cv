@@ -3,7 +3,7 @@ import Link from "next/link"
 import {
   ChevronRight,
   Mail,
-  MapPin, 
+  MapPin,
   Phone,
   Linkedin,
   Briefcase,
@@ -111,6 +111,7 @@ export default function Home() {
                     fill
                     className="object-cover"
                     priority
+                    unoptimized
                   />
                 </div>
               </div>
@@ -309,7 +310,13 @@ export default function Home() {
               {/* Iqrar App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
-                  <Image src="/iqra-app.png" alt="IQRA App Preview" fill className="object-contain bg-[#e8f5ee]" />
+                  <Image
+                    src="/iqra-app.png"
+                    alt="IQRA App Preview"
+                    fill
+                    className="object-contain bg-[#e8f5ee]"
+                    unoptimized
+                  />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-teal-700 mb-2">IQRA</h3>
@@ -330,7 +337,13 @@ export default function Home() {
               {/* Kalam App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
-                  <Image src="/kalam-app.png" alt="KALAM App Preview" fill className="object-contain bg-[#0a6e4a]" />
+                  <Image
+                    src="/kalam-app.png"
+                    alt="KALAM App Preview"
+                    fill
+                    className="object-contain bg-[#0a6e4a]"
+                    unoptimized
+                  />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-teal-700 mb-2">KALAM</h3>
@@ -351,7 +364,13 @@ export default function Home() {
               {/* Barzaq App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
-                  <Image src="/barzaq-app.png" alt="Barzaq App Preview" fill className="object-contain bg-[#1a2235]" />
+                  <Image
+                    src="/barzaq-app.png"
+                    alt="Barzaq App Preview"
+                    fill
+                    className="object-contain bg-[#1a2235]"
+                    unoptimized
+                  />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-teal-700 mb-2">Barzaq</h3>
@@ -372,7 +391,13 @@ export default function Home() {
               {/* Noor App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
-                  <Image src="/noor-app.png" alt="Noor App Preview" fill className="object-contain bg-[#f0faf5]" />
+                  <Image
+                    src="/noor-app.png"
+                    alt="Noor App Preview"
+                    fill
+                    className="object-contain bg-[#f0faf5]"
+                    unoptimized
+                  />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-teal-700 mb-2">Noor</h3>
@@ -398,6 +423,7 @@ export default function Home() {
                     alt="Islamic Ethical Quandary Game Preview"
                     fill
                     className="object-contain bg-[#e8f7f0]"
+                    unoptimized
                   />
                 </div>
                 <div className="p-4">
@@ -424,6 +450,7 @@ export default function Home() {
                     alt="ACLS Trainer App Preview"
                     fill
                     className="object-contain bg-[#e6f0fa]"
+                    unoptimized
                   />
                 </div>
                 <div className="p-4">
