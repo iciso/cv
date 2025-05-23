@@ -39,8 +39,7 @@ export default function Home() {
                 M.B.,B.S., D.V., D.T.D., Dip Web Media., D.I.S., (B.M.A.I.S.,)
               </p>
               <p className="text-lg mb-6 text-teal-50">
-                Dermatologist, Public Health Specialist, and Medical Officer with extensive experience in healthcare
-                management, HIV/AIDS initiatives, and senior care services.
+                UN & WHO Consultant, Public Health Specialist, and Dermatologist with extensive experience in healthcare management, HIV/AIDS initiatives, and senior care services.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
