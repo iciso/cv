@@ -783,7 +783,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center mb-8">
             <div className="mb-4 md:mb-0">
               <h3 className="text-xl font-bold">Dr. Essa Mohamed Rafique</h3>
-              <p className="text-teal-200">Medical Officer & Public Health Specialist</p>
+              <p className="text-teal-200">UN & WHO Consultant</p>
             </div>
             <div className="flex gap-4">
               <a
@@ -956,7 +956,7 @@ export default function Home() {
 
               {/* Blogs */}
               <div className="space-y-3">
-                <h5 className="text-teal-300 font-medium">Additional Blogs</h5>
+                <h5 className="text-teal-300 font-medium">Additional</h5>
                 <div className="space-y-2">
                   <a
                     href="https://www.blogger.com/profile/16421051685766047459"

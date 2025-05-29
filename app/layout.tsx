@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Dr. Essa Mohamed Rafique - CV",
   description:
-    "Professional CV of Dr. Essa Mohamed Rafique - Dermatologist, Public Health Specialist, and Medical Officer",
+    "Professional CV of Dr. Essa Mohamed Rafique - UN & WHO Consultant, Dermatologist, and Public Health Specialist",
     generator: 'v0.dev'
 }
 
