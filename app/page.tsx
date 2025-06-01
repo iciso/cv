@@ -672,6 +672,9 @@ export default function Home() {
                 <span className="font-medium">Python Core</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
+                <span className="font-medium">Python Data Structures</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">Data Science</span>
               </div>
             </div>
