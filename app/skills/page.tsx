@@ -149,6 +149,11 @@ const certifications = [
     url: "https://www.sololearn.com/en/certificates/CC-RFSLWF9V",
   },
   {
+    name: "Data Analytics with AI",
+    description: "AI techs to enhance the collection, processing, and interpretation of data to extract actionable insights.",
+    url: "https://www.sololearn.com/en/certificates/CC-RPU1079M",
+  },
+  {
     name: "Coding for Marketers",
     description: "Programming fundamentals for marketing professionals.",
     url: "https://www.sololearn.com/Certificate/1165-19469613/jpg",
