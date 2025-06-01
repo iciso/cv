@@ -654,6 +654,9 @@ export default function Home() {
                 <span className="font-medium">Responsive Web Design</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
+                <span className="font-medium">Vibe Coding</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">Angular + Nest JS</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
@@ -671,7 +674,7 @@ export default function Home() {
             </div>
             <div className="mt-4">
               <Link href="/skills" className="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium">
-                View all 22 certifications <ChevronRight className="ml-1" size={16} />
+                View all 23 certifications <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>

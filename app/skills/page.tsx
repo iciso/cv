@@ -144,6 +144,11 @@ const certifications = [
     url: "https://www.sololearn.com/Certificate/1162-19469613/jpg",
   },
   {
+    name: "Vibe Coding",
+    description: "Using natural language prompts to instruct AI to generate, refine, and debug App codes.",
+    url: "https://www.sololearn.com/en/certificates/CC-RFSLWF9V",
+  },
+  {
     name: "Coding for Marketers",
     description: "Programming fundamentals for marketing professionals.",
     url: "https://www.sololearn.com/Certificate/1165-19469613/jpg",
