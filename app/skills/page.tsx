@@ -150,7 +150,7 @@ const certifications = [
   },
   {
     name: "Data Analytics with AI",
-    description: "AI techs to enhance the collection, processing, and interpretation of data to extract actionable insights.",
+    description: "AI techniques that collect, process, and interpret data to extract actionable insights.",
     url: "https://www.sololearn.com/en/certificates/CC-RPU1079M",
   },
   {
