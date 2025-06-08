@@ -9,6 +9,7 @@ import {
   Briefcase,
   GraduationCap,
   BookOpen,
+  Album,
   Code,
   Users,
   Globe,
