@@ -1009,7 +1009,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
                   >
-                    <Globe size={16} />
+                    <Textfile size={16} />
                     <span>ORCID</span>
                   </a>
                 </div>
