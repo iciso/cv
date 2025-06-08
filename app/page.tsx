@@ -1004,21 +1004,12 @@ export default function Home() {
                     <span>TMC Case Conference (WhatsApp)</span>
                   </a>
                   <a
-                    href="https://t.me/islamophob"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
-                  >
-                    <Send size={16} />
-                    <span>Islamophob (Telegram)</span>
-                  </a>
-                  <a
                     href="https://orcid.org/my-orcid?orcid=0009-0001-2135-0777"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-white hover:text-teal-200 transition-colors"
                   >
-                    <Orcid size={16} />
+                    <Globe size={16} />
                     <span>ORCID</span>
                   </a>
                 </div>
