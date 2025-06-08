@@ -783,8 +783,9 @@ export default function Home() {
               <p className="text-gray-600">Email: dnagchowdhury@macfound.org</p>
             </div>
           </div>
+        </section>
 
-          {/* Skills Summary */}
+        {/* Skills Summary */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-6 text-gray-800 border-b border-gray-200 pb-2">Skills Summary</h2>
           <p className="text-lg text-gray-700 leading-relaxed">
@@ -792,7 +793,6 @@ export default function Home() {
           </p>
         </section>
 
-        </section>
       </main>
 
       {/* Footer */}
