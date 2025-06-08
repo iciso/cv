@@ -783,6 +783,15 @@ export default function Home() {
               <p className="text-gray-600">Email: dnagchowdhury@macfound.org</p>
             </div>
           </div>
+
+          {/* Skills Summary */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-6 text-gray-800 border-b border-gray-200 pb-2">Skills Summary</h2>
+          <p className="text-lg text-gray-700 leading-relaxed">
+            Dr. Essa Mohamed Rafique is currently completing the Bridge to Masters in Islamic Sciences at the International Open University (IOU) and completed Level 5 Dawah courses at the Messengers of Peace Academy. With a background in Medicine, IT, and HR (M.B., B.S., D.V., D.T.D. Dip Web Media) and extensive experience in community health, Dr. Rafique combines a passion for Islamic knowledge with practical skills in web and App development. His interests include creating free and accessible digital resources for Islamic education and fostering interfaith dialogue.
+          </p>
+        </section>
+
         </section>
       </main>
 
