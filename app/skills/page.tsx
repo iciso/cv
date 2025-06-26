@@ -19,9 +19,9 @@ export default function SkillsPage() {
 
       <main className="container mx-auto px-4 py-12">
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h2 className="text-2xl font-bold text-teal-700 mb-6">IT Certifications (2019-2022)</h2>
+          <h2 className="text-2xl font-bold text-teal-700 mb-6">IT Certifications</h2>
           <p className="text-gray-700 mb-6">
-            Dr. Rafique has completed 25 programming language courses through SoloLearn between 2019 and 2022,
+            Dr. Rafique has completed 26 programming language courses at SoloLearn since 2019,
             demonstrating his commitment to continuous learning and technical skill development.
           </p>
 
@@ -127,6 +127,11 @@ const certifications = [
     name: "CSS",
     description: "Cascading Style Sheets for styling and layout of web pages.",
     url: "https://www.sololearn.com/Certificate/1023-19469613/jpg",
+  },
+  {
+    name: "Project Planning with AI",
+    description: "AI techniques to manage tasks, estimate costs and timelines, optimize resources, and proactively analyze and mitigate risks.",
+    url: "https://www.sololearn.com/certificates/CC-7DXFZPKR",
   },
   {
     name: "PHP",
