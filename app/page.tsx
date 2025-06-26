@@ -646,10 +646,13 @@ export default function Home() {
                 <span className="font-medium">CSS</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">PHP</span>
+                <span className="font-medium">Prompt Engineering</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Game Development with JS</span>
+                <span className="font-medium">Project Planning with AI</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md">
+                <span className="font-medium">Generative AI in Practice</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">Responsive Web Design</span>
@@ -659,6 +662,12 @@ export default function Home() {
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">Data Analytics with AI</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md">
+                <span className="font-medium">PHP</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md">
+                <span className="font-medium">Game Development with JS</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">Angular + Nest JS</span>
