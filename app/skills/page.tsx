@@ -139,6 +139,11 @@ const certifications = [
     url: "https://www.sololearn.com/Certificate/1140-19469613/jpg",
   },
   {
+    name: "Generative AI in Practice",
+    description: "AI techniques that create new content and ideas, like images and videos, and also reuse them.",
+    url: "https://www.sololearn.com/certificates/CC-J89AVCVT",
+  },
+  {
     name: "Responsive Web Design",
     description: "Techniques for creating websites that work on all devices and screen sizes.",
     url: "https://www.sololearn.com/Certificate/1162-19469613/jpg",
