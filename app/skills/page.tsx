@@ -129,19 +129,14 @@ const certifications = [
     url: "https://www.sololearn.com/Certificate/1023-19469613/jpg",
   },
   {
+    name: "Prompt Engineering",
+    description: "Crafting precise prompts to help generative AI models correctly perform a wide range of tasks.",
+    url: "https://www.sololearn.com/certificates/CC-HL9BZKEL",
+  },
+  {
     name: "Project Planning with AI",
     description: "AI techniques to manage tasks, estimate costs and timelines, optimize resources, and proactively analyze and mitigate risks.",
     url: "https://www.sololearn.com/certificates/CC-7DXFZPKR",
-  },
-  {
-    name: "PHP",
-    description: "Server-side scripting language designed for web development.",
-    url: "https://www.sololearn.com/Certificate/1059-19469613/jpg",
-  },
-  {
-    name: "Game Development with JS",
-    description: "Creating interactive games using JavaScript and HTML5 Canvas.",
-    url: "https://www.sololearn.com/Certificate/1140-19469613/jpg",
   },
   {
     name: "Generative AI in Practice",
@@ -162,6 +157,16 @@ const certifications = [
     name: "Data Analytics with AI",
     description: "AI techniques that collect, process, and interpret data to extract actionable insights.",
     url: "https://www.sololearn.com/en/certificates/CC-RPU1079M",
+  },
+  {
+    name: "PHP",
+    description: "Server-side scripting language designed for web development.",
+    url: "https://www.sololearn.com/Certificate/1059-19469613/jpg",
+  },
+  {
+    name: "Game Development with JS",
+    description: "Creating interactive games using JavaScript and HTML5 Canvas.",
+    url: "https://www.sololearn.com/Certificate/1140-19469613/jpg",
   },
   {
     name: "Coding for Marketers",
