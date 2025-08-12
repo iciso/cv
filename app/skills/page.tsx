@@ -21,7 +21,7 @@ export default function SkillsPage() {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-2xl font-bold text-teal-700 mb-6">IT Certifications</h2>
           <p className="text-gray-700 mb-6">
-            Dr. Rafique has completed 26 programming language courses at SoloLearn since 2019,
+            Dr. Rafique has completed 27 programming language courses at SoloLearn since 2019,
             demonstrating his commitment to continuous learning and technical skill development.
           </p>
 
