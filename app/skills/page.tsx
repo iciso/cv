@@ -114,19 +114,14 @@ const certifications = [
     url: "https://www.sololearn.com/Certificate/1141-19469613/jpg",
   },
   {
-    name: "JavaScript",
-    description: "Core JavaScript programming concepts, functions, objects, DOM manipulation, and more.",
-    url: "https://www.sololearn.com/certificates/course/en/19469613/1024/landscape/png",
+    name: "Research with AI",
+    description: "integration of AI tools into the research process to enhance research efficiency and effectiveness.",
+    url: "https://www.sololearn.com/certificates/CC-B1BGYLTS",  
   },
   {
-    name: "HTML",
-    description: "HTML5 markup language for structuring web content and documents.",
-    url: "https://www.sololearn.com/Certificate/1014-19469613/jpg",
-  },
-  {
-    name: "CSS",
-    description: "Cascading Style Sheets for styling and layout of web pages.",
-    url: "https://www.sololearn.com/Certificate/1023-19469613/jpg",
+    name: "Visualize Data with AI",
+    description: "AI Skills to effectively communicate data insights through engaging visualizations and compelling narratives.",
+    url: "https://www.sololearn.com/certificates/CC-HMZ87SGS",
   },
   {
     name: "Prompt Engineering",
@@ -157,6 +152,21 @@ const certifications = [
     name: "Data Analytics with AI",
     description: "AI techniques that collect, process, and interpret data to extract actionable insights.",
     url: "https://www.sololearn.com/en/certificates/CC-RPU1079M",
+  },
+    {
+    name: "JavaScript",
+    description: "Core JavaScript programming concepts, functions, objects, DOM manipulation, and more.",
+    url: "https://www.sololearn.com/certificates/course/en/19469613/1024/landscape/png",
+  },
+  {
+    name: "HTML",
+    description: "HTML5 markup language for structuring web content and documents.",
+    url: "https://www.sololearn.com/Certificate/1014-19469613/jpg",
+  },
+  {
+    name: "CSS",
+    description: "Cascading Style Sheets for styling and layout of web pages.",
+    url: "https://www.sololearn.com/Certificate/1023-19469613/jpg",
   },
   {
     name: "PHP",
