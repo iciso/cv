@@ -111,7 +111,7 @@ const certifications = [
   {
     name: "Ethical AI Foundations",
     description: "Principles of responsible, safe, and ethical GenAI use to mitigate risks and complexities of GenAI systems.",
-    url: "https://www.sololearn.com/Certificate/1141-19469613/jpg",
+    url: "https://www.sololearn.com/certificates/CC-W89JGF5D",
   },
   {
     name: "Research with AI",
