@@ -109,13 +109,13 @@ export default function SkillsPage() {
 
 const certifications = [
   {
-    name: "Web Development Fundamentals",
-    description: "Comprehensive course covering the basics of web development technologies and practices.",
+    name: "Ethical AI Foundations",
+    description: "Principles of responsible, safe, and ethical GenAI use to mitigate risks and complexities of GenAI systems.",
     url: "https://www.sololearn.com/Certificate/1141-19469613/jpg",
   },
   {
     name: "Research with AI",
-    description: "integration of AI tools into the research process to enhance research efficiency and effectiveness.",
+    description: "Integration of AI tools into the research process to enhance research efficiency and effectiveness.",
     url: "https://www.sololearn.com/certificates/CC-B1BGYLTS",  
   },
   {
@@ -138,20 +138,25 @@ const certifications = [
     description: "AI techniques that create new content and ideas, like images and videos, and also reuse them.",
     url: "https://www.sololearn.com/certificates/CC-J89AVCVT",
   },
-  {
-    name: "Responsive Web Design",
-    description: "Techniques for creating websites that work on all devices and screen sizes.",
-    url: "https://www.sololearn.com/Certificate/1162-19469613/jpg",
+   {
+    name: "Data Analytics with AI",
+    description: "AI techniques that collect, process, and interpret data to extract actionable insights.",
+    url: "https://www.sololearn.com/en/certificates/CC-RPU1079M",
   },
-  {
+   {
     name: "Vibe Coding",
     description: "Using natural language prompts to instruct AI to generate, refine, and debug App codes.",
     url: "https://www.sololearn.com/en/certificates/CC-RFSLWF9V",
   },
-  {
-    name: "Data Analytics with AI",
-    description: "AI techniques that collect, process, and interpret data to extract actionable insights.",
-    url: "https://www.sololearn.com/en/certificates/CC-RPU1079M",
+     {
+    name: "Responsive Web Design",
+    description: "Techniques for creating websites that work on all devices and screen sizes.",
+    url: "https://www.sololearn.com/Certificate/1162-19469613/jpg",
+  },
+   {
+    name: "Web Development Fundamentals",
+    description: "Comprehensive course covering the basics of web development technologies and practices.",
+    url: "https://www.sololearn.com/Certificate/1141-19469613/jpg",
   },
     {
     name: "JavaScript",
