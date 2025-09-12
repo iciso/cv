@@ -63,6 +63,12 @@ export default function Home() {
                   Books
                 </Link>
                 <Link
+                  href="#stories"
+                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
+                >
+                  Stories
+                </Link>
+                <Link
                   href="#publications"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
@@ -287,6 +293,54 @@ export default function Home() {
                 className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
               >
                 View All 14 Blogs <ChevronRight className="ml-1" size={16} />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Stories Section */}
+        <section id="stories" className="mb-16 scroll-mt-20">
+          <div className="flex items-center mb-6">
+            <BookOpen className="mr-2 text-teal-600" size={28} />
+            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+              Stories & Community Papers
+            </h2>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <p className="text-lg text-gray-700 mb-8">
+              A collection of 42 community-focused stories published on behalf of The Constellation. These stories
+              explore community life competence, social inclusion, and participatory development approaches in
+              accessible, narrative formats that resonate with community members.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {stories.slice(0, 12).map((story, index) => (
+                <div
+                  key={index}
+                  className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div className="p-4">
+                    <h3 className="text-xl font-bold text-teal-700 mb-2">{story.title}</h3>
+                    <p className="text-gray-600 mb-4 line-clamp-3">{story.description}</p>
+                    <a
+                      href={story.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                    >
+                      Read Story <ExternalLink className="ml-1" size={16} />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 text-center">
+              <Link
+                href="/stories"
+                className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
+              >
+                View All 42 Stories <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>
@@ -1181,5 +1235,79 @@ const blogs = [
     title: "CLCP was there before the Facilitators!",
     description: "History and development of the Community Life Competence Process methodology.",
     url: "http://tinyurl.com/25lf9k5",
+  },
+]
+
+const stories = [
+  {
+    title: "8 Maxims on Being Humane resonate in 3 Scriptures",
+    description:
+      "Exploring universal human values that transcend religious boundaries and resonate across different spiritual traditions.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/8-maxims-on-being-humane-resonate-in-3-scriptures",
+  },
+  {
+    title: "The Role of KM",
+    description:
+      "Understanding the critical role of Knowledge Management in community development and organizational learning.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/the-role-of-km",
+  },
+  {
+    title: "Steps of Dream Building Using SALT & compared to WoT",
+    description:
+      "A detailed exploration of dream building processes using SALT methodology compared to other approaches.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/steps-of-dream-building-using-salt-amp-compared-to-wot",
+  },
+  {
+    title: "Definitions of Transparency",
+    description:
+      "Examining different perspectives and definitions of transparency in community and organizational contexts.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/definitions-of-transparency",
+  },
+  {
+    title: "Icons of The Constellation",
+    description:
+      "Understanding the symbolic representations and visual identity elements that define The Constellation's work.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/icons-of-the-constellation",
+  },
+  {
+    title: "Membership Type: Who are we?",
+    description: "Defining the different types of membership and identity within The Constellation community network.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/membership-type-who-are-we",
+  },
+  {
+    title: "The Constellation: A Constellation of Communities: Towards True Community Ownership",
+    description:
+      "Exploring the vision of authentic community ownership and the network of communities working together.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/the-constellation-a-constellation-of-communities-towards-true",
+  },
+  {
+    title: "The Unquenchable Thirst: A Journey Within The Constellation",
+    description:
+      "A personal journey narrative exploring the deep motivations and aspirations within The Constellation's work.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/the-unquenchable-thirst-a-journey-within-the-constellation",
+  },
+  {
+    title: "Knowledge is Power: Community Ownership of Knowledge",
+    description:
+      "Examining how communities can take ownership of knowledge creation, sharing, and application processes.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/knowledge-is-power-community-ownership-of-knowledge",
+  },
+  {
+    title: "Why CLCP is far better than Targeted Interventions (TI) - Part III",
+    description:
+      "The third part of a comprehensive analysis comparing Community Life Competence Process with traditional targeted interventions.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/why-clcp-is-far-better-than-targeted-interventions-ti-part-iii",
+  },
+  {
+    title: "Defining key terms in the context of CLCP",
+    description:
+      "A glossary and explanation of essential terminology used in Community Life Competence Process methodology.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/defining-key-terms-in-the-context-of-clcp",
+  },
+  {
+    title: "Tree of Emotions: How Beautiful Is Our SALT",
+    description:
+      "Exploring the emotional dimensions and beauty of the SALT (Support, Appreciate, Learn, Transfer) approach.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/tree-of-emotions-how-beautiful-is-our-salt",
   },
 ]
