@@ -22,44 +22,94 @@ export default function AppsPage() {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-2xl font-bold text-teal-700 mb-4">Open Source Applications</h2>
           <p className="text-lg text-gray-700 mb-8">
+            A comprehensive collection of 17 applications developed both individually and in collaboration with teams.
             All applications are developed as freeware and open source tools, designed to serve various healthcare,
             spiritual, and community needs. These applications are freely available for use, modification, and
             distribution.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {apps.map((app, index) => (
-              <div key={index} className="border rounded-lg overflow-hidden shadow-md">
-                <div className="h-64 relative">
-                  <Image
-                    src={app.imagePath || "/placeholder.svg"}
-                    alt={`${app.name} App Preview`}
-                    fill
-                    className="object-contain"
-                    style={{ backgroundColor: app.bgColor }}
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-teal-700 mb-2">{app.name}</h3>
-                  <p className="text-gray-600 mb-6">{app.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {app.tags.map((tag, i) => (
-                      <span key={i} className="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <a
-                    href={app.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
-                  >
-                    Visit Application <ExternalLink className="ml-2" size={16} />
-                  </a>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div>
+              <h3 className="text-2xl font-bold text-teal-700 mb-6">Individual Applications</h3>
+              <div className="grid grid-cols-1 gap-6">
+                {apps
+                  .filter((app) => app.category === "Individual")
+                  .map((app, index) => (
+                    <div key={index} className="border rounded-lg overflow-hidden shadow-md">
+                      <div className="h-64 relative">
+                        <Image
+                          src={app.imagePath || "/placeholder.svg"}
+                          alt={`${app.name} App Preview`}
+                          fill
+                          className="object-contain"
+                          style={{ backgroundColor: app.bgColor }}
+                          unoptimized
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h4 className="text-2xl font-bold text-teal-700 mb-2">{app.name}</h4>
+                        <p className="text-gray-600 mb-6">{app.description}</p>
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {app.tags.map((tag, i) => (
+                            <span key={i} className="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <a
+                          href={app.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                        >
+                          Visit Application <ExternalLink className="ml-2" size={16} />
+                        </a>
+                      </div>
+                    </div>
+                  ))}
               </div>
-            ))}
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-bold text-teal-700 mb-6">Team Collaboration Applications</h3>
+              <div className="grid grid-cols-1 gap-6">
+                {apps
+                  .filter((app) => app.category === "Team Collaboration")
+                  .map((app, index) => (
+                    <div key={index} className="border rounded-lg overflow-hidden shadow-md">
+                      <div className="h-64 relative">
+                        <Image
+                          src={app.imagePath || "/placeholder.svg"}
+                          alt={`${app.name} App Preview`}
+                          fill
+                          className="object-contain"
+                          style={{ backgroundColor: app.bgColor }}
+                          unoptimized
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h4 className="text-2xl font-bold text-teal-700 mb-2">{app.name}</h4>
+                        <p className="text-gray-600 mb-6">{app.description}</p>
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {app.tags.map((tag, i) => (
+                            <span key={i} className="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <a
+                          href={app.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                        >
+                          Visit Application <ExternalLink className="ml-2" size={16} />
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -124,6 +174,7 @@ export default function AppsPage() {
 }
 
 const apps = [
+  // Individual Apps
   {
     name: "IQRA",
     description:
@@ -132,6 +183,7 @@ const apps = [
     bgColor: "#e8f5ee",
     url: "https://iqrar.vercel.app/",
     tags: ["Islamic", "Educational", "Quiz", "Competition"],
+    category: "Individual",
   },
   {
     name: "KALAM",
@@ -141,6 +193,7 @@ const apps = [
     bgColor: "#0a6e4a",
     url: "https://v0-kalam.vercel.app/",
     tags: ["Islamic", "Spiritual Growth", "Activities", "Education"],
+    category: "Individual",
   },
   {
     name: "Barzaq",
@@ -150,6 +203,7 @@ const apps = [
     bgColor: "#1a2235",
     url: "https://v0-barzaq.vercel.app/",
     tags: ["Islamic", "Afterlife", "Educational", "Spiritual Journey"],
+    category: "Individual",
   },
   {
     name: "Noor",
@@ -159,6 +213,7 @@ const apps = [
     bgColor: "#f0faf5",
     url: "https://v0-noor-liard.vercel.app/",
     tags: ["Comparative Religion", "CLCP", "Interactive", "Educational"],
+    category: "Individual",
   },
   {
     name: "Islamic Ethical Quandary",
@@ -168,6 +223,7 @@ const apps = [
     bgColor: "#e8f7f0",
     url: "https://v0-twine-ten.vercel.app/",
     tags: ["Islamic Ethics", "Interactive Game", "Decision Making", "Financial Literacy"],
+    category: "Individual",
   },
   {
     name: "ACLS Protocol Trainer",
@@ -177,5 +233,117 @@ const apps = [
     bgColor: "#e6f0fa",
     url: "https://v0-syndromic.vercel.app/",
     tags: ["Medical", "ACLS", "Emergency Training", "Healthcare Education"],
+    category: "Individual",
+  },
+  {
+    name: "Hajj",
+    description:
+      "A comprehensive Hajj pilgrimage guidance application providing step-by-step instructions, prayers, and essential information for pilgrims. The app serves as a digital companion for those undertaking the sacred journey, offering guidance on rituals, locations, and spiritual preparation.",
+    imagePath: "/hajj-app.jpg",
+    bgColor: "#f8f4e6",
+    url: "https://tamatu.vercel.app",
+    tags: ["Islamic", "Hajj", "Pilgrimage", "Guidance"],
+    category: "Individual",
+  },
+  // Team Collaboration Apps
+  {
+    name: "Quran",
+    description:
+      "A comprehensive Quran reading and study application developed in collaboration with a team. The app provides an intuitive interface for reading, listening to, and studying the Holy Quran with various features to enhance the spiritual and educational experience.",
+    imagePath: "/quran-app.jpg",
+    bgColor: "#e8f5e8",
+    url: "https://al-quran-joy.vercel.app",
+    tags: ["Islamic", "Quran", "Reading", "Study"],
+    category: "Team Collaboration",
+  },
+  {
+    name: "Sepsis Management",
+    description:
+      "A clinical decision support tool for sepsis management developed with medical professionals. The application helps healthcare providers with early detection, assessment, and treatment protocols for sepsis patients, incorporating evidence-based guidelines and clinical pathways.",
+    imagePath: "/sepsis-app.jpg",
+    bgColor: "#fff2f2",
+    url: "https://v0-sepsis-app-sigma.vercel.app",
+    tags: ["Medical", "Sepsis", "Clinical Decision", "Healthcare"],
+    category: "Team Collaboration",
+  },
+  {
+    name: "3 Zone System",
+    description:
+      "A medical application implementing the 3-zone system for clinical assessment and patient management. This tool helps healthcare professionals categorize patient conditions and implement appropriate care protocols based on severity and clinical indicators.",
+    imagePath: "/3zone-app.jpg",
+    bgColor: "#f0f8ff",
+    url: "https://v0-3zone.vercel.app",
+    tags: ["Medical", "Clinical Assessment", "Patient Management", "Healthcare"],
+    category: "Team Collaboration",
+  },
+  {
+    name: "Noradrenaline Calculator",
+    description:
+      "A specialized medical calculator for noradrenaline dosage and administration developed for critical care settings. The application assists healthcare professionals in calculating appropriate dosages and monitoring parameters for patients requiring vasopressor support.",
+    imagePath: "/noradrenaline-app.jpg",
+    bgColor: "#f5f5f5",
+    url: "https://v0-noradrenaline.vercel.app/",
+    tags: ["Medical", "Dosage Calculator", "Critical Care", "Pharmacology"],
+    category: "Team Collaboration",
+  },
+  {
+    name: "Burns & IV Fluids",
+    description:
+      "A comprehensive burns management application that calculates fluid requirements and treatment protocols for burn patients. The tool incorporates established formulas and guidelines to assist healthcare providers in managing burn injuries effectively.",
+    imagePath: "/burns-app.jpg",
+    bgColor: "#fff8f0",
+    url: "https://v0-burns-iv-fluids-app.vercel.app",
+    tags: ["Medical", "Burns Treatment", "Fluid Management", "Emergency Care"],
+    category: "Team Collaboration",
+  },
+  {
+    name: "Medical Training Platform",
+    description:
+      "An educational platform designed for medical training and continuing education. The application provides interactive learning modules, assessments, and resources for healthcare professionals to enhance their knowledge and skills in various medical specialties.",
+    imagePath: "/medical-training-app.jpg",
+    bgColor: "#f0f8f0",
+    url: "https://v0-training-hub.vercel.app",
+    tags: ["Medical Education", "Training", "E-Learning", "Healthcare"],
+    category: "Team Collaboration",
+  },
+  {
+    name: "IVY Program Website",
+    description:
+      "A professional website for the IVY healthcare program, showcasing program details, resources, and information for participants. The site serves as a comprehensive portal for program-related activities and communications.",
+    imagePath: "/ivy-website.jpg",
+    bgColor: "#f8f8ff",
+    url: "https://v0-ivy-program.vercel.app",
+    tags: ["Healthcare Program", "Website", "Information Portal", "Professional"],
+    category: "Team Collaboration",
+  },
+  {
+    name: "GKF Hospital Website",
+    description:
+      "A modern, comprehensive website for Grace Kennet Foundation Hospital, providing information about services, facilities, and healthcare offerings. The site serves as the digital presence for the hospital's community outreach and patient services.",
+    imagePath: "/gkf-website.jpg",
+    bgColor: "#f0f8f8",
+    url: "https://v0-gkf-hospital-website.vercel.app/",
+    tags: ["Hospital Website", "Healthcare Services", "Community Health", "Information"],
+    category: "Team Collaboration",
+  },
+  {
+    name: "GKF Hospital Management System",
+    description:
+      "A comprehensive hospital management system for Grace Kennet Foundation Hospital, featuring patient records, appointment scheduling, inventory management, and administrative tools. The system streamlines hospital operations and improves patient care delivery.",
+    imagePath: "/gkf-hospital-mgmt.jpg",
+    bgColor: "#f8f8f8",
+    url: "https://v0-hospital-app-three.vercel.app/",
+    tags: ["Hospital Management", "Patient Records", "Healthcare System", "Administration"],
+    category: "Team Collaboration",
+  },
+  {
+    name: "TMCH Website",
+    description:
+      "A modern website for Thanjavur Medical College Hospital, showcasing the institution's academic programs, medical services, and community initiatives. The site serves as a comprehensive digital platform for students, faculty, and patients.",
+    imagePath: "/tmch-website.jpg",
+    bgColor: "#f5f8ff",
+    url: "https://v0-modern-landing-page-design-eta-fawn.vercel.app",
+    tags: ["Medical College", "Hospital Website", "Academic Institution", "Healthcare"],
+    category: "Team Collaboration",
   },
 ]

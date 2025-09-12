@@ -40,7 +40,8 @@ export default function Home() {
                 M.B.,B.S., D.V., D.T.D., Dip Web Media., D.I.S., (B.M.A.I.S.,)
               </p>
               <p className="text-lg mb-6 text-teal-50">
-                UN & WHO Consultant, Public Health Specialist, and Dermatologist with extensive experience in healthcare management, HIV/AIDS initiatives, and senior care services.
+                UN & WHO Consultant, Public Health Specialist, and Dermatologist with extensive experience in healthcare
+                management, HIV/AIDS initiatives, and senior care services.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -469,6 +470,14 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            <div className="mt-6 text-center">
+              <Link
+                href="/apps"
+                className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
+              >
+                View All Apps <ChevronRight className="ml-1" size={16} />
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -690,7 +699,7 @@ export default function Home() {
             </div>
             <div className="mt-4">
               <Link href="/skills" className="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium">
-                View all 30 certifications <ChevronRight className="ml-1" size={16} />
+                View all 27 certifications <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>
@@ -799,10 +808,14 @@ export default function Home() {
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-6 text-gray-800 border-b border-gray-200 pb-2">Skills Summary</h2>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Dr. Essa Mohamed Rafique is currently completing the Bridge to Masters in Islamic Sciences at the International Open University (IOU) and completed Level 5 Dawah courses at the Messengers of Peace Academy. With a background in Medicine, IT, and HR (M.B., B.S., D.V., D.T.D. Dip Web Media) and extensive experience in community health, Dr. Rafique combines a passion for Islamic knowledge with practical skills in web and App development. His interests include creating free and accessible digital resources for Islamic education and fostering interfaith dialogue.
+            Dr. Essa Mohamed Rafique is currently completing the Bridge to Masters in Islamic Sciences at the
+            International Open University (IOU) and completed Level 5 Dawah courses at the Messengers of Peace Academy.
+            With a background in Medicine, IT, and HR (M.B., B.S., D.V., D.T.D. Dip Web Media) and extensive experience
+            in community health, Dr. Rafique combines a passion for Islamic knowledge with practical skills in web and
+            App development. His interests include creating free and accessible digital resources for Islamic education
+            and fostering interfaith dialogue.
           </p>
         </section>
-
       </main>
 
       {/* Footer */}

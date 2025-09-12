@@ -21,7 +21,7 @@ export default function SkillsPage() {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-2xl font-bold text-teal-700 mb-6">IT Certifications</h2>
           <p className="text-gray-700 mb-6">
-            Dr. Rafique has completed 30 programming language courses at SoloLearn since 2019,
+            Dr. Rafique has completed 26 programming language courses at SoloLearn since 2019,
             demonstrating his commitment to continuous learning and technical skill development.
           </p>
 
@@ -109,19 +109,24 @@ export default function SkillsPage() {
 
 const certifications = [
   {
-    name: "Ethical AI Foundations",
-    description: "Principles of responsible, safe, and ethical GenAI use to mitigate risks and complexities of GenAI systems.",
-    url: "https://www.sololearn.com/certificates/CC-W89JGF5D",
+    name: "Web Development Fundamentals",
+    description: "Comprehensive course covering the basics of web development technologies and practices.",
+    url: "https://www.sololearn.com/Certificate/1141-19469613/jpg",
   },
   {
-    name: "Research with AI",
-    description: "Integration of AI tools into the research process to enhance research efficiency and effectiveness.",
-    url: "https://www.sololearn.com/certificates/CC-B1BGYLTS",  
+    name: "JavaScript",
+    description: "Core JavaScript programming concepts, functions, objects, DOM manipulation, and more.",
+    url: "https://www.sololearn.com/certificates/course/en/19469613/1024/landscape/png",
   },
   {
-    name: "Visualize Data with AI",
-    description: "AI Skills to effectively communicate data insights through engaging visualizations and compelling narratives.",
-    url: "https://www.sololearn.com/certificates/CC-HMZ87SGS",
+    name: "HTML",
+    description: "HTML5 markup language for structuring web content and documents.",
+    url: "https://www.sololearn.com/Certificate/1014-19469613/jpg",
+  },
+  {
+    name: "CSS",
+    description: "Cascading Style Sheets for styling and layout of web pages.",
+    url: "https://www.sololearn.com/Certificate/1023-19469613/jpg",
   },
   {
     name: "Prompt Engineering",
@@ -138,40 +143,20 @@ const certifications = [
     description: "AI techniques that create new content and ideas, like images and videos, and also reuse them.",
     url: "https://www.sololearn.com/certificates/CC-J89AVCVT",
   },
-   {
-    name: "Data Analytics with AI",
-    description: "AI techniques that collect, process, and interpret data to extract actionable insights.",
-    url: "https://www.sololearn.com/en/certificates/CC-RPU1079M",
-  },
-   {
-    name: "Vibe Coding",
-    description: "Using natural language prompts to instruct AI to generate, refine, and debug App codes.",
-    url: "https://www.sololearn.com/en/certificates/CC-RFSLWF9V",
-  },
-     {
+  {
     name: "Responsive Web Design",
     description: "Techniques for creating websites that work on all devices and screen sizes.",
     url: "https://www.sololearn.com/Certificate/1162-19469613/jpg",
   },
-   {
-    name: "Web Development Fundamentals",
-    description: "Comprehensive course covering the basics of web development technologies and practices.",
-    url: "https://www.sololearn.com/Certificate/1141-19469613/jpg",
-  },
-    {
-    name: "JavaScript",
-    description: "Core JavaScript programming concepts, functions, objects, DOM manipulation, and more.",
-    url: "https://www.sololearn.com/certificates/course/en/19469613/1024/landscape/png",
+  {
+    name: "Vibe Coding",
+    description: "Using natural language prompts to instruct AI to generate, refine, and debug App codes.",
+    url: "https://www.sololearn.com/en/certificates/CC-RFSLWF9V",
   },
   {
-    name: "HTML",
-    description: "HTML5 markup language for structuring web content and documents.",
-    url: "https://www.sololearn.com/Certificate/1014-19469613/jpg",
-  },
-  {
-    name: "CSS",
-    description: "Cascading Style Sheets for styling and layout of web pages.",
-    url: "https://www.sololearn.com/Certificate/1023-19469613/jpg",
+    name: "Data Analytics with AI",
+    description: "AI techniques that collect, process, and interpret data to extract actionable insights.",
+    url: "https://www.sololearn.com/en/certificates/CC-RPU1079M",
   },
   {
     name: "PHP",

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Dr. Essa Mohamed Rafique - CV",
   description:
     "Professional CV of Dr. Essa Mohamed Rafique - UN & WHO Consultant, App Developer, and Public Health Specialist",
-    generator: 'v0.dev'
+    generator: 'v0.app'
 }
 
 export default function RootLayout({
