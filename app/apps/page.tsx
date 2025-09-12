@@ -339,11 +339,11 @@ const apps = [
   {
     name: "TMCH Website",
     description:
-      "A modern website for Thanjavur Medical College Hospital, showcasing the institution's academic programs, medical services, and community initiatives. The site serves as a comprehensive digital platform for students, faculty, and patients.",
+      "A modern website for TOP MEDICAL & COSMETIC HUB (TMCH), showcasing the institution's counselling programs, medical and cosmetic services, as well as community initiatives. The site serves as a comprehensive digital platform for patients, service providers, and the community.",
     imagePath: "/tmch-website.jpg",
     bgColor: "#f5f8ff",
     url: "https://v0-modern-landing-page-design-eta-fawn.vercel.app",
-    tags: ["Medical College", "Hospital Website", "Academic Institution", "Healthcare"],
+    tags: ["Consultation", "Hospital Website", "Cosmetic Institution", "Healthcare"],
     category: "Team Collaboration",
   },
 ]
