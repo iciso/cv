@@ -25,6 +25,7 @@ import {
   Code2,
   Layers,
   Rss,
+  Database,
 } from "lucide-react"
 
 export default function Home() {
@@ -67,6 +68,13 @@ export default function Home() {
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
                   Stories
+                </Link>
+                {/* KM Products Link */}
+                <Link
+                  href="#km"
+                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
+                >
+                  KM Products
                 </Link>
                 <Link
                   href="#publications"
@@ -341,6 +349,74 @@ export default function Home() {
                 className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
               >
                 View All 42 Stories <ChevronRight className="ml-1" size={16} />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* KM Section */}
+        <section id="km" className="mb-16 scroll-mt-20">
+          <div className="flex items-center mb-6">
+            <Database className="mr-2 text-teal-600" size={28} />
+            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+              Knowledge Management Products
+            </h2>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <p className="text-lg text-gray-700 mb-8">
+              A collection of 27 knowledge products developed during my tenure as Resource Person and Moderator for the
+              AIDS Community with the UN Knowledge Management team in Delhi (2005-2006). These include Consolidated
+              Replies, Concept Notes, Community Updates, and a comprehensive NACP-III summary booklet.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {kmProducts.slice(0, 12).map((product, index) => (
+                <div
+                  key={index}
+                  className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div className="p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="text-lg font-bold text-teal-700 flex-grow">{product.title}</h3>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-medium ml-2 ${
+                          product.type === "BOOKLET"
+                            ? "bg-teal-100 text-teal-800"
+                            : product.type === "CR"
+                              ? "bg-blue-100 text-blue-800"
+                              : product.type === "CN"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-purple-100 text-purple-800"
+                        }`}
+                      >
+                        {product.type}
+                      </span>
+                    </div>
+                    {product.organization && (
+                      <p className="text-sm text-gray-600 mb-2">
+                        <strong>From:</strong> {product.organization}
+                      </p>
+                    )}
+                    <p className="text-gray-600 mb-4 line-clamp-3">{product.description}</p>
+                    <a
+                      href={product.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                    >
+                      Access Document <ExternalLink className="ml-1" size={16} />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 text-center">
+              <Link
+                href="/km"
+                className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
+              >
+                View All 27 Knowledge Products <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>
@@ -1309,5 +1385,98 @@ const stories = [
     description:
       "Exploring the emotional dimensions and beauty of the SALT (Support, Appreciate, Learn, Transfer) approach.",
     url: "https://aidscompetence.ning.com/profiles/blogs/tree-of-emotions-how-beautiful-is-our-salt",
+  },
+]
+
+const kmProducts = [
+  {
+    title: "NACP-III Summary of Contributions - BOOKLET",
+    type: "BOOKLET",
+    description:
+      "A comprehensive booklet summarizing key contributions to India's National AIDS Control Program Phase III, documenting strategic approaches and best practices.",
+    url: "https://docs.google.com/document/d/1mgm18O0v7zQFbyVI3w0kf0J0UVgzwRvV/edit",
+  },
+  {
+    title: "Public-Private Partnerships for Treatment of AIDS",
+    type: "CR 01",
+    organization: "Tamil Nadu MGR Medical University, Chennai",
+    description:
+      "Comprehensive analysis of public-private partnership models for AIDS treatment, examining successful collaborations and strategic recommendations.",
+    url: "https://docs.google.com/document/d/1cmy8EvFZ1F3xYTViEvS8XWt_C9Eifyla/edit?usp=drive_link&ouid=114806208085926162684&rtpof=true&sd=true",
+  },
+  {
+    title: "Behaviour Change Communication for prevention of HIV",
+    type: "CR 02",
+    organization: "Christian Medical College, Vellore",
+    description:
+      "Comparative experiences and examples of effective behavior change communication strategies for HIV prevention.",
+    url: "https://docs.google.com/document/d/1HmQyvmT2VLwHFrCq_wb2j0LWWAeH0Tvv/edit?usp=drive_link&ouid=114806208085926162684&rtpof=true&sd=true",
+  },
+  {
+    title: "Roles for Faith Based Organizations",
+    type: "CR 03",
+    organization: "Emmanuel Hospital Association, Delhi",
+    description: "Strategic advice on the roles and contributions of faith-based organizations in HIV/AIDS response.",
+    url: "https://docs.google.com/document/d/1wDYX4fcLzFIIKPuhb9d3IPXoft68mXpj/edit?rtpof=true",
+  },
+  {
+    title: "Information on Injecting Drug Users",
+    type: "CR 04",
+    organization: "Social Awareness Service Organization, Imphal",
+    description:
+      "Comparative experiences and strategies for working with injecting drug users, including harm reduction approaches.",
+    url: "#",
+  },
+  {
+    title: "Prevention of Parent to Child Transmission",
+    type: "CR 05",
+    organization: "Prof. S.Y.Saptasagar, Y. P. S., Sangli",
+    description:
+      "Comparative experiences in preventing parent-to-child transmission of HIV, examining successful programs.",
+    url: "https://docs.google.com/document/d/1Kdb79Ry30pDwrtQHscGfHY-UKPQiHflz/edit",
+  },
+  {
+    title: "Information Communication Technology (ICT) and HIV",
+    type: "CR 06",
+    organization: "CSDMS, Noida",
+    description: "Comparative experiences in using ICT for HIV prevention, treatment, and support services.",
+    url: "https://docs.google.com/document/d/1JAeQxA2Y0DG_VdF2j1j3eucqb_OAGxa_/edit",
+  },
+  {
+    title: "Monitoring indicators for HIV prevention",
+    type: "CR 07",
+    organization: "PSU, Kerala",
+    description: "Comparative experiences and examples of effective monitoring indicators for HIV prevention programs.",
+    url: "https://docs.google.com/document/d/1FceyvifiesI2AppPEVXB36XNPwR284II/edit",
+  },
+  {
+    title: "Nutrition and PLHIV",
+    type: "CR 08",
+    organization: "World Food Programme",
+    description:
+      "Consolidated reply on nutrition support for people living with HIV, including successful nutrition programs.",
+    url: "https://docs.google.com/document/d/1GC-ILfuumPt_jw7UzV0TRAbRGn70HbF5/edit",
+  },
+  {
+    title: "Stigma and Discrimination",
+    type: "CR 09",
+    organization: "SHADOWS, Chirala",
+    description: "Comparative experiences in addressing stigma and discrimination faced by people living with HIV.",
+    url: "https://docs.google.com/document/d/1ZTsRbHGDbtj88h1mYBprR47TehE1Gb6c/edit",
+  },
+  {
+    title: "Website content",
+    type: "CR 10",
+    organization: "UNAIDS-India",
+    description: "Strategic advice on developing effective website content for HIV/AIDS organizations.",
+    url: "https://docs.google.com/document/d/1hPjylWK7epBxI-zHFML8-eHpLkWY7wun/edit",
+  },
+  {
+    title: "Universal Access",
+    type: "CR 11",
+    organization: "Alliance India & AASRA",
+    description:
+      "Strategic advice on achieving universal access to HIV prevention, treatment, care and support services.",
+    url: "https://docs.google.com/document/d/1JD3TD9iF3pa0t7FMKKuKLX7gAs8svnfw/edit",
   },
 ]
