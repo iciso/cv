@@ -38,7 +38,7 @@ export default function Home() {
             <div className="md:col-span-2">
               <h1 className="text-4xl md:text-5xl font-bold mb-2">Dr. Essa Mohamed Rafique</h1>
               <p className="text-xl md:text-2xl mb-6 text-teal-100">
-                M.B.,B.S., D.V., D.T.D., Dip Web Media., D.I.S., (B.M.A.I.S.,)
+                M.B.,B.S., D.V., D.T.D., Dip Web Media., D.I.S., Fellowship for Leadership Development, MacArthur Foundation, (B.M.A.I.S.,) 
               </p>
               <p className="text-lg mb-6 text-teal-50">
                 UN & WHO Consultant, Public Health Specialist, and Dermatologist with extensive experience in healthcare
