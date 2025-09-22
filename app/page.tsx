@@ -605,7 +605,7 @@ export default function Home() {
                 href="/apps"
                 className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
               >
-                View All 18 Apps <ChevronRight className="ml-1" size={16} />
+                View All 17 Apps <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>

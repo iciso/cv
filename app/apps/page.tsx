@@ -22,7 +22,7 @@ export default function AppsPage() {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-2xl font-bold text-teal-700 mb-4">Open Source Applications</h2>
           <p className="text-lg text-gray-700 mb-8">
-            A comprehensive collection of 18 applications developed both individually and in collaboration with teams.
+            A comprehensive collection of 17 applications developed both individually and in collaboration with teams.
             All applications are developed as freeware and open source tools, designed to serve various healthcare,
             spiritual, and community needs. These applications are freely available for use, modification, and
             distribution.
@@ -236,16 +236,6 @@ const apps = [
     category: "Individual",
   },
   {
-    name: "ICISO",
-    description:
-      "Find opportunities in Quranic Studies, Dawah, and community service, or any listed sphere in reputed Islamic organizations through this air-bnb like app. Join a global network of volunteers and interns making a difference in Islamic communities worldwide.",
-    imagePath: "/iciso-app.png",
-    bgColor: "#f8f4e6",
-    url: "https://iciso.vercel.app",
-    tags: ["Islamic", "ICISO", "Volunteering", "Intern"],
-    category: "Individual",
-  },
-    {
     name: "Hajj",
     description:
       "A comprehensive Hajj pilgrimage guidance application providing step-by-step instructions, prayers, and essential information for pilgrims. The app serves as a digital companion for those undertaking the sacred journey, offering guidance on rituals, locations, and spiritual preparation.",
