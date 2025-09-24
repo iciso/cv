@@ -238,7 +238,7 @@ const apps = [
   {
     name: "ICISO",
     description:
-      "Find opportunities in Quranic Studies, Dawah, and community service, or any listed sphere in reputed Islamic organizations through this air-bnb like app. Join a global network of volunteers and interns making a difference in Islamic communities worldwide.",
+      "Demo of an app that finds opportunities in Quranic Studies, Dawah, and community service, or any listed sphere in reputed Islamic organizations through this air-bnb like app. Join a global network of volunteers and interns making a difference in Islamic communities worldwide.",
     imagePath: "/iciso-app.png",
     bgColor: "#f8f4e6",
     url: "https://iciso.vercel.app",
@@ -248,7 +248,7 @@ const apps = [
   {
     name: "FOCUS",
     description:
-      "Free Online College of Ultimate Quranic Studies (FOCUS) is making authentic Quranic education accessible to everyone, everywhere. FOCUS mission is providing always Free Education, Authentic Scholarship, Global Accessibility, through Modern Technology, FOCUS has Interactive Lessons, Progress Tracking, Community Forums, Free Certificates.",
+      "Demo of a Free Online College of Ultimate Quranic Studies (FOCUS) is making authentic Quranic education accessible to everyone, everywhere. FOCUS mission is providing always Free Education, Authentic Scholarship, Global Accessibility, through Modern Technology, FOCUS has Interactive Lessons, Progress Tracking, Community Forums, Free Certificates.",
     imagePath: "/focus.png",
     bgColor: "#f8f4e6",
     url: "https://v0-focus-fawn.vercel.app/",
@@ -269,7 +269,7 @@ const apps = [
   {
     name: "Quran",
     description:
-      "A comprehensive Quran reading and study application developed in collaboration with a team. The app provides an intuitive interface for reading, listening to, and studying the Holy Quran with various features to enhance the spiritual and educational experience.",
+      "Demo of a Quran reading and study application developed in collaboration with a team. The app provides an intuitive interface for reading, listening to, and studying the Holy Quran with various features to enhance the spiritual and educational experience.",
     imagePath: "/quran-app.jpg",
     bgColor: "#e8f5e8",
     url: "https://al-quran-joy.vercel.app",
