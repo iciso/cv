@@ -245,7 +245,17 @@ const apps = [
     tags: ["Islamic", "ICISO", "Volunteering", "Intern"],
     category: "Individual",
   },
-    {
+  {
+    name: "FOCUS",
+    description:
+      "Free Online College of Ultimate Quranic Studies (FOCUS) is making authentic Quranic education accessible to everyone, everywhere. FOCUS mission is providing always Free Education, Authentic Scholarship, Global Accessibility, through Modern Technology, FOCUS has Interactive Lessons, Progress Tracking, Community Forums, Free Certificates.",
+    imagePath: "/focus.png",
+    bgColor: "#f8f4e6",
+    url: "https://v0-focus-fawn.vercel.app/",
+    tags: ["Islamic", "FOCUS", "Quran", "College"],
+    category: "Individual",
+  },
+  {
     name: "Hajj",
     description:
       "A comprehensive Hajj pilgrimage guidance application providing step-by-step instructions, prayers, and essential information for pilgrims. The app serves as a digital companion for those undertaking the sacred journey, offering guidance on rituals, locations, and spiritual preparation.",
