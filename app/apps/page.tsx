@@ -255,6 +255,16 @@ const apps = [
     tags: ["Islamic", "FOCUS", "Quran", "College"],
     category: "Individual",
   },
+   {
+    name: "Go Dutch",
+    description:
+      "Go Dutch is a Family Expense Sharing App, that helps family members A, B, C, and D track their contributions and settle expenses equally. The App has provisions to add expenses, track contributions, and calculate settlements, and all statements and reports can be downloaded as excell sheets.",
+    imagePath: "/dutch.png",
+    bgColor: "#f8f4e6",
+    url: "https://v0-dutch-jet.vercel.app",
+    tags: ["Family Expenses", "Go Dutch", "Track Contributions", "Calculate Settlements"],
+    category: "Individual",
+  },
   {
     name: "Hajj",
     description:
