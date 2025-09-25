@@ -22,7 +22,7 @@ export default function AppsPage() {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-2xl font-bold text-teal-700 mb-4">Open Source Applications</h2>
           <p className="text-lg text-gray-700 mb-8">
-            A comprehensive collection of 18 applications developed both individually and in collaboration with teams.
+            A comprehensive collection of 20 applications developed both individually and in collaboration with teams.
             All applications are developed as freeware and open source tools, designed to serve various healthcare,
             spiritual, and community needs. These applications are freely available for use, modification, and
             distribution.
