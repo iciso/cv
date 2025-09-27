@@ -41,8 +41,7 @@ export default function Home() {
                 M.B.,B.S., D.V., D.T.D., Dip Web Media., D.I.S., Fellowship for Leadership Development, MacArthur Foundation, (B.M.A.I.S.,) 
               </p>
               <p className="text-lg mb-6 text-teal-50">
-                UN & WHO Consultant, Public Health Specialist, and Dermatologist with extensive experience in healthcare
-                management, HIV/AIDS initiatives, and senior care services.
+                UN & WHO Consultant, Public Health Specialist, and Dermatologist with extensive experience in HIV/AIDS, healthcare, FBO management, and Islamic Educational initiatives.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -56,6 +55,12 @@ export default function Home() {
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
                   Education
+                </Link>
+                <Link
+                  href="#apps"
+                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
+                >
+                  Apps
                 </Link>
                 <Link
                   href="#books"
@@ -87,12 +92,6 @@ export default function Home() {
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
                   Blogs
-                </Link>
-                <Link
-                  href="#apps"
-                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
-                >
-                  Apps
                 </Link>
                 <a
                   href="https://docs.google.com/document/d/1h2A_pw48gVhvmMk3RXiyLtKxgu3-5vHl/export?format=pdf"
@@ -173,6 +172,197 @@ export default function Home() {
             Foundation, and as the Convener of the Editorial Board of the Thanjavur Medical Journal.
           </p>
         </section>
+
+          {/* Apps Section */}
+        <section id="apps" className="mb-16 scroll-mt-20">
+          <div className="flex items-center mb-6">
+            <Globe className="mr-2 text-teal-600" size={28} />
+            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+              Applications & Tools
+            </h2>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <p className="text-lg text-gray-700 mb-8">
+              All applications are developed as freeware and open source tools, designed to serve various healthcare and
+              community needs.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Iqrar App */}
+              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
+                <div className="h-48 relative">
+                  <Image
+                    src="/iqra-app.png"
+                    alt="IQRA App Preview"
+                    fill
+                    className="object-contain bg-[#e8f5ee]"
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-bold text-teal-700 mb-2">IQRA</h3>
+                  <p className="text-gray-600 mb-4">
+                    Islamic Quiz Rivalry App for educational engagement and knowledge testing.
+                  </p>
+                  <a
+                    href="https://iqrar.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                  >
+                    Visit App <ExternalLink className="ml-1" size={16} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Kalam App */}
+              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
+                <div className="h-48 relative">
+                  <Image
+                    src="/kalam-app.png"
+                    alt="KALAM App Preview"
+                    fill
+                    className="object-contain bg-[#0a6e4a]"
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-bold text-teal-700 mb-2">KALAM</h3>
+                  <p className="text-gray-600 mb-4">
+                    Know Allah by Lighting up Activities of Mirth - an Islamic spiritual development app.
+                  </p>
+                  <a
+                    href="https://v0-kalam.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                  >
+                    Visit App <ExternalLink className="ml-1" size={16} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Barzaq App */}
+              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
+                <div className="h-48 relative">
+                  <Image
+                    src="/barzaq-app.png"
+                    alt="Barzaq App Preview"
+                    fill
+                    className="object-contain bg-[#1a2235]"
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-bold text-teal-700 mb-2">Barzaq</h3>
+                  <p className="text-gray-600 mb-4">
+                    An Islamic Journey Through the Afterlife - educational exploration.
+                  </p>
+                  <a
+                    href="https://v0-barzaq.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                  >
+                    Visit App <ExternalLink className="ml-1" size={16} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Noor App */}
+              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
+                <div className="h-48 relative">
+                  <Image
+                    src="/noor-app.png"
+                    alt="Noor App Preview"
+                    fill
+                    className="object-contain bg-[#f0faf5]"
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-bold text-teal-700 mb-2">Noor</h3>
+                  <p className="text-gray-600 mb-4">
+                    Natural Open Objective Resource for comparative religious perspectives and CLCP.
+                  </p>
+                  <a
+                    href="https://v0-noor-liard.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                  >
+                    Visit App <ExternalLink className="ml-1" size={16} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Islamic Ethical Quandary App */}
+              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
+                <div className="h-48 relative">
+                  <Image
+                    src="/islamic-finance-game.png"
+                    alt="Islamic Ethical Quandary Game Preview"
+                    fill
+                    className="object-contain bg-[#e8f7f0]"
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-bold text-teal-700 mb-2">Islamic Ethical Quandary</h3>
+                  <p className="text-gray-600 mb-4">
+                    An interactive game exploring ethical dilemmas and financial decisions in Islamic contexts.
+                  </p>
+                  <a
+                    href="https://v0-twine-ten.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                  >
+                    Visit App <ExternalLink className="ml-1" size={16} />
+                  </a>
+                </div>
+              </div>
+
+              {/* ACLS Trainer App */}
+              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
+                <div className="h-48 relative">
+                  <Image
+                    src="/acls-trainer-app.png"
+                    alt="ACLS Trainer App Preview"
+                    fill
+                    className="object-contain bg-[#e6f0fa]"
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-bold text-teal-700 mb-2">ACLS Protocol Trainer</h3>
+                  <p className="text-gray-600 mb-4">
+                    Interactive training for cardiac emergency management based on ACLS protocols.
+                  </p>
+                  <a
+                    href="https://v0-syndromic.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                  >
+                    Visit App <ExternalLink className="ml-1" size={16} />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 text-center">
+              <Link
+                href="/apps"
+                className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
+              >
+                View All 20 Apps <ChevronRight className="ml-1" size={16} />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+
 
         {/* Books Section */}
         <section id="books" className="mb-16 scroll-mt-20">
@@ -422,196 +612,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Apps Section */}
-        <section id="apps" className="mb-16 scroll-mt-20">
-          <div className="flex items-center mb-6">
-            <Globe className="mr-2 text-teal-600" size={28} />
-            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
-              Applications & Tools
-            </h2>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-            <p className="text-lg text-gray-700 mb-8">
-              All applications are developed as freeware and open source tools, designed to serve various healthcare and
-              community needs.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Iqrar App */}
-              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative">
-                  <Image
-                    src="/iqra-app.png"
-                    alt="IQRA App Preview"
-                    fill
-                    className="object-contain bg-[#e8f5ee]"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-teal-700 mb-2">IQRA</h3>
-                  <p className="text-gray-600 mb-4">
-                    Islamic Quiz Rivalry App for educational engagement and knowledge testing.
-                  </p>
-                  <a
-                    href="https://iqrar.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
-                  >
-                    Visit App <ExternalLink className="ml-1" size={16} />
-                  </a>
-                </div>
-              </div>
-
-              {/* Kalam App */}
-              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative">
-                  <Image
-                    src="/kalam-app.png"
-                    alt="KALAM App Preview"
-                    fill
-                    className="object-contain bg-[#0a6e4a]"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-teal-700 mb-2">KALAM</h3>
-                  <p className="text-gray-600 mb-4">
-                    Know Allah by Lighting up Activities of Mirth - an Islamic spiritual development app.
-                  </p>
-                  <a
-                    href="https://v0-kalam.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
-                  >
-                    Visit App <ExternalLink className="ml-1" size={16} />
-                  </a>
-                </div>
-              </div>
-
-              {/* Barzaq App */}
-              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative">
-                  <Image
-                    src="/barzaq-app.png"
-                    alt="Barzaq App Preview"
-                    fill
-                    className="object-contain bg-[#1a2235]"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-teal-700 mb-2">Barzaq</h3>
-                  <p className="text-gray-600 mb-4">
-                    An Islamic Journey Through the Afterlife - educational exploration.
-                  </p>
-                  <a
-                    href="https://v0-barzaq.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
-                  >
-                    Visit App <ExternalLink className="ml-1" size={16} />
-                  </a>
-                </div>
-              </div>
-
-              {/* Noor App */}
-              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative">
-                  <Image
-                    src="/noor-app.png"
-                    alt="Noor App Preview"
-                    fill
-                    className="object-contain bg-[#f0faf5]"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-teal-700 mb-2">Noor</h3>
-                  <p className="text-gray-600 mb-4">
-                    Natural Open Objective Resource for comparative religious perspectives and CLCP.
-                  </p>
-                  <a
-                    href="https://v0-noor-liard.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
-                  >
-                    Visit App <ExternalLink className="ml-1" size={16} />
-                  </a>
-                </div>
-              </div>
-
-              {/* Islamic Ethical Quandary App */}
-              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative">
-                  <Image
-                    src="/islamic-finance-game.png"
-                    alt="Islamic Ethical Quandary Game Preview"
-                    fill
-                    className="object-contain bg-[#e8f7f0]"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-teal-700 mb-2">Islamic Ethical Quandary</h3>
-                  <p className="text-gray-600 mb-4">
-                    An interactive game exploring ethical dilemmas and financial decisions in Islamic contexts.
-                  </p>
-                  <a
-                    href="https://v0-twine-ten.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
-                  >
-                    Visit App <ExternalLink className="ml-1" size={16} />
-                  </a>
-                </div>
-              </div>
-
-              {/* ACLS Trainer App */}
-              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative">
-                  <Image
-                    src="/acls-trainer-app.png"
-                    alt="ACLS Trainer App Preview"
-                    fill
-                    className="object-contain bg-[#e6f0fa]"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-teal-700 mb-2">ACLS Protocol Trainer</h3>
-                  <p className="text-gray-600 mb-4">
-                    Interactive training for cardiac emergency management based on ACLS protocols.
-                  </p>
-                  <a
-                    href="https://v0-syndromic.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
-                  >
-                    Visit App <ExternalLink className="ml-1" size={16} />
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="mt-6 text-center">
-              <Link
-                href="/apps"
-                className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
-              >
-                View All 20 Apps <ChevronRight className="ml-1" size={16} />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Experience */}
         <section id="experience" className="mb-16 scroll-mt-20">
           <div className="flex items-center mb-6">
             <Briefcase className="mr-2 text-teal-600" size={28} />
