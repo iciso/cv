@@ -275,6 +275,16 @@ const apps = [
     tags: ["Islamic", "Hajj", "Pilgrimage", "Guidance"],
     category: "Individual",
   },
+  {
+    name: "IV",
+    description:
+      "A compelling site providing interns and volunteers to find opportunities that match their availability, skills, and other requirements. Complete with user profiles both for applyicants and for organizations willing to host the applicants.",
+    imagePath: "/gkfiv.png",
+    bgColor: "#f8f4e6",
+    url: "https://gkfiv.vercel.app",
+    tags: ["Volunteer", "Internship", "Youth", "Development"],
+    category: "Individual",
+  },
   // Team Collaboration Apps
   {
     name: "Quran",
@@ -364,6 +374,16 @@ const apps = [
     bgColor: "#f8f8f8",
     url: "https://v0-hospital-app-three.vercel.app/",
     tags: ["Hospital Management", "Patient Records", "Healthcare System", "Administration"],
+    category: "Team Collaboration",
+  },
+  {
+    name: "Med Rep Appointments",
+    description:
+      "A versatile app wherein Medical Representatives can book their appointments in a visiting hospital, allowing for hsopital administrators to schedule these Medical Rep appointments easily the doctors visiting time.",
+    imagePath: "/medrep.png",
+    bgColor: "#f5f8ff",
+    url: "https://v0-medical-rep-app.vercel.app/",
+    tags: ["Consultation", "Hospital", "Medical Representatives", "Healthcare"],
     category: "Team Collaboration",
   },
   {
