@@ -278,7 +278,7 @@ const apps = [
   {
     name: "IV",
     description:
-      "A compelling site providing interns and volunteers to find opportunities that match their availability, skills, and other requirements. Complete with user profiles both for applyicants and for organizations willing to host the applicants.",
+      "A compelling site providing interns and volunteers to find opportunities that match their availability, skills, and other requirements. Complete with user profiles both for applicants and for organizations willing to host the applicants.",
     imagePath: "/gkfiv.png",
     bgColor: "#f8f4e6",
     url: "https://gkfiv.vercel.app",
