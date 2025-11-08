@@ -256,7 +256,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="p-4">
-                  <h3 className="text-xl font-bold text-teal-700 mb-2">Barzaq</h3>
+                  <h3 className="text-xl font-bold text-teal-700 mb-2">Jamath</h3>
                   <p className="text-gray-600 mb-4">
                     An official collabrative App for a Masjid and its Community.
                   </p>
