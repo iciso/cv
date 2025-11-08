@@ -9,6 +9,7 @@ import {
   Briefcase,
   GraduationCap,
   BookOpen,
+  Building2,
   Album,
   Code,
   Users,
@@ -243,6 +244,33 @@ export default function Home() {
                 </div>
               </div>
 
+                  {/* Jamath App */}
+              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
+                <div className="h-48 relative">
+                  <Image
+                    src="/jamath.png"
+                    alt="Jamath App Preview"
+                    fill
+                    className="object-contain bg-[#1a2235]"
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-bold text-teal-700 mb-2">Barzaq</h3>
+                  <p className="text-gray-600 mb-4">
+                    An official collabrative App for a Masjid and its Community.
+                  </p>
+                  <a
+                    href="https://v0-masjid-community-app.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                  >
+                    Visit App <ExternalLink className="ml-1" size={16} />
+                  </a>
+                </div>
+              </div>
+
               {/* Barzaq App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
@@ -297,33 +325,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Islamic Ethical Quandary App */}
-              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative">
-                  <Image
-                    src="/islamic-finance-game.png"
-                    alt="Islamic Ethical Quandary Game Preview"
-                    fill
-                    className="object-contain bg-[#e8f7f0]"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-teal-700 mb-2">Islamic Ethical Quandary</h3>
-                  <p className="text-gray-600 mb-4">
-                    An interactive game exploring ethical dilemmas and financial decisions in Islamic contexts.
-                  </p>
-                  <a
-                    href="https://v0-twine-ten.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
-                  >
-                    Visit App <ExternalLink className="ml-1" size={16} />
-                  </a>
-                </div>
-              </div>
-
+             
               {/* ACLS Trainer App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
@@ -356,7 +358,7 @@ export default function Home() {
                 href="/apps"
                 className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
               >
-                View All 22 Apps <ChevronRight className="ml-1" size={16} />
+                View All 23 Apps <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>

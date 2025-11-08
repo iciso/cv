@@ -195,6 +195,16 @@ const apps = [
     tags: ["Islamic", "Spiritual Growth", "Activities", "Education"],
     category: "Individual",
   },
+   {
+    name: "Jamath",
+    description:
+      "An official Jamath portal for our local Muslim community. Registered members can access services, events, certificates, and community support. Non-members can view the Masjid info and prayer times.",
+    imagePath: "/jamath.png",
+    bgColor: "#0a6e4a",
+    url: "https://v0-masjid-community-app.vercel.app/",
+    tags: ["Jamath", "Masjid", "Activities", "Community"],
+    category: "Individual",
+  },
   {
     name: "Barzaq",
     description:
