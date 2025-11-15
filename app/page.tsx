@@ -805,6 +805,9 @@ export default function Home() {
                 <span className="font-medium">Data Analytics with AI</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
+                <span className="font-medium">Think Creatively with AI</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">PHP</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">

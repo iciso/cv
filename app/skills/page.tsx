@@ -159,6 +159,11 @@ const certifications = [
     url: "https://www.sololearn.com/en/certificates/CC-RPU1079M",
   },
   {
+    name: "Thinking Creatively with AI",
+    description: "Using AI for crafting a creative brief, seeking inspiration, and refining your ideas.",
+    url: "https://www.sololearn.com/en/certificates/CC-R0TEOWDM",
+  },
+  {
     name: "PHP",
     description: "Server-side scripting language designed for web development.",
     url: "https://www.sololearn.com/Certificate/1059-19469613/jpg",
