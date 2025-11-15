@@ -811,6 +811,9 @@ export default function Home() {
                 <span className="font-medium">Think Creatively with AI</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
+                <span className="font-medium">Data Literacy with AI</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">PHP</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
@@ -837,7 +840,7 @@ export default function Home() {
             </div>
             <div className="mt-4">
               <Link href="/skills" className="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium">
-                View all 29 certifications <ChevronRight className="ml-1" size={16} />
+                View all 30 certifications <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>

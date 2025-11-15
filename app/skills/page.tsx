@@ -169,6 +169,11 @@ const certifications = [
     url: "https://www.sololearn.com/en/certificates/CC-R0TEOWDM",
   },
   {
+    name: "Data Literacy with AI",
+    description: "Methods of integrating AI tools and techniques to manage and analyze data.",
+    url: "https://www.sololearn.com/certificates/CC-PZF1MZ2S",
+  },
+  {
     name: "PHP",
     description: "Server-side scripting language designed for web development.",
     url: "https://www.sololearn.com/Certificate/1059-19469613/jpg",
