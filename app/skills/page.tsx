@@ -21,7 +21,7 @@ export default function SkillsPage() {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-2xl font-bold text-teal-700 mb-6">IT Certifications</h2>
           <p className="text-gray-700 mb-6">
-            Dr. Rafique has completed 31 programming language courses at SoloLearn since 2019,
+            Dr. Rafique has completed 32 programming language courses at SoloLearn since 2019,
             demonstrating his commitment to continuous learning and technical skill development.
           </p>
 
@@ -177,6 +177,11 @@ const certifications = [
     name: "Data Literacy with AI",
     description: "Methods of integrating AI tools and techniques to manage and analyze data.",
     url: "https://www.sololearn.com/certificates/CC-PZF1MZ2S",
+  },
+  {
+    name: "Brainstorming with AI",
+    description: "From idea generation to pitching, learn techniques and strategies to think outside the box.",
+    url: "https://www.sololearn.com/certificates/CC-ZLES2HJU",
   },
   {
     name: "PHP",
