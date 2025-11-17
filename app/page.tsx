@@ -840,7 +840,7 @@ export default function Home() {
             </div>
             <div className="mt-4">
               <Link href="/skills" className="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium">
-                View all 32 certifications <ChevronRight className="ml-1" size={16} />
+                View all 33 certifications <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>
