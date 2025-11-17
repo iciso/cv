@@ -134,6 +134,11 @@ const certifications = [
     url: "https://www.sololearn.com/certificates/CC-QRLGNX0E",
   },
   {
+    name: "Machine Learning for Beginners",
+    description: "Know the basics of Machine Learning to start using Generative AI for training and testing machine learning models.",
+    url: "https://www.sololearn.com/certificates/CC-1N5OBYM8",
+  },
+  {
     name: "Prompt Engineering",
     description: "Crafting precise prompts to help generative AI models correctly perform a wide range of tasks.",
     url: "https://www.sololearn.com/certificates/CC-HL9BZKEL",
