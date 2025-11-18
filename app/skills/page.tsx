@@ -164,6 +164,11 @@ const certifications = [
     url: "https://www.sololearn.com/en/certificates/CC-RFSLWF9V",
   },
   {
+    name: "AI-Powered A/B Testing",
+    description: "Learn to design experiments, interpret results, and leverage data to make informed data-driven decisions.",
+    url: "https://www.sololearn.com/certificates/CC-AARAZPB8",
+  },
+  {
     name: "Data Analytics with AI",
     description: "AI techniques that collect, process, and interpret data to extract actionable insights.",
     url: "https://www.sololearn.com/en/certificates/CC-RPU1079M",

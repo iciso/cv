@@ -793,6 +793,9 @@ export default function Home() {
                 <span className="font-medium">Prompt Engineering</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
+                <span className="font-medium">Machine Learning for Beginners</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">Project Planning with AI</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
@@ -809,6 +812,12 @@ export default function Home() {
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">Think Creatively with AI</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md">
+                <span className="font-medium">Social Media Marketing with AI</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-md">
+                <span className="font-medium">Search Engine Optimization(SEO) with AI</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">Data Literacy with AI</span>
@@ -840,7 +849,7 @@ export default function Home() {
             </div>
             <div className="mt-4">
               <Link href="/skills" className="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium">
-                View all 35 certifications <ChevronRight className="ml-1" size={16} />
+                View all 36 certifications <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>
