@@ -190,33 +190,7 @@ export default function Home() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Iqrar App */}
-              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
-                <div className="h-48 relative">
-                  <Image
-                    src="/iqra-app.png"
-                    alt="IQRA App Preview"
-                    fill
-                    className="object-contain bg-[#e8f5ee]"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-teal-700 mb-2">IQRA</h3>
-                  <p className="text-gray-600 mb-4">
-                    Islamic Quiz Rivalry App for educational engagement and knowledge testing.
-                  </p>
-                  <a
-                    href="https://iqrar.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
-                  >
-                    Visit App <ExternalLink className="ml-1" size={16} />
-                  </a>
-                </div>
-              </div>
-
+              
               {/* Kalam App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
@@ -325,7 +299,35 @@ export default function Home() {
                 </div>
               </div>
 
-             
+              
+              {/* Iqrar App */}
+              <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
+                <div className="h-48 relative">
+                  <Image
+                    src="/iqra-app.png"
+                    alt="IQRA App Preview"
+                    fill
+                    className="object-contain bg-[#e8f5ee]"
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-bold text-teal-700 mb-2">IQRA</h3>
+                  <p className="text-gray-600 mb-4">
+                    Islamic Quiz Rivalry App for educational engagement and knowledge testing.
+                  </p>
+                  <a
+                    href="https://iqrar.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-teal-600 hover:text-teal-800"
+                  >
+                    Visit App <ExternalLink className="ml-1" size={16} />
+                  </a>
+                </div>
+              </div>
+
+              
               {/* ACLS Trainer App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
