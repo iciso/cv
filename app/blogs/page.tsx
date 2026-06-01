@@ -21,7 +21,7 @@ export default function BlogsPage() {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-2xl font-bold text-teal-700 mb-6">Professional Blogs</h2>
           <p className="text-lg text-gray-700 mb-8">
-            A collection of reflections, experiences, and insights from my work in healthcare, public health, and
+            A collection of reflections, experiences, and insights from life and work in healthcare, public health, and
             international development. These blogs cover various aspects of my professional journey, including
             conferences, field work, and critical analysis of health initiatives.
           </p>
