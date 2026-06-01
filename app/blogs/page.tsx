@@ -107,6 +107,42 @@ export default function BlogsPage() {
 }
 
 const blogs = [
+   {
+    title: "The Garden of Curiosities: Memories of a JMC Childhood",
+    description:
+      "A nostalgic dive into a Trichy childhood, where Zinnia flowers transformed a colony into a vibrant, living tapestry of community effort.",
+    url: "https://emrafi.wordpress.com/2026/02/14/the-garden-of-curiosities-memories-of-a-jmc-childhood/",
+  },
+  {
+    title: "The Hill of Two Banners in the Wide Blue Sea",
+    description:
+      "An origin fable of the first black ants arriving on an island, told with the delicate mystery of driftwood, storms, and whispered legends.",
+    url: "https://emrafi.wordpress.com/2026/03/03/the-hill-of-two-banners-in-the-wide-blue-sea/",
+  },
+  {
+    title: "The Great Railway Siege: A Battle of Witless Proportions",
+    description:
+      "A hilarious chronicle of modern railway booking, where a simple task devolves into a grand, absurd adventure of witless proportions.",
+    url: "https://emrafi.wordpress.com/2026/04/11/the-great-railway-siege-a-battle-of-witless-proportions/",
+  },
+  {
+    title: "The “Weighty” Truth: A Doctor’s Guide to Losing at Weight Loss",
+    description:
+      "Recounting the fun episodes, when the doctor trying his best to lose weight, ends up gaining them.",
+    url: "https://emrafi.wordpress.com/2026/05/07/the-weighty-truth-a-doctors-guide-to-losing-at-weight-loss/",
+  },
+  {
+    title: "Spaceships, Secret Castles, and the Legend of the Lungi Balloon",
+    description:
+      "A wildly bonkers wedding memory from Adiyakkamangalam, featuring unexpected adventures, family lore, and the legendary 'Lungi Balloon'.",
+    url: "https://emrafi.wordpress.com/2026/05/07/spaceships-secret-castles-and-the-legend-of-the-lungi-balloon/",
+  },
+  {
+    title: "Branching Out Too Far: A Survivor’s Guide to the Great Drumstick Deluge",
+    description:
+      "A first-hand account of the 'Moringa Meltdown' of 2026, when a giant drumstick tree’s collapse buried everything in a hilarious green avalanche.",
+    url: "https://emrafi.wordpress.com/2026/05/07/branching-out-too-far-a-survivors-guide-to-the-great-drumstick-deluge/",
+  },
   {
     title: "AIDS 2002: A Catalonian Experience",
     description:
