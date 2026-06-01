@@ -121,7 +121,7 @@ export default function Home() {
               <div className="bg-white p-2 rounded-full shadow-lg">
                 <div className="relative w-[200px] h-[200px] rounded-full overflow-hidden">
                   <Image
-                    src="/profile-image.jpg"
+                    src="/profile-img.jpeg"
                     alt="Dr. Essa Mohamed Rafique speaking at a medical conference"
                     fill
                     className="object-cover"
