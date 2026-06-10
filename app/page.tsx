@@ -948,10 +948,10 @@ export default function Home() {
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold text-teal-700 mb-2">Ms. Dipa Nag Chowdhury</h3>
-              <p className="text-gray-700 mb-1">Country Head, The MacArthur Fund for Leadership Development</p>
-              <p className="text-gray-600 mb-1">Phone: +91-11-2464 4006</p>
-              <p className="text-gray-600">Email: dnagchowdhury@macfound.org</p>
+              <h3 className="text-xl font-bold text-teal-700 mb-2">Dr. Alok Srivastava</h3>
+              <p className="text-gray-700 mb-1">Former Union Secretary, Law and Justice</p>
+              <p className="text-gray-600 mb-1">Phone: +91-9868107118</p>
+              <p className="text-gray-600">Email: medrag1@yahoo.com</p>
             </div>
           </div>
         </section>
