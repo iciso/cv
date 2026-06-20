@@ -1,0 +1,764 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+<!-- 
+This infographic is from the sandpit of BMJ presented by iframe at 
+https://www.bmj.com/content/369/bmj.m1808/infographic
+but the original html page is at
+https://sandpit.bmj.com/graphics/2020/c19test/
+
+Please maintain BMJ's copyrights, as I am distributing only for 
+learning about covid testing, and for learning the coding used 
+for which the JS files can be viewed, as they are in here.
+ -->
+
+		<meta charset="utf-8">
+		<title>The BMJ interactive: interpreting covid-19 test results</title>
+
+		<!-- Fontawesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/1c2c73bff2.js" crossorigin="anonymous"></script>
+		
+		<!-- Scroll Back to Top button -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script SRC="https://html-online.com/demo/scroll-to-top/script.js"></script>
+		
+		<!--d3-->
+		<script src="https://d3js.org/d3.v5.min.js"></script>
+		<!--<script src="http://d3js.org/d3.geo.projection.v0.min.js" charset="utf-8"></script>-->
+
+		<!--typekit-->
+		<script src="https://use.typekit.net/hjr3yei.js"></script>
+    	<script>try{Typekit.load({ async: true });}catch(e){}</script>
+    	
+		<link rel="stylesheet" type="text/css" href="https://sandpit.bmj.com/graphics/2020/c19test/styles.css">
+		
+		
+    		<!-- This site uses the Google Analytics by MonsterInsights plugin v7.17.0 - Using Analytics tracking - https://www.monsterinsights.com/ -->
+		<!-- Note: MonsterInsights does not track you as a logged-in site administrator to prevent site owners from accidentally skewing their own Google Analytics data.
+If you are testing Google Analytics code, please do so either logged out or in the private browsing/incognito mode of your web browser. -->
+					<script src="//www.googletagmanager.com/gtag/js?id=UA-167990912-1"  type="text/javascript" data-cfasync="false"></script>
+			<script type="text/javascript" data-cfasync="false">
+				var mi_version = '7.17.0';
+				var mi_track_user = false;
+				var mi_no_track_reason = 'Note: MonsterInsights does not track you as a logged-in site administrator to prevent site owners from accidentally skewing their own Google Analytics data.\nIf you are testing Google Analytics code, please do so either logged out or in the private browsing/incognito mode of your web browser.';
+				
+								var disableStr = 'ga-disable-UA-167990912-1';
+
+				/* Function to detect opted out users */
+				function __gtagTrackerIsOptedOut() {
+					return document.cookie.indexOf( disableStr + '=true' ) > - 1;
+				}
+
+				/* Disable tracking if the opt-out cookie exists. */
+				if ( __gtagTrackerIsOptedOut() ) {
+					window[disableStr] = true;
+				}
+
+				/* Opt-out function */
+				function __gtagTrackerOptout() {
+					document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+					window[disableStr] = true;
+				}
+
+				if ( 'undefined' === typeof gaOptout ) {
+					function gaOptout() {
+						__gtagTrackerOptout();
+					}
+				}
+								window.dataLayer = window.dataLayer || [];
+				if ( mi_track_user ) {
+					function __gtagTracker() {dataLayer.push( arguments );}
+					__gtagTracker( 'js', new Date() );
+					__gtagTracker( 'set', {
+						'developer_id.dZGIzZG' : true,
+						                    });
+					__gtagTracker( 'config', 'UA-167990912-1', {
+						forceSSL:true,link_attribution:true,					} );
+										window.gtag = __gtagTracker;										(
+						function () {
+							/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+							/* ga and __gaTracker compatibility shim. */
+							var noopfn = function () {
+								return null;
+							};
+							var newtracker = function () {
+								return new Tracker();
+							};
+							var Tracker = function () {
+								return null;
+							};
+							var p = Tracker.prototype;
+							p.get = noopfn;
+							p.set = noopfn;
+							p.send = function (){
+								var args = Array.prototype.slice.call(arguments);
+								args.unshift( 'send' );
+								__gaTracker.apply(null, args);
+							};
+							var __gaTracker = function () {
+								var len = arguments.length;
+								if ( len === 0 ) {
+									return;
+								}
+								var f = arguments[len - 1];
+								if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+									if ( 'send' === arguments[0] ) {
+										var hitConverted, hitObject = false, action;
+										if ( 'event' === arguments[1] ) {
+											if ( 'undefined' !== typeof arguments[3] ) {
+												hitObject = {
+													'eventAction': arguments[3],
+													'eventCategory': arguments[2],
+													'eventLabel': arguments[4],
+													'value': arguments[5] ? arguments[5] : 1,
+												}
+											}
+										}
+										if ( typeof arguments[2] === 'object' ) {
+											hitObject = arguments[2];
+										}
+										if ( typeof arguments[5] === 'object' ) {
+											Object.assign( hitObject, arguments[5] );
+										}
+										if ( 'undefined' !== typeof (
+											arguments[1].hitType
+										) ) {
+											hitObject = arguments[1];
+										}
+										if ( hitObject ) {
+											action = 'timing' === arguments[1].hitType ? 'timing_complete' : hitObject.eventAction;
+											hitConverted = mapArgs( hitObject );
+											__gtagTracker( 'event', action, hitConverted );
+										}
+									}
+									return;
+								}
+
+								function mapArgs( args ) {
+									var gaKey, hit = {};
+									var gaMap = {
+										'eventCategory': 'event_category',
+										'eventAction': 'event_action',
+										'eventLabel': 'event_label',
+										'eventValue': 'event_value',
+										'nonInteraction': 'non_interaction',
+										'timingCategory': 'event_category',
+										'timingVar': 'name',
+										'timingValue': 'value',
+										'timingLabel': 'event_label',
+									};
+									for ( gaKey in gaMap ) {
+										if ( 'undefined' !== typeof args[gaKey] ) {
+											hit[gaMap[gaKey]] = args[gaKey];
+										}
+									}
+									return hit;
+								}
+
+								try {
+									f.hitCallback();
+								} catch ( ex ) {
+								}
+							};
+							__gaTracker.create = newtracker;
+							__gaTracker.getByName = newtracker;
+							__gaTracker.getAll = function () {
+								return [];
+							};
+							__gaTracker.remove = noopfn;
+							__gaTracker.loaded = true;
+							window['__gaTracker'] = __gaTracker;
+						}
+					)();
+									} else {
+										console.log( "Note: MonsterInsights does not track you as a logged-in site administrator to prevent site owners from accidentally skewing their own Google Analytics data.\nIf you are testing Google Analytics code, please do so either logged out or in the private browsing/incognito mode of your web browser." );
+					( function () {
+							function __gtagTracker() {
+								return null;
+							}
+							window['__gtagTracker'] = __gtagTracker;
+							window['gtag'] = __gtagTracker;
+					} )();
+									}
+			</script>
+				<!-- / Google Analytics by MonsterInsights -->
+				<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/kyft.club\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.7.2"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+
+		
+		
+<style>
+
+body {
+ 
+}
+
+.outerwrap {
+margin-bottom: 10px;
+border-style: solid;
+border-width: 20px 20px 20px 20px;
+border-color: #6495ED;
+padding: 5px;
+background-color: inherit;  // #6495ED;
+color: white;
+border-radius:0%;
+}
+
+
+
+
+/*-----------*\
+|* Fa icons  *|
+\*-----------*/
+
+
+
+        .fa-heart {
+
+
+/*------------*\
+|* Pulse Beat *|
+\*------------*/
+
+            animation: pulse 1s linear infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.3);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+
+
+/*---------*\
+|* Footer  *|
+\*---------*/
+
+        .foot {
+            font-family: Roboto, Verdana, "Comic Sans", sans-serif;
+            margin-bottom: 10px;
+            text-align: center;
+            border-style: solid;
+            border-width: 1px 20px 1px 20px;
+            border-color: navy;
+            padding: 5px;
+            background-color: #6495ED; //inherit;
+            color: white;
+            border-radius: 10%;
+        }
+
+
+        .padding-m {
+            padding: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+
+
+
+
+/*----------------*\
+|*   Back to Top  *|
+\*----------------*/
+
+        #back2Top {
+            width: 40px;
+            line-height: 40px;
+            overflow: hidden;
+            z-index: 999;
+            display: none;
+            cursor: pointer;
+            -moz-transform: rotate(270deg);
+            -webkit-transform: rotate(270deg);
+            -o-transform: rotate(270deg);
+            -ms-transform: rotate(270deg);
+            transform: rotate(270deg);
+            position: fixed;
+            bottom: 50px;
+            right: 0;
+            background-color: #DDD;
+            color: #555;
+            text-align: center;
+            font-size: 30px;
+            text-decoration: none;
+        }
+
+        #back2Top:hover {
+            background-color: #DDF;
+            color: #000;
+        }
+
+</style>
+	</head>
+
+	<body>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script type="text/javascript">
+        Swal.fire({
+  title: "<i>COVID-19 Test Results ©2020 BMJ</i>", 
+  html: "By changing figures of test sensitivity and specificity, we can see the changes in True positives, False positives. True negatives, and False negatives.</br>Please maintain © Credits for this calculator of BMJ -Rafique</br>",  
+  confirmButtonText: "<b>Show COVID 19 Results page!</b>", 
+  icon: "success",
+  width: '400px',
+}).then((result) => {
+  if (result.value) {
+    
+  }
+})
+ </script>
+ 
+ 
+	<center>
+	
+		<div class="outerwrap" style="max-width:1000px;">
+
+			<div class="scaling-svg-container" style="padding-bottom: 100%; max-width: 1000px; margin: 0px auto 0px auto; ">
+
+				<svg id="bmjInteractive" class="scaling-svg" style="max-width: 1000px;" id="graphic" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
+					
+
+					<g id="background">
+						<rect fill="#C1D3E9" width="750" height="750"/>
+						<g>
+							<g>
+								<path fill="#CCCCCC" d="M162,308.5c1.93,0,1.934-3,0-3C160.07,305.5,160.066,308.5,162,308.5L162,308.5z"/>
+							</g>
+						</g>
+						<g id="XMLID_11_">
+							<rect id="XMLID_13_" x="8.062" y="711.461" fill="none" width="554.938" height="27.628"/>
+							<text transform="matrix(1 0 0 1 8.062 718.1294)"><tspan x="0" y="0" fill="#2F6EB5" font-family="'InterFace-Bold'" font-size="8px">Disclaimer: </tspan><tspan x="41.015" y="0" fill="#2F6EB5" font-family="'InterFace-Regular'" font-size="8px">This infographic is not a validated clinical decision aid. This information is provided without any representations, conditions, or warranties that it is accurate or </tspan><tspan x="0" y="9.6" fill="#2F6EB5" font-family="'InterFace-Regular'" font-size="8px">up to date. BMJ and its licensors assume no responsibility for any aspect of treatment administered with the aid of this information. Any reliance placed on this information </tspan><tspan x="0" y="19.2" fill="#2F6EB5" font-family="'InterFace-Regular'" font-size="8px">is strictly at the user&apos;s own risk. For the full disclaimer wording see BMJ&apos;s terms and conditions: http://www.bmj.com/company/legal-information/</tspan></text>
+						</g>
+					</g>
+					<g id="inputBackground">
+						
+
+						<polygon fill="#FFFFFF" points="114.089,97.5 114.089,180 353.064,204 592.039,180 592.039,97.5 	"/>
+						<text transform="matrix(1 0 0 1 259.138 33.6896)" fill="#333333" font-family="'InterFace-Regular'" font-size="24px">Covid-19 test calculator</text>
+						<g>
+							<text transform="matrix(1 0 0 1 261.1377 54.4863)" fill="#333333" font-family="'InterFace-Regular'" font-size="16.3555px">How to interpret test results</text>
+						</g>
+						<g id="XMLID_30_">
+							<text transform="matrix(1 0 0 1 593.1641 738.6299)" fill="#2F6EB5" font-family="'InterFace-Regular'" font-size="10.7335px">© 2020 BMJ Publishing Group Ltd.</text>
+						</g>
+						<g>
+							<defs>
+								<path id="SVGID_1_" d="M243.418,57.638H18.251c-1.788,0-3.251-1.463-3.251-3.251V18.251C15,16.463,16.463,15,18.251,15h225.166
+									c1.788,0,3.251,1.463,3.251,3.251v36.135C246.669,56.175,245.206,57.638,243.418,57.638z"/>
+							</defs>
+							<clipPath id="SVGID_2_">
+								<use xlink:href="#SVGID_1_"  overflow="visible"/>
+							</clipPath>
+							<g clip-path="url(#SVGID_2_)">
+								<path fill="#2D6DB4" d="M238.2,57.638H23.469c-4.658,0-8.469-3.811-8.469-8.469v-25.7C15,18.811,18.811,15,23.469,15H238.2
+									c4.658,0,8.469,3.811,8.469,8.469v25.7C246.669,53.827,242.858,57.638,238.2,57.638z"/>
+								<g>
+									<text transform="matrix(1 0 0 1 103.3403 41.3159)" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="18.512px">Interactive</text>
+								</g>
+								<g>
+									<g>
+										<g>
+											<g>
+												<path fill="#5185C5" d="M212.933,36.912l-11.543-8.797c1.505-1.963,3.238-3.342,5.492-4.371L212.933,36.912z"/>
+											</g>
+										</g>
+										<g>
+											<g>
+												<path fill="#8CA7D7" d="M212.933,36.912l-12.9-6.665c0.391-0.753,0.84-1.458,1.356-2.131L212.933,36.912z"/>
+											</g>
+										</g>
+										<g>
+											<g>
+												<path fill="#7297CF" d="M212.933,36.912L198.6,34.545c0.266-1.602,0.684-2.858,1.434-4.299L212.933,36.912z"/>
+											</g>
+										</g>
+										<g>
+											<g>
+												<path fill="#A2B6DF" d="M212.933,36.912l-14.324,2.414c-0.272-1.601-0.275-3.178-0.01-4.78L212.933,36.912z"/>
+											</g>
+										</g>
+										<g>
+											<g>
+												<path fill="#7297CF" d="M212.933,36.912L204.939,49c-3.564-2.343-5.617-5.48-6.33-9.675L212.933,36.912z"/>
+											</g>
+										</g>
+										<g>
+											<g>
+												<path fill="#5587C6" d="M212.933,36.912l-3.363,14.086c-1.709-0.406-3.164-1.033-4.631-1.998L212.933,36.912z"/>
+											</g>
+										</g>
+										<g>
+											<g>
+												<path fill="#5587C6" d="M212.933,36.912l11.696,8.594c-3.527,4.77-9.275,6.866-15.059,5.492L212.933,36.912z"/>
+											</g>
+										</g>
+										<g>
+											<g>
+												<path fill="#7297CF" d="M212.933,36.912l14.324-2.414c0.685,4.03-0.196,7.719-2.628,11.008L212.933,36.912z"/>
+											</g>
+										</g>
+										<g>
+											<g>
+												<path fill="#C5D0EB" d="M212.933,36.912l13.685-4.856c0.294,0.821,0.493,1.583,0.639,2.443L212.933,36.912z"/>
+											</g>
+										</g>
+										<path fill="#6F95CE" d="M225.686,29.981c-0.111-0.204-0.26-0.458-0.382-0.656l-12.372,7.587l13.685-4.856
+											C226.329,31.249,226.097,30.732,225.686,29.981z"/>
+										<g>
+											<g>
+												<path fill="#91AAD9" d="M212.933,36.912l7.128-12.615c2.223,1.249,3.906,2.862,5.243,5.029L212.933,36.912z"/>
+											</g>
+										</g>
+										<g>
+											<g>
+												<path fill="#C7D2EC" d="M212.933,36.912l0.604-14.468c2.405,0.101,4.426,0.675,6.524,1.853L212.933,36.912z"/>
+											</g>
+										</g>
+										<g>
+											<g>
+												<path fill="#8AA5D6" d="M212.933,36.912l-6.051-13.167c2.239-1.022,4.195-1.404,6.656-1.301L212.933,36.912z"/>
+											</g>
+										</g>
+									</g>
+									<ellipse fill="#2D6DB4" cx="212.92" cy="36.943" rx="8.841" ry="8.809"/>
+								</g>
+								<g>
+									<path fill="#FFFFFF" d="M24.02,39.796v-6.168h-1.417v-0.665c1.501-0.124,1.626-0.623,1.855-2.824h0.75v2.534h3.293v0.955h-3.293
+										v6.168c0,1.516,0.667,1.953,1.709,1.953c0.792,0,1.313-0.187,1.813-0.499v0.685c-0.229,0.353-0.834,0.789-1.917,0.789
+										C25.312,42.724,24.02,41.997,24.02,39.796z"/>
+									<path fill="#FFFFFF" d="M36.168,41.603h1.542v-6.085c0-1.371-0.667-2.077-2.251-2.077c-1.917,0-3.377,1.371-3.439,3.572v4.59
+										h1.563v0.935h-4.106v-0.935h1.334V29.557h-1.334V28.56h2.543v6.896c0.334-2.015,2.043-3.012,3.731-3.012
+										c2.042,0,3.147,1.142,3.147,3.282v5.877h1.23v0.935h-3.96V41.603z"/>
+									<path fill="#FFFFFF" d="M40.377,37.553v-0.021c0-3.012,1.876-5.088,4.523-5.088c2.689,0,3.877,1.807,3.877,4.112
+										c0,0.415-0.021,0.872-0.084,1.267h-7.066c0.021,2.638,1.23,3.967,3.752,3.967c1.417,0,2.543-0.436,3.21-0.976v0.831
+										c-0.375,0.456-1.605,1.08-3.314,1.08C42.232,42.724,40.377,40.876,40.377,37.553z M41.627,37.054h6.044v-0.145
+										c0-2.451-1-3.573-2.772-3.573C43.003,33.337,41.669,34.77,41.627,37.054z"/>
+									<path fill="#FFFFFF" d="M49.942,28.56h4.773v5.774c0.271-0.914,1.23-2.305,3.085-2.305c2.689,0,4.148,2.181,4.148,5.192v0.02
+										c0,3.531-1.729,5.525-4.294,5.525c-1.813,0-2.835-1.017-3.293-2.783c-0.042,1.662-0.604,2.554-0.604,2.554h-3.814v-2.721h0.813
+										v-8.328h-0.813V28.56z M57.946,37.511v-0.602c0-1.33-0.584-2.139-1.647-2.139c-1,0-1.584,0.872-1.584,2.326v0.374
+										c0,1.786,0.584,2.7,1.584,2.7C57.3,40.17,57.946,39.194,57.946,37.511z"/>
+									<path fill="#FFFFFF" d="M68.874,39.817h0.917v-3.302c0-1.122-0.334-1.641-1.084-1.641c-0.834,0-1.313,0.79-1.313,2.327v2.617
+										h0.917v2.721h-5.69v-2.721h0.812v-4.299h-0.812v-3.24h4.043c0,0,0.625,0.935,0.625,2.305v0.104
+										c0.521-1.537,1.585-2.658,3.356-2.658c1.543,0,2.523,0.851,2.814,2.679c0.688-1.724,1.897-2.679,3.543-2.679
+										c1.834,0,3.106,1.204,3.106,3.78v4.008h0.812v2.721h-5.731v-2.721h0.958v-3.302c0-1.122-0.333-1.641-1.083-1.641
+										c-0.855,0-1.314,0.79-1.314,2.327v2.617h0.897v2.721h-5.774V39.817z"/>
+									<path fill="#FFFFFF" d="M81.559,32.277h4.835v9.616c0,2.658-1.562,3.905-3.689,3.905c-1.271,0-1.855-0.145-2.23-0.457v-2.119
+										c0.25,0.041,0.5,0.063,0.729,0.063c0.689,0,1.23-0.229,1.23-1.143v-6.625h-0.876V32.277z M82.392,29.931
+										c0-1.122,0.917-2.057,2.023-2.057c1.104,0,2.021,0.935,2.021,2.057c0,1.122-0.917,2.035-2.021,2.035
+										C83.309,31.966,82.392,31.053,82.392,29.931z"/>
+								</g>
+								<g>
+									<path fill="#FFFFFF" d="M232.549,60.108c-0.005-0.097-0.011-0.194-0.019-0.29c0.008-0.054,0.014-0.109,0.019-0.165
+										c0.005-0.055,0.007-0.111,0.007-0.168v-6.733c0-1.288-1.058-2.343-2.351-2.343h-0.929c-1.078,0-1.99,0.733-2.264,1.723v-1.625
+										c0-1.288-1.058-2.343-2.351-2.343h-0.929c-1.078,0-1.99,0.733-2.264,1.723v-1.625c0-1.288-1.058-2.343-2.351-2.343h-0.929
+										c-1.078,0-1.99,0.733-2.264,1.723v-1.548v-1.455v-2.328v-1.626V37.21c0-1.543-1.267-2.806-2.815-2.806s-2.815,1.262-2.815,2.806
+										v3.476v1.626v2.328v1.455v9.007l-1.107-2.492c-0.035-0.079-0.075-0.155-0.116-0.23c-0.012-0.022-0.025-0.043-0.038-0.064
+										c-0.033-0.055-0.067-0.108-0.103-0.16c-0.013-0.019-0.026-0.039-0.04-0.058c-0.049-0.067-0.1-0.132-0.154-0.194
+										c-0.006-0.007-0.013-0.013-0.019-0.02c-0.049-0.055-0.101-0.108-0.154-0.158c-0.018-0.017-0.036-0.034-0.055-0.05
+										c-0.046-0.042-0.093-0.081-0.142-0.12c-0.017-0.014-0.034-0.028-0.051-0.041c-0.065-0.049-0.131-0.095-0.199-0.138
+										c-0.012-0.008-0.025-0.015-0.038-0.022c-0.057-0.035-0.116-0.068-0.176-0.098c-0.022-0.011-0.045-0.022-0.067-0.033
+										c-0.056-0.027-0.113-0.052-0.171-0.075c-0.019-0.007-0.037-0.016-0.055-0.023c-0.075-0.028-0.151-0.054-0.228-0.076
+										c-0.017-0.005-0.035-0.009-0.052-0.013c-0.062-0.016-0.124-0.031-0.187-0.043c-0.024-0.005-0.049-0.009-0.074-0.013
+										c-0.064-0.011-0.129-0.019-0.194-0.025c-0.017-0.002-0.034-0.004-0.051-0.005c-0.073-0.006-0.146-0.009-0.219-0.009
+										c-0.007,0-0.014,0.001-0.021,0.001c-0.053,0-0.106,0.005-0.159,0.008c-0.04,0.003-0.08,0.003-0.121,0.008
+										c-0.055,0.006-0.111,0.016-0.166,0.026c-0.038,0.006-0.076,0.011-0.114,0.019c-0.061,0.013-0.122,0.031-0.182,0.048
+										c-0.032,0.009-0.064,0.016-0.095,0.026c-0.092,0.03-0.183,0.064-0.273,0.104l0,0c-1.416,0.625-2.062,2.29-1.435,3.701
+										l6.618,14.894c0.016,0.036,0.035,0.069,0.052,0.103c0.03,0.083,0.062,0.165,0.096,0.247c0.167,0.408,0.372,0.796,0.61,1.161
+										c0.095,0.146,0.196,0.288,0.302,0.426s0.217,0.272,0.332,0.402c0.289,0.324,0.609,0.622,0.954,0.888
+										c0.276,0.213,0.568,0.405,0.874,0.575c0.996,0.553,2.14,0.868,3.355,0.868h8.39c1.788,0,3.424-0.683,4.658-1.801
+										c1.398-1.267,2.279-3.091,2.279-5.111v-7.135v0C232.556,60.302,232.553,60.205,232.549,60.108z"/>
+								</g>
+							</g>
+						</g>
+						<path fill="#C31884" d="M246.669,150.146c0,4.87-4.5,8.854-10,8.854H25c-5.5,0-10-3.984-10-8.854V82.854C15,77.984,19.5,74,25,74
+							h211.669c5.5,0,10,3.984,10,8.854V150.146z"/>
+						<g>
+							<text transform="matrix(1 0 0 1 26.4487 96.6011)" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="15px">Pre-test probability</text>
+						</g>
+						<rect x="28" y="105.998" fill="none" width="127" height="41.442"/>
+						<text transform="matrix(1 0 0 1 28 116)"><tspan x="0" y="0" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="12px">The likelihood a person </tspan><tspan x="0" y="14.4" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="12px">has covid-19 based on </tspan><tspan x="0" y="28.8" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="12px">their characteristics</tspan></text>
+						<path fill="#FFFFFF" d="M224.501,136.5h-50.002c-4.675,0-8.499-3.825-8.499-8.499v-22.002c0-4.675,3.825-8.499,8.499-8.499h50.002
+							c4.675,0,8.499,3.825,8.499,8.499v22.002C233,132.675,229.175,136.5,224.501,136.5z"/>
+						<path fill="#EDBADA" d="M207.39,97.5h17.111c4.675,0,8.499,3.825,8.499,8.499v22.002c0,4.675-3.825,8.499-8.499,8.499H207.39V97.5z
+							"/>
+						<text transform="matrix(1 0 0 1 211.8691 122.7648)" fill="#C31884" font-family="'InterFace-Regular'" font-size="20px">%</text>
+						<g>
+							<path fill="#00B1A7" d="M490.834,150.146c0,4.87-4.5,8.854-10,8.854H269.166c-5.5,0-10-3.984-10-8.854V82.854
+								c0-4.87,4.5-8.854,10-8.854h211.669c5.5,0,10,3.984,10,8.854V150.146z"/>
+							<g>
+								<text transform="matrix(1 0 0 1 271.0005 96.6011)" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="15px">Test sensitivity</text>
+							</g>
+							<rect x="272.166" y="105.998" fill="none" width="127" height="41.442"/>
+							<text transform="matrix(1 0 0 1 272.1656 116)"><tspan x="0" y="0" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="12px">The proportion of </tspan><tspan x="0" y="14.4" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="12px">patients with covid-19 </tspan><tspan x="0" y="28.8" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="12px">who have a positive test</tspan></text>
+							<path fill="#FFFFFF" d="M468.666,136.5h-50.002c-4.675,0-8.499-3.825-8.499-8.499v-22.002c0-4.675,3.825-8.499,8.499-8.499h50.002
+								c4.675,0,8.499,3.825,8.499,8.499v22.002C477.166,132.675,473.341,136.5,468.666,136.5z"/>
+							<path fill="#B2E8E5" d="M451.443,97.5h17.224c4.675,0,8.499,3.825,8.499,8.499v22.002c0,4.675-3.825,8.499-8.499,8.499h-17.224
+								V97.5z"/>
+							<text transform="matrix(1 0 0 1 456.2844 122.7648)" fill="#00B1A7" font-family="'InterFace-Regular'" font-size="20px">%</text>
+						</g>
+						<g>
+							<path fill="#765FA8" d="M735,150.146c0,4.87-4.5,8.854-10,8.854H513.331c-5.5,0-10-3.984-10-8.854V82.854
+								c0-4.87,4.5-8.854,10-8.854H725c5.5,0,10,3.984,10,8.854V150.146z"/>
+							<g>
+								<text transform="matrix(1 0 0 1 515.166 96.6011)" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="15px">Test specificity</text>
+							</g>
+							<rect x="516.331" y="105.998" fill="none" width="127" height="41.442"/>
+							<text transform="matrix(1 0 0 1 516.3311 116)"><tspan x="0" y="0" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="12px">The proportion of </tspan><tspan x="0" y="14.4" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="12px">patients without covid-19 </tspan><tspan x="0" y="28.8" fill="#FFFFFF" font-family="'InterFace-Regular'" font-size="12px">who have a negative test</tspan></text>
+							<path fill="#FFFFFF" d="M712.832,136.5H662.83c-4.675,0-8.499-3.825-8.499-8.499v-22.002c0-4.675,3.825-8.499,8.499-8.499h50.002
+								c4.675,0,8.499,3.825,8.499,8.499v22.002C721.331,132.675,717.506,136.5,712.832,136.5z"/>
+							<path fill="#D6CFE5" d="M695.608,97.5h17.224c4.675,0,8.499,3.825,8.499,8.499v22.002c0,4.675-3.825,8.499-8.499,8.499h-17.224
+								V97.5z"/>
+							<text transform="matrix(1 0 0 1 699.7044 122.7648)" fill="#765FA8" font-family="'InterFace-Regular'" font-size="20px">%</text>
+						</g>
+						<text transform="matrix(1 0 0 1 221.1565 179.6269)" fill="#7C8696" font-family="'InterFace-Regular'" font-size="15px">If 100 people were tested with these values</text>
+
+
+					</g>
+
+					<g id="results">
+						<path fill="#FFFFFF" d="M335.267,463.158H101.22c-5.5,0-10-4.5-10-10V247.5c0-5.5,4.5-10,10-10h234.047c5.5,0,10,4.5,10,10v205.658
+							C345.267,458.658,340.767,463.158,335.267,463.158z"/>
+						<path fill="#FFFFFF" d="M603.975,463.158H369.928c-5.5,0-10-4.5-10-10V247.5c0-5.5,4.5-10,10-10h234.047c5.5,0,10,4.5,10,10
+							v205.658C613.975,458.658,609.475,463.158,603.975,463.158z"/>
+						<path fill="#FFFFFF" d="M335.267,701.835H101.22c-5.5,0-10-4.5-10-10V486.177c0-5.5,4.5-10,10-10h234.047c5.5,0,10,4.5,10,10
+							v205.658C345.267,697.335,340.767,701.835,335.267,701.835z"/>
+						<g>
+							<g>
+								<text transform="matrix(1 0 0 1 181.1227 225.7156)" fill="#333333" font-family="'InterFace-Regular'" font-size="18px">Have covid-19</text>
+							</g>
+							<path fill="#C31884" d="M172.128,220.194c0,0.731-0.071,1.456-0.214,2.173c-0.143,0.717-0.354,1.414-0.634,2.09
+								c-0.28,0.676-0.623,1.318-1.029,1.926c-0.406,0.608-0.868,1.171-1.385,1.688c-0.517,0.517-1.08,0.979-1.688,1.385
+								c-0.608,0.406-1.25,0.749-1.926,1.029c-0.676,0.28-1.372,0.491-2.09,0.634c-0.717,0.143-1.442,0.214-2.173,0.214
+								c-0.732,0-1.456-0.071-2.173-0.214c-0.717-0.143-1.414-0.354-2.09-0.634c-0.676-0.28-1.318-0.623-1.926-1.029
+								s-1.171-0.868-1.688-1.385c-0.517-0.517-0.979-1.08-1.385-1.688c-0.406-0.608-0.75-1.25-1.029-1.926
+								c-0.28-0.676-0.491-1.372-0.634-2.09c-0.143-0.717-0.214-1.442-0.214-2.173c0-0.732,0.071-1.456,0.214-2.173
+								c0.143-0.717,0.354-1.414,0.634-2.09c0.28-0.676,0.623-1.318,1.029-1.926c0.406-0.608,0.868-1.171,1.385-1.688
+								c0.517-0.517,1.08-0.979,1.688-1.385c0.608-0.406,1.25-0.75,1.926-1.029c0.676-0.28,1.372-0.491,2.09-0.634
+								c0.717-0.143,1.442-0.214,2.173-0.214c0.731,0,1.456,0.071,2.173,0.214c0.717,0.143,1.414,0.354,2.09,0.634
+								c0.676,0.28,1.318,0.623,1.926,1.029c0.608,0.406,1.171,0.868,1.688,1.385c0.517,0.517,0.979,1.08,1.385,1.688
+								c0.406,0.608,0.749,1.25,1.029,1.926c0.28,0.676,0.491,1.372,0.634,2.09C172.057,218.738,172.128,219.462,172.128,220.194z"/>
+						</g>
+						<g>
+							<g>
+								<text transform="matrix(1 0 0 1 424.1009 225.7155)" fill="#333333" font-family="'InterFace-Regular'" font-size="18px">Do not have covid-19</text>
+							</g>
+							<path fill="#00B1A7" d="M415.357,220.194c0,0.731-0.071,1.456-0.214,2.173c-0.143,0.717-0.354,1.414-0.634,2.09
+								c-0.28,0.676-0.623,1.318-1.029,1.926c-0.406,0.608-0.868,1.171-1.385,1.688c-0.517,0.517-1.08,0.979-1.688,1.385
+								c-0.608,0.406-1.25,0.749-1.926,1.029c-0.676,0.28-1.372,0.491-2.09,0.634c-0.717,0.143-1.442,0.214-2.173,0.214
+								c-0.732,0-1.456-0.071-2.173-0.214c-0.717-0.143-1.414-0.354-2.09-0.634c-0.676-0.28-1.318-0.623-1.926-1.029
+								c-0.608-0.406-1.171-0.868-1.688-1.385c-0.517-0.517-0.979-1.08-1.385-1.688c-0.406-0.608-0.75-1.25-1.029-1.926
+								c-0.28-0.676-0.491-1.372-0.634-2.09c-0.143-0.717-0.214-1.442-0.214-2.173c0-0.731,0.071-1.456,0.214-2.173
+								c0.143-0.717,0.354-1.414,0.634-2.09c0.28-0.676,0.623-1.318,1.029-1.926c0.406-0.608,0.868-1.171,1.385-1.688
+								c0.517-0.517,1.08-0.979,1.688-1.385c0.608-0.406,1.25-0.75,1.926-1.029c0.676-0.28,1.372-0.491,2.09-0.634
+								c0.717-0.143,1.442-0.214,2.173-0.214c0.731,0,1.456,0.071,2.173,0.214c0.717,0.143,1.414,0.354,2.09,0.634
+								c0.676,0.28,1.318,0.623,1.926,1.029c0.608,0.406,1.171,0.868,1.688,1.385c0.517,0.517,0.979,1.08,1.385,1.688
+								c0.406,0.608,0.749,1.25,1.029,1.926c0.28,0.676,0.491,1.372,0.634,2.09C415.286,218.738,415.357,219.463,415.357,220.194z"/>
+						</g>
+						<path fill="#FFFFFF" d="M603.974,701.834H369.928c-5.5,0-10-4.5-10-10V486.177c0-5.5,4.5-10,10-10h234.047c5.5,0,10,4.5,10,10
+							v205.658C613.974,697.334,609.474,701.834,603.974,701.834z"/>
+						<g>
+							<text transform="matrix(1 0 0 1 104.2503 264.1044)" fill="#7C8696" font-family="'InterFace-Regular'" font-size="18px">True positive</text>
+						</g>
+						<g>
+							<text transform="matrix(1 0 0 1 373.3281 264.1044)" fill="#7C8696" font-family="'InterFace-Regular'" font-size="18px">False positive</text>
+						</g>
+						<g>
+							<text transform="matrix(1 0 0 1 104.2503 499.5435)" fill="#7C8696" font-family="'InterFace-Regular'" font-size="18px">False negative</text>
+						</g>
+						<g>
+							<text transform="matrix(1 0 0 1 373.3283 499.5435)" fill="#7C8696" font-family="'InterFace-Regular'" font-size="18px">True negative</text>
+						</g>
+						<g>
+							<g>
+								<text transform="matrix(1 0 0 1 46.9139 349.4784)"><tspan x="0" y="0" fill="#333333" font-family="'InterFace-Regular'" font-size="18px">Test</tspan><tspan x="-25.686" y="21.6" fill="#333333" font-family="'InterFace-Regular'" font-size="18px">positive</tspan></text>
+							</g>
+							<path fill="#FFFFFF" d="M70.763,326.661v-4.253c0-0.983,0.797-1.78,1.78-1.78h4.253c0.7,0,1.29-0.413,1.58-1
+								c0.117-0.237,0.2-0.496,0.2-0.78v-3.826c0-0.283-0.08-0.543-0.2-0.78c-0.29-0.587-0.88-1-1.58-1h-4.253
+								c-0.983,0-1.78-0.797-1.78-1.78v-4.253c0-0.983-0.796-1.78-1.78-1.78h-3.826c-0.983,0-1.78,0.797-1.78,1.78v4.253
+								c0,0.983-0.796,1.78-1.78,1.78h-4.253c-0.723,0-1.34,0.437-1.62,1.056c-0.1,0.223-0.16,0.463-0.16,0.724v3.826
+								c0,0.26,0.06,0.5,0.16,0.723c0.277,0.62,0.897,1.056,1.62,1.056h4.253c0.983,0,1.78,0.797,1.78,1.78v4.253
+								c0,0.983,0.797,1.78,1.78,1.78h3.826C69.966,328.441,70.763,327.644,70.763,326.661z"/>
+						</g>
+						<g>
+							<g>
+								<text transform="matrix(1 0 0 1 46.9138 581.052)"><tspan x="0" y="0" fill="#333333" font-family="'InterFace-Regular'" font-size="18px">Test</tspan><tspan x="-32.003" y="21.6" fill="#333333" font-family="'InterFace-Regular'" font-size="18px">negative</tspan></text>
+							</g>
+							<path fill="#FFFFFF" d="M57.348,548.69c-0.723,0-1.343,0.437-1.62,1.056c-0.1,0.223-0.16,0.463-0.16,0.723v3.826
+								c0,0.26,0.06,0.5,0.16,0.723c0.277,0.62,0.896,1.057,1.62,1.057h19.447c0.7,0,1.29-0.413,1.58-1c0.116-0.236,0.2-0.496,0.2-0.78
+								v-3.826c0-0.283-0.08-0.543-0.2-0.78c-0.29-0.587-0.883-0.999-1.58-0.999H57.348z"/>
+						</g>
+						<rect x="104.212" y="427.228" fill="none" width="139.658" height="27.042"/>
+						<text transform="matrix(1 0 0 1 104.2124 437.2303)" fill="#7C8696"><tspan x="0" y="0" font-family="'InterFace-Regular'"  font-size="12px">They are appropriately told </tspan><tspan x="0" y="14.4" font-family="'InterFace-Regular'" font-size="12px">to self-isolate</tspan></text>
+						<rect x="373.328" y="664.543" fill="none" width="206.76" height="27.042"/>
+						<text transform="matrix(1 0 0 1 373.3283 674.5453)" fill="#7C8696"><tspan x="0" y="0" font-family="'InterFace-Regular'" font-size="12px">They are told they do not need to </tspan><tspan x="0" y="14.4" font-family="'InterFace-Regular'" font-size="12px">self-isolate and are safe to go out </tspan></text>
+						<rect x="104.212" y="664.543" fill="none" width="223.126" height="27.042"/>
+						<text transform="matrix(1 0 0 1 104.2124 674.545)" fill="#7C8696"><tspan x="0" y="0" font-family="'InterFace-Regular'" font-size="12px">They are told they do not need to self-isolate </tspan><tspan x="0" y="14.4" font-family="'InterFace-Regular'" font-size="12px">so they go out and infect more people</tspan></text>
+						<rect x="373.328" y="427.228" fill="none" width="184.813" height="27.042"/>
+						<text transform="matrix(1 0 0 1 373.3283 437.2297)" fill="#7C8696"><tspan x="0" y="0" font-family="'InterFace-Regular'" font-size="12px">They are told they need to self-isolate </tspan><tspan x="0" y="14.4" font-family="'InterFace-Regular'" font-size="12px">when they would be safe to go out</tspan></text>
+						<line fill="none" stroke="#C1D3E9" stroke-miterlimit="10" x1="82.152" y1="421.04" x2="349.557" y2="421.04"/>
+						<line fill="none" stroke="#C1D3E9" stroke-miterlimit="10" x1="350.513" y1="421.04" x2="617.917" y2="421.04"/>
+						<line fill="none" stroke="#C1D3E9" stroke-miterlimit="10" x1="82.152" y1="656.479" x2="349.557" y2="656.479"/>
+						<line fill="none" stroke="#C1D3E9" stroke-miterlimit="10" x1="350.513" y1="656.479" x2="617.917" y2="656.479"/>
+						
+					</g>
+
+					<g id="ppv">
+						<path fill="#FFFFFF" d="M725,443.158h-87.339c-5.5,0-10-4.5-10-10V267.5c0-5.5,4.5-10,10-10H725c5.5,0,10,4.5,10,10v165.658
+							C735,438.658,730.5,443.158,725,443.158z"/>
+						<path fill="#C31884" d="M627.661,313.5v-46c0-5.5,4.5-10,10-10H725c5.5,0,10,4.5,10,10v46"/>
+						<path fill="#FFFFFF" d="M725,681.834h-87.339c-5.5,0-10-4.5-10-10V506.177c0-5.5,4.5-10,10-10H725c5.5,0,10,4.5,10,10v165.658
+							C735,677.334,730.5,681.834,725,681.834z"/>
+						<path fill="#00B1A7" d="M627.661,551.953v-45.777c0-5.5,4.5-10,10-10H725c5.5,0,10,4.5,10,10v45.777"/>
+						<g>
+							<rect x="644.901" y="330.125" fill="none" width="78.812" height="93.656"/>
+							<text transform="matrix(1 0 0 1 644.9006 343.4608)"><tspan x="0" y="0" fill="#333333" font-family="'InterFace-Regular'" font-size="16px">Probability </tspan><tspan x="0" y="19.2" fill="#333333" font-family="'InterFace-Regular'" font-size="16px">of having </tspan><tspan x="0" y="38.4" fill="#333333" font-family="'InterFace-Regular'" font-size="16px">covid-19 </tspan><tspan x="0" y="57.6" fill="#333333" font-family="'InterFace-Regular'" font-size="16px">if test is </tspan><tspan x="0" y="76.8" fill="#333333" font-family="'InterFace-Regular'" font-size="16px">positive</tspan></text>
+						</g>
+						<g>
+							<rect x="644.901" y="567.559" fill="none" width="78.812" height="93.656"/>
+							<text transform="matrix(1 0 0 1 644.9006 580.895)"><tspan x="0" y="0" fill="#333333" font-family="'InterFace-Regular'" font-size="16px">Probability </tspan><tspan x="0" y="19.2" fill="#333333" font-family="'InterFace-Regular'" font-size="16px">of having  </tspan><tspan x="0" y="38.4" fill="#333333" font-family="'InterFace-Regular'" font-size="16px">covid-19 </tspan><tspan x="0" y="57.6" fill="#333333" font-family="'InterFace-Regular'" font-size="16px">if test is </tspan><tspan x="0" y="76.8" fill="#333333" font-family="'InterFace-Regular'" font-size="16px">negative</tspan></text>
+						</g>
+					</g>
+					
+					<g id="updatingText">
+
+						<!-- text input boxes -->
+
+						<foreignObject id="preTestProbInputObject" x="169" y="103" width="40" height="30">
+					      <div xmlns="http://www.w3.org/1999/xhtml">
+					      <input id="preTestProbInput" style="color:#C31884;" value="80">
+					      </div>
+						</foreignObject>
+
+						<foreignObject id="sensitivityInputObject" x="413" y="103" width="40" height="30">
+					      <div xmlns="http://www.w3.org/1999/xhtml">
+					      <input id="sensitivityInput" style="color:#00B1A7;" value="70">
+					      </div>
+						</foreignObject>
+
+						<foreignObject id="specificityObject" x="657" y="103" width="40" height="30">
+					      <div xmlns="http://www.w3.org/1999/xhtml">
+					      <input id="specificityInput" style="color:#765FA8;" value="95">
+					      </div>
+						</foreignObject>
+
+						<!-- <text transform="matrix(1 0 0 1 172.6836 124.5068)" fill="#C31884" font-family="'InterFace-Regular'" font-size="24.472px">80</text> -->
+						<!-- <text transform="matrix(1 0 0 1 416.2307 124.5068)" fill="#00B1A7" font-family="'InterFace-Regular'" font-size="24.472px">70</text>
+						<text transform="matrix(1 0 0 1 660.2307 124.5068)" fill="#765FA8" font-family="'InterFace-Regular'" font-size="24.472px">95</text> -->
+
+						<path fill="#EDBADA" d="M207.39,97.5h17.111c4.675,0,8.499,3.825,8.499,8.499v22.002c0,4.675-3.825,8.499-8.499,8.499H207.39V97.5z
+							"/>
+						<path fill="#B2E8E5" d="M451.443,97.5h17.224c4.675,0,8.499,3.825,8.499,8.499v22.002c0,4.675-3.825,8.499-8.499,8.499h-17.224
+							V97.5z"/>
+						<path fill="#D6CFE5" d="M695.608,97.5h17.224c4.675,0,8.499,3.825,8.499,8.499v22.002c0,4.675-3.825,8.499-8.499,8.499h-17.224
+							V97.5z"/>
+
+						<text id="truePosValue" transform="matrix(1 0 0 1 104.2123 411.2869)" fill="#C31884" font-family="'InterFace-Bold'" font-size="36px">56</text>
+						<text id="trueNegValue" transform="matrix(1 0 0 1 373.3285 645.9409)" fill="#00B1A7" font-family="'InterFace-Bold'" font-size="36px">19</text>
+						<text id="falsePosValue" transform="matrix(1 0 0 1 373.3279 411.2853)" fill="#00B1A7" font-family="'InterFace-Bold'" font-size="36px">1</text>
+						<text id="falseNegValue" transform="matrix(1 0 0 1 104.2125 645.9409)" fill="#C31884" font-family="'InterFace-Bold'" font-size="36px">24</text>
+
+						<text id="ppvText" transform="matrix(1 0 0 1 680 294.5444)" fill="#FFFFFF" font-family="'InterFace-Bold'" font-size="28px" text-anchor="middle">98%</text>
+						<text id="npvText" transform="matrix(1 0 0 1 680 531.9786)" fill="#FFFFFF" font-family="'InterFace-Bold'" font-size="28px" text-anchor="middle">56%</text>
+						
+
+						<text id="truePosText" transform="matrix(1 0 0 1 153 395.0835)"><tspan id="truePosText1" x="0" y="0" font-family="'InterFace-Regular'" font-size="12px">people who test </tspan><tspan id="truePosText2" x="0" y="14.4" font-family="'InterFace-Regular'" font-size="12px">positive have covid-19</tspan></text>
+
+						<text id="falseNegText" transform="matrix(1 0 0 1 153 629.739)"><tspan id="falseNegText1" x="0" y="0" font-family="'InterFace-Regular'" font-size="12px">people who test negative </tspan><tspan id="falseNegText2" x="0" y="14.4" font-family="'InterFace-Regular'" font-size="12px">have covid-19</tspan></text>
+
+						<text id="falsePosText" transform="matrix(1 0 0 1 402 395.0836)"><tspan id="falsePosText1" x="0" y="0" font-family="'InterFace-Regular'" font-size="12px">person who tests positive </tspan><tspan id="falsePosText2" x="0" y="14.4" font-family="'InterFace-Regular'" font-size="12px">does not have covid-19</tspan></text>
+
+						<text id="trueNegText" transform="matrix(1 0 0 1 420 629.7394)"><tspan id="trueNegText1" x="0" y="0" font-family="'InterFace-Regular'" font-size="12px">people who test negative </tspan><tspan id="trueNegText2" x="0" y="14.4" font-family="'InterFace-Regular'" font-size="12px">do not have covid-19</tspan></text>
+						
+						
+						
+						
+						
+						<rect x="572" y="29.5" fill="#FFFFFF" width="148.5" height="52"/>
+						
+							<rect x="687.111" y="65.803" transform="matrix(0.7071 -0.7071 0.7071 0.7071 150.4169 515.5232)" fill="#FFFFFF" width="20.778" height="20.778"/>
+						<g>
+							<text transform="matrix(1 0 0 1 582.3618 51.3945)"><tspan x="0" y="0" fill="#2F6EB5" font-family="'InterFace-Regular'" font-size="14px">Adjust these values to </tspan><tspan x="0" y="16.8" fill="#2F6EB5" font-family="'InterFace-Regular'" font-size="14px">update graphic below</tspan></text>
+						</g>
+
+						<text transform="matrix(1 0 0 1 211.8691 122.7648)" fill="#C31884" font-family="'InterFace-Regular'" font-size="20px">%</text>
+						<text transform="matrix(1 0 0 1 456.2844 122.7648)" fill="#00B1A7" font-family="'InterFace-Regular'" font-size="20px">%</text>
+						<text transform="matrix(1 0 0 1 699.7044 122.7648)" fill="#765FA8" font-family="'InterFace-Regular'" font-size="20px">%</text>
+						
+					</g>
+					
+					<g id="errors">
+						<g id="preTestProbError" display="none">
+							<path fill="none" stroke="#F6D48F" stroke-miterlimit="10" d="M224.501,136.5h-50.002c-4.675,0-8.499-3.825-8.499-8.499v-22.002
+								c0-4.675,3.825-8.499,8.499-8.499h50.002c4.675,0,8.499,3.825,8.499,8.499v22.002C233,132.675,229.175,136.5,224.501,136.5z"/>
+							<rect x="124.568" y="143.191" fill="#F6D48F" width="149.864" height="48.93"/>
+							
+							<rect x="191.186" y="139.533" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -46.1114 184.3712)" fill="#F6D48F" width="16.627" height="16.627"/>
+							<text transform="matrix(1 0 0 1 133.7363 163.144)"><tspan x="0" y="0" font-family="'InterFace-Regular'" font-size="14px">Please enter a number  </tspan><tspan x="0" y="16.8" font-family="'InterFace-Regular'" font-size="14px">between 0 and 100</tspan></text>
+						</g>
+
+						<g id="sensitivityError" display="none">	
+							<path fill="none" stroke="#F6D48F" stroke-miterlimit="10" d="M468.586,136.5h-50.002c-4.675,0-8.499-3.825-8.499-8.499v-22.002
+								c0-4.675,3.825-8.499,8.499-8.499h50.002c4.675,0,8.499,3.825,8.499,8.499v22.002C477.085,132.675,473.26,136.5,468.586,136.5z"/>
+							<rect x="368.653" y="143.191" fill="#F6D48F" width="149.864" height="48.93"/>
+							
+							<rect x="435.272" y="139.533" transform="matrix(0.7071 -0.7071 0.7071 0.7071 25.3795 356.9654)" fill="#F6D48F" width="16.627" height="16.627"/>
+							<text transform="matrix(1 0 0 1 377.8215 163.144)"><tspan x="0" y="0" font-family="'InterFace-Regular'" font-size="14px">Please enter a number  </tspan><tspan x="0" y="16.8" font-family="'InterFace-Regular'" font-size="14px">between 0 and 100</tspan></text>
+						</g>
+
+						<g id="specificityError" display="none">
+							<path fill="none" stroke="#F6D48F" stroke-miterlimit="10" d="M713.336,136.5h-50.002c-4.675,0-8.499-3.825-8.499-8.499v-22.002
+								c0-4.675,3.825-8.499,8.499-8.499h50.002c4.675,0,8.499,3.825,8.499,8.499v22.002C721.835,132.675,718.011,136.5,713.336,136.5z"/>
+							<rect x="590.125" y="143.191" fill="#F6D48F" width="149.864" height="48.93"/>
+							
+							<rect x="680.022" y="139.533" transform="matrix(0.7071 -0.7071 0.7071 0.7071 97.0651 530.03)" fill="#F6D48F" width="16.627" height="16.627"/>
+							<text transform="matrix(1 0 0 1 599.2938 163.144)"><tspan x="0" y="0" font-family="'InterFace-Regular'" font-size="14px">Please enter a number  </tspan><tspan x="0" y="16.8" font-family="'InterFace-Regular'" font-size="14px">between 0 and 100</tspan></text>
+						</g>
+					</g>
+
+
+				</svg>
+
+			</div>
+
+		</div>
+
+	</center>
+
+	<script src="https://sandpit.bmj.com/graphics/2020/c19test/code.js"></script>
+	
+	
+<center><table class="text-wrap" style="width:98% background-color:#FFFFFF; color:#000000; border:#FFFFFF; text-align:center;">
+<tr style="background-color:#FFFFFF; color:#000000;;"><td style="background-color:#FFFFFF; color:#000000;"><p id="footer" class="text-wrap" style="background-color:#FFFFFF; color:#000000;">
+
+<i class="fa fa-heartbeat" style="font-size:24px;color:red;"></i> The India Hypertension Control Initiative (IHCI) is a collaborative project between Indian Council of Medical Research (ICMR),<br> Ministry of Health & Family Welfare (MoHFW), State Governments, World Health Organization (WHO),<br> and Resolve to Save Lives, an initiative of Vital Strategies. <i class="fa fa-globe" style="font-size:24px;color:blue;"></i></p>
+</td><td style="background-color:#FFFFFF; color:#000000;">
+<img src="https://kyft.club/wp-content/uploads/2020/07/IHCI-logo-for-email.png" alt="IHCI" width="290" height="88" style="float:right">
+
+</td></tr>
+</table></center>
+
+
+<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+<br>
+
+
+	</body>
+
+</html>
