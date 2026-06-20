@@ -1,0 +1,721 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/1c2c73bff2.js" crossorigin="anonymous"></script>
+<title>DSD Scale in COVID</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+background-color: white;
+padding: 10px;
+font-family: 'Lato', Helvetica, sans-serif;
+line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-image: -o-linear-gradient(45deg, #003399, #5f9ea0);
+  background-image: linear-gradient(45deg, #003399, #5f9ea0);
+}
+
+li {
+  float: right;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+#main {
+width: 90%;
+border: 1px gray solid;
+margin: auto;
+padding: 10px;
+background-color: white;
+border-radius: 10px;
+}
+
+/* http://www.yourcommonwealth.org/wp-content/uploads/2020/08/COVID-stigma-760x390.jpg */
+/* background-image: url(""); */
+/* background-repeat: no-repeat; */
+/* https://images.newindianexpress.com/uploads/user/imagelibrary/2020/9/7/w600X390/COVID-stigma-woman.jpg */
+
+
+
+
+label {
+width: 150px;
+display: inline-block;
+}
+
+button {
+display: block;
+margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 10px;
+  border-collapse: collapse;
+  valign: middle;
+}
+table.center {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button{
+  font-family: sans-serif;
+	font-size: 22px;
+	background-color: blue;
+	color: #fff;
+	border: 0px;
+	border-radius: 5px;
+	padding: 20px;
+	cursor: pointer;
+	margin-bottom: 20px;
+}
+button:hover{
+	background-color: #38a;
+}
+
+/* Modal CSS */
+
+h1,
+h2,
+h3,
+p {
+  font-weight: 300;
+  margin: 0 0 2.4rem 0;
+}
+h1,
+h2,
+h3 {
+  line-height: 1.3;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 400;
+}
+/**
+ * Material Modal CSS    background: #f44336;
+ */
+.modal {
+  will-change: visibility, opacity;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: $modal-delay;
+}
+.modal--active {
+  visibility: visible;
+  opacity: 1;
+}
+.modal--align-top {
+  align-items: flex-start;
+}
+.modal__bg {
+  background: transparent;
+}
+.modal__dialog {
+  max-width: 600px;
+  padding: 1.2rem;
+}
+.modal__content {
+  will-change: transform, opacity;
+  position: relative;
+  padding: 2.4rem;
+  background: #ffebee;
+  background-clip: padding-box;
+  box-shadow: 0 12px 15px 0 rgba(0,0,0,0.25);
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.modal__content--active {
+  opacity: 1;
+}
+.modal__close {
+  z-index: 1100;
+  cursor: pointer;
+}
+.modal__trigger {
+  position: relative;
+  display: inline-block;
+  padding: 1.2rem 2.4rem;
+  color: rgba(0,0,0,0.7);
+  line-height: 1;
+  cursor: pointer;
+  background: #ffebee;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.modal__trigger--active {
+  z-index: 10;
+}
+.modal__trigger:hover {
+  background: #e5d3d6;
+}
+#modal__temp {
+  will-change: transform, opacity;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffebee;
+  -webkit-transform: none;
+          transform: none;
+  opacity: 1;
+  transition: opacity 0.1s ease-out, -webkit-transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: opacity 0.1s ease-out, transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: opacity 0.1s ease-out, transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), -webkit-transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+/**
+ * Demo specific CSS
+ */
+body {
+  height: 100vh;
+}
+img {
+  max-width: 100%;
+}
+.demo-btns header {
+  padding: 7vh 10vw;
+  background: #ffebee;
+  display: flex;
+  align-items: center;
+}
+.demo-btns header h1 {
+  margin: 0;
+  color: rgba(0,0,0,0.54);
+  font-weight: 300;
+}
+.demo-btns .info {
+  background: #f44336;
+  padding: 3vh 10vw;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+}
+.demo-btns p {
+  text-align: center;
+  color: #fff;
+}
+.demo-btns .link {
+  font-size: 20px;
+}
+.demo-btns .modal__trigger {
+  margin-right: 3px;
+}
+@media (max-width: 640px) {
+  .demo-btns .modal__trigger {
+    margin-bottom: 0.8rem;
+  }
+}
+.demo-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1.2rem;
+  padding: 0.6rem;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.demo-close svg {
+  width: 24px;
+  fill: #fff;
+  pointer-events: none;
+  vertical-align: top;
+}
+.demo-close:hover {
+  background: rgba(0,0,0,0.6);
+}
+.logo {
+  position: fixed;
+  bottom: 3vh;
+  right: 3vw;
+  z-index: 2;
+}
+.logo img {
+  width: 45px;
+  -webkit-transform: rotate(0);
+          transform: rotate(0);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.logo img:hover {
+  -webkit-transform: rotate(180deg) scale(1.1);
+          transform: rotate(180deg) scale(1.1);
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+</style>
+</head>
+<body>
+
+
+<h1>How much do I hate those working for or suffering from COVID-19?</h1>
+
+<form  id="form1">
+<h2>1. If I am invited for a Lunch, by a patient who recovered from COVID-19 more than three weeks ago, I will</h2>
+<table style="width:80%">
+  <tr>
+<td><label><input type="radio" name="age" id="go" value="quiet" />Even if I am not invited, I will drop in after an appointment and share my lunch</label></td>
+ <td><label><input type="radio" name="age" id="maygo" value="moderate" />If my friends who invited force me, I may go along with my friends</label></td>
+ <td><label><input type="radio" name="age" id="notgo" value="proactive" />I will never go, and also try to stop such practices.</label></td>
+ </tr>
+</table>
+<hr>
+<br>
+<h2>2. If someone asks me to visit a COVID-19 patient I will</h2>
+<table style="width:80%">
+  <tr>
+<td><label><input type="radio" name="activity" id="visit" value="quiet" />Be proactive, seek, visit, and support COVID-19 patients and frontline workers.</label></td>
+<td><label><input type="radio" name="activity" id="mayvisit" value="moderate" />I may respond if forced to keep good relationships in the community I live</label></td>
+<td><label><input type="radio"  name="activity" id="novisit" value="proactive" />I will stop such practices, and also tell everyone else that they will surely be infected if they visit.</label></td>
+ </tr>
+</table>
+<hr>
+<br>
+<h2>3. If I know my neighbour has tested positive to COVID-19, I will</h2>
+<table style="width:80%">
+  <tr>
+<td><label><input type="radio" name="genre" id="stop" value="quiet" />always avoid spreading this news</label></td>
+<td><label><input type="radio" name="genre" id="mayspread" value="moderate" />Tell it to others, when asked, as everyone must know and protect themselves</label></td>
+<td><label><input type="radio" name="genre" id="spread" value="proactive" />Repeatedly post messages to all my friends, and ask them to inform all concerned.</label></td>
+ </tr>
+</table>
+<hr>
+<h2>4. If I am infected with COVID-19</h2>
+<table style="width:80%">
+  <tr>
+<td><label><input type="radio" name="prempt" id="small" value="quiet" />I never feel bad, guilty, or less than others, as it is not our fault</label></td>
+<td><label><input type="radio" name="prempt" id="mod" value="moderate" />When people remind me I am infected, I feel guilty, and worse about myself.</label></td>
+<td><label><input type="radio"  name="prempt" id="big" value="proactive" />I always feel that because of my fault, I am infected and therefore lesser and of lower esteem than others who are not.</label></td>
+ </tr>
+</table>
+<hr>
+<br>
+
+<button type="submit" value="Submit">Submit</button>
+</form>
+
+<h2><p id="answer"></h2>
+<h2><p id="answer2"></h2>
+<h2><p id="answer3"></h2>
+<h2><p id="answer4"></h2>
+
+</div>
+<script>
+ 
+    
+	document.getElementById("form1").onsubmit=function() {
+	   
+	  age = document.querySelector('input[name = "age"]:checked').value;
+	   
+	  
+	  activity = document.querySelector('input[name = "activity"]:checked').value;
+	   
+	  genre = document.querySelector('input[name = "genre"]:checked').value;
+	    
+	  // initialize score variables 
+	  quiet = 0;
+	  moderate = 0;
+	  proactive = 0;
+	  
+	  //function to calculate score for each question
+	  function eachscore(x){
+	  if(x == "quiet") { quiet = quiet + 1}
+	  if(x == "moderate") { moderate = moderate + 2}
+	  if(x == "proactive") { proactive = proactive + 3}
+	  }
+	  // for the above function, you could also change the 1 to a variable so you could give more points for certain questions
+	  
+	  //call function for each question
+	  eachscore(eval("age"));
+	  eachscore(eval("activity"));
+	  eachscore(eval("genre"));
+	  
+	  
+	  
+	  all = [quiet, moderate, proactive];
+	  
+	//get the max score  in the array
+	maxscore = Math.max.apply(Math,all);
+	
+    //figure out which score is the max score by identifying its index number
+	for(i=0; i<all.length; i++) {
+	if(all[i]==maxscore) {
+	highest = i;
+	}
+	}
+	
+
+// object holding scores and feedback	
+scores = [{index:0, feedback: "You would do everything to support COVID-19 survivors, patients, and front line workers"},
+{index:1, feedback: "You are more ready to stigmatize and discriminate COVID-19 patients, than to support them"},
+{index:2, feedback: "You actively deny, stigmatize, and discriminate COVID-19 survivors, patients, and front line workers"}];
+
+
+//loop to match index to score and reply with feedback
+for(i=0;i<scores.length; i++) {
+if(highest == scores[i].index) {
+document.getElementById("answer4").innerHTML = scores[i].feedback;
+}
+}
+		   
+return false; // required to not refresh the page; just leave this here
+	   }// end the submit function
+	
+
+</script>
+<br><br>
+<div class="info">
+<div class="buttons" align="center">
+<p align="center">
+<a href="" data-modal="#modal" class="modal__trigger">COVID-DSD Info 1</a>
+<a href="" data-modal="#modal2" class="modal__trigger">COVID-DSD Info 2</a>
+<a href="" data-modal="#modal3" class="modal__trigger">COVID-DSD Info 3</a>
+</p>
+</div>
+<p>&nbsp;</p>
+</div>
+</div>
+
+<div id="modal" class="modal modal__bg" role="dialog" aria-hidden="true">
+<div class="modal__dialog">
+<div class="modal__content">
+<h1>COVID DSD Info 1</h1>
+<h3>Description of this Tool</h3>
+<p>Description:<br>
+This questionnaire attempts to measue the negative attitudes to people who are infected with COVID-19, the COVID-19 front line workers, perceived discrimination in the community, COVID-19 survivors, and support for equitable treatment of those suffering from COVID-19 infection.<br>
+
+<a href="" class="modal__close demo-close">
+<svg class="" viewBox="0 0 24 24"><path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z" /><path d="M0 0h24v24h-24z" fill="none" /></svg>
+</a>
+</div>
+</div>
+</div>
+<div id="modal2" class="modal modal--align-top modal__bg" role="dialog" aria-hidden="true">
+<div class="modal__dialog">
+<div class="modal__content">
+
+<h1>COVID DSD Info 2</h1>
+<h3>Why this tool is helpful against DSD</h3>
+
+<p>A study with over 14,000 respondents to validate the scale showed that stigma was highest among people who had never talked about COVID-19, had less knowledge about it and its treatment, and lived in low prevalence settings. DSD Interventions that aim to increase awareness and knowledge result in reduced stigma. Hence this tool is suitable:<br>
+
+1) For before and after testing of a program's effects, <br>
+2) Easily completed and analysed, <br>
+3) Could easily be programmed to be given electronically, <br>
+4) Note that it was created for use in developing countries, so some of the questions may not apply as well in developed countries and could be dropped or replaced.
+</p>
+
+<p><img src="https://images.newindianexpress.com/uploads/user/imagelibrary/2020/9/7/w600X390/COVID-stigma-woman.jpg" alt="" />
+<i> Abandoned by her children due to COVID-19</i></p>
+
+<h4>What you can do to reduce COVID-19 stigma</h4>
+<p>Education is one way to fight stigma. It helps dispel harmful stereotypes. You can help reduce stigma by:<br>
+
+1) Getting the facts about COVID-19 from reputable sources such as the Centers for Disease Control and Prevention (CDC) and World Health Organization (WHO). Share them with your family and friends.<br>
+2) Speaking up if you hear or see inaccurate statements about COVID-19 and certain people or groups.<br>
+3) Reaching out to people who may feel stigmatized. Ask how you can help. Listen to them and show that you understand and support them.<br>
+4) Showing support for health care workers and others who are caring for people with COVID-19. Thank them for their work and share positive messages on social media.<br>
+5) Showing support for and thanking all who continue their essential jobs to help you and your community, such as police officers, bus drivers, grocery store clerks, food bank workers and delivery people.
+
+</p>
+
+<a href="" class="modal__close demo-close">
+<svg class="" viewBox="0 0 24 24"><path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z" /><path d="M0 0h24v24h-24z" fill="none" /></svg>
+</a>
+</div>
+</div>
+</div>
+<div id="modal3" class="modal modal__bg" role="dialog" aria-hidden="true">
+<div class="modal__dialog">
+<div class="modal__content">
+<h1>COVID DSD Info 3</h1>
+<h3>Let us work together:</h3>
+<p>Remember, everyone is in this together. The COVID-19 pandemic will be over sooner if fears and rumors are replaced by facts, proper action and a show of support for one another.</p>
+<a href="" class="modal__close demo-close">
+<svg class="" viewBox="0 0 24 24"><path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z" /><path d="M0 0h24v24h-24z" fill="none" /></svg>
+</a>
+</div>
+</div>
+</div>
+<script>
+  var Modal = function () {
+
+  var trigger = $qsa('.modal__trigger'); // what you click to activate the modal
+  var modals = $qsa('.modal'); // the entire modal (takes up entire window)
+  var modalsbg = $qsa('.modal__bg'); // the entire modal (takes up entire window)
+  var content = $qsa('.modal__content'); // the inner content of the modal
+  var closers = $qsa('.modal__close'); // an element used to close the modal
+  var w = window;
+  var isOpen = false;
+  var contentDelay = 400; // duration after you click the button and wait for the content to show
+  var len = trigger.length;
+
+  // make it easier for yourself by not having to type as much to select an element
+  function $qsa(el) {
+    return document.querySelectorAll(el);
+  }
+
+  var getId = function (event) {
+
+    event.preventDefault();
+    var self = this;
+    // get the value of the data-modal attribute from the button
+    var modalId = self.dataset.modal;
+    var len = modalId.length;
+    // remove the '#' from the string
+    var modalIdTrimmed = modalId.substring(1, len);
+    // select the modal we want to activate
+    var modal = document.getElementById(modalIdTrimmed);
+    // execute function that creates the temporary expanding div
+    makeDiv(self, modal);
+  };
+
+  var makeDiv = function (self, modal) {
+
+    var fakediv = document.getElementById('modal__temp');
+
+    /**
+                                                           * if there isn't a 'fakediv', create one and append it to the button that was
+                                                           * clicked. after that execute the function 'moveTrig' which handles the animations.
+                                                           */
+
+    if (fakediv === null) {
+      var div = document.createElement('div');
+      div.id = 'modal__temp';
+      self.appendChild(div);
+      moveTrig(self, modal, div);
+    }
+  };
+
+  var moveTrig = function (trig, modal, div) {
+    var trigProps = trig.getBoundingClientRect();
+    var m = modal;
+    var mProps = m.querySelector('.modal__content').getBoundingClientRect();
+    var transX, transY, scaleX, scaleY;
+    var xc = w.innerWidth / 2;
+    var yc = w.innerHeight / 2;
+
+    // this class increases z-index value so the button goes overtop the other buttons
+    trig.classList.add('modal__trigger--active');
+
+    // these values are used for scale the temporary div to the same size as the modal
+    scaleX = mProps.width / trigProps.width;
+    scaleY = mProps.height / trigProps.height;
+
+    scaleX = scaleX.toFixed(3); // round to 3 decimal places
+    scaleY = scaleY.toFixed(3);
+
+
+    // these values are used to move the button to the center of the window
+    transX = Math.round(xc - trigProps.left - trigProps.width / 2);
+    transY = Math.round(yc - trigProps.top - trigProps.height / 2);
+
+    // if the modal is aligned to the top then move the button to the center-y of the modal instead of the window
+    if (m.classList.contains('modal--align-top')) {
+      transY = Math.round(mProps.height / 2 + mProps.top - trigProps.top - trigProps.height / 2);
+    }
+
+
+    // translate button to center of screen
+    trig.style.transform = 'translate(' + transX + 'px, ' + transY + 'px)';
+    trig.style.webkitTransform = 'translate(' + transX + 'px, ' + transY + 'px)';
+    // expand temporary div to the same size as the modal
+    div.style.transform = 'scale(' + scaleX + ',' + scaleY + ')';
+    div.style.webkitTransform = 'scale(' + scaleX + ',' + scaleY + ')';
+
+
+    window.setTimeout(function () {
+      window.requestAnimationFrame(function () {
+        open(m, div);
+      });
+    }, contentDelay);
+
+  };
+
+  var open = function (m, div) {
+
+    if (!isOpen) {
+      // select the content inside the modal
+      var content = m.querySelector('.modal__content');
+      // reveal the modal
+      m.classList.add('modal--active');
+      // reveal the modal content
+      content.classList.add('modal__content--active');
+
+      /**
+                                                        * when the modal content is finished transitioning, fadeout the temporary
+                                                        * expanding div so when the window resizes it isn't visible ( it doesn't
+                                                        * move with the window).
+                                                        */
+
+      content.addEventListener('transitionend', hideDiv, false);
+
+      isOpen = true;
+    }
+
+    function hideDiv() {
+      // fadeout div so that it can't be seen when the window is resized
+      div.style.opacity = '0';
+      content.removeEventListener('transitionend', hideDiv, false);
+    }
+  };
+
+  var close = function (event) {
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    var target = event.target;
+    var div = document.getElementById('modal__temp');
+
+    /**
+                                                       * make sure the modal__bg or modal__close was clicked, we don't want to be able to click
+                                                       * inside the modal and have it close.
+                                                       */
+
+    if (isOpen && target.classList.contains('modal__bg') || target.classList.contains('modal__close')) {
+
+      // make the hidden div visible again and remove the transforms so it scales back to its original size
+      div.style.opacity = '1';
+      div.removeAttribute('style');
+
+      /**
+                                    * iterate through the modals and modal contents and triggers to remove their active classes.
+                                       * remove the inline css from the trigger to move it back into its original position.
+                                    */
+
+      for (var i = 0; i < len; i++) {
+        modals[i].classList.remove('modal--active');
+        content[i].classList.remove('modal__content--active');
+        trigger[i].style.transform = 'none';
+        trigger[i].style.webkitTransform = 'none';
+        trigger[i].classList.remove('modal__trigger--active');
+      }
+
+      // when the temporary div is opacity:1 again, we want to remove it from the dom
+      div.addEventListener('transitionend', removeDiv, false);
+
+      isOpen = false;
+
+    }
+
+    function removeDiv() {
+      setTimeout(function () {
+        window.requestAnimationFrame(function () {
+          // remove the temp div from the dom with a slight delay so the animation looks good
+          div.remove();
+        });
+      }, contentDelay - 50);
+    }
+
+  };
+
+  var bindActions = function () {
+    for (var i = 0; i < len; i++) {
+      trigger[i].addEventListener('click', getId, false);
+      closers[i].addEventListener('click', close, false);
+      modalsbg[i].addEventListener('click', close, false);
+    }
+  };
+
+  var init = function () {
+    bindActions();
+  };
+
+  return {
+    init: init };
+
+
+}();
+
+Modal.init();
+
+</script>
+
+
+<footer><center>
+<i class="fa fa-home" aria-hidden="true" style="font-size:24px;color:teal;"></i> <a href="https://peerconnect.network/peerconsult/india/covidaction">PC: PeerConnect India:</a> <i class="fas fa-book" style="font-size:24px;color:brown;"></i> A one-stop shop knowledge hub on COVID-19. <i class="fas fa-globe-americas" style="font-size:24px;color:navy;"></i><br>
+No <i class="far fa-copyright" style="font-size:20px;color:indigo;"></i>!  No Copyrights! Made for everyone and shared with the world, <i class="fas fa-globe" style="font-size:24px;color:teal;"></i>
+</center></footer>
+</body>
+</html>
