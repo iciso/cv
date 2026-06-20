@@ -8,8 +8,13 @@
 <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/1c2c73bff2.js" crossorigin="anonymous"></script>
-<title>DSD Scale in COVID</title>
+<title>DSD Scale in COVID-19</title>
 <style>
+/**
+ * Page by Dr. Essa Md. Rafique CVHO, WHO, Wayanad, who works voluntarily for PeerConsult
+ * No Copyrights, Feel free to share with the world.
+ */
+
 * {
   box-sizing: border-box;
 }
@@ -23,76 +28,6 @@ line-height: 1.5;
   overflow-x: hidden;
 }
 
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-image: -o-linear-gradient(45deg, #003399, #5f9ea0);
-  background-image: linear-gradient(45deg, #003399, #5f9ea0);
-}
-
-li {
-  float: right;
-}
-
-li a, .dropbtn {
-  display: inline-block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
-}
-
-li.dropdown {
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {background-color: #f1f1f1;}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-
-#main {
-width: 90%;
-border: 1px gray solid;
-margin: auto;
-padding: 10px;
-background-color: white;
-border-radius: 10px;
-}
-
-/* http://www.yourcommonwealth.org/wp-content/uploads/2020/08/COVID-stigma-760x390.jpg */
-/* background-image: url(""); */
-/* background-repeat: no-repeat; */
-/* https://images.newindianexpress.com/uploads/user/imagelibrary/2020/9/7/w600X390/COVID-stigma-woman.jpg */
-
-
-
-
 label {
 width: 150px;
 display: inline-block;
@@ -103,20 +38,9 @@ display: block;
 margin-top: 20px;
 }
 
-table, th, td {
-  border: 1px solid black;
-  padding: 10px;
-  border-collapse: collapse;
-  valign: middle;
-}
-table.center {
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-}
 
-button{
-  font-family: sans-serif;
+#button {
+        font-family: sans-serif;
 	font-size: 22px;
 	background-color: blue;
 	color: #fff;
@@ -126,7 +50,7 @@ button{
 	cursor: pointer;
 	margin-bottom: 20px;
 }
-button:hover{
+#button:hover{
 	background-color: #38a;
 }
 
@@ -142,7 +66,10 @@ p {
 h1,
 h2,
 h3 {
-  line-height: 1.3;
+  line-height: 1.8;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
 }
 a {
   text-decoration: none;
@@ -323,127 +250,98 @@ img {
   margin-right: auto;
   width: 50%;
 }
+
+#end {
+background-color: #FFFFFF;
+font-size: 9pt;
+}
+
 </style>
-</head>
-<body>
 
+<script LANGUAGE="JavaScript">
+<!--Hide JavaScript from Java-Impaired Browsers
+function test_it(entry) {
+if (entry.value!=null && entry.value.length!=0) {
+entry.value=""+ eval(entry.value);
+}
+computeForm(entry.form);
+}
+function computeForm(form) {
+var total=0
 
-<h1>How much do I hate those working for or suffering from COVID-19?</h1>
-
-<form  id="form1">
-<h2>1. If I am invited for a Lunch, by a patient who recovered from COVID-19 more than three weeks ago, I will</h2>
-<table style="width:80%">
-  <tr>
-<td><label><input type="radio" name="age" id="go" value="quiet" />Even if I am not invited, I will drop in after an appointment and share my lunch</label></td>
- <td><label><input type="radio" name="age" id="maygo" value="moderate" />If my friends who invited force me, I may go along with my friends</label></td>
- <td><label><input type="radio" name="age" id="notgo" value="proactive" />I will never go, and also try to stop such practices.</label></td>
- </tr>
-</table>
-<hr>
-<br>
-<h2>2. If someone asks me to visit a COVID-19 patient I will</h2>
-<table style="width:80%">
-  <tr>
-<td><label><input type="radio" name="activity" id="visit" value="quiet" />Be proactive, seek, visit, and support COVID-19 patients and frontline workers.</label></td>
-<td><label><input type="radio" name="activity" id="mayvisit" value="moderate" />I may respond if forced to keep good relationships in the community I live</label></td>
-<td><label><input type="radio"  name="activity" id="novisit" value="proactive" />I will stop such practices, and also tell everyone else that they will surely be infected if they visit.</label></td>
- </tr>
-</table>
-<hr>
-<br>
-<h2>3. If I know my neighbour has tested positive to COVID-19, I will</h2>
-<table style="width:80%">
-  <tr>
-<td><label><input type="radio" name="genre" id="stop" value="quiet" />always avoid spreading this news</label></td>
-<td><label><input type="radio" name="genre" id="mayspread" value="moderate" />Tell it to others, when asked, as everyone must know and protect themselves</label></td>
-<td><label><input type="radio" name="genre" id="spread" value="proactive" />Repeatedly post messages to all my friends, and ask them to inform all concerned.</label></td>
- </tr>
-</table>
-<hr>
-<h2>4. If I am infected with COVID-19</h2>
-<table style="width:80%">
-  <tr>
-<td><label><input type="radio" name="prempt" id="small" value="quiet" />I never feel bad, guilty, or less than others, as it is not our fault</label></td>
-<td><label><input type="radio" name="prempt" id="mod" value="moderate" />When people remind me I am infected, I feel guilty, and worse about myself.</label></td>
-<td><label><input type="radio"  name="prempt" id="big" value="proactive" />I always feel that because of my fault, I am infected and therefore lesser and of lower esteem than others who are not.</label></td>
- </tr>
-</table>
-<hr>
-<br>
-
-<button type="submit" value="Submit">Submit</button>
-</form>
-
-<h2><p id="answer"></h2>
-<h2><p id="answer2"></h2>
-<h2><p id="answer3"></h2>
-<h2><p id="answer4"></h2>
-
-</div>
-<script>
- 
-    
-	document.getElementById("form1").onsubmit=function() {
-	   
-	  age = document.querySelector('input[name = "age"]:checked').value;
-	   
-	  
-	  activity = document.querySelector('input[name = "activity"]:checked').value;
-	   
-	  genre = document.querySelector('input[name = "genre"]:checked').value;
-	    
-	  // initialize score variables 
-	  quiet = 0;
-	  moderate = 0;
-	  proactive = 0;
-	  
-	  //function to calculate score for each question
-	  function eachscore(x){
-	  if(x == "quiet") { quiet = quiet + 1}
-	  if(x == "moderate") { moderate = moderate + 2}
-	  if(x == "proactive") { proactive = proactive + 3}
-	  }
-	  // for the above function, you could also change the 1 to a variable so you could give more points for certain questions
-	  
-	  //call function for each question
-	  eachscore(eval("age"));
-	  eachscore(eval("activity"));
-	  eachscore(eval("genre"));
-	  
-	  
-	  
-	  all = [quiet, moderate, proactive];
-	  
-	//get the max score  in the array
-	maxscore = Math.max.apply(Math,all);
-	
-    //figure out which score is the max score by identifying its index number
-	for(i=0; i<all.length; i++) {
-	if(all[i]==maxscore) {
-	highest = i;
-	}
-	}
-	
-
-// object holding scores and feedback	
-scores = [{index:0, feedback: "You would do everything to support COVID-19 survivors, patients, and front line workers"},
-{index:1, feedback: "You are more ready to stigmatize and discriminate COVID-19 patients, than to support them"},
-{index:2, feedback: "You actively deny, stigmatize, and discriminate COVID-19 survivors, patients, and front line workers"}];
-
-
-//loop to match index to score and reply with feedback
-for(i=0;i<scores.length; i++) {
-if(highest == scores[i].index) {
-document.getElementById("answer4").innerHTML = scores[i].feedback;
+for (var count=0; count<4; count++)
+{
+if (form.a[count].checked){
+var total=total+parseInt(form.a[count].value);
 }
 }
-		   
-return false; // required to not refresh the page; just leave this here
-	   }// end the submit function
-	
 
-</script>
-<br><br>
+for (var count=0; count<4; count++)
+{
+if (form.b[count].checked){
+var total=total+parseInt(form.b[count].value);
+}
+}
+
+for (var count=0; count<4; count++)
+{
+if (form.c[count].checked){
+var total=total+parseInt(form.c[count].value);
+}
+}
+
+for (var count=0; count<4; count++)
+{
+if (form.d[count].checked){
+var total=total+parseInt(form.d[count].value);
+}
+}
+
+for (var count=0; count<4; count++)
+{
+if (form.e[count].checked){
+var total=total+parseInt(form.e[count].value);
+}
+}
+
+for (var count=0; count<2; count++)
+{
+if (form.f[count].checked){
+var total=total+parseInt(form.f[count].value);
+}
+}
+
+for (var count=0; count<4; count++)
+{
+if (form.g[count].checked){
+var total=total+parseInt(form.g[count].value);
+}
+}
+
+for (var count=0; count<2; count++)
+{
+if (form.h[count].checked){
+var total=total+parseInt(form.h[count].value);
+}
+}
+
+alert("Hello! your Total score is = " + total +  " points. \n\nE) If you score 72 points: You could not hate COVID-19 patients more and you will harm them.\nD) 48 to 71 points: You bear hatred to COVID-19 patients, but you may not physically harm them.\nC) 24 to 47 points: You like COVID-19 patients and will support them by only speaking out for them.\nB) 9 to23 points: You love COVID-19 patients and you are willing to support them.\nA) If you score 8 points: You could not love COVID-19 patients more!");
+
+if (total==0){ window.location="https://peerconnect.network/peerconsult/india/covidaction/sign-up" }
+else if (total<25){ window.location="https://peerconnect.network/peerconsult/india/covidaction/about" }
+else if (total<49){ window.location="https://peerconnect.network/peerconsult/india/covidaction/get-involved" }
+else if (total<73){ window.location="https://peerconnect.network/peerconsult/india/covidaction/about" }
+else { window.location="https://peerconnect.network/peerconsult/india/covidaction/contact-us" }
+
+}
+//-->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+
+<h1>Do I hate or love Health Care Workers(HCW) and COVID-19 patients?</h1>
+<p><b>Quiz Purpose & Instructions: </b>We have in this quiz the right questions in the right number, with the response buttons randomized as well, so that it is as per the existing Denial, Stigma and Discrimination (DSD) scales used in research work. Moreover, your responses are not stored anywhere in this web page or on your device. Accordingly, after you complete selection of your responses, and hit the "Compute Score" button, you will see your score in an alert message, which is lost on you hitting the "OK" button. Consequently, depending on your score, you can be redirected to different web pages on the COVID Action Community site. So, do click on the three info buttons to read up more on the confidentiality of this quiz, as well as about stigma and discrimination in COVID-19.</p>
 <div class="info">
 <div class="buttons" align="center">
 <p align="center">
@@ -477,12 +375,12 @@ This questionnaire attempts to measue the negative attitudes to people who are i
 <h1>COVID DSD Info 2</h1>
 <h3>Why this tool is helpful against DSD</h3>
 
-<p>A study with over 14,000 respondents to validate the scale showed that stigma was highest among people who had never talked about COVID-19, had less knowledge about it and its treatment, and lived in low prevalence settings. DSD Interventions that aim to increase awareness and knowledge result in reduced stigma. Hence this tool is suitable:<br>
+<p>A study with over 14,000 respondents to validate the scale showed that stigma was highest among people who had never talked about COVID-19, had less knowledge about it and its treatment, and lived in low prevalence settings. DSD Interventions that aim to increase awareness and knowledge result in reduced stigma. This tool is developed so that people who do the quiz will know for themselves on which side of the DSD divide they are, and to what extent they are on the DSD scale on their side. Awareness of "where we are?" preceeds "where we want to be?" So, in this tool we have taken all efforts to:<br>
 
-1) For before and after testing of a program's effects, <br>
-2) Easily completed and analysed, <br>
-3) Could easily be programmed to be given electronically, <br>
-4) Note that it was created for use in developing countries, so some of the questions may not apply as well in developed countries and could be dropped or replaced.
+1) Not to store any answers, and is shown confidentially and private to the user alone. <br>
+2) Easily completed and analysed by the user <br>
+3) Could easily be programmed to be spread electronically, <br>
+4) Note that it was created for use in developing countries, so some of the questions may not apply in developed countries and could be dropped or replaced.
 </p>
 
 <p><img src="https://images.newindianexpress.com/uploads/user/imagelibrary/2020/9/7/w600X390/COVID-stigma-woman.jpg" alt="" />
@@ -517,6 +415,57 @@ This questionnaire attempts to measue the negative attitudes to people who are i
 </div>
 </div>
 </div>
+
+
+<h1>My Quiz for DSD</h1> 
+<form METHOD=POST>
+<h3>1. If you are tested positive for COVID-19 and have some symptoms, you feel:</h3>
+<input TYPE="radio" NAME="a" VALUE="1">Okay, as others attitude do not affect you, also you correct their avoidance.<br>
+<input TYPE="radio" NAME="a" VALUE="6">Bad, whenever people avoid you, conciously or unconciously.<br>
+<input TYPE="radio" NAME="a" VALUE="3">You do not feel sad, but you do not correct others for avoiding you.<br>
+<input TYPE="radio" NAME="a" VALUE="9">Guilty always, as you are not as good as others because of having COVID-19.<br><br>
+
+<h3>2. In a meeting, you find that the person next to you has recovered from COVID-19, three weeks ago. You would:</h3>
+<input TYPE="radio" NAME="b" VALUE="9">Request the person to leave the meeting, and even remove him/her physically<br>
+<input TYPE="radio" NAME="b" VALUE="3">Talk in favour of the person attending the meeting, but not act in support.<br>
+<input TYPE="radio" NAME="b" VALUE="6">Request the person to leave the meeting, but never remove him/her physically.<br>
+<input TYPE="radio" NAME="b" VALUE="1">Do all that is possible to care, and support the person.<br><br>
+
+<h3>3. On the increased risk faced by Health Care Workers (HCW) treating COVID-19 patients, you:</h3>
+<input TYPE="radio" NAME="c" VALUE="6">Will talk against HCW, but you will not physically harm them.<br>
+<input TYPE="radio" NAME="c" VALUE="3">Will talk in support of HCW, but will not act in support.<br>
+<input TYPE="radio" NAME="c" VALUE="1">Proactively volunteer and support HCW and other "COVID-Warriors".<br>
+<input TYPE="radio" NAME="c" VALUE="9">Feel, <q>Well, they deserve to be infected</q>, and so you are ready to be violent as well.<br><br>
+
+<h3>4. While calling up a friend you come to know that two of his family have just contacted COVID-19. You will</h3>
+<input TYPE="radio" NAME="d" VALUE="9">Persuade the family to leave the locality, otherwise arrange to remove them physically<br>
+<input TYPE="radio" NAME="d" VALUE="1">Arrange for treatment, provision, care, and support to the affected family.<br>
+<input TYPE="radio" NAME="d" VALUE="3">Talk in favour of the family staying in the locality, but not act to support them.<br>
+<input TYPE="radio" NAME="d" VALUE="6">Request the family to move elsewhere, but never remove them physically.<br><br>
+
+<h3>5. If you are invited, to a function by one who recovered from COVID-19 more than three weeks ago, you will:</h3>
+<input TYPE="radio" NAME="e" VALUE="6">Not attend, and find every excuse to prevent other invitees from attending.<br>
+<input TYPE="radio" NAME="e" VALUE="3">Attend, but keep as safe a distance from the patient and his family.<br>
+<input TYPE="radio" NAME="e" VALUE="9">Proactively try to stop the function with all the friends you can gather.<br>
+<input TYPE="radio" NAME="e" VALUE="1">Attend the function, offer support, and invite him/her to a meal, as follow-up.<br><br>
+
+<h3>6. <q>HCW and others working with COVID-19 must not mix in public places, as they could spread COVID-19</q>. You:</h3>
+<input TYPE="radio" NAME="f" VALUE="1">Disagree.<br>
+<input TYPE="radio" NAME="f" VALUE="9">Agree<br><br>
+
+<h3>7. The building next to your house is being converted into a COVID-19 First Line Treatment Center (CFLTC). You will:</h3>
+<input TYPE="radio" NAME="g" VALUE="1">Try to save some time to volunteer at the hospital, and also donate in kind.<br>
+<input TYPE="radio" NAME="g" VALUE="6">Ring up the authorities and persuade them of a better place, but will not protest against it.<br>
+<input TYPE="radio" NAME="g" VALUE="3"><q>After all patients have to be treated, and next door is as good as any other place</q>.<br>
+<input TYPE="radio" NAME="g" VALUE="9">Try your best to stop the hospital from coming up, and start a protest meeting.<br><br>
+
+<h3>8. <q>People with COVID-19 must be treated with care and support</q>. You:</h3>
+<input TYPE="radio" NAME="h" VALUE="1">Agree<br>
+<input TYPE="radio" NAME="h" VALUE="9">Disagree.<br><br>
+
+<input TYPE="button" id="button" VALUE="Compute Score!" onClick=computeForm(this.form)><br><br>
+
+</form>
 <script>
   var Modal = function () {
 
@@ -711,11 +660,17 @@ This questionnaire attempts to measue the negative attitudes to people who are i
 Modal.init();
 
 </script>
+<div class="section">    
+       <h2><span>Speak out on DSD:</span></h2>
+ <p id="credits">To Join the DSD discussion <span style="color:blue"><u><a href="callto:+917558845528">Call Rafique</a></u></span> or click:<br>
+<button id="button" onclick="document.location='https://peerconnect.network/peerconsult/india/covidaction/sign-up'">Join the COVID Action Community India</button>
+</p>      
 
+</div>   
 
-<footer><center>
-<i class="fa fa-home" aria-hidden="true" style="font-size:24px;color:teal;"></i> <a href="https://peerconnect.network/peerconsult/india/covidaction">PC: PeerConnect India:</a> <i class="fas fa-book" style="font-size:24px;color:brown;"></i> A one-stop shop knowledge hub on COVID-19. <i class="fas fa-globe-americas" style="font-size:24px;color:navy;"></i><br>
-No <i class="far fa-copyright" style="font-size:20px;color:indigo;"></i>!  No Copyrights! Made for everyone and shared with the world, <i class="fas fa-globe" style="font-size:24px;color:teal;"></i>
-</center></footer>
+<p id="end" align="center" style="font-size:9pt"><center><span style="color:blue"><u><i class="fa fa-home" aria-hidden="true" style="font-size:24px;color:teal;"></i> <a href="https://peerconnect.network/peerconsult/india/covidaction">The COVID Action Community India</a></u></span> <i class="fas fa-book" style="font-size:24px;color:brown;"></i> A one-stop knowledge hub on COVID-19. <i class="fas fa-globe-americas" style="font-size:24px;color:navy;"></i>
+<br>
+Copyrighted under Creative Commons License <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Attribution-NonCommercial-ShareAlike</a>.<br>Re-users of this material must cite this source, if relevant, and must share any derivative work with the Community. <i class="fas fa-globe" style="font-size:24px;color:teal;"></i></center></p>
+</center>
 </body>
 </html>
