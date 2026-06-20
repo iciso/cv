@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<head>
+    	
+    <!-- Fonts from Google -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Verdana" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cavolini" rel="stylesheet">
+    
+    <!-- Fonts from Font-Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/1c2c73bff2.js" crossorigin="anonymous"></script>
+
+   
+    
+<title>Fidyah & Kaffarah Calculator</title>
+
+	<!-- Trying to replace one JS function  with JQuery -->
+	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	
+	<!-- Typer -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
+	<script>
+	
+
+window.onload = function() {
+
+const typing = document.getElementById('typing')
+    const text = '\[Observing Sawm \(fasts\)\] for a fixed number of days, but if any of you is ill or on a journey, the same number \(should be made up\) from other days. And as for those who can fast with difficulty, \(e.g. an old man\), they have \(a choice either to fast or\) to feed a Miskeen \(poor person\) \(for every day\). But whoever does good of his own accord, it is better for him. And that you fast is better for you, if only you knew. \n-Noble Quran 2:184.'
+    let index = 0;
+    
+    writeText()
+    
+    function writeText(){
+        typing.innerText = text.slice(0, index);
+    
+        index++;
+    
+        if(index > text.length){
+            index = text.length;
+        }
+        setTimeout(writeText, 200)
+    }
+}
+</script>
+<script language="javascript">
+var total_items = 4;
+
+function CalculateFidiyahKaffarah() {
+    var total = 0;
+    for (i=1; i<=total_items; i++) {
+        
+        itemID = document.getElementById("day_"+i);
+        if (typeof itemID === 'undefined' || itemID === null) {
+            alert("No entry for - " + "day_"+i);
+        } else {
+            total = total + parseInt(itemID.value) * parseInt(itemID.getAttribute("fidyah-Kaffrah-price"));
+        }
+        
+    }
+    document.getElementById("ItemsTotal").innerHTML = "<i class='fas fa-rupee-sign' style='font-size:16px;color:black'></i>" + total;
+
+    textOfReward();
+    changeBackgroundColor();
+}
+</script>
+
+<style>
+
+/*----------------*\
+|*      Import    *|
+\*----------------*/
+@import url("https://fonts.googleapis.com/css?family=Dosis|Roboto");
+
+
+/*----------------*\
+|*     Body       *|
+\*----------------*/
+body {
+   font-family:Verdana,sans-serif;
+    margin: 40px;
+    font-size:16px;
+    color:ffffff;
+    height: 100%;
+    justify-content:center;
+    align-items:center;
+    padding-left:8px; 
+    padding-right:8px; 
+    padding-top:4px; 
+    padding-bottom:4px;
+    }
+
+#calculator {
+  font-family: Comic-Sans, Arial, Roboto, Verdana, Cavolini, sans-serif;
+    font-size:16px;
+}
+
+
+#myP {
+    background-color: #ffffff;
+    color: #ffffff;
+}
+
+
+#demo {
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #fff,
+    0 0 40px #0ff,
+    0 0 80px #0ff,
+    0 0 90px #0ff,
+    0 0 100px #0ff,
+    0 0 150px #0ff;
+}
+
+h1 {
+color: blue; 
+font-family: 'Dela Gothic One', cursive;
+}
+
+h3 {
+color: blue; 
+font-family: 'Dela Gothic One', cursive;
+}
+
+#bismi {
+    position: absolute;
+    top: 20px;
+    font-size:27px;
+}
+/*----------------*\
+|*      Table     *|
+\*----------------*/
+
+.fidyahtable {
+  font-family: Comic-Sans, Arial, Roboto, Verdana, Cavolini, sans-serif;
+  font-size: 16px;
+  border-spacing: 2px;
+  border-collapse: separate;
+  border: 2px solid aqua;
+  border-radius: 5px / 20px;
+  max-width: 89vw;
+  align: center;
+  background-color: #ffffff;
+  margin:10px 10px 10px 10px;
+  padding-left:8px; 
+  padding-right:8px; 
+  padding-top:4px; 
+  padding-bottom:4px;
+  cellspacing:5px;
+  width: 71vw;
+  box-shadow:1px 2px 10px 10px lightgrey;
+}
+.verticalTableHeader {
+    font-weight: bold;
+    font-size: x-large;
+    color: Blue;
+    background-color:#f1f1c1;
+    border-spacing: 3px;
+    border-collapse: separate;
+    border: 2px solid aqua;
+    padding: 8px;
+    opacity: 1;
+    transition: 0.3s;
+}
+thead, tfoot {
+   text-align: center;   
+}
+td, th {
+  border: 2px solid aqua;
+  text-align: left;
+  padding: 4px;
+}
+caption:hover {
+  background-color: white;
+  opacity: 0.6;
+}
+a:hover {
+  background-color: yellow;
+  color: blue;
+  text-decoration: none;
+}
+
+
+tr:hover {
+    background-color:#f5f5f5;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+
+
+
+/*----------------*\
+|*      Notes     *|
+\*----------------*/
+.notes {
+ align: center; 
+}
+
+
+
+/*----------------*\
+|*    Button      *|
+\*----------------*/
+
+.btn {
+width:150px;
+color: #eeeeee;
+font-weight: 600;
+font-size: 16px;
+background-color: red;
+padding: 15px 50px;
+border: 2px solid orange;
+border-radius: 25px;
+margin:5px;
+}
+
+
+/*---------*\
+|* Footer  *|
+\*---------*/
+
+.foot{
+font-family: Roboto, Verdana, "Comic Sans", sans-serif;
+margin-bottom: 10px;
+text-align: center;
+border:0;
+padding: 5px;
+background-color: inherit;
+color: black;
+border-radius: 10%;
+}
+
+
+.padding-m {
+	padding: 10px;
+}
+</style>
+
+</head>
+
+<body>
+<H1 align="center" id="header" id="bismi">In the Name of Allah, The Entierly Beneficient, The Most Merciful</H1>
+	<br>
+ <h3 id = 'typing'> </h3>
+	<br>
+<p align="left">Accordingly, this Fidyah & Kaffarah Calculator calculates the total payments due to missed fasts for a family of two <i class="fas fa-user-friends" style="font-size:24px;color:blue;"></i> individuals A and B. Do enter  in numerals the number of days <i class="fas fa-calendar-alt" style="font-size:24px;color:blue;"></i> of fasting missed out or invalidated to find the total fidyah and kaffarah amount payable. Also, enter 0 if no fast is missed, or this calculator <i class="fas fa-calculator" style="font-size:24px;color:blue;"></i> will show "NaN" for "Not a Number"!</p>
+	<br>
+<center><div class="notes" align="center">
+<table class="fidyahtable" width="70%" border="1" color="yellow" align="center" cellpadding="5" id="calculator">
+    
+    <colgroup>
+       <col span="1" style="width: 30%;">
+       <col span="1" style="width: 20%;">
+       <col span="1" style="width: 20%;">
+    </colgroup>
+ 
+<tr><td class="verticalTableHeader" colspan="3">Fidyah & Kaffarah Calculator <i class="fas fa-calculator" style="font-size:36px;color:blue;"></i></td></tr>
+ 
+    <tr>
+        <td bgcolor="#CCCCCC"></td> 
+        <td bgcolor="#CCCCCC" width="50"><strong>1 Day</strong></td>
+        <td bgcolor="#CCCCCC" width="50"><strong>Days</strong></td>
+        
+    </tr>
+    <tr>
+        <td bgcolor="#eeeee">Fidyah by A</td>
+        <td><i class='fas fa-rupee-sign' style='font-size:16px;color:black'></i> 100</td>
+        <td><input name="day_1" type="text" id="day_1" value="0" placeholder="ðŸ’‰" size="3" fidyah-Kaffrah-price="100" onkeyup="CalculateFidiyahKaffarah()" /></td>
+        
+    </tr>
+    <tr>
+        
+        <td bgcolor="#eeeee">Fidyah by B</td>
+        <td><i class='fas fa-rupee-sign' style='font-size:16px;color:black'></i> 100</td>
+        <td><input name="day_2" type="text" id="day_2" value="0" placeholder="ðŸ’‰" size="3" fidyah-Kaffrah-price="100" onkeyup="CalculateFidiyahKaffarah()" /></td>
+        
+    </tr>
+    <tr>
+        
+        <td bgcolor="#eeeee">Kaffarah by A</td>
+        <td><i class='fas fa-rupee-sign' style='font-size:16px;color:black'></i> 6000</td>
+        <td><input name="day_3" type="text" id="day_3" value="0" placeholder="ðŸ’‰" size="3" fidyah-Kaffrah-price="6000" onkeyup="CalculateFidiyahKaffarah()" /></td>
+        
+    </tr>
+    <tr>
+        
+        <td bgcolor="#eeeee">Kaffarah by B</td>
+        <td><i class='fas fa-rupee-sign' style='font-size:16px;color:black'></i> 6000</td>
+        <td><input name="day_4" type="text" id="day_4" value="0" placeholder="ðŸ’‰" size="3" fidyah-Kaffrah-price="6000" onkeyup="CalculateFidiyahKaffarah()" /></td>
+        
+    </tr>
+    <tr>
+        <td bgcolor="#CCCCCC" colspan="2" align="center"><strong>Total:</strong></td>
+        <td bgcolor="#CCCCCC"><strong><div id="ItemsTotal"><i class='fas fa-rupee-sign' style='font-size:16px;color:black'></i>0</div></strong></td>
+    </tr>
+    <tr>
+        <td id= "myC" bgcolor="#eeeeaa" colspan="2" text-align="center"><p id="demo"></p><center>Space for Extra Rewards</center></td>
+        <td bgcolor="#eeeeaa" align=center><input type=button class="btn" onClick='myReset()' value="Clear All"></td>
+    </tr>    
+<tfoot>
+<tr><td colspan="3" style="text-align:left">An amount of <i class='fas fa-rupee-sign' style='font-size:16px;color:black'></i> 100 is used as the cost of meal for one person <i class="fas fa-user" style="font-size:24px;color:blue;"></i> to fast. <br>However, the <i class='fas fa-rupee-sign' style='font-size:16px;color:black'></i> amount given must be the cost of the food <i class="fas fa-bread-slice" style="font-size:24px;color:gold;"></i> <i class="fas fa-egg" style="font-size:24px;color:grey;"></i> <i class="fas fa-carrot" style="font-size:24px;color:orange;"></i><i class="fas fa-fish" style="font-size:24px;color:pink;"></i><i class="fas fa-drumstick-bite" style="font-size:24px;color:brown;"></i><i class="fas fa-apple-alt" style="font-size:24px;color:red;"></i><i class="fas fa-ice-cream" style="font-size:24px;color:aqua;"></i><i class="fas fa-mug-hot" style="font-size:24px;color:brown;"></i> that the person who missed the fast usually has, and so will vary from person to person.<i class="fas fa-users" style="font-size:24px;color:blue;"></i></td></tr>
+</tfoot>
+</table>
+    </div>    
+    </center>
+<br>
+
+  <div>
+                <h2>What is Fidyah?</h2>
+           
+                <p>Fidyah is paid in circumstances when it is difficult, or nearly impossible, for an individual to fast. Like for example:</p>
+<ol>
+<li> The person <i class="fas fa-user" style="font-size:24px;color:blue;"></i> being of old age</li>
+<li> The person <i class="fas fa-user" style="font-size:24px;color:blue;"></i> has to take medicines <i class="fas fa-pills" style="font-size:24px;color:brown;"></i>  <i class="fas fa-syringe" style="font-size:24px;color:red;"></i>  <i class="fas fa-tablets" style="font-size:24px;color:green;"></i> during the fast period</li>
+<li> The individual <i class="fas fa-user" style="font-size:24px;color:blue;"></i> is permanently ill; <i class="fas fa-diagnoses" style="font-size:24px;color:brown;"></i> physically or mentally</li>
+</ol>
+<p>In these cases, the individual <i class="fas fa-user" style="font-size:24px;color:blue;"></i> is liable to feed 1 person for every fast missed. For example, if an individual cannot fast for the entire month of Ramadan due to any of the reasons mentioned above, that individual must pay for 30 days' worth of food <i class="fas fa-bread-slice" style="font-size:24px;color:gold;"></i> <i class="fas fa-egg" style="font-size:24px;color:grey;"></i> <i class="fas fa-carrot" style="font-size:24px;color:orange;"></i><i class="fas fa-fish" style="font-size:24px;color:pink;"></i><i class="fas fa-drumstick-bite" style="font-size:24px;color:brown;"></i><i class="fas fa-apple-alt" style="font-size:24px;color:red;"></i><i class="fas fa-ice-cream" style="font-size:24px;color:aqua;"></i><i class="fas fa-mug-hot" style="font-size:24px;color:brown;"></i> , or 29 days, according to the Islamic calendar, to someone in need. So, be in faith this Ramadan, and give <i class="fas fa-hand-holding-usd" style="font-size:24px;color:green;"></i> your Fidyah to your family members in need.</p>
+ 
+    </div>
+
+    <div>
+         
+                <h2>What is Kaffarah?</h2>
+            
+
+       
+          
+                <p>Kaffara is paid as a penalty for leaving or breaking a fast intentionally. Kaffarah is applicable when the individual does any of the following deliberately, and knowingly:</p>
+<ol>
+<li> Eating or drinking <i class="fas fa-glass-whiskey" style="font-size:24px;color:orange;"></i> while fasting</li>
+<li> Engaging in sexual activities <i class="fas fa-bed" style="font-size:24px;color:aqua;"></i> anytime between dawn and dusk in the month of Ramadan</li>
+<li> Physically or verbally hurting <i class="fas fa-sad-tear" style="font-size:24px;color:red;"></i> <i class="far fa-sad-cry" style="font-size:24px;color:crimson;"></i> someone, while fasting.</li>
+</ol>
+<p>The penalty for breaking the fast is a payment, in addition to keeping fast at a later stage. If the fast cannot be kept, the individual is liable to feed 60 people for every fast missed or broken. For example, if a person breaks a fast during Ramadan due to any of the reasons mentioned above, and does not keep the fast at a later stage; the person is liable to pay for 60 days' worth of food <i class="fas fa-bread-slice" style="font-size:24px;color:gold;"></i> <i class="fas fa-egg" style="font-size:24px;color:grey;"></i> <i class="fas fa-carrot" style="font-size:24px;color:orange;"></i><i class="fas fa-fish" style="font-size:24px;color:pink;"></i><i class="fas fa-drumstick-bite" style="font-size:24px;color:brown;"></i><i class="fas fa-apple-alt" style="font-size:24px;color:red;"></i><i class="fas fa-ice-cream" style="font-size:24px;color:aqua;"></i><i class="fas fa-mug-hot" style="font-size:24px;color:brown;"></i>.</p>
+<p>Also, give Kaffarah to your closest <i class="fas fa-house-user" style="font-size:24px;color:blue;"></i> relatives!</p>
+            </div>
+        <div>
+            <h4 align="center"> So, share the blessings of Ramadan with your family members <i class="fas fa-house-user" style="font-size:30px;color:blue;"></i> even after the month of Ramadan has passed!</h4>
+        </div>    
+    
+
+
+<p id="myP">A Big Reward from Allah, Glorious Be He!</p>
+
+<script>
+
+function textOfReward() {
+var x = $("#myP").val();
+$("#demo").text(x);
+}
+
+<!--   //The appended JS script is replaced by aforementioned JQuery:
+function textOfReward() {
+  var x = document.getElementById("myP").innerHTML;
+  document.getElementById("demo").innerHTML = x;
+}
+
+-->
+</script>
+
+<script>
+function changeBackgroundColor() {
+    var a = document.getElementById("myC");
+    a.style.background='black';
+}
+</script>
+
+<script>
+function myReset() {
+  document.getElementById("demo").innerHTML = "";
+  document.getElementById("myC").style.background='#eeeeaa';
+  document.getElementById("ItemsTotal").innerHTML = "<i class='fas fa-rupee-sign' style='font-size:16px;color:black'></i>" + 0;
+  document.getElementById("day_1").value = "0";
+  document.getElementById("day_2").value = "0";
+  document.getElementById("day_3").value = "0";
+  document.getElementById("day_4").value = "0";
+}
+</script>
+
+<center><div class="foot">		
+		<a href="https://kyft.club/"><i class="fa fa-home" aria-hidden="true" style="font-size:24px;color:blue;"></i> KYFCT</a>: Uniting Families, <i class="far fa-heart" style="font-size:24px;color:red;"></i> Uniting the World. <!-- <i class="fas fa-globe-americas" style="font-size:24px;color:navy;"></i>   --><br>
+		No <i class="far fa-copyright" style="font-size:20px;color:indigo;"></i>!  No Copyrights! Made for everyone and shared with the world. <!-- <i class="fas fa-globe" style="font-size:24px;color:pink;"></i>  --><br>	
+		<p class="padding-m"><a href="#header">Scroll to the top</a></p>
+	</div></center>        
+     
+        </body>
+      
+      </script>
+</html>
+</html>
