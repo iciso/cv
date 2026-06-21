@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tools/1.2.7/jquery.tools.min.js"></script>
+
+				<!-- FontAwesome styles for KYFT from -->	
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/1c2c73bff2.js" crossorigin="anonymous"></script>
+
+
+<style>
+body {
+font-family: Helvetica;
+font-size: 16px;
+}
+
+h1 {
+color: #FF0000;
+}
+
+.bars {
+background-color: blue;
+height: 25px;
+margin: 10px 0 0 0;
+transition:width 1s ease-in;
+}	
+
+#bar0 {
+width: 556px;
+}
+
+#bar1 {
+width: 454px;
+}
+
+#bar2 {
+width: 622px;
+}
+
+#bar3 {
+width: 127px;
+}
+
+.number {
+color: white;
+text-align: right;
+padding: 3px;
+font-size: 12px; 
+}
+
+#main
+{
+border-top: 1px solid black;
+border-bottom: 1px solid black;
+overflow: auto;
+padding: 10px;
+margin-top: 10px;
+margin-bottom: 10px;
+}
+
+.tooltip {
+    display:none;
+    background: beige;
+    font-size:14px;
+    height:25px;
+    border-radius: 5px;
+    padding-top: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+    color: black;
+    border: 1px solid black;
+  }
+
+
+/*----------------*\
+|*      Table     *|
+\*----------------*/
+
+.wp-block-table {
+  font-family: "Comic-Sans", Roboto, "sans-serif";
+  font-size: 14px;
+  border-spacing: 2px;
+  border: 2px solid aqua;
+  max-width: 90vw;
+ word-wrap: break-word;
+ /* Merges cell borders and allows proper outline styling */
+            border-collapse: collapse; 
+            width: 100%;
+            
+            /* Applies borders ONLY to the top and bottom of the main table */
+            border-top: 2px solid #000000;
+            border-bottom: 2px solid #000000;
+}
+
+th, td {
+            padding: 12px;
+            text-align: left;
+            /* Explicitly ensuring internal cells have no borders */
+            border: none; 
+        }
+        
+#footer {
+margin-bottom: 0;
+border: 1px blue;
+height: 110px;
+background: #FFFFFF;
+background-image: url("");
+color: #333;
+}
+
+#credits {
+text-align: center;
+font-size:11px;
+}
+
+</style>
+</head>
+<body>
+<h1>IHCI: A Tale of Four Districts in Kerala</h1>
+<form name="form1">
+<select id="sel" onChange="selMeasure()">
+  <option value="1">Population in Hundred-Thousands</option>
+  <option value="2">Estimated Hypertensives in Thousands</option>  
+  <option value="3">IHCI Registrations in Thousands</option>  
+  <option value="4">Percentage Registered in IHCI</option> 
+  <option value="5">Amlodipine Patient Days Available</option>  
+  <option value="6">Telmisartan-Losartan Patient Days Available</option> 
+  <option value="7">HCTZ-Chlorthalidone Patient Days Available</option> 
+  <option value="8">Percentage who received NCD drugs Apr-May 2020</option>
+  <option value="9">2018 Annual Outcome: Controlled %</option>
+  <option value="10">2018 Annual Outcome: Uncontrolled %</option>
+  <option value="11">2018 Annual Outcome: Missed Visits %</option>
+  <option value="12">2019 Q3: BP Controlled %</option>
+  <option value="13">2019 Q3: Uncontrolled %</option>
+  <option value="14">2019 Q3: Missed Visits %</option>
+</select>
+</form>
+<div id="main">
+<div id="cat"></div>
+
+
+<div id="bar0" class="bars">
+<p id="bartext0" class="number"></p>
+</div>
+<div id="name0"></div>
+
+
+<div id="bar1" class="bars">
+<p id="bartext1" class="number"></p>
+</div>
+<div id="name1"></div>
+
+
+<div id="bar2" class="bars">
+<p id="bartext2" class="number"></p>
+</div>
+<div id="name2"></div>
+
+
+<div id="bar3" class="bars">
+<p id="bartext3" class="number"></p>
+</div>
+<div id="name3"></div>
+</div>
+
+<script>
+var cities = [
+{name: "Thiruvananthapuram", Population: 33.01427, Hypertensives: 556, Registrations: 99, PercentageRegistered: 18, Amlodipine: 111, Telmisartan: 106, HCTZ: 78, ReceivedNCD: 94, BPControlled:35, Uncontrolled:40, Default:25, QControlled:40, QUncontrolled:40, QDefault:20, tip: "State Capital"},
+{name: "Thrissur", Population: 31.21200, Hypertensives: 454, Registrations: 91, PercentageRegistered: 20, Amlodipine: 19, Telmisartan: 88, HCTZ: 115, ReceivedNCD: 90, BPControlled:36, Uncontrolled:38, Default:26, QControlled:31, QUncontrolled:35, QDefault:34, tip: "Highest number of facilities"},
+{name: "Kannur", Population: 25.23003, Hypertensives: 622, Registrations: 69, PercentageRegistered: 11, Amlodipine: 42, Telmisartan: 119, HCTZ: 159, ReceivedNCD: 97, BPControlled:46, Uncontrolled:36, Default:18, QControlled:47, QUncontrolled:37, QDefault:16, tip: "Northernmost"},
+{name: "Wayanad", Population: 8.17400, Hypertensives: 127, Registrations: 23, PercentageRegistered: 18, Amlodipine: 99, Telmisartan: 192, HCTZ: 76, ReceivedNCD: 86, BPControlled:34, Uncontrolled:36, Default:30, QControlled:36, QUncontrolled:33, QDefault:31, tip: "Most backward"}
+];
+
+
+var measures = Object.keys(cities[0]);
+
+function writeData(x) {
+    for (var i = 0; i<cities.length; i++) {
+    document.getElementById("name" + (i)).innerHTML= eval("cities[i]." + measures[0]);
+    document.getElementById("bartext" + (i)).innerHTML= eval("cities[i]." + measures[x]);
+    document.getElementById("bar" + (i)).style.width = eval("cities[i]." + measures[x])/10 + "%";
+    document.getElementById("bar" + (i)).title= eval("cities[i]." + measures[5]); 
+    }
+    //city and tip do not need to change for each measure. 
+
+    // this area inserts the Category as a heading 
+    document.getElementById("cat").innerHTML = "<strong>" + measures[x] + "</strong>";
+};
+
+writeData(1); // this is where we call the function the first time. 
+
+function selMeasure() { // function that writes the data based on the dropdown selection
+var m = document.getElementById("sel").value;
+writeData(m); 
+};// end selMeasure();
+
+$( document ).ready(function() {
+   $("[title]").tooltip({offset: [10, -30]});
+    });
+
+
+</script>
+<p id="credits">Chart by <a href="https://cvemrafi.vercel.app" target="_blank">Dr. Rafique</a>, who worked as Cardio Vascular Health Officer (CVHO) in IHCI, for WHO in Wayand Dt, Kerala, India. Rafique also volunteers for Peer Consult, formed by erstwhile UN colleagues of his in response to COVID-19. To suggest changes to these charts <a href="callto:+917558845528">Call or WhatsApp Rafique, by Clicking Here.</a>
+
+</p>
+
+
+<div id="footer">
+<h2 id="header" style="text-align:center"></h2><br>
+
+   <table class="wp-block-table;" style="width:100%; overflow-x:auto;">
+            <tr>
+                <td>
+                    <p id="footer">
+
+                        <i class="fas fa-heartbeat" style="font-size:24px;color:red;"></i> The India Hypertension
+                        Control Initiative (IHCI) is a collaborative project between Indian Council of Medical Research
+                        (ICMR), Ministry of
+                        Health & Family Welfare (MoHFW), State Governments, World Health Organization (WHO), and Resolve
+                        to Save
+                        Lives, an initiative of Vital Strategies. <i class="fas fa-globe"
+                            style="font-size:24px;color:blue;"></i>
+                    </p>
+                </td>
+                <td>
+                    <img src="https://www.ihci.in/~gitbook/image?url=https%3A%2F%2F4110139307-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-MMHxovP9vC7uvdIVdm8%252Favatar-1605562495454.png%3Fgeneration%3D1605562495815944%26alt%3Dmedia&width=32&dpr=2&quality=100&sign=7eea2677&sv=2" alt="IHCI"
+                         style="float:right">
+
+                </td>
+            </tr>
+        </table>
+</div>
+</body>
+</html>
