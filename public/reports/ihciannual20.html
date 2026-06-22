@@ -1,0 +1,432 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Wayanad IHCI Annual Review 2020</title>
+
+    <meta content="Annual and Quarterly Review of the year 2020 presented as charts" name="keywords">
+    <meta content="Wayanad IHCI Annual and Last Quarter Review 2020" name="description">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Muli%7CRoboto%7CRoboto+Condensed%7CRoboto+Mono%7CRoboto+Slab&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/1c2c73bff2.js" crossorigin="anonymous"></script>
+
+    <!-- Scroll Back to Top button -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script SRC="https://html-online.com/demo/scroll-to-top/script.js"></script>
+
+
+
+
+    <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+    <!-- Google Visualization -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+    <link href="https://cdn.anychart.com/releases/8.10.0/css/anychart-ui.min.css?hcode=a0c21fc77e1449cc86299c5faa067dc4"
+        rel="stylesheet" type="text/css">
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Codystar:300&display=swap');
+
+        html,
+        body,
+        #container,
+        #div_chart {
+            font-family:  "Roboto", "Poppins", "Codystar", "Comic Sans", Arial, sans-serif;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            font-size: 8vmin;
+            margin-top: -1vmin;
+            margin-bottom: -3vmin;
+            padding: 3vmin 3vmin;
+        }
+
+        h3 {
+            text-align: left;
+            font-size: 5vmin;
+            padding: 3vmin 3vmin;
+        }
+
+        p,
+        .notes {
+            padding: 5vmin 2vmin;
+            text-align: justify;
+            font-size: 4vmin;
+            margin-left: 3vmin;
+            margin-right: 3vmin;
+            border-radius: 3vmin
+        }
+
+        .text-wrap {
+            padding: 5vmin 2vmin;
+            text-align: justify;
+            font-size: 2.5vmin;
+            margin-left: 3vmin;
+            margin-right: 3vmin;
+            border-radius: 3vmin
+        }
+
+		@media screen 
+  and (device-width: 360px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 2) {
+
+	#div_chart {
+    width:360px;
+    overflow-x: auto;
+    position: absolute;
+    height:640px;
+    left: 0;
+  }
+}
+/*----------------*\
+|*     SIDE nav   *|
+\*----------------*/
+
+.sidenav {
+  font-family: "Comic Sans", Arial, sans-serif;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  color: lime;
+ background: #37474F;  /*linear-gradient(#6e05ff, #00008B)*/
+ box-shadow: -2px 3px 7px black;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  text-align:center;
+  
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;  /*   #818181   */
+  display: block;
+  transition: 0.3s;
+
+}
+
+.sidenav a:hover{
+  color: red;  /*  #f1f1f1  */
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 46px;
+  font-weight:bold;
+  margin-left:0;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+.sidenavlink {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  z-index: -1;
+   background-color:#37474F; /*00008B*/
+    box-shadow: -2px 3px 7px black;
+  border-radius: 20px;
+  height: 40px;
+  text-decoration: none;
+  padding-right: 10px;
+  -webkit-box-pack: justify;
+          justify-content: space-between;
+  font-family: sans-serif;
+  font-weight: 600;
+  text-align: center;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  color: white;
+  font-size: 14px;
+  width: 100px;
+  z-index: 10;
+}
+
+.sidenavlink:hover {
+  opacity: 1;
+}
+
+.sidenavelinkicon {
+  height: 26px;
+}
+/*-----------*\
+|*    Small  *|
+\*-----------*/
+
+
+
+        .small {
+		font-size:12px;
+}
+
+
+/*-----------*\
+|* Fa icons  *|
+\*-----------*/
+
+
+
+        .fa-heart {
+
+
+/*------------*\
+|* Pulse Beat *|
+\*------------*/
+
+            animation: pulse 1s linear infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.3);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+
+
+
+
+
+        /*----------------*\
+        |*   Back to Top  *|
+        \*----------------*/
+
+        #back2Top {
+            width: 40px;
+            line-height: 40px;
+            overflow: hidden;
+            z-index: 999;
+            display: none;
+            cursor: pointer;
+            -moz-transform: rotate(270deg);
+            -webkit-transform: rotate(270deg);
+            -o-transform: rotate(270deg);
+            -ms-transform: rotate(270deg);
+            transform: rotate(270deg);
+            position: fixed;
+            bottom: 50px;
+            right: 0;
+            background-color: #DDD;
+            color: #555;
+            text-align: center;
+            font-size: 30px;
+            text-decoration: none;
+        }
+
+        #back2Top:hover {
+            background-color: #DDF;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <h1>Wayanad IHCI 2020 Annual Review</h1>
+
+    <p>
+        Treatment outcome analysis of a total of 22,897 patients who had been registered since the start of the
+        program till the last day of the year 2020 are presented for the 2020 Annual Review as a
+        donut-chart-in-chart.
+    </p>
+
+
+    <div id="container"></div>
+
+    <script
+        src="https://cdn.anychart.com/releases/8.10.0/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+    <script
+        src="https://cdn.anychart.com/releases/8.10.0/js/anychart-exports.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+    <script
+        src="https://cdn.anychart.com/releases/8.10.0/js/anychart-ui.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+    <script type="text/javascript">anychart.onDocumentReady(function () {
+
+            // data set
+            var data = [
+                { x: "Controlled", value: 3176 },
+                { x: "Not Controlled", value: 3718 },
+                { x: "Missed Visits", value: 2239 },
+                { x: "LTFU", value: 13764 },
+            ];
+
+            // create and configure a pie chart
+            var chart1 = anychart.pie(data);
+            chart1.innerRadius("75%");
+
+            // create a bar chart
+            var chart2 = anychart.bar(data);
+
+            // set bar chart as the center content of a pie chart
+            chart1.center().content(chart2);
+
+            chart1.title("Wayanad IHCI Annual Review 2020: n=22,897");
+            chart1.container("container");
+            chart1.draw();
+        });</script>
+<p><span class="small">PS: <i class="fas fa-mouse" style="font-size:24px;color:brown;"></i>  Mouse over the donut-graph to see data for each type.</span></p>
+    <div class="notes">
+        <h3> The keys for the Treatment Analysis are:</h3>
+        <ul>
+            <li>Controlled (C) – Number of Hypertensive patients with BP less than 140/90 at their most recent visit in
+                Q1 2021</li>
+            <li>Not Controlled (NC) - Number of Hypertensive patients with BP greater than or equal to 140/90 at their
+                most recent visit in Q1 2021</li>
+            <li>Missed Visits (MV) - Number of Hypertensive patients with No visits in Q1 2021</li>
+            <li>Lost to Follow Up (LTFU) - Number of Hypertensive patients who had not visited the facility for an year
+                or more.</li>
+        </ul>
+
+    </div>
+
+
+
+    <h2>The Q4 2020 Quarterly Review</h2>
+    <p>This pertains to the the Treatment outcome measured in Q1 2021 for all patients registered in Q4 2020. A total of
+        510 patients were registered between 1 Oct 2020 to 31 Dec 2020.<br><br>
+        The Stacked bar graph compares the Q4 2020 with Monthly Reviews. The data for the Monthly Reviews are from
+        Supportive Supervision wherein also an average of 400 treatment cards are reviewed.
+    </p>
+    <center>
+        <div id="div_chart"></div>
+    </center>
+
+
+
+    <script type="text/javascript">
+        google.charts.load("current", { packages: [ "corechart" ] });
+        google.charts.setOnLoadCallback(drawChart);
+
+
+
+        function drawChart() {
+
+
+            var data = google.visualization.arrayToDataTable([
+                [ 'Genre', 'Controlled', 'Uncontrolled', 'Missed Visits', 'LTFU', { role: 'annotation' } ],
+                [ 'Q4 2020', 26, 22, 34, 18, '' ],
+                [ 'Jan 2021', 13, 8, 20, 59, '' ],
+                [ 'Feb 2021', 11, 11, 12, 66, '' ],
+                [ 'Mar 2021', 25, 23, 11, 41, '' ],
+                [ 'Apr 2021', 30, 24, 13, 33, '' ]
+            ]);
+
+            var options = {
+                width: 800,
+                height: 600,
+                legend: { position: 'bottom', maxLines: 4 },
+                bar: { groupWidth: '75%' },
+                colors: [ '#00FF00', '#FF0000', 'yellow', 'grey' ],
+                title: 'Comparing Treatment Outcome % of Q4 2020 with Monthly Reviews\nMonthly Review % are from Supportive Supervision',
+                isStacked: true
+            };
+
+
+
+            var options_fullStacked = {
+                isStacked: 'percent',
+                height: 600,
+                legend: { position: 'bottom', maxLines: 4 },
+                hAxis: {
+                    minValue: 0,
+                    ticks: [ 0, .3, .6, .9, 1 ]
+                }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('div_chart'));
+
+            chart.draw(data, options);
+        }
+
+    </script>
+	<p><span class="small">PS: <i class="fas fa-mouse" style="font-size:24px;color:brown;"></i>  Mouse over the stacked bar-graph to see data for each type or month.</span></p>
+    <div class="notes"></div>
+    <h3>Way Forward:</h3>
+    <p>Due to resurgence of COVID-19 in May and June of 2021, and consequent lockdowns, Supportive Supervison visits
+        were not done in these months. However, the trend of increasing control rate is a good sign, and with increase
+        of footfalls in the facilities in future, better control rates are expected.</p>
+
+
+
+
+    <center>
+        <table class="text-wrap" style=" width:98%; background-color:#FFFFFF; color:#000000; border:#FFFFFF; text-align:center;
+            font-size:16px;">
+            <tr style="background-color:#FFFFFF; color:#000000;">
+                <td style="background-color:#FFFFFF; color:#000000;">
+                    <p id="footer" class="text-wrap" style="background-color:#FFFFFF; color:#000000;">
+
+                        <i class="fa fa-heartbeat" style="font-size:24px;color:red;"></i> The India Hypertension Control
+                        Initiative (IHCI) is a collaborative project between Indian Council of Medical Research
+                        (ICMR), Ministry of Health & Family Welfare (MoHFW), State Governments, World Health
+                        Organization (WHO), and Resolve to Save Lives, an initiative of Vital Strategies. <i
+                            class="fa fa-globe" style="font-size:24px;color:blue;"></i>
+                    </p>
+                </td>
+                <td style="background-color:#FFFFFF; color:#000000;">
+                    <img src="https://www.ihci.in/~gitbook/image?url=https%3A%2F%2F4110139307-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-MMHxovP9vC7uvdIVdm8%252Favatar-1605562495454.png%3Fgeneration%3D1605562495815944%26alt%3Dmedia&width=32&dpr=1&quality=100&sign=7eea2677&sv=2" alt="IHCI" style="float:right">                </td>
+            </tr>
+        </table>
+    </center>
+    <a id="back2Top" title="Back to top" href="#">&#10148;</a>
+</body>
+
+</html>
