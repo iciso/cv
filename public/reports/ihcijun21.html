@@ -1,0 +1,2792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta name="author"
+        content="Created by Rafique, Cardio Vascular Health Officer (CVHO), WHO, IHCI, for Wayanad and Kozhikode Districts of Kerala" />
+    <meta name="keywords"
+        content="IHCI, India, Hypertension, BP, BP Control, BP Uncontrol, Initiative, ICMR, RTSL, State Governments, GoI, Gonvernment, Wayanad, Calicut, Kozhikode" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="dc:creator" content="Rafique" />
+    <meta name="dc:title"
+        content="The monthly Report and Dashboard of the Wayanad India Hypertension Control Initiative is a harbinger to the IHCI website." />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="IHCI Wayanad Monthly Report Dashboard - Oct 2021" />
+    <meta property="og:description"
+        content="The India Hypertension Control Initiative (IHCI) is a collaborative project between Indian Council of Medical Research (ICMR), Ministry of
+        Health & Family Welfare (MoHFW), State Governments, World Health Organization (WHO), and Resolve to Save Lives, an initiative of Vital Strategies." />
+    <meta property="og:url" content="https://cvemrafi.vercel.app/" />
+
+  <title>IHCI Monthly Report Dashboard - June 2021</title>
+
+  <!-- CSS & Scripts for Header -->
+  <script src="https://tobiasahlin.com/js/anime.min.js"></script>
+  <script type="text/javascript" src="https://tobiasahlin.com/js/app.js?v=1"></script>
+  <script type="text/javascript" src="https://tobiasahlin.com/js/moving-letters.js"></script>
+
+  <!-- CanvasJS Bootstrap CSS required for the width of containers-->
+  <link rel="stylesheet" href="http://www.geocities.ws/kyft/db/assets/bootstrap/bootstrap4-alpha3.min.css">
+
+  <!-- Bootstrap CSS for Codepen Table  -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+
+
+  <!-- Zing Chart Scripts  -->
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+
+
+  <!-- Canvas JS Scripts //Have to use this Trial Version .js file from Canvas JS as this is only for purchase -->
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+  <!-- Highcharts Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/highcharts.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/modules/exporting.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/modules/export-data.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/modules/data.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/modules/accessibility.js"></script>
+
+  <!-- FontAwesome styles for KYFT from -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/1c2c73bff2.js" crossorigin="anonymous"></script>
+
+  <!-- Scroll Back to Top button -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script SRC="https://html-online.com/demo/scroll-to-top/script.js"></script>
+
+  <!-- Apex Charts Stylesheet & Script -->
+  <link href="https://apexcharts.com/samples/assets/styles.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+  <!-- Codepen Scripts -->
+
+
+
+
+
+  <style>
+    /*---------*\
+	|*   Body  *|
+	\*---------*/
+
+
+    body {
+      background-color: #fafafa;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-weight: 400;
+    }
+
+    h4 {
+      text-align: left;
+    }
+
+    #header {
+      border-bottom: 5px solid #37474F;
+      color: #37474F;
+      margin-bottom: 1.5rem;
+      padding: 1rem 0;
+      width: 100%;
+    }
+
+    #right {
+      text-align: right;
+    }
+
+    .left {
+      text-align: left;
+    }
+
+    #revenue-tag {
+      font-weight: inherit !important;
+      border-radius: 0px !important;
+    }
+
+    /*--------------*\
+	|*   Section    *|
+	\*--------------*/
+
+    section {
+      background-color: cornflowerblue;
+      padding: 55px;
+      margin: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      color: white;
+      border-radius: 50%
+    }
+
+
+    /*---------*\
+	|*   Card  *|
+	\*---------*/
+
+    .card {
+      border: 0rem;
+      border-radius: 0rem;
+      padding: 2px;
+      width: 100%;
+    }
+
+    .card-header {
+      background-color: #37474F;
+      border-radius: 0 !important;
+      width: 100%;
+      color: white;
+      margin-bottom: 0;
+      padding: 1rem;
+    }
+
+    .card-block {
+      border: 1px solid #cccccc;
+      width: 100%;
+    }
+
+    .shadow {
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+        0 1px 18px 0 rgba(0, 0, 0, 0.12),
+        0 3px 5px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .tag {
+      background: green;
+      padding: 10px;
+      border: 1px solid lightgreen;
+    }
+
+    #revenue-column-chart,
+    #products-revenue-pie-chart,
+    #orders-spline-chart {
+      height: 300px;
+      width: 100%;
+    }
+
+
+    /*---------------*\
+	|*   Highcharts  *|
+	\*---------------*/
+
+
+    .highcharts-figure,
+    .highcharts-data-table table {
+      min-width: 310px;
+      max-width: 800px;
+      margin: 1em auto;
+    }
+
+    #container {
+      height: 400px;
+      width: 100%;
+    }
+
+    .highcharts-data-table table {
+      font-family: Verdana, sans-serif;
+      border-collapse: collapse;
+      border: 1px solid #EBEBEB;
+      margin: 10px auto;
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+      padding: 1em 0;
+      font-size: 1.2em;
+      color: #555;
+    }
+
+    .highcharts-data-table th {
+      font-weight: 300;
+      padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+      padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+      background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+      background: #f1f7ff;
+    }
+
+
+
+
+
+    /*--------------------*\
+	|*   Facility charts  *|
+	\*--------------------*/
+
+
+    .chart--container {
+      height: 100%;
+      width: 100%;
+      min-height: 530px;
+      padding: 5px;
+      margin: 2px;
+    }
+
+    .zc-ref {
+      display: none;
+    }
+
+
+
+
+    /*---------------*\
+	|*     Lists     *|
+	\*---------------*/
+
+    ol {
+      background: #ff9999;
+      padding: 20px;
+    }
+
+    ul {
+      background: #3399ff;
+      padding: 20px;
+    }
+
+    ol li {
+      background: #ffe5e5;
+      padding: 5px;
+      margin-left: 35px;
+    }
+
+    ul li {
+      background: #cce5ff;
+      margin: 5px;
+    }
+
+
+    /*----------------*\
+	|*   Drugs Table  *|
+	\*----------------*/
+
+    .wp-block-table {
+      font-family: "Comic-Sans", Roboto, "sans-serif";
+      font-size: 14px;
+      border-spacing: 2px;
+      border-collapse: separate;
+      border: 2px solid aqua;
+      max-width: 90vw;
+    }
+
+    .verticalTableHeader {
+      font-weight: 400;
+      font-size: 14px;
+      color: Blue;
+      background-color: #f1f1c1;
+      border-spacing: 3px;
+      border-collapse: separate;
+      border: 2px solid aqua;
+      padding: 8px;
+      opacity: 1;
+      transition: 0.3s;
+    }
+
+    thead,
+    tfoot {
+      text-align: center;
+    }
+
+    td,
+    th {
+      border: 2px solid aqua;
+      text-align: left;
+      padding: 4px;
+    }
+
+    caption:hover {
+      background-color: white;
+      opacity: 0.6;
+    }
+
+    a {
+      color: indigo;
+    }
+
+    a:hover {
+      background-color: yellow;
+      color: red;
+      text-decoration: none;
+    }
+
+
+    .TableHeader {
+      font-weight: bold;
+      font-size: 15px;
+      color: Blue;
+      background-color: #f1f1c1;
+      border-spacing: 10px;
+      border-collapse: separate;
+      padding: 8px;
+      opacity: 0.6;
+      transition: 0.3s;
+    }
+
+
+    tr:hover {
+      background-color: #f5f5f5;
+      opacity: 0.6;
+      transition: 0.3s;
+    }
+
+
+    /*-----------------------------*\
+	|*  Line & other Apex Charts    *|
+	\*-----------------------------*/
+
+    #chart5,
+    chart6 {
+      max-width: 650px;
+      margin: 35px auto;
+    }
+
+    .apexcharts-tooltip-title {
+      display: none;
+    }
+
+    #chart .apexcharts-tooltip {
+      display: flex;
+      border: 0;
+      box-shadow: none;
+    }
+
+    /*--------------------*\
+	|*    Annual Review   *|
+	\*--------------------*/
+
+
+    h3,
+    h6 {
+      margin: 0;
+      line-height: 1em;
+    }
+
+    h3 {
+      margin-bottom: 1em;
+    }
+
+    h6 {
+      font-size: .8em;
+      padding: 0 0 .5em;
+      color: #919191;
+    }
+
+    figure {
+      margin: 0 auto;
+      max-width: 90%; //1100px;
+      position: relative;
+    }
+
+    .graphic {
+      padding-left: 40px;
+    }
+
+    .row {
+      margin-bottom: 1.5em;
+    }
+
+    @keyframes expand {
+      from {
+        width: 0%;
+      }
+
+      to {
+        width: 100%;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      @keyframes expand {
+        from {
+          width: 0%;
+        }
+
+        to {
+          width: calc(100% - 75px);
+        }
+      }
+    }
+
+    .chart {
+      overflow: hidden;
+      width: 0%;
+      animation: expand 1.5s ease forwards;
+    }
+
+    .row+.row .chart {
+      animation-delay: .2s;
+    }
+
+    .row+.row+.row .chart {
+      animation-delay: .4s;
+    }
+
+    .block {
+      display: block;
+      height: 70px;
+      color: #fff;
+      font-size: .75em;
+      float: left;
+      background-color: lightgreen; //#334D5C;
+      position: relative;
+      overflow: hidden;
+      opacity: 1;
+      transition: opacity, .3s ease;
+      cursor: pointer;
+    }
+
+    .block:nth-of-type(2),
+    .legend li:nth-of-type(2):before {
+      background-color: red; //#45B29D;
+    }
+
+    .block:nth-of-type(3),
+    .legend li:nth-of-type(3):before {
+      background-color: lightblue; //#EFC94C;
+    }
+
+    .block:nth-of-type(4),
+    .legend li:nth-of-type(4):before {
+      background-color: #E27A3F;
+    }
+
+    .block:nth-of-type(5),
+    .legend li:nth-of-type(5):before {
+      background-color: #DF5A49;
+    }
+
+    .block:nth-of-type(6),
+    .legend li:nth-of-type(6):before {
+      background-color: #962D3E;
+    }
+
+    .block:hover {
+      opacity: .65;
+    }
+
+    .value {
+      display: block;
+      line-height: 1em;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%);
+    }
+
+    .x-axis {
+      text-align: center;
+      padding: .5em 0 2em;
+    }
+
+    .y-axis {
+      height: 20px;
+      transform: translate(-32px, 170px) rotate(270deg);
+      position: absolute;
+      left: 0;
+    }
+
+    .legend {
+      width: 70%;
+      overflow-x: auto;
+      margin: 0 auto;
+      padding: 5px;
+      font-size: .9em;
+      background-color: #334D5C; //darkgreen;
+      text-align: center;
+    }
+
+    .legend li {
+      display: inline-block;
+      padding: .25em 1em;
+      line-height: 1em;
+      color: white;
+      border-color: aqua;
+      border-style: solid;
+      border-width: 1px;
+      background-color: darkgreen;
+    }
+
+    .legend li:before {
+      content: "";
+      margin-right: .5em;
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: lightgreen; //#334D5C;
+    }
+
+    @media screen and (min-width: 768px) {
+      h6 {
+        padding: 0;
+        width: 75px;
+        float: left;
+        line-height: 100px;
+      }
+
+      .block {
+        font-size: 1em;
+      }
+    }
+
+    /*----------------*\
+	|*  Data to Table *|
+	\*----------------*/
+
+    .highcharts-figure,
+    .highcharts-data-table table {
+      min-width: 310px;
+      max-width: 800px;
+      margin: 5px auto;
+    }
+
+    #datatable {
+      font-family: Verdana, sans-serif;
+      border-collapse: collapse;
+      border: 1px solid #EBEBEB;
+      margin: 10px auto;
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    #datatable caption {
+      padding: 1em 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    #datatable th {
+      font-weight: bold;
+      padding: 10px;
+    }
+
+    #datatable td,
+    #datatable th,
+    #datatable caption {
+      padding: 10px;
+    }
+
+    #datatable thead tr,
+    #datatable tr:nth-child(even) {
+      background: #f8f8f8;
+    }
+
+    #datatable tr:hover {
+      background: #f1f7ff;
+    }
+
+
+
+
+    /*-----------*\
+	|*   Footer  *|
+	\*-----------*/
+
+    #footer {
+      font-size: small;
+      text-align: center;
+      padding: 20px;
+      border: 0;
+      margin: 10px;
+    }
+
+    #small {
+      font-size: small;
+    }
+
+
+    /*----------------*\
+	|*   Back to Top  *|
+	\*----------------*/
+
+    #back2Top {
+      width: 40px;
+      line-height: 40px;
+      overflow: hidden;
+      z-index: 999;
+      display: none;
+      cursor: pointer;
+      -moz-transform: rotate(270deg);
+      -webkit-transform: rotate(270deg);
+      -o-transform: rotate(270deg);
+      -ms-transform: rotate(270deg);
+      transform: rotate(270deg);
+      position: fixed;
+      bottom: 50px;
+      right: 0;
+      background-color: #DDD;
+      color: #555;
+      text-align: center;
+      font-size: 30px;
+      text-decoration: none;
+    }
+
+    #back2Top:hover {
+      background-color: #DDF;
+      color: #000;
+    }
+  </style>
+
+
+
+  </script>
+</head>
+
+<body>
+
+
+  <!--  First Row starts here -->
+
+  <div class="container">
+    <!-- 1 open -->
+    <h2 id="header">
+
+
+
+      <strong>Wayanad District IHCI Monthly Report</strong><br>
+      <small class="text-muted">June 2021</small>
+
+
+
+
+
+
+    </h2><br>
+    <center>
+      <div class="row m-b-1" style="width:100%">
+        <!-- 2 open -->
+        <div class="col-xs-12" style="width:100%">
+          <!-- 3 open -->
+          <div class="card shadow" style="width:100%">
+            <!-- 4 open -->
+            <h4 class="card-header" style="width:100%">Registrations till June 2021: <span class="tag" id="revenue-tag">
+                26,131 </span>
+            </h4>
+            <div class="card-block" style="width:100%">
+              <!-- 5 open -->
+
+
+
+
+              <figure class="highcharts-figure" style="width:100%">
+
+
+
+
+                <div id="container" style="width:100%"></div> <!-- 6 open & closed -->
+                <p class="highcharts-description" style="padding:20px">
+                  With the Lockdown lifted in June 2021 and the delivery of drugs to the houses of the patients
+                  reducing, there
+                  is an upward trend in registraton across most facilities. Thus, the upward trend seen in new
+                  Registration
+                  which started with 139 in Nov and Dec 2020, and which had improved to 248 in Feb 2021, till 445 in Mar
+                  2021, has once again reached the 424 mark in June 2021, with a dip in between due to the intervening
+                  resurgence of COVID-19.<br><br>
+                  <span id="small">To view data table, full screen, download pdf, svg, excel formats, or print this
+                    graph, and for other options, click the hamburger menu <i class="fas fa-bars"
+                      style="font-size:24px;color:black;"></i> on the right top corner of this graph.</span>
+                </p>
+
+              </figure>
+
+
+            </div><!-- 5 closed -->
+          </div><!-- 4 closed -->
+        </div><!-- 3 closed -->
+      </div><!-- 2 closed -->
+    </center>
+
+
+    <!--  First Row ends here --><br>
+
+
+
+    <!--  Second Row starts here -->
+    <div class="row m-b-1">
+      <!-- 2 open -->
+      <div class="col-xs-12" style="width:100%">
+        <!-- 3 open -->
+        <div class="card shadow" style="width:100%">
+          <!-- 4 open -->
+          <h4 class="card-header" style="width:100%">Regn by Facility: <span class="tag" id="revenue-tag">n (Types) =
+              3</span>
+          </h4>
+          <div class="card-block" style="width:100%">
+            <!-- 5 open -->
+
+
+            <center>
+              <div id="chart6" class="chart--container" style="width:100%">
+                <!-- 6 open -->
+
+
+
+              </div>
+            </center><!-- 6 closed -->
+
+
+            <p class="highcharts-description" style="padding:20px">
+              <span>The reason for lesser registrations at the SDH and CHC is that these were converted into COVID-19
+                First Line Treatment Centers or full-fledged COVID-19 designated centers, and so no NCD clinics are held
+                in these facilities.<br><br>
+                However, new registrations in PHCs have picked up in Jun 21 after the resurgence of COVID-19 had stopped
+                registration since Mar 21. <br><br>
+              </span>
+            </p>
+            <p class="highcharts-description">
+              <span id="small">PS: <i class="fas fa-mouse" style="font-size:24px;color:brown;"></i> Mouse over the
+                column-graph to see data for each facility type or month. Also, to view data table, full screen,
+                download pdf, svg, excel formats, or print this
+                graph, and for other options like zoom in, zoom out, selection zoom, panning, click the hamburger menu
+                <i class="fas fa-bars" style="font-size:24px;color:black;"></i> on the right top corner of this
+                graph.</span>
+            </p>
+
+          </div><!-- 5 closed -->
+        </div><!-- 4 closed -->
+      </div> <!-- 3 closed -->
+      <!-- Added in May 2021 only! -->
+    </div> <!-- 2 closed -->
+
+    <!--  Second Row ends here --><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--   Third  Row starts here. Added in June 2021  to accomodate Innovation stories -->
+
+
+    <div class="row m-b-1">
+      <!-- 2 open -->
+      <div class="col-xs-12" style="width:100%">
+        <!-- 3 open -->
+        <div class="card shadow" style="width:100%">
+          <!-- 4 open -->
+          <h4 class="card-header" style="width:100%">Innovations from the field: <span class="tag" id="revenue-tag">FHC
+              Poothady</span></h4>
+          <div class="card-block" style="width:100%">
+            <!-- 5 open -->
+
+
+            <center>
+              <!-- 6 open -->
+              <p class="highcharts-description" style="padding:20px">
+                <span>
+                  <p><i>The NCD clinics were restarted after lockdowns were lifted in the third week of June 2021.
+                      Accordingly, FHC Poothady revamped its conduct of NCD clinic, as outlined.</i></p>
+                  <table class="wp-block-table">
+                    <caption>Table showing the respective appointment days of each of
+                      the wards under FHC Poothady, in Wayanad District, Kerala.
+                    </caption>
+
+
+
+                    <tbody>
+                      <tr style="" height="">
+                        <td class="" style="" bgcolor="lightblue" width="" height="">Days fixed
+                          for Wards</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Mon</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Tue</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wed</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Thu</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Fri</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Sat</td>
+                        <td class="xl73" style="" bgcolor="#999999" width="">Sun</td>
+                      </tr>
+                      <tr style="" height="">
+                        <td class="xl69" style="" bgcolor="#ffcccc" width="" height="">1<sup>st</sup>
+                          Week</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:1</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:2</td>
+                        <td class="" style="" width:59pt" bgcolor="lightblue" width="">Wd:3</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:4</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:5</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:6</td>
+                        <td class="" style="" bgcolor="#999999" width="">&nbsp;</td>
+                      </tr>
+                      <tr style="" height="">
+                        <td class="xl69" style="" bgcolor="#ffcccc" width="" height="">2<sup>nd</sup>
+                          Week</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:7</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:8</td>
+                        <td class="" style="" width:59pt" bgcolor="lightblue" width="">Wd:9</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:10</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:11</td>
+                        <td class="xl66" style="" bgcolor="#999999" width="">2nd Sat</td>
+                        <td class="" style="" bgcolor="#999999" width="">&nbsp;</td>
+                      </tr>
+                      <tr style="" height="">
+                        <td class="xl69" style="" bgcolor="#ffcccc" width="" height="">3<sup>rd</sup>
+                          Week</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:12</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:13</td>
+                        <td class="" style="" width:59pt" bgcolor="lightblue" width="">Wd:14</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:15</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:16</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:17</td>
+                        <td class="" style="" bgcolor="#999999" width="">&nbsp;</td>
+                      </tr>
+                      <tr style="" height="">
+                        <td class="xl69" style="" bgcolor="#ffcccc" width="" height="">4<sup>th</sup>
+                          Week</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:18</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:19</td>
+                        <td class="" style="" width:59pt" bgcolor="lightblue" width="">Wd:20</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:21</td>
+                        <td class="" style="" bgcolor="lightblue" width="">Wd:22</td>
+                        <td class="" style="" bgcolor="#ffff66" width="">Others</td>
+                        <td class="" style="" bgcolor="#999999" width="">&nbsp;</td>
+                      </tr>
+                      <tr style="height:15.75pt" height="21">
+                        <td class="xl70" style="" bgcolor="#ffcccc" width="" height="21">5<sup>th</sup>
+                          Week</td>
+                        <td class="xl67" style="" bgcolor="#ff66ff" width="">M visit</td>
+                        <td class="xl67" style="" bgcolor="#ff66ff" width="">M visit</td>
+                        <td class="xl67" style="" width:59pt" bgcolor="#ff66ff" width="">M visit</td>
+                        <td class="xl67" style="" bgcolor="lightblue" width="">&nbsp;</td>
+                        <td class="xl67" style="" bgcolor="lightblue" width="">&nbsp;</td>
+                        <td class="xl67" style="" bgcolor="lightblue" width="">&nbsp;</td>
+                        <td class="xl68" style="" bgcolor="#999999" width="">&nbsp;</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+            </center><!-- 6 closed -->
+
+
+
+            <h2>Changes made:</h2>
+            <ol>
+              <li>The NCD paitents of say Ward 1 will be visiting FHC Poothady on the first Monday.
+                Similarly, NCD patients of Ward 2 will visit on first Tuesday, and so on till all the
+                22 odd wards to which FHC Poothady caters, are covered during the working days of the month.</li>
+              <li>The First responsible person is JHI in the JHI-JPHN-ASHA Team. This JHI-JPHN-ASHA Team
+                of the Subcentre and its wardwill present themselves at FHC Poothady on the appointed day of their ward,
+                and be responsible for recording the BP and updating it in the IHCI cards.</li>
+              <li>The fourth Saturday is earmarked for NCD patients from other panchayats</li>
+              <li>After the appointed 22 days are over, patients from any ward would be seen on the remaining free days
+              </li>
+              <li>Though patients from other wards and panchayats would be seen on the days not appointed for them,
+                preference would be for those patients from the appointed ward for that given day</li>
+            </ol></span>
+            </p>
+            <p class="highcharts-description" style="text-align:center" ;>
+              <span id="small">PS: <i class="fas fa-envelope-open" style="font-size:24px;color:brown;"></i> To inform
+                similar innovations by mail <a href="mailto:cvhowayanad@ihmi.in">Click Here</a>&nbsp; or to call <i
+                  class="fas fa-mobile" style="font-size:24px;color:brown;"></i> the Wayanad CVHO <a
+                  href="tel:+917558845528">Click Here</a></span>
+            </p>
+
+
+          </div><!-- 5 closed -->
+        </div><!-- 4 closed -->
+      </div> <!-- 3 closed -->
+      <!-- Added in May 2021 only! -->
+    </div> <!-- 2 closed -->
+
+    <br><br>
+
+
+
+
+    <!--   Third  Row ends here. Was sdded in June 2021  to accomodate Innovation stories -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--   Fourth row starts here. Added in June 2021  to accomodate Annual Review 2020 Reports -->
+
+
+    <div class="row m-b-1">
+      <!-- 2 open -->
+      <div class="col-xs-12" style="width:100%">
+        <!-- 3 open -->
+        <div class="card shadow" style="width:100%">
+          <!-- 4 open -->
+          <h4 class="card-header" style="width:100%">Annual Review 2018 to 2020 <span class="tag" id="revenue-tag"> n =
+              22,987 Registered Patients</span></h4>
+          <div class="card-block" style="width:100%">
+            <!-- 5 open -->
+
+
+            <center>
+              <!-- 6 open -->
+              <br>
+              <h3>Outcomes of Annual Review 2018 to 2020 & Q4 2020</h3><!-- Not removed  -->
+              <figure>
+                <div class="y-axis">
+                  <h3></h3> <!-- Y - Axis Title removed -->
+                </div>
+
+                <div class="graphic">
+
+                  <div class="row">
+                    <h6>2018-20</h6>
+                    <div class="chart">
+                      <span class="block" title="Controlled: 3,176">
+                        <span class="value">14%</span>
+                      </span>
+                      <span class="block" title="Un-controlled: 3,718">
+                        <span class="value">16%</span>
+                      </span>
+                      <span class="block" title="Missed Visits: 2,239">
+                        <span class="value">10%</span>
+                      </span>
+                      <span class="block" title="LTFU: 13,764">
+                        <span class="value">60%</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <h6>Q4-2020</h6>
+                    <div class="chart">
+                      <span class="block" title="Controlled: 135">
+                        <span class="value">26%</span>
+                      </span>
+                      <span class="block" title="Un-controlled: 114">
+                        <span class="value">22%</span>
+                      </span>
+                      <span class="block" title="Missed Visits: 174">
+                        <span class="value">34%</span>
+                      </span>
+                      <span class="block" title="LTFU:87">
+                        <span class="value">18%</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="x-axis">
+                  <ul class="legend">
+                    <li>Controlled</li>
+                    <li>Un-controlled</li>
+                    <li>Missed Visits</li>
+                    <li>LTFU</li>
+                  </ul>
+
+                </div>
+
+              </figure>
+
+              <p class="highcharts-description"> For the Annual Review, all treatment cards registered since the
+                begining of the program in 2018 till the last day of 2020 were reviewed. Subsequently the Treatment
+                outcomes were measured in Q1 2021 for all the 22,987 patients registered in the period under review.</p>
+              <h4> The keys for the Treatment Analysis are:</h4>
+              <ol style="text-align:left;">
+                <li>Controlled (C) – Number of Hypertensive patients with BP less than 140/90 at their most recent visit
+                  in
+                  Q1 2021</li>
+                <li>Not Controlled (NC) - Number of Hypertensive patients with BP greater than or equal to 140/90 at
+                  their
+                  most recent visit in Q1 2021</li>
+                <li>Missed Visits (MV) - Number of Hypertensive patients with No visits in Q1 2021</li>
+                <li>Lost to Follow Up (LTFU) - Number of Hypertensive patients who had not visited the facility for an
+                  year
+                  or more.</li>
+              </ol>
+
+
+              <p class="highcharts-description">In addition the 510 patients registered from 1 Oct 2020 to 31 Dec 2020,
+                were reviewed separately as the Quarter-4 Review of 2020. Similarly, the Treatment outcomes were
+                measured in Q1 2021 for these 510 patients registered in Q3 2020. Thus, the percentages of patients with
+                controlled BP are shown in the stacked bar graph.</p>
+
+              <p class="highcharts-description">
+                <span id="small">PS: <i class="fas fa-mouse" style="font-size:24px;color:brown;"></i> Mouse over the
+                  stacked bar-graph to see data for the Annual and Quarterly Reviews.</span>
+              </p>
+
+          </div><!-- 5 closed -->
+        </div><!-- 4 closed -->
+      </div> <!-- 3 closed -->
+      <!-- Added in May 2021 only! -->
+    </div> <!-- 2 closed -->
+    <!-- end of second Additional row --><br><br>
+
+
+
+
+    <!--   Fourth row ends here. Added in June 2021  to accomodate Annual Review 2020 Reports -->
+
+
+
+
+
+
+
+
+
+    <!--   Fifth Row starts here. It has two Columns Monthly Treatment Analysis & Supportive Supervision  -->
+
+
+
+    <div class="row m-b-1">
+      <!-- start of third row -->
+      <div class="col-lg-6">
+        <div class="card shadow">
+          <h4 class="card-header" style="height:110px; padding:30px;">Comparison of: <span class="tag" id="revenue-tag">
+              Q4 2020 & 2021 Monthly </span>
+          </h4>
+          <div class="card-block">
+
+            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+            <br>
+            <p class="highcharts-description">Shown is the comparions of the Treatment Outcomes of Q4 2020,
+              with the Treatment Outcomes from the Monthly Reviews during Jan 2021 to April 2021.
+              The Missed visits had gone down from around 95% in Nov 20 to 79% in Feb 21
+              and to 45% in Apr 21. The biggest dip in control was in Feb 21 which however improved to 30% in Mar 21.
+              Reduction in the COVID-19 resurgence has improved these back to the Q4 2020 levels.
+              So, if all the visits and BP readings of the hypertensive patients must be recorded, the control rate will
+              improve.</p>
+            <p class="highcharts-description">
+              <span id="small">PS: <i class="fas fa-mouse" style="font-size:24px;color:brown;"></i> Mouse over each bar
+                in the Stacked 100% bar graph to see the data for that month.</span>
+            </p>
+          </div>
+        </div>
+      </div><!-- end of 2nd row  --><br>
+
+      <div class="col-lg-6">
+        <div class="card shadow">
+          <!-- <h4 class="card-header">Call for Innovations: <span class="tag" id="revenue-tag"> Do call! </span> -->
+
+
+
+
+
+
+
+
+
+          <header
+            style="height:110px; display:grid; place-content:center; overflow:hidden; margin:0; background-color:#37474F; color:white;">
+
+            <center>
+              <h1 class="ml5">
+                <span class="text-wrapper">
+                  <span class="line line1"></span>
+                  <span class="letters letters-left">Innovate</span>
+                  <span class="letters ampersand">&amp;</span>
+                  <span class="letters letters-right">Call</span>
+                  <span class="line line2"></span>
+                </span>
+              </h1>
+            </center>
+            <!--more-->
+
+            <script>
+              // Wrap every letter in a span
+              anime.timeline({ loop: true })
+                .add({
+                  targets: '.ml5 .line',
+                  opacity: [ 0.5, 1 ],
+                  scaleX: [ 0, 1 ],
+                  easing: "easeInOutExpo",
+                  duration: 700
+                }).add({
+                  targets: '.ml5 .line',
+                  duration: 600,
+                  easing: "easeOutExpo",
+                  translateY: (el, i) => (-0.625 + 0.625 * 2 * i) + "em"
+                }).add({
+                  targets: '.ml5 .ampersand',
+                  opacity: [ 0, 1 ],
+                  scaleY: [ 0.5, 1 ],
+                  easing: "easeOutExpo",
+                  duration: 600,
+                  offset: '-=600'
+                }).add({
+                  targets: '.ml5 .letters-left',
+                  opacity: [ 0, 1 ],
+                  translateX: [ "0.5em", 0 ],
+                  easing: "easeOutExpo",
+                  duration: 600,
+                  offset: '-=300'
+                }).add({
+                  targets: '.ml5 .letters-right',
+                  opacity: [ 0, 1 ],
+                  translateX: [ "-0.5em", 0 ],
+                  easing: "easeOutExpo",
+                  duration: 600,
+                  offset: '-=600'
+                }).add({
+                  targets: '.ml5',
+                  opacity: 0,
+                  duration: 1000,
+                  easing: "easeOutExpo",
+                  delay: 1000
+                });
+            </script>
+
+            <style>
+              .ml5 {
+                position: relative;
+                font-weight: 200;
+                font-size: 2.25em;
+                color: white; // #402d2d;
+              }
+
+              .ml5 .text-wrapper {
+                position: relative;
+                display: inline-block;
+                padding-top: 0.1em;
+                padding-right: 0.05em;
+                padding-bottom: 0.15em;
+                line-height: 1em;
+              }
+
+              .ml5 .line {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                height: 3px;
+                width: 100%;
+                background-color: white; // #402d2d;
+                transform-origin: 0.5 0;
+              }
+
+              .ml5 .ampersand {
+                font-family: Baskerville, serif;
+                font-style: italic;
+                font-weight: 200;
+                width: 1em;
+                margin-right: -0.1em;
+                margin-left: -0.1em;
+              }
+
+              .ml5 .letters {
+                display: inline-block;
+                opacity: 0;
+              }
+            </style>
+          </header>
+
+
+
+
+
+
+
+
+
+
+          </h4>
+          <div class="card-block">
+
+
+            <section>
+              <p style="text-align:center">We are<br>starting this series to<br>share practices that can help achieve
+                better treatment of NCD.<br>Any human interest stories narrating a positive impact on a patient’s life
+                can also be sent to us.<br>To, inform stories and innovations by <i class="fas fa-envelope-open-text"
+                  style="font-size:24px;color:brown;"></i> mail <a href="mailto:cvhowayanad@ihmi.in">Click
+                  Here</a>&nbsp;<br>or to <i class="fas fa-mobile" style="font-size:24px;color:brown;"></i> call<br>the
+                Wayanad CVHO<br><a href="tel:+917558845528">Click Here</a>
+              </p>
+            </section>
+            <br>
+            <p class="highcharts-description"> So, any intervention that reduced missed visits, and lost to follow-up,
+              or increased new registrations, or distributed better the patient load over the month like the Innovation
+              story from Poothady featured in the row above, can be highlighted.
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+
+
+
+    <!--   Fifth Row ends here. It had two Columns:  Monthly Treatment Analysis & Supportive Supervision  -->
+
+
+
+
+
+
+
+
+
+
+    <!--   Sixth Row starts here. On Drug Status  -->
+
+    <div class="row m-b-1">
+      <!-- 2 open -->
+      <div class="col-xs-12">
+        <!-- 3 open -->
+        <div class="card shadow">
+          <!-- 4 open -->
+          <h4 class="card-header">Anti-hypertension Drug Status: <span class="tag" id="revenue-tag"> n=37 Facilities
+            </span></h4>
+          <div class="card-block">
+            <!-- 5 open -->
+
+            <div id="" style="width:100%">
+              <!-- 6 open  -->
+              <br>
+              <details>
+                <summary>Click on the triangle on left to see 'What is Stock in Patient Days?'</summary>
+                <p class="highcharts-description">The Stock in Patient Days or Stock in Days(SID) is the number of days
+                  that the present stock of the protocol drug would last for the number of patients registered in the
+                  program.</p>
+              </details>
+              <br>
+              <h4>IHCI Drugs Stock Summary in Jun-21:</h4>
+              <p class="highcharts-description left">Available stock on the last day of Jun 2021 versus requirement for
+                next three months is shown in the following table, both in actual stock as well as in Patient Days:</p>
+
+              <!-- #link to Annexure 2 table from here to be given -->
+
+
+              <table class="wp-block-table" align="center">
+                <tbody>
+                  <tr>
+                    <td class="verticalTableHeader">Jun-21 Summary</td>
+                    <td class="verticalTableHeader">Amlodipine</td>
+                    <td class="verticalTableHeader">ARB</td>
+                    <td class="verticalTableHeader">Diuretics</td>
+                  </tr>
+                  <tr>
+                    <td><b>Available stock</b></td>
+                    <td id="right">66,30,650</td>
+                    <td id="right">35,09,936</td>
+                    <td id="right">4,93,850</td>
+                  </tr>
+                  <tr>
+                    <td><b>Stock in Patient Days</b></td>
+                    <td id="right">227</td>
+                    <td id="right">207</td>
+                    <td id="right">378</td>
+                  </tr>
+                  <tr>
+                    <td><b>Three months requirement</b></td>
+                    <td id="right">26,34,005</td>
+                    <td id="right">15,28,664</td>
+                    <td id="right">1,17,590</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <br>
+              <h4>IHCI Drugs in Patient Days from Jul 2020 till Jun-21:</h4>
+
+              <p class="highcharts-description left">Available stock in Patient days is shown in the following line
+                graph, since Jul 2020, till the last day of Jun 2021:</p>
+              <!-- Include a para explaining the line graph. Line graph template starts here for Drug stock  -->
+
+
+
+              <div id="chart5"></div>
+            </div><!-- 7 reopened & closed  -->
+
+
+
+            <p class="highcharts-description">
+              <span id="small">PS: <i class="fas fa-mouse" style="font-size:24px;color:brown;"></i> Mouse over each
+                point vertically above a particular month on the line graph to see the data for that month.</span>
+            </p>
+
+            <br>
+
+
+            <!--  Line graph template ends here for Drug stock  -->
+
+            <h4>Details of Drugs Stock out in Facilities in Jun-21:</h4>
+
+            <p class="highcharts-description left">The following data table and column graph details the stock out and
+              near stock out positions in the 37 facilities in Wayanad in Jun 2021:</p>
+
+            <figure class="highcharts-figure">
+
+              <table id="datatable1" class="drug-table" style="overflow-x:auto;">
+                <thead>
+                  <th class="TableHeader">Drugs</th>
+                  <th class="TableHeader">Nil Stock</th>
+                  <th class="TableHeader">High-risk<br>
+                    <30 days</th>
+                  <th class="TableHeader">Medium-risk<br>
+                    <60 days</th>
+                  <th class="TableHeader">Low-risk<br>
+                    <90 days</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Amlodipine</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>3</td>
+                  </tr>
+                  <tr>
+                    <td>Telmisartan+Losartan</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>5</td>
+                    <td>6</td>
+                  </tr>
+                  <tr>
+                    <td>HCTZ+Clorthalidone</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>4</td>
+                  </tr>
+                </tbody>
+              </table>
+              <br><br>
+              <div id="container1"></div>
+
+              <p class="highcharts-description">
+                Do note that there are no column graphs for the drugs without stock-outs. Thus, we would have no graph
+                above if Wayanad has stock of all IHCI drugs for more than ninety days in all 37 facilities!<br><br>
+                Accordingly, drug stock is best in Amlo and Telmi with no facilities having nil stock.<br><br>The two
+                facilities having stock out for Chlorthalidone do not have patients who require Chlorthalidone or
+                diuretics. <br><br>Also, borrowing between facilities within the district has helped to tide over all
+                deficits so far. <br><br>Credit for monitoring this IHCI protocol drug distribution system without stock
+                outs goes to the Pharmacists motivated by the Warehouse Manager.</p>
+
+            </figure>
+
+
+            <br>
+
+
+            <p class="highcharts-description">
+              <span id="small">PS: <i class="fas fa-mouse" style="font-size:24px;color:brown;"></i> Mouse over each
+                column in the graph to see the number of facilites without stock for that particular drug. To view
+                data table, full screen, download pdf, svg, excel formats, or print this graph, and for other options,
+                click the hamburger menu <i class="fas fa-bars" style="font-size:24px;color:black;"></i> on the right
+                top corner of this graph.</span>
+            </p>
+
+
+            <br><br>
+
+          </div><!-- 6 closed  -->
+        </div> <!-- 5 closed  -->
+      </div> <!-- 4 closed  -->
+    </div> <!-- 3 closed  -->
+    <!-- end of sixth row is without closing 2 Important after 2 column cards --><br>
+
+    <!--   Sixth Row ends here. Was on Drug Status  -->
+
+
+
+
+
+
+    <!--   Seventh Row starts here. On High & Low Performers  -->
+
+    <div class="row m-b-1">
+      <!-- 2 opened -->
+      <div class="col-lg-6">
+        <!-- 3 opened -->
+        <div class="card shadow">
+          <!-- 4 opened -->
+          <h4 class="card-header"> Low <i class="fas fa-sad-tear" style="font-size:24px;color:lightblue;"></i>
+            Perofrmers:</h4>
+          <div class="card-block">
+            <!-- 5 opened -->
+
+
+            <div id="" style="width: 100%;">
+              <!-- 6 opened -->
+              <p>
+              <ul>
+                <li><i class="fas fa-sad-tear" style="font-size:24px;color:crimson;"></i> Appapara, Panamaran, Meppady,
+                  Periya, Pulpally, Meenangadi, Cheeral, Edavaka, and Nallurnad did not register any new case.</li>
+              </ul>
+              </p>
+            </div> <!-- 6 closed-->
+            <p class="highcharts-description"> </p>
+          </div> <!-- 5 closed -->
+        </div> <!-- 4 closed -->
+      </div> <!-- 3 closed -->
+      <!-- end of 1/2 row --><br>
+
+
+
+
+
+      <div class="col-lg-6">
+        <!-- 3 opened -->
+        <div class="card shadow">
+          <!-- 4 opened -->
+          <h4 class="card-header"> High <i class="fas fa-certificate" style="font-size:24px;color:gold;"></i>
+            Performers:</h4>
+          <div class="card-block">
+            <!-- 5 opened -->
+            <p>
+            <ol>
+              <li><i class="fas fa-medal" style="font-size:24px;color:magenta;"></i> Thondernad - 73 Registrations
+              </li>
+              <li><i class="fas fa-smile" style="font-size:24px;color:indigo;"></i> Thariode - 60 Registrations
+              </li>
+              <li><i class="fas fa-smile-beam" style="font-size:24px;color:gold;"></i> Kappukunnu - 45 Registrations
+              </li>
+            </ol>
+            </p>
+          </div><!-- 5 closed -->
+
+
+        </div><!-- 4 closed -->
+      </div> <!-- 3 closed -->
+    </div><!-- 2 closed --> <br>
+
+
+    <!--   Seventh Row ends here. On High & Low Performers  -->
+
+
+
+
+
+
+
+    <!--   Eigth Row starts here. Annexure 1. 0n Block wise Performance  -->
+
+    <h2 id="header">
+      <strong>Annexure 1: Block-wise performance</strong><br>
+    </h2>
+    <!-- 1 Block details start  -->
+
+
+    </h2><br>
+
+    <center>
+      <div class="row m-b-1" style="width:100%">
+        <!-- 2 opened -->
+        <div class="col-xs-12" style="width:100%">
+          <!-- 3 opened -->
+          <div class="card shadow" style="width:100%">
+            <!-- 4 opened -->
+            <h4 class="card-header" style="width:100%">Registrations Vs Estimated Hypertensives: <span class="tag"
+                id="revenue-tag"> till June 2021 </span></h4>
+            <div class="card-block" style="width:100%">
+              <!-- 5 opened -->
+
+
+
+
+              <figure class="highcharts-figure" style="width:100%">
+                <div id="container3" style="width:100%"></div> <!-- 6 opened & closed-->
+                <p class="highcharts-description" style="padding:20px">
+                  The Estimated Hypertensives for each block is calculated based on its Population above the age group
+                  of thirty, using data from the DLHS.<br><br>Column graph represents the hypertensive patients
+                  registered in each block, while the line graph represents the percentage of the estimated
+                  hypertensives that has been registered till June-21.<br><br>
+                  <span id="small">PS: <i class="fas fa-mouse" style="font-size:24px;color:brown;"></i> Mouse over the
+                    graph to view data. In order to view data table, full screen, download pdf, svg, excel formats, or
+                    print this graph, and for other options, click the hamburger menu <i class="fas fa-bars"
+                      style="font-size:24px;color:black;"></i> on the right top corner of this graph.</span>
+                </p>
+              </figure>
+
+            </div><!-- 5 closed -->
+          </div><!-- 4 closed -->
+        </div> <!-- 3 closed -->
+      </div> <!-- 2 closed -->
+    </center> <!-- end of row --><br>
+
+    <!--   Eigth Row ends here. On Block wise Performance  -->
+
+
+
+
+
+
+
+
+
+
+
+    <!--   9th Row starts here. Annexure 2: on Monthly Ranking  -->
+
+
+
+
+    <h2 id="header">
+      <strong>Annexure 2: Ranking on Present Month Registration</strong><br>
+    </h2>
+
+    <!-- start of eighth row: that is new page -->
+
+    <center>
+      <div class="row m-b-1" style="width:100%">
+        <!-- 2 opened -->
+        <div class="col-xs-12" style="width:100%">
+          <!-- 3 opened -->
+          <div class="card shadow" style="width:100%">
+            <!-- 4 opened -->
+            <h4 class="card-header" style="width:100%">
+              Stock of <i class="fas fa-pills" style="font-size:24px;color:yellow;"></i> Drugs <i class="fas fa-syringe"
+                style="font-size:24px;color:aqua;"></i> and Registrations at <i class="fas fa-ambulance"
+                style="font-size:24px;color:lightblue;"></i> Facilities <i class="fas fa-hospital"
+                style="font-size:24px;color:lightgreen;"></i> &nbsp; <span class="tag" id="revenue-tag"> n=37
+                Facilities</span></h4>
+            <div class="card-block">
+              <!-- 5 opened -->
+
+
+
+              <!-- Drugs table of eighth row begins   <td style="background-color:brown;color:white;">    style="overflow-x:auto;" -->
+
+              <table class="wp-block-table drug-table" style="overflow-x:auto;">
+                <thead>
+
+
+                  <tr>
+                    <td colspan="12" style="text-align:center"><i class="fas fa-trophy"
+                        style="font-size:24px;color:gold;"></i>Facility Ranking is based on the Registrations in the
+                      month under consideration, namely for June 2021. <i class="fas fa-stethoscope"
+                        style="font-size:24px;color:black;"></i> BP Control percentage is actually the ideal for
+                      ranking. <i class="fas fa-award" style="font-size:24px;color:blue;"></i> However, due to <i
+                        class="fas fa-virus" style="font-size:24px;color:darkred;"></i> COVID-19, nine facilities
+                      recorded zero registrations, and so ranking of facilities for June 2021 is as per the number of
+                      new registrations.</td>
+                  </tr>
+
+                  <tr>
+                    <th class="verticalTableHeader">Rank</td>
+                    <th class="verticalTableHeader">Facility</td>
+                    <th class="verticalTableHeader">Block</td>
+                    <th class="verticalTableHeader">Total Regd</td>
+                    <th class="verticalTableHeader">Pts in Care</td>
+                    <th class="verticalTableHeader">Regd in Jun</td>
+                    <th class="verticalTableHeader">Coverage %</td>
+                    <th class="verticalTableHeader">CCB</td>
+                    <th class="verticalTableHeader">ARB</td>
+                    <th class="verticalTableHeader">Diuretic</td>
+                  </tr>
+
+                </thead>
+                <tbody>
+                  <!-- Bg color code  <td style="background-color:brown;color:white;"> -->
+
+
+                  <tr>
+                    <td>1</td>
+                    <td>Thondernad</td>
+                    <td>Porunnanore</td>
+                    <td>765</td>
+                    <td>681</td>
+                    <td>73</td>
+                    <td>19</td>
+                    <td>124</td>
+                    <td>169</td>
+                    <td>541</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Thariode</td>
+                    <td>Thariode</td>
+                    <td>565</td>
+                    <td>497</td>
+                    <td>60</td>
+                    <td>27</td>
+                    <td>265</td>
+                    <td>90</td>
+                    <td>88</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Kappukunnu</td>
+                    <td>Thariode</td>
+                    <td>274</td>
+                    <td>218</td>
+                    <td>45</td>
+                    <td>13</td>
+                    <td>39</td>
+                    <td>102</td>
+                    <td>146</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Ambalavayal</td>
+                    <td>Meenangady</td>
+                    <td>1186</td>
+                    <td>1095</td>
+                    <td>37</td>
+                    <td>20</td>
+                    <td>197</td>
+                    <td>107</td>
+                    <td style="background-color:brown;color:white;">0</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Varadoor</td>
+                    <td>Meenangady</td>
+                    <td>527</td>
+                    <td>479</td>
+                    <td>24</td>
+                    <td>10</td>
+                    <td>200</td>
+                    <td>65</td>
+                    <td>228</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>Pakkom</td>
+                    <td>Pulpally</td>
+                    <td>238</td>
+                    <td>204</td>
+                    <td>20</td>
+                    <td>8</td>
+                    <td>343</td>
+                    <td>126</td>
+                    <td>1185</td>
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td>Vengapally</td>
+                    <td>Thariode</td>
+                    <td>492</td>
+                    <td>455</td>
+                    <td>18</td>
+                    <td>25</td>
+                    <td>163</td>
+                    <td>96</td>
+                    <td>73</td>
+                  </tr>
+                  <tr>
+                    <td>8</td>
+                    <td>Moopainad</td>
+                    <td>Meppady</td>
+                    <td>534</td>
+                    <td>504</td>
+                    <td>18</td>
+                    <td>12</td>
+                    <td>318</td>
+                    <td>37</td>
+                    <td>401</td>
+                  </tr>
+                  <tr>
+                    <td>9</td>
+                    <td>Vazhavatta</td>
+                    <td>Meenangady</td>
+                    <td>1063</td>
+                    <td>1040</td>
+                    <td>16</td>
+                    <td>19</td>
+                    <td>180</td>
+                    <td>63</td>
+                    <td>292</td>
+                  </tr>
+                  <tr>
+                    <td>10</td>
+                    <td>Valad</td>
+                    <td>Porunnanore</td>
+                    <td>598</td>
+                    <td>577</td>
+                    <td>12</td>
+                    <td>19</td>
+                    <td>108</td>
+                    <td>169</td>
+                    <td>234</td>
+                  </tr>
+                  <tr>
+                    <td>11</td>
+                    <td>Mananthavady</td>
+                    <td>Porunnanore</td>
+                    <td>1216</td>
+                    <td>1196</td>
+                    <td>11</td>
+                    <td>87</td>
+                    <td>214</td>
+                    <td>109</td>
+                    <td>99</td>
+                  </tr>
+                  <tr>
+                    <td>12</td>
+                    <td>Poothady</td>
+                    <td>Pulpally</td>
+                    <td>683</td>
+                    <td>673</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>269</td>
+                    <td>178</td>
+                    <td style="background-color:brown;color:white;">0</td>
+                  </tr>
+                  <tr>
+                    <td>13</td>
+                    <td>Padinjarathara</td>
+                    <td>Thariode</td>
+                    <td>439</td>
+                    <td>422</td>
+                    <td>10</td>
+                    <td>17</td>
+                    <td>319</td>
+                    <td>208</td>
+                    <td>364</td>
+                  </tr>
+                  <tr>
+                    <td>14</td>
+                    <td>Mullankolly</td>
+                    <td>Pulpally</td>
+                    <td>195</td>
+                    <td>178</td>
+                    <td>8</td>
+                    <td>4</td>
+                    <td>916</td>
+                    <td>225</td>
+                    <td>769</td>
+                  </tr>
+                  <tr>
+                    <td>15</td>
+                    <td>Bathery</td>
+                    <td>Meppady</td>
+                    <td>1149</td>
+                    <td>1136</td>
+                    <td>8</td>
+                    <td>100</td>
+                    <td>181</td>
+                    <td>195</td>
+                    <td>400</td>
+                  </tr>
+                  <tr>
+                    <td>16</td>
+                    <td>Vazhikatty</td>
+                    <td>Meppady</td>
+                    <td>1224</td>
+                    <td>1160</td>
+                    <td>7</td>
+                    <td>24</td>
+                    <td>189</td>
+                    <td>348</td>
+                    <td>998</td>
+                  </tr>
+                  <tr>
+                    <td>17</td>
+                    <td>Noolpuzha</td>
+                    <td>Pulpally</td>
+                    <td>1390</td>
+                    <td>1381</td>
+                    <td>7</td>
+                    <td>30</td>
+                    <td>152</td>
+                    <td>106</td>
+                    <td>112</td>
+                  </tr>
+                  <tr>
+                    <td>18</td>
+                    <td>Munderi</td>
+                    <td>Meppady</td>
+                    <td>504</td>
+                    <td>398</td>
+                    <td>6</td>
+                    <td>17</td>
+                    <td>55</td>
+                    <td>67</td>
+                    <td>103</td>
+                  </tr>
+                  <tr>
+                    <td>19</td>
+                    <td>Vythiri</td>
+                    <td>Meppady</td>
+                    <td>488</td>
+                    <td>466</td>
+                    <td>6</td>
+                    <td>75</td>
+                    <td>383</td>
+                    <td>99</td>
+                    <td>102</td>
+                  </tr>
+                  <tr>
+                    <td>20</td>
+                    <td>Vellamunda</td>
+                    <td>Porunnanore</td>
+                    <td>1027</td>
+                    <td>1002</td>
+                    <td>5</td>
+                    <td>20</td>
+                    <td>184</td>
+                    <td>303</td>
+                    <td>136</td>
+                  </tr>
+                  <tr>
+                    <td>21</td>
+                    <td>Pozhuthana</td>
+                    <td>Thariode</td>
+                    <td>692</td>
+                    <td>685</td>
+                    <td>5</td>
+                    <td>24</td>
+                    <td>147</td>
+                    <td>56</td>
+                    <td>145</td>
+                  </tr>
+                  <tr>
+                    <td>22</td>
+                    <td>Chulliyode</td>
+                    <td>Meenangady</td>
+                    <td>745</td>
+                    <td>740</td>
+                    <td>5</td>
+                    <td>18</td>
+                    <td>209</td>
+                    <td>59</td>
+                    <td>67</td>
+                  </tr>
+                  <tr>
+                    <td>23</td>
+                    <td>Kurukanmoola</td>
+                    <td>Porunnanore</td>
+                    <td>253</td>
+                    <td>247</td>
+                    <td>5</td>
+                    <td>4</td>
+                    <td>395</td>
+                    <td>180</td>
+                    <td>435</td>
+                  </tr>
+                  <tr>
+                    <td>24</td>
+                    <td>Begur</td>
+                    <td>Porunnanore</td>
+                    <td>764</td>
+                    <td>750</td>
+                    <td>3</td>
+                    <td>31</td>
+                    <td>88</td>
+                    <td>155</td>
+                    <td>84</td>
+                  </tr>
+                  <tr>
+                    <td>25</td>
+                    <td>Porunnannore</td>
+                    <td>Porunnanore</td>
+                    <td>481</td>
+                    <td>472</td>
+                    <td>2</td>
+                    <td>11</td>
+                    <td>429</td>
+                    <td>359</td>
+                    <td>644</td>
+                  </tr>
+                  <tr>
+                    <td>26</td>
+                    <td>Sughandhagiri</td>
+                    <td>Meppady</td>
+                    <td>116</td>
+                    <td>108</td>
+                    <td>1</td>
+                    <td>4</td>
+                    <td>65</td>
+                    <td>119</td>
+                    <td>259</td>
+                  </tr>
+                  <tr>
+                    <td>27</td>
+                    <td>Chethalayam</td>
+                    <td>Pulpally</td>
+                    <td>284</td>
+                    <td>281</td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td>198</td>
+                    <td>352</td>
+                    <td>599</td>
+                  </tr>
+                  <tr>
+                    <td>28</td>
+                    <td>Kottathara</td>
+                    <td>Thariode</td>
+                    <td>257</td>
+                    <td>252</td>
+                    <td>1</td>
+                    <td>9</td>
+                    <td>389</td>
+                    <td>120</td>
+                    <td>506</td>
+                  </tr>
+                  <tr>
+                    <td>29</td>
+                    <td>Appapara</td>
+                    <td>Porunnanore</td>
+                    <td>645</td>
+                    <td>642</td>
+                    <td>0</td>
+                    <td>28</td>
+                    <td>147</td>
+                    <td>76</td>
+                    <td>93</td>
+                  </tr>
+                  <tr>
+                    <td>30</td>
+                    <td>Panamaram</td>
+                    <td>Porunnanore</td>
+                    <td>1058</td>
+                    <td>1054</td>
+                    <td>0</td>
+                    <td>20</td>
+                    <td>310</td>
+                    <td>144</td>
+                    <td>127</td>
+                  </tr>
+                  <tr>
+                    <td>31</td>
+                    <td>Meppady</td>
+                    <td>Meppady</td>
+                    <td>1573</td>
+                    <td>1573</td>
+                    <td>0</td>
+                    <td>24</td>
+                    <td>95</td>
+                    <td>85</td>
+                    <td>38</td>
+                  </tr>
+                  <tr>
+                    <td>32</td>
+                    <td>Periya</td>
+                    <td>Porunnanore</td>
+                    <td>764</td>
+                    <td>764</td>
+                    <td>0</td>
+                    <td>23</td>
+                    <td>122</td>
+                    <td>77</td>
+                    <td>196</td>
+                  </tr>
+                  <tr>
+                    <td>33</td>
+                    <td>Pulpally</td>
+                    <td>Pulpally</td>
+                    <td>418</td>
+                    <td>415</td>
+                    <td>0</td>
+                    <td>15</td>
+                    <td>254</td>
+                    <td>386</td>
+                    <td>1148</td>
+                  </tr>
+                  <tr>
+                    <td>34</td>
+                    <td>Meenangady</td>
+                    <td>Meenangady</td>
+                    <td>1359</td>
+                    <td>1359</td>
+                    <td>0</td>
+                    <td>25</td>
+                    <td>172</td>
+                    <td>120</td>
+                    <td>265</td>
+                  </tr>
+                  <tr>
+                    <td>35</td>
+                    <td>Cheeral</td>
+                    <td>Meenangady</td>
+                    <td>1124</td>
+                    <td>1124</td>
+                    <td>0</td>
+                    <td>38</td>
+                    <td>176</td>
+                    <td>54</td>
+                    <td>347</td>
+                  </tr>
+                  <tr>
+                    <td>36</td>
+                    <td>Edavaka</td>
+                    <td>Porunnanore</td>
+                    <td>901</td>
+                    <td>901</td>
+                    <td>0</td>
+                    <td>25</td>
+                    <td>82</td>
+                    <td>38</td>
+                    <td>400</td>
+                  </tr>
+                  <tr>
+                    <td>37</td>
+                    <td>Nallurnad</td>
+                    <td>Porunnanore</td>
+                    <td>140</td>
+                    <td>140</td>
+                    <td>0</td>
+                    <td>21</td>
+                    <td>478</td>
+                    <td>388</td>
+                    <td>929</td>
+                  </tr>
+
+                  <tr>
+                    <th class="verticalTableHeader">Rank</td>
+                    <th class="verticalTableHeader">Facility</td>
+                    <th class="verticalTableHeader">Block</td>
+                    <th class="verticalTableHeader">Total Regd</td>
+                    <th class="verticalTableHeader">Pts in Care</td>
+                    <th class="verticalTableHeader">Regd in Jun</td>
+                    <th class="verticalTableHeader">Coverage %</td>
+                    <th class="verticalTableHeader">CCB</td>
+                    <th class="verticalTableHeader">ARB</td>
+                    <th class="verticalTableHeader">Diuretic</td>
+                  </tr>
+
+
+                </tbody>
+                <tfoot>
+
+
+
+                  <tr>
+                    <td colspan="12" style="text-align:center">The brown color <i class="fas fa-palette"
+                        style="font-size:24px;color:brown;"></i> used for background in cells of this table <i
+                        class="fas fa-table" style="font-size:24px;color:aqua;"></i> indicate that the particular stock
+                      of the drug was less than the required Stock in patient days (SID) for that facility.</td>
+                  </tr>
+
+                </tfoot>
+              </table>
+              <br>
+              <br>
+
+              <!-- Drugs table of eighth row ends -->
+            </div> <!-- 5 closed -->
+          </div> <!-- 4 closed -->
+
+
+          <p class="highcharts-description">
+            <span id="small">PS: <i class="fas fa-envelope-open" style="font-size:24px;color:brown;"></i> To inform
+              suggestions or corrections by mail <a href="mailto:cvhowayanad@ihmi.in">Click Here</a>&nbsp; or to call <i
+                class="fas fa-mobile" style="font-size:24px;color:brown;"></i> the Wayanad CVHO <a
+                href="tel:+917558845528">Click Here</a></span>
+          </p>
+
+
+        </div>
+        <!--3 closed -->
+      </div> <!-- 2 closed -->
+    </center> <!-- end of 8 row & page--><br>
+    <!--   9th Row ends here. Annexure 2: on Monthly Ranking  -->
+
+
+
+
+
+
+
+    <h2 id="header" style="text-align:center"></h2><br>
+
+    
+    <table style="width:100%">
+        <tr><td><p id="footer">
+        
+        The India Hypertension Control Initiative (IHCI) is a collaborative project <i class="fas fa-heartbeat" style="font-size:24px;color:red;"></i> between Indian Council of Medical Research (ICMR), Ministry of Health & Family Welfare (MoHFW), State Governments, World Health Organization (WHO), and Resolve to Save Lives, an initiative of Vital Strategies. <i class="fas fa-globe" style="font-size:24px;color:blue;"></i></p>
+        </td><td>
+        <img src="https://www.ihci.in/~gitbook/image?url=https%3A%2F%2F4110139307-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-MMHxovP9vC7uvdIVdm8%252Favatar-1605562495454.png%3Fgeneration%3D1605562495815944%26alt%3Dmedia&width=32&dpr=1&quality=100&sign=7eea2677&sv=2" alt="IHCI" style="float:right">
+        
+        </td></tr>
+        </table>
+
+  </div> <!-- 1. container closed -->
+  <a id="back2Top" title="Back to top" href="#">&#10148;</a>
+  <br>
+
+  <!-- Data to Table scripts --->
+
+  <script id="insert"></script>
+
+  <!--  Registration across Facility Types script begins here -->
+
+
+  <script>
+
+
+    var options = {
+      series: [ {
+        name: 'CHC',
+        type: 'column',
+        data: [ 4, 5, 52, 52, 58, 99 ]
+      }, {
+        name: 'PHC',
+        type: 'column',
+        data: [ 171, 231, 347, 214, 138, 300 ]
+      }, {
+        name: 'SDH',
+        type: 'column',
+        data: [ 15, 12, 46, 34, 30, 25 ]
+      }, {
+        name: 'Cumulative',
+        type: 'line',
+        data: [ 24488, 24736, 25181, 25481, 25707, 26131 ]
+      } ],
+      chart: {
+        height: 350,
+        type: 'line',
+        stacked: false
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        width: [ 1, 1, 4 ]
+      },
+      title: {
+        text: 'Registrations Across Facility Types, SDH, CHC, PHC : Jan-Jun 2021',
+        align: 'left',
+        offsetX: 110
+      },
+      xaxis: {
+        categories: [ 'Jan 21', 'Feb', 'Mar', 'Apr', 'May', 'Jun' ],
+      },
+      yaxis: [
+        {
+          axisTicks: {
+            show: true,
+          },
+          axisBorder: {
+            show: true,
+            color: '#008FFB'
+          },
+          labels: {
+            style: {
+              colors: '#008FFB',
+            }
+          },
+          title: {
+            text: "CHC",
+            style: {
+              color: '#008FFB',
+            }
+          },
+          tooltip: {
+            enabled: true
+          }
+        },
+        {
+          seriesName: 'CHC',
+          opposite: true,
+          axisTicks: {
+            show: true,
+          },
+          axisBorder: {
+            show: true,
+            color: '#00E396'
+          },
+          labels: {
+            style: {
+              colors: '#00E396',
+            }
+          },
+          title: {
+            text: "PHC",
+            style: {
+              color: '#00E396',
+            }
+          },
+        },
+        {
+          seriesName: 'Assets',
+          opposite: true,
+          axisTicks: {
+            show: true,
+          },
+          axisBorder: {
+            show: true,
+            color: '#00E396'
+          },
+          labels: {
+            style: {
+              colors: '#00E396',
+            }
+          },
+          title: {
+            text: "SDH",
+            style: {
+              color: '#00E396',
+            }
+          },
+        },
+
+        {
+          seriesName: 'Cumulative',
+          opposite: true,
+          axisTicks: {
+            show: true,
+          },
+          axisBorder: {
+            show: true,
+            color: '#FEB019'
+          },
+          labels: {
+            style: {
+              colors: '#FEB019',
+            },
+          },
+          title: {
+            text: "Cumulative",
+            style: {
+              color: '#FEB019',
+            }
+          }
+        },
+      ],
+      tooltip: {
+        fixed: {
+          enabled: true,
+          position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
+          offsetY: 30,
+          offsetX: 60
+        },
+      },
+      legend: {
+        horizontalAlign: 'left',
+        offsetX: 40
+      }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart6"), options);
+    chart.render();
+
+
+
+
+
+  </script>
+
+
+
+
+  <!--  Registration across Facility Types script ends here-->
+
+
+  <!--  Annual & Quarterly Report script begins here-->
+
+
+  <!-- From:  https://codepen.io/richardramsay/pen/ZKmQJv    -->
+  <script>
+    $('.value').each(function () {
+      var text = $(this).text();
+      $(this).parent().css('width', text);
+    });
+
+    $('.block').tooltip();
+//# sourceURL=pen.js
+  </script>
+
+
+  <!--  Annual & Quarterly Report script ends here-->
+
+  <!--  Drug Availability across Months script begins here -->
+
+  <script>
+
+    var options = {
+      series: [
+        {
+          name: "CCB",
+          data: [ 198, 181, 283, 323, 327, 315, 279, 248, 274, 243, 227 ]
+        },
+        {
+          name: "ARB",
+          data: [ 212, 171, 142, 201, 172, 157, 290, 226, 237, 186, 207 ]
+        },
+        {
+          name: "Diuretics",
+          data: [ 158, 138, 380, 490, 405, 367, 445, 361, 467, 369, 378 ]
+        }
+      ],
+      chart: {
+        height: 350,
+        type: 'line',
+        dropShadow: {
+          enabled: true,
+          color: '#000',
+          top: 18,
+          left: 7,
+          blur: 10,
+          opacity: 0.2
+        },
+        toolbar: {
+          show: false
+        }
+      },
+      colors: [ '#800080', '#00FF00', '#0000FF' ],  //'#  77B6EA  545454
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      title: {
+        text: 'IHCI Drug Availability in Patient Days',
+        align: 'left'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: [ '#f3f3f3', 'transparent' ], // takes an array which will be repeated on columns
+          opacity: 0.5
+        },
+      },
+      markers: {
+        size: 1
+      },
+      xaxis: {
+        categories: [ 'Jul-20', 'Aug', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun-21' ],
+        title: {
+          text: 'Year & Month'
+        }
+      },
+      yaxis: {
+        title: {
+          text: 'No. of Patient Days'
+        },
+        min: 0,
+        max: 500
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'right',
+        floating: true,
+        offsetY: -25,
+        offsetX: -5
+      }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart5"), options);
+    chart.render();
+
+
+  </script>
+  <!--  Drug Availability Line graph script ends here -->
+
+
+
+
+
+
+  <!-- Block wise Registration Mixed graph Scripts begins here -->
+
+  <script>
+
+    Highcharts.chart('container3', {
+      chart: {
+        zoomType: 'xy'
+      },
+
+      title: {
+        text: 'Hypertensives registered till Jun-21 block-wise is shown as column graph'
+      },
+
+      subtitle: {
+        text: '% of patients with hypertension registered is shown as line graph'
+      },
+
+      xAxis: [ {
+        categories: [ 'Meenangady', 'Meppady', 'Porunnannore', 'Pulpally', 'Thariode' ],
+        crosshair: true
+      } ],
+
+      yAxis: [ { // Primary yAxis
+        labels: {
+          format: '{value}',
+          style: {
+            color: Highcharts.getOptions().colors[ 1 ]
+          }
+        },
+
+
+        title: {
+          text: '% of patients with hypertension registered',
+          style: {
+            color: Highcharts.getOptions().colors[ 1 ]
+          }
+        }
+      },
+
+
+      { // Secondary yAxis
+        title: {
+          text: 'Hypertensives registered till Jun-21',
+          style: {
+            color: Highcharts.getOptions().colors[ 0 ]
+          }
+        },
+
+
+        labels: {
+          format: '{value}',
+          style: {
+            color: Highcharts.getOptions().colors[ 0 ]
+          }
+        },
+
+
+        opposite: true
+      } ],
+
+      tooltip: {
+        shared: true
+      },
+
+      legend: {
+        layout: 'vertical',
+        align: 'left',
+        x: 120,
+        verticalAlign: 'top',
+        y: 100,
+        floating: true,
+        backgroundColor:
+          Highcharts.defaultOptions.legend.backgroundColor || // theme
+          'rgba(255,255,255,0.25)'
+      },
+
+      series: [ {
+        name: 'Total Hypertensives Registrered',
+        type: 'column',
+        yAxis: 1,
+        data: [ 6004, 5588, 8612, 3208, 2567 ],
+        tooltip: {
+          valueSuffix: ' Hypertensives Registered'
+        }
+      },
+
+
+      {
+        name: '% of estimated hypertensives registered',
+        type: 'spline',
+        data: [ 21, 51, 25, 11, 18 ],
+        tooltip: {
+          valueSuffix: ' % of Total Estimated are Regd'
+        }
+      } ]
+    });
+    //# sourceURL=pen.js
+  </script>
+  <!-- Block wise Registration Mixed graph Scripts ends here -->
+
+
+
+
+
+  <!--   Side Nav Script begins -->
+
+  <script>
+< !--Side Nav-- >
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+      }
+
+    /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+    }
+  </script>
+  <!--   Side Nav Script ends -->
+
+
+
+
+
+
+
+
+  <!-- First Graph on Monthly Registration Script begins here -->
+
+  <script>
+    Highcharts.chart('container', {
+      chart: {
+        zoomType: 'xy'
+      },
+
+      title: {
+        text: 'Estimated number of people with hypertension in the district: 1,31,584'
+      },
+
+      subtitle: {
+        text: 'Proportion of patients with hypertension registered: 19.9%'
+      },
+
+      xAxis: [ {
+        categories: [ 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan 21', 'Feb', 'Mar', 'Apr', 'May', 'Jun' ],
+        crosshair: true
+      } ],
+
+      yAxis: [ { // Primary yAxis
+        labels: {
+          format: '{value}',
+          style: {
+            color: Highcharts.getOptions().colors[ 1 ]
+          }
+        },
+
+
+        title: {
+          text: 'Cumulative Registrations',
+          style: {
+            color: Highcharts.getOptions().colors[ 1 ]
+          }
+        }
+      },
+
+
+      { // Secondary yAxis
+        title: {
+          text: 'Monthly Registrations',
+          style: {
+            color: Highcharts.getOptions().colors[ 0 ]
+          }
+        },
+
+
+        labels: {
+          format: '{value}',
+          style: {
+            color: Highcharts.getOptions().colors[ 0 ]
+          }
+        },
+
+
+        opposite: true
+      } ],
+
+      tooltip: {
+        shared: true
+      },
+
+      legend: {
+        layout: 'vertical',
+        align: 'left',
+        x: 120,
+        verticalAlign: 'top',
+        y: 100,
+        floating: true,
+        backgroundColor:
+          Highcharts.defaultOptions.legend.backgroundColor || // theme
+          'rgba(255,255,255,0.25)'
+      },
+
+      series: [ {
+        name: 'Monthly Registrations',
+        type: 'column',
+        yAxis: 1,
+        data: [ 28, 34, 55, 40, 139, 139, 190, 248, 445, 300, 226, 424 ],
+        tooltip: {
+          valueSuffix: ' hypertensives'
+        }
+      },
+
+
+      {
+        name: 'Cumulative Registration',
+        type: 'spline',
+        data: [ 23891, 23925, 23980, 24020, 24159, 24298, 24488, 24736, 25181, 25481, 25707, 26131 ],
+        tooltip: {
+          valueSuffix: ' - since Jun 2018'
+        }
+      } ]
+    });
+    //# sourceURL=pen.js
+  </script>
+
+  <!-- First Graph on Monthly Registration Script ends here -->
+
+  <!--High Charts  Scripts for windows begins here -->
+  <script type="text/javascript">//<![CDATA[
+
+
+    Highcharts.chart('container1', {
+      data: {
+        table: 'datatable1'
+      },
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Facilities with stock-outs of Drugs:'
+      },
+      yAxis: {
+        allowDecimals: false,
+        title: {
+          text: 'No. of Facilities with Stock-outs'
+        }
+      },
+      tooltip: {
+        formatter: function () {
+          return '<b>' + this.series.name + '</b><br/>' +
+            this.point.y + ' ' + this.point.name.toLowerCase();
+        }
+      }
+    });
+
+
+  //]]></script>
+
+
+
+
+
+
+
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent) {
+      window.parent.parent.postMessage([ "resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: ""
+      } ], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+  <script>
+    let allLines = []
+
+    window.addEventListener("message", (message) => {
+      if (message.data.console) {
+        let insert = document.querySelector("#insert")
+        allLines.push(message.data.console.payload)
+        insert.innerHTML = allLines.join(";\r")
+
+        let result = eval.call(null, message.data.console.payload)
+        if (result !== undefined) {
+          console.log(result)
+        }
+      }
+    })
+  </script>
+  <!--High Charts  Scripts for windows ends here -->
+
+
+  <!--Canvas JS Scripts for Monthly stacked bar chart begins here -->
+  <script>
+    window.onload = function () {
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2", //"light1", "dark1", "dark2", "light2",
+        title: {
+          text: "Comparing Q4 20 to Jan-Apr 21"
+        },
+        axisY: {
+          interval: 10,
+          suffix: "%"
+        },
+        toolTip: {
+          shared: true
+        },
+        data: [ {
+          color: "lightgreen",
+          type: "stackedBar100",
+          toolTipContent: "{label}<br><b>{name}:</b> {y} (#percent%)",
+          showInLegend: true,
+          name: "Control",
+          dataPoints: [
+
+            { y: 26, label: "Q4 2020" },
+            { y: 186, label: "Jan 2021" },
+            { y: 49, label: "Feb 2021" },
+            { y: 102, label: "March 2021" },
+            { y: 146, label: "April 2021" }
+          ]
+        },
+        {
+          color: "red",
+          type: "stackedBar100",
+          toolTipContent: "<b>{name}:</b> {y} (#percent%)",
+          showInLegend: true,
+          name: "Un-control",
+          dataPoints: [
+
+            { y: 22, label: "Q4 2020" },
+            { y: 86, label: "Jan 2021" },
+            { y: 51, label: "Feb 2021" },
+            { y: 94, label: "March 2021" },
+            { y: 114, label: "April 2021" }
+          ]
+        },
+        {
+          color: "skyblue",
+          type: "stackedBar100",
+          toolTipContent: "<b>{name}:</b> {y} (#percent%)",
+          showInLegend: true,
+          name: "Missed Visits",
+          dataPoints: [
+
+            { y: 52, label: "Q4 2020" },
+            { y: 503, label: "Jan 2021" },
+            { y: 375, label: "Feb 2021" },
+            { y: 204, label: "March 2021" },
+            { y: 215, label: "April 2021" }
+          ]
+        } ]
+      });
+      chart.render();
+
+    }
+  </script>
+
+  <!-- Canvas JS Script  containing Trial Version Mark and hence unavaiable for edits, which are only by purchase.  -->
+
+
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+  <!--Canvas JS Scripts for stacked bar chart ends here -->
+
+
+</body>
+
+</html>
