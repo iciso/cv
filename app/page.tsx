@@ -95,7 +95,7 @@ export default function Home() {
                   Blogs
                 </Link>
                  <a
-                    href="https://your-domain.com/cv-offline.zip"  // or wherever you host the ZIP
+                    href="https://cvemrafi.vercel.app/cv-offline.zip"  // or wherever you host the ZIP
                     download="Dr-Essa-Rafique-CV-Offline.zip"
                     className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors flex items-center"
                   >
