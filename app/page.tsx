@@ -94,11 +94,11 @@ export default function Home() {
                 >
                   Blogs
                 </Link>
-                <a
-                  href="https://docs.google.com/document/d/1h2A_pw48gVhvmMk3RXiyLtKxgu3-5vHl/export?format=pdf"
-                  download
-                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors flex items-center"
-                >
+                 <a
+                    href="https://your-domain.com/cv-offline.zip"  // or wherever you host the ZIP
+                    download="Dr-Essa-Rafique-CV-Offline.zip"
+                    className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors flex items-center"
+                  >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 mr-2"
