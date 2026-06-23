@@ -19,7 +19,82 @@ export default function KMPage() {
 
       <main className="container mx-auto px-4 py-12 space-y-12">
         
-        {/* ================= SECTION 1: UN KNOWLEDGE PRODUCTS ================= */}
+      
+        {/* ================= SECTION 1: IHCI MONITORING & INTERACTIVE WEB PRODUCTS ================= */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center mb-6">
+            <BarChart3 className="mr-3 text-teal-600" size={32} />
+            <div>
+              <h2 className="text-2xl font-bold text-teal-700">India Hypertension Control Initiative (IHCI) & Public Health Tools</h2>
+              <p className="text-gray-600">Monitoring Reports & Digital Knowledge Assets (2020-2021)</p>
+            </div>
+          </div>
+
+          <p className="text-lg text-gray-700 mb-8">
+            This portfolio tracks active field outputs, operational evaluations, and dynamic clinical support systems built during the India Hypertension Control Initiative (IHCI). Deployed as digital assets, these resources deliver automated health communication, computational assessments, and targeted metric validation.
+          </p>
+
+          {/* New Subsection A: IHCI Monitoring Dashboards */}
+          <div className="mb-10">
+            <h3 className="text-xl font-bold text-teal-800 mb-4 border-b pb-2">IHCI Progress and Monitoring Reports</h3>
+            <p className="text-sm text-gray-600 mb-6">
+              A chronological suite of field evaluation metrics, cohort control charts, and operational reviews tracking performance timelines.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {ihciMonitoringReports.map((report, index) => (
+                <div key={index} className="border border-gray-100 rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition-colors flex flex-col justify-between">
+                  <div>
+                    <span className="text-xs font-bold text-teal-600 tracking-wider uppercase block mb-1">
+                      {report.period}
+                    </span>
+                    <h4 className="text-base font-bold text-gray-900 mb-2">{report.title}</h4>
+                    <p className="text-xs text-gray-600 mb-4">{report.description}</p>
+                  </div>
+                  <a
+                    href={`/reports/${report.file}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center text-xs font-semibold bg-teal-600 text-white py-2 px-3 rounded hover:bg-teal-700 transition-colors mt-auto"
+                  >
+                    Open Full Report <ExternalLink className="ml-1.5" size={12} />
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* New Subsection B: Serious Games & Interactive Assets */}
+          <div>
+            <h3 className="text-xl font-bold text-teal-800 mb-4 border-b pb-2">Interactive Frameworks, Calculators & Educational Engines</h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Web applications engineered utilizing data visualization structures, game modules, and live endpoint connections to augment public response mechanics.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {interactiveWebProducts.map((tool, index) => (
+                <div key={index} className="border border-teal-100 rounded-lg p-5 bg-gradient-to-br from-white to-teal-50/20 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-lg font-bold text-teal-900">{tool.title}</h4>
+                      <span className="text-[10px] font-mono tracking-tight bg-teal-100 text-teal-800 px-2 py-0.5 rounded">
+                        {tool.file}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-700 mb-4 leading-relaxed">{tool.description}</p>
+                  </div>
+                  <a
+                    href={`/reports/${tool.file}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center bg-teal-700 text-white text-sm font-medium py-2 px-4 rounded-md hover:bg-teal-800 transition-colors mt-2 self-start"
+                  >
+                    Launch Application <ExternalLink className="ml-2" size={14} />
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+
+                {/* ================= SECTION 1: UN KNOWLEDGE PRODUCTS ================= */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex items-center mb-6">
             <FileText className="mr-3 text-teal-600" size={32} />
@@ -195,80 +270,7 @@ export default function KMPage() {
           </div>
         </div>
 
-        {/* ================= SECTION 2: IHCI MONITORING & INTERACTIVE WEB PRODUCTS ================= */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center mb-6">
-            <BarChart3 className="mr-3 text-teal-600" size={32} />
-            <div>
-              <h2 className="text-2xl font-bold text-teal-700">India Hypertension Control Initiative (IHCI) & Public Health Tools</h2>
-              <p className="text-gray-600">Monitoring Reports & Digital Knowledge Assets (2020-2021)</p>
-            </div>
-          </div>
-
-          <p className="text-lg text-gray-700 mb-8">
-            This portfolio tracks active field outputs, operational evaluations, and dynamic clinical support systems built during the India Hypertension Control Initiative (IHCI). Deployed as digital assets, these resources deliver automated health communication, computational assessments, and targeted metric validation.
-          </p>
-
-          {/* New Subsection A: IHCI Monitoring Dashboards */}
-          <div className="mb-10">
-            <h3 className="text-xl font-bold text-teal-800 mb-4 border-b pb-2">IHCI Progress and Monitoring Reports</h3>
-            <p className="text-sm text-gray-600 mb-6">
-              A chronological suite of field evaluation metrics, cohort control charts, and operational reviews tracking performance timelines.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {ihciMonitoringReports.map((report, index) => (
-                <div key={index} className="border border-gray-100 rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition-colors flex flex-col justify-between">
-                  <div>
-                    <span className="text-xs font-bold text-teal-600 tracking-wider uppercase block mb-1">
-                      {report.period}
-                    </span>
-                    <h4 className="text-base font-bold text-gray-900 mb-2">{report.title}</h4>
-                    <p className="text-xs text-gray-600 mb-4">{report.description}</p>
-                  </div>
-                  <a
-                    href={`/reports/${report.file}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center text-xs font-semibold bg-teal-600 text-white py-2 px-3 rounded hover:bg-teal-700 transition-colors mt-auto"
-                  >
-                    Open Full Report <ExternalLink className="ml-1.5" size={12} />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* New Subsection B: Serious Games & Interactive Assets */}
-          <div>
-            <h3 className="text-xl font-bold text-teal-800 mb-4 border-b pb-2">Interactive Frameworks, Calculators & Educational Engines</h3>
-            <p className="text-sm text-gray-600 mb-6">
-              Web applications engineered utilizing data visualization structures, game modules, and live endpoint connections to augment public response mechanics.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {interactiveWebProducts.map((tool, index) => (
-                <div key={index} className="border border-teal-100 rounded-lg p-5 bg-gradient-to-br from-white to-teal-50/20 shadow-sm flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-lg font-bold text-teal-900">{tool.title}</h4>
-                      <span className="text-[10px] font-mono tracking-tight bg-teal-100 text-teal-800 px-2 py-0.5 rounded">
-                        {tool.file}
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-700 mb-4 leading-relaxed">{tool.description}</p>
-                  </div>
-                  <a
-                    href={`/reports/${tool.file}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center bg-teal-700 text-white text-sm font-medium py-2 px-4 rounded-md hover:bg-teal-800 transition-colors mt-2 self-start"
-                  >
-                    Launch Application <ExternalLink className="ml-2" size={14} />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-
+          
         </div>
       </main>
 
