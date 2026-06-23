@@ -559,8 +559,11 @@ export default function Home() {
 
           <div className="bg-white p-6 rounded-lg shadow-md mb-8">
             <p className="text-lg text-gray-700 mb-8">
-              A collection of 27 knowledge products developed during my tenure as Resource Person and Moderator for the
-              AIDS Community with the UN Knowledge Management team in Delhi (2005-2006). These include Consolidated
+              A collection of totally 49 Knowledge Products (KP), 22 of which tracks 
+              active field outputs, operational evaluations, and dynamic clinical support systems built during the India Hypertension Control Initiative (IHCI) from 2019 to 2021. 
+              Deployed as digital assets, these resources deliver automated health communication, computational assessments, and targeted metric validation.
+              The second subsection has 27 other Knowledge Products which were developed during my tenure as Resource Person and Moderator for the
+              AIDS Community with the UN Knowledge Management team in Delhi (2005-2010). These include Consolidated
               Replies, Concept Notes, Community Updates, and a comprehensive NACP-III summary booklet.
             </p>
 
@@ -610,7 +613,7 @@ export default function Home() {
                 href="/km"
                 className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
               >
-                View All 27 Knowledge Products <ChevronRight className="ml-1" size={16} />
+                View All 49 Knowledge Products <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>
