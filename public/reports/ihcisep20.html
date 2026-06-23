@@ -1,0 +1,1014 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta property="og:title" content="IHCI Wayanad Monthly Report Dashboard - July 2021" />
+    <meta property="og:description"
+        content="IHCI Wayanad has made web based dashboards of its monthly report since Sep 2020. From July 2021, this report features diabetes as well." />
+    <meta property="og:url" content="https://cvemrafi.vercel.app/" />
+    <meta property="og:image" content="https://www.ihci.in/~gitbook/image?url=https%3A%2F%2F4110139307-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-MMHxovP9vC7uvdIVdm8%252Favatar-1605562495454.png%3Fgeneration%3D1605562495815944%26alt%3Dmedia&width=32&dpr=1&quality=100&sign=7eea2677&sv=2" alt="IHCI" style="float:right" />
+		
+		<title>IHCI Monthly Report Dashboard</title>
+	
+		<!-- CanvasJS Bootstrap CSS required for the width of containers-->
+		<link rel="stylesheet" href="http://www.geocities.ws/kyft/db/assets/bootstrap/bootstrap4-alpha3.min.css">
+	
+		<!-- Bootstrap CSS for Codepen Table  -->
+		 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+
+
+	<!-- Zing Chart Scripts //Have to use this Trial Version .js file from Zing Chart.com as this is only for purchase -->
+		<script src="https://cdn.zingchart.com/zingchart.min.js"></script>  
+	<!--  <script src="http://www.geocities.ws/kyft/db/zingchart.min.js"></script>  -->
+
+
+	<!-- Canvas JS Scripts //Have to use this Trial Version .js file from Canvas JS as this is only for purchase -->
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+		<!-- Highcharts Scripts -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/highcharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/modules/exporting.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/modules/export-data.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/modules/data.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/modules/accessibility.js"></script>
+
+		<!-- FontAwesome styles for KYFT from-->	
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/1c2c73bff2.js" crossorigin="anonymous"></script>
+
+
+
+		<!-- Scroll Back to Top button-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script SRC="https://html-online.com/demo/scroll-to-top/script.js"></script>
+	<!--  <link rel="stylesheet" type="text/css" href="https://html-online.com/demo/scroll-to-top/style.css" />   -->
+		<script src="https://www.google.com/jsapi"></script>
+
+
+
+
+		<script type="text/javascript">
+window.onload = function () {
+	var chart = new CanvasJS.Chart("chart1Container",
+	{
+		
+		legend: {
+			maxWidth: 350,
+			itemWidth: 120
+		},
+		data: [
+		{
+			type: "pie",
+			showInLegend: true,
+			legendText: "{indexLabel}",
+			dataPoints: [
+				{ y: 1699, indexLabel: "Missed Visits 43%" },
+				{ y: 1082, indexLabel: "Uncontrolled 27%"},
+				{ y: 1227, indexLabel: "Control 25%" },
+				{ y: 55, indexLabel: "Door Delivery 5%" }
+					]
+				}
+			]
+		});
+	chart.render();
+	}
+	</script>
+
+	<!-- Canvas JS Script containing Trial Version Mark and hence unavaiable for download or edits. Only purchase  -->
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		<style>
+			body {
+				background-color: #fafafa;
+				font-size: 16px;
+				line-height: 1.5;
+			}
+			
+			h1,h2,h3,h4,h5,h6 {
+				font-weight: 400;	
+			}
+			
+			#header {
+				border-bottom: 5px solid #37474F;
+				color: #37474F;
+				margin-bottom: 1.5rem;
+				padding: 1rem 0;
+				width: 100%;
+			}
+
+			#right {
+			text-align:right;
+			}
+			
+			#revenue-tag {
+				font-weight: inherit !important;
+				border-radius: 0px !important;
+			}
+			
+			.card {
+				border: 0rem;
+				border-radius: 0rem;
+				width: 100%;
+			}
+			
+			.card-header {
+				background-color: #37474F;
+				border-radius: 0 !important;
+				width: 100%;
+				color:	white;
+				margin-bottom: 0;
+				padding: 1rem;
+			}
+			
+			.card-block {
+				border: 1px solid #cccccc;
+				width: 100%;	
+			}
+			
+			.shadow {
+				box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+					0 1px 18px 0 rgba(0, 0, 0, 0.12),
+					0 3px 5px -1px rgba(0, 0, 0, 0.2);
+			}
+
+			.tag {
+			background: green;  
+ 			padding: 10px;
+			border: 1px solid lightgreen;
+			}
+			
+			#revenue-column-chart, #products-revenue-pie-chart, #orders-spline-chart {
+				height: 300px;
+				width: 100%;
+			}
+
+			#footer {
+			font-size: small;
+			text-align: center;
+			padding: 20px;
+			border: 0;
+			margin: 10px;
+			}
+
+			#small {
+			font-size: small;
+			}			
+		</style>
+		
+		<style class="INLINE_PEN_STYLESHEET_ID">
+    .highcharts-figure, .highcharts-data-table table {
+  min-width: 310px; 
+  max-width: 800px;
+  margin: 1em auto;
+}
+
+#container {
+  height: 400px;
+  width: 100%;
+}
+
+.highcharts-data-table table {
+	font-family: Verdana, sans-serif;
+	border-collapse: collapse;
+	border: 1px solid #EBEBEB;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+
+
+/* CSS for Zing Charts */
+
+   
+    .chart--container {
+      height: 100%;
+      width: 100%;
+      min-height: 530px;
+    padding: 5px;	
+     margin: 2px;
+    }
+
+    .zc-ref {
+      display: none;
+    }
+ 
+
+
+
+/* CSS for Lists */
+ol {
+  background: #ff9999;
+  padding: 20px;
+}
+
+ul {
+  background: #3399ff;
+  padding: 20px;
+}
+
+ol li {
+  background: #ffe5e5;
+  padding: 5px;
+  margin-left: 35px;
+}
+
+ul li {
+  background: #cce5ff;
+  margin: 5px;
+}
+
+
+
+/*----------------*\
+|*  Data to Table *|
+\*----------------*/
+
+.highcharts-figure, .highcharts-data-table table {
+    min-width: 310px;
+    max-width: 800px;
+    margin: 1em auto;
+}
+
+#datatable {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #EBEBEB;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+#datatable caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+#datatable th {
+	font-weight: 600;
+    padding: 0.5em;
+}
+#datatable td, #datatable th, #datatable caption {
+    padding: 0.5em;
+}
+#datatable thead tr, #datatable tr:nth-child(even) {
+    background: #f8f8f8;
+}
+#datatable tr:hover {
+    background: #f1f7ff;
+}
+
+
+
+/* CSS for Flip Cards */
+
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 300px;
+ perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: pink;
+  color: black;
+}
+
+.flip-card-back {
+  background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+
+/*  CSS for Back to Top Button */
+
+#back2Top {
+    width: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    position: fixed;
+    bottom: 50px;
+    right: 0;
+    background-color: #DDD;
+    color: #555;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+}
+#back2Top:hover {
+    background-color: #DDF;
+	color: #000;
+}
+  </style>
+
+  <!-- Codepen Scripts -->
+<script src="https://static.codepen.io/assets/editor/iframe/iframeConsoleRunner-7f4d47902dc785f30dedcac9c996b9f31d4dfcc33567cc48f0431bc918c2bf05.js"></script>
+<script src="https://static.codepen.io/assets/editor/iframe/iframeRefreshCSS-e03f509ba0a671350b4b363ff105b2eb009850f34a2b4deaadaa63ed5d970b37.js"></script>
+<script src="https://static.codepen.io/assets/editor/iframe/iframeRuntimeErrors-29f059e28a3c6d3878960591ef98b1e303c1fe1935197dae7797c017a3ca1e82.js"></script>
+
+		
+
+
+		
+		
+	</head>
+	<body>
+		<div class="container">
+			<h2 id="header">
+
+
+
+		<strong>Wayanad District IHCI Monthly Report</strong><br>
+		<small class="text-muted">Sep 2020</small>
+
+
+
+	
+			
+
+			</h2><br>
+			
+			<center><div class="row m-b-1" style="width:100%">
+				<div class="col-xs-12" style="width:100%">
+					<div class="card shadow" style="width:100%">
+						<h4 class="card-header" style="width:100%">Registrations till Sep 2020: <span class="tag" id="revenue-tag"> 23,980 </span></h4>
+						<div class="card-block" style="width:100%">
+							
+
+	
+
+<figure class="highcharts-figure" style="width:100%">
+  <div id="container" style="width:100%"></div>
+  <p class="highcharts-description" style="padding:20px; text-align: left;">
+    Wayand District saw its first cases of COVID-19 in Feb 2020. Since then a combination of fear of infection, and a series of lockdowns has resulted in patients turning up at the health facilities only for emergencies. Also, the directives from the State confined routine outpatients to their homes. In addition, delivery of drugs to the houses of the patients were not, and are still not documented.<br><br>
+<span id="small">To view data table, full screen, download pdf, svg, excel formats, or print this graph, and for other options, click the hamburger menu on the right top corner of this graph.</span>
+  </p>
+</figure>
+  
+  <!-- Codepen Scripts -->
+<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+  <script id="INLINE_PEN_JS_ID">
+    Highcharts.chart('container', {
+  chart: {
+    zoomType: 'xy' },
+
+  title: {
+    text: 'Estimated number of people with hypertension in the district: 1,31,584' },
+
+  subtitle: {
+    text: 'Proportion of patients with hypertension registered: 18.2%' },
+
+  xAxis: [{
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep'],
+    crosshair: true }],
+
+  yAxis: [{ // Primary yAxis
+    labels: {
+      format: '{value}',
+      style: {
+        color: Highcharts.getOptions().colors[1] } },
+
+
+    title: {
+      text: 'Cumulative Registrations',
+      style: {
+        color: Highcharts.getOptions().colors[1] } } },
+
+
+  { // Secondary yAxis
+    title: {
+      text: 'Monthly Registrations',
+      style: {
+        color: Highcharts.getOptions().colors[0] } },
+
+
+    labels: {
+      format: '{value}',
+      style: {
+        color: Highcharts.getOptions().colors[0] } },
+
+
+    opposite: true }],
+
+  tooltip: {
+    shared: true },
+
+  legend: {
+    layout: 'vertical',
+    align: 'left',
+    x: 120,
+    verticalAlign: 'top',
+    y: 100,
+    floating: true,
+    backgroundColor:
+    Highcharts.defaultOptions.legend.backgroundColor || // theme
+    'rgba(255,255,255,0.25)' },
+
+  series: [{
+    name: 'Monthly Registrations',
+    type: 'column',
+    yAxis: 1,
+    data: [1189, 824, 232, 132, 13, 72, 28, 34, 55],
+    tooltip: {
+      valueSuffix: ' hypertensives' } },
+
+
+  {
+    name: 'Cumulative Registration',
+    type: 'spline',
+    data: [22590, 23414, 23646, 23778, 23791, 23837, 23891, 23925, 23980],
+    tooltip: {
+      valueSuffix: ' - since Jun 2018' } }] });
+    //# sourceURL=pen.js
+  </script>
+
+						</div>
+					</div>
+				</div>
+			</div></center> <!-- end of 1 row --><br>
+
+
+
+
+			<div class="row m-b-1">
+				<div class="col-xs-12" style="width:100%">
+					<div class="card shadow" style="width:100%">
+						<h4 class="card-header" style="width:100%">Registrations across Facility Type:   <span class="tag" id="revenue-tag"> Types = SDH, FHC & PHC</span></h4>
+						<div class="card-block" style="width:100%">
+							
+
+ <center><div id="my1Chart" class="chart--container" style="width:100%">
+   
+
+
+  <script>
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"]; // CHART CONFIG
+    // -----------------------------
+     let chartConfig = {
+      type: 'mixed',
+	title: {
+        text: 'Registrations-New in month: 55 & Cumulative: 23,980',
+	fontSize: '18px',
+        align: 'center',
+	verticalAlign: 'top',
+        margin: '0%'
+      },
+      subtitle: {
+        text: 'Note: Cumulative Registration scale in Primary Y Axis on the left',
+	fontSize: '14px',
+        align: 'center',
+	verticalAlign: 'bottom',
+        margin: '0%'
+      },
+      legend: {
+        adjustLayout: true,
+	textalign: 'center',
+	horizontalAlign: 'center',
+        verticalAlign: 'top'
+	
+      },
+      scaleX: {
+        labels: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'] // one label for every datapoint
+      },
+      scaleY: {
+        guide: { // dashed lines
+          visible: true
+        },
+        label: {
+          text: 'Cumulative',
+          fontSize: '14px',
+	  marginLeft: '0%'
+        },
+	 maxValue: 24200,
+        minValue: 23200,
+		},
+
+      scaleY2: {
+        label: {
+          text: 'Secondary Y Axis: Registrations across facilities',
+          fontSize: '14px'
+        },
+        maxValue: 500,
+        minValue: 0,
+        step: 100 // can define scale step values or default
+      },
+      crosshairX: {
+        lineColor: '#424242',
+        lineGapSize: '4px',
+        lineStyle: 'dotted',
+        plotLabel: {
+          padding: '15px',
+          backgroundColor: 'white',
+          bold: true,
+          borderColor: '#e3e3e3',
+          borderRadius: '5px',
+          fontColor: '#2f2f2f',
+          fontFamily: 'Lato',
+          fontSize: '12px',
+          shadow: true,
+          shadowAlpha: 0.2,
+          shadowBlur: 5,
+          shadowColor: '#a1a1a1',
+          shadowDistance: 4,
+          textAlign: 'left'
+        },
+        scaleLabel: {
+          backgroundColor: '#424242'
+        }
+      },
+      series: [{
+          type: 'line',
+          text: 'Cumulative',
+          values: [23414, 23646, 23778, 23791, 23837, 23891, 23925, 23980],
+          lineColor: '#42a5f5',
+          marker: {
+            visible: false
+          },
+          scales: 'scale-x, scale-y'
+        },
+        {
+          type: 'bar',
+          text: 'CHC',
+          values: [197, 70, 3, 4, 1, 6, 30, 31],
+          lineColor: '#5c6bc0',
+          marker: {
+            type: 'square',
+            backgroundColor: '#5c6bc0'
+          },
+          scales: 'scale-x, scale-y-2'
+        },
+        {
+          type: 'bar',
+          text: 'PHC',
+          values: [442, 129, 88, 8, 68, 22, 4, 24],
+          lineColor: '#66bb6a',
+          marker: {
+            visible: false
+          },
+          scales: 'scale-x, scale-y-2'
+        },
+        {
+          type: 'bar',
+          text: 'SDH',
+          values: [185, 34, 41, 0, 0, 0, 0, 0],
+          backgroundColor: '#ffa726',
+          scales: 'scale-x, scale-y-2'
+        }
+      ]
+    };
+
+    // RENDER CHARTS
+    // -----------------------------
+    zingchart.render({
+      id: 'my1Chart',
+      data: chartConfig,
+      height: '100%',
+      width: '100%',
+      align: 'center',
+    });
+  </script>
+</div></center>
+
+
+						 <p class="highcharts-description" style="padding:20px">
+    The reason for lesser registrations at the SDH and CHC is that these are converted into COVID-19 First Line Treatment Centers or full-fledged COVID-19 designated centers, and so no NCD clinics are held presently in these facilities.<br><br>
+<span>However, a new advisory is expected from the State on restarting NCD program without putting the geriatric population at risk.</span>
+  </p>
+						
+
+					</div>
+					</div>
+				
+			</div> <!-- end of second row --><br><br>
+
+
+
+
+
+			<div class="row m-b-1"><!-- start of third row -->
+				<div class="col-lg-6">
+					<div class="card shadow">
+						<h4 class="card-header">Treatment Analysis:  <span class="tag" id="revenue-tag"> (cards=4063) </span></h4>
+						<div class="card-block">
+
+
+						 <div id="chart1Container" style="height: 300px; width: 100%;"></div><br>
+						<p class="highcharts-description"> Though Missed visits, and Door step delivery of drugs are shown separately, some facilities are marking them together. Hence this break up is not accurate, though their totals are.</p>
+						</div>
+					</div>
+				</div><!-- end of 2nd row  --><br>
+
+				<div class="col-lg-6">
+					<div class="card shadow">
+						<h4 class="card-header">Supportive Supervision:  <span class="tag" id="revenue-tag"> (n=36 Facilities) </span></h4>
+						<div class="card-block">
+							<table class="table" id="data1Table">
+  <thead>
+    <th>Details</th>
+    <th>No.</th>
+    <th>Percent</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Functional Digital BP Monitor</td>
+      <td>20</td>
+      <td>36%</td>
+    </tr>
+    <tr>
+      <td>Designated Nurse</td>
+      <td>4</td>
+      <td>11%</td>
+    </tr>
+   <tr>
+      <td>Opportunisitc Screening</td>
+      <td>0</td>
+      <td>0%</td>
+    </tr>
+   <tr>
+      <td>Card Storage System</td>
+      <td>30</td>
+      <td>83%</td>
+    </tr>
+	<tr>
+      <td>Defaulter Retrieval System</td>
+      <td>2</td>
+      <td>6%</td>
+    </tr>
+   <tr>
+      <td>Drugs given for >30 days</td>
+      <td>36</td>
+      <td>100%</td>
+    </tr>
+	<tr>
+      <td>Facilities without M.O.</td>
+      <td>0</td>
+      <td>0%</td>
+    </tr>
+
+
+  </tbody>
+</table>						</div>
+<!--
+<br>
+						<p class="highcharts-description"> The District Hospital (DH) could not be visited, as it is the COVID-19 designated hospital for Wayanad.</p>
+-->
+					</div>
+				</div>
+			</div> <!-- end of third row --><br>
+
+      <div class="row m-b-1">
+				<div class="col-xs-12">
+					<div class="card shadow">
+						<h4 class="card-header">No. of facilities with risk of stock-outs:   <span class="tag" id="revenue-tag"> n=37 Facilities </span></h4>
+						<div class="card-block">
+					
+
+<figure class="highcharts-figure">
+
+    <table id="datatable">
+        <thead>
+    <th class="TableHeader">Drugs</th>
+    <th class="TableHeader">Nil Stock</th>
+    <th class="TableHeader">High-risk<br><30 days</th>
+    <th class="TableHeader">Medium-risk<br><60 days</th>
+    <th class="TableHeader">Low-risk<br><90 days</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Amlodipine</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Telmisartan+Losartan</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>HCTZ+Clorthalidone</td>
+      <td>7</td>
+      <td>3</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+     </tbody>
+    </table>
+<br><br>
+    <div id="container1"></div>
+    
+<p class="highcharts-description">
+  Most of the hospitals having stock out for Chlorthalidone do not have patients who require Chlorthalidone or diuretics. Also, borrowing between facilities within the district has helped to tide over all deficits so far. Credit for monitoring this IHCI protocol drug distribution system without stock outs goes to the Warehouse Manager.</p>
+	
+</figure>
+
+    <script type="text/javascript">//<![CDATA[
+
+
+Highcharts.chart('container1', {
+    data: {
+        table: 'datatable'
+    },
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Facilities with stock-outs of Drugs:'
+    },
+    yAxis: {
+        allowDecimals: false,
+        title: {
+            text: 'No. of Facilities with Stock-outs'
+        }
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.series.name + '</b><br/>' +
+                this.point.y + ' ' + this.point.name.toLowerCase();
+        }
+    }
+});
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: ""
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+    <script>
+      let allLines = []
+
+      window.addEventListener("message", (message) => {
+        if (message.data.console){
+          let insert = document.querySelector("#insert")
+          allLines.push(message.data.console.payload)
+          insert.innerHTML = allLines.join(";\r")
+
+          let result = eval.call(null, message.data.console.payload)
+          if (result !== undefined){
+            console.log(result)
+          }
+        }
+      })
+    </script>
+
+
+<br>
+						
+						
+						<p class="highcharts-description"> 
+<span id="small">PS: <i class="fas fa-mouse" style="font-size:24px;color:brown;"></i>  Mouse over the bar-graphs to see the data. <br>To view data table, full screen, download pdf, svg, excel formats, or print this graph, and for other options, click the hamburger menu <i class="fas fa-bars" style="font-size:24px;color:black;"></i> on the right top corner of this graph.</span></p>
+						</div>
+					</div>
+				</div>
+			</div> <!-- end of fourth row with data of Dec 20 --><br>
+
+
+
+			<div class="row m-b-1">
+				<div class="col-lg-6">
+					<div class="card shadow">
+						<h4 class="card-header">Key Achievements & Recommendations </h4>
+						<div class="card-block">
+
+
+						 <div><p>
+<ol>
+  <li><i class="fas fa-medal" style="font-size:24px;color:crimson;"></i> Documenting the NCD drugs that were distributed to the patients at their houses, will reduce the number of Missed Visits.</li>
+  <li><i class="fas fa-medal" style="font-size:24px;color:crimson;"></i> Restarting the Patient Support Groups (PSG) with the Palliative Care Team instead of ASHAs as ASHAs are now deputed for COVID-19 duties.</li>
+  <li><i class="fas fa-medal" style="font-size:24px;color:crimson;"></i> State Advisory on restarting NCD program without putting the older patients into danger on the anvil.</li>
+<li><i class="fas fa-medal" style="font-size:24px;color:crimson;"></i> More Tribal Mobile Medical Units.</li>
+</ol>
+
+
+						</p></div>
+						<p class="highcharts-description"> 
+ </p>
+						</div>
+					</div>
+				</div><!-- end of 1/2 row --><br>
+
+				<div class="col-lg-6">
+					<div class="card shadow">
+						<h4 class="card-header">High & Low Performers</h4>
+						<div class="card-block"><p>
+<ul>							
+<li><i class="fas fa-trophy" style="font-size:24px;color:indigo;"></i> The Annual and Quarterly high and low performing facilities being ascertained from the Annual and Quarterly Review, as most of the facilities cancelled their NCD Clinics due to COVID-19</li>
+<li><i class="fas fa-award" style="font-size:24px;color:gold;"></i> Certificates of Appreciation will be given this year onwards along with usual prizes to the top three facilities with best Hypertension Control Rates in the Annual Review</li>
+<li><i class="fas fa-trophy" style="font-size:24px;color:indigo;"></i>  An additional prize would be awarded to the District Hospital, Mananthavady, which has the best control rates once the data from the hospital is got.</li>
+  </ul>
+
+
+
+
+					</p></div>
+
+<!--
+						<p class="highcharts-description" style="padding:20px;margin-top:10px;"> 
+<b>Criteria for Monthly Review: </b><br>
+<i><b>High performer:</b> >50% control & or >100 registered;<br><b>Low performer:</b> Zero Registrations or High default or non-availability of any of the first-line protocol drugs.</i>  </p>
+-->
+					</div>
+				</div>
+			</div> <!-- end of fifth row --><br>
+
+
+
+			<h2 id="header">
+			<strong>Annexure 1: List of facilities requiring specific action</strong><br></h2>
+
+			<div class="row m-b-1"><!-- start of sixth row: that is new page -->
+				<div class="col-lg-6">
+					<div class="card shadow">
+						<h4 class="card-header">Facilities without <i class="fas fa-capsules" style="font-size:24px;color:lime;"></i> drugs</h4>
+						 <div class="card-block">
+
+
+						<center><div class="flip-card">
+ <div class="flip-card-inner">
+    <div class="flip-card-front">
+     <h1>Diuretics: </h1> 
+      <p>Meppady, Ambalavayal, Thondernad, Cheeral, Vazhavatta, Mullankolly, DH Mananthavady.</p> 
+      <p>There were no stock outs in any facility for ARB and CCB</p>
+    </div>
+    <div class="flip-card-back">
+      <h1>Notes:</h1> 
+      <p>Training of pharmacists on Morbidity pattern forecasting due</p> 
+      <p>Virtual training in view of COVID-19</p>
+    </div>
+  </div>
+</div></center>
+						<p class="highcharts-description"> 
+<span id="small">PS: <i class="fas fa-ribbon" style="font-size:24px;color:blue;"></i>  Mouse over the card to see the additional notes.</span></p>						</div>
+					</div>
+				</div><!-- end of 1/2 row --><br>
+
+				<div class="col-lg-6">
+					<div class="card shadow">
+						<h4 class="card-header">Facilities <30-day stock of <i class="fas fa-capsules" style="font-size:24px;color:#CC0000;"></i> drugs</h4>
+						 <div class="card-block">
+
+						<center><div class="flip-card">
+ <div class="flip-card-inner">
+    <div class="flip-card-front">
+     <h1>CCB: </h1> 
+      <p>Begur</p> 
+      <p>Mouseover to see facilities with <30-day stock for ARB and Diuretic protocol drugs</p>
+    </div>
+    <div class="flip-card-back">
+       <h1>ARB: </h1> 
+      <p>Vazhavatta</p> 
+       <h1>Diuretics: </h1> 
+      <p>Pozhuthana, Padinjarathara, Begur</p> 
+    </div>
+  </div>
+</div></center>
+						<p class="highcharts-description"> 
+<span id="small">PS: <i class="fas fa-ribbon" style="font-size:24px;color:blue;"></i>  Mouse over the card to see the additional notes.</span></p>
+						</div>
+					</div>
+				</div><!-- end of 6th row --><br>
+
+
+
+
+
+
+<div class="row m-b-1"><!-- start of seventh row that is in the second page -->
+				<div class="col-lg-6">
+					<div class="card shadow">
+						<h4 class="card-header"> Facilities with least registrations <i class="fas fa-chart-bar" style="font-size:24px;color:turquoise;"></i></h4>
+						 <div class="card-block">
+
+
+						<center><div class="flip-card">
+ <div class="flip-card-inner">
+    <div class="flip-card-front">
+     <h1>Zero Registrations: </h1> 
+      <p>All SDH and most FHC had zero registrations.</p> 
+      <p>Only 6 of the 37 facilities registered one or more cases in the month.</p>
+    </div>
+    <div class="flip-card-back">
+      <h1>Zero Registratons:</h1> 
+      <p>Except for Vengapally, Periya, Noolpuzha, Pozhuthana, Padinjarathara, and Vazhavatta, all other facilities had  zero registrations. </p> 
+    </div>
+  </div>
+</div></center>
+						<p class="highcharts-description"> 
+<span id="small">PS: <i class="fas fa-ribbon" style="font-size:24px;color:blue;"></i>  Mouse over the card to see the additional notes.</span></p>						</div>
+					</div>
+				</div><!-- end of 1/2 row --><br>
+
+				<div class="col-lg-6">
+					<div class="card shadow">
+						<h4 class="card-header">Staffing <i class="fas fa-user-md" style="font-size:24px;color:#FF00FF;"></i></h4>
+						 <div class="card-block">
+
+						<center><div class="flip-card">
+ <div class="flip-card-inner">
+    <div class="flip-card-front">
+     <h1>Facilities having NCD Nurse</h1> 
+      <p>Two CHCs are having designated nurse, and they cover only eight hours in a day.</p> 
+      <p>Also, almost all PHCs in the district require a designated NCD nurse.</p>
+    </div>
+    <div class="flip-card-back">
+       <h1>NCD Nurse: continued</h1> 
+      <p>In addition: <br>
+Some staff nurses are on COVID-19 duty, and some others on quarantine.</p> 
+      <p>A designated NCD nurse is a must for NCD and IHCI integration in Wayanad</p> 
+    </div>
+  </div>
+</div></center>
+						<p class="highcharts-description"> 
+<span id="small">PS: <i class="fas fa-ribbon" style="font-size:24px;color:blue;"></i>  Mouse over the card to see the additional notes.</span></p>
+						</div>
+					</div>
+				</div><!-- end of seventh row --><br>
+
+
+
+
+
+
+<h2 id="header" style="text-align:center"></h2><br>
+
+<table style="width:100%">
+  <tr><td><p id="footer">
+  
+  The India Hypertension Control Initiative (IHCI) is a collaborative project <i class="fas fa-heartbeat" style="font-size:24px;color:red;"></i> between Indian Council of Medical Research (ICMR), Ministry of Health & Family Welfare (MoHFW), State Governments, World Health Organization (WHO), and Resolve to Save Lives, an initiative of Vital Strategies. <i class="fas fa-globe" style="font-size:24px;color:blue;"></i></p>
+  </td><td>
+  <img src="https://www.ihci.in/~gitbook/image?url=https%3A%2F%2F4110139307-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-MMHxovP9vC7uvdIVdm8%252Favatar-1605562495454.png%3Fgeneration%3D1605562495815944%26alt%3Dmedia&width=32&dpr=1&quality=100&sign=7eea2677&sv=2" alt="IHCI" style="float:right">
+  
+  </td></tr>
+  </table>
+		</div> <!-- container -->
+<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+
+	</body>
+</html>
