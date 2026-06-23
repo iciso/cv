@@ -259,8 +259,9 @@ export default function KMPage() {
             <h3 className="text-xl font-bold text-teal-700 mb-4">Research and Compilation Team</h3>
             <p className="text-gray-700 mb-4">
               These knowledge products were compiled by <strong>E. Mohamed Rafique</strong> as Resource Person and
-              Moderator for the AIDS Community, with extensive research support provided by dedicated Research
-              Associates including <strong>Seema Kochhar</strong>, <strong>Shavika Gupta</strong>, <strong>Bidisha Pillai</strong>, and
+              Moderator for the AIDS Community, <strong>Rituu B. Nanda</strong> and <strong>Seema Kochhar</strong>, as Research Associates, 
+              for the AIDS Community, with extensive research support provided by dedicated Research
+              Associates from other Communities including  <strong>Shavika Gupta</strong>, <strong>Bidisha Pillai</strong>, and
               collaboration with other Resource Persons such as <strong>Gopi N Ghosh</strong> and <strong>Meghendra Banerjee</strong>.
             </p>
             <p className="text-gray-700">
