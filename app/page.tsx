@@ -798,7 +798,7 @@ export default function Home() {
                 <span className="font-medium">Prompt Engineering</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Machine Learning for Beginners</span>
+                <span className="font-medium">Machine Learning</span>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
                 <span className="font-medium">Project Planning with AI</span>
@@ -854,7 +854,7 @@ export default function Home() {
             </div>
             <div className="mt-4">
               <Link href="/skills" className="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium">
-                View all 36 certifications <ChevronRight className="ml-1" size={16} />
+                View all 39 certifications <ChevronRight className="ml-1" size={16} />
               </Link>
             </div>
           </div>
