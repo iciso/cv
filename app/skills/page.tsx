@@ -139,6 +139,11 @@ const certifications = [
     url: "https://www.sololearn.com/certificates/CC-1N5OBYM8",
   },
   {
+    name: "Machine Learning",
+    description: "Know the practical skills of Machine Learning to use Logistic Regression, Decision Tress, Random Forests, and Neural Network models.",
+    url: "https://www.sololearn.com/certificates/CC-7WDI1D3A",
+  },
+  {
     name: "Prompt Engineering",
     description: "Crafting precise prompts to help generative AI models correctly perform a wide range of tasks.",
     url: "https://www.sololearn.com/certificates/CC-HL9BZKEL",
