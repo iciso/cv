@@ -1,7 +1,7 @@
 // Updated cvappskillspage290626.tsx (Skills Page)
 import Link from "next/link"
 import { ArrowLeft, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
-  BookOpen, Brain, Cpu, Database, Globe, Lightbulb, Monitor, Palette, 
+  BookOpen, Brain, Cpu, ChartBar, Database, Globe, Lightbulb, Monitor, Palette, 
   Play, Rocket, Search, Settings, Shield, Smartphone, Star, Trophy, Users, Zap 
 } from "lucide-react"
 
@@ -292,7 +292,7 @@ const certifications = [
     name: "R",
     description: "Programming language for statistical computing and graphics.",
     url: "https://www.sololearn.com/certificates/course/en/19469613/1147/landscape/png",
-    icon: <BarChart3 size={24} />, // Note: Add BarChart3 import if needed
+    icon: <ChartBar size={24} />,
     icon: <Database size={24} />,
   },
   // Added missing ones from docx
@@ -306,7 +306,7 @@ const certifications = [
     name: "Ethical AI Foundations",
     description: "Principles and practices for responsible and ethical AI development.",
     url: "https://www.sololearn.com/certificates/CC-W89JGF5D",
-    icon: <Shield size={24} />, // Add appropriate import
+    icon: <Shield size={24} />, 
     icon: <Star size={24} />,
   },
   {
