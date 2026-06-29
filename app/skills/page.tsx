@@ -1,7 +1,6 @@
 // Updated cvappskillspage290626.tsx (Skills Page)
 import Link from "next/link"
 import { ArrowLeft, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
-  // Add relevant icons
   BookOpen, Brain, Cpu, Database, Globe, Lightbulb, Monitor, Palette, 
   Play, Rocket, Search, Settings, Shield, Smartphone, Star, Trophy, Users, Zap 
 } from "lucide-react"
