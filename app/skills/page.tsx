@@ -1,4 +1,3 @@
-// Updated cvappskillspage290626.tsx (Skills Page)
 import Link from "next/link"
 import { ArrowLeft, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
   BookOpen, Brain, Cpu, ChartBar, Database, Globe, Lightbulb, Monitor, Palette, 
@@ -295,7 +294,6 @@ const certifications = [
     icon: <ChartBar size={24} />,
     icon: <Database size={24} />,
   },
-  // Added missing ones from docx
   {
     name: "Visualize Your Data",
     description: "Data visualization techniques and tools for effective communication of insights.",
