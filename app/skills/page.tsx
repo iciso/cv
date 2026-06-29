@@ -208,6 +208,11 @@ const certifications = [
     description: "From idea generation to pitching, learn techniques and strategies to think outside the box.",
     url: "https://www.sololearn.com/certificates/CC-ZLES2HJU",
   },
+   {
+    name: "Growth Mindset in the Age of AI",
+    description: "Learn to recognize automatic reactions, regulate stress, adopt a growth mindset, think flexibly, and support others through change.",
+    url: "https://www.sololearn.com/certificates/CC-T0DDRSWX",
+  },
   {
     name: "PHP",
     description: "Server-side scripting language designed for web development.",
