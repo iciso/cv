@@ -193,8 +193,14 @@ const certifications = [
   },
   {
     name: "Agentic Workflows",
-    description: "learn the design patterns that shape intelligent, reasoning-driven systems.",
+    description: "Learn the design patterns that shape intelligent, reasoning-driven systems.",
     url: "https://www.sololearn.com/certificates/CC-VSQ5WRNV",
+    icon: <Workflow size={24} />,
+  },
+   {
+    name: "Meet Claude",
+    description: "Become expert at building working tools in seconds, to reading screenshots and PDFs, to working on tasks across your files and apps",
+    url: "https://www.sololearn.com/certificates/CC-SVOUXPRE",
     icon: <Workflow size={24} />,
   },
   {
