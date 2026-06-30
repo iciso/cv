@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ArrowLeft, Asterisk, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
   BookOpen, Brain, Cpu, ChartBar, Database, Globe, Lightbulb, Monitor, Palette, 
-  Play, Rocket, Search, Settings, Shield, Smartphone, Star, Trophy, Users, Workflow, Zap 
+  Play, Rocket, Search, Settings, Shield, Smartphone, Sparkles, Star, Trophy, Users, Workflow, Zap 
 } from "lucide-react"
 
 export default function SkillsPage() {
@@ -202,6 +202,12 @@ const certifications = [
     description: "Become expert at building working tools in seconds, to reading screenshots and PDFs, to working on tasks across your files and apps",
     url: "https://www.sololearn.com/certificates/CC-SVOUXPRE",
     icon: <Asterisk size={24} />,
+  },
+   {
+    name: "AI-Powered Product & UX",
+    description: "Analyze user interviews, extract insights, define problems, explore design directions, and turn ideas into testable prototypes",
+    url: "https://www.sololearn.com/certificates/CC-O7UER6XJ",
+    icon: <Sparkles size={24} />,
   },
   {
     name: "PHP",
