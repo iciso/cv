@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, Asterisk, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
+import { ArrowLeft, Asterisk, BrainCircuit, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
   BookOpen, Brain, Cpu, ChartBar, Database, Globe, Lightbulb, Monitor, Palette, 
   Play, Rocket, Search, Settings, Shield, Smartphone, Sparkles, Star, Trophy, Users, Workflow, Zap 
 } from "lucide-react"
@@ -208,6 +208,12 @@ const certifications = [
     description: "Analyze user interviews, extract insights, define problems, explore design directions, and turn ideas into testable prototypes",
     url: "https://www.sololearn.com/certificates/CC-O7UER6XJ",
     icon: <Sparkles size={24} />,
+  },
+  {
+    name: "Critical Thinking in the Age of AI",
+    description: "Teaches how to evaluate AI outputs, detect flawed reasoning, recognize cognitive biases and logical fallacies, and make sound, human-centered decisions.",
+    url: "https://www.sololearn.com/certificates/CC-NJTTDEPO",
+    icon: <BrainCircuit size={24} />,
   },
   {
     name: "PHP",
