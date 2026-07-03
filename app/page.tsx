@@ -797,6 +797,23 @@ export default function Home() {
               <p className="text-gray-600">Diploma Course in Islamic Studies</p>
             </div>
 
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-bold text-teal-700 mb-2">B.M.A.I.S.</h3>
+                <h4 className="text-lg font-medium text-gray-700 mb-1">
+                  International Open University, Banjul, The Gambia
+                </h4>
+                <p className="text-gray-600 mb-2">Presently in Final Semester</p>
+                <p className="text-gray-600 mb-3">Bridge to Masters in Islamic Studies</p>
+                <a
+                  href="/iou-marks.png"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium"
+                >
+                  View Marksheet <ExternalLink className="ml-1" size={16} />
+                </a>
+              </div>
+            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold text-teal-700 mb-2">Fellowship for Leadership Development</h3>
               <h4 className="text-lg font-medium text-gray-700 mb-1">MacArthur Foundation, Delhi, India</h4>
