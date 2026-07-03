@@ -378,7 +378,7 @@ export default function Home() {
           <div className="flex items-center mb-6">
             <Book className="mr-2 text-teal-600" size={28} />
             <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
-              Books & Recent Papers
+              Books
             </h2>
           </div>
 
@@ -1303,6 +1303,12 @@ const bookChapters = [
 ]
 
       const recentPapers = [
+  {
+    title: "The India Hypertension Control Initiative–early outcomes in 26 districts across five states of India, 2018–2020",
+    description:
+      "A comprehensive, nationally representative analysis of the hypertension care continuum in India, revealing that only one in twelve adults with hypertension has their blood pressure under control.",
+    url: "https://nature.com/articles/s41371-022-00742-5",
+  },
   {
     title: "Innovations in Wayanad District (National IHCI WHO Newsletter)",
     description:
