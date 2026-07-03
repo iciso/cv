@@ -70,12 +70,17 @@ export default function Home() {
                   Books
                 </Link>
                 <Link
+                  href="#recent-papers"
+                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
+                >
+                  Papers
+                </Link>
+                <Link
                   href="#stories"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
                   Stories
                 </Link>
-                {/* KM Products Link */}
                 <Link
                   href="#km"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
@@ -453,6 +458,40 @@ export default function Home() {
           </div>
         </section>
 
+           {/* Recent Papers Section */}
+              <section id="recent-papers" className="mb-16 scroll-mt-20">
+                <div className="flex items-center mb-6">
+                  <FileText className="mr-2 text-teal-600" size={28} />
+                  <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+                    Recent Papers
+                  </h2>
+                </div>
+              
+                <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {recentPapers.map((paper, index) => (
+                      <div
+                        key={index}
+                        className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
+                      >
+                        <div className="p-6">
+                          <h4 className="text-xl font-bold text-teal-700 mb-4">{paper.title}</h4>
+                          <p className="text-gray-600 mb-6">{paper.description}</p>
+                          <a
+                            href={paper.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                          >
+                            Read Paper <ExternalLink className="ml-2" size={16} />
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+        
         {/* Blogs Section */}
         <section id="blogs" className="mb-16 scroll-mt-20">
           <div className="flex items-center mb-6">
@@ -1229,18 +1268,7 @@ export default function Home() {
 }
 
 const books = [
-  {
-    title: "Innovations in Wayanad District (National IHCI WHO Newsletter)",
-    description:
-      "A feature article highlighting key public health innovations implemented in Wayanad District, as showcased in the National India Hypertension Control Initiative (IHCI) WHO Newsletter (Apr-June 2021).",
-    url: "https://cdn.who.int/media/docs/default-source/india-news/india-hypertension-control-initiative/ihci-enewsletter_apr-june-2021.pdf?sfvrsn=33534c46_2",
-  },
-  {
-    title: "All IHCI Reports Collection",
-    description: "A comprehensive repository of all India Hypertension Control Initiative (IHCI) reports.",
-    url: "https://cvemrafi.vercel.app/km",
-  },
-  {
+   {
     title: "Nine Essays and a Poem by a Student: A collection of Islamic Essays",
     description:
       "A compilation of thoughtful essays exploring various aspects of Islamic philosophy, ethics, and spirituality, alongside a poem reflecting on the journey of faith and understanding.",
@@ -1273,6 +1301,19 @@ const bookChapters = [
     url: "http://hivstigma.blogspot.com/",
   },
 ]
+
+      const recentPapers = [
+  {
+    title: "Innovations in Wayanad District (National IHCI WHO Newsletter)",
+    description:
+      "A feature article highlighting key public health innovations implemented in Wayanad District, as showcased in the National India Hypertension Control Initiative (IHCI) WHO Newsletter (Apr-June 2021).",
+    url: "https://cdn.who.int/media/docs/default-source/india-news/india-hypertension-control-initiative/ihci-enewsletter_apr-june-2021.pdf?sfvrsn=33534c46_2",
+  },
+  {
+    title: "All IHCI Reports Collection",
+    description: "A comprehensive repository of all India Hypertension Control Initiative (IHCI) reports.",
+    url: "https://cvemrafi.vercel.app/km",
+  },
 
 const blogs = [
   {
