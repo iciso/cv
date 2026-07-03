@@ -1304,6 +1304,11 @@ const bookChapters = [
 
       const recentPapers = [
   {
+  "title": "Assessing the Knowledge Attitude and Practice Among the Intern Doctors About the Recent NACO Guidelines on Post Exposure Prophylaxis of HIV: A Questionnaire Based Study",
+  "description": "A descriptive observational study highlighting critical knowledge gaps and inconsistent practices among intern doctors regarding HIV PEP protocols, emphasizing the need for structured training and institutional safety support.",
+  "url": "https://drive.google.com/file/d/1TkcJA1HCTgmVA2WLut4CZyDabW1YLJ1x/view?usp=sharing"
+  }, 
+  {
     title: "The India Hypertension Control Initiative–early outcomes in 26 districts across five states of India, 2018–2020",
     description:
       "A comprehensive, nationally representative analysis of the hypertension care continuum in India, revealing that only one in twelve adults with hypertension has their blood pressure under control.",
