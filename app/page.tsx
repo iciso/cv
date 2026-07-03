@@ -1304,6 +1304,11 @@ const bookChapters = [
 
       const recentPapers = [
   {
+  "title": "From vertical silos to integrated care: administrative agility and normalization of HIV services in Tamil Nadu, India",
+  "description": "An analysis of the strategic transition of HIV services in Tamil Nadu from vertical silos to an integrated care model, emphasizing the impact of administrative agility and service normalization.",
+  "url": "https://link.springer.com/article/10.1186/s12981-026-00897-y"
+  },
+  {
   "title": "Assessing the Knowledge Attitude and Practice Among the Intern Doctors About the Recent NACO Guidelines on Post Exposure Prophylaxis of HIV: A Questionnaire Based Study",
   "description": "A descriptive observational study highlighting critical knowledge gaps and inconsistent practices among intern doctors regarding HIV PEP protocols, emphasizing the need for structured training and institutional safety support.",
   "url": "https://drive.google.com/file/d/1TkcJA1HCTgmVA2WLut4CZyDabW1YLJ1x/view?usp=sharing"
