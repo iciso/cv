@@ -373,7 +373,7 @@ export default function Home() {
           <div className="flex items-center mb-6">
             <Book className="mr-2 text-teal-600" size={28} />
             <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
-              Books & Chapters
+              Books & Recent Papers
             </h2>
           </div>
 
@@ -1229,6 +1229,17 @@ export default function Home() {
 }
 
 const books = [
+  {
+    title: "Innovations in Wayanad District (National IHCI WHO Newsletter)",
+    description:
+      "A feature article highlighting key public health innovations implemented in Wayanad District, as showcased in the National India Hypertension Control Initiative (IHCI) WHO Newsletter (Apr-June 2021).",
+    url: "https://cdn.who.int/media/docs/default-source/india-news/india-hypertension-control-initiative/ihci-enewsletter_apr-june-2021.pdf?sfvrsn=33534c46_2",
+  },
+  {
+    title: "All IHCI Reports Collection",
+    description: "A comprehensive repository of all India Hypertension Control Initiative (IHCI) reports.",
+    url: "https://cvemrafi.vercel.app/km",
+  },
   {
     title: "Nine Essays and a Poem by a Student: A collection of Islamic Essays",
     description:
