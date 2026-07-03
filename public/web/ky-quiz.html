@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+
+/* Quiz */
+body {
+    font-family: sans-serif;
+}
+
+#quiz {
+    margin-left:0px;
+    background:#d2def2;
+    padding:10px 20px 10px 20px;
+    width:device-width;
+    border-radius:20px;
+    float:left;
+}
+
+
+h1 {
+    text-align:center;
+}
+
+
+#input {
+    margin:20px;
+    display:block ;
+}
+
+
+#textbox {
+    height:22px;
+    width:120px;
+    font-size:16px;
+    border-radius:5px;
+    border:none;
+    padding-left:5px; 
+}
+
+
+#button {
+    background:green;
+    border:none;
+    border-radius:5px;
+    padding:10px;
+    color:white;
+    font-size:16px;
+    transition-duration:.5s;
+    margin-top:15px;
+}
+
+
+#button.hover {
+    background:white;
+    border:1px solid green;
+    color:black;
+    cursor:pointer;
+   
+}
+
+
+#after_submit {
+    visibility:hidden;
+    background:#FFFFFF;
+    padding:10px 20px 10px 20px;
+    width:device-width;
+    border-radius:20px;
+    float:down;
+    margin-left:20px;
+    font-size:30px;
+}
+
+
+#pictures {
+    width:100%;
+    height:100%;
+}
+
+</style>	
+	</head>
+
+    <body>
+     <h5>"The best KY Family Quiz"</h5>
+     
+     <form id="quiz" name="quiz">
+        
+     <p>1. The First name of our Ancestor was _______ Khan.</p>
+     <input id="textbox" type="text" name="question1">
+     
+     <p>2. The Diwan of Travancore gifted 145 acres of land to our Ancestors</p>
+     <input type="radio" id="mc" name="question2" value="true">true<br>
+     <input type="radio" id="mc" name="question2" value="false">false<br>
+     
+     <p>3. What is the name of the place in Alappuzha where our ancestors lived</p>
+     <input type="radio" id="mc" name="question3" value="img">Khader Parambu<br>
+     <input type="radio" id="mc" name="question3" value="src">Kattoos Manzil<br>
+     <input type="radio" id="mc" name="question3" value="href">Thotapally<br>
+     <input type="radio" id="mc" name="question3" value="alt">Zakria Bazar<br>
+     
+     <p>4. A fight broke out in a wedding because someone said "Bismillah"!</p>
+     <input type="radio" id="mc" name="question4" value="true">true<br>
+     <input type="radio" id="mc" name="question4" value="false">false<br>
+     
+     <p>5. Fathima the daughter of Asad Khan married Hasan Yamani</p>
+     <input type="radio" id="mc" name="question5" value="true">true<br>
+     <input type="radio" id="mc" name="question5" value="false">false<br>
+
+     <p>6. Asad Khan relocated to Alappuzha from _______ in India</p>
+     <input id="textbox" type="text" name="question6">
+     
+     <p>7. The KY ladies held the bridle of the Maharajah's horse and stopped it</p>
+     <input type="radio" id="mc" name="question7" value="true">true<br>
+     <input type="radio" id="mc" name="question7" value="false">false<br>
+
+     <p>8. Abdul Gafoor Khan is the real name of Januchicha.</p>
+     <input type="radio" id="mc" name="question8" value="true">true<br>
+     <input type="radio" id="mc" name="question8" value="false">false<br>
+
+     <p>9. The family headman was the authorized person for inviting to a wedding</p>
+     <input type="radio" id="mc" name="question9" value="true">true<br>
+     <input type="radio" id="mc" name="question9" value="false">false<br>
+
+     <p>10. The biggest wedding shop in Alleppey was owned by:</p>
+     <input type="radio" id="mc" name="question10" value="gkp">G K Pillai<br>
+     <input type="radio" id="mc" name="question10" value="dmu">Dadamamu<br>
+
+
+     <input id="button" type="button" value="I'm finished!" onclick="check();">
+     
+     </form></p>
+     <p><br><br></p>
+     </p><div id="after_submit"></div></p>
+     
+     <p id="messages"></p>
+     <p id="number_correct"></p>
+     <img id="pictures">
+     
+ 
+<script>
+/* Quiz script begins */
+function check(){
+  
+var question1=document.quiz.question1.value;
+var question2=document.quiz.question2.value;
+var question3=document.quiz.question3.value;
+var question4=document.quiz.question4.value;
+var question5=document.quiz.question5.value;
+var question6=document.quiz.question6.value;
+var question7=document.quiz.question7.value;
+var question8=document.quiz.question8.value;
+var question9=document.quiz.question9.value;
+var question10=document.quiz.question10.value;
+var correct=0;
+
+
+    if (question1=="Asad"){
+        correct++;
+  }
+
+   if (question2=="true"){
+       correct++;
+  }  
+
+  if (question3=="img"){
+      correct++;
+  }
+
+
+  if (question4=="true"){
+       correct++;
+  }  
+
+
+ if (question5=="true"){
+       correct++;
+  }  
+
+
+ if (question6=="Surat"){
+        correct++;
+  }
+
+ if (question7=="true"){
+       correct++;
+  }  
+
+ if (question8=="false"){
+       correct++;
+  }  
+
+ if (question9=="false"){
+       correct++;
+  }  
+
+ if (question10=="dmu"){
+       correct++;
+  }  
+
+var messages=["Great job!","That's just okay!","You really need to do better"];
+var pictures=["https://media1.giphy.com/media/11sBLVxNs7v6WA/giphy.gif","https://media1.giphy.com/media/Nm9hS20D4swVO/200w.gif","https://media.giphy.com/media/xUA7aRaGvA53VSlxUk/giphy.gif"];
+
+var range;
+
+  if(correct<4){
+      range=2;
+  }
+  
+  if(correct>3&&correct<7){
+      range=1;
+  }
+  
+  if(correct>6){
+      range=0;
+  }
+
+
+document.getElementById("after_submit").style.visibility="visible";
+
+document.getElementById("pictures").src=pictures[range];
+document.getElementById("messages").innerHTML=messages[range];
+document.getElementById("number_correct").innerHTML="→you got "+correct+" correct.";
+
+}
+</script>
+
+    </body>
+</html>
