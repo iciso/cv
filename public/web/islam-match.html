@@ -1,0 +1,202 @@
+
+<!doctype HTML public '-//W3C//DTD HTML 4.0 Frameset//EN'>
+<html>
+<head>
+<title>Matching Islamic Synonyms</title>
+
+<script language=javascript><!--
+//DECLARATION OF GLOBAL VARIABLES AND ARRAYS
+var theRightSelection='';
+var theLeftSelection='';
+var theColorIndicator='ffffdd';
+var theTableColor='green'
+var theIncorrectCount=0
+var theCorrecCount=0
+
+QuestionsArray=new Array()
+QuestionsArray[0]=["Creed","Kalima"];
+QuestionsArray[1]=["Prayer","Salat"];
+QuestionsArray[2]=["Fasting","Ramadaan"];
+QuestionsArray[3]=["Pilgrimage","Hajj"];
+QuestionsArray[4]=["Charity","Zakat"];
+
+LeftArray=new Array();
+RightArray=new Array();
+
+for (q in QuestionsArray) {
+    LeftArray[q]  = [QuestionsArray[q][0],''];
+    RightArray[q] = [QuestionsArray[q][1],'']; }
+
+//FUNCTION TO RANDOMIZE ARRAYS
+Array.prototype.shuffle = function(){
+  var len = this.length;
+  var rand,temp,i;
+  for (i = 0; i < len; i++){
+    rand = Math.floor(Math.random()*len);
+    temp = this[i];
+    this[i] = this[rand];
+    this[rand] = temp; }
+    }
+
+
+//FUNCTION TO SETUP THE WEB PAGE ON LOAD
+function resetForm() {
+LeftArray.shuffle();
+RightArray.shuffle();
+
+ txtQuestions.innerHTML = WriteQuestions();
+
+ txtScore.innerText='';
+ quizmain.StudentName.focus();
+
+txtScore.innerHTML='<p><br>Remaining Pairs: '+eval(QuestionsArray.length-theCorrecCount)+'&nbsp;&nbsp; Correct Attempts: '+theCorrecCount+'&nbsp;&nbsp; Incorrect Attempts: '+theIncorrectCount+'<br>&nbsp;</p>'; }
+
+
+//FUNCTION TO WRITE THE QUESTIONS TO THE PAGE
+function WriteQuestions(){
+var info="";
+var theLeftColor='white';
+var theRightColor='white';
+TempArrayL=new Array();
+TempArrayR=new Array();
+TempArray=new Array();
+
+for (l in QuestionsArray) { if (LeftArray[l][0]  != null && LeftArray[l][1]=='')  { TempArrayL[TempArrayL.length]=[LeftArray[l][0],l]; } }
+for (r in QuestionsArray) { if (RightArray[r][0] != null && RightArray[r][1]=='') { TempArrayR[TempArrayR.length]=[RightArray[r][0],r]; } }
+for (f in TempArrayR) { TempArray[TempArray.length]=[TempArrayL[f][0],TempArrayL[f][1],TempArrayR[f][0],TempArrayR[f][1]]; }
+
+info += '<center><br><table style=width:75%;background-color:'+theTableColor+'; border=0 id=theQuestionsTable><col width=49%><col width=2%><col width=49%>'
+
+for (w in TempArray) {
+if (theLeftSelection!='' && theLeftSelection==TempArray[w][1]) theLeftColor=theColorIndicator; else theLeftColor='white';
+if (theRightSelection!='' && theRightSelection==TempArray[w][3]) theRightColor=theColorIndicator; else theRightColor='white';
+
+if (TempArray[w][0]!=null) {
+info += '<tr valign=top>'
+info += '<td valign=top style=cursor:pointer;background-color:'+theLeftColor+'; id=theLeft'+TempArray[w][1]+' onclick="SelectLeft(\''+TempArray[w][1]+'\')"><p style=color:000000;text-align:center;>'+TempArray[w][0]+'</p></td>'
+info += '<td valign=top><p>&nbsp;</p></td>'
+info += '<td valign=top style=cursor:pointer;background-color:'+theRightColor+'; id=theRight'+TempArray[w][3]+' onclick="SelectRight(\''+TempArray[w][3]+'\')"><p style=color:000000;text-align:center;>'+TempArray[w][2]+'</p></td>'
+info += '</tr>' }}
+
+info += '</table></center>'
+
+return info; }
+
+//FUNCTION TO SET THE VALUE OF A QUESTION OPTION
+function SelectLeft(Number){
+  theLeftSelection=Number;
+  eval('theLeft'+Number).style.backgroundColor='ffffdd';
+  CheckMatch(); }
+
+function SelectRight(Number){
+  theRightSelection=Number;
+  eval('theRight'+Number).style.backgroundColor='ffffdd';
+  CheckMatch(); }
+
+function CheckMatch(){
+var aMatch=false;
+
+if (theLeftSelection!='' && theRightSelection!='') {
+for (c in QuestionsArray) { if (QuestionsArray[c][0]==LeftArray[theLeftSelection][0] && QuestionsArray[c][1]==RightArray[theRightSelection][0]) aMatch=true; }
+
+if (aMatch) {
+theColorIndicator='ffffdd';
+theTableColor='green';
+LeftArray[theLeftSelection][1]='Matched'
+RightArray[theRightSelection][1]='Matched'
+theRightSelection='';
+theLeftSelection='';
+theCorrecCount++; }
+else {
+theTableColor='maroon';
+theColorIndicator='ffdddd';
+theIncorrectCount++; } }
+
+txtQuestions.innerHTML = WriteQuestions();
+txtScore.innerHTML='<p><br>Remaining Pairs: '+eval(QuestionsArray.length-theCorrecCount)+'&nbsp;&nbsp; Correct Attempts: '+theCorrecCount+'&nbsp;&nbsp; Incorrect Attempts: '+theIncorrectCount+'<br>&nbsp;</p>';
+
+return aMatch; }
+
+
+//FUNCTION TO PRINT THE QUIZ RESULTS
+function printQuiz(){
+if (quizmain.StudentName.value=='') { quizmain.StudentName.focus();alert('Please enter your name before printing your quiz.'); }
+else { window.print(); } }
+
+// Stop hiding -->
+</script><style type='text/css'>
+<!--
+
+body {    background-color: #445577; 
+          scrollbar-face-color: 445577; scrollbar-highlight-color: #667799; scrollbar-3dlight-color: 445577; scrollbar-darkshadow-color: 445577; scrollbar-shadow-color: 445577; scrollbar-arrow-color: #667799; scrollbar-track-color: 445577;
+          font-family: "Verdana", "Arial", "Helvetica", sans-serif; overflow:auto; }
+
+h1, h2, h3, h4 { margin:0pt; margin-top:6pt; color:ffffff; }
+
+li, p, td     {   margin:0pt; color: ffffff; }
+
+h1     {   font-size:16pt; font-weight:bold; }
+h2     {   font-size:13pt; font-weight:bold; }
+h3     {   font-size:12pt; font-weight:bold; }
+          
+ul    {   list-style-image:url('images/anchorchrome.png'); }
+
+a         { font-weight: bold; text-decoration: none; color:#AAAACC; }
+a:visited { font-weight: bold; text-decoration: none; color:#AAAACC; }
+a:active  { font-weight: bold; text-decoration: underline; color:#AAAAAA; }
+a:hover   { font-weight: bold; text-decoration: underline; color:#070034; }
+
+a img {   border:none; }
+
+.correct { border:none; background-color:transparent; font-weight:bold; }
+
+.bluebox  { background-color: #667799; text-align:center; margin-top:10px; margin-bottom:10px; border: #070034 2px solid; width: 85%; padding:1px; font-size:16pt; }
+          
+.linkbox  { margin-top:10px; border: #070034 2px solid; border-top: #070034 20px solid; padding:10px; padding-left:20px; position:absolute; left:10px; width:140px; }
+            
+.anchor   { margin:15px; margin-right: 20px;  }
+
+.signature { font-family: "Times New Roman", serif; font-style: italic; font-size:12pt; margin-top:10; }
+             
+p.signature { font-family: "Times New Roman", serif; font-style: italic; text-indent: 15pt; font-size:12pt; margin-top:10; }
+
+p.Calendar { color: #000000; font-weight: bold;	font-family: Tahoma, sans-serif; text-align: center; font-size: 14pt;  }
+
+h1.CalendarHeader { background-color: Transparent; border:none; font-family: Tahoma, sans-serif; color: #0000b7; font-weight: bold; text-align: center;	font-size: 15pt;	margin: 0;  }
+
+a.calendar:link    { color: #d40014; text-underline: Off; text-decoration: none; width:100%; padding-top:10px; padding-bottom:10px; }
+a.calendar:visited { color: #d40014; text-underline: Off; text-decoration: none; width:100%; padding-top:10px; padding-bottom:10px; }
+a.calendar:active  { color: #ffffff; text-underline: Off; text-decoration: none; background-color: #000066; width:100%; padding-top:10px; padding-bottom:10px; }
+a.calendar:hover   { color: #ffffff; text-underline: Off; text-decoration: none; background-color: #000066; width:100%; padding-top:10px; padding-bottom:10px; }
+
+-->
+</style>
+
+</head>
+<body onload='resetForm();' style='font-family:Tahoma,sans-serif;'>
+
+<form name='quizmain' method='post' action='javascript:checkIt();'>
+<center><h1>Matching Islamic Synonyms<input name=txtQuiz type=hidden value='Matching Islamic Synonyms'></h1>
+
+<p>Click on an item in the left-hand column and the click on the item that best matches it in the right hand-column.<br><br></p>
+
+<table x-use-null-cells style="x-cell-content-align: top; float: aligncenter; border-spacing: 0px;" cellspacing=0><col><col style="width: 0px;">
+<tr style="x-cell-content-align: top;" valign=top>
+<td style="border: none; padding: 2px;">
+<p><b>Student Name</b></td>
+<td style=padding:0px;border:None; width=0>
+<p><input tabindex=0 name=StudentName type=text style=width:400px;></p></td></tr></table>
+
+</center>
+<div id=txtQuestions style=margin-left:15px></div>
+
+<center>
+<div id=txtScore></div>
+<p><input name=print type=button value="Print" onclick="printQuiz();"></p>
+</center>
+</form>
+<!--
+<p style=text-align:center>Quiz Created Using Howe-Two Matching Quiz Maker<br>&#169; 2003, <a href=../../index.html>Howe-Two Software</a></p>
+-->
+</body>
+</html>
