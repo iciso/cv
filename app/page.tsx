@@ -1314,6 +1314,7 @@ const bookChapters = [
     description: "A comprehensive repository of all India Hypertension Control Initiative (IHCI) reports.",
     url: "https://cvemrafi.vercel.app/km",
   },
+  ]
 
 const blogs = [
   {
