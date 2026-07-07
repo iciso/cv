@@ -114,7 +114,7 @@ export default function KMPage() {
           <div className="flex items-center mb-6">
             <FileText className="mr-3 text-teal-600" size={32} />
             <div>
-              <h2 className="text-2xl font-bold text-teal-700">UN Knowledge Management Products</h2>
+              <h2 id="un-knowledge-products" className="text-2xl font-bold text-teal-700">UN Knowledge Management Products</h2>
               <p className="text-gray-600">27 Knowledge Products (2005-2006)</p>
             </div>
           </div>
@@ -128,7 +128,7 @@ export default function KMPage() {
           </p>
 
           <div className="mb-8 p-4 bg-teal-50 rounded-lg border-l-4 border-teal-500">
-            <h3 id="un-knowledge-products" className="text-lg font-semibold text-teal-800 mb-2">About the Knowledge Products</h3>
+            <h3 className="text-lg font-semibold text-teal-800 mb-2">About the Knowledge Products</h3>
             <div className="text-teal-700 space-y-2">
               <p>
                 <strong>CR (Consolidated Replies):</strong> Responses to specific queries from organizations across India
