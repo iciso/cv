@@ -26,7 +26,7 @@ export default function KMPage() {
             <BarChart3 className="mr-3 text-teal-600" size={32} />
             <div>
               <h2 className="text-2xl font-bold text-teal-700">India Hypertension Control Initiative (IHCI) & Public Health Tools</h2>
-              <p className="text-gray-600">Monitoring Reports & Digital Knowledge Assets (2020-2021)</p>
+              <p className="text-gray-600">Monitoring Dashboards & Digital Knowledge Assets (2020-2021)</p>
             </div>
           </div>
 
@@ -36,7 +36,7 @@ export default function KMPage() {
 
           {/* New Subsection A: IHCI Monitoring Dashboards */}
           <div className="mb-10">
-            <h3 className="text-xl font-bold text-teal-800 mb-4 border-b pb-2">IHCI Progress and Monitoring Reports</h3>
+            <h3 className="text-xl font-bold text-teal-800 mb-4 border-b pb-2">IHCI Progress and Monitoring Dashboards</h3>
             <p className="text-sm text-gray-600 mb-6">
               A chronological suite of field evaluation metrics, cohort control charts, and operational reviews tracking performance timelines.
             </p>
@@ -541,7 +541,7 @@ const communityUpdates = [
   },
 ]
 
-// ================= NEW REPORT DATASETS =================
+// ================= NEW Dashboard DATASETS =================
 const ihciMonitoringReports = [
   {
     period: "Annual 2020",
@@ -552,73 +552,73 @@ const ihciMonitoringReports = [
   {
     period: "September 2020",
     file: "ihcisep20.html",
-    title: "IHCI Monthly Report - Sep 2020",
+    title: "IHCI Monthly Dashboard - Sep 2020",
     description: "Initial baseline monitoring and healthcare field metrics tracking system implementation reports."
   },
   {
     period: "December 2020",
     file: "ihcidec20.html",
-    title: "IHCI Monthly Report - Dec 2020",
+    title: "IHCI Monthly Dashboard - Dec 2020",
     description: "Year-end progress indicator summaries across targeted regional primary healthcare sites."
   },
   {
     period: "January 2021",
     file: "ihcijan21.html",
-    title: "IHCI Monthly Report - Jan 2021",
+    title: "IHCI Monthly Dashboard - Jan 2021",
     description: "Early-quarter hypertension registry expansions, log system setups, and operational feedback."
   },
   {
     period: "February 2021",
     file: "ihcifeb21.html",
-    title: "IHCI Monthly Report - Feb 2021",
+    title: "IHCI Monthly Dashboard - Feb 2021",
     description: "Active patient registration intervals and longitudinal monitoring benchmarks for hypertension control."
   },
   {
     period: "March 2021",
     file: "ihcimar21.html",
-    title: "IHCI Monthly Report - Mar 2021",
+    title: "IHCI Monthly Dashboard - Mar 2021",
     description: "First-quarter clinic compliance indicators and data validation framework evaluations."
   },
   {
     period: "April 2021",
     file: "ihciapr21.html",
-    title: "IHCI Monthly Report - Apr 2021",
+    title: "IHCI Monthly Dashboard - Apr 2021",
     description: "Mid-cohort clinic updates and structural healthcare field operational analysis updates."
   },
   {
     period: "May 2021",
     file: "ihcimay21.html",
-    title: "IHCI Monthly Report - May 2021",
+    title: "IHCI Monthly Dashboard - May 2021",
     description: "Treatment adherence compliance stats and operational metrics tracking updates under field conditions."
   },
   {
     period: "June 2021",
     file: "ihcijun21.html",
-    title: "IHCI Monthly Report - Jun 2021",
+    title: "IHCI Monthly Dashboard - Jun 2021",
     description: "Mid-year programmatic status updates, clinical metrics, and patient follow-up overviews."
   },
   {
     period: "July 2021",
     file: "ihcijul21.html",
-    title: "IHCI Monthly Report - Jul 2021",
+    title: "IHCI Monthly Dashboard - Jul 2021",
     description: "Hypertension response indicator analysis across active program deployment districts."
   },
   {
     period: "August 2021",
     file: "ihciaug21.html",
-    title: "IHCI Monthly Report - Aug 2021",
+    title: "IHCI Monthly Dashboard - Aug 2021",
     description: "Late-summer medical distribution logistics checks and localized tracking data collections."
   },
   {
     period: "September 2021",
     file: "ihcisep21.html",
-    title: "IHCI Monthly Report - Sep 2021",
+    title: "IHCI Monthly Dashboard - Sep 2021",
     description: "Comparative regional performance indexes evaluation against baseline data trends."
   },
   {
     period: "October 2021",
     file: "ihcioct21.html",
-    title: "IHCI Monthly Report - Oct 2021",
+    title: "IHCI Monthly Dashboard - Oct 2021",
     description: "Final quarter field monitoring data sets and final clinical outcomes summaries."
   }
 ]
