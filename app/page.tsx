@@ -75,7 +75,7 @@ export default function Home() {
                 >
                   Papers
                 </Link>
-                <Link href="#jvrc-research" className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors">JVRC Research</Link>
+                <Link href="#jvrc-research" className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors">Genomic-AI Research</Link>
                 <Link
                   href="#stories"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
