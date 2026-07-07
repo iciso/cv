@@ -23,6 +23,10 @@ export default function KMPage() {
                 <a href="#un-knowledge-products" className="text-teal-700 font-semibold hover:underline">
                   Jump to UN Knowledge Products
                 </a>
+                 <span className="text-gray-400">|</span>
+                <a href="#dashboards" className="text-teal-700 font-semibold hover:underline">
+                  Jump to Interactive Apps & Dashboards
+                </a>
                 <span className="text-gray-400">|</span>
                 <a href="#interactive-frameworks" className="text-teal-700 font-semibold hover:underline">
                   Jump to Interactive Frameworks
@@ -35,13 +39,15 @@ export default function KMPage() {
           <div className="flex items-center mb-6">
             <BarChart3 className="mr-3 text-teal-600" size={32} />
             <div>
-              <h2 id="interactive-frameworks" className="text-xl font-bold text-teal-800 mb-4 border-b pb-2"> IHCI Interactive Frameworks, Calculators & Educational Engines</h2>
+              <h2 id="interactive-frameworks" className="text-xl font-bold text-teal-800 mb-4 border-b pb-2"> IHCI, COVID, and other Interactive Apps, Dashboards, Calculators & 
+                Educational Engines</h2>
               <p className="text-gray-600">Monitoring Reports & Digital Knowledge Assets (2020-2021)</p>
             </div>
           </div>
 
           <p className="text-lg text-gray-700 mb-8">
-            This portfolio tracks active field outputs, operational evaluations, and dynamic clinical support systems built during the India Hypertension Control Initiative (IHCI). Deployed as digital assets, these resources deliver automated health communication, computational assessments, and targeted metric validation.
+            This portfolio tracks active field outputs, operational evaluations, and dynamic clinical support systems built during the India Hypertension Control Initiative 
+            (IHCI). Deployed as digital assets, these resources deliver automated health communication, computational assessments, and targeted metric validation.
           </p>
 
           {/* New Subsection A: IHCI Monitoring Dashboards */}
