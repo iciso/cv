@@ -88,6 +88,12 @@ export default function Home() {
                 >
                   KM Products
                 </Link>
+                  <Link
+                  href="https://cvemrafi.vercel.app/bcdc"
+                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
+                >
+                  Islamic Research
+                </Link>
                 <Link
                   href="#publications"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
