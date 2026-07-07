@@ -18,6 +18,16 @@ export default function KMPage() {
       </header>
 
       <main className="container mx-auto px-4 py-12 space-y-12">
+
+          <div className="flex gap-4 mb-8 p-4 bg-gray-100 rounded-lg">
+                <a href="#un-knowledge-products" className="text-teal-700 font-semibold hover:underline">
+                  Jump to UN Knowledge Products
+                </a>
+                <span className="text-gray-400">|</span>
+                <a href="#interactive-frameworks" className="text-teal-700 font-semibold hover:underline">
+                  Jump to Interactive Frameworks
+                </a>
+           </div>
         
       
         {/* ================= SECTION 1: IHCI MONITORING & INTERACTIVE WEB PRODUCTS ================= */}
@@ -25,7 +35,7 @@ export default function KMPage() {
           <div className="flex items-center mb-6">
             <BarChart3 className="mr-3 text-teal-600" size={32} />
             <div>
-              <h2 className="text-2xl font-bold text-teal-700">India Hypertension Control Initiative (IHCI) & Public Health Tools</h2>
+              <h2 id="interactive-frameworks" className="text-xl font-bold text-teal-800 mb-4 border-b pb-2"> IHCI Interactive Frameworks, Calculators & Educational Engines</h2>
               <p className="text-gray-600">Monitoring Reports & Digital Knowledge Assets (2020-2021)</p>
             </div>
           </div>
@@ -99,7 +109,11 @@ export default function KMPage() {
           <div className="flex items-center mb-6">
             <FileText className="mr-3 text-teal-600" size={32} />
             <div>
-              <h2 className="text-2xl font-bold text-teal-700">UN Knowledge Management Products</h2>
+              <h2 id="un-knowledge-products" className="text-xl font-bold text-teal-800 mb-4 border-b pb-2">
+                      UN Knowledge Management Products
+                    </h2>
+
+
               <p className="text-gray-600">27 Knowledge Products (2005-2006)</p>
             </div>
           </div>
