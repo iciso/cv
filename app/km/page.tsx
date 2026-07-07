@@ -20,19 +20,20 @@ export default function KMPage() {
       <main className="container mx-auto px-4 py-12 space-y-12">
         
          {/* ================= NAVIGATION ================= */}
-         <div className="flex gap-4 mb-8 p-4 bg-gray-100 rounded-lg">
-          	<h2 id="un-dashboards" className="text-xl font-bold text-teal-800 mb-4 border-b pb-2">
-         	 IHCI Dashboards, COVID, Interactive Apps, Medical Calculators & Educational Engines
-        		</h2>
-        		 <span className="text-gray-400">|</span>
-        	<a href="#interactive-frameworks" className="text-teal-700 font-semibold hover:underline">
-          	  Jump to Interactive Frameworks
-        	  </a>
-        		  <span className="text-gray-400">|</span>
-        	<a href="#un-knowledge-products" className="text-teal-700 font-semibold hover:underline">
-            Jump to UN Knowledge Products
-          </a>
-        </div>
+             <div className="flex gap-4 mb-8 p-4 bg-gray-100 rounded-lg">
+              	<a href="#dashboards" className="text-teal-700 font-semibold hover:underline">
+             	 Jump to IHCI Dashboards
+            		</h2>
+            		 <span className="text-gray-400">|</span>
+            	<a href="#interactive-frameworks" className="text-teal-700 font-semibold hover:underline">
+              	  Jump to Interactive Frameworks
+            	  </a>
+            		  <span className="text-gray-400">|</span>
+            	<a href="#un-knowledge-products" className="text-teal-700 font-semibold hover:underline">
+                Jump to UN Knowledge Products
+              </a>
+            </div>
+
 
         {/* ================= SECTION 1: IHCI MONITORING & INTERACTIVE WEB PRODUCTS ================= */}
         <div className="bg-white p-6 rounded-lg shadow-md">
