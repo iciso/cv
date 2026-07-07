@@ -1402,7 +1402,7 @@ const bookChapters = [
   },
    {
     title: "Clinical AI Integration Plan",
-    description: "A strategic blueprint utilizing knowledge visualization to align genomic research goals with clinical AI integration strategies at JVRC.",
+    description: "A strategic framework for integrating computational intelligence, structural biology, and clinical expertise to bridge the gap between raw medical data and advanced HIV-CVD research.",
     url: "https://drive.google.com/file/d/1Tfef3CortDj4MRpktMWhqoaJvdsz96x9/view?usp=sharing"
   },
   {
