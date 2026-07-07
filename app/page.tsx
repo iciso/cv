@@ -83,7 +83,7 @@ export default function Home() {
                   Stories
                 </Link>
                 <Link
-                  href="#km"
+                  href="https://cvemrafi.vercel.app/km"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
                   KM Products
