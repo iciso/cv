@@ -75,6 +75,7 @@ export default function Home() {
                 >
                   Papers
                 </Link>
+                <Link href="#jvrc-research" className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors">JVRC Research</Link>
                 <Link
                   href="#stories"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
@@ -484,6 +485,40 @@ export default function Home() {
                             className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
                           >
                             Read Paper <ExternalLink className="ml-2" size={16} />
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+                            {/* JVRC Research & AI Workflows Section */}
+              <section id="jvrc-research" className="mb-16 scroll-mt-20">
+                <div className="flex items-center mb-6">
+                  <Layers className="mr-2 text-teal-600" size={28} />
+                  <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+                    JVRC Research & AI Workflows
+                  </h2>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {jvrcWorkflows.map((workflow, index) => (
+                      <div
+                        key={index}
+                        className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
+                      >
+                        <div className="p-6">
+                          <h4 className="text-xl font-bold text-teal-700 mb-4">{workflow.title}</h4>
+                          <p className="text-gray-600 mb-6">{workflow.description}</p>
+                          <a
+                            href={workflow.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                          >
+                            View Slide Deck <ExternalLink className="ml-2" size={16} />
                           </a>
                         </div>
                       </div>
@@ -1348,6 +1383,29 @@ const bookChapters = [
     url: "https://cvemrafi.vercel.app/km",
   },
   ]
+
+  const jvrcWorkflows = [
+  {
+    title: "HIV-1 Resistance Genomic Workflow",
+    description: "An AI-integrated analysis of molecular data structures that bridges viral agility, resistance mutations, and clinical treatment optimization.",
+    url: "#" // Replace with your actual link
+  },
+  {
+    title: "Genomic Research on Cardiovascular Risk",
+    description: "Development of AI-driven research frameworks designed to identify and evaluate novel cardiovascular disease markers within complex genomic datasets.",
+    url: "#" // Replace with your actual link
+  },
+  {
+    title: "JVRC Resilience & AI Integration Plan",
+    description: "A strategic blueprint utilizing knowledge visualization to align genomic research goals with clinical AI integration strategies at JVRC.",
+    url: "#" // Replace with your actual link
+  },
+  {
+    title: "Agile HIV Research Leadership",
+    description: "Application of advanced AI models to synthesize evidence across HIV-CVD genomics and proteomics, establishing a new niche for integrated research leadership.",
+    url: "#" // Replace with your actual link
+  }
+]
 
 const blogs = [
   {
