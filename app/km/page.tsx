@@ -23,7 +23,7 @@ export default function KMPage() {
              <div className="flex gap-4 mb-8 p-4 bg-gray-100 rounded-lg">
               	<a href="#dashboards" className="text-teal-700 font-semibold hover:underline">
              	 Jump to IHCI Dashboards
-            		</h2>
+            		  </a>
             		 <span className="text-gray-400">|</span>
             	<a href="#interactive-frameworks" className="text-teal-700 font-semibold hover:underline">
               	  Jump to Interactive Frameworks
