@@ -1388,22 +1388,27 @@ const bookChapters = [
   {
     title: "HIV-1 Resistance Genomic Workflow",
     description: "An AI-integrated analysis of molecular data structures that bridges viral agility, resistance mutations, and clinical treatment optimization.",
-    url: "#" // Replace with your actual link
+    url: "https://drive.google.com/file/d/1itRY5xIBNLwAcGLfOpi7x8VE2LrhBTOm/view?usp=sharing" 
   },
   {
     title: "Genomic Research on Cardiovascular Risk",
     description: "Development of AI-driven research frameworks designed to identify and evaluate novel cardiovascular disease markers within complex genomic datasets.",
-    url: "#" // Replace with your actual link
+    url: "https://drive.google.com/file/d/1FdljGFyNLvpK5pju5syNoRJpIxK2AtAT/view?usp=sharing" 
   },
   {
-    title: "JVRC Resilience & AI Integration Plan",
+    title: "JVRC Resilience Plan",
+    description: "A framework document outlining knowledge management in kickstarting and aligning genomic and protemic research goals with resilience strategies.",
+    url: "https://drive.google.com/file/d/1DCdKTEaiUloGvEmIrlSvsNkGrOno6Ahe/view?usp=sharing"
+  },
+   {
+    title: "Clinical AI Integration Plan",
     description: "A strategic blueprint utilizing knowledge visualization to align genomic research goals with clinical AI integration strategies at JVRC.",
-    url: "#" // Replace with your actual link
+    url: "https://drive.google.com/file/d/1Tfef3CortDj4MRpktMWhqoaJvdsz96x9/view?usp=sharing"
   },
   {
     title: "Agile HIV Research Leadership",
     description: "Application of advanced AI models to synthesize evidence across HIV-CVD genomics and proteomics, establishing a new niche for integrated research leadership.",
-    url: "#" // Replace with your actual link
+    url: "https://drive.google.com/file/d/1Tfef3CortDj4MRpktMWhqoaJvdsz96x9/view?usp=sharing"
   }
 ]
 
