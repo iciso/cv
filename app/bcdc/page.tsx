@@ -13,6 +13,7 @@ const bcdcPresentations = [
   { title: "The Quranic Helix: Pairing Complementary Virtues", description: "Details how the Quran pairs virtues to facilitate holistic human transformation.", url: "https://drive.google.com/file/d/1wWOOGzeMDt5SLfQySO1D4s_1PG5i9-Lz/view?usp=sharing" },
   { title: "Resonance and Distinction: Spiritual Themes in Quran and Bible", description: "A comparative study identifying shared spiritual themes and distinct revelations across both texts.", url: "https://drive.google.com/file/d/1-jTMr7o58z0CCqFHYW6oLW2QJGRum8nl/view?usp=sharing" },
   { title: "The Mirror and The Scales: Judicial Ethics from Prophet Dawud (AS)", description: "Extracts timeless lessons on justice, ethics, and leadership from the life of Prophet Dawud (AS).", url: "https://drive.google.com/file/d/1BWXCkQSnlcOSZOcnaFo_YBujHHXqvDV3/view?usp=sharing" },
+  { title: "The Abrahamic Bioethics Handbook: Mapping Medical Ethics across 3 Faiths", description: "Maps bioethics and bedside guidance across the Abrahamic faiths to support religiously diverse patients and HCWs", url: "https://drive.google.com/file/d/1qGQhxPrIz_c9skNdP3kRG6yLtV4h0POH/view?usp=sharing" },
   { title: "Bridging Islamic Psychology and Psychiatry", description: "Proposes an integrated framework connecting traditional Islamic psychological insights with modern clinical psychiatry.", url: "https://drive.google.com/file/d/1isDcyTH6XX1sDiswaoBbWwDSb9piZGe0/view?usp=sharing" },
 ]
 
