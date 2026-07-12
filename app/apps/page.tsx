@@ -205,6 +205,16 @@ const apps = [
     tags: ["Jamath", "Masjid", "Activities", "Community"],
     category: "Individual",
   },
+   {
+    name: "BCDC",
+    description:
+      "Busaiteen Chat Dialogue Centre, based in the Kingdom of Bahrain, is dedicated to fulfilling the mission of conveying the truth of our common humanity for attaining Peace.",
+    imagePath: "/bcdc.png",
+    bgColor: "#0a6e4a",
+    url: "https://bcdcb.vercel.app/",
+    tags: ["Islamic", "Spiritual Growth", "Dawah", "Education"],
+    category: "Individual",
+  },
   {
     name: "Barzaq",
     description:
