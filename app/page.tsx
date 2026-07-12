@@ -106,27 +106,9 @@ export default function Home() {
                 >
                   Blogs
                 </Link>
-                 <a
-                    href="/downloads"  // or wherever you host the ZIP
-                    download="CV-Download-Page"
-                    className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors flex items-center"
-                  >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                  Download CV
-                </a>
+                 <Link href="/downloads" className="text-gray-600 hover:text-teal-700 font-medium">
+                  Download CVs
+                </Link>
               </div>
             </div>
             <div className="flex justify-center md:justify-end">
