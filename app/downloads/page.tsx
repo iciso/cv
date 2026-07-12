@@ -15,12 +15,12 @@ const cvProfiles = [
    {
     title: "Medical, KM & Public Health Profile",
     description: "Focuses on knowledge management in clinical trials and public health interventions.",
-    file: "/cv-medical-genomics.pdf"
+    file: "/cv-medical-km-public-health.pdf"
   },
   {
     title: "Public Health & Community Development Profile",
     description: "Focuses on community health systems, UN-level knowledge management, and large-scale public health interventions.",
-    file: "/cv-medical-km-public-health.pdf"
+    file: "/cv-public-health.pdf"
   },
   {
     title: "Islamic Studies & Interfaith Profile",
