@@ -107,8 +107,8 @@ export default function Home() {
                   Blogs
                 </Link>
                  <a
-                    href="https://cvemrafi.vercel.app/cv-offline.zip"  // or wherever you host the ZIP
-                    download="Dr-Essa-Rafique-CV-Offline.zip"
+                    href="/downloads"  // or wherever you host the ZIP
+                    download="CV-Download-Page"
                     className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors flex items-center"
                   >
                   <svg
@@ -1300,10 +1300,10 @@ export default function Home() {
       {/* Floating Download Button */}
       <div className="fixed bottom-8 right-8 z-50">
         <a
-          href="https://docs.google.com/document/d/1h2A_pw48gVhvmMk3RXiyLtKxgu3-5vHl/export?format=pdf"
+          href="/downloads"
           download
           className="bg-teal-700 text-white p-4 rounded-full shadow-lg hover:bg-teal-800 transition-colors flex items-center justify-center"
-          aria-label="Download CV"
+          aria-label="Download CV Page"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
