@@ -106,7 +106,9 @@ export default function Home() {
                 >
                   Blogs
                 </Link>
-                 <Link href="/downloads" className="text-gray-600 hover:text-teal-700 font-medium">
+                 <Link href="/downloads" 
+                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
+                   >
                   Download CVs
                 </Link>
               </div>
