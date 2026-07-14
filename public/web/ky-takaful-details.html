@@ -1,0 +1,3854 @@
+<!DOCTYPE html>
+<HTML>
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Share:700i&display=swap" rel="stylesheet">
+
+<style>
+.sansserif {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+#customers tr:hover {background-color: #ddd;}
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+table.timecard {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	margin: auto;
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #ddd; /*for older IE*/
+	/*border-style: hidden; */
+}
+table.timecard caption {
+	background-color: #f79646;
+	color: #fff;
+	font-size: x-large;
+	font-weight: bold;
+	letter-spacing: .3em;
+}
+table.timecard thead th {
+	padding: 8px;
+	background-color: #fde9d9;
+	font-size: large;
+}
+table.timecard thead th#thDay {
+	width: "auto";
+}
+table.timecard thead th#thRegular, table.timecard thead th#thOvertime, table.timecard thead th#thTotal {
+	width: "auto";
+}
+table.timecard th, table.timecard td {
+	padding: 3px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #f79646 #ccc;
+}
+table.timecard td {
+	text-align: left;
+}
+table.timecard tbody th {
+	text-align: left;
+	font-weight: normal;
+}
+table.timecard tr.even {
+	background-color: #fde9d9;
+}
+</style>
+</head>
+<body class="sansserif">
+<script language="JavaScript">
+TargetDate = "12/25/2020 1:00 AM";
+BackColor = "palegreen";
+ForeColor = "navy";
+CountActive = true;
+CountStepper = -1;
+LeadingZero = true;
+DisplayFormat = "Insha Allah, for 2020 KY Annual Meet there is: " + "%%D%% Days, %%H%% Hours, %%M%% Minutes, %%S%% Seconds.";
+FinishMessage = "Masha Allah, KY Family Meet day it is!";
+
+</script>
+<!--
+<script language="JavaScript" src="https:/rhashemian.github.io/js/countdown.js"></script>
+-->
+<script language="JavaScript">
+function calcage(secs, num1, num2) {
+  s = ((Math.floor(secs/num1))%num2).toString();
+  if (LeadingZero && s.length < 2)
+    s = "0" + s;
+  return "<b>" + s + "</b>";
+}
+
+function CountBack(secs) {
+  if (secs < 0) {
+    document.getElementById("cntdwn").innerHTML = FinishMessage;
+    return;
+  }
+  DisplayStr = DisplayFormat.replace(/%%D%%/g, calcage(secs,86400,100000));
+  DisplayStr = DisplayStr.replace(/%%H%%/g, calcage(secs,3600,24));
+  DisplayStr = DisplayStr.replace(/%%M%%/g, calcage(secs,60,60));
+  DisplayStr = DisplayStr.replace(/%%S%%/g, calcage(secs,1,60));
+
+  document.getElementById("cntdwn").innerHTML = DisplayStr;
+  if (CountActive)
+    setTimeout("CountBack(" + (secs+CountStepper) + ")", SetTimeOutPeriod);
+}
+
+function putspan(backcolor, forecolor) {
+ document.write("<H3><center><span id='cntdwn' style='background-color:" + backcolor + 
+                "; color:" + forecolor + "'></span></center></H3>");
+}
+
+if (typeof(BackColor)=="undefined")
+  BackColor = "white";
+if (typeof(ForeColor)=="undefined")
+  ForeColor= "black";
+if (typeof(TargetDate)=="undefined")
+  TargetDate = "12/25/2020 12:01 AM";
+if (typeof(DisplayFormat)=="undefined")
+  DisplayFormat = "%%D%% Days, %%H%% Hours, %%M%% Minutes, %%S%% Seconds.";
+if (typeof(CountActive)=="undefined")
+  CountActive = true;
+if (typeof(FinishMessage)=="undefined")
+  FinishMessage = "";
+if (typeof(CountStepper)!="number")
+  CountStepper = -1;
+if (typeof(LeadingZero)=="undefined")
+  LeadingZero = true;
+
+
+CountStepper = Math.ceil(CountStepper);
+if (CountStepper == 0)
+  CountActive = false;
+var SetTimeOutPeriod = (Math.abs(CountStepper)-1)*1000 + 990;
+putspan(BackColor, ForeColor);
+var dthen = new Date(TargetDate);
+var dnow = new Date();
+if(CountStepper>0)
+  ddiff = new Date(dnow-dthen);
+else
+  ddiff = new Date(dthen-dnow);
+gsecs = Math.floor(ddiff.valueOf()/1000);
+CountBack(gsecs);
+</script>
+<div id="fwchart" align="center"><H1>Kattoo-Yamani Takaful or Insurance Scheme</H1></div>
+<br>
+<strong>Takaful Operators:</strong><br>
+<strong>Aluva:</strong> Riswan Abdul Rasheed helped by Ruksana, Husna and Janath<br>
+<strong>Alleppey: </strong>Shami Asharaf Khan, helped by Zoherban, Adhila Sheik, and Farooq Khan<br>
+<strong>Trivandrum:</strong> Nihal Harshad<br>
+<strong>Accounts &amp; Tally: </strong>Shamna Asharaf Khan<br>
+<strong>Legal: </strong>Faizal M.I.<br>
+<strong>Banking:</strong> Aslam M.O.<br><br>
+
+<div id="flowchart" align="center">
+<H2>Kattoo-Yamani Takaful Flow Chart</H2>
+
+<img src="https://kyft.club/wp-content/uploads/2020/08/takafulflow.png" alt="Takaful Flow Chart" width="" height="" style="float:center">
+</div>
+<br><br>
+<div id="Malayalam" align="center">
+<img src="https://kyft.club/wp-content/uploads/2020/08/takafulMalayalam.png" alt="Takaful Malayalam notes" width="80%" height="" style="float:center">
+</div>
+<br><br>
+<div id="flowchart" align="center">
+<H2>Details of Takaful Members</H2></div>
+Table shows amounts that will be contributed by members, as stated during the KY zoom meeting of the 2 Aug 2020.<br>
+<table class="timecard"><caption>Details of Members who joined KY Takaful Scheme</caption>
+<table id="customers">
+<tbody>
+<tr>
+<th>No.</th>
+<th>Members joined in KY Takaful</th>
+<th>Amount</th>
+</tr>
+<tr>
+<td>1.</td>
+<td>Md. Amin Khattu</td>
+<td>5000</td>
+</tr>
+<tr>
+<td>2.</td>
+<td>Adhila Sheik</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>3.</td>
+<td>E. Md. Rafique</td>
+<td>5000</td>
+</tr>
+<tr>
+<td>4.</td>
+<td>Farooq Khan</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>5.</td>
+<td>Zoherban</td>
+<td>2000</td>
+</tr>
+<tr>
+<td>6.</td>
+<td>Shabeer Khan</td>
+<td>500</td>
+</tr>
+<tr>
+<td>7.</td>
+<td>Abdul Rasheed Aluva</td>
+<td>500</td>
+</tr>
+<tr>
+<td>8.</td>
+<td>Abdul Majid</td>
+<td>500</td>
+</tr>
+<tr>
+<td>9.</td>
+<td>Asghar Amanullah</td>
+<td>500</td>
+</tr>
+<tr>
+<td>10.</td>
+<td>Harshad M.J.</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>11.</td>
+<td>Total</td>
+<td>17000</td>
+</tr>
+</tbody>
+</table><br><br>
+
+
+<div id="flowchart" align="center">
+<H2>Kattoo-Yamani Takaful Operators Details</H2></div>
+The following table gives the area, team, and lead details of the Takaful operators:<br>
+<div id="main">
+<table class="timecard"><caption>Details of Takaful Operators</caption>
+<thead>
+<tr>
+<th id="thDay">No.</th>
+<th id="thRegular">Name</th>
+<th id="thOvertime">Area</th>
+<th id="thTotal">Lead</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th>1.</th>
+<td>Riswan Abdul Rasheed</td>
+<td>Ernakulam, and districts north of EKM</td>
+<td>Aluva Team Lead</td>
+</tr>
+<tr class="even">
+<th>2.</th>
+<td>Ruksana</td>
+<td>Ernakulam, and districts north of EKM</td>
+<td>Aluva Team</td>
+</tr>
+<tr class="odd">
+<th>3.</th>
+<td>Husna</td>
+<td>Ernakulam, and districts north of EKM</td>
+<td>Aluva Team</td>
+</tr>
+<tr class="even">
+<th>4.</th>
+<td>Jannath</td>
+<td>Ernakulam, and districts north of EKM</td>
+<td>Aluva Team</td>
+</tr>
+<tr class="odd">
+<th>5</th>
+<td>Shami Asharaf Khan</td>
+<td>Alleppey, Kollam, Kottayam, Idukki and Pathinamthitta Districts</td>
+<td>Alleppey Team Lead</td>
+</tr>
+<tr class="even">
+<th>6.</th>
+<td>Zoherban</td>
+<td>Alleppey, Kollam, Kottayam, Idukki and Pathinamthitta Districts</td>
+<td>Alleppey Team</td>
+</tr>
+<tr class="odd">
+<th>7.</th>
+<td>Adhila Sheik</td>
+<td>Alleppey, Kollam, Kottayam, Idukki and Pathinamthitta Districts</td>
+<td>Alleppey Team</td>
+</tr>
+<tr class="even">
+<th>8.</th>
+<td>Farooq Khan</td>
+<td>Alleppey, Kollam, Kottayam, Idukki and Pathinamthitta Districts</td>
+<td>Alleppey Team</td>
+</tr>
+<tr class="odd">
+<th>9.</th>
+<td>Nihal Harshad</td>
+<td>Trivandrum District, Rest of India, NRIs</td>
+<td>Trivandrum Team Lead</td>
+</tr>
+<tr class="even">
+<th>10.</th>
+<td>Trivandrum TBS</td>
+<td>Trivandrum District, Rest of India, NRIs</td>
+<td>TVM Team</td>
+</tr>
+<tr class="odd">
+<th>11.</th>
+<td>Trivandrum TBS</td>
+<td>Trivandrum District, Rest of India, NRIs</td>
+<td>TVM Team</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="flhart" align="center">
+<H2>Kattoo-Yamani Takaful Funds Break-up Chart</H2></div>
+
+<div id="piechart" align="center"></div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Fund', 'Amount'],
+  ['Donation', 25],
+  ['Operator', 5],
+  ['Investment', 70]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Details of KY Takaful Fund', 'width':650, 'height':500};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+
+<strong>List of KYFT Members in Alleppey and adjoining districts&nbsp; from which we have to take out the earning members to enroll as Takaful subscribers</strong>
+<table class="timecard"><caption>KY Members in Alleppey and adjoining areas</caption>
+<table id="customers" width="633">
+<tbody>
+<tr>
+<th width="34">No.</th>
+<th width="87">Name</th>
+<th width="110">Address</th>
+<th width="58">Town</th>
+<th width="48">State</th>
+<th width="64">PIN</th>
+<th width="84">Home Phone</th>
+<th width="84">Mobile Phone</th>
+<th width="64">Comments</th>
+</tr>
+<tr>
+<td width="34">1</td>
+<td width="87">Abdul Hafees Khan</td>
+<td width="110">Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">2</td>
+<td width="87">Abdul Jamal</td>
+<td width="110">Rahmath Mannzil, Near Yaffi Masjid, Zakria Bazaar P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84">4772251747</td>
+<td width="84">97445257991</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">3</td>
+<td width="87">Abdul Khader Jailani (Munna)</td>
+<td width="110">Mariyam Manzil, Mukham Lane, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84">4772260451</td>
+<td width="84">07293201020
+09497340315</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">4</td>
+<td width="87">Abdul Rashid</td>
+<td width="110">Arzu Manzil, North Punnathala, Thiru mulla varam P.O.</td>
+<td width="58">Kollam</td>
+<td width="48">Kerala</td>
+<td width="64">691 012</td>
+<td width="84">4742795763</td>
+<td width="84">9400995763</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">5</td>
+<td width="87">Adhila Sheik, Faqrudeen, Sumi, Surumi, Shahul Hameed</td>
+<td width="110">Pandithecayavu Parambu, Jubilee Road, Sea View Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84"></td>
+<td width="84">9895556405</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">6</td>
+<td width="87">Adruika Yamani</td>
+<td width="110">Allissery Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9961904009</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">7</td>
+<td width="87">Afaan Sayana Asif</td>
+<td width="110">S/o Sayana, Sayed Manzil, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84">4772252477</td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">8</td>
+<td width="87">Afra Sayana Asif</td>
+<td width="110">D/o Sayana, Sayed Manzil, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84">4772252477</td>
+<td width="84">9400629477</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">9</td>
+<td width="87">Aisha</td>
+<td width="110">Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">10</td>
+<td width="87">Akbar</td>
+<td width="110">S/o Noorjehan, Suman House, Puzhayan vazhy, Valliya maram Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">7403570919</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">11</td>
+<td width="87">Alma Sayana Asif</td>
+<td width="110">D/o Sayana, Sayed Manzil, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84">4772252477</td>
+<td width="84">9400629477</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">12</td>
+<td width="87">Ameen S.M.</td>
+<td width="110">S/o Mariam Bivi, Arayan Perambu, Vattayil Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9495119383</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">13</td>
+<td width="87">Ameer</td>
+<td width="110">S/o Noorjehan, Rashid Manzil, Kambivallapu, Allisserry Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9497340118</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">14</td>
+<td width="87">Ammajan</td>
+<td width="110">Kalapturayil House, Evangelical Church Lane, Alleppey Head Post Office,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9961806320</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">15</td>
+<td width="87">Arif Mehaboob</td>
+<td width="110">Channus, Panakal Purayidam, Valliakulam Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">689 012</td>
+<td width="84"></td>
+<td width="84">9446830106</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">16</td>
+<td width="87">Ashraff Khan</td>
+<td width="110">S/o Rabi, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">09388920960
+09020234722</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">17</td>
+<td width="87">Asif Syed</td>
+<td width="110">Syed Manzil, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772252477</td>
+<td width="84">9447958577</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">18</td>
+<td width="87">Aslam Yamani</td>
+<td width="110">Ammen's, Pullayanvazhi,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9947506347</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">19</td>
+<td width="87">Aslam M.O.</td>
+<td width="110">Ayesha Manzil, Amman Koil Lane, Allisserry Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772251783</td>
+<td width="84">9846290914</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">20</td>
+<td width="87">Asuma Beevi Ramla</td>
+<td width="110">Marikar Kudi Valapu, Zakria Bazar Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9746099738</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">21</td>
+<td width="87">Bajara Beevi</td>
+<td width="110">Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">22</td>
+<td width="87">Betima</td>
+<td width="110">C/o Shaji, Aliyas, Zakriya Bazaar,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9349484190</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">23</td>
+<td width="87">Biju</td>
+<td width="110">S/o Ammajan, Kalapturayil House, Evangelical Church Lane, Alleppey Head Post Office,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9961806320</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">24</td>
+<td width="87">Bivi &amp; Shamina Nawab</td>
+<td width="110">Sister of Ameen, Al Noor, Vencie Nagar, Lajnath Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84">4772239346</td>
+<td width="84">8089235213</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">25</td>
+<td width="87">Faizal Falahi</td>
+<td width="110">S/o Taha SA, Haleema Manzil, Vattapalli</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9446372761</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">26</td>
+<td width="87">Faizal Ayub Kattoo</td>
+<td width="110">Faizal Manzil, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9447987618</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">27</td>
+<td width="87">Faizal M.I.</td>
+<td width="110">Katoos Manzil, Vellakinar, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772263524</td>
+<td width="84">9846340440</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">28</td>
+<td width="87">Farhana</td>
+<td width="110">Ayesha Manzil, Amman Koil Lane, Allisserry Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772251783</td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">29</td>
+<td width="87">Farsana</td>
+<td width="110">C/o Farooq Khan, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">30</td>
+<td width="87">Farooq Khan</td>
+<td width="110">S/o Talif Khan who is S/o Sathar Khan. Or S/o of Khairunissa, who is D/o Saramma, Khader Parambu House, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9895413635</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">31</td>
+<td width="87">Fathima Wahid</td>
+<td width="110">Shiffin Manzil, Lajnath Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">689 001</td>
+<td width="84">4772237992</td>
+<td width="84">8089233950</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">32</td>
+<td width="87">Feroz</td>
+<td width="110">S/o M. Rahim, Puthenveetil Puraiyadam, Vattayal Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">33</td>
+<td width="87">Feroz Khan</td>
+<td width="110">C/o Shabada, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9995822574</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">34</td>
+<td width="87">Firos Khan</td>
+<td width="110">Puthen Veetil, Puthiya edam, Vattayil Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9633847459</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">35</td>
+<td width="87">Gulshan</td>
+<td width="110">Darus-Salaam, Allisserry Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772254153</td>
+<td width="84">9400754153</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">36</td>
+<td width="87">Hajira Beevi</td>
+<td width="110">W/o Ashraff, who is s/o Rabia, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9388920960</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">37</td>
+<td width="87">Haleema Arif</td>
+<td width="110">Channus, Panakal Purayidam, Valliakulam Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">38</td>
+<td width="87">Harshita</td>
+<td width="110">D/o Haseena, W/o Shuhaib, Pattil Veedu, Near boat jetty</td>
+<td width="58">Chengnasserry</td>
+<td width="48">Kerala</td>
+<td width="64">682 001</td>
+<td width="84"></td>
+<td width="84">09947175272
+08281430657</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">39</td>
+<td width="87">Haseena Farooq</td>
+<td width="110">W/o Farooq Khan, Khader Parambu House, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9895816011</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">40</td>
+<td width="87">Haseena Hanif</td>
+<td width="110"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="224a435147474c434f0c414e47435051494b475162454f434b4e0c414d4f">[email&#160;protected]</a></td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84">4772260451</td>
+<td width="84">8129262119</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">41</td>
+<td width="87">Hathuma</td>
+<td width="110">Sister of Saramma, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">42</td>
+<td width="87">Ibrahim Sherieff (Yusufjaan)</td>
+<td width="110">Katoos Manzil, Vellakinar, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84">4772263524</td>
+<td width="84">8089126273</td>
+<td>1</td>
+</tr>
+<tr>
+<td width="34">43</td>
+<td width="87">Iqbal Khan</td>
+<td width="110">S/o Essa Khan, Haroon Manzil, Civil Station Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84"></td>
+<td width="84">8891228703</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">44</td>
+<td width="87">Irfan Khan</td>
+<td width="110">C/o Farooq Khan, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">45</td>
+<td width="87">Jani Bava</td>
+<td width="110">Konvanam Parambu, Mukham Lane, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84"></td>
+<td width="84">9895139765</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">46</td>
+<td width="87">K. P. Verghese</td>
+<td width="110">H/o Ammajan, Kalapturayil House, Evangelical Church Lane, Alleppey Head Post Office,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9349438180</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">47</td>
+<td width="87">Kasim A. Yamani</td>
+<td width="110">Mehar Cottage, Vattapally,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84"></td>
+<td width="84">9400203335</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">48</td>
+<td width="87">Khairun Nissa</td>
+<td width="110">D/o Saramma &amp; M/o Farooq, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9349590252</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">49</td>
+<td width="87">Kulsumbi Mohamed</td>
+<td width="110">Mariam Manzil, Mukham Lane, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84">4772260451</td>
+<td width="84">9497340315</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">50</td>
+<td width="87">Lathifa Banu</td>
+<td width="110">Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">51</td>
+<td width="87">Manzoor</td>
+<td width="110">Khan Manzil, Lajnath Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">52</td>
+<td width="87">Mehaboob</td>
+<td width="110">Channus, Panakal Purayidam, Valliakulam Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">689 012</td>
+<td width="84"></td>
+<td width="84">9446830106</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">53</td>
+<td width="87">Meharaj Kasim</td>
+<td width="110">Mehar Cottage, Vattapally,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84"></td>
+<td width="84">9400203335</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">54</td>
+<td width="87">Mohamed Abdul Wahid</td>
+<td width="110">Shafik Manzil, Lajnath Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84">4772237994</td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">55</td>
+<td width="87">Mohamed Ali</td>
+<td width="110">H/o Shameem Yamani, Mananchery</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688</td>
+<td width="84"></td>
+<td width="84">9847483806</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">56</td>
+<td width="87">Mohamed Ameen Yamani</td>
+<td width="110">Ameen Manzil, Near Sareena Textiles, Pulleiyan Vazhi, Mullathu vapu,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 002</td>
+<td width="84"></td>
+<td width="84">9605880350</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">57</td>
+<td width="87">Mohamed Basheer</td>
+<td width="110">S/o Yahya Yamani, Near Yasi Masjid, Zakria Bazaar,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">689 001</td>
+<td width="84"></td>
+<td width="84">9746099738</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">58</td>
+<td width="87">Mohamed Hassan</td>
+<td width="110">S/o Yahya Yamani, Thayal Veli, Manancheery P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 538</td>
+<td width="84"></td>
+<td width="84">9846560009</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">59</td>
+<td width="87">Mohamed Hazeem Yamani</td>
+<td width="110">S/o Yahya Yamani, Yamani Manzil, South Panayil Junction, Mananchery P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 538</td>
+<td width="84"></td>
+<td width="84">9526779022</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">60</td>
+<td width="87">Mohamed Iqbal</td>
+<td width="110">H/o Shabina Yamani, Aswathy Nivas, Chalakara, Vembala muku, Koravanthodu, Kunjapala P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688</td>
+<td width="84"></td>
+<td width="84">9995546010</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">61</td>
+<td width="87">Mohamed Nihal</td>
+<td width="110">Ayesha Manzil, Amman Koil Lane, Allisserry Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772251783</td>
+<td width="84">9946720914</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">62</td>
+<td width="87">Mohammed Amin</td>
+<td width="110">Thayal Veiyil, Manancherry P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 538</td>
+<td width="84"></td>
+<td width="84">9846560009</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">63</td>
+<td width="87">Mohammed Ashique</td>
+<td width="110">Thayal Veiyil, Manancherry P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 538</td>
+<td width="84"></td>
+<td width="84">9846560009</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">64</td>
+<td width="87">Mohammed Hassan</td>
+<td width="110">Thayal Veiyil, Manancherry P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 538</td>
+<td width="84"></td>
+<td width="84">9846560009</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">65</td>
+<td width="87">Mohammed Muneer</td>
+<td width="110">S/o Abdul Khadeer Jailani, Mariam Manzil, Mukham Lane, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84"></td>
+<td width="84">8157086127</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">66</td>
+<td width="87">Mohammed Yaseen</td>
+<td width="110">Channus, Panakal Purayidam, Valliakulam Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">67</td>
+<td width="87">Mohammed Naseem J.</td>
+<td width="110">Rahmath Mannzil, Near Yaffi Masjid, Zakria Bazaar P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9605312034</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">68</td>
+<td width="87">Muhammed Iqbal</td>
+<td width="110">Marakkar Kutty Valapu, Zakria Bazaar Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9995546010</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">69</td>
+<td width="87">Mumtaz Begum</td>
+<td width="110">Velim Parambil House, Lajnath Ward, Vattapalli</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9446810012</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">70</td>
+<td width="87">Muneera</td>
+<td width="110">Syed Manzil, Athiparambil, Vellakinar Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9895575585</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">71</td>
+<td width="87">Nazir Sheik Ismail (Nazrul)</td>
+<td width="110">Naduvilparamb Civil Station ward (old: Sudha Niwas, Kailaram, Santhosh Nagar, Kanajanapuram P.O.)</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 003</td>
+<td width="84"></td>
+<td width="84">9447286914</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">72</td>
+<td width="87">Nazura</td>
+<td width="110">M/o Sham</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688</td>
+<td width="84"></td>
+<td width="84">989535442</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">73</td>
+<td width="87">Nisa Sherief</td>
+<td width="110">Katoos Manzil, Vellakinar, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772263524</td>
+<td width="84">8547363524</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">74</td>
+<td width="87">Nishana N.</td>
+<td width="110">D/o Wahida, Faizal Manzil, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">689 001</td>
+<td width="84">4772237618</td>
+<td width="84">9656017583</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">75</td>
+<td width="87">Noorjahan</td>
+<td width="110">Naeluvilla Parambu, Civil Station Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">689 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">76</td>
+<td width="87">Noorjehan (Alpy)</td>
+<td width="110">D/o Yahya Yamani, Kakaeri Puraedam, Vattiyar Ward, Thiruvambady</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9746927807</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">77</td>
+<td width="87">Noorjehan, Shahanas, Nafeeza, Javed, Parvez</td>
+<td width="110">Milans, Mallika muku, Kanjiramchira P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 007</td>
+<td width="84"></td>
+<td width="84">9656098609</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">78</td>
+<td width="87">Pyari Usman</td>
+<td width="110">Haleema Manzil, Vattapalli</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">79</td>
+<td width="87">Raheena Valiapakath</td>
+<td width="110">Ayesha Manzil, Amman Koil Lane, Allisserry Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4712456173</td>
+<td width="84">9539029900</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">80</td>
+<td width="87">Rahila Beevi Yusufjaan</td>
+<td width="110">Khan Manzil, Lajnath Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9895497919</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">81</td>
+<td width="87">Rahim</td>
+<td width="110">Puthen Veetil, Puthiya edam, Vattayil Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9847004301</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">82</td>
+<td width="87">Raiban Khan</td>
+<td width="110">C/o Farooq Khan, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">83</td>
+<td width="87">Rameez Abdul Rasheed</td>
+<td width="110"></td>
+<td width="58">Kollam</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">474227963</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">84</td>
+<td width="87">Rehnaz Aslam</td>
+<td width="110">Ayesha Manzil, Amman Koil Lane, Allisserry Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772251783</td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">85</td>
+<td width="87">Roshana Arif</td>
+<td width="110">Channus, Panakal Purayidam, Valliakulam Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">689 012</td>
+<td width="84"></td>
+<td width="84">9446830106</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">86</td>
+<td width="87">Rukam Beevi</td>
+<td width="110">Haleema Manzil, Vattapalli</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">87</td>
+<td width="87">S. A. Tahir (Taha)</td>
+<td width="110">Velim Parambil House, Lajnath Ward, Vattapalli</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9446810012</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">88</td>
+<td width="87">Sahira</td>
+<td width="110">Khan Manzil, Lajnath Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">89</td>
+<td width="87">Saifun Nisaa Syed Ali, Ansi, Sunaina</td>
+<td width="110">Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">8129966443</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">90</td>
+<td width="87">Saira Faizal</td>
+<td width="110">Katoos Manzil, Vellakinar, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84">47123632137</td>
+<td width="84">9846139473</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">91</td>
+<td width="87">Sajna</td>
+<td width="110">Kader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">92</td>
+<td width="87">Sayana Asif</td>
+<td width="110">Syed Manzil, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84">4772252477</td>
+<td width="84">09447958577
+09400629477</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">93</td>
+<td width="87">Sayed Ali</td>
+<td width="110">Kanaganam Parambil, Mukham Lane, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">8897139765</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">94</td>
+<td width="87">Sehanaz</td>
+<td width="110">Sehnaz Manzil, Near Yaffi Masjid, Zakria Bazaar P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84">4772254169</td>
+<td width="84">9947472553</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">95</td>
+<td width="87">Seybun Sadique</td>
+<td width="110">Navaroji Puraidam, Lajnath Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9746799061</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">96</td>
+<td width="87">Shabina Yahya</td>
+<td width="110">D/o Yahya Yamani, Aswathy Nivas, Chalakara, Vembala muku, Koravanthodu, Kunjapala P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688</td>
+<td width="84"></td>
+<td width="84">9895795361</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">97</td>
+<td width="87">Shabir Khan, Jasmine, Talif Khan, Fathima Misiriya</td>
+<td width="110">Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9656505625</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">98</td>
+<td width="87">Shahina</td>
+<td width="110">Rashid Manzil, Kambivallapu, Allisserry Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9497340118</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">99</td>
+<td width="87">Shajeena</td>
+<td width="110">D/o Betima, Vatapally,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9645463249</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">100</td>
+<td width="87">Shaji</td>
+<td width="110">S/o Betima, Aliyas, Zakria Bazaar,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9744519650</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">101</td>
+<td width="87">Shakeelabi</td>
+<td width="110">W/o M. Rahim, Puthenveetil Puraiyadam, Vattayal Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">102</td>
+<td width="87">Shakeela Jamal</td>
+<td width="110">Rahmath Mannzil, Near Yaffi Masjid, Zakria Bazaar P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 012</td>
+<td width="84">4772251747</td>
+<td width="84">9446195139</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">103</td>
+<td width="87">Shameem Yamani</td>
+<td width="110">D/o Yahya Yamani, Mananchery</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688</td>
+<td width="84"></td>
+<td width="84">9605389471</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">104</td>
+<td width="87">Shami</td>
+<td width="110">D/o Bivi Al Noor, Vencie Nagar, Lajnath Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84">4772239346</td>
+<td width="84">8089235213</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">105</td>
+<td width="87">Sharu Khan</td>
+<td width="110">S/o Ashraff Khan and Zeenath, G.S/o Rabi, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9388920960</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">106</td>
+<td width="87">Shamna Khan</td>
+<td width="110">C/o Ashraff Khan and Zeenath, G.S/o Rabi, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">107</td>
+<td width="87">Shareena Khan</td>
+<td width="110">C/o Ashraff Khan and Zeenath, G.S/o Rabi, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">689 001</td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">109</td>
+<td width="87">Shebeena Yamani</td>
+<td width="110">Marakkar Kutty Valapu, Zakria Bazaar Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9895795361</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">110</td>
+<td width="87">Sheen</td>
+<td width="110">Shiffin Manzil, Lajnath Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">47722379921</td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">111</td>
+<td width="87">Sheharbua-Shabada</td>
+<td width="110">Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9146649420</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">112</td>
+<td width="87">Sherban Sajuna</td>
+<td width="110">C/o Farooq Kaderparambu, Civil Station Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9995172731</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">113</td>
+<td width="87">Shiffin</td>
+<td width="110">Shiffin Manzil, Lajnath Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772237992</td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">114</td>
+<td width="87">Shouhaib H/o Harshita</td>
+<td width="110">Pathil House, Chengnasserry</td>
+<td width="58">Chengnasserry</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">115</td>
+<td width="87">Slama</td>
+<td width="110">D/o Ashraff Khan and GD/o Rabi, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9388920960</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">116</td>
+<td width="87">Sulaikha beevi</td>
+<td width="110">Channus, Panakal Purayidam, Valliakulam Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">689 012</td>
+<td width="84"></td>
+<td width="84">9446830106</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">117</td>
+<td width="87">Suraiya Iqbal</td>
+<td width="110">Marakkar Kutty Valapu, Zakria Bazaar Ward, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9be8eee9faf2e2faf2eaf9faf7a2aadbfcf6faf2f7b5f8f4f6">[email&#160;protected]</a></td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9746217181</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">118</td>
+<td width="87">Syed Afsal (Gija)</td>
+<td width="110">Milans, Mallika muku, Kanniramchira P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">09656098609
+09746724294</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">119</td>
+<td width="87">Usman (Majistrate)</td>
+<td width="110">Haleema Manzil, Lajnath Ward, Vattapalli</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">120</td>
+<td width="87">Wahid</td>
+<td width="110">Shiffin Manzil, Lajnath Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84">47722379921</td>
+<td width="84">9446983590</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">121</td>
+<td width="87">Wahida Beevi</td>
+<td width="110">w/o Late Ayoob Katoo, Faizal Manzil, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772237618</td>
+<td width="84">9447157618</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">122</td>
+<td width="87">Y. Muhamed Basheer</td>
+<td width="110">Salman Manzil, Zackria Bazaar Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9746099738</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">123</td>
+<td width="87">Yusuf Jhan</td>
+<td width="110">Khan Manzil, Lajnath Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">124</td>
+<td width="87">Zaithun</td>
+<td width="110">Syed Manzil, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84">4772252477</td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">125</td>
+<td width="87">Zeenath</td>
+<td width="110">W/o Ameen S. M. DIL/o Mariam Bivi, Arayan Perambu, Vattayil Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84">9495119383</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">126</td>
+<td width="87">Zeenath Lathif</td>
+<td width="110">W/o Ashraff Khan and DIL/o Rabi, Khader Parambu, Civil Station Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84"></td>
+<td width="84">9388920960</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">127</td>
+<td width="87">Zeenath Biwi</td>
+<td width="110">Thayal Veiyil, Manancherry P.O.</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 538</td>
+<td width="84"></td>
+<td width="84">9846560009</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">128</td>
+<td width="87">Zohra Rasheed</td>
+<td width="110">W/o Abdul Rasheed,</td>
+<td width="58">Kollam</td>
+<td width="48">Kerala</td>
+<td width="64"></td>
+<td width="84"></td>
+<td width="84"></td>
+<td></td>
+</tr>
+<tr>
+<td width="34">129</td>
+<td width="87">Zulekha Beevi</td>
+<td width="110">W/o Arif Mehaboob, Channus, Panakal Purayidam, Valliakulam Ward</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">689 012</td>
+<td width="84"></td>
+<td width="84">9446830106</td>
+<td></td>
+</tr>
+<tr>
+<td width="34">130</td>
+<td width="87">Zulekha Siraj</td>
+<td width="110">Darus-Salaam, Allisserry Ward,</td>
+<td width="58">Alleppey</td>
+<td width="48">Kerala</td>
+<td width="64">688 001</td>
+<td width="84">4772254153</td>
+<td width="84"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<br><br>
+</div>
+<br>
+<div><strong>List of KYFT Members in Ernakulam Dt., and North Kerala&nbsp; from which we have to take out the earning members to enroll as Takaful subscribers</strong>
+<table class="timecard"><caption>KY Members in Ernakulam and North Kerala</caption>
+<table id="customers" width="633">
+<tbody>
+<tr>
+<th width="64">No.</th>
+<th width="102">Name</th>
+<th width="130">Address</th>
+<th width="94">Town</th>
+<th width="99">State</th>
+<th width="83">PIN</th>
+<th width="156">Home Phone</th>
+<th width="141">Mobile Phone</th>
+</tr>
+<tr>
+<td width="64">1</td>
+<td width="102">A. Md. Ashraf Yamani</td>
+<td width="130">Noorji House, 16/416 Karuvely Pady West,</td>
+<td width="94">Kochi</td>
+<td width="99">Kerala</td>
+<td width="83">682 005</td>
+<td width="156"></td>
+<td width="141">9847368689</td>
+</tr>
+<tr>
+<td width="64">2</td>
+<td width="102">Aafrin Khan</td>
+<td width="130">D/o of Kather Khan, and Shahnaz Khan, Sister of Aamrin Khan, Kareparambil house</td>
+<td width="94">Irinjalakuda</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141"></td>
+</tr>
+<tr>
+<td width="64">3</td>
+<td width="102">Abdul Kadir Parkar</td>
+<td width="130">Rizwan Manzil, Pallipady, Panayikulam, Aluva <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d3c362d3c2f363c2f6a6f1d3a303c3431733e3230">[email&#160;protected]</a></td>
+<td width="94">Ernakulam Dt.</td>
+<td width="99">Kerala</td>
+<td width="83">683 511</td>
+<td width="156"></td>
+<td width="141">97333225788</td>
+</tr>
+<tr>
+<td width="64">4</td>
+<td width="102">Abdul Rauf K</td>
+<td width="130">Kolakkat (H), Perinjeeri Road, Near Vallathol College, Venginikkara, Ayilakad P.O. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4a0b38382b3f2c7b780a26233c2f64292527">[email&#160;protected]</a></td>
+<td width="94">Edapal</td>
+<td width="99">Kerala</td>
+<td width="83">679 576</td>
+<td width="156"></td>
+<td width="141">9746311743</td>
+</tr>
+<tr>
+<td width="64">5</td>
+<td width="102">Abdul Satar</td>
+<td width="130">H/o Rashida, Vazthanakadu House, Vattaikunnam, North Edappally P.O.</td>
+<td width="94">Ernakulam</td>
+<td width="99">Kerala</td>
+<td width="83">682 024</td>
+<td width="156"></td>
+<td width="141">7736414270</td>
+</tr>
+<tr>
+<td width="64">6</td>
+<td width="102">Adhila Beevi AK Yamani</td>
+<td width="130">478/9, Yamani Cottage. Kadhar Parambil House. Opposite Service Cooperative Bank, Elookkara Kayantikkara Road, Elookkara, Muppathadm P. O.</td>
+<td width="94">Ernakulam</td>
+<td width="99">Kerala</td>
+<td width="83">683 110</td>
+<td width="156"></td>
+<td width="141">9495361890</td>
+</tr>
+<tr>
+<td width="64">7</td>
+<td width="102">Azeez (Aji)</td>
+<td width="130">Son/o Zubaida Sister/o Jani Bava, Elamakara,</td>
+<td width="94">Ernakulam</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">8281035887</td>
+</tr>
+<tr>
+<td width="64">8</td>
+<td width="102">Ameena Pasha</td>
+<td width="130">Bait-ul Nizam, Millu padi, Panayikulam P.O. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9aeafbe9f2fbb4fbe0ffffe0a3dafdf7fbf3f6b4f9f5f7">[email&#160;protected]</a></td>
+<td width="94">Ernakulam Dt.</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156">9995678298</td>
+<td width="141">97337120639</td>
+</tr>
+<tr>
+<td width="64">9</td>
+<td width="102">Amrin Khan.</td>
+<td width="130">D/o of Kather Khan, and Shahnaz Khan, Sister of Aafrin khan, Kareparambil house</td>
+<td width="94">Irinjalakuda</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141"></td>
+</tr>
+<tr>
+<td width="64">10</td>
+<td width="102">Arifa Majid</td>
+<td width="130">Green Gardens, Khader Parambu, Near Federal Village, Eloorkara, Muppathadam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9961210502</td>
+</tr>
+<tr>
+<td width="64">11</td>
+<td width="102">Arshad Ali Khan</td>
+<td width="130">H/o Reshma, Fathima Nivas Kolezhy P.O</td>
+<td width="94">Thrissur</td>
+<td width="99">Kerala</td>
+<td width="83">688 010</td>
+<td width="156"></td>
+<td width="141">9995525765</td>
+</tr>
+<tr>
+<td width="64">12</td>
+<td width="102">Asghar Amanullah</td>
+<td width="130">Green Gardens, Khader Parambu, Near Federal Village, Eloorkara, Muppathadam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83">683110</td>
+<td width="156">9400703390</td>
+<td width="141">9.71506E+11</td>
+</tr>
+<tr>
+<td width="64">13</td>
+<td width="102">Ashraff Yamani</td>
+<td width="130">Nooji House, Karuvely Pady,</td>
+<td width="94">Kochi</td>
+<td width="99">Kerala</td>
+<td width="83">682 005</td>
+<td width="156"></td>
+<td width="141">9847368689</td>
+</tr>
+<tr>
+<td width="64">14</td>
+<td width="102">Beena</td>
+<td width="130">D/o Ismail Sahib SA, W/o P.M. Harris, Chanayath House, Kunder Veli, Nattoor P.O., Maradu</td>
+<td width="94">Ernakulam Dt.</td>
+<td width="99">Kerala</td>
+<td width="83">682 304</td>
+<td width="156"></td>
+<td width="141">9496229605</td>
+</tr>
+<tr>
+<td width="64">15</td>
+<td width="102">Bincey</td>
+<td width="130">D/o Ismail Sahib SA, Kurichi Parambil House, Nattoor P.O., Maradu</td>
+<td width="94">Ernakulam Dt.</td>
+<td width="99">Kerala</td>
+<td width="83">682 304</td>
+<td width="156"></td>
+<td width="141">8943093482</td>
+</tr>
+<tr>
+<td width="64">16</td>
+<td width="102">Fouzia Banu</td>
+<td width="130">Fayaz Manzil, Paynaikulam,</td>
+<td width="94">Ernakulam Dt.</td>
+<td width="99">Kerala</td>
+<td width="83">683 511</td>
+<td width="156"></td>
+<td width="141">8086985879</td>
+</tr>
+<tr>
+<td width="64">17</td>
+<td width="102">Habibuddin Khan</td>
+<td width="130">Khan Manzil, Aryankatu parambil, Green Valley Rd, Pulliparambu, Ollukara P.O.,</td>
+<td width="94">Trichur</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9020268636</td>
+</tr>
+<tr>
+<td width="64">18</td>
+<td width="102">Hamurdeen Khan</td>
+<td width="130">S/o Imamudeen Khan &amp; Shameem who is D/o Mariam Beevi</td>
+<td width="94">Thrissur</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9605531742</td>
+</tr>
+<tr>
+<td width="64">19</td>
+<td width="102">Harris M. B.</td>
+<td width="130">H/o Haseena, 1/1496 South Thamara Parambu, Fort Kochi</td>
+<td width="94">Kochi</td>
+<td width="99">Kerala</td>
+<td width="83">682 001</td>
+<td width="156">8129215288</td>
+<td width="141">09387218168, 09995781922</td>
+</tr>
+<tr>
+<td width="64">20</td>
+<td width="102">Hasina Janu</td>
+<td width="130">1/1496 South Thamara Parambu, Fort Kochi</td>
+<td width="94">Kochi</td>
+<td width="99">Kerala</td>
+<td width="83">682 001</td>
+<td width="156"></td>
+<td width="141">09387218168, 09995781922</td>
+</tr>
+<tr>
+<td width="64">21</td>
+<td width="102">Husna Majeed</td>
+<td width="130">D/o Majeed, Green Gardens, Khader Parambu, Near Federal Village, Eloorkara, Muppathadam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141"></td>
+</tr>
+<tr>
+<td width="64">22</td>
+<td width="102">Imamudheen Khan A. A., Shameem</td>
+<td width="130">H/o Fathima, Ariaigathi Parambil House, Vettikal Manuthy P.O.</td>
+<td width="94">Thrissur</td>
+<td width="99">Kerala</td>
+<td width="83">680 651</td>
+<td width="156"></td>
+<td width="141">9946726236</td>
+</tr>
+<tr>
+<td width="64">23</td>
+<td width="102">Imthiaz M.I.</td>
+<td width="130">Ashika Manzil, HMC Nagar, Koorkenchery,</td>
+<td width="94">Thrissur</td>
+<td width="99">Kerala</td>
+<td width="83">680 007</td>
+<td width="156"></td>
+<td width="141">97334020172</td>
+</tr>
+<tr>
+<td width="64">24</td>
+<td width="102">Ismail Sahib S.A.</td>
+<td width="130">Kurichi Parambil House, Nattoor P.O., Maradu</td>
+<td width="94">Ernakulam Dt.</td>
+<td width="99">Kerala</td>
+<td width="83">682 304</td>
+<td width="156"></td>
+<td width="141">9496229605</td>
+</tr>
+<tr>
+<td width="64">25</td>
+<td width="102">Izazuddin Khan</td>
+<td width="130">S/o Mehrunissa, Khan Manzil, Aryankatu parambil, Green Valley Rd, Pulliparambu, Ollukara P.O.,</td>
+<td width="94">Thrissur</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9020268636</td>
+</tr>
+<tr>
+<td width="64">26</td>
+<td width="102">Kamarudheen Khan</td>
+<td width="130">S/o Fathima &amp; Imamuddin Khan, Ariaigathi Parambil House, Vettikal Manuthy P.O.</td>
+<td width="94">Thrissur</td>
+<td width="99">Kerala</td>
+<td width="83">680 651</td>
+<td width="156"></td>
+<td width="141">9605531742</td>
+</tr>
+<tr>
+<td width="64">27</td>
+<td width="102">Kather Khan</td>
+<td width="130">H/o of Shahnaz Khan, Children: Aamrin Khan, and Aafrin khan, Kareparambil house</td>
+<td width="94">Irinjalakuda</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141"></td>
+</tr>
+<tr>
+<td width="64">28</td>
+<td width="102">Majid</td>
+<td width="130">Green Gardens, Khader Parambu, Near Federal Village, Eloorkara, Muppathadam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83">683110</td>
+<td width="156"></td>
+<td width="141">9526971551</td>
+</tr>
+<tr>
+<td width="64">29</td>
+<td width="102">Mehrunissa Habibuddin</td>
+<td width="130">Khan Manzil, Aryankatu parambil, Green Valley Rd, Pulliparambu, Ollukara P.O.,</td>
+<td width="94">Trichur</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9020268636</td>
+</tr>
+<tr>
+<td width="64">30</td>
+<td width="102">Mohamed Shajeer</td>
+<td width="130">S/o A. Md. Ashraff, Noorji House, House No. 16/416, KMK Abdullah road, Grace Eye Clinic, Thoppumpady mohamed <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="55263d343f3030276260153238343c397b363a38">[email&#160;protected]</a></td>
+<td width="94">Ernakulam</td>
+<td width="99">Kerala</td>
+<td width="83">682 005</td>
+<td width="156"></td>
+<td width="141">9895572751</td>
+</tr>
+<tr>
+<td width="64">31`</td>
+<td width="102">Monisha Anas</td>
+<td width="130">Chirapparambil House, Near Police Station, Vadanapally, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="97faf8f9fee4fff6f6fefdd7f0faf6fefbb9f4f8fa">[email&#160;protected]</a></td>
+<td width="94">Thrissur</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9497340315</td>
+</tr>
+<tr>
+<td width="64">32</td>
+<td width="102">Moomina A. J.</td>
+<td width="130">D/o Abdul Khadeer Jailani, Thalambathu Kagam, Near Earnhipalam. moving to Cheruvatta, in-laws at Meppady</td>
+<td width="94">Calicut</td>
+<td width="99">Kerala</td>
+<td width="83">689 012</td>
+<td width="156">08086175721 08848368624</td>
+<td width="141">9447164431</td>
+</tr>
+<tr>
+<td width="64">33</td>
+<td width="102">Naseema Rashid (Nessi)</td>
+<td width="130">Green Gardens, Khader Parambu, Near Federal Village, Eloorkara, Muppathadam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9746247327</td>
+</tr>
+<tr>
+<td width="64">34</td>
+<td width="102">Nazreen Azeez Pasha</td>
+<td width="130">Rizwan Manzil, Pallipady, Panayikulam, Aluva <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5739362d3c36333e2565656517303a363e3b7934383a">[email&#160;protected]</a></td>
+<td width="94">Ernakulam Dt.</td>
+<td width="99">Kerala</td>
+<td width="83">683 511</td>
+<td width="156"></td>
+<td width="141">97333778561</td>
+</tr>
+<tr>
+<td width="64">35</td>
+<td width="102">Noorjehan</td>
+<td width="130">W/o Ashraff Yamani, Nooji House, Karuvely Pady,</td>
+<td width="94">Kochi</td>
+<td width="99">Kerala</td>
+<td width="83">682 005</td>
+<td width="156"></td>
+<td width="141">9605759368</td>
+</tr>
+<tr>
+<td width="64">36</td>
+<td width="102">Noorjehan AK Yamani</td>
+<td width="130">Green Gardens, Khader Parambu, Near Federal Village, Eloorkara, Muppathadam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83">683110</td>
+<td width="156">4842603390</td>
+<td width="141">9847835533</td>
+</tr>
+<tr>
+<td width="64">37</td>
+<td width="102">Noorjehan M</td>
+<td width="130">W/o A. Md. Ashraff, 16/416 Karuvelli Pady West</td>
+<td width="94">Kochi</td>
+<td width="99">Kerala</td>
+<td width="83">682 005</td>
+<td width="156"></td>
+<td width="141">9895308689</td>
+</tr>
+<tr>
+<td width="64">38</td>
+<td width="102">Rabia</td>
+<td width="130">D/o Majid</td>
+<td width="94">Edapal</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9567513113</td>
+</tr>
+<tr>
+<td width="64">39</td>
+<td width="102">Rafique</td>
+<td width="130">H/o of Shamshad Rafique, 32/1172 A Mather Nagar, Changampuzha Nagar P.O., <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="addec5ccc0dec5ccc9dfcccbc4dcd8c89c949b9cedcac0ccc4c183cec2c0">[email&#160;protected]</a></td>
+<td width="94">Cochin</td>
+<td width="99">Kerala</td>
+<td width="83">682 033</td>
+<td width="156">7736624614 971504218338</td>
+<td width="141">7907989908 9895125111</td>
+</tr>
+<tr>
+<td width="64">40</td>
+<td width="102">Rashid Amanullah</td>
+<td width="130">Green Gardens, Khader Parambu, Near Federal Village, Eloorkara, Muppathadam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156">08943174287 09496571427</td>
+<td width="141">9446819777</td>
+</tr>
+<tr>
+<td width="64">41</td>
+<td width="102">Rashida</td>
+<td width="130">D/o A. Kasim, Vazthanakadu House, Vattaikunnam, North Edappally P.O.</td>
+<td width="94">Ernakulam</td>
+<td width="99">Kerala</td>
+<td width="83">682 024</td>
+<td width="156"></td>
+<td width="141">7736414270</td>
+</tr>
+<tr>
+<td width="64">42</td>
+<td width="102">Rasiya Begum</td>
+<td width="130">D/o T. Ramla Begum, Kannadigal Shethram,</td>
+<td width="94">Calicut</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9895873375</td>
+</tr>
+<tr>
+<td width="64">43</td>
+<td width="102">Razeena X</td>
+<td width="130">Manyaparambil Bava Line, S.R.M. Rd,</td>
+<td width="94">Cochin</td>
+<td width="99">Kerala</td>
+<td width="83">682 018</td>
+<td width="156"></td>
+<td width="141"></td>
+</tr>
+<tr>
+<td width="64">44</td>
+<td width="102">Reshma</td>
+<td width="130">D/o Rahim, M-Arshad Ali Kahn, Fathima Nivas Kolezhy P.O</td>
+<td width="94">Thrissur</td>
+<td width="99">Kerala</td>
+<td width="83">688 010</td>
+<td width="156"></td>
+<td width="141">9995525765</td>
+</tr>
+<tr>
+<td width="64">45</td>
+<td width="102">Roxana Shamsudeen</td>
+<td width="130">W/o Shamshudeen K, Dental Hygienest, Quarters No. A/8, ESI Hospital, Behind North Railway Station,</td>
+<td width="94">Ernakulam</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9446046491</td>
+</tr>
+<tr>
+<td width="64">46</td>
+<td width="102">Ruksana Rasheed</td>
+<td width="130">D/o Rasheed, Green Gardens, Khader Parambu, Near Federal Village, Eloorkara, Muppathadam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141"></td>
+</tr>
+<tr>
+<td width="64">47</td>
+<td width="102">Saifudeen Khan</td>
+<td width="130">S/o Mehrunissa, Khan Manzil, Aryankatu parambil, Green Valley Rd, Pulliparambu, Ollukara P.O.,</td>
+<td width="94">Trichur</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9746193792</td>
+</tr>
+<tr>
+<td width="64">48</td>
+<td width="102">Saifunnisa Abdul Azeez,</td>
+<td width="130">Manyaparambil Bava Line, S.R.M. Rd,</td>
+<td width="94">Cochin</td>
+<td width="99">Kerala</td>
+<td width="83">682 018</td>
+<td width="156"></td>
+<td width="141"></td>
+</tr>
+<tr>
+<td width="64">49</td>
+<td width="102">Sameera Ameerjan Asghar Amanullah</td>
+<td width="130">Yamani Cottage, Khader Parambu, Eloorkara, Aluva</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83">683110</td>
+<td width="156"></td>
+<td width="141">9.7151E+11</td>
+</tr>
+<tr>
+<td width="64">50</td>
+<td width="102">Sajuna</td>
+<td width="130">DIL/O Zaibun, Velivaram House, Kurupam padam, Swamipadi, Elamkara,</td>
+<td width="94">Ernakulam</td>
+<td width="99">Kerala</td>
+<td width="83">622 026</td>
+<td width="156"></td>
+<td width="141">9895032806</td>
+</tr>
+<tr>
+<td width="64">51</td>
+<td width="102">Shahair</td>
+<td width="130">S/o Ashraff Yamani, Nooji House, Karuvely Pady,</td>
+<td width="94">Kochi</td>
+<td width="99">Kerala</td>
+<td width="83">683 005</td>
+<td width="156"></td>
+<td width="141">9847209347</td>
+</tr>
+<tr>
+<td width="64">52</td>
+<td width="102">Shahanaz khan (Palliveedu)</td>
+<td width="130">W/o Kather Khan, Children: Aamrin Khan and Aafrin Khan, Kareparambil House,</td>
+<td width="94">Irinjalakuda</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">96895886132</td>
+</tr>
+<tr>
+<td width="64">53</td>
+<td width="102">Shahida Imthiaz</td>
+<td width="130">Ashika Manzil, HMC Nagar, Koorkenchery,</td>
+<td width="94">Trichur</td>
+<td width="99">Kerala</td>
+<td width="83">680 007</td>
+<td width="156"></td>
+<td width="141">9447526759</td>
+</tr>
+<tr>
+<td width="64">54</td>
+<td width="102">Shahina MP</td>
+<td width="130">D/o of Shahnaz, Yatheem Colony, PO Arakkinar,</td>
+<td width="94">Kozhikode</td>
+<td width="99">Kerala</td>
+<td width="83">673028</td>
+<td width="156"></td>
+<td width="141">095396 01845</td>
+</tr>
+<tr>
+<td width="64">55</td>
+<td width="102">Shaik Faizal</td>
+<td width="130">H/o Shihana, Mehfil, Malliyekapadi, Pookattupadi, Kezhkaeambalam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83">683 562</td>
+<td width="156"></td>
+<td width="141">9037375503</td>
+</tr>
+<tr>
+<td width="64">56</td>
+<td width="102">Shajair Md.</td>
+<td width="130">S/o Ashraff Yamani, Nooji House, Karuvely Pady,</td>
+<td width="94">Kochi</td>
+<td width="99">Kerala</td>
+<td width="83">683 005</td>
+<td width="156"></td>
+<td width="141">9895572751</td>
+</tr>
+<tr>
+<td width="64">57</td>
+<td width="102">Shameela</td>
+<td width="130">D/o Betima, CRRI 18, Thrivarna Rd, Elamakara P.O.,</td>
+<td width="94">Kochi</td>
+<td width="99">Kerala</td>
+<td width="83">682 026</td>
+<td width="156"></td>
+<td width="141">7736697214</td>
+</tr>
+<tr>
+<td width="64">58</td>
+<td width="102">Shamela Yamani</td>
+<td width="130">D/o Ashraff Yamani, Nooji House, Karuvely Pady,</td>
+<td width="94">Kochi</td>
+<td width="99">Kerala</td>
+<td width="83">682 005</td>
+<td width="156"></td>
+<td width="141">9605759368</td>
+</tr>
+<tr>
+<td width="64">59</td>
+<td width="102">Shamshad Rafique</td>
+<td width="130">32/1172 A Mather Nagar, Changampuzha Nagar P.O., <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2a59424b4759424b4e584b4c435b5f4f1b131c1b6a4d474b434604494547">[email&#160;protected]</a></td>
+<td width="94">Cochin</td>
+<td width="99">Kerala</td>
+<td width="83">682 033</td>
+<td width="156">7736624614 971504218338</td>
+<td width="141">7907989908 9895125111</td>
+</tr>
+<tr>
+<td width="64">60</td>
+<td width="102">Shamshudeen Khan Sahib D.</td>
+<td width="130">Dental Hygienest, Quarters No. A/8, ESI Hospital, Behind North Railway Station, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="304358515d43455458595e5b58515e70575d51595c1e535f5d">[email&#160;protected]</a></td>
+<td width="94">Ernakulam</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9446020491</td>
+</tr>
+<tr>
+<td width="64">61</td>
+<td width="102">Shanaz</td>
+<td width="130">Baitul Rahma, 2 Villa, 26 Yateem Colony, Arae Kinar P.O.,</td>
+<td width="94">Calicut</td>
+<td width="99">Kerala</td>
+<td width="83">673 015</td>
+<td width="156"></td>
+<td width="141">9846805900</td>
+</tr>
+<tr>
+<td width="64">62</td>
+<td width="102">Sheeja Amjad</td>
+<td width="130">D/o Betima, Ponkunnum,</td>
+<td width="94">Thrissur</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9400739243</td>
+</tr>
+<tr>
+<td width="64">63</td>
+<td width="102">Shihabuddin Khan</td>
+<td width="130">S/o Mehrunissa, Khan Manzil, Aryankatu parambil, Green Valley Rd, Pulliparambu, Ollukara P.O.,</td>
+<td width="94">Trichur</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">9746193098</td>
+</tr>
+<tr>
+<td width="64">64</td>
+<td width="102">Shihana</td>
+<td width="130">D/o Wahid &amp; W/o Shaik Faizal, Mehfil, Malliyekapadi, Pookattupadi, Kezhkaeambalam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83">683 562</td>
+<td width="156"></td>
+<td width="141">9037375503</td>
+</tr>
+<tr>
+<td width="64">65</td>
+<td width="102">Thahida Ramla Begum</td>
+<td width="130">Bait-ul Rahma, VD 2 Block, No. 1 Silver Garden, Landmark Apartment, Vain Mary P.O.</td>
+<td width="94">Calicut</td>
+<td width="99">Kerala</td>
+<td width="83">673 010</td>
+<td width="156"></td>
+<td width="141">9895873375</td>
+</tr>
+<tr>
+<td width="64">66</td>
+<td width="102">Zaibun</td>
+<td width="130">W/o Late Kochi Azeez, Maria parambu, Bava Lane, SRM Road,</td>
+<td width="94">Ernakulam</td>
+<td width="99">Kerala</td>
+<td width="83"></td>
+<td width="156"></td>
+<td width="141">09605031572 08547767026</td>
+</tr>
+<tr>
+<td width="64">67</td>
+<td width="102">Zaithun Bivi</td>
+<td width="130">Kurichi Parambil House, Nattoor P.O., Maradu</td>
+<td width="94">Ernakulam Dt.</td>
+<td width="99">Kerala</td>
+<td width="83">682 304</td>
+<td width="156">9496229605</td>
+<td width="141">8943093482</td>
+</tr>
+<tr>
+<td width="64">68</td>
+<td width="102">Zakir Saiyed Mohammed</td>
+<td width="130">Green Gardens, Khader Parambu, Near Federal Village, Eloorkara, Muppathadam P.O.</td>
+<td width="94">Aluva</td>
+<td width="99">Kerala</td>
+<td width="83">683 110</td>
+<td width="156"></td>
+<td width="141">9879763897</td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
+</div>
+<div><strong>List of KYFT Members in Trivandrum and rest of India and NRIs&nbsp; from which we have to take out the earning members to enroll as Takaful subscribers</strong>
+<br>
+<br>
+<table class="timecard"><caption>Details of KYFT Members in Trivandrum Dt, NRKs, and NRIs</caption>
+<table id="customers" width="864">
+<tbody>
+<tr>
+<th width="35">No.</th>
+<th width="86">Name</th>
+<th width="119">Address</th>
+<th width="140">Town</th>
+<th width="86">State</th>
+<th width="94">PIN</th>
+<th width="146">Home Phone</th>
+<th width="158">Mobile Phone</th>
+</tr>
+<tr>
+<td width="35">1</td>
+<td width="86">A. Abdul Wahab</td>
+<td width="119">TC 9/1962 Kocchar Road, Sasthamangalam,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 010</td>
+<td width="146">4712727724</td>
+<td width="158">09447145292
+09895643033</td>
+</tr>
+<tr>
+<td width="35">2</td>
+<td width="86">A. Feroze</td>
+<td width="119">H/o Shibina, Eye Care Opticals, Opp. B1 Police Station, Near Market,</td>
+<td width="140">Ooty</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">643 001</td>
+<td width="146"></td>
+<td width="158">09443856499
+9020392675</td>
+</tr>
+<tr>
+<td width="35">3</td>
+<td width="86">A. G. Khan, Sihab AK Khan</td>
+<td width="119">Khan Cottage, KKMPRA 28, Vattyurkavu, Kodunganoor P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 013</td>
+<td width="146"></td>
+<td width="158">9562152296</td>
+</tr>
+<tr>
+<td width="35">4</td>
+<td width="86">A. K. Mohamed Amin Khattu</td>
+<td width="119">No. 65, Lourdhu Nagar, Kaja Malai P.O. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36575b5f585d5e57424243030f764453525f50505b575f5a1855595b">[email&#160;protected]</a></td>
+<td width="140">Tiruchirapalli</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">620 023</td>
+<td width="146">4312420590</td>
+<td width="158">9443192872</td>
+</tr>
+<tr>
+<td width="35">5</td>
+<td width="86">Abdul Azeez Pasha</td>
+<td width="119">Mal Suits, Flat No. 34, Bldg 1076, Road 4022 Block 340, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1969786a71783778637c7c6320597e74787075377a7674">[email&#160;protected]</a></td>
+<td width="140"></td>
+<td width="86">Bahrain</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9995678298</td>
+</tr>
+<tr>
+<td width="35">6</td>
+<td width="86">Abdul Hameed Essa</td>
+<td width="119">Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5ada4a8b0f4f6f2fd85a2a8a4aca9eba6aaa8">[email&#160;protected]</a> Flat 1, Building: 3650, Road: 2664, Block: 226, Busaiteen, Kingdom of Bahrain</td>
+<td width="140">Busaiteen</td>
+<td width="86">Bahrain</td>
+<td width="94">600 005</td>
+<td width="146"></td>
+<td width="158">918939170239 97339377497</td>
+</tr>
+<tr>
+<td width="35">7</td>
+<td width="86">Abdul Rahim Kattoo (Naushad)</td>
+<td width="119">Fathima Manzil, Fire Station Road, Ponnani South P.O. Mallapuram Dt <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b2d3d0d6c7dedec0d3dad7d7dfd9d3c6c6ddddf2d5dfd3dbde9cd1dddf">[email&#160;protected]</a></td>
+<td width="140">Ponnani</td>
+<td width="86">Kerala</td>
+<td width="94">679 856</td>
+<td width="146">4942666580</td>
+<td width="158">09895814980
+09895797864</td>
+</tr>
+<tr>
+<td width="35">8</td>
+<td width="86">Abhijit</td>
+<td width="119">H. No. 44-A TC 7/1342(2) Kootamila Rd, Vetamuku, Vattiyurkavu,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 013</td>
+<td width="146">4712360777</td>
+<td width="158">9938165264</td>
+</tr>
+<tr>
+<td width="35">9</td>
+<td width="86">Afkar Ansar</td>
+<td width="119">D/o Ansar Hussain, Gurabi Road, Batha <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ffef1ecfeedc0f7eaecdff7f0ebf2fef6f3b1fcf0f2">[email&#160;protected]</a></td>
+<td width="140">Riyadh</td>
+<td width="86">KSA</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">8301893994</td>
+</tr>
+<tr>
+<td width="35">10</td>
+<td width="86">Afreen Ansar</td>
+<td width="119">D/o Ansar Hussain, Gurabi Road, Batha</td>
+<td width="140">Riyadh</td>
+<td width="86">KSA</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9746746966</td>
+</tr>
+<tr>
+<td width="35">11</td>
+<td width="86">Afroz</td>
+<td width="119">6/44, G3, Hidaya Flats, Azizudeen Khan Street, Opp. Adam Market, Triplicane High Road,</td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 005</td>
+<td width="146"></td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">12</td>
+<td width="86">Afsal Syed Hussain</td>
+<td width="119">TC 48/417 (3) NRA 85C Navodhaya Residents Association, Paravankunnu, Poonthura P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 026</td>
+<td width="146"></td>
+<td width="158">9.71506E+11</td>
+</tr>
+<tr>
+<td width="35">13</td>
+<td width="86">Afsul</td>
+<td width="119">Bivi Manzil, Kitti Villa, Kaliyoor P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 004</td>
+<td width="146"></td>
+<td width="158">9645262605</td>
+</tr>
+<tr>
+<td width="35">14</td>
+<td width="86">Akbar Pasha</td>
+<td width="119">H/o Shahira, No.2 Gandhinagar Link, Fathma Nagar, Thiruvattiyoor,</td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 019</td>
+<td width="146"></td>
+<td width="158">9790814309</td>
+</tr>
+<tr>
+<td width="35">15</td>
+<td width="86">Akthar S.M.</td>
+<td width="119">Abdul Rahim Kattoo, Fathima Manzil, Fire Station Road, Ponnani South P.O. Mallapuram Dt</td>
+<td width="140">Ponnani</td>
+<td width="86">Kerala</td>
+<td width="94">679 856</td>
+<td width="146"></td>
+<td width="158">9.19496E+11</td>
+</tr>
+<tr>
+<td width="35">16</td>
+<td width="86">Ameen ul Haque</td>
+<td width="119">123, Purva Parkridge, Garudachar Palya, Mahadevapura, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="11707c74747f5162657e636866707d7d7079623f727e7c">[email&#160;protected]</a></td>
+<td width="140">Bengaluru</td>
+<td width="86">Karnataka</td>
+<td width="94">560048</td>
+<td width="146">8041251356</td>
+<td width="158">9845536114</td>
+</tr>
+<tr>
+<td width="35">17</td>
+<td width="86">Amina Rizwan</td>
+<td width="119">TC25/73 First Floor, Kairali Bldg, Opp India Hospital, Mele Thampanoor,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146">9846711802</td>
+<td width="158">9495945292</td>
+</tr>
+<tr>
+<td width="35">18</td>
+<td width="86">Amjith</td>
+<td width="119">Khan Manzil,KKMPRA 28, Vattyurkavu, Vayalikada,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 013</td>
+<td width="146"></td>
+<td width="158">9846399754</td>
+</tr>
+<tr>
+<td width="35">19</td>
+<td width="86">Ammujan Safia Wahab</td>
+<td width="119">TC 9/1962 Kocchar Road, Sasthamangalam,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695010</td>
+<td width="146"></td>
+<td width="158">9895643033</td>
+</tr>
+<tr>
+<td width="35">20</td>
+<td width="86">Ansar Hussain M G</td>
+<td width="119">Gurabi Road, Batha</td>
+<td width="140">Riyadh</td>
+<td width="86">KSA</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9.66503E+11</td>
+</tr>
+<tr>
+<td width="35">21</td>
+<td width="86">Anwar Ameen</td>
+<td width="119">TC 9/1962 Kocchar Road, Sasthamangalam,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695010</td>
+<td width="146"></td>
+<td width="158">96551691700</td>
+</tr>
+<tr>
+<td width="35">22</td>
+<td width="86">Asheeda</td>
+<td width="119">D/o Shahira &amp; Akbar Basha, No.2 Gandhinagar Link, Fathma Nagar, Thiruvattiyoor,</td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 019</td>
+<td width="146"></td>
+<td width="158">9940666329</td>
+</tr>
+<tr>
+<td width="35">23</td>
+<td width="86">Ashfaq Hameed</td>
+<td width="119">6/44, G3, HIDAYA FLATS, Azizudeen Khan Street, Opp. Adam Market, Triplicane High Road,</td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 005</td>
+<td width="146">445566980</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">24</td>
+<td width="86">Ashique</td>
+<td width="119">Khan Cottage, Vattyurkavu, Kodunganoor P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86"></td>
+<td width="94">695 013</td>
+<td width="146"></td>
+<td width="158">09387832168</td>
+</tr>
+<tr>
+<td width="35">25</td>
+<td width="86">Ayesha Nusrat</td>
+<td width="119">5 Stamford Square S, Scarborough, Toronto, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c8a0a5bfa9bbadada5f0fe88afa5a9a1a4e6aba7a5">[email&#160;protected]</a></td>
+<td width="140">Ontario</td>
+<td width="86">Canada</td>
+<td width="94">M1L1X2</td>
+<td width="146"></td>
+<td width="158">09967643853 001437238778</td>
+</tr>
+<tr>
+<td width="35">26</td>
+<td width="86">Baker Ali Khan</td>
+<td width="119">H/o Mehrunissa 10th Mile, Plot No. 7 / 56, Jaulke, (Via) Ozar</td>
+<td width="140">Nasik District</td>
+<td width="86">Maharashtra</td>
+<td width="94">422 206</td>
+<td width="146"></td>
+<td width="158">096374 89768</td>
+</tr>
+<tr>
+<td width="35">27</td>
+<td width="86">Basheer Ahamed E</td>
+<td width="119">407 Park Ave, Piscataway, NJ 08854</td>
+<td width="140">New Jersey</td>
+<td width="86">USA</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">001732 6886070</td>
+</tr>
+<tr>
+<td width="35">28</td>
+<td width="86">Basheer Khan</td>
+<td width="119">?R/o Babujan</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9947303011</td>
+</tr>
+<tr>
+<td width="35">29</td>
+<td width="86">Beema Jaffer</td>
+<td width="119">H. No.. 171, Al-Zaura, Munavari Road, Kayaltheeram, Kakamoola, Kalliyoor P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146">4712409721</td>
+<td width="158">9495924520</td>
+</tr>
+<tr>
+<td width="35">30</td>
+<td width="86">Binu</td>
+<td width="119">D/o Ismail Sahib SA, W/o Feroz Khan, Bismi Manzil, Karichara P.O. Pallipuram</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9746998648</td>
+</tr>
+<tr>
+<td width="35">31</td>
+<td width="86">Bobby Wahab</td>
+<td width="119"></td>
+<td width="140">Hyderabad</td>
+<td width="86">Andhra</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">8886000308</td>
+</tr>
+<tr>
+<td width="35">32</td>
+<td width="86">Elangovan</td>
+<td width="119">No.38 A, Pathmavathy Nagar, 3rd Street, Vinayagapuram, Kolathur,</td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 099</td>
+<td width="146"></td>
+<td width="158">9841598031</td>
+</tr>
+<tr>
+<td width="35">33</td>
+<td width="86">Fathima Jailani</td>
+<td width="119">Sis/o AK Jailani</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9539068877</td>
+</tr>
+<tr>
+<td width="35">34</td>
+<td width="86">Feroz Khan</td>
+<td width="119">Barkath Manzil, TC 4/1940(6) Kavu Road, Kowdiar P.O.,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695003</td>
+<td width="146"></td>
+<td width="158">9995822574</td>
+</tr>
+<tr>
+<td width="35">35</td>
+<td width="86">Fouzia Hussain</td>
+<td width="119">D/o Kasim A. W/o Azgar Hussain, Benedict Villa, TC 7/163/2 Karithodu Lane, Kanjirampara P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9495731032</td>
+</tr>
+<tr>
+<td width="35">36</td>
+<td width="86">Fouzia M. I.</td>
+<td width="119">W/o Ansar Hussain, Gurabi Road, Batha</td>
+<td width="140">Riyadh</td>
+<td width="86">KSA</td>
+<td width="94"></td>
+<td width="146">9.66114E+11</td>
+<td width="158">9.66503E+11</td>
+</tr>
+<tr>
+<td width="35">37</td>
+<td width="86">Gulshan, Haniya Khan F.</td>
+<td width="119">Barkath Manzil, TC 4/1940(6) Kavu Road, Kowdiar P.O.,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695003</td>
+<td width="146"></td>
+<td width="158">09400754153 08606126222</td>
+</tr>
+<tr>
+<td width="35">38</td>
+<td width="86">Habeeba W/o late Azeez</td>
+<td width="119">C/o Md Azam Sahib, H. No.1/9/75 Azad Nagar,</td>
+<td width="140">Raichur</td>
+<td width="86">Karnataka</td>
+<td width="94">584 101</td>
+<td width="146">8532230586</td>
+<td width="158">7204383068</td>
+</tr>
+<tr>
+<td width="35">39</td>
+<td width="86">Habibuddin Khan</td>
+<td width="119">Khan Manzil, Aryankatu parambil, Green Valley Rd, Pulliparambu, Ollukara P.O.,</td>
+<td width="140">Trichur</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9020268636</td>
+</tr>
+<tr>
+<td width="35">40</td>
+<td width="86">Hamidi Yamani</td>
+<td width="119">C/o Tahira Begum, TC 6/70 (2) Ashianna High School Junction, Vatyurkavu,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 013</td>
+<td width="146">4712364969</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">41</td>
+<td width="86">Harshad M Jaffer, Roshini, Nihaal, Raehaan, Nairaah</td>
+<td width="119">TC 8/8-1 TBRA-5, LIC lane, Thirumala,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 006</td>
+<td width="146">4712356969</td>
+<td width="158">9446533603</td>
+</tr>
+<tr>
+<td width="35">42</td>
+<td width="86">Haseena Begum S.A.,</td>
+<td width="119">W/o Shabeer Ahmed Amin, 65, Lourde Nagar,</td>
+<td width="140">Tiruchy</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">620 023</td>
+<td width="146"></td>
+<td width="158">9442413759</td>
+</tr>
+<tr>
+<td width="35">43</td>
+<td width="86">Haseena Aijaz, Aijaz Ahammed Khan, Heba Afra</td>
+<td width="119">Al-Zaura, Munavari Road, Kayaltheeram, Kakamoola, Kalliyoor P.O. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="69080003081301081a0c0c0708290e04080005470a0604">[email&#160;protected]</a></td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 042</td>
+<td width="146">9746222324, 8137022022</td>
+<td width="158">2.55688E+11</td>
+</tr>
+<tr>
+<td width="35">44</td>
+<td width="86">Hanna Raiza</td>
+<td width="119">Haris Villa, 118A Mythri Street -19, Poojapura P.O. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a4ccc5cacac5d6c5c1c1dec5cce4c3c9c5cdc88ac7cbc9">[email&#160;protected]</a></td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 012</td>
+<td width="146"></td>
+<td width="158">9895781145</td>
+</tr>
+<tr>
+<td width="35">45</td>
+<td width="86">Ifthiyaz Syed</td>
+<td width="119">Najuma W/o Jalal</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9.71552E+11</td>
+</tr>
+<tr>
+<td width="35">46</td>
+<td width="86">Jalaludeen S.</td>
+<td width="119">N J Manzil.TC 68/2511 KGRA-12 Valliya Veed Lane, Kairali Gardens, Kamaleswaram, Manacaud P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 009</td>
+<td width="146"></td>
+<td width="158">9895867578</td>
+</tr>
+<tr>
+<td width="35">47</td>
+<td width="86">Junaid</td>
+<td width="119">E-804, Kolte Patil Raaga, Kannuru Road,</td>
+<td width="140">Bangalore</td>
+<td width="86">Karnataka</td>
+<td width="94">562149</td>
+<td width="146"></td>
+<td width="158">19196374426</td>
+</tr>
+<tr>
+<td width="35">48</td>
+<td width="86">Khadeeja Beevi (Naseema)</td>
+<td width="119">TC 48/417 (3) NRA 85C Navodhaya Residents Association, Paravankunnu, Poonthura P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 026</td>
+<td width="146">4712456173</td>
+<td width="158">9446178514</td>
+</tr>
+<tr>
+<td width="35">49</td>
+<td width="86">Khairun Nissa</td>
+<td width="119"></td>
+<td width="140">Ankleshwar</td>
+<td width="86">Gujarat</td>
+<td width="94"></td>
+<td width="146">9825060224</td>
+<td width="158">9662106178</td>
+</tr>
+<tr>
+<td width="35">50</td>
+<td width="86">Khairun Nissa A. R. Katoo</td>
+<td width="119">D/o A.R. Katoo, Room No.8, Noorani Chawl, Narul Naka, Himmat wada, Kurla Andheri Road,</td>
+<td width="140">Mumbai</td>
+<td width="86">Maharashtra</td>
+<td width="94">200 069</td>
+<td width="146"></td>
+<td width="158">9222143816</td>
+</tr>
+<tr>
+<td width="35">51</td>
+<td width="86">Latheefa Bhanu</td>
+<td width="119">R C RIVIERA, #48/2B Apartment E-4, Surapet Main Road, Puthagaram,</td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 099</td>
+<td width="146"></td>
+<td width="158">09746382826, 8608044664,</td>
+</tr>
+<tr>
+<td width="35">52</td>
+<td width="86">Mahmood ul-Haque Mahamad Sayed</td>
+<td width="119">6201 Lookout Dr., Mechanicsburg, PA 17050 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="107d71787d7f7f747871617550777d71797c3e737f7d">[email&#160;protected]</a>
+USA</td>
+<td width="140">Pensylvania 17050</td>
+<td width="86">USA</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">19739063364</td>
+</tr>
+<tr>
+<td width="35">53</td>
+<td width="86">Majid Khan P</td>
+<td width="119">TC11/428 Fazal Quarters, Nadancode, Kawdiar P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9895637617</td>
+</tr>
+<tr>
+<td width="35">54</td>
+<td width="86">Meherjabeen Sheik</td>
+<td width="119">C/o Nazeer Sheik Ismail</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">55</td>
+<td width="86">Mehrunissa A.</td>
+<td width="119">10th Mile, Plot No. 7/56, (Via)Ozar - 422206,</td>
+<td width="140">Nasik</td>
+<td width="86">Maharashtra</td>
+<td width="94"></td>
+<td width="146">2557279167</td>
+<td width="158">9637489768</td>
+</tr>
+<tr>
+<td width="35">56</td>
+<td width="86">Mehrunissa Habibuddin</td>
+<td width="119">Khan Manzil, Aryankatu parambil, Green Valley Rd, Pulliparambu, Ollukara P.O.,</td>
+<td width="140">Trichur</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9020268636</td>
+</tr>
+<tr>
+<td width="35">57</td>
+<td width="86">Mohammed Azaan</td>
+<td width="119">C/o Meharaj Kasim</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">58</td>
+<td width="86">Mohammed Ayyan</td>
+<td width="119">C/o Meharaj Kasim</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">59</td>
+<td width="86">Mohamed Jaffer M.</td>
+<td width="119">H. No. 171, Al-Zaura, Munavari Road, Kayaltheeram, Kakamoola, Kalliyoor P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146">4712409721</td>
+<td width="158">9447024520</td>
+</tr>
+<tr>
+<td width="35">60</td>
+<td width="86">Mohamed Sameer</td>
+<td width="119">S/o A. Md. Ashraff</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9895812751</td>
+</tr>
+<tr>
+<td width="35">61</td>
+<td width="86">Mohamed Taj</td>
+<td width="119">Door No. 196, Attur Layout, Attur P.O. Yelahanka</td>
+<td width="140">Bangalore</td>
+<td width="86">Karnataka</td>
+<td width="94">560 064</td>
+<td width="146"></td>
+<td width="158">9820683815</td>
+</tr>
+<tr>
+<td width="35">62</td>
+<td width="86">Mohammed Hashim I.</td>
+<td width="119">52 Rengadoss Colony, 5th Street, Villivakam, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddb4b0b5bcaeb5b4b0ecee9dbab0bcb4b1f3beb2b0">[email&#160;protected]</a></td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 049</td>
+<td width="146"></td>
+<td width="158">09789040316 09940510642</td>
+</tr>
+<tr>
+<td width="35">63</td>
+<td width="86">Mujibudeen Khan</td>
+<td width="119">S/o Imamudeen Khan</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9645082820</td>
+</tr>
+<tr>
+<td width="35">64</td>
+<td width="86">Mumthaj Begum (Thaju)</td>
+<td width="119">W/o Naushad Fathima Manzil, Fire Station Road, Ponnani South P.O. Mallapuram Dt</td>
+<td width="140">Ponnani</td>
+<td width="86">Kerala</td>
+<td width="94">679 856</td>
+<td width="146">4942666580</td>
+<td width="158">9895814980</td>
+</tr>
+<tr>
+<td width="35">65</td>
+<td width="86">Musa Jamal</td>
+<td width="119">Gardina Flats, KR Puram,</td>
+<td width="140">Bangalore</td>
+<td width="86">Karnataka</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">7702854727</td>
+</tr>
+<tr>
+<td width="35">66</td>
+<td width="86">Nadeem Mohamed</td>
+<td width="119">S/o Mohamed Hashim, 52 Rengadoss Colony, 5th Street, Villivakam,</td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 049</td>
+<td width="146"></td>
+<td width="158">9890877602</td>
+</tr>
+<tr>
+<td width="35">67</td>
+<td width="86">Najumunnissa</td>
+<td width="119">N J Manzil.TC 68/2511 KGRA-12 Valliya Veed Lane, Kairali Gardens, Kamaleswaram, Manacaud P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 009</td>
+<td width="146"></td>
+<td width="158">9746928673</td>
+</tr>
+<tr>
+<td width="35">68</td>
+<td width="86">Naseem Jamal</td>
+<td width="119">in Italy</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9605312034</td>
+</tr>
+<tr>
+<td width="35">69</td>
+<td width="86">Nazrin Farha Sheik</td>
+<td width="119">C/o Najeer Sheik Ismail</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">70</td>
+<td width="86">Noorjehan Beegum</td>
+<td width="119">M/o Nazrul, Naduvilparamb Civil Station ward (old: Sudha Niwas, Kailaram, Santhosh Nagar, Kanajanapuram P.O.)</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9447286914</td>
+</tr>
+<tr>
+<td width="35">71</td>
+<td width="86">Noorjehan (Pune)</td>
+<td width="119">D/o Late A.R. Katoo, Row House No. 27, Memory Gardens, NIBM Road, Near Jothy Restaurant,</td>
+<td width="140">Pune</td>
+<td width="86">Maharashtra</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9850903776</td>
+</tr>
+<tr>
+<td width="35">72</td>
+<td width="86">Parveen Abdul Hameed</td>
+<td width="119">6/44, G3, HIDAYA FLATS, Azizudeen Khan Street, Opp. Adam Market, Triplicane High Road,</td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 005</td>
+<td width="146">445566980</td>
+<td width="158">9840564082</td>
+</tr>
+<tr>
+<td width="35">73</td>
+<td width="86">Raheena Valiapakath</td>
+<td width="119">TC 48/417 (3) Risaaf NRA 85C Navodhaya Residents Association, Paravankunnu, Poonthura P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 026</td>
+<td width="146">09985276601 8547008778</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">74</td>
+<td width="86">Rahath Ebrahim</td>
+<td width="119">2nd Floor, Appaji Tower, Ruby Nnagar, Chalai,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146">4712477408</td>
+<td width="158">9995251455</td>
+</tr>
+<tr>
+<td width="35">75</td>
+<td width="86">Raihan</td>
+<td width="119">S/o Shabeer Amin, 65 Lourdu Nagar, Tiruchy</td>
+<td width="140">Tiruchy</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">620 023</td>
+<td width="146">4312420590</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">76</td>
+<td width="86">Dr. Rameeza Anwar</td>
+<td width="119">TC 9 / 1962, Kochar Road, Shasthamangalam,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 010</td>
+<td width="146"></td>
+<td width="158">9505684863</td>
+</tr>
+<tr>
+<td width="35">77</td>
+<td width="86">Ramjith Ali Habeeb Jan</td>
+<td width="119">25 / 11 Walden Gulch Katy, Texas – 77494</td>
+<td width="140">Houston</td>
+<td width="86">USA</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">1 832 858 0517</td>
+</tr>
+<tr>
+<td width="35">78</td>
+<td width="86">Rashid Rizwan</td>
+<td width="119">TC25/73 First Floor, Kairali Bldg, Opp India Hospital, Mele Thampanoor,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9846711802</td>
+</tr>
+<tr>
+<td width="35">79</td>
+<td width="86">Riyaz Syed Hussain</td>
+<td width="119">TC 48/417 (3) Risaaf NRA 85C Navodhaya Residents Association, Paravankunnu, Poonthura P.O. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ee9d869c87978f94dfdcddae978f868181c08d8183">[email&#160;protected]</a></td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 026</td>
+<td width="146"></td>
+<td width="158">8547008778</td>
+</tr>
+<tr>
+<td width="35">80</td>
+<td width="86">Rizwan Ahmed</td>
+<td width="119">TC 25/73 First Floor, Kairali Bldg, Opp India Hospital, Mele Thampanoor,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9846711802</td>
+</tr>
+<tr>
+<td width="35">81</td>
+<td width="86">Roshni Harshad</td>
+<td width="119">TC 8/8-1 TBRA-5, LIC lane, Thirumala,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 006</td>
+<td width="146">4712356969</td>
+<td width="158">9072428780</td>
+</tr>
+<tr>
+<td width="35">82</td>
+<td width="86">Rubeena Habeeb</td>
+<td width="119">D/o Amin Katoo, 65, Lourdhu Nagar, Kaja Malai P.O.</td>
+<td width="140">Tiruchy</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">620 023</td>
+<td width="146">4312420590</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">83</td>
+<td width="86">Ruby Syeda</td>
+<td width="119">D/o Riyaz S.H., TC 48/417 (3) Risaaf NRA 85C Navodhaya Residents Association, Paravankunnu, Poonthura P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 026</td>
+<td width="146">4712456173</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">84</td>
+<td width="86">S. A. Ryan</td>
+<td width="119">S/o Riyaz S.H., TC 48/417 (3) Risaaf NRA 85C Navodhaya Residents Association, Paravankunnu, Poonthura P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 026</td>
+<td width="146">4712456173</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">85</td>
+<td width="86">S. M. Ebrahim</td>
+<td width="119">2nd Floor, Appaji Tower, Ruby Nnagar, Chalai,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146">4712477408</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">86</td>
+<td width="86">Safa Aman</td>
+<td width="119">TC 19/2394 (9) Mythri Street -15, House No. 118 A, Poojapura P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 012</td>
+<td width="146"></td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">87</td>
+<td width="86">Safurdeen Khan</td>
+<td width="119">S/o Imamudeen Khan</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9895156267</td>
+</tr>
+<tr>
+<td width="35">88</td>
+<td width="86">Sajida Sheik</td>
+<td width="119">C/o Najeer Sheik Ismail</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">89</td>
+<td width="86">Saifudeen Khan</td>
+<td width="119">S/o Mehrunissa, Khan Manzil, Aryankatu parambil, Green Valley Rd, Pulliparambu, Ollukara P.O.,</td>
+<td width="140">Trichur</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9746193792</td>
+</tr>
+<tr>
+<td width="35">90</td>
+<td width="86">Saira Banu</td>
+<td width="119">Vellayani,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146">4712401416</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">91</td>
+<td width="86">Sandhya</td>
+<td width="119">H. No. 44-A TC 7/1342(2) Kootamila Rd, Vetamuku, Vattiyurkavu,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 013</td>
+<td width="146">4712360777</td>
+<td width="158">9633022517</td>
+</tr>
+<tr>
+<td width="35">92</td>
+<td width="86">Satish</td>
+<td width="119">H. No. 44-A TC 7/1342(2) Kootamila Rd, Vetamuku, Vattiyurkavu,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 013</td>
+<td width="146">4712360777</td>
+<td width="158">9847061937</td>
+</tr>
+<tr>
+<td width="35">93</td>
+<td width="86">Shabeer Ahmed Amin</td>
+<td width="119">65, Lourdhu Nagar, Kaja Malai P.O.</td>
+<td width="140">Tiruchy</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">620 023</td>
+<td width="146">4312420590</td>
+<td width="158">9894400489</td>
+</tr>
+<tr>
+<td width="35">94</td>
+<td width="86">Shabina Bivi</td>
+<td width="119">Bivi Manzil, Kitti Villa, Kaliyoor P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 004</td>
+<td width="146"></td>
+<td width="158">9544069747</td>
+</tr>
+<tr>
+<td width="35">95</td>
+<td width="86">Shabir</td>
+<td width="119">B/o Farooq</td>
+<td width="140"></td>
+<td width="86"></td>
+<td width="94"></td>
+<td width="146">4772237193</td>
+<td width="158">9249774437</td>
+</tr>
+<tr>
+<td width="35">96</td>
+<td width="86">Shafique Kokan</td>
+<td width="119">E-804, Kolte Patil Raaga, Kannuru Road,</td>
+<td width="140">Bangalore</td>
+<td width="86">Karnataka</td>
+<td width="94">562149</td>
+<td width="146"></td>
+<td width="158">9845477682</td>
+</tr>
+<tr>
+<td width="35">97</td>
+<td width="86">Shahida Imthiaz</td>
+<td width="119">Ashika Manzil, HMC Nagar, Koorkenchery,</td>
+<td width="140">Trichur</td>
+<td width="86">Kerala</td>
+<td width="94">680 007</td>
+<td width="146"></td>
+<td width="158">9447526759</td>
+</tr>
+<tr>
+<td width="35">98</td>
+<td width="86">Shahil</td>
+<td width="119">H/o Shebana Parveen, R No. 17, Shri Bhavan Chawl, Narul Naka, Himmatwada, Kurla-Andheri Rd,</td>
+<td width="140">Mumbai</td>
+<td width="86">Maharashtra</td>
+<td width="94">200 069</td>
+<td width="146"></td>
+<td width="158">9619811623</td>
+</tr>
+<tr>
+<td width="35">99</td>
+<td width="86">Sheik Shahiny</td>
+<td width="119">#38A Padmavathy Nagar 3rd Street, Surapet Road, Vinayagapuram,
+Kolathur</td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 099</td>
+<td width="146"></td>
+<td width="158">9841158658, 8248145900</td>
+</tr>
+<tr>
+<td width="35">100</td>
+<td width="86">Shahita</td>
+<td width="119">D/o Bivi, No.2 Gandhinagar Link, Fathma Nagar, Thiruvattiyoor,</td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 019</td>
+<td width="146"></td>
+<td width="158">9884334030</td>
+</tr>
+<tr>
+<td width="35">101</td>
+<td width="86">Shakila Amin</td>
+<td width="119">W/o A K Md. Amin, 65, Lourdhu Nagar, Kaja Malai P.O.</td>
+<td width="140">Tiruchy</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">620 023</td>
+<td width="146">4312420590</td>
+<td width="158">9677910348</td>
+</tr>
+<tr>
+<td width="35">102</td>
+<td width="86">Shakir Ahmed</td>
+<td width="119">S/o Amin Katoo, 208 Summer, Windsor 4 Seasons, Hulimavu,
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0f7c676e64667d3b6e4f67607b626e6663216c6062">[email&#160;protected]</a></td>
+<td width="140">Bangalore</td>
+<td width="86">Karnataka</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9945806459</td>
+</tr>
+<tr>
+<td width="35">103</td>
+<td width="86">Shameem Mustafa</td>
+<td width="119">Mubarak Manzil, Parvathypuram P.O.,</td>
+<td width="140">Nagercoil</td>
+<td width="86">Tamil Nadu</td>
+<td width="94"></td>
+<td width="146">4652259827</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">104</td>
+<td width="86">Shamshad Hashim</td>
+<td width="119">52 Rengadoss Colony, 4th Street, Villivakam, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36455e575b455e57525e57455e5f5b040176515b575f5a1855595b">[email&#160;protected]</a></td>
+<td width="140">Chennai</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">600 049</td>
+<td width="146">9.19284E+11</td>
+<td width="158">9789040316</td>
+</tr>
+<tr>
+<td width="35">105</td>
+<td width="86">Shehna Parveen</td>
+<td width="119">GD/o A.R. Katoo, Room No. 17, Shree Bhavan Chawl, Narul Naka, Himmat wada, Kurla-Andheri Rd,</td>
+<td width="140">Mumbai</td>
+<td width="86">Maharashtra</td>
+<td width="94">200 059</td>
+<td width="146"></td>
+<td width="158">8097728644</td>
+</tr>
+<tr>
+<td width="35">106</td>
+<td width="86">Sherin Haris</td>
+<td width="119">Haris Villa, 118A Mythri Street -19, Poojapura P.O. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80e8e1eeeee1f2e1e5e5fae1e8c0e7ede1e9ecaee3efed">[email&#160;protected]</a></td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 012</td>
+<td width="146">4712368881</td>
+<td width="158">9447570209</td>
+</tr>
+<tr>
+<td width="35">107</td>
+<td width="86">Shereen Satish</td>
+<td width="119">H. No. 44-A TC 7/1342(2) Kootamila Rd, Vetamuku, Vattiyurkavu,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 013</td>
+<td width="146">4712360777</td>
+<td width="158">09349115747 97333351019</td>
+</tr>
+<tr>
+<td width="35">108</td>
+<td width="86">Shibina</td>
+<td width="119">D/o Wahid &amp; W/o A. Feroze, Eye Care Opticals, Opp. B1 Police Station, Near Market,</td>
+<td width="140">Ooty</td>
+<td width="86">Tamil Nadu</td>
+<td width="94">643 001</td>
+<td width="146"></td>
+<td width="158">9489108623</td>
+</tr>
+<tr>
+<td width="35">109</td>
+<td width="86">Shihabuddin Khan</td>
+<td width="119">S/o Mehrunissa, Khan Manzil, Aryankatu parambil, Green Valley Rd, Pulliparambu, Ollukara P.O.,</td>
+<td width="140">Trichur</td>
+<td width="86">Kerala</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">9746193098</td>
+</tr>
+<tr>
+<td width="35">110</td>
+<td width="86">Shihas Khan</td>
+<td width="119">Khan Cottage, KKMPRA 28, Vattyurkavu, Kodunganoor P.O.</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 013</td>
+<td width="146"></td>
+<td width="158">9846399754</td>
+</tr>
+<tr>
+<td width="35">111</td>
+<td width="86">Simi Jahangeer Khan</td>
+<td width="119">Plot No.35 Kosamdi, Valia Road, Kosamadi, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aeddc7c3c7c4c5c6cfc0eed7c3cfc7c280cdc1c3">[email&#160;protected]</a></td>
+<td width="140">Ankleshwar</td>
+<td width="86">Gujarat.</td>
+<td width="94"></td>
+<td width="146">9601187609</td>
+<td width="158">9924003328</td>
+</tr>
+<tr>
+<td width="35">112</td>
+<td width="86">Sufyan</td>
+<td width="119">S/o Shabeer Amin, 65 Lourdu Nagar, Tiruchy</td>
+<td width="140"></td>
+<td width="86">Tamil Nadu</td>
+<td width="94">620 023</td>
+<td width="146">4312420590</td>
+<td width="158"></td>
+</tr>
+<tr>
+<td width="35">113</td>
+<td width="86">Tabassum Imthiaz</td>
+<td width="119">60 Jade Garden, Colchester, Essex,</td>
+<td width="140">CO4 5FG</td>
+<td width="86">UK</td>
+<td width="94"></td>
+<td width="146"></td>
+<td width="158">4.47447E+11</td>
+</tr>
+<tr>
+<td width="35">114</td>
+<td width="86">Taj Dawood Kattoo</td>
+<td width="119">Door No. 196, Attur Layout, Attur P.O. Yelahanka</td>
+<td width="140">Bangalore</td>
+<td width="86">Karnataka</td>
+<td width="94">560 064</td>
+<td width="146">09880311286 md tahir</td>
+<td width="158">9343075561</td>
+</tr>
+<tr>
+<td width="35">115</td>
+<td width="86">Mohammed Waseem</td>
+<td width="119">5 Stamford Square S, Scarborough, Toronto, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="30585d47514355555d080670575d51595c1e535f5d">[email&#160;protected]</a></td>
+<td width="140">Ontario</td>
+<td width="86">Canada</td>
+<td width="94">M1L1X2</td>
+<td width="146"></td>
+<td width="158">09892752157 0014372268336</td>
+</tr>
+<tr>
+<td width="35">116</td>
+<td width="86">Zahida Shafique</td>
+<td width="119">E-804, Kolte Patil Raaga, Kannuru Road,</td>
+<td width="140">Bangalore</td>
+<td width="86">Karnataka</td>
+<td width="94">562149</td>
+<td width="146"></td>
+<td width="158">9880605566</td>
+</tr>
+<tr>
+<td width="35">117</td>
+<td width="86">Zulaikha Beevi</td>
+<td width="119">Abad, TC 14/316 Nethaji Line, Nandavaam Road,</td>
+<td width="140">Thiruvananthapuram</td>
+<td width="86">Kerala</td>
+<td width="94">695 003</td>
+<td width="146">4772254153</td>
+<td width="158">9400754153</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+<div id="notes" align="center">
+<H2>Notes on Takaful or Insurance Funds</H2>
+<strong>by Md. Amin Khattu</strong><br>
+<br></div>
+
+<strong>Definition</strong><br>
+
+<strong>Takaful</strong> (translated as solidarity or mutual guarantee is a type of <strong>Islamic</strong><strong> Insurance</strong> wherein members contribute money into a pool system to guarantee each other against loss or damage. It is based on Shariah and an alternative to conventional insurance, which contains forbidden <strong><em>riba </em></strong>(usury) and <strong><em>gharar</em></strong>. Here individuals are responsible to co-operate and protect one another. Takaful policies cover health, life, and general insurance needs. Takaful insurance company can only <strong><em>invest in </em></strong><a href="http://www.islamicmortgages.co.uk/index.php?id=122"><em><strong>halal</strong></em><strong><em> businesses</em></strong></a><strong><em>.</em></strong> Basically they are not allowed to invest in companies that deal in interest, alcohol, gambling or provide too much uncertainty.<br><br>
+
+The takaful industry has grown into a $27.7 billion of contributions in 2018, from a 2011 figure of $12 billion.The movement has been praised as providing superior alternatives insurance that reinvigorate human capital, emphasize personal dignity, community self-help, and economic self-development but also criticized as having dwindled in scope to an industry of conventional insurance with Arabic terminology and language of contract. The fundamentals underlying takaful are very similar to co-operative and mutual principles that are accepted under Islamic law.<br><br>
+
+Allah SWT has commanded us to help one another in <em>al-Birr</em> and in <em>al-Taqwa</em> : And help one another in righteousness and piety, and help not one another in sin and aggression, and keep your duty to Allah. Surely Allah is Severe in requiting (evil). (Al Maidah. 5:2)<br><br>
+
+An Islamic insurance company operating a takafulfundmust operate under the following principles:<br><br>
+
+Takaful works on the principle of <strong>Tabarru </strong>and<strong> Taawun.</strong><br><br>
+
+<strong>Tabarru </strong>means a donation or a gift.<br><br>
+
+<strong>Taawun</strong> means mutual assistance.<br>
+<ul>
+ 	<li>It must operate according to Islamic co-operative principles.</li>
+ 	<li>A reinsurance commission may only be received from or paid out to Islamic insurance and reinsurance companies.</li>
+ 	<li>The insurance company must maintain two separatefunds: a participant and policyholder fund, and a shareholder fund.</li>
+</ul>
+Funds collected through Takaful premiums is invested in Shariah compliant investments that involve environmentally friendly and socially responsible business activities. Most of the profits from these funds are shared among the participants. Besides, Takaful involves each participant giving away as donation (<strong>Tabarru</strong>) a certain proportion of the full amount of the contributions required to be paid. Therefore, by joining Takaful, every participant is indirectly involved in charity and social welfare.<br><br>
+
+<strong>How Takaful Operates</strong><br>
+
+All partiesor policyholders in a takafularrangementagree to guarantee each other and make contributions to a pool or mutual fund instead of paying premiums. The pool of collected contributions creates the takaful fund. Each participants contribution is based on the type of coverage they require andtheir personal circumstances. <strong><em>A portion of the fund is invested in a Sharia compliant profitable business.</em></strong><br><br>
+
+A takaful contractspecifies the nature of the risk and the length of the coverage, similar to that of a conventional insurance policy.<br><br>
+
+The takaful fund is managed and administered on behalf of the participants by <strong>a takaful operator</strong>, who charges an agreed-upon fee to cover costs. Much like a conventional insurance company, costs include sales and marketing, underwriting, and claims management.<br><br>
+
+Any claims made by participants are paid out of the takaful fund and any remaining surpluses, after making provisions for the likely cost of future claims and other reserves, belong to the participants (policy holders) in the fund, not the takafuloperator. Those fundsmay be distributed to the participants as cash dividends or distributions, or viaareduction in future contributions. The surplus is not treated as the profit to the fund.<br><br>
+
+<strong>Takaful vs. Conventional Insurance</strong><br>
+
+Most Islamic jurists conclude that conventional insurance is unacceptable inIslam because it does not conform to sharia for the following reasons:
+
+Takaful is free from the elements of <strong>uncertainty </strong>(Gharar), <strong>Gambling </strong>(Maysir) and <strong>Interest </strong>(Riba).
+<ul>
+ 	<li>Conventional insuranceincludes an element of <strong><em>al-gharar</em> </strong>or uncertainty.</li>
+ 	<li>Conventional insurance isbased on the concept and practice of charging interest  or <strong><em>riba</em></strong>.</li>
+ 	<li>slamic insurance, on the other hand,is based on <a href="http://www.islamic-insurance.com/2016/01/what-is-tabarru-concept.html" target="_blank" rel="noreferrer noopener"><strong><em>tabarru</em></strong></a><strong><em>,</em></strong> where a portionof the contributions made by participants istreated as a donation. This is why policyholders in takaful are usually referred to as participants.</li>
+ 	<li>Conventional insuranceis considered a form of <strong><em>Maysir</em></strong> or gambling.</li>
+ 	<li></li>
+</ul>
+<strong>What are the different models adopted in Takaful?</strong><br><br>
+
+There are four commonly adopted models :
+<ol type="1">
+ 	<li><strong>Mudaraba,</strong>  2. <strong>Wakala</strong>, 3. <strong>Waqf </strong> 4. <strong>Hybrid</strong> model.</li>
+</ol>
+<ul>
+ 	<li><strong>The Mudaraba Model” </strong>In the <strong>Mudaraba</strong> model, the Fund Manager invests the surplus of the pooled money on the Mudaraba basis and the same with the other model The fund manager is entitled to a share in surplus but not entitled to a salary or any fee.</li>
+</ul>
+<ul>
+ 	<li>In the Wakala model, the fund manager is entitled to a specific fee but not the share of the surplus.</li>
+</ul>
+<ul>
+ 	<li>In the Waqf model, the fund manager is entitled to a salary.</li>
+</ul>
+<ul>
+ 	<li>In a Hybrid model, the fund manager is entitled to a share in net realization as well as a fee for his or her services to manage the contributions and claims. The <strong>Hybrid Model</strong> is where two different structures of Islamic finance, e.g. the Mudaraba and Wakala are used in a single model then it is referred to as a hybrid model.</li>
+</ul>
+<strong>Differences in Takaful models</strong><br>
+
+A Fund Manager entitlements in different models:
+<table class="timecard"><caption>Details of Fund Manager entitlements</caption>
+<thead>
+<tr>
+<th>No.</th>
+<th> Salary</th>
+<th>Share in Surplus</th>
+<th>Specific Fee</th>
+<th>Share in Net Realisation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mudaraba</td>
+<td>X</td>
+<td>YES</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>Wakala</td>
+<td>X</td>
+<td>X</td>
+<td>YES</td>
+<td>X</td>
+</tr>
+<tr>
+<td>Waqf</td>
+<td>YES</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>Hybrid</td>
+<td>X</td>
+<td>X</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+</tbody>
+</table>
+</figure><br><br>
+
+<strong>A Working Example of Takaful</strong><br />
+
+Lets suppose there are ten participants who are contributing $10 each into a fund, making a total contribution of $100.<br /><br />
+
+The Fund Operator is appointed to manage this fund of $100 for a period of one year.<br /><br />
+
+From this $100;<br>
+
+ $70 dollars are distributed to the<strong> claims account</strong> and<br>
+ $30 dollars to the <strong>investment account</strong><br>
+
+In the claims account, we have $70 which is used to pay for the losses claimed by the participants, in these twelve months if there were two claims made and the fund operators paid $30.<br><br>
+
+From the remaining $40 in the claims pool the fund operator deducts <em>operation expenses</em> including the <em>fee of the fund manager, </em>who is working as an agent and distributes the rest to the participants at the end of 12 months.<br><br>
+
+The $30 dollars in the investment account will be invested in Sharia permissible businesses.<br><br>
+
+If there is any profit after the one year from the investments then the fund operator will distribute the profit amongst the participants after deducting the operating expenses.<br><br>
+
+<strong>The fee for the Fund Operator</strong><br><br>
+
+Based on the Takaful structure an agreed fee would be paid to the fund operator in a WAKALA structure a fee is paid and in a MUDARABA structure the fund manager share from the realised profit on an agreed ratio. The other important point is that the remaining amounts in the investment account and claims account are distributed to the participant at the end based on the WAKALA and the MUDARABA models.<br><br>
+
+But in the case of Waqf model, it would be retained as a reserve and not distributed.<br><br>
+
+<strong>Takaful Categories</strong><br><br>
+
+Before you apply for Takaful you should know the products. There are two categories one as a <strong>General Takaful </strong>and the other is <strong>Family Takaful</strong>.<br><br>
+
+General Takaful provides protection on a short-term basis normally covering a period of one year.<br><br>
+
+This includes the following claims:<br>
+<ul>
+ 	<li>fire accidents</li>
+ 	<li>car accidents</li>
+ 	<li>marine accidents</li>
+ 	<li>airplane accidents</li>
+ 	<li>liability and breach of trust</li>
+</ul>
+Family Takaful includes insurance against the risk of disability and death.<br><br>
+
+Family Takaful offers a combination of protection and long term savings usually covering a period of more than one year. It provides financial benefits if the insured is inflicted by a tragedy.
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
