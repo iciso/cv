@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYFCT Quiz - Basics of Islam</title>
+    <style>
+        :root {
+            --primary-color: #064e3b; /* Deep Emerald */
+            --primary-hover: #047857;
+            --secondary-color: #d97706; /* Warm Amber */
+            --background-color: #f3f4f6;
+            --card-background: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --correct-color: #10b981;
+            --incorrect-color: #ef4444;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: var(--card-background);
+            max-width: 700px;
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background-color: #e5e7eb;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--secondary-color);
+            transition: width 0.4s ease;
+        }
+
+        .quiz-content {
+            padding: 40px;
+        }
+
+        /* Screen States */
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Welcome Screen Styling */
+        .welcome-screen h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 15px;
+        }
+
+        .welcome-screen p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Question Elements */
+        .question-meta {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        /* Options */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .option-btn {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: var(--border-radius);
+            padding: 16px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #f0fdf4;
+            border-color: var(--primary-hover);
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary-color);
+            background-color: #ecfdf5;
+        }
+
+        .option-btn.correct {
+            background-color: #d1fae5;
+            border-color: var(--correct-color);
+            color: #065f46;
+        }
+
+        .option-btn.incorrect {
+            background-color: #fee2e2;
+            border-color: var(--incorrect-color);
+            color: #991b1b;
+        }
+
+        /* Feedback Explanation Box */
+        .explanation-box {
+            background-color: #f0fdfa;
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            display: none;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .explanation-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        /* Utility Buttons */
+        .btn {
+            display: inline-block;
+            width: 100%;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.2);
+        }
+
+        .action-container {
+            margin-top: 20px;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: #ecfdf5;
+            border: 5px solid var(--correct-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+
+        .score-num {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .results-screen h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .results-screen p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <div class="quiz-content">
+        <!-- Start / Intro Screen -->
+        <div id="welcomeScreen" class="screen active">
+            <div class="welcome-screen">
+                <h1>Basics of Islam Quiz</h1>
+                <p>The Basics of Islam is the barest of knowledge we as Muslims must have.</p>
+                <p>The main message of Islam is the same as the basic message in all revealed religions, as they are all from the same source: The One True God.</p>
+                <p>He has placed us in this worldly life as a test. We cannot navigate the twists and turns of this life without His guidance, which He has provided in the form of revelation and through His Messengers. This quiz is designed to explore that guidance to help save our lives in this world, and our souls in the next.</p>
+                <button class="btn" id="startBtn">Start Quiz</button>
+            </div>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="questionScreen" class="screen">
+            <div class="question-meta">Question <span id="currentQuestionNum">1</span> of 10</div>
+            <div class="question-text" id="questionText">Question content goes here?</div>
+            
+            <div class="options-container" id="optionsContainer">
+                <!-- Buttons will be dynamically rendered here -->
+            </div>
+
+            <div class="explanation-box" id="explanationBox">
+                <h4>Context & Evidence</h4>
+                <div id="explanationText">Explanation goes here.</div>
+            </div>
+
+            <div class="action-container">
+                <button class="btn" id="nextBtn" style="display: none;">Next Question</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="screen">
+            <div class="results-screen">
+                <div class="score-circle">
+                    <span class="score-num" id="scoreValue">0</span>
+                    <span class="score-label">Score</span>
+                </div>
+                <h2 id="resultTitle">Well Done!</h2>
+                <p id="resultFeedback">You have completed the quiz. Keep studying the divine guidance to beautify your faith.</p>
+                <button class="btn" id="restartBtn">Take Quiz Again</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Quiz Database containing Questions, Choices, Answers, and Contextual Explanations
+    const quizData = [
+        {
+            question: "What is true of divine love?",
+            options: [
+                "Love of Allah is not combined with a feeling of awe and divine majesty.",
+                "Love of Allah is in the heart, it does not actually move a person to worship Allah.",
+                "A Muslim must love Allah.",
+                "None of the above"
+            ],
+            correctIndex: 2,
+            explanation: `Almighty Allah said (what means): "Say (O Muhammad): 'if you (really) love Allah then follow me (i.e. accept Islamic monotheism, follow the Quran and Sunnah), Allah will love you and forgive you your sins. And Allah is Oft-Forgiving, Most Merciful.'" [3:31].<br><br>Abu Huraira narrated that the Prophet (pbuh) said: "if Allah loves a person, He calls Jibrael saying, 'Allah loves so and so; O Jibrael love him.'..." [Al-Bukhari & Muslim].`
+        },
+        {
+            question: "A romantic relationship outside marriage",
+            options: [
+                "is always acceptable in Islam",
+                "is acceptable as long as it does not reach the level of obsession.",
+                "is acceptable as long as it does not lead one to worship other gods.",
+                "is prohibited in Islam"
+            ],
+            correctIndex: 3,
+            explanation: "A relationship between a man and a woman outside of marriage, which is what is called an unlawful relationship, is haraam, regardless of the level of this relationship and whether it goes as far as an intimate relationship or zina."
+        },
+        {
+            question: "The very definition of worship states that it is",
+            options: [
+                "everything Allah loves and is pleased with.",
+                "spending one’s time in nothing but prayers.",
+                "doing that which is pleasing to others no matter what it be",
+                "serving mankind."
+            ],
+            correctIndex: 0,
+            explanation: "Worship ('Ibadah) is a comprehensive term for everything Allah loves and is pleased with—both inward and outward actions. This is initiated first by establishing obligatory duties (Faraid) and is continually beautified through supererogatory deeds (Nawafil)."
+        },
+        {
+            question: "Love for _ should be given precedence if it conflicts with the love for Allah?",
+            options: [
+                "parents",
+                "a beautiful wife",
+                "none of the above because love for Allah precedes everyone else’s.",
+                "a child"
+            ],
+            correctIndex: 2,
+            explanation: `Allah says (interpretation of the meaning): "O you who believe! Let not your properties or your children divert you from the remembrance of Allah" [63:9]. Loving for the sake of Allah is a sign of perfect faith, but loving something alongside or above Allah is the essence of shirk.`
+        },
+        {
+            question: "The most sublime form of love is:",
+            options: [
+                "genuine, romantic love between a young man and a woman.",
+                "love of Allah.",
+                "love for money.",
+                "love between a parent and a child."
+            ],
+            correctIndex: 1,
+            explanation: "The most beautiful, sincere, elevated, and exalted kind of love is the love of the One Whom hearts were created to love. Allah is loved for His own sake in every respect. All except Him are loved secondary to our love for Him."
+        },
+        {
+            question: "What are the qualities Allah does not love?",
+            options: [
+                "All of the answers mentioned herein",
+                "Arrogance, and doing wrong to others.",
+                "Sins and disbelief.",
+                "Boasting and stinginess."
+            ],
+            correctIndex: 0,
+            explanation: "Allah explicitly mentions in the Qur'an that He does not love extravagance (Israaf), pride (Istikbaar), arrogant boasting (Mukhtal fakhoor), transgression (Udwaan), wrongdoing/oppression (Zulm), treachery (Khiyaanah), or mischief-making (Ifsaad)."
+        },
+        {
+            question: "What are some qualities Allah loves that a Muslim should try to develop?",
+            options: [
+                "Patience.",
+                "All of the answers mentioned herein",
+                "Taqwa ie. Piety or God conciousness.",
+                "Tawakkul or Trust in Allah"
+            ],
+            correctIndex: 1,
+            explanation: "Seven beloved qualities include: Repentance (Tawbah), Purification (Taharah), Piety (Taqwa), Goodness & Perfection (Ihsan), Trust in Allah (Tawakkul), Justice (Qist), and Patience (Sabr)."
+        },
+        {
+            question: "How is love for Prophet Muhammad viewed in Islam?",
+            options: [
+                "Love of the Prophet is disparaged.",
+                "Muslim may or may not love the Prophet, what is important is loving Allah",
+                "It is forbidden to love Prophet Muhammad as it contradicts loving Allah",
+                "Loving Prophet Muhammad is part of loving Allah."
+            ],
+            correctIndex: 3,
+            explanation: `Loving the Prophet is a non-negotiable requirement of faith. The Messenger of Allah said: "None of you is a believer till I am dearer to him than his child, his father and the whole of mankind." [Muslim]. It is a requisite of loving Allah.`
+        },
+        {
+            question: "How can a Muslim achieve the love of Allah? Choose the right order.",
+            options: [
+                "Shahadah, voluntary acts, obligatory duties.",
+                "Obligatory duties, Shahadah, voluntary acts.",
+                "Shahadah, obligatory duties, voluntary acts.",
+                "Voluntary acts, Shahadah, obligatory duties."
+            ],
+            correctIndex: 2,
+            explanation: "We must enter the faith (Shahadah), then fulfill what is obligatory upon us (Faraid) as the fundamental baseline to draw close to Allah, and lastly stack voluntary/supererogatory deeds (Nawafil) to attain deeper closeness and love."
+        },
+        {
+            question: "A deepened state of love for Allah comes with:",
+            options: [
+                "leading a nomadic life.",
+                "spiritual effort, prayer and developing qualities that He loves.",
+                "yoga and meditation.",
+                "None of the above."
+            ],
+            correctIndex: 1,
+            explanation: "True love of Allah is cultivated through sincere spiritual effort, adherence to prayer, seeking knowledge, and intentionally nurturing the characteristics, patience, and internal attributes that He loves."
+        }
+    ];
+
+    // State Variables
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let hasAnswered = false;
+
+    // DOM Elements
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const questionScreen = document.getElementById('questionScreen');
+    const resultsScreen = document.getElementById('resultsScreen');
+    const progressBar = document.getElementById('progressBar');
+    
+    const startBtn = document.getElementById('startBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    
+    const questionText = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const currentQuestionNum = document.getElementById('currentQuestionNum');
+    
+    const explanationBox = document.getElementById('explanationBox');
+    const explanationText = document.getElementById('explanationText');
+    
+    const scoreValue = document.getElementById('scoreValue');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultFeedback = document.getElementById('resultFeedback');
+
+    // Event Listeners
+    startBtn.addEventListener('click', startQuiz);
+    nextBtn.addEventListener('click', handleNext);
+    restartBtn.addEventListener('click', restartQuiz);
+
+    function startQuiz() {
+        welcomeScreen.classList.remove('active');
+        questionScreen.classList.add('active');
+        currentQuestionIndex = 0;
+        score = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        hasAnswered = false;
+        nextBtn.style.display = 'none';
+        explanationBox.style.display = 'none';
+        
+        const currentQuestion = quizData[currentQuestionIndex];
+        
+        // Update UI Text
+        currentQuestionNum.textContent = currentQuestionIndex + 1;
+        questionText.textContent = currentQuestion.question;
+        
+        // Progress Bar
+        const progressPercent = ((currentQuestionIndex) / quizData.length) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+
+        // Load Options
+        optionsContainer.innerHTML = '';
+        currentQuestion.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.classList.add('option-btn');
+            button.innerHTML = `<span>${option}</span>`;
+            button.addEventListener('click', () => selectOption(index));
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    function selectOption(selectedIndex) {
+        if (hasAnswered) return;
+        hasAnswered = true;
+
+        const currentQuestion = quizData[currentQuestionIndex];
+        const optionButtons = optionsContainer.querySelectorAll('.option-btn');
+
+        optionButtons.forEach((btn, index) => {
+            // Disable all buttons to prevent double-answering
+            btn.disabled = true;
+
+            if (index === currentQuestion.correctIndex) {
+                btn.classList.add('correct');
+            } else if (index === selectedIndex) {
+                btn.classList.add('incorrect');
+            }
+        });
+
+        if (selectedIndex === currentQuestion.correctIndex) {
+            score++;
+        }
+
+        // Display explanation
+        explanationText.innerHTML = currentQuestion.explanation;
+        explanationBox.style.display = 'block';
+        nextBtn.style.display = 'block';
+        
+        // Smooth scroll to explanation if content is long
+        setTimeout(() => {
+            explanationBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+    }
+
+    function handleNext() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        questionScreen.classList.remove('active');
+        resultsScreen.classList.add('active');
+        progressBar.style.width = '100%';
+        
+        scoreValue.textContent = `${score}/${quizData.length}`;
+        
+        if (score === quizData.length) {
+            resultTitle.textContent = "Excellent! Perfect Score!";
+            resultFeedback.textContent = "Masha'Allah, you have shown comprehensive knowledge of the foundational principles and messages of Islam.";
+        } else if (score >= 7) {
+            resultTitle.textContent = "Great Job!";
+            resultFeedback.textContent = "You have a strong understanding of the basics! Continue striving to seek knowledge and perfect your faith.";
+        } else {
+            resultTitle.textContent = "Keep Learning!";
+            resultFeedback.textContent = "Every step towards seeking knowledge is highly rewarded. Re-read the commentaries and try again to master these concepts.";
+        }
+    }
+
+    function restartQuiz() {
+        resultsScreen.classList.remove('active');
+        startQuiz();
+    }
+</script>
+</body>
+</html>
