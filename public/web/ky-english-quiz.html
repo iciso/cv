@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYFCT Quiz - English Grammar</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a; /* Deep Classic Blue */
+            --primary-hover: #2563eb;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
+            --correct-bg: #d1fae5;
+            --correct-border: #10b981;
+            --correct-text: #065f46;
+            --incorrect-bg: #fee2e2;
+            --incorrect-border: #ef4444;
+            --incorrect-text: #991b1b;
+            --border-radius: 8px;
+            --transition: all 0.2s ease-in-out;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-main);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .quiz-wrapper {
+            background-color: var(--card-background);
+            max-width: 750px;
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            background-color: #fafafa;
+            transition: var(--transition);
+        }
+
+        .question-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-item:hover {
+            background-color: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 12px;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .option-item span {
+            font-size: 1rem;
+        }
+
+        /* Interactive Feedback Classes */
+        .option-item.correct-choice {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: var(--correct-text) !important;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect-choice {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: var(--incorrect-text) !important;
+        }
+
+        /* Action Buttons */
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 25px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            flex: 2;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-reset {
+            background-color: #e2e8f0;
+            color: var(--text-muted);
+            flex: 1;
+        }
+
+        .btn-reset:hover {
+            background-color: #cbd5e1;
+            color: var(--text-main);
+        }
+
+        /* Results Display Panel */
+        .results-panel {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            display: none;
+            text-align: center;
+        }
+
+        .results-panel h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .score-output {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 10px;
+        }
+
+        .score-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .score-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-wrapper">
+    <header>
+        <h1>English Grammar Quiz</h1>
+        <p>Kattoo-Yamani Family Charitable Trust</p>
+    </header>
+
+    <form id="grammarQuiz">
+        <!-- Question 1 -->
+        <div class="question-block" data-qindex="0">
+            <div class="question-title">Question 1. He -------------------- it.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q1" value="don't like"><span>don't like</span></label>
+                <label class="option-item"><input type="radio" name="q1" value="doesn't like"><span>doesn't like</span></label>
+                <label class="option-item"><input type="radio" name="q1" value="doesn't likes"><span>doesn't likes</span></label>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-block" data-qindex="1">
+            <div class="question-title">Question 2. They -------------------- here very often.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q2" value="don't come"><span>don't come</span></label>
+                <label class="option-item"><input type="radio" name="q2" value="doesn't come"><span>doesn't come</span></label>
+                <label class="option-item"><input type="radio" name="q2" value="doesn't comes"><span>doesn't comes</span></label>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-block" data-qindex="2">
+            <div class="question-title">Question 3. John and Mary -------------------- twice a week.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q3" value="come"><span>come</span></label>
+                <label class="option-item"><input type="radio" name="q3" value="comes"><span>comes</span></label>
+                <label class="option-item"><input type="radio" name="q3" value="coming"><span>coming</span></label>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-block" data-qindex="3">
+            <div class="question-title">Question 4. I -------------------- mind at all.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q4" value="not"><span>not</span></label>
+                <label class="option-item"><input type="radio" name="q4" value="isn't"><span>isn't</span></label>
+                <label class="option-item"><input type="radio" name="q4" value="don't"><span>don't</span></label>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-block" data-qindex="4">
+            <div class="question-title">Question 5. It -------------------- sense.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q5" value="don't make"><span>don't make</span></label>
+                <label class="option-item"><input type="radio" name="q5" value="doesn't makes"><span>doesn't makes</span></label>
+                <label class="option-item"><input type="radio" name="q5" value="doesn't make"><span>doesn't make</span></label>
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question-block" data-qindex="5">
+            <div class="question-title">Question 6. They -------------------- happy.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q6" value="seem"><span>seem</span></label>
+                <label class="option-item"><input type="radio" name="q6" value="seems"><span>seems</span></label>
+                <label class="option-item"><input type="radio" name="q6" value="seeming"><span>seeming</span></label>
+            </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="question-block" data-qindex="6">
+            <div class="question-title">Question 7. You -------------------- to do it.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q7" value="don't have"><span>don't have</span></label>
+                <label class="option-item"><input type="radio" name="q7" value="doesn't have"><span>doesn't have</span></label>
+                <label class="option-item"><input type="radio" name="q7" value="doesn't has"><span>doesn't has</span></label>
+            </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="question-block" data-qindex="7">
+            <div class="question-title">Question 8. She -------------------- a brother.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q8" value="doesn't has"><span>doesn't has</span></label>
+                <label class="option-item"><input type="radio" name="q8" value="don't has"><span>don't has</span></label>
+                <label class="option-item"><input type="radio" name="q8" value="doesn't have"><span>doesn't have</span></label>
+            </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="question-block" data-qindex="8">
+            <div class="question-title">Question 9. The journey -------------------- an hour.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q9" value="take"><span>take</span></label>
+                <label class="option-item"><input type="radio" name="q9" value="takes"><span>takes</span></label>
+                <label class="option-item"><input type="radio" name="q9" value="taking"><span>taking</span></label>
+            </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="question-block" data-qindex="9">
+            <div class="question-title">Question 10. I -------------------- it now.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q10" value="want"><span>want</span></label>
+                <label class="option-item"><input type="radio" name="q10" value="wants"><span>wants</span></label>
+                <label class="option-item"><input type="radio" name="q10" value="wanting"><span>wanting</span></label>
+            </div>
+        </div>
+
+        <!-- Question 11 -->
+        <div class="question-block" data-qindex="10">
+            <div class="question-title">Question 11. Peggy -------------------- by bus.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q11" value="come"><span>come</span></label>
+                <label class="option-item"><input type="radio" name="q11" value="comes"><span>comes</span></label>
+                <label class="option-item"><input type="radio" name="q11" value="coming"><span>coming</span></label>
+            </div>
+        </div>
+
+        <!-- Question 12 -->
+        <div class="question-block" data-qindex="11">
+            <div class="question-title">Question 12. She --------------------.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q12" value="don't know"><span>don't know</span></label>
+                <label class="option-item"><input type="radio" name="q12" value="doesn't knows"><span>doesn't knows</span></label>
+                <label class="option-item"><input type="radio" name="q12" value="doesn't know"><span>doesn't know</span></label>
+            </div>
+        </div>
+
+        <!-- Question 13 -->
+        <div class="question-block" data-qindex="12">
+            <div class="question-title">Question 13. She -------------------- hard.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q13" value="try"><span>try</span></label>
+                <label class="option-item"><input type="radio" name="q13" value="trys"><span>trys</span></label>
+                <label class="option-item"><input type="radio" name="q13" value="tries"><span>tries</span></label>
+            </div>
+        </div>
+
+        <!-- Question 14 -->
+        <div class="question-block" data-qindex="13">
+            <div class="question-title">Question 14. They -------------------- football every weekend.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q14" value="play"><span>play</span></label>
+                <label class="option-item"><input type="radio" name="q14" value="plays"><span>plays</span></label>
+                <label class="option-item"><input type="radio" name="q14" value="playing"><span>playing</span></label>
+            </div>
+        </div>
+
+        <!-- Question 15 -->
+        <div class="question-block" data-qindex="14">
+            <div class="question-title">Question 15. The exam -------------------- two hours.</div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q15" value="last"><span>last</span></label>
+                <label class="option-item"><input type="radio" name="q15" value="lastes"><span>lastes</span></label>
+                <label class="option-item"><input type="radio" name="q15" value="lasts"><span>lasts</span></label>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button type="button" class="btn btn-submit" id="submitBtn">Grade Me</button>
+            <button type="button" class="btn btn-reset" id="resetBtn">Clear</button>
+        </div>
+    </form>
+
+    <div class="results-panel" id="resultsPanel">
+        <h2>Quiz Performance Summary</h2>
+        <div class="score-output">
+            <div class="score-box">
+                <span class="score-label">Total Score</span>
+                <span class="score-value" id="markLabel">0 / 15</span>
+            </div>
+            <div class="score-box">
+                <span class="score-label">Percentage</span>
+                <span class="score-value" id="percentageLabel">0%</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Preserved answer key mapping from your original script source code
+    const answers = [
+        "doesn't like",  // Q1
+        "don't come",    // Q2
+        "come",          // Q3
+        "don't",         // Q4
+        "doesn't make",  // Q5
+        "seem",          // Q6
+        "don't have",    // Q7
+        "doesn't have",  // Q8
+        "takes",         // Q9
+        "want",          // Q10
+        "comes",         // Q11
+        "doesn't know",  // Q12
+        "tries",         // Q13
+        "play",          // Q14
+        "lasts"          // Q15
+    ];
+
+    const form = document.getElementById('grammarQuiz');
+    const submitBtn = document.getElementById('submitBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const resultsPanel = document.getElementById('resultsPanel');
+    const markLabel = document.getElementById('markLabel');
+    const percentageLabel = document.getElementById('percentageLabel');
+
+    submitBtn.addEventListener('click', () => {
+        let score = 0;
+        const totalQuestions = answers.length;
+        
+        // Visual indicator cleanup before evaluation running
+        const cleanOptions = form.querySelectorAll('.option-item');
+        cleanOptions.forEach(opt => opt.classList.remove('correct-choice', 'incorrect-choice'));
+
+        // Validate complete compliance for all form indices
+        for (let i = 0; i < totalQuestions; i++) {
+            const radioGroupName = `q${i + 1}`;
+            const selectedRadio = form.querySelector(`input[name="${radioGroupName}"]:checked`);
+
+            if (!selectedRadio) {
+                alert("Do answer all the questions, Please");
+                // Scroll focus automatically to the neglected item block
+                form.querySelector(`[data-qindex="${i}"]`).scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+        }
+
+        // Grade entries if validation validation requirement loop resolves successfully
+        for (let i = 0; i < totalQuestions; i++) {
+            const radioGroupName = `q${i + 1}`;
+            const selectedRadio = form.querySelector(`input[name="${radioGroupName}"]:checked`);
+            const targetBlock = form.querySelector(`[data-qindex="${i}"]`);
+            const allRadiosInBlock = targetBlock.querySelectorAll('input[type="radio"]');
+
+            if (selectedRadio.value === answers[i]) {
+                score++;
+                // Colorize targeted container element selection context
+                selectedRadio.parentElement.classList.add('correct-choice');
+            } else {
+                // Color selection element state incorrect indicator
+                selectedRadio.parentElement.classList.add('incorrect-choice');
+                
+                // Expose explicitly hidden clean structural correct answer mapping context frame elements
+                allRadiosInBlock.forEach(radio => {
+                    if (radio.value === answers[i]) {
+                        radio.parentElement.classList.add('correct-choice');
+                    }
+                });
+            }
+        }
+
+        // Calculate and display scores
+        const scorePercentage = Math.round((score / totalQuestions) * 100);
+        markLabel.textContent = `${score} / ${totalQuestions}`;
+        percentageLabel.textContent = `${scorePercentage}%`;
+        
+        resultsPanel.style.display = 'block';
+        resultsPanel.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    resetBtn.addEventListener('click', () => {
+        form.reset();
+        resultsPanel.style.display = 'none';
+        
+        const allOptions = form.querySelectorAll('.option-item');
+        allOptions.forEach(opt => opt.classList.remove('correct-choice', 'incorrect-choice'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
