@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Game COVID-19</title>
+  
+  <!-- Font Awesome Icons & Bootstrap CSS for legacy styling support -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
+  
+  <style>
+    body {
+      background: oldlace; /* Preserved your original background color choice */
+      padding: 20px;
+      font-family: 'Helvetica Neue', Helvetica, Arial, Sans-Serif;
+    }
+
+    .game-header {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #1e3a8a;
+    }
+
+    /* Notification Banner for Matches */
+    .message-banner {
+      background-color: #ecfdf5;
+      border: 2px solid #10b981;
+      border-radius: 8px;
+      padding: 15px;
+      max-width: 720px;
+      margin: 0 auto 20px auto;
+      text-align: center;
+      color: #065f46;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease-in-out;
+      display: none;
+    }
+
+    .message-banner.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .message-banner i {
+      margin-right: 10px;
+      color: #10b981;
+    }
+
+    #app {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 100px);
+      grid-auto-rows: 100px;
+      grid-gap: 15px;
+      justify-content: center;
+      perspective: 800px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    i.fas {
+      font-size: 40px;
+      color: blue; /* Preserved your classic blue icon layout style */
+    }
+
+    .victoryState {
+      grid-column-start: 1;
+      grid-column-end: -1;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #d1fae5;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #10b981;
+      color: #065f46;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .card {
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      box-shadow: 5px 5px 0 0 #333;
+      cursor: pointer;
+      animation: flipUp .5s forwards;
+    }
+    
+    .card i {
+      opacity: 1;
+      transition: opacity .5s;
+    }
+    
+    .card.down {
+      animation: flipDown .5s forwards;
+    }
+    
+    .card.down i {
+      opacity: 0;
+    }
+    
+    .card.matched {
+      animation: matching .3s forwards;
+    }
+
+    @keyframes flipDown {
+      0% {
+        background: #fff;
+        transform: rotateY(0deg);
+        box-shadow: 5px 5px 0 0 #333;
+      }
+      100% {
+        background: #73847f;
+        transform: rotateY(180deg);
+        box-shadow: -5px 5px 0 0 #333;
+      }
+    }
+    @keyframes flipUp {
+      0% {
+        background: #73847f;
+        transform: rotateY(180deg);
+        box-shadow: -5px 5px 0 0 #333;
+      }
+      100% {
+        background: #fff;
+        transform: rotateY(0deg);
+        box-shadow: 5px 5px 0 0 #333;
+      }
+    }
+    @keyframes matching {
+      0% {
+        background: #fff;
+      }
+      100% {
+        background: lightpink; /* Keeps your custom soft pink matching state feedback highlight */
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="game-header">
+    <h1>COVID-19 Awareness Memory Game</h1>
+    <p>Match the tiles to unlock vital prevention messages!</p>
+  </div>
+
+  <!-- Real-time specific match alert banner text window element link -->
+  <div class="message-banner" id="msgBanner">
+    <i class="fas fa-info-circle"></i> <span id="bannerText">Match a pair to learn more!</span>
+  </div>
+  
+  <br>
+
+  <div id="app">
+    <p class="victoryState" v-if="victory">
+      <span>🎉 Masha'Allah! All matches completed successfully! Stay safe!</span> 
+      <button v-on:click="cardsShuffle" class="btn btn-success">Play Again</button>
+    </p>
+    
+    <div v-for="(card, index) in cards" 
+         :key="index" 
+         :class="[{'down': card.down && !card.matched, 'up': !card.down, 'matched': card.matched}, 'card']" 
+         v-on:click="handleClick(card)">
+      <i :class="card.icon"></i>
+    </div>
+  </div>
+</div>
+
+<!-- Framework Dependencies standard distribution feeds -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+
+<script>
+// Icon definitions mapped directly to targeted contextual Covid Prevention Rules messages array mapping dictionary structures
+const covidPreventionData = {
+  'fas fa-hands-wash': 'Wash your hands thoroughly with soap and water for at least 20 seconds to kill virus particles.',
+  'fas fa-virus': 'Understand the enemy: Coronavirus spreads via respiratory droplets. Awareness is your first line of shield safety!',
+  'fas fa-lungs-virus': 'Protect your respiratory system. Avoid touching your eyes, nose, or mouth with unwashed hands.',
+  'fas fa-head-side-mask': 'Wear a proper mask securely covering both your nose and chin to shield others and yourself.',
+  'fas fa-handshake-slash': 'Practice physical distancing! Swap friendly handshakes for non-contact gestures.',
+  'fas fa-pump-medical': 'Keep alcohol-based hand sanitizer (at least 60% concentration) nearby for environments where soap is absent.',
+  'fas fa-store-slash': 'Avoid heavily crowded public environments, indoor community squares, and unventilated spaces.',
+  'fas fa-laptop-house': 'Work from home or attend classes remotely whenever outbreak metrics peak in your local zone.',
+  'fas fa-hospital-alt': 'Contact medical services promptly if you display persistent symptoms or chest distress.',
+  'fas fa-temperature-high': 'Monitor your wellness metrics regularly. High fever is a primary warning flag signature.',
+  'fas fa-ambulance': 'Keep emergency hotlines saved. Early professional medical intervention saves family lives.',
+  'fas fa-house-user': 'Stay home when sick! Self-isolation protects vulnerable members of your community.'
+};
+
+// Extracted valid icon classes array keys
+const icons = Object.keys(covidPreventionData);
+
+new Vue({
+  el: "#app",
+  data: {
+    cards: _.range(0, icons.length * 2),
+    running: false
+  },
+
+  methods: {
+    cardsShuffle() {
+      // Reset banner element visibility state
+      const banner = document.getElementById('msgBanner');
+      banner.classList.remove('show');
+
+      // Prep game objects
+      let rawCards = [];
+      
+      // Populate two of each structured object
+      icons.forEach((icon) => {
+        rawCards.push({ icon: icon, down: true, matched: false });
+        rawCards.push({ icon: icon, down: true, matched: false });
+      });
+      
+      // Shuffle objects correctly using lodash library mechanics
+      this.cards = _.shuffle(rawCards);
+    },
+
+    showGreetings(matchedIconClass) {
+      // Fetch the specific protection message tied precisely to this specific tile
+      const customMessage = covidPreventionData[matchedIconClass] || "Great match! Keep practicing safety habits.";
+      
+      // Update custom alert banner layer elements safely inside the layout frame view context
+      const banner = document.getElementById('msgBanner');
+      const textSpan = document.getElementById('bannerText');
+      
+      textSpan.textContent = customMessage;
+      banner.classList.add('show');
+    },
+
+    handleClick(cardClicked) {
+      // Lock click listener thread execution paths when running validation delay timelines
+      if (this.running) return;
+      
+      // Ignore clicks on already validated correct match tokens or currently flipped items
+      if (cardClicked.matched || !cardClicked.down) return;
+
+      // Turn targeted card up
+      if (this.cardCount.cardsUp < 2) {
+        cardClicked.down = false;
+      }
+
+      // Check validation matrix states once precisely 2 elements sit exposed
+      if (this.cardCount.cardsUp === 2) {
+        this.running = true;
+        
+        setTimeout(() => {
+          const activeIcons = this.cardCount.icons;
+          const isMatch = activeIcons[0] === activeIcons[1];
+
+          this.cards.forEach(card => {
+            if (!card.down && !card.matched) {
+              if (isMatch) {
+                card.matched = true;
+              } else {
+                card.down = true;
+              }
+            }
+          });
+
+          // Trigger explicit contextual messaging hook on success
+          if (isMatch) {
+            this.showGreetings(activeIcons[0]);
+          }
+
+          this.running = false;
+        }, 1000); // 1-second delay feels smooth for reading matching pairs
+      }
+    }
+  },
+
+  mounted() {
+    this.cardsShuffle();
+  },
+
+  computed: {
+    cardCount() {
+      let cardUpCount = 0;
+      let cardMatchedCount = 0;
+      let openIcons = [];
+      
+      this.cards.forEach(card => {
+        if (!card.down && !card.matched) {
+          cardUpCount++;
+          openIcons.push(card.icon);
+        }
+        if (card.matched) {
+          cardMatchedCount++;
+        }
+      });
+      
+      return {
+        cardsUp: cardUpCount,
+        cardsMatched: cardMatchedCount,
+        icons: openIcons
+      };
+    },
+
+    victory() {
+      return this.cardCount.cardsMatched === this.cards.length;
+    }
+  }
+});
+</script>
+
+</body>
+</html>
