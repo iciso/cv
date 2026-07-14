@@ -1,0 +1,1201 @@
+<!-- 
+Bismillah! 
+May Peace and Blessings of The One Creator who created all, be on all of us!
+
+CSS and HTML code to update  from 3Ws to 8Ws was by Rafique in May 2021,
+whose SL profile is at https://www.sololearn.com/profile/19469613
+
+Also, code had to be updated as vaccines became available, along with variants of the virus as well!
+
+Collapsing Faq code is available at W3 schools as well as at
+https://www.alltechnotricks.com/ where the author Karunakar Patel has used it to demo
+CSS animation of Font Awesome. Moreover, these are present in JQuery modules of SoloLearn.
+
+Text on Qawaaid, Fiqh, and authentic Sunnah in relation to the COVID-19 
+pandemic taken from Rafique's assignment to International Open University 
+submitted on 30 May 2021. References are mentioned, though bibliography 
+is not added to cut down on the length.
+
+Joy Bro of Bangladesh Koders Forum has edited the JS entirely to convert it to ES6.
+Of course, I am indebted, more because of my lack of practice in this new area of JS.
+
+Finally, whatever Truth written is from Allah, The Exalted, and whatever is not is from me. 
+May the Lord of All creations, guide us all, and forgive us. 
+Amen and Ameen
+
+Jazack Allah Khayurun, 
+  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<meta name="dc:title" content="KYFCT" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The 8Ws of COVID and it's Qawaaid</title>
+	
+ 
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Muli%7CRoboto%7CRoboto+Condensed%7CRoboto+Mono%7CRoboto+Slab&amp;display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Grand+Hotel%7CIndie+Flower%7CLeckerli+One%7CPacifico&amp;display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+	
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://kit.fontawesome.com/1c2c73bff2.js" crossorigin="anonymous"></script>
+		
+	<!-- Scroll Back to Top button-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script SRC="https://html-online.com/demo/scroll-to-top/script.js"></script>
+			 
+<style>	
+
+/*---------*\
+|*   Body  *|
+\*---------*/
+
+body {
+font-family: Roboto, Poppins, Verdana, "Comic Sans", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+/*----------*\
+|* Div-show *|
+\*----------*/
+
+
+
+
+.collapsible {
+  background-color: DodgerBlue;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  border-radius:0,0,5%,5%;
+  text-align: center;
+  outline: none;
+  font-size: 15px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+button.collapsible {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 10px;
+  font-weight : bold;
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 1s ease-out;
+  background-color: #f1f1f1;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+}
+
+
+
+/*---------*\
+|* Header  *|
+\*---------*/
+
+
+header{
+        background-color: #15191F;
+        padding: 25px 0;
+        //text-transform: uppercase;
+        font-family: 'Poppins',sans-serif;
+}
+header h3{
+    color: #ffffff;
+    margin: 0;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    
+}
+header h6{
+    text-align: center;
+    color: #2A8AE7;
+    font-size: 20px;
+    margin: 30px 0 0 0;
+    font-weight: 600;
+}
+
+
+
+/*----------*\
+|* Tooltip  *|
+\*----------*/
+
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 100%;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 0%;  //50%
+  margin-left: 0px;   //-60%
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+blockquote {
+padding:20px;
+border-top:8px;
+border-top-style: solid;
+border-top-color:#40E0D0;
+background-color: #B2FFFF;//#AFEEEE;
+color:Indigo;
+}
+
+
+
+/*---------*\
+|* Wrapper *|
+\*---------*/
+
+.wrapper{
+    width: 85%;
+    margin-left: 7.5%;
+    position: relative;
+}
+.wrapper h6{
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    font-weight: 700;
+    font-family: 'Poppins',sans-serif;
+    margin: 40px 0 15px 0;
+}
+.container{
+    height: 250px;
+    width: 100%;
+    min-width: 320px;
+    background-color: #2A8AE7;
+    position: relative;
+    border-radius: 10px;
+}
+.emoji{
+    background-image: -o-radial-gradient(#feca3e 58%,
+    #ff8000 80%);
+    background-image: radial-gradient(#feca3e 58%,
+    #ff8000 80%);
+    height: 300px;
+    width: 300px;
+    border-radius: 100%;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 1;
+    -webkit-box-shadow: 20px 20px 30px rgba(0,0,0,0.1);
+            box-shadow: 20px 20px 30px rgba(0,0,0,0.1);
+    -webkit-animation: scaleUp 1.5s infinite linear;
+            animation: scaleUp 1.5s infinite linear; 
+}
+@-webkit-keyframes  scaleUp{
+    0%{
+        -webkit-transform: scale(0.45);
+                transform: scale(0.45);
+    }
+    50%{
+        -webkit-transform: scale(0.6);
+                transform: scale(0.6);
+    }
+    100%{
+        -webkit-transform: scale(0.45);
+                transform: scale(0.45);
+    }
+}
+@keyframes  scaleUp{
+    0%{
+        -webkit-transform: scale(0.45);
+                transform: scale(0.45);
+    }
+    50%{
+        -webkit-transform: scale(0.6);
+                transform: scale(0.6);
+    }
+    100%{
+        -webkit-transform: scale(0.45);
+                transform: scale(0.45);
+    }
+}
+.emoji:before,
+.emoji:after{
+    content: "";
+    height: 45px;
+    width: 32px;
+    background-color: #663D0F;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 -6px  #4D2E08;
+            box-shadow: 0 -6px  #4D2E08;
+    position: absolute;
+    top: 90px;
+}
+.emoji:before{
+    left: 80px;
+}
+.emoji:after{
+    right: 80px;
+}
+.mask{
+    height: 120px;
+    width: 220px;
+    background-color: #e9fbfa;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    border-radius: 5px 5px 50% 50%;
+    z-index: 0;
+}
+.mask:before,
+.mask:after{
+    content: "";
+    width: 300px;
+    height: 10px;
+    background-color: #e9fbfa;
+    position: absolute;
+    z-index: -1;
+}
+.mask:before{
+    -webkit-transform: rotate(-20deg);
+        -ms-transform: rotate(-20deg);
+            transform: rotate(-20deg);
+    right: -51px;
+    top: 30px;
+}
+.mask:after{
+    -webkit-transform: rotate(20deg);
+        -ms-transform: rotate(20deg);
+            transform: rotate(20deg);
+    left: -51px;
+    top: 30px;
+}
+.details{
+    height: 15px;
+    width: 180px;
+    background-color: #bef4f1;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 20px;
+    border-radius: 0 0 50% 50%;
+    -webkit-box-shadow: 0 25px #bef4f1,
+                0 50px#bef4f1;
+            box-shadow: 0 25px #bef4f1,
+                0 50px#bef4f1;
+}
+.hands-container{
+    width: 200px;
+    height: 100%;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+
+
+
+/*---------------*\
+|* Font Awesome  *|
+\*---------------*/
+
+.fas {
+    height: 120px;
+    width: 110px;
+    color: #FECA3E;
+    font-size: 120px;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-shadow: 0 0 30px rgba(0,0,0,0.1);
+}
+
+.hand1{
+    -webkit-transform: rotate(60deg) translateX(10px);
+        -ms-transform: rotate(60deg) translateX(10px);
+            transform: rotate(60deg) translateX(10px);
+    -webkit-animation: wash1 2s infinite;
+            animation: wash1 2s infinite;
+}
+@-webkit-keyframes wash1{
+    50%{
+        -webkit-transform: rotate(60deg) translateX(-10px);
+                transform: rotate(60deg) translateX(-10px);
+    }
+}
+@keyframes wash1{
+    50%{
+        -webkit-transform: rotate(60deg) translateX(-10px);
+                transform: rotate(60deg) translateX(-10px);
+    }
+}
+.hand2{
+    -webkit-animation: wash2 2s infinite;
+            animation: wash2 2s infinite;
+}
+@-webkit-keyframes wash2{
+    50%{
+        -webkit-transform: translateY(15px);
+                transform: translateY(15px);
+    }
+}
+@keyframes wash2{
+    50%{
+        -webkit-transform: translateY(15px);
+                transform: translateY(15px);
+    }
+}
+.foam{
+    height: 30px;
+    width: 30px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 95px;
+    left: 82px;
+    -webkit-box-shadow:
+        20px 10px 0 -2px #ffffff,
+    -5px 20px 0 3px  #ffffff, 
+    15px 0 0 1px #ffffff,
+    -15px 0 0 0.5px  #ffffff,
+    20px -12px 0 -2px #ffffff,
+    -22px 10px 0 -5px  #ffffff,
+    0px -21px 0 0px #ffffff ;
+            box-shadow:
+        20px 10px 0 -2px #ffffff,
+    -5px 20px 0 3px  #ffffff, 
+    15px 0 0 1px #ffffff,
+    -15px 0 0 0.5px  #ffffff,
+    20px -12px 0 -2px #ffffff,
+    -22px 10px 0 -5px  #ffffff,
+    0px -21px 0 0px #ffffff ;
+    -webkit-transform: scale(1.4,1.1);
+        -ms-transform: scale(1.4,1.1);
+            transform: scale(1.4,1.1);
+}
+.foam:before,
+.foam:after{
+    content: "";
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    opacity: 0.6;
+}
+.foam:before{
+    height: 20px;
+    width: 20px;
+    bottom: 40px;
+    right: 40px;
+    -webkit-animation: bubbles 5s 1s infinite;
+            animation: bubbles 5s 1s infinite;
+}
+.foam:after{
+    height: 15px;
+    width: 15px;
+    bottom: 0px;
+    left: 40px;
+    -webkit-animation: bubbles 3s 4s infinite;
+            animation: bubbles 3s 4s infinite;
+}
+@-webkit-keyframes bubbles{
+    100%{
+        -webkit-transform: translateY(-60px);
+                transform: translateY(-60px);
+        opacity: 0;
+    }
+}
+@keyframes bubbles{
+    100%{
+        -webkit-transform: translateY(-60px);
+                transform: translateY(-60px);
+        opacity: 0;
+    }
+}
+.person-container{
+    height: 100%;
+    width: 300px;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.person{
+    height: 32px;
+    width: 40px;
+    background-color: #FECA3E;
+    border-radius: 25px 25px 0 0;
+    position: absolute;
+    top: 120px;
+}
+.person:after{
+    position: absolute;
+    content: "";
+    height: 25px;
+    width: 25px;
+    background-color: #FECA3E;
+    border:5px solid #2A8AE7;
+    left: 3px;
+    bottom: 25px;
+    border-radius: 50%;
+}
+.person1{
+    left: 80px;
+    -webkit-animation: move1 4s infinite;
+            animation: move1 4s infinite;
+}
+@-webkit-keyframes move1{
+    100%{
+        -webkit-transform: translateX(-80px);
+                transform: translateX(-80px)
+    }
+}
+@keyframes move1{
+    100%{
+        -webkit-transform: translateX(-80px);
+                transform: translateX(-80px)
+    }
+}
+.person2{
+    right: 80px;
+    -webkit-animation: move2 4s infinite;
+            animation: move2 4s infinite;
+}
+@-webkit-keyframes move2{
+    100%{
+        -webkit-transform: translateX(80px);
+                transform: translateX(80px)
+    }
+}
+@keyframes move2{
+    100%{
+        -webkit-transform: translateX(80px);
+                transform: translateX(80px)
+    }
+}
+.distance{
+    height: 3px;
+    width: 30px;
+    background-color:#ffffff;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 125px;
+    -webkit-animation: expand 4s infinite;
+            animation: expand 4s infinite;
+}
+@-webkit-keyframes expand{
+    100%{
+        width: 170px;
+    }
+}
+@keyframes expand{
+    100%{
+        width: 170px;
+    }
+}
+.distance:before,
+.distance:after{
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    bottom: -8px;
+}
+.distance:before{
+    border-right: 12px solid white;
+    left: -12px;
+}
+.distance:after{
+    border-left: 12px solid white;
+    right: -12px;
+}
+.person-container p{
+    width: 100%;
+    position: absolute;
+    top: 70px;
+    font-family: 'Poppins',sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+
+/*-----------*\
+|* Fa icons  *|
+\*-----------*/
+
+
+
+.fa-icons, .fa-heart, .fa-head-side-cough, .bubbles {
+   
+    
+ /*-----------*\
+|* Pulse Beat *|
+\*------------*/
+
+    animation: pulse 1s linear infinite;
+}
+  
+@keyframes pulse {
+    0%{
+      transform: scale(1);
+      opacity: 0;
+    }
+    50%{
+      transform: scale(1.3);
+      opacity:1;
+    }
+    100%{
+      transform: scale(1);
+      opacity:0;
+    }
+}
+
+
+
+/*---------*\
+|* Cough   *|
+\*---------*/
+
+.bubbles__container {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  width: 100px;
+  height: 50px;
+  transform: translate(100%, -50%);
+}
+
+.fa-head-side-cough::after { 
+  content: "*";
+  color: #FECA3E;
+  size: 2px;
+  overflow: hidden;
+  z-index: 1; 
+}
+
+/*---------*\
+|*   Blink *|
+\*---------*/
+
+
+blink, .blink {
+  -webkit-animation: blink 1s step-end infinite;
+  -moz-animation: blink 1s step-end infinite;
+  -o-animation: blink 1s step-end infinite;
+  animation: blink 1s step-end infinite;
+}
+
+@-webkit-keyframes blink {
+  67% { opacity: 0 }
+}
+
+@-moz-keyframes blink {
+  67% { opacity: 0 }
+}
+
+@-o-keyframes blink {
+  67% { opacity: 0 }
+}
+
+@keyframes blink {
+  67% { opacity: 0 }
+}
+
+
+
+
+
+/*----------*\
+|*  Align   *|
+\*----------*/
+
+.right {
+  margin-left: auto;
+  margin-right: 0;
+  padding: 10px;
+}
+
+.right20 {
+  margin-left: auto;
+  margin-right: 0;
+  border: 40;
+  padding: 40;
+  overflow: hidden;
+  z-index: 1; 
+}
+
+.left {
+  margin-right: auto;
+  margin-left: 0;
+  padding: 10px;
+}
+
+.left20 {
+  margin-right: auto;
+  margin-left: 0;
+  border: 0, 0, 0, 20;
+  padding:  0, 0, 0, 20;
+  overflow: hidden;
+  z-index: 1; 
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.clear::before {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+.arrow__container {
+  position: absolute;
+  bottom: 50%;
+  right: 70%;
+  width: 100px;
+  height: 50px;
+  transform: translate(100%, +50%);
+}
+
+
+
+
+
+/*------------------*\
+|* Battery, Portal   *|
+\*------------------*/
+
+
+#battery {
+	color: #FECA3E;
+    font-size: 120px;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-shadow: 0 0 30px rgba(0,0,0,0.1)
+}
+
+ #portal {
+	color: #FECA3E;
+    font-size: 96px;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-shadow: 0 0 30px rgba(0,0,0,0.1)
+}
+
+
+
+
+
+
+
+
+
+/*---------*\
+|* Footer  *|
+\*---------*/
+
+footer {
+font-family: Roboto, Verdana, "Comic Sans", sans-serif;
+font-size: 16px;
+text-align: center;
+border:0;
+color: white;
+background-color: #15191F;
+padding: 15px 0;
+}
+
+
+
+.padding-m {
+	padding: 20px;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+
+
+
+/*----------------*\
+|*   Back to Top  *|
+\*----------------*/
+
+#back2Top {
+    width: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    position: fixed;
+    bottom: 50px;
+    right: 0;
+    background-color: #DDD;
+    color: #555;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+}
+#back2Top:hover {
+    background-color: #DDF;
+	color: #000;
+}
+
+</style>	
+
+
+
+
+
+
+
+</head>
+<body>
+<header id="header">
+
+
+	<br>
+
+
+    
+        <h3>The Qawaaid & COVID's 8Ws</h3>
+        <h6>8 Ws: Wash, Wear, Watch, Wrap, Windows, Wind, Way & Win</h6>
+    </header>
+	
+	
+	</div>
+        
+        <button class="collapsible">Click to read Introduction</button>
+        <div class="content">
+		
+			<p>Qawaaid is the Arabic word for Islamic Legal Maxims. Qawaaid is a plural word. It means the broad tenets of Islamic Law, which help in understanding and classifying the law (Fiqh) derived from the Qur'an and Sunnah.</p> 
+			
+			<p>This page shows us that the commandments of the Quraan and Hadith are in line with those measures and precautions taken to counter the pandemic.</p>
+			           
+            <p>According to the Hadith of Abdourahmane Ibn ‘Awf, the Prophet (PBUH) said:<i><blockquote>“When an epidemic breaks out in the land where you are, do not leave and flee from it. When you hear of an epidemic outbreak in another land, do not go there.”</blockquote></i></p>
+            
+            <p>The Qur’an refers us to specialists: <i><blockquote>“Ask scholars and specialists if you do not know.”</i><br> -(S The Bee, V 43 and S The Prophets V 7).</blockquote>Thus, this verse compels us to follow the recommendations of the health specialists during the pandemic. The measures that doctors and epidemiologists worldwide recommend today are in alignment with directions provided in the Qur’an and Sunnah.</p>
+			
+			<p>Though the COVID-19 pandemic has changed goalposts, so that, what was the 3Ws in the early 2020s namely: Wash your hands,  Wear a mask, and Watch your distance, has now become 8Ws, with the advent of vaccines, and new knowledge on the transmission of the virus. 
+        </div>
+        
+		
+		
+		<div class="padding-m"></div>
+
+    <div class="wrapper">
+
+		 
+		 
+		 
+		 
+        <div class="container">
+            <div class="hands-container">
+                <i class="fas fa-hand-paper hand1"></i>
+                <div class="foam"></div>
+                <i class="fas fa-hand-paper hand2"></i>
+            </div>
+        </div>
+
+			
+			<button class="collapsible tooltip">Click to read the first W: 1. Wash your hands
+		 <span class="tooltiptext">There cannot be a better emphasis on cleanliness than the hadith of our Noble Prophet which states,<br>“<i>Hygiene is half the faith</i>”.</span>
+		 </button>
+        <div class="content">
+            <p> We must ensure personal and public cleanliness and hygiene, for the Prophet (PBUH) said: <i><blockquote>“When you do your ablutions, clean your nostrils with water and when you use the latrine, clean yourself with water...and when you wake up, wash your hands before putting them anywhere, because you don’t know where your hand has spent the night.”</i></blockquote><p>
+			<p> Similarly, Verses 43 in Surah "The Woman" and in 6 of Surah: "The Table" of the Qu’ran recommend using water in the toilet whenever possible. The Qu’ran also says that <i><blockquote>“Allah (SWT) loves those who purify themselves.” (S Repentance, V 108)</i></blockquote></p>
+			<p> According to Seydatuna Aysha, the Mother of the Believers, the Prophet (PBUH) said:<i><blockquote> “Be clean, Islam is clean.”<br> “Cleanliness is half of Faith,” <br>“Allah (SWT) is Clean and loves those who are clean... is Generous and loves those who are generous. Always keep your courtyards and public places clean.”</i></blockquote>
+
+            
+          
+        </div>
+
+
+  	<div class="padding-m"></div>
+
+   		
+		
+		
+		
+		<div class="container">
+            <div class="emoji">
+                <div class="mask">
+                    <div class="details"></div>
+                </div>
+            </div>
+        </div>
+		
+			
+		 <button class="collapsible tooltip">Click to read the second W: 2. Wear a mask.
+		 <span class="tooltiptext">Preventing spread has its origins from the Qawaaid of not harming anyone.</span>
+		 </button>
+        <div class="content">
+            <p>The use of Face Mask during Salat as well as in Hajj and Umrah is promulgated by using the Major Qawaaid that emphasizes the elimination of all harm</p>
+            
+            <p> The maxim in Arabic is "al-Darar muzal": harm must be eliminated. The basis for this maxim is the hadith of the Prophet (may Allah bless him and give him peace): <blockquote>“Harm may neither be inflicted nor reciprocated in Islam.”</blockquote></p>
+			
+			<p>Similarly, the use of alcohol-based hand sanitizers (U.S. Department of Health and Human Services, 2021);  as well as the formulation of ethical guidelines to be in self-isolation to prevent spread from infected persons, have their origins from the same Qawaaid of not harming anyone (Ware, 2015).</p>
+			
+			<p>The example for precautions, comes form the general Islamic rule during insecure times such as a pandemic, which is to protect oneself, as stated in the Qu’ran:<i><blockquote>“Believers, take precautions.”</blockquote></i></p>
+            
+           
+        </div>
+		
+		
+		
+		<div class="padding-m"></div>
+
+
+		
+		
+        <div class="container">
+             <div class="person-container">
+                <div class="person person1"></div>
+                <div class="person person2"></div>
+                <div class="distance"></div>
+                <p>6 Ft.</p>
+            </div>
+        </div>
+		
+		
+		 <button class="collapsible tooltip">Click to read the third W:3. Watch your distance.
+			<span class="tooltiptext">Preventing spread by maintaining distance has its origins from multiple Qawaaids of taking precautions, of not harming anyone, as well as the Qyaidah that states that with every difficulty there is ease.</span>
+			 </button>
+
+        <div class="content">
+            <p>The example for precautions, comes form the general Islamic rule during insecure times such as a pandemic, which is to protect oneself, as stated in the Qu’ran:<i><blockquote>“Believers, take precautions.”</blockquote></i></p>
+            <p>Also, Muslims are instructed to avoid shaking hands when greeting someone during the pandemic. Allah (STW) says in V 54 S The Livestock: <blockquote>“When those who believe in Our teachings come to you, tell them: Peace be with you!”</blockquote></p>
+            <p>Thus, the only obligation while greeting in Islam is to say ”Peace be with you.” So, when health experts judge that hugging or shaking hands can infect others or oneslef, Muslims should refrain from doing so.</p>
+			<p>Be careful in the way that you gather at mealtime and adapt to the coronavirus situation by eating separately. V 61 S The Light states: <blockquote>“There is no harm in eating either together or eating separately.”</blockquote></p>
+			<p>Avoid gathering together for prayer according to the situation. Health experts recommend avoiding gatherings in places of worship during the pandemic. This recommendation corresponds to the Prophet’s advice (PBUH). For, Islam allows you to pray at home when the weather is bad as seen in this account by Imam Ibn Hajar (RA)  who says in Fathul Bâry's Commentary on Bukhari: <blockquote>Bukhari (RA) reports that Abdallah Ibn Harith said: “Abdallah Ibn Abas exhorted us one day of great rain and when the muezzin arrived at the phrase, Come to prayer, he ordered him to say: Pray in your homes. Everyone looked at each other in amazement. He said to them: Do you disagree with me? Yet someone better than me (the Prophet) did it.”</blockquote></p>
+			<p>In situations where the right to health or life is threatened, Islam grants numerous exemptions related to worship. For example, you are allowed to do the following:<ul><li>Suspend prayers in times of insecurity or when traveling</li>
+			<li>Temporarily suspend fasting during times of illness</li>
+			<li>Permanently end fasting for people with chronic illness</li>
+			<li>Not perform the pilgrimage in times of illness or insecurity</li>
+			<li>Shorten prayers and the number of Rakas when ill or in times of insecurity.</li></ul></p>
+			<p>All of these exemptions are granted in accordance with the following Qu’ranic principle:<blockquote>“Allah (Swt ) does not want to cause you problems. On the contrary, HE wants to purify you and fill you with Favors so that you will be grateful.” (V 6 S La Table)<br><br>
+			“Allah (Swt ) wants to facilitate and not create difficulties.” -(V 185 S The Cow)</blockquote></p>
+			<p>Religious experts have interpreted these verses through the following Islamic Principles:<ul>
+			<li>Principle 1: “Under certain circumstances, normal obligations need not be followed.”</li>
+			<li>Principle 2: “Avoiding something bad is more important than doing something good.”</li></ul><br>
+			Protect yourself from getting sick and take care of yourself if you fall ill. For, the Messenger of Allah (PBUH) said: <blockquote>“Allah (SWT) brings sickness, but provides cures and there is a remedy for every sickness. Therefore, heal yourselves, but not with things that are forbidden.”</blockquote></p>
+        </div>
+		
+		<div class="padding-m"></div>
+
+		
+		
+		
+		<div class="container"">
+				<i class="fas fa-head-side-cough fa-12x" style="color:#FECA3E;"></i> 
+               
+					
+				<div></div>	
+				
+				<i class="fas fa-head-side-cough-slash blink fa-12x" style="text-decoration: blink; color:#FECA3E;"></i> 
+                
+        </div>
+				
+		 <button class="collapsible tooltip">4. Wrap the cough or sneeze!
+			<span class="tooltiptext">“When you cough or yawn, place your hand in front of your face (mouth) and lower your head.” - Hadith</span>
+		</button>      
+		 <div class="content">
+            <p>Cover your mouth when coughing or yawning for the Prophet (PBUH) said: “ When you cough or yawn, place your hand in front of your face (mouth) and lower your head.” His followers reported that: <blockquote>“When the Prophet (PBUH) coughed, he put his hand or his handkerchief over his mouth to reduce the impact.” </blockquote></p>
+            
+            <p> The maxim in Arabic is "al-Darar muzal": harm must be eliminated. The basis for this maxim is the hadith of the Prophet (may Allah bless him and give him peace): <blockquote>“Harm may neither be inflicted nor reciprocated in Islam.”</blockquote></p>
+            
+            <p>Similarly, the use of alcohol-based hand sanitizers (U.S. Department of Health and Human Services, 2021);  as well as the formulation of ethical guidelines to be in self-isolation to prevent spread from infected persons, have their origins from the same Qawaaid of not harming anyone (Ware, 2015).</p>
+            
+            <p>In the current context of coronavirus, these guidelines are recommended by doctors who consider them as ways to avoid spreading saliva or cough droplets, considered to be the main method for teansmitting infection to others. This is why they recommend coughing or sneezing into the crook of the elbow or into a tissue to be thrown into a waste basket immediately after use.</p>
+        </div>
+		
+		
+		
+		<div class="padding-m"></div>
+
+		
+	
+		<div class="container">
+					<div class=""><i class="fas fa-door-closed left fa-12x" style="font-size:96px;color:#FECA3E;"></i><span class="arrow__container"><i class="fas fa-arrow-alt-circle-right left20 blink fa-10x" style="font-size:64px;color:white;"></i></span></div>
+				
+					<center><div id="portal" class="fa" style="font-size:96px;color:#FECA3E;"></div></center> 
+             
+					<div class=""><i class="fas fa-door-open right fa-12x" style="font-size:96px;color:#FECA3E;"></i><span class="bubbles__container"><i class="fas fa-arrow-alt-circle-right right20 blink fa-10x" style="font-size:64px;color:white;"></i></span></div>
+        </div>
+		
+		 <button class="collapsible tooltip">5. Windows and doors we open!
+			<span class="tooltiptext">The Prophet declared Medina with a 12 mile belt as a natural reserve: trees were not to be felled or cut, except for sticks used for driving camels.” </span>
+		</button>      
+		 <div class="content">
+		
+		<p>For, in order to get fresh air, we need environmental protection. And, the Prophet was the first man ever to establish nature reserves where trees may not be felled and animals may not be killed. In another hadith, we read the following report:  <blockquote>“The Prophet declared as forbidden the cutting of trees and the hunting of game within the confines of Medina”. -Ref No. [62] in <a href="https://applications.emro.who.int/dsaf/dsa217.pdf" >Dr M H Al Khayat Health as a Human Right in Islam-Part 5 WHO</a> <!--   --> In reference to a certain valley in Taif, the Prophet says: “Hunting and cutting trees in Wajj are forbidden”. [63]</blockquote> Abu Yussuf quotes Malik ibn Anas as saying that he learnt that the Prophet had forbidden the cutting of trees in a 12 mile belt around Medina and forbidden hunting within a belt of four miles. He says that a number of scholars consider that these measures are aimed at preserving trees, in order to protect the environment. [64]</p>
+        </div>
+		
+		<div class="padding-m"></div>
+		
+		
+		
+		
+	
+		    
+		<div class="container">
+			<div class="container">
+				<center><div id="battery" class="fa" style="color:#FECA3E;"></div></center> 
+			</div>
+		</div>
+		<button class="collapsible tooltip">6. Wind up the worries & Un-wind to recharge spiritually!
+			<span class="tooltiptext"> “Your body has a right over you”. - Hadith<br>"He has set the balance of everything so that you might not transgress the balance"- Quran 55:7</span>
+		</button>   
+		 <div class="content">
+		 <p>This right requires each one of us to feed the body when it is hungry, rest it when tired, clean it when it gets dirty, protect it against all harm, take precautions against subjecting it to illness, provide it with the necessary treatment when it suffers from disease, and not to overburden it in any way. All this represents, from the Islamic standpoint, a right which must never be overlooked or neglected in preference to other rights, including God’s own rights over us.</p>
+		 <p><b>Place your trust in Allah (SWT)</b>: Some people have said: “We don’t need to follow the recommendations of health specialists; we just need to place our trust in Allah (SWT) to protect us from the COVID-19.” However, Islam recommends something else.</p>
+		 <blockquote>Abderrahmane Ibn Abi Layla (RA) relates that a man asked the Prophet (PBUH): “Do I place my trust in Allah (SWT) and leave my camel outside without attaching him or do I attach my camel outside and place my trust in Allah (SWT)?” The Prophet (PBUH) told him: “Attach it outside and place your trust in Allah (SWT).”</blockquote> <p>Attaching your camel in the current context means that we must take every precaution to avoid contracting the COVID-19 disease. In this way, we truly place our trust in Allah (SWT). It is only when we have taken all precautions, following the general and specific recommendations, that our prayers have the most chance of being favorably accepted by Allah (SWT).</p>
+		 <p>Accordingly, we ask for forgiveness and pray to Allah (SWT) as did his final Prophet: <blockquote>“God, protect me from skin disease, from leprosy, from mental illness and the consequences of other illnesses.”</blockquote></p>
+	
+	
+	
+	</div>
+		
+		<div class="padding-m"></div>
+	
+	
+	
+	
+	
+
+		    
+		<div class="container">
+				<i class="fas fa-house-user fa-12x" style="font-size:96px;color:#FECA3E;"></i><br>
+              
+					<div></div>
+                
+				<i class="fas fa-icons  fa-6x" style="font-size:64px;color:white;"></i><br>
+        </div>
+		<button class="collapsible tooltip">7. Way of Life from home is new norm.
+			<span class="tooltiptext">The Maxim, "Adversity begets facility” allows for flexibilities in doing our work and religious duties.</span>
+		</button>    
+		
+		<div class="content">
+		<p><blockquote>[He]  has  not  laid  upon  you  in  religion  any  hardship”4 and  “God  wishes  to  lighten  [the  burden]  for  you;  and  man  was  created  weak”-Noble Quran 4:28</blockquote></p>
+		<p>The Prophet is reported in al-Bukhārī, Kitāb al-Imān, Ḥadīth No. 39, to have said: <blockquote>“Religion is very easy and whoever overburdens himself in his religion will not be able to continue in that way”.</blockquote></p> 
+		<p>Events that occurred during ʿUmar Ibn Khaṭṭāb’s rule provide a vivid proof that rules can be breached in dire circumstances. It is reported that ʿUmar suspended ḥaddpunishment  for  theft  during  a  period  of  famine  in  Medina.10  The  crime  was  neither legalized nor ‘fiscalized’, but the severe punishment for a ḥudūd crime was  waived  or  reduced  temporarily,  depending  on  the  perpetrator’s  circum-stances, in order to alleviate the hardship of starvation.</p> 
+		<p>Thus, after the first protective measure with regard to our health, we must refrain from causing any harm to people, which in the pandemic context is spread of infection. This begins in the limited immediate environment of the home and similar enclosed places, where only a small number of people may stay. Hence, in Islam it is forbidden to pollute such an environment, say by tobacco smoke, or by any biological infectious agents say by coronavirus for example, as the serious health risks of both tabacco smoke and coronavirus represent have been ascertained beyond any shadow of doubt.</p>
+		<p>Moreover, we can use the new norm of work from home, to catch up with members of our own home, our kith and kin, our neighbours. Also, time saved from travel can be spent to learn new skills, or clear up backlogs.</p>
+		<p>Likewise, religious experts have interpreted the maxim, “Adversity begets facility” to indicate that any form of suffering, even if it does not endanger lives, will allow for flexibilities in finishing religious duties. In addition, this tenet declares that we must protect ourselves from getting sick and take care of ourselves, if we fall ill (Nordin, 2019).</p>
+		
+		
+		
+		</div>
+		
+		<div class="padding-m"></div>
+	
+		
+	
+		
+        <div class="container">
+            <div class="container">
+                <i class="fas fa-viruses fa-spin fa-pulse fa-8x" style="font-size:96px;color:white;"></i>
+					<div></div>
+                <i class="fas fa-syringe fa-spin fa-8x" style="font-size:108px;color:#FECA3E;"></i>
+            </div>
+        </div>
+		<button class="collapsible tooltip">8. Win with Vaccine.
+			<span class="tooltiptext">"There is no disease that Allah has created, except that He also has created its treatment." - Hadith</span>
+		</button>
+		<div class="content">
+	<p>This Hadith of the noble Prophet, which says that there is no disease that Allah has created, except that He also has created its treatment, rings in hope whenever mankind is put to test like in this pandemic. For, this hadith reveals itself evolving to crystallize into its Qawaaid form and spreading beyond in manifold roles of promoting faith in the science of COVID-19, including its vaccines, destroying the conspiracy theories, and the pandemic of misinformation (Alghamas, 2020).</p>
+		
+		
+		
+		
+		
+		</div>
+		
+			</div>
+		
+		<div class="padding-m"></div>
+	</div>
+		
+        <button class="collapsible tooltip">Conclusion.
+			<span class="tooltiptext">Not only Covid-19 mitigation through behavior change, (Jessie Pinchoff, 2020) but also an overall change in Muslims is required for them not to miss their focus in attaining piety (Fatimah Husein, 2018), must be the learning. And COVID-19 is just a wake-up call!</span>
+		</button>    
+		
+		<div class="content">
+		
+		<p>The Qawaid al Fiqh or Maxims of Islamic Law, are part of Maqasid al Shariah or Objectives of Islamic Law. That these cover our entire life, as can be seen by the fact that the Maqasid of Shariah were used by the founding fathers of America in the Declaration of Independence. <blockquote>For, there are five objectives to Islamic Shariah, namely, to preserve a persons religion, life, intellect, family, and property; And, some scholars such as Imam al-Ghazali included the pursuit of Happiness. This is where the founding fathers of America get their inalienable form of human rights stated in the declaration, as the protection of life, liberty and the pursuit of Happiness. Similarly, the fathers of Europe's enlightenment took much from Islam’s Maqasid al Shariah.</blockquote> </p>
+		<p> Let's ponder how we can benefit from all that Islam has to offer.</p>
+		</div>
+		
+		
+	
+		<footer>
+       	<p>
+		<i class="fa fa-globe-asia" aria-hidden="true" style="font-size:24px;color:turquoise;"></i><a style="color:white" href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" target="_blank"> WHO</a>: Responsible for International Public Health <i class="fa fa-heart" style="font-size:24px;color:red;"></i> Uniting the World through better Health.  <i class="fa fa-globe-africa" style="font-size:24px;color:yellow;"></i>  <br>
+		No <i class="fa fa-copyright" style="font-size:20px;color:pink;"></i>!  No Copyrights! Made for everyone and shared with the world. <i class="fa fa-globe" style="font-size:24px;color:lightgreen;"></i></p>	
+		
+	<footer>      
+
+ 
+ <a id="back2Top" title="Back to top" href="#">&#10148;</a>
+
+    
+ <!-- Battery Recharge Animation -->  
+<script>
+function chargebattery() {
+  var a;
+  a = document.getElementById("battery");
+  a.innerHTML = "&#xf244;";
+  setTimeout(function () {
+      a.innerHTML = "&#xf243;";
+    }, 1000);
+  setTimeout(function () {
+      a.innerHTML = "&#xf242;";
+    }, 2000);
+  setTimeout(function () {
+      a.innerHTML = "&#xf241;";
+    }, 3000);
+  setTimeout(function () {
+      a.innerHTML = "&#xf240;";
+    }, 4000);
+}
+chargebattery();
+setInterval(chargebattery, 5000);
+</script>
+
+
+   <!-- Open portal Animation -->  
+
+<script>
+function openportal() {
+  var b;
+  b = document.getElementById("portal");
+  b.innerHTML = "&#xf52a;";
+  setTimeout(function () {
+      b.innerHTML = "&#xf52b;";
+    }, 1000);
+}
+openportal();
+setInterval(openportal, 2000);
+</script>
+   
+   
+   
+ <!-- Collapsing FAQ display -->  
+   
+        <script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+</script>
+
+
+ 
+ 
+        </body>
+      
+
+</html>
