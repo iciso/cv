@@ -1,134 +1,542 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Quiz</title></head>
-<body bgcolor="Pink" text="Blue">
-<script type="text/javascript">
-var correct="Correct!! press ok to get your next question👏";
-var con=confirm("Do you want to play the quiz⁉");
-var c=0;
-var wro="Wrong answer ";
-var q;
-if(con==true){
-for(;;){
-var sub=prompt("Select subject:(press 1)for computer(press 2)for physics and press 3 for Biology");
-if(sub==1){
-alert("In this quiz you will get about 5 questions to answer only press the numbers allotted Best of luck☺");
-q=prompt("Who is sunder Pechai? Options:(press 1)CEO of google,(press 2)CEO of Facebook(Press 3)CEO of Amazon");
-if(q==1){
-alert(correct);c++;}
-else
-alert(wro+"correct answer is 1");
-q=prompt("for(i=1,j=2;i++,j++) is this loop finite press1 for yes and 2 for No");
-if(q==2){
-alert(correct);c++;}
-else
-alert(wro+"correct answer is 1");
-q=prompt("Can length be used for strings? options:1 for yes and 2 for No");
-if(q==2){
-alert(correct);c++;
-}
-else{
-alert(wro+"correct answer is no because in strings length() is used")
-}
-q=prompt("What is the binary value of 7? options press 1 for 111, press 2 for 101 and press 3 for 1101");
-if(q==1){
-alert(correct);c++
-}
-else
-alert(wro+"correct answer is 1 that is 111");
-q=confirm("Did You like this code?");
-if(q==true){
-alert("Thank you😍");c++;
-}
-else
-alert("It okay 😔");
-}
-else if(sub==2){
-alert("In this quiz you will get about 8 questions to answer only press the numbers allotted Best of luck☺");
-q=prompt("v^2=u^2+2g(f+y) is this kinametics equation is dimensionsally correct? Options: press 1 for yes and 2 for No");
-if(q==1){
-alert(correct);c++;
-}
-else
-alert(wro+"correct answer is 1 i.e yes");
-q=prompt("Whose refractive index is more Ruby (press 1), diamond (press2) or water (press3)");
-if(q==2){
-alert(correct);c++;
-}
-else
-alert(wro+"correct answer is 2, diamond");
-q=prompt("Which law of Newton is said to be a priciple law(a law in which other laws are included) Options:press 1 for 1st law, press 2 for 2nd law and press 3 for 3rd law");
-if(q==2){
-alert(correct);c++;
-}
-else
-alert(wro+"2nd law is the principal law");
-q=prompt("Which is fastest Light or Sound? Options:Press 1 for Light or 2 for Sound");
-if(q==1){
-alert(correct);c++
-}
-else
-alert(wro+"lol speed of light is 3*10^8m/s whole speed of sound is just 3000m/s so light is fastest lol!😂");
-q=prompt("What is the actual speed of light? 1)3*10^8m/s 2)2*10^6m/s or 3)3000km/h");
-if(q==1)
-alert(correct);
-else
-alert("wrong correct answer is 1");
-q=confirm("Did you liked this code?☺");
-if(q==true){
-alert("Thank you very Much😍");c++;
-}
-else
-alert("It's okay😔");
-}
-else if(sub==3){
-alert("In this quiz you will get about 5 questions to answer only press the numbers allotted Best of luck☺");
-q=prompt("Name the basic structure of life? Options :press 1 for organ press 2 for tissue or press 3 for cell");
-if(q==3){
-alert(correct);c++;
-}
-else
-alert(wro+"cell is the basic structure of life");
-q=prompt("Can a-sexual reproduction be done by humans? Options press 1 for yes or press 2 for No");
-if(q==1){
-alert(correct);c++;
-}
-else
-alert(wro+"😂 Lol humans do sexual reproduction I think you are not human😂");
-q=prompt("Which form of energy if more powerful ATP or ADP? Options:Press 1 for ATP or press 2 for ADP");
-if(q==1){
-alert(correct);c++;
-}
-else
-alert(wro+"correct answer is ATP");
-q=confirm("Did you like this code?☺");
-if(q=true){
-alert("Thank you very Much😍");c++;
-}
-else
-alert("It's okay 😔");
-}
-q=confirm("Do you again want to play the quiz?");
-if(q==true)
-continue;
-else
-break;
-}
-}
-else
-alert("Okay but like the code😆");
-document.write("Total Numbers of questions:5 <br> ");
-document.write("Correct answers : "+c+"<br>");
-if(c==5)
-document.write("Comments: Wow played awesome all the answers correct!<br>");
-else
-document.write("Comment: Played well<br>");
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYFCT - Interactive Quiz</title>
+    <style>
+        :root {
+            --bg-color: #fdf2f8; /* Soft pink background inspired by your original layout */
+            --text-color: #1e3a8a; /* Deep blue text color */
+            --primary: #ec4899; /* Vibrant pink accent */
+            --primary-hover: #db2777;
+            --modal-bg: #ffffff;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Main Landing Dashboard Card */
+        .dashboard-card {
+            background: var(--modal-bg);
+            max-width: 600px;
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 40px;
+            text-align: center;
+            border: 2px solid #fbcfe8;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(236, 72, 153, 0.2);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #475569;
+            box-shadow: none;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e1;
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Custom Modal Backdrop */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(30, 58, 138, 0.4); /* Blue tinted translucent overlay */
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Custom Alert / Prompt Box Content */
+        .custom-box {
+            background: var(--modal-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+            border-top: 6px solid var(--primary);
+        }
+
+        .modal-overlay.active .custom-box {
+            transform: scale(1);
+        }
+
+        .box-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .option-btn {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 0.95rem;
+            cursor: pointer;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+
+        .option-btn:hover {
+            background-color: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+
+        /* Profile Links & Footers */
+        footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            border-top: 1px dashed #f472b6;
+            padding-top: 20px;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Results Sheet Output Styling */
+        .results-box {
+            display: none;
+            text-align: left;
+            background: #fdf2f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 4px solid var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-card">
+    <h1>KYFCT</h1>
+    <h2>Interactive Knowledge Quiz</h2>
+    
+    <div id="welcomeView">
+        <p>Welcome! This interactive web app upgrades your historic alert loops into custom CSS modal presentation layers while preserving your original logic and structure.</p>
+        <button class="btn" id="initBtn">Play Quiz ⁉</button>
+    </div>
+
+    <div id="gameplayView" style="display: none;">
+        <p>The quiz track is running active. Use the dynamic context overlays to clear your responses!</p>
+    </div>
+
+    <div class="results-box" id="summaryView">
+        <!-- Results document writes populate here dynamically -->
+    </div>
+
+    <footer>
+        <p>If you liked it, please leave a comment about this quiz and suggest new questions! 😊</p>
+        <a href="https://www.sololearn.com/en/profile/19469613" target="_blank">My Sololearn profile!!</a>
+    </footer>
+</div>
+
+<!-- Dynamic Overlay Framework Component -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="custom-box" id="boxContainer">
+        <!-- Inner template dynamically rendered via controller state engine -->
+    </div>
+</div>
+
+<script>
+    // System Constants matching your original logic parameters
+    const txtCorrect = "Correct!! press ok to get your next question👏";
+    const txtWrong = "Wrong answer ";
+    
+    // Core engine state container
+    let scoreCounter = 0;
+    let trackQuestionCount = 0;
+
+    // DOM selectors
+    const modalOverlay = document.getElementById('modalOverlay');
+    const boxContainer = document.getElementById('boxContainer');
+    const welcomeView = document.getElementById('welcomeView');
+    const gameplayView = document.getElementById('gameplayView');
+    const summaryView = document.getElementById('summaryView');
+    const initBtn = document.getElementById('initBtn');
+
+    initBtn.addEventListener('click', () => {
+        showConfirm("Do you want to play the quiz⁉", () => {
+            welcomeView.style.display = 'none';
+            gameplayView.style.display = 'block';
+            scoreCounter = 0;
+            triggerSubjectSelect();
+        }, () => {
+            showAlert("Okay but like the code😆", renderFinalPerformanceDashboard);
+        });
+    });
+
+    // Subject branching core menu selector
+    function triggerSubjectSelect() {
+        showPrompt("Select subject:", [
+            { text: "1) Computer", val: 1 },
+            { text: "2) Physics", val: 2 },
+            { text: "3) Biology", val: 3 }
+        ], (selectedSubject) => {
+            if (selectedSubject === 1) {
+                runComputerTrack();
+            } else if (selectedSubject === 2) {
+                runPhysicsTrack();
+            } else if (selectedSubject === 3) {
+                runBiologyTrack();
+            } else {
+                triggerSubjectSelect(); // Fallback recursion if out of bounds
+            }
+        });
+    }
+
+    /* Track 1: Computer Sciences */
+    function runComputerTrack() {
+        trackQuestionCount = 5;
+        showAlert("In this quiz you will get about 5 questions to answer only press the numbers allotted Best of luck☺", () => {
+            showPrompt("Who is Sundar Pichai?", [
+                { text: "1) CEO of Google", val: 1 },
+                { text: "2) CEO of Facebook", val: 2 },
+                { text: "3) CEO of Amazon", val: 3 }
+            ], (q) => {
+                evaluateAnswer(q, 1, "1", () => {
+                    showPrompt("for(i=1,j=2;i++,j++) is this loop finite?", [
+                        { text: "1) Yes", val: 1 },
+                        { text: "2) No", val: 2 }
+                    ], (q) => {
+                        evaluateAnswer(q, 2, "2 (No)", () => {
+                            showPrompt("Can length be used for strings?", [
+                                { text: "1) Yes", val: 1 },
+                                { text: "2) No", val: 2 }
+                            ], (q) => {
+                                // Preserved your specific logic explanation for question 3
+                                if (q === 2) {
+                                    scoreCounter++;
+                                    showAlert(txtCorrect, compQ4);
+                                } else {
+                                    showAlert(txtWrong + "correct answer is no because in strings length() is used", compQ4);
+                                }
+                            });
+                        });
+                    });
+                });
+            });
+        });
+
+        function compQ4() {
+            showPrompt("What is the binary value of 7?", [
+                { text: "1) 111", val: 1 },
+                { text: "2) 101", val: 2 },
+                { text: "3) 1101", val: 3 }
+            ], (q) => {
+                evaluateAnswer(q, 1, "1 that is 111", () => {
+                    showConfirm("Did You like this code?", () => {
+                        scoreCounter++;
+                        showAlert("Thank you😍", checkLoopContinuance);
+                    }, () => {
+                        showAlert("It okay 😔", checkLoopContinuance);
+                    });
+                });
+            });
+        }
+    }
+
+    /* Track 2: Physics */
+    function runPhysicsTrack() {
+        trackQuestionCount = 8; // Preserved your original variable parameters
+        showAlert("In this quiz you will get about 8 questions to answer only press the numbers allotted Best of luck☺", () => {
+            showPrompt("v^2=u^2+2g(f+y) is this kinematics equation dimensionally correct?", [
+                { text: "1) Yes", val: 1 },
+                { text: "2) No", val: 2 }
+            ], (q) => {
+                evaluateAnswer(q, 1, "1 i.e yes", () => {
+                    showPrompt("Whose refractive index is more?", [
+                        { text: "1) Ruby", val: 1 },
+                        { text: "2) Diamond", val: 2 },
+                        { text: "3) Water", val: 3 }
+                    ], (q) => {
+                        evaluateAnswer(q, 2, "2, diamond", () => {
+                            showPrompt("Which law of Newton is said to be a principal law (a law in which other laws are included)?", [
+                                { text: "1) 1st law", val: 1 },
+                                { text: "2) 2nd law", val: 2 },
+                                { text: "3) 3rd law", val: 3 }
+                            ], (q) => {
+                                evaluateAnswer(q, 2, "2nd law is the principal law", () => {
+                                    showPrompt("Which is fastest, Light or Sound?", [
+                                        { text: "1) Light", val: 1 },
+                                        { text: "2) Sound", val: 2 }
+                                    ], (q) => {
+                                        if (q === 1) {
+                                            scoreCounter++;
+                                            showAlert(txtCorrect, physQ5);
+                                        } else {
+                                            showAlert(txtWrong + "lol speed of light is 3*10^8m/s while speed of sound is just 3000m/s so light is fastest lol!😂", physQ5);
+                                        }
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+
+        function physQ5() {
+            showPrompt("What is the actual speed of light?", [
+                { text: "1) 3*10^8m/s", val: 1 },
+                { text: "2) 2*10^6m/s", val: 2 },
+                { text: "3) 3000km/h", val: 3 }
+            ], (q) => {
+                // Preserving structural variance matching your source file where score wasn't incremented on this item
+                if (q === 1) {
+                    showAlert(txtCorrect, physFinish);
+                } else {
+                    showAlert("wrong correct answer is 1", physFinish);
+                }
+            });
+        }
+
+        function physFinish() {
+            showConfirm("Did you liked this code?☺", () => {
+                scoreCounter++;
+                showAlert("Thank you very Much😍", checkLoopContinuance);
+            }, () => {
+                showAlert("It's okay😔", checkLoopContinuance);
+            });
+        }
+    }
+
+    /* Track 3: Biology */
+    function runBiologyTrack() {
+        trackQuestionCount = 5;
+        showAlert("In this quiz you will get about 5 questions to answer only press the numbers allotted Best of luck☺", () => {
+            showPrompt("Name the basic structure of life?", [
+                { text: "1) Organ", val: 1 },
+                { text: "2) Tissue", val: 2 },
+                { text: "3) Cell", val: 3 }
+            ], (q) => {
+                evaluateAnswer(q, 3, "cell is the basic structure of life", () => {
+                    showPrompt("Can asexual reproduction be done by humans?", [
+                        { text: "1) Yes", val: 1 },
+                        { text: "2) No", val: 2 }
+                    ], (q) => {
+                        // Evaluating verification sequence using your custom feedback
+                        if (q === 1) {
+                            scoreCounter++;
+                            showAlert(txtCorrect, bioQ3);
+                        } else {
+                            showAlert(txtWrong + "😂 Lol humans do sexual reproduction I think you are not human😂", bioQ3);
+                        }
+                    });
+                });
+            });
+        });
+
+        function bioQ3() {
+            showPrompt("Which form of energy is more powerful, ATP or ADP?", [
+                { text: "1) ATP", val: 1 },
+                { text: "2) ADP", val: 2 }
+            ], (q) => {
+                evaluateAnswer(q, 1, "correct answer is ATP", () => {
+                    showConfirm("Did you like this code?☺", () => {
+                        scoreCounter++;
+                        showAlert("Thank you very Much😍", checkLoopContinuance);
+                    }, () => {
+                        showAlert("It's okay 😔", checkLoopContinuance);
+                    });
+                });
+            });
+        }
+    }
+
+    // Process evaluation metrics helper utilities
+    function evaluateAnswer(input, correctAnswer, answerTextString, nextStepCallback) {
+        if (input === correctAnswer) {
+            scoreCounter++;
+            showAlert(txtCorrect, nextStepCallback);
+        } else {
+            showAlert(txtWrong + "correct answer is " + answerTextString, nextStepCallback);
+        }
+    }
+
+    function checkLoopContinuance() {
+        showConfirm("Do you again want to play the quiz?", () => {
+            triggerSubjectSelect();
+        }, () => {
+            renderFinalPerformanceDashboard();
+        });
+    }
+
+    function renderFinalPerformanceDashboard() {
+        gameplayView.style.display = 'none';
+        welcomeView.style.display = 'block';
+        
+        let comment = "Played well";
+        if (scoreCounter === 5) {
+            comment = "Wow played awesome all the answers correct!";
+        }
+
+        summaryView.innerHTML = `
+            <h3>Quiz Session Results:</h3>
+            <p><strong>Total Target Baseline:</strong> 5 Questions Assigned</p>
+            <p><strong>Correct Items Logged:</strong> ${scoreCounter}</p>
+            <p><strong>Comments:</strong> ${comment}</p>
+        `;
+        summaryView.style.display = 'block';
+    }
+
+    /* --- Beautiful UI Overlay Driver Functions replacing native block elements --- */
+    
+    function openModal(contentHtml) {
+        boxContainer.innerHTML = contentHtml;
+        modalOverlay.classList.add('active');
+    }
+
+    function closeModal() {
+        modalOverlay.classList.remove('active');
+    }
+
+    function showAlert(textMessage, onConfirmCallback) {
+        const layoutHtml = `
+            <div class="box-title">Notification</div>
+            <p>${textMessage}</p>
+            <button class="btn" id="modalOkBtn">OK</button>
+        `;
+        openModal(layoutHtml);
+        document.getElementById('modalOkBtn').addEventListener('click', () => {
+            closeModal();
+            if (onConfirmCallback) onConfirmCallback();
+        });
+    }
+
+    function showConfirm(textMessage, yesCallback, noCallback) {
+        const layoutHtml = `
+            <div class="box-title">Confirmation Required</div>
+            <p>${textMessage}</p>
+            <div style="margin-top: 20px;">
+                <button class="btn" id="modalYesBtn">Yes</button>
+                <button class="btn btn-secondary" id="modalNoBtn">No</button>
+            </div>
+        `;
+        openModal(layoutHtml);
+        
+        document.getElementById('modalYesBtn').addEventListener('click', () => {
+            closeModal();
+            if (yesCallback) yesCallback();
+        });
+        document.getElementById('modalNoBtn').addEventListener('click', () => {
+            closeModal();
+            if (noCallback) noCallback();
+        });
+    }
+
+    function showPrompt(titlePrompt, dynamicOptionsArray, selectionCallback) {
+        let optionsButtonString = "";
+        dynamicOptionsArray.forEach(option => {
+            optionsButtonString += `<button class="option-btn" data-value="${option.val}">${option.text}</button>`;
+        });
+
+        const layoutHtml = `
+            <div class="box-title">${titlePrompt}</div>
+            <div class="options-group">
+                ${optionsButtonString}
+            </div>
+        `;
+        openModal(layoutHtml);
+
+        const targetButtons = boxContainer.querySelectorAll('.option-btn');
+        targetButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const numericChoice = parseInt(e.currentTarget.getAttribute('data-value'), 10);
+                closeModal();
+                if (selectionCallback) selectionCallback(numericChoice);
+            });
+        });
+    }
 </script>
-<br>
-<h3>Thank you</h3> If you liked it then please like it and leave a comment about this quiz and also suggest some new questions and subjects😊
-<br><br>
-<h4>Developed for</h4><h1>KYFCT</h1>
-<br><h4>Get connected with me!</h4> <br><br>
-<a href="https://www.sololearn.com/en/profile/19469613" alt="SL Profile of Rafique" >My Sololearn profile!!</a>
+
 </body>
 </html>
