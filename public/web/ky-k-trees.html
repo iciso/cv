@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<style id="webmakerstyle">
+body {
+  font-family: Calibri, Segoe, "Segoe UI", "Gill Sans", "Gill Sans MT",
+    sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+/* It's supposed to look like a tree diagram */
+.tree,
+.tree ul,
+.tree li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.tree {
+  margin: 0 0 1em;
+  text-align: center;
+}
+.tree,
+.tree ul {
+  display: table;
+}
+.tree ul {
+  width: 100%;
+}
+.tree li {
+  display: table-cell;
+  padding: 0.5em 0;
+  vertical-align: top;
+}
+/* _________ */
+.tree li:before {
+  outline: solid 1px #666;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.tree li:first-child:before {
+  left: 50%;
+}
+.tree li:last-child:before {
+  right: 50%;
+}
+
+.tree code,
+.tree span {
+  border: solid 0.1em #666;
+  border-radius: 0.2em;
+  display: inline-block;
+  margin: 0 0.2em 0.5em;
+  padding: 0.2em 0.5em;
+  position: relative;
+}
+/* If the tree represents DOM structure */
+.tree code {
+  font-family: monaco, Consolas, "Lucida Console", monospace;
+}
+
+/* | */
+.tree ul:before,
+.tree code:before,
+.tree span:before {
+  outline: solid 1px #666;
+  content: "";
+  height: 0.5em;
+  left: 50%;
+  position: absolute;
+}
+.tree ul:before {
+  top: -0.5em;
+}
+.tree code:before,
+.tree span:before {
+  top: -0.55em;
+}
+
+/* The root node doesn't connect upwards */
+.tree > li {
+  margin-top: 0;
+}
+.tree > li:before,
+.tree > li:after,
+.tree > li > code:before,
+.tree > li > span:before {
+  outline: none;
+}
+
+
+
+
+</style>
+</head>
+<body>
+  <h1 style="font-size: 6vw; background: blue; color: white;">🌳The Kattoo Family Trees: Page 1🌲</h1>
+<figure>
+  
+
+
+<p>Insha Allah, إِنْ شَاءَ ٱللّٰهُ Do suggest changes and additions by calling or WhatsApp to +91 7558845528 especially substituting the ? marks or the word "someone".  Jazack Allah Khayir جَزَاكَ ٱللَّٰهُ خَيْرًا</p> 
+<p>&nbsp;</p> 
+
+<figcaption><b>Kattoo Family Chart No. I: 1. Asad Khan and his five children</b></figcaption>
+  <ul class="tree">
+    <li><code>1. Asad Khan</code>
+      <ul>
+        <li><code>2. Abdul Rahman Kattoo</code></li>
+        <li><code>3. Haji Ismail Kattoo</code></li>
+        <li><code>4. Ebrahim Kattoo</code></li>
+        <li><code>5. Haji Essa Kattoo</code></li>
+        <li><code>6. Fathima Asad Khan ❤️ Hassan Yamani</code></li>
+      </ul>
+    </li>
+</ul>
+
+  <figcaption>Kattoo Family Chart No. II: 1. Asad Khan, his children and the GenNext</figcaption>
+  <ul class="tree">
+    <li><code>Asad Khan</code>
+      <ul>
+        <li><code>Abdul Rahman Kattoo</code>
+        <ul>
+            <li><code>Abdul Kader Kattoo ❤️ Fathima Bivi</code></li>
+            <li><code>Abdul Sattar Kattoo</code></li>
+            <li><code>Abdul Rahim Kattoo ❤️ Zohara Bivi</code></li>
+            <li><code>Mohamed Kattoo</code></li>
+            <li><code>Zainaba Bivi ❤️ Moosa Kattoo</code></li>
+          </ul>
+       </li><li><code>Haji Ismail Kattoo</code>
+      <ul>
+            <li><code>Haleema Bivi D</code></li>
+            <li><code>Fathima Bivi ❤️ Abdul Kader Kattoo</code></li>
+            <li><code>Bisha Bivi D</code></li>
+            <li><code>Ameena Bivi</code></li>
+            <li><code>Moosa Kattoo ❤️ Zainab Bivi</code></li>
+            <li><code>Sulaiman Kattoo</code></li>
+            <li><code>Zainab Bivi D</code></li>
+          </ul>
+        </li><li><code>Ebrahim Kattoo</code>
+    <ul>
+            <li><code>Hawa Bivi</code></li>
+            <li><code>Zohara Bivi ❤️ Abdul Raheem Kattoo</code></li>
+          </ul>
+        </li><li><code>Haji Essa Kattoo</code>
+          <ul>
+            <li><code>Hashim Kattoo ❤️ Majan Bivi</code></li>
+            <li><code>Ebrahim Kattoo ❤️ Ayesha Beevi</code></li>
+          </ul>
+      </li></ul>
+     </li>
+    </ul>
+
+<figcaption>Kattoo Family Chart No. III: 2. Abdul Rahman Kattoo's descendants</figcaption>
+  <ul class="tree">
+            <li><code>2. Abdul Rahman Kattoo</code>
+ <ul>
+            <li><code>7. Abdul Kader Kattoo ❤️ Fathima Bivi</code>
+<ul>
+                        <li><code>Ayesha Bivi ❤️ Ibrahim Kattoo</code>
+<ul>
+            <li><code>For children see 🔭 Haji Essa Kattoo</code></li>
+</ul>
+
+            </li><li><code>Rabiya Bivi ❤️ Abdul Kader Yamani</code>
+<ul>
+            <li><code>Zainaba Beevi ❤️ Mohamed Essa</code>
+        <ul>
+            <li><code>For children see 🔭 Haji Essa Kattoo</code>          </li>
+      </ul>
+       </li><li><code>Abdullah Yamani-Anwar Firoze</code>
+<ul>
+            <li><code>Did not marry, left the country</code>          </li>
+      </ul>
+            </li><li><code>Mohamed Jaffer</code></li>
+            <li><code>Hameeda Beevi ❤️ Abdul Raheem</code></li>
+            <li><code>Adhila Beevi ❤️ Haque</code></li>
+            <li><code>Lathifa Banu ❤️ Sheikpeer</code></li>
+            <li><code>Noorjehan ❤️ Amanullah</code></li>
+</ul>
+</li><li><code>A. K. Kattoo ❤️ Sara Bivi</code>
+<ul>       
+            <li><code>Safia ❤️ Abdul Wahab</code></li>
+<li><code>A.K. Amin Khattu ❤️ Shakila</code></li>
+</ul>
+            </li><li><code>Ashiya Bivi ❤️ Haji Ismail bin Haji Haroon</code>
+<ul>              
+<li><code>Abdul Ghani Khan 1st married ❤️ Ameena;</code>
+  <ul>
+<li><code>Sabeena ❤️ Nazrudeen</code>
+  <ul>
+    <li><code>Afsal</code></li>    
+    <li><code>Rabia</code></li>   
+    <li><code>3rd child of Sabeena</code></li>  
+   </ul>  
+</li> 
+  <li><code>Haseena ❤️ Haris</code>
+    <ul>
+      <li><code>Harshitha ❤️ someone <!-- Souhaib  --></code>
+        <ul>
+          <li><code>Mohamed Zidan</code></li>      
+         </ul>  
+      
+      </li>    
+      <li><code>Harshath</code></li>   
+     </ul>  
+  </li> 
+
+ <li><code>Ashique ❤️ Anida</code></li>      
+ <li><code>Amjad ❤️ Babitha</code>
+  <ul>
+    <li><code>Arfan Khan</code></li>    
+    <li><code>Imran Khan</code></li>   
+   </ul>  
+</li>
+
+</ul>  
+</li>
+
+
+<li><code>Abdul Ghani Khan 2nd married ❤️ Shamshad</code>
+  <ul>
+ <li><code>Sihas ❤️ Sona</code>
+  <ul>
+    <li><code>Sana</code></li>    
+    <li><code>Siyana</code></li>   
+   </ul>  
+</li>    
+ <li><code>Rihas ❤️ someone <!-- Rehana  --></code>
+  <ul>
+    <li><code>1st child of Rihas</code></li>    
+    <li><code>2nd child of Rihas</code></li>   
+   </ul>  
+</li>   
+</ul>  
+</li>
+</li>
+
+
+
+</ul>
+</li>
+</ul>
+</li>
+            <li><code>8. Abdul Sattar Kattoo</code></li>
+            <li><code>9. Abdul Rahim Kattoo ❤️ Zohara Bivi</code></li>
+            <li><code>10. Md. Kattoo</code></li>
+            <li><code>11. Zainaba Bivi ❤️ Moosa Kattoo</code></li>
+          </ul>
+   <!--   </li></ul> -->
+
+ <figcaption>Kattoo Family Chart No. IV: 3. Haji Ismail Kattoo and his Next Generation</figcaption>
+  <ul class="tree">
+        <li><code>3. Haji Ismail Kattoo</code>
+ <ul>
+            <li><code>Haleema Bivi</code>
+<ul>
+            <li><code>Saly Mohamed</code></li>
+</ul>
+         </li><li><code>Fathima Bivi ❤️ Abdul Kader Kattoo</code>
+<ul>
+            <li><code>For children see 👀 Abdul Kader Kattoo ❤️ Fathima Bivi</code></li>
+</ul>
+            </li><li><code>Bisha Bivi D</code>
+<ul>
+            <li><code>Majan Bivi ❤️ Hashim Kattoo</code>
+<ul>
+            <li><code>For children see 👀 Hashim Kattoo ❤️ Majan Bivi</code></li>
+</ul>
+            </li><li><code>Hasan Miya</code></li>
+</ul>
+            </li><li><code>Ameena Bivi</code>
+<ul>
+<li><code>Begum Bivi</code></li>
+<li><code>Syed Mia</code>
+<ul>
+            <li><code>Zainaba Ammajan ❤️ Peter</code></li>
+            <li><code>Basha</code></li>
+            <li><code>Rabi ❤️ Bade Mia</code>
+       <ul>
+            <li><code>Naushad accident drowned in Punnamada lake</code></li>
+            <li><code>Asharaf Khan ❤️ ?</code>
+         <ul>
+            <li><code>Shereena ❤️ Sheik Ajmal Shaw</code>
+<ul>
+            <li><code>Manha Sheik Ajmal Shaw</code></li>
+            <li><code>Hamdan Sheik Ajmal Shaw</code></li>
+</ul>  
+  </li>
+            <li><code>Shami Asharaff Khan ❤️ Shaji</code>
+      <ul>
+            <li><code>Afrin Fathima</code></li>
+</ul>
+           </li>
+            <li><code>Shamne ❤️ Shamnad</code></li>
+            <li><code>Sharu Khan</code></li>
+</ul>          
+         </li>
+</ul>                    
+  </li>
+           </ul>
+</li><li><code>Shaijadi Bivi ❤️ Haji Hussain</code>
+<ul>
+            <li><code>Noorjahan ❤️ Abdul Khader Khan</code>
+<ul>
+            <li><code>Shakeela ❤️ Jamal</code>
+<ul>
+            <li><code>Moosa ❤️ Afzana</code></li>
+            <li><code>Mohamed Naseem</code></li>
+</ul>  
+</li>
+            <li><code>Ameer ❤️ Shahina</code>
+<ul>
+            <li><code>Raashid Ameer ❤️ Nafeesa</code></li>
+            <li><code>Reshma Ameer ❤️ Mehabi ❤️ Buskar</code></li>
+</ul>  
+</li>
+            <li><code>Akbar ❤️ Afthab</code>
+<ul>
+          <li><code>Dr Sukaina ❤️ Dr Sameer</code></li>  
+          <li><code>Sameena</code></li>
+            <li><code>Suman</code></li>
+</ul>  
+</li>
+            <li><code>Shameem ❤️ Musthafa</code>
+    <ul>
+          <li><code>Shabnam ❤️ Adam Navas</code>
+    <ul>
+          <li><code>Shahnaz</code></li>  
+          <li><code>Sheik Fareed</code></li>
+</ul>  
+</li>  
+          <li><code>Sithara ❤️ Sheik Meeran</code>
+            <ul>
+          <li><code>Muhammed Bilal</code></li>  
+          <li><code>Muhammed Zayed</code></li>
+</ul>   
+      </li>
+</ul>  
+</li>
+</ul>  
+
+</li>
+            <li><code>Rahathjaan ❤️ S.M. Ebrahim</code>
+<ul>
+            <li><code>Saira Banu ❤️ Sayed Usman; ❤️ Louis Kanes</code>
+ <ul>
+          <li><code>1 c of Saira</code></li>  
+          <li><code>2 c of Saira</code></li>
+</ul>   
+</li>
+            <li><code>Babu or Basheer Ahamed ❤️ Haseena</code>
+               <ul>
+          <li><code>1 c of Basheer</code></li>  
+          <li><code>2 c of Basheer</code></li>
+</ul>   
+  </li>
+            <li><code>Raju or Ibrahim ❤️ Parveen</code>
+               <ul>
+          <li><code>1 c of Ibrahim</code></li>  
+          <li><code>2 c of Ibrahim</code></li>
+</ul>   
+  </li>
+            <li><code>Biju or Erah Anwar ❤️ Ashika Shafi</code>
+               <ul>
+          <li><code>1 c of Anwar</code></li>  
+          <li><code>2 c of Anwar</code></li>
+</ul>   
+  </li>
+</ul>  
+</li>
+            <li><code>Zaithoon ❤️ Syed</code>
+<ul>
+            <li><code>Syed Asif ❤️ Sayana</code>
+     <ul>
+      <li><code>Dr. Afra Asif</code></li>
+      <li><code>Alma Asif</code></li>      
+      <li><code>Afan Asif</code></li>    
+</ul>              
+  </li>
+            <li><code>Parveen ❤️ Raju or Ibrahim</code>
+              <ul>
+                <li><code>1 c of Ibrahim</code></li>  
+                <li><code>2 c of Ibrahim</code></li>
+      </ul>   
+            
+            </li>
+</ul> 
+</li>
+            <li><code>Ameen ❤️ Saleena</code>
+<ul>
+            <li><code>Aslam Yamani ❤️ Jishu</code>
+              <ul>
+                <li><code>Hussain</code></li>  
+                <li><code>Hazhart Mohammed</code></li>
+      </ul>       
+            
+            </li>
+            <li><code>Azeem Yamani❤️ ?</code></li>
+</ul>  
+</li>
+</ul>
+</li><li><code>Khulsum Bivi</code></li>
+<li><code>Salahuddin</code></li>
+</ul>
+            </li><li><code>Moosa Kattoo ❤️ Zainab Bivi</code></li>
+            <li><code>Sulaiman Kattoo</code></li>
+            <li><code>Zainab Bivi D</code></li>
+      </ul>
+  </li></ul>
+
+
+<figcaption>Kattoo Family Chart No. V: 4. Ebrahim Kattoo and his Next Generation</figcaption>
+
+<h2 style="font-size: 6vw; background: blue; color: white;">🌳The Kattoo Family Trees: 2🌲</h2>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p> 
+
+  <ul class="tree">
+<li><code>4. Ebrahim Kattoo</code>
+    <ul>
+            <li><code>Hawa Bivi</code>
+    <ul>
+            <li><code>Abdul Lateef or Adha Bhai</code></li>
+
+</ul>
+            </li><li><code>Zohara Bivi ❤️ Abdul Raheem Kattoo</code>
+<ul>
+<li><code>Sara Bivi ❤️ A. K. Kattoo</code>
+<ul>
+<li><code>Safia ❤️ A Abdul Wahab</code>
+<ul>
+<li><code>Rizwan ❤️ Amina</code>
+<ul>
+            <li><code>Rashid Ahamed ❤️ Hamera Abrar</code></li>
+            <li><code>Rashad Ahamed</code></li>
+</ul>
+
+</li><li><code>Riaz or Bobby ❤️ Reema</code>
+<ul>
+            <li><code>Saran</code></li>
+            <li><code>Vandana</code></li>
+</ul>
+</li><li><code>Remiza ❤️ Anwar</code>
+<ul>
+            <li><code>Adhil</code></li>
+            <li><code>Roshan</code></li>
+</ul>
+</li></ul>
+</li><li><code>A. K. Ameen Khattu ❤️ Shakkeela</code>
+<ul>
+            <li><code>Shabeer Ameen ❤️ Haseena</code>
+            
+              <ul>
+                <li><code>Sufyan</code></li>
+                <li><code>Raihan</code></li>
+    </ul>
+            
+            </li>
+            <li><code>Shakir ❤️ <!-- first someone  -->Tabasum</code></li>
+            <li><code>Dr. Rubeena ❤️ Remjith Habeebjan</code>
+            
+              <ul>
+                <li><code>Simrah Ali</code></li>
+                <li><code> Inarah Mariyam Ali</code></li>
+                <li><code>Niam Ali</code></li>
+    </ul>
+            
+            </li>
+</ul>
+</li></ul>
+</li><li><code>Usman Kattoo ❤️ Ayisha Bivi</code>
+<ul>
+            <li><code>Abdul Rahim or Naushad ❤️ Mumthaj or Thaju</code>
+<ul>
+            <li><code>Akthar ❤️ Ruksana</code>
+<ul>
+          <li><code>Zoya</code></li>
+</ul>
+            </li><li><code>Zameer ❤️ Dr. Muneera D/o Dr. Haseena</code>
+<ul>
+           
+            <li><code>Imran</code></li>
+</ul>
+          </li><li><code>Dr. Reshma</code></li>
+</ul>
+
+            </li><li><code>Khadeeja or Naseema ❤️ Syed Hussain or Raja</code>
+<ul>
+            <li><code>Riaz Syed Hussain ❤️ Raheena</code>
+<ul>
+            <li><code>Rayan Riaz Syed Ahmed</code></li>
+            <li><code>Ruby Syeda</code></li>
+</ul>
+            </li><li><code>Afsal Syed Hussain ❤️ Safia</code>
+<ul>
+            <li><code>Eeman Afsal Syed</code></li>
+            <li><code>Aman Afsal Syed</code></li>         
+</ul>
+          </li><li><code>Sayana ❤️ Asif Syed</code>
+<ul>
+            <li><code>Dr. Afra Asif</code></li>
+            <li><code>Alma Asif</code></li>      
+            <li><code>Afan Asif</code></li>     
+</ul>
+</li></ul>
+            </li><li><code>Abdul Rasheed ❤️ Zohara or Thajida</code>
+<ul>
+            <li><code>Rameez ❤️ Nishima</code>
+<ul>
+            <li><code>Ayaan</code></li>
+            <li><code>Ayara</code></li>         
+</ul>
+            </li><li><code>Rizwan ❤️ Karishma</code></li>
+</ul>
+            </li><li><code>Aslam Md Osman ❤️ Rehna</code>
+<ul>
+            <li><code>Farhana ❤️ Ejaz</code>
+    <ul>
+                
+                <li><code>Ruman</code></li>
+              
+    </ul>            
+            
+            
+            </li>
+            <li><code>Nihal</code></li>
+          
+</ul>
+            </li><li><code>Meharunissa ❤️ Habeebuddin</code>
+<ul>
+  <li><code>Ejaz ❤️ Farhana</code>
+    <ul>
+                
+      <li><code>Ruman</code></li>
+    
+</ul>            
+  
+  </li>
+            <li><code>Saifudeen Khan ❤️ Fasiha</code>
+    <ul>
+                
+                <li><code>Zara</code></li>
+              
+    </ul>            
+            
+            </li>
+          <li><code>Sihabudeen</code></li>
+</ul>
+ </li></ul>
+</li></ul>
+</li></ul>
+
+</li></ul>
+
+
+<figcaption>Kattoo Family Chart No. VI: 5. Haji Essa Kattoo and his Next Generations</figcaption>
+  <ul class="tree">
+
+
+
+
+<li><code>5. Haji Essa Kattoo</code>
+          <ul>
+            <li><code>Hashim Kattoo ❤️ Majan Bivi</code>
+  <ul>
+            <li><code>Piyari ❤️ Usman Yamani or Magistrate</code></li>
+            <li><code>Bivijaan ❤️ H. K. Mohamed Khan</code>
+<ul>
+            <li><code>Rahim Khan ❤️ Mumtaz, then Shakila Rahim</code>
+<ul>
+            <li><code>Reshma ❤️ Harshad</code></li>
+            <li><code>Feroz Khan ❤️ Insha Allah in Jan 24</code></li>
+</ul>
+</li></ul>
+            </li><li><code>Dawood</code>
+<ul>
+            <li><code>Mumtaz ❤️ Rahim and divorced</code></li>
+            <li><code>Shahanaz Khan ❤️ Kather Khan</code>
+<ul>
+            <li><code>Amreen Khan</code>
+<ul>
+              <li><code>Child of Amreen named ?Kenny</code></li>      
+</ul>
+            </li>
+            <li><code>Afreen Khan</code></li>
+</ul>
+            </li><li><code>Taj or Munna ❤️ someone</code></li>
+             <li><code>Papa ❤️ someone</code></li>
+</ul>
+            </li><li><code>Rukumma ❤️ someone from Chennai, who died in Khader Parambu,  No children</code></li>
+            <li><code>Md. Ayub Kattoo ❤️ Wahida</code>
+<ul>
+                <li><code>Faizal Ayub Kattoo ❤️ Nishana </code>
+                
+<ul>
+                    <li><code>Eshana Faizal</code></li>
+                    <li><code>Faiha Faizal</code></li>
+                    
+</ul>                
+                
+                </li>
+                <li><code>Rehana Ayub Kattoo ❤️ ?</code>
+<ul>
+                    <li><code>Arbas</code></li>
+                    <li><code>Azmi</code></li>
+                    
+</ul>                
+                
+                </li>
+              
+</ul>    
+            
+            </li>
+            <li><code>Mariyam Bivi ❤️ Hussain or Bapji</code>
+<ul>
+            <li><code>Abdul Khader Jailani or Munna ❤️ Kulsum Beevi</code>
+<ul>
+            <li><code>Muneer ❤️ Hasina Hanif, then someone</code></li>
+            <li><code>Monisha ❤️ Annas Gaffar</code></li>
+            <li><code>Muneera ❤️ someone</code></li>
+</ul>
+            </li><li><code>Fathima Begum or Shamshad ❤️ Imamudeen Khan</code>
+<ul>
+            <li><code>Khamerudeen Khan ❤️ Nisheedha</code></li>
+            <li><code>Mujibudeen Khan ❤️ Numeedha</code></li>
+            <li><code>Safarudeen Khan</code></li>
+</ul>
+</li></ul>
+            </li><li><code>Kasim Kattoo ❤️ Sarumma </code></li>
+</ul>
+            </li><li><code>Ebrahim Kattoo ❤️ Ayesha Beevi</code>
+          <ul>
+            <li><code>Mohamed Essa ❤️ Zainaba Beevi</code>
+ <ul>
+            <li><code>Abdul Hameed ❤️ Fareeda then ❤️ Meher Sayed</code>
+<ul>
+            <li><code>Ashfaque Hameed ❤️ Farzana Perween</code>
+<ul>
+            <li><code>Ruqaya</code></li>      
+</ul>
+            </li><li><code>Afroz Hameed divorced</code></li>
+</ul>
+
+            </li><li><code>Shamshad Begum ❤️ Mohamed Hashim</code>
+<ul>
+            <li><code>Mohamed Nadeem ❤️ Pooja</code>
+
+              <ul>
+                <li><code>Naira</code></li>      
+    </ul> 
+            
+            </li>
+            <li><code>Mohamed Waseem ❤️ Ayesha</code></li>
+</ul>
+            </li><li><code>Mohamed Rafique ❤️ Feroza M. I.</code>
+<ul>
+            <li><code>Ayesha Nusrat ❤️ Mohamed Waseem</code></li>
+            <li><code>Akram Naeem</code></li>
+</ul>
+            </li><li><code>Zahida Begum ❤️ Shafique R. Kokan</code>
+<ul>
+            <li><code>Tabassum Fathima ❤️ Imthiaz Ahamed</code>
+<ul>
+            <li><code>Zayn</code></li>
+            <li><code>Zara</code></li>
+            
+</ul>
+            </li><li><code>Junaid Kokan</code></li>
+</ul>
+</li></ul>
+            </li><li><code>Mohamed Yusuf did not marry.</code></li>
+            <li><code>Mohamed Jaffer ❤️ Beema</code>
+ <ul>
+            <li><code>Haris M. J. ❤️ Sherin</code>
+<ul>
+         <li><code>Hanna Raeeza ❤️ Nikhil </code></li>
+            <li><code>Safa Aman</code></li>
+ </ul>
+            </li><li><code>Harshad M. J. ❤️ Roshini</code>
+<ul>
+         <li><code>Nihal</code></li>
+            <li><code>Bobby</code></li>
+          <li><code>Naira</code></li>
+ </ul>
+            </li><li><code>Hasina M. J. ❤️ Aijaz Khan</code>
+<ul>
+         <li><code>Hiba</code></li>
+ </ul>
+
+            </li><li><code>Haroon M. J. died young in an accident</code></li>
+</ul>
+            </li><li><code>Khairunissa ❤️ Ibrahim Sherif</code>
+<ul>
+            <li><code>Imthiaz M. I. ❤️ Shahida</code>
+<ul>
+  <li><code>Ashiyana Imthiaz ❤️ Ejaz</code>
+<ul>
+  <li><code>Innaya</code></li>
+            <li><code>Ayath</code></li>
+ </ul>
+            </li><li><code>Ashika</code></li>
+ </ul>
+            </li><li><code>Feroza M. I. ❤️ Mohamed Rafique</code>
+              <ul>
+                <li><code>Ayesha Nusrat ❤️ Mohamed Waseem</code></li>
+                <li><code>Akram Naeem</code></li>
+    </ul>
+            
+            </li>
+            <li><code>Faizal M. I. ❤️ Saira</code>
+<ul>
+           <li><code>Nihal name changed to Irfan</code></li>
+ </ul>
+            </li><li><code>Fouzya M. I. ❤️ Ansar Hussain</code>
+<ul>
+         <li><code>Afreen Ansar Hussain❤️ Nizam</code>
+<ul>
+           <li><code>Narmin Nizam</code></li>
+ </ul>
+            </li><li><code>Afkar Ansar Hussain</code></li>
+ </ul>
+
+</li></ul>
+            </li><li><code>Zulaika Beevi ❤️ Sirajudeen</code>
+<ul>
+            <li><code>Gulshan Sihara ❤️ Feroze Khan</code>
+<ul>
+         <li><code>Haniya</code></li>
+            
+ </ul>
+</li></ul>
+</li></ul>
+
+     </li></ul>
+    </li></ul>
+        <!-- saved from url which is not functional 
+<p>Visit the Kattoo Family website</p> 
+<p><a href="http://kyft.club/">http://kyft.club/</a></p>
+
+
+
+
+
+
+<p>View the Yamani Family Tree at:</p>
+<p><a href="https://kyft.club/wp-content/uploads/2020/06/ytree.html">https://kyft.club/wp-content/uploads/2020/06/ytree.html</a></p>
+<br>
+<p>View the Kattoo Family Tree at:</p> 
+<p><a href="https://kyft.club/wp-content/uploads/2020/06/ftree.html">https://kyft.club/wp-content/uploads/2020/06/ftree.html</a></p>
+<br>
+<p>Visit the Kattoo Family website</p> 
+<p><a href="http://kyft.club/">http://kyft.club/</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+-->
+<p>&nbsp;</p> 
+<p>&nbsp;</p> 
+<p>Insha Allah, إِنْ شَاءَ ٱللّٰهُ Do suggest changes and additions by calling or WhatsApp to +91 7558845528 especially substituting the ? marks or the word "someone".  Jazack Allah Khayir جَزَاكَ ٱللَّٰهُ خَيْرًا</p> 
+<p>&nbsp;</p> 
+<p>&nbsp;</p> 
+</li></ul>
+
+</figure>
+
+<script>
+document.getElementsByTagName("h1")[0].style.fontSize = "6vw";
+document.getElementsByTagName("h1")[0].style.background = "blue";
+document.getElementsByTagName("h1")[0].style.color = "white";
+document.getElementsByTagName("h1")[0].style.align = "center";
+
+document.getElementsByTagName("h2")[0].style.fontSize = "6vw";
+document.getElementsByTagName("h2")[0].style.background = "blue";
+document.getElementsByTagName("h2")[0].style.color = "white";
+document.getElementsByTagName("h2")[0].style.align = "center";
+</script>
+
+</body></html>
