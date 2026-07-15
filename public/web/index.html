@@ -49,7 +49,7 @@
       font-size: 0.95em;
     }
     .system { color: #4ade80; }
-    .me { color: #60a5fa; }
+    .me { color: #60a5fa; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -64,6 +64,8 @@
   const statusEl = document.getElementById("status");
   const inputEl = document.getElementById("input");
 
+  let myHandle = "User-" + Math.floor(1000 + Math.random() * 9000);
+
   function log(message, type = "") {
     const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     let cls = "";
@@ -75,42 +77,39 @@
   }
 
   log("Bismillah! السلام عليكم ورحمة الله وبركاته - KY Chat", "system");
+  log("Your handle: " + myHandle, "system");
 
-  // More reliable public WebSocket echo server
   const wsUrl = "wss://ws.ifelse.io/";
   let ws = new WebSocket(wsUrl);
 
   ws.onopen = () => {
-    statusEl.textContent = "✅ Connected! Start chatting...";
+    statusEl.textContent = "✅ Connected! Chat with others in the same room.";
     statusEl.style.color = "#4ade80";
-    log("Successfully connected to KY Chat.", "system");
+    log("Connection successful.", "system");
   };
 
   ws.onmessage = (event) => {
     try {
       const data = JSON.parse(event.data);
-      if (data.type === "message") {
+      if (data.type === "message" && data.handle !== myHandle) {
         log(data.handle + ": " + data.text);
       }
     } catch(e) {
+      // Fallback for non-JSON messages
       log("Received: " + event.data);
     }
   };
 
-  ws.onerror = (err) => {
-    console.error(err);
-    statusEl.innerHTML = "❌ Connection failed.<br>Try refreshing or check your internet.";
+  ws.onerror = () => {
+    statusEl.innerHTML = "❌ Connection error.<br>Please refresh the page.";
     statusEl.style.color = "#f87171";
   };
 
   ws.onclose = () => {
-    statusEl.innerHTML = "⚠️ Disconnected. Refresh the page to reconnect.";
+    statusEl.innerHTML = "⚠️ Disconnected. Refresh to reconnect.";
   };
 
-  function getHandle() {
-    return "User-" + Math.floor(1000 + Math.random() * 9000);
-  }
-
+  // Send message
   inputEl.addEventListener("keydown", function(ev) {
     if (ev.key === "Enter") {
       ev.preventDefault();
@@ -119,18 +118,20 @@
 
       const payload = JSON.stringify({
         type: "message",
-        handle: getHandle(),
+        handle: myHandle,
         text: msg
       });
 
       ws.send(payload);
+      
+      // Show our message locally
       log("You: " + msg, "me");
       
       inputEl.innerText = "";
     }
   });
 
-  setTimeout(() => inputEl.focus(), 500);
+  setTimeout(() => inputEl.focus(), 300);
 </script>
 </body>
 </html>
