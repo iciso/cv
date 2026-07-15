@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NCD Risk Estimator · Daily Activity &amp; Exercise</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: linear-gradient(145deg, #f0f6fc 0%, #e3edf5 100%);
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      max-width: 820px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 48px;
+      box-shadow: 0 25px 60px -12px rgba(0, 30, 50, 0.25), 0 4px 20px rgba(0, 0, 0, 0.04);
+      padding: 2.4rem 2.4rem 2.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      transition: 0.3s;
+    }
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0a2a3f;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      border-bottom: 3px solid #d0dfeb;
+      padding-bottom: 0.8rem;
+      margin-bottom: 1.8rem;
+    }
+    h1 .badge {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #2a6b8a;
+      background: #dce8f2;
+      padding: 0.15rem 1.2rem;
+      border-radius: 60px;
+      letter-spacing: 0.3px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem 2rem;
+      background: #f7faff;
+      padding: 1.6rem 2rem;
+      border-radius: 32px;
+      margin-bottom: 1.8rem;
+      border: 1px solid #e4eef7;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .form-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1a4058;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .form-group label .hint {
+      font-weight: 400;
+      color: #6a8ba0;
+      font-size: 0.75rem;
+    }
+    .form-group input {
+      padding: 0.65rem 1rem;
+      border: 2px solid #d2dfea;
+      border-radius: 60px;
+      font-size: 1rem;
+      font-weight: 500;
+      background: white;
+      transition: 0.15s;
+      width: 100%;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #1f7a9e;
+      box-shadow: 0 0 0 4px rgba(31, 122, 158, 0.12);
+    }
+    .form-group input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    .form-group input[type="number"]::-webkit-outer-spin-button,
+    .form-group input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .btn-estimate {
+      background: linear-gradient(145deg, #1a6a8e, #135573);
+      border: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 0.8rem 2.8rem;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 6px 18px rgba(26, 106, 142, 0.25);
+      letter-spacing: 0.5px;
+      width: fit-content;
+      grid-column: span 2;
+      justify-self: center;
+    }
+    .btn-estimate:hover {
+      transform: scale(0.97);
+      box-shadow: 0 4px 12px rgba(26, 106, 142, 0.35);
+    }
+    .btn-estimate:active {
+      transform: scale(0.93);
+    }
+    .stats-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2.5rem;
+      background: #ecf4fa;
+      border-radius: 32px;
+      padding: 1rem 2rem;
+      margin: 1.2rem 0 1.8rem;
+      align-items: center;
+      border: 1px solid #d8e6f0;
+    }
+    .stats-panel .stat-item {
+      font-weight: 500;
+      color: #1a4058;
+      font-size: 0.95rem;
+    }
+    .stats-panel .stat-item strong {
+      font-weight: 700;
+      color: #0a2a3f;
+      background: white;
+      padding: 0.05rem 0.8rem;
+      border-radius: 40px;
+    }
+    .bars-container {
+      margin: 1.5rem 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .bar-label {
+      font-weight: 600;
+      width: 80px;
+      color: #1a3f57;
+      font-size: 0.9rem;
+      text-transform: capitalize;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .bar-label .icon {
+      font-size: 1.1rem;
+    }
+    .bar-track {
+      flex: 1;
+      background: #e7eef5;
+      height: 30px;
+      border-radius: 40px;
+      overflow: hidden;
+      position: relative;
+      min-width: 120px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
+    }
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 40px;
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .bar-fill.work { background: linear-gradient(90deg, #2a6f97, #3d8bb3); }
+    .bar-fill.eat { background: linear-gradient(90deg, #d17c3b, #e8944a); }
+    .bar-fill.sleep { background: linear-gradient(90deg, #5f6f7a, #7f8f9a); }
+    .bar-fill.exercise { background: linear-gradient(90deg, #279b6b, #3bbf85); }
+
+    .ncd-message {
+      background: #f0f7fe;
+      border-left: 6px solid #1f7a9e;
+      padding: 1.4rem 2rem;
+      border-radius: 24px;
+      margin-top: 1.8rem;
+      font-size: 0.98rem;
+      color: #0f3346;
+      line-height: 1.6;
+      border: 1px solid #dce8f2;
+      transition: 0.3s;
+    }
+    .ncd-message .msg-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #0a3f5a;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .ncd-message .msg-title .emoji {
+      font-size: 1.2rem;
+    }
+    .ncd-message .highlight {
+      background: #d4e4f0;
+      padding: 0.1rem 0.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+    }
+    .ncd-message .risk-low { color: #1f8b5e; }
+    .ncd-message .risk-moderate { color: #c57a2e; }
+    .ncd-message .risk-elevated { color: #b85a2a; }
+    .ncd-message .risk-high { color: #b13e4b; }
+
+    .footnote {
+      margin-top: 2rem;
+      border-top: 2px solid #dce8f2;
+      padding-top: 1.2rem;
+      font-size: 0.85rem;
+      color: #4f6f84;
+      text-align: center;
+    }
+    .footnote i {
+      background: #e6edf4;
+      padding: 0.1rem 1.2rem;
+      border-radius: 60px;
+      font-style: normal;
+    }
+    @media (max-width: 640px) {
+      .card { padding: 1.5rem; }
+      .form-grid { grid-template-columns: 1fr; gap: 1rem; padding: 1.2rem; }
+      .btn-estimate { grid-column: span 1; width: 100%; }
+      .bar-label { width: 70px; }
+      .stats-panel { gap: 0.8rem 1.5rem; padding: 0.8rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>
+    ⏳ NCD Estimator
+    <span class="badge">daily activity + exercise</span>
+  </h1>
+
+  <form id="activityForm" class="form-grid">
+    <div class="form-group">
+      <label for="workInput">💼 Work <span class="hint">(hours)</span></label>
+      <input type="number" id="workInput" step="0.5" min="0" value="8" />
+    </div>
+    <div class="form-group">
+      <label for="eatInput">🍽️ Eating <span class="hint">(hours)</span></label>
+      <input type="number" id="eatInput" step="0.5" min="0" value="2" />
+    </div>
+    <div class="form-group">
+      <label for="sleepInput">😴 Sleep <span class="hint">(hours)</span></label>
+      <input type="number" id="sleepInput" step="0.5" min="0" value="7" />
+    </div>
+    <div class="form-group">
+      <label for="exerciseInput">🏃 Exercise <span class="hint">(hours) ✨</span></label>
+      <input type="number" id="exerciseInput" step="0.25" min="0" value="1" />
+    </div>
+    <button type="submit" class="btn-estimate">📊 Estimate NCD Risk</button>
+  </form>
+
+  <div class="stats-panel" id="statsPanel">
+    <span class="stat-item">📌 Total: <strong id="totalDisplay">0</strong> h</span>
+    <span class="stat-item">⏳ Left: <strong id="differenceDisplay">24</strong> h</span>
+    <span class="stat-item">🏃 Exercise: <strong id="exerciseDisplay">0</strong> h</span>
+  </div>
+
+  <div class="bars-container" id="barsContainer">
+    <div class="bar-row"><span class="bar-label"><span class="icon">💼</span> Work</span><div class="bar-track"><div class="bar-fill work" id="workBar" style="width:0%;">0%</div></div></div>
+    <div class="bar-row"><span class="bar-label"><span class="icon">🍽️</span> Eat</span><div class="bar-track"><div class="bar-fill eat" id="eatBar" style="width:0%;">0%</div></div></div>
+    <div class="bar-row"><span class="bar-label"><span class="icon">😴</span> Sleep</span><div class="bar-track"><div class="bar-fill sleep" id="sleepBar" style="width:0%;">0%</div></div></div>
+    <div class="bar-row"><span class="bar-label"><span class="icon">🏃</span> Exercise</span><div class="bar-track"><div class="bar-fill exercise" id="exerciseBar" style="width:0%;">0%</div></div></div>
+  </div>
+
+  <div class="ncd-message" id="ncdMessage">
+    <span class="msg-title"><span class="emoji">🧠</span> NCD Insight</span>
+    <span id="messageText">Adjust your numbers and click <strong>"Estimate NCD Risk"</strong> to see personalised feedback.</span>
+  </div>
+
+  <div class="footnote">
+    <i>💡 Based on WHO physical activity guidelines · NCD = non‑communicable disease</i>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const form = document.getElementById('activityForm');
+    const workInput = document.getElementById('workInput');
+    const eatInput = document.getElementById('eatInput');
+    const sleepInput = document.getElementById('sleepInput');
+    const exerciseInput = document.getElementById('exerciseInput');
+
+    const totalDisplay = document.getElementById('totalDisplay');
+    const differenceDisplay = document.getElementById('differenceDisplay');
+    const exerciseDisplay = document.getElementById('exerciseDisplay');
+
+    const workBar = document.getElementById('workBar');
+    const eatBar = document.getElementById('eatBar');
+    const sleepBar = document.getElementById('sleepBar');
+    const exerciseBar = document.getElementById('exerciseBar');
+
+    const messageText = document.getElementById('messageText');
+
+    // ---------- NCD risk messages ----------
+    function getNCDMessage(exerciseHours, totalHours, workHours, sleepHours) {
+      const ex = exerciseHours || 0;
+      const sleep = sleepHours || 0;
+      const work = workHours || 0;
+      const left = 24 - totalHours;
+
+      let riskLevel = 'moderate';
+      let detail = '';
+
+      // Exercise guidance (WHO: 150-300 min moderate/week ≈ 0.36-0.7h/day)
+      if (ex >= 1.5) {
+        riskLevel = 'low';
+        detail = '✅ <span class="risk-low">You meet or exceed physical activity recommendations.</span> This significantly lowers your risk of NCDs like heart disease, stroke, and type 2 diabetes. Keep it up!';
+      } else if (ex >= 0.75) {
+        riskLevel = 'moderate';
+        detail = '⚠️ <span class="risk-moderate">You are moderately active.</span> Try to increase to at least 1.5 hours per day for optimal NCD protection. Even 15–30 minutes more makes a difference.';
+      } else if (ex > 0) {
+        riskLevel = 'elevated';
+        detail = '🔶 <span class="risk-elevated">Low exercise duration.</span> Regular physical activity (≥1.5h/day) reduces NCD risk. Consider brisk walking, cycling, or swimming. Start small and build up.';
+      } else {
+        riskLevel = 'high';
+        detail = '🔴 <span class="risk-high">No exercise logged.</span> Physical inactivity is a major risk factor for NCDs. Start with 15–30 minutes of moderate activity daily — every step counts!';
+      }
+
+      // Sleep impact
+      if (sleep < 6) {
+        detail += ' 😴 <span class="risk-moderate">Short sleep (&lt;6h)</span> may increase NCD risk. Aim for 7–9 hours.';
+      } else if (sleep > 10) {
+        detail += ' 😴 <span class="risk-moderate">Long sleep (&gt;10h)</span> may also be associated with health risks.';
+      }
+
+      // Work-life balance
+      if (work > 12) {
+        detail += ' 💼 <span class="risk-elevated">Prolonged work hours (&gt;12h)</span> can increase stress and sedentary time. Try to take short breaks.';
+      }
+
+      // Free time suggestion
+      if (left < 2 && left >= 0) {
+        detail += ' ⏳ <span class="risk-moderate">Very little free time</span> — consider integrating short activity breaks throughout your day.';
+      } else if (left > 4) {
+        detail += ' 🌿 You have ample free time — consider using some of it for physical activity!';
+      }
+
+      return detail;
+    }
+
+    // ---------- update UI ----------
+    function updateDashboard(work, eat, sleep, exercise) {
+      const total = work + eat + sleep + exercise;
+      const difference = 24 - total;
+
+      totalDisplay.textContent = total.toFixed(1);
+      differenceDisplay.textContent = difference.toFixed(1);
+      exerciseDisplay.textContent = exercise.toFixed(1);
+
+      const maxHours = 24;
+      const workPct = Math.min((work / maxHours) * 100, 100);
+      const eatPct = Math.min((eat / maxHours) * 100, 100);
+      const sleepPct = Math.min((sleep / maxHours) * 100, 100);
+      const exPct = Math.min((exercise / maxHours) * 100, 100);
+
+      workBar.style.width = workPct + '%';
+      workBar.textContent = Math.round(workPct) + '%';
+      eatBar.style.width = eatPct + '%';
+      eatBar.textContent = Math.round(eatPct) + '%';
+      sleepBar.style.width = sleepPct + '%';
+      sleepBar.textContent = Math.round(sleepPct) + '%';
+      exerciseBar.style.width = exPct + '%';
+      exerciseBar.textContent = Math.round(exPct) + '%';
+
+      const msg = getNCDMessage(exercise, total, work, sleep);
+      messageText.innerHTML = msg;
+    }
+
+    // ---------- form submit ----------
+    form.addEventListener('submit', function(evt) {
+      evt.preventDefault();
+
+      // parse with fallback 0 — using distinct variable names to avoid conflicts
+      const workVal = parseFloat(workInput.value) || 0;
+      const eatVal = parseFloat(eatInput.value) || 0;
+      const sleepVal = parseFloat(sleepInput.value) || 0;
+      const exerciseVal = parseFloat(exerciseInput.value) || 0;
+
+      // ensure non-negative
+      const clean = (v) => Math.max(0, v);
+      const w = clean(workVal);
+      const e = clean(eatVal);
+      const s = clean(sleepVal);
+      const ex = clean(exerciseVal);
+
+      const total = w + e + s + ex;
+
+      // if total > 24, show warning
+      if (total > 24) {
+        const msg = `⚠️ Total (${total.toFixed(1)}h) exceeds 24 hours. Please reduce some activities.`;
+        messageText.innerHTML = msg;
+        // still update bars with capped values
+        const cappedWork = Math.min(w, 24);
+        const cappedEat = Math.min(e, 24);
+        const cappedSleep = Math.min(s, 24);
+        const cappedEx = Math.min(ex, 24);
+        const maxHours = 24;
+        workBar.style.width = ((cappedWork / maxHours) * 100) + '%';
+        workBar.textContent = Math.round((cappedWork / maxHours) * 100) + '%';
+        eatBar.style.width = ((cappedEat / maxHours) * 100) + '%';
+        eatBar.textContent = Math.round((cappedEat / maxHours) * 100) + '%';
+        sleepBar.style.width = ((cappedSleep / maxHours) * 100) + '%';
+        sleepBar.textContent = Math.round((cappedSleep / maxHours) * 100) + '%';
+        exerciseBar.style.width = ((cappedEx / maxHours) * 100) + '%';
+        exerciseBar.textContent = Math.round((cappedEx / maxHours) * 100) + '%';
+        totalDisplay.textContent = total.toFixed(1);
+        differenceDisplay.textContent = (24 - total).toFixed(1);
+        exerciseDisplay.textContent = ex.toFixed(1);
+        return;
+      }
+
+      updateDashboard(w, e, s, ex);
+    });
+
+    // ---------- auto-load with defaults ----------
+    window.addEventListener('DOMContentLoaded', function() {
+      if (!workInput.value) workInput.value = 8;
+      if (!eatInput.value) eatInput.value = 2;
+      if (!sleepInput.value) sleepInput.value = 7;
+      if (!exerciseInput.value) exerciseInput.value = 1;
+
+      const evt = new Event('submit', { cancelable: true });
+      form.dispatchEvent(evt);
+    });
+
+  })();
+</script>
+</body>
+</html>
