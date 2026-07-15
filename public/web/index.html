@@ -56,7 +56,7 @@
   <pre id="log"></pre>
   <div id="status" class="system">Connecting to chat server...</div>
   <div id="input-container">
-    <div id="input" contenteditable="true" spellcheck="false" placeholder="Type message and press Enter..."></div>
+    <div id="input" contenteditable="true" spellcheck="false"></div>
   </div>
 
 <script>
@@ -76,62 +76,61 @@
 
   log("Bismillah! السلام عليكم ورحمة الله وبركاته - KY Chat", "system");
 
-  // === WebSocket Connection ===
-  // For testing: using a free public echo server
-  // In production, use your own WebSocket server
-  let ws = new WebSocket("wss://echo.websocket.events");
+  // More reliable public WebSocket echo server
+  const wsUrl = "wss://ws.ifelse.io/";
+  let ws = new WebSocket(wsUrl);
 
   ws.onopen = () => {
-    statusEl.textContent = "✅ Connected to KY Chat Server";
-    statusEl.className = "system";
-    log("Connected successfully! You can now chat.", "system");
+    statusEl.textContent = "✅ Connected! Start chatting...";
+    statusEl.style.color = "#4ade80";
+    log("Successfully connected to KY Chat.", "system");
   };
 
   ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    if (data.type === "message") {
-      log(data.handle + ": " + data.text);
+    try {
+      const data = JSON.parse(event.data);
+      if (data.type === "message") {
+        log(data.handle + ": " + data.text);
+      }
+    } catch(e) {
+      log("Received: " + event.data);
     }
   };
 
-  ws.onerror = () => {
-    statusEl.textContent = "❌ Connection error. Try refreshing.";
+  ws.onerror = (err) => {
+    console.error(err);
+    statusEl.innerHTML = "❌ Connection failed.<br>Try refreshing or check your internet.";
     statusEl.style.color = "#f87171";
   };
 
   ws.onclose = () => {
-    statusEl.textContent = "⚠️ Connection closed. Refresh to reconnect.";
+    statusEl.innerHTML = "⚠️ Disconnected. Refresh the page to reconnect.";
   };
 
   function getHandle() {
-    // Simple handle based on time or you can ask user for name
-    return "User" + Math.floor(Math.random()*9999);
+    return "User-" + Math.floor(1000 + Math.random() * 9000);
   }
 
-  // Send message
   inputEl.addEventListener("keydown", function(ev) {
     if (ev.key === "Enter") {
       ev.preventDefault();
       const msg = inputEl.innerText.trim();
       if (msg.length === 0 || ws.readyState !== WebSocket.OPEN) return;
 
-      const payload = {
+      const payload = JSON.stringify({
         type: "message",
         handle: getHandle(),
         text: msg
-      };
+      });
 
-      ws.send(JSON.stringify(payload));
-      
-      // Show our own message
+      ws.send(payload);
       log("You: " + msg, "me");
       
       inputEl.innerText = "";
     }
   });
 
-  // Auto focus
-  setTimeout(() => inputEl.focus(), 300);
+  setTimeout(() => inputEl.focus(), 500);
 </script>
 </body>
 </html>
