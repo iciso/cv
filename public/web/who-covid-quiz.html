@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+@import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+
+body{
+	font-size: 15px;
+	font-family: sans-serif;
+	color: #333;
+  font-weight: 250;
+  text-align: center;
+  background-color: white;
+}
+h1{
+  font-weight: 500;
+  margin: 0px;
+  padding: 10px;
+  font-size: 20px;
+  background-color: blue;
+  color: #fff;
+}
+.question{
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.answers {
+  margin-bottom: 25px;
+  text-align: left;
+  display: inline-block;
+}
+.answers label{
+  display: block;
+  margin-bottom: 10px;
+}
+button{
+  font-family: sans-serif;
+	font-size: 20px;
+	background-color: blue;
+	color: #fff;
+	border: 0px;
+	border-radius: 5px;
+	padding: 10px;
+	cursor: pointer;
+	margin-bottom: 40px;
+}
+button:hover{
+	background-color: #38a;
+}
+
+.slide{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.active-slide{
+  opacity: 1;
+  z-index: 2;
+}
+.quiz-container{
+  position: relative;
+  height: 300px;
+  margin-top: 25px;
+}
+
+#credits {
+font-size:11px;
+text-align: center;
+}
+
+#footer {
+margin-bottom: 0;
+border: 1px blue;
+height: 100px;
+background: #FFFFFF;
+background-image: url("");
+color: #333;
+}
+
+</style>
+</head>
+
+<body>
+<p><img src="https://www.who.int/images/default-source/fallback/header-logos/h-logo-blue.svg?sfvrsn=aaed4f35_18" alt="WHO logo" height="78"> </p>
+<h1>COVID-19 & Health Services Quiz</h1>
+
+<div class="quiz-container">
+  <div id="quiz"></div>
+</div>
+<button id="previous">Previous Question</button>
+<button id="next">Next Question</button>
+<button id="submit">Submit Quiz</button>
+<div id="results"></div>
+
+<script>
+(function(){
+  // Functions
+  function buildQuiz(){
+    // variable to store the HTML output
+    const output = [];
+
+    // for each question...
+    myQuestions.forEach(
+      (currentQuestion, questionNumber) => {
+
+        // variable to store the list of possible answers
+        const answers = [];
+
+        // and for each available answer...
+        for(letter in currentQuestion.answers){
+
+          // ...add an HTML radio button
+          answers.push(
+            `<label>
+              <input type="radio" name="question${questionNumber}" value="${letter}">
+              ${letter} :
+              ${currentQuestion.answers[letter]}
+            </label>`
+          );
+        }
+
+        // add this question and its answers to the output
+        output.push(
+          `<div class="slide">
+            <div class="question"> ${currentQuestion.question} </div>
+            <div class="answers"> ${answers.join("")} </div>
+          </div>`
+        );
+      }
+    );
+
+    // finally combine our output list into one string of HTML and put it on the page
+    quizContainer.innerHTML = output.join('');
+  }
+
+  function showResults(){
+
+    // gather answer containers from our quiz
+    const answerContainers = quizContainer.querySelectorAll('.answers');
+
+    // keep track of user's answers
+    let numCorrect = 0;
+
+    // for each question...
+    myQuestions.forEach( (currentQuestion, questionNumber) => {
+
+      // find selected answer
+      const answerContainer = answerContainers[questionNumber];
+      const selector = `input[name=question${questionNumber}]:checked`;
+      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+      // if answer is correct
+      if(userAnswer === currentQuestion.correctAnswer){
+        // add to the number of correct answers
+        numCorrect++;
+
+        // color the answers green
+        answerContainers[questionNumber].style.color = 'lightgreen';
+      }
+      // if answer is wrong or blank
+      else{
+        // color the answers red
+        answerContainers[questionNumber].style.color = 'red';
+      }
+    });
+
+    // show number of correct answers out of total
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+  }
+
+  function showSlide(n) {
+    slides[currentSlide].classList.remove('active-slide');
+    slides[n].classList.add('active-slide');
+    currentSlide = n;
+    if(currentSlide === 0){
+      previousButton.style.display = 'none';
+    }
+    else{
+      previousButton.style.display = 'inline-block';
+    }
+    if(currentSlide === slides.length-1){
+      nextButton.style.display = 'none';
+      submitButton.style.display = 'inline-block';
+    }
+    else{
+      nextButton.style.display = 'inline-block';
+      submitButton.style.display = 'none';
+    }
+  }
+
+  function showNextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function showPreviousSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  // Variables
+  const quizContainer = document.getElementById('quiz');
+  const resultsContainer = document.getElementById('results');
+  const submitButton = document.getElementById('submit');
+  const myQuestions = [
+    {
+      question: "1. COVID-19 affects provision of health services to:",
+      answers: {
+        a: "sexual, and reproductive",
+        b: "maternal, and newborn",
+        c: "child, and adolescent",
+        d: "geriatric, and those with co-morbidities",
+        e: "groups like migrants, PLHIV",
+        f: "all of the above"
+      },
+      correctAnswer: "f"
+    },
+    {
+      question: "2. Essential Health Services is not affected by:",
+      answers: {
+        a: "Societal and economic disruption",
+        b: "Proactive HCWs and a responsive community",
+        c: "Pandemic surge leading to diversion of resources",
+        d: "Fear of getting infected from hospital",
+        e: "Fear of being tested and quarantined",
+        f: "Lockdown, and containment measures"
+      },
+      correctAnswer: "b"
+    },
+    {
+      question: "3. Can we sustain Essential Health Services?",
+      answers: {
+        a: "Yes",
+        b: "Maybe",
+        c: "Impossible",
+        d: "Difficult",
+        e: "No"
+      },
+      correctAnswer: "a"
+    },
+    {
+      question: "4. Core Essential Health Services includes:",
+      answers: {
+        a: "Antenatal care, Intrapartum care",
+        b: "Postnatal, Newborn care and breastfeeding",
+        c: "Child care and feeding, Care of adolescents",
+        d: "SRH: family planning, abortion, gender-violence and HIV services",
+        e: "All of the above",
+        f: "Only b,c,and d"
+      },
+      correctAnswer: "e"
+    },
+    {
+      question: "5. Access to health services and patient flow is not affected by:",
+      answers: {
+        a: "Patient is not exposed, or exposed to COVID-19",
+        b: "Need for curfew pass",
+        c: "Mobile medical units providing doorstep service delivery",
+        d: "Protocols for triage, screening and testing",
+        d: "IPC and PPE for HCW, patients and accompanying persons",
+        e: "Dilemma in choosing COVID dedicated vs. normal hospital"
+      },
+      correctAnswer: "c"
+    },
+    {
+      question: "6. Essential Health Services after discharge includes:",
+      answers: {
+        a: "Counselling service, including Tele-Counselling",
+        b: "Telemedicine and remote Follow-up",
+        c: "Transport to Home by COVID-19 dedicated vs. normal ambulance",
+        d: "Visits by Field Health staff and community volunteers",
+        e: "All of the above"
+      },
+      correctAnswer: "e"
+    },
+    {
+      question: "7. Disruption of healthcare services does not occur by:?",
+      answers: {
+        a: "Reorganization of hospitals into COVID hospitals",
+        b: "Diversion of human and financial resources to COVID",
+        c: "Lack of Jobs, and so no money to go to hospital",
+        d: "Establishing alternate methods to provide health services",
+        e: "Lockdown and restrictions, non-availability of transport"
+      },
+      correctAnswer: "d"
+    }
+  ];
+
+  // Kick things off
+  buildQuiz();
+
+  // Pagination
+  const previousButton = document.getElementById("previous");
+  const nextButton = document.getElementById("next");
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  // Show the first slide
+  showSlide(currentSlide);
+
+  // Event listeners
+  submitButton.addEventListener('click', showResults);
+  previousButton.addEventListener("click", showPreviousSlide);
+  nextButton.addEventListener("click", showNextSlide);
+})();
+
+</script>
+<p id="credits">A Quiz by Rafique, who works for WHO at Wayanad in Kerala, India. Suggest changes by <a href="callto:+917558845528">Calling Rafique</a><br> or <form method="post" action="mailto:cvho.wayanad@ihmi.in?cc=emrafi@yahoo.com&bcc=ihmiwyd@gmail.com&subject=%20Quiz%20on%20Health%20Services&body=Dear Rafique, 
+
+<br>Thanks for the Quiz,
+
+<br>from">
+	
+	<input type="submit" value="Suggest a Quiz to Rafique" />
+
+</form></p>
+<div id="footer">
+ <table style="width:100%">
+  <tr><td><p id="footer">
+  
+  The India Hypertension Control Initiative (IHCI) is a collaborative project <i class="fas fa-heartbeat" style="font-size:24px;color:red;"></i> between Indian Council of Medical Research (ICMR), Ministry of Health & Family Welfare (MoHFW), State Governments, World Health Organization (WHO), and Resolve to Save Lives, an initiative of Vital Strategies. <i class="fas fa-globe" style="font-size:24px;color:blue;"></i></p>
+  </td><td>
+  <img src="https://www.ihci.in/~gitbook/image?url=https%3A%2F%2F4110139307-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-MMHxovP9vC7uvdIVdm8%252Favatar-1605562495454.png%3Fgeneration%3D1605562495815944%26alt%3Dmedia&width=32&dpr=1&quality=100&sign=7eea2677&sv=2" alt="IHCI" style="float:right">
+  
+  </td></tr>
+  </table>
+</div>
+</body>
+</html>
