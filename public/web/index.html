@@ -5,56 +5,19 @@
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <title>KY Chat</title>
   <style>
-    body { 
-      background-color: #1e1e1e; 
-      color: #fff; 
-      font-size: 1.1em; 
-      padding: 10px; 
-      font-family: monospace; 
-      margin: 0;
-    }
-    #log { 
-      color: #ddd; 
-      white-space: pre-wrap; 
-      word-wrap: break-word; 
-      margin: 0; 
-      padding: 15px; 
-      background: #2d2d2d; 
-      border-radius: 8px;
-      min-height: 300px;
-      max-height: 70vh;
-      overflow-y: auto;
-      border: 1px solid #444;
-    }
-    #input-container {
-      display: flex;
-      background-color: #383838;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 10px;
-      border: 1px solid #555;
-    }
-    #input { 
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: #fff;
-      font-family: monospace;
-      font-size: 1.1em;
-      padding: 6px 10px;
-    }
-    #status {
-      margin: 8px 0;
-      font-size: 0.95em;
-    }
+    body { background-color: #1e1e1e; color: #fff; font-size: 1.1em; padding: 10px; font-family: monospace; margin: 0; }
+    #log { color: #ddd; white-space: pre-wrap; word-wrap: break-word; margin: 0; padding: 15px; background: #2d2d2d; border-radius: 8px; min-height: 300px; max-height: 70vh; overflow-y: auto; border: 1px solid #444; }
+    #input-container { display: flex; background-color: #383838; padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid #555; }
+    #input { flex: 1; background: transparent; border: none; outline: none; color: #fff; font-family: monospace; font-size: 1.1em; padding: 6px 10px; }
+    #status { margin: 8px 0; font-size: 0.95em; }
     .system { color: #4ade80; }
     .me { color: #60a5fa; font-weight: bold; }
   </style>
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 </head>
 <body>
   <pre id="log"></pre>
-  <div id="status" class="system">Connecting to chat server...</div>
+  <div id="status" class="system">Initializing P2P Chat...</div>
   <div id="input-container">
     <div id="input" contenteditable="true" spellcheck="false"></div>
   </div>
@@ -65,73 +28,86 @@
   const inputEl = document.getElementById("input");
 
   let myHandle = "User-" + Math.floor(1000 + Math.random() * 9000);
+  let peer;
+  let conn;
 
   function log(message, type = "") {
     const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    let cls = "";
-    if (type === "system") cls = "system";
-    if (type === "me") cls = "me";
-    
+    let cls = type === "system" ? "system" : type === "me" ? "me" : "";
     logEl.innerHTML += `<span class="${cls}">[${time}] ${message}</span><br>`;
     logEl.scrollTop = logEl.scrollHeight;
   }
 
   log("Bismillah! السلام عليكم ورحمة الله وبركاته - KY Chat", "system");
-  log("Your handle: " + myHandle, "system");
+  log("Your Handle: " + myHandle, "system");
 
-  const wsUrl = "wss://ws.ifelse.io/";
-  let ws = new WebSocket(wsUrl);
+  // Initialize PeerJS
+  peer = new Peer();   // Uses PeerJS cloud server
 
-  ws.onopen = () => {
-    statusEl.textContent = "✅ Connected! Chat with others in the same room.";
+  peer.on('open', (id) => {
+    statusEl.innerHTML = `✅ Your ID: <strong>${id}</strong><br>Share this ID with the other person.`;
     statusEl.style.color = "#4ade80";
-    log("Connection successful.", "system");
-  };
+    log(`Your Peer ID is: ${id} (Share this with friend)`, "system");
+  });
 
-  ws.onmessage = (event) => {
-    try {
-      const data = JSON.parse(event.data);
-      if (data.type === "message" && data.handle !== myHandle) {
-        log(data.handle + ": " + data.text);
-      }
-    } catch(e) {
-      // Fallback for non-JSON messages
-      log("Received: " + event.data);
-    }
-  };
+  peer.on('connection', (c) => {
+    conn = c;
+    conn.on('open', () => {
+      log("Friend connected!", "system");
+      statusEl.textContent = "✅ Connected with friend";
+    });
 
-  ws.onerror = () => {
-    statusEl.innerHTML = "❌ Connection error.<br>Please refresh the page.";
-    statusEl.style.color = "#f87171";
-  };
+    conn.on('data', (data) => {
+      log(data.handle + ": " + data.text);
+    });
+  });
 
-  ws.onclose = () => {
-    statusEl.innerHTML = "⚠️ Disconnected. Refresh to reconnect.";
-  };
+  peer.on('error', (err) => {
+    console.error(err);
+    statusEl.textContent = "Error: " + err.type;
+  });
 
   // Send message
   inputEl.addEventListener("keydown", function(ev) {
     if (ev.key === "Enter") {
       ev.preventDefault();
       const msg = inputEl.innerText.trim();
-      if (msg.length === 0 || ws.readyState !== WebSocket.OPEN) return;
+      if (msg.length === 0) return;
 
-      const payload = JSON.stringify({
-        type: "message",
-        handle: myHandle,
-        text: msg
-      });
+      if (!conn || !conn.open) {
+        log("Not connected yet. Share your ID with the other person.", "system");
+        return;
+      }
 
-      ws.send(payload);
-      
-      // Show our message locally
+      const payload = { handle: myHandle, text: msg };
+      conn.send(payload);
+
       log("You: " + msg, "me");
-      
       inputEl.innerText = "";
     }
   });
 
-  setTimeout(() => inputEl.focus(), 300);
+  // Allow connecting to friend's ID
+  window.connectToFriend = function() {
+    const friendId = prompt("Enter friend's Peer ID:");
+    if (friendId) {
+      conn = peer.connect(friendId);
+      conn.on('open', () => {
+        log("Connected to friend!", "system");
+      });
+      conn.on('data', (data) => {
+        log(data.handle + ": " + data.text);
+      });
+    }
+  };
+
+  setTimeout(() => inputEl.focus(), 500);
 </script>
+
+<p style="margin-top:15px; font-size:0.9em;">
+  <button onclick="connectToFriend()" style="padding:8px 16px; background:#60a5fa; color:white; border:none; border-radius:4px; cursor:pointer;">
+    Connect to Friend (Enter their ID)
+  </button>
+</p>
 </body>
 </html>
