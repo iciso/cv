@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easy Islamic Quiz</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f0f4f8;
+      --text-main: #1e293b;
+      --success: #10b981;
+      --error: #ef4444;
+      --knowledge-bg: #eff6ff;
+      --knowledge-border: #3b82f6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 650px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      padding: 30px;
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 8px;
+      font-size: 1.8rem;
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+    }
+
+    /* Progress Architecture */
+    .progress-container {
+      background-color: #e2e8f0;
+      border-radius: 9999px;
+      height: 8px;
+      width: 100%;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: var(--success);
+      width: 0%;
+      transition: width 0.4s ease-in-out;
+    }
+
+    .progress-text {
+      font-size: 0.85rem;
+      color: #64748b;
+      text-align: right;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    /* Quiz Slides Engine */
+    .quiz-container {
+      min-height: 260px;
+      margin-bottom: 25px;
+    }
+
+    .slide {
+      display: none;
+    }
+
+    .slide.active-slide {
+      display: block;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #0f172a;
+      line-height: 1.5;
+    }
+
+    .answers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      background-color: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    label:hover {
+      background-color: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    input[type="radio"] {
+      margin-right: 14px;
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Knowledge Panels */
+    .knowledge-panel {
+      margin-top: 20px;
+      padding: 16px;
+      background-color: var(--knowledge-bg);
+      border-left: 4px solid var(--knowledge-border);
+      border-radius: 4px 10px 10px 4px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      display: none;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    .knowledge-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Controller Panel Layout */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      background-color: var(--primary);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      flex: 1;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: #64748b;
+    }
+
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+
+    .btn-success {
+      background-color: var(--success);
+    }
+
+    .btn-success:hover {
+      background-color: #059669;
+    }
+
+    /* Results Dashboard Elements */
+    .results-card {
+      text-align: center;
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .score-display {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 20px 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Interactive Quiz Layout Block -->
+  <div id="quiz-flow">
+    <h2>Easy Islamic Quiz</h2>
+    <p class="subtitle">Test and grow your knowledge of beneficial history and terminology</p>
+    
+    <div class="progress-container">
+      <div id="myBar" class="progress-bar"></div>
+    </div>
+    <div id="progressText" class="progress-text">Question 1 of 10</div>
+
+    <div class="quiz-container">
+      <div id="quiz"></div>
+    </div>
+
+    <div class="controls">
+      <button id="previous" class="btn btn-secondary">Previous</button>
+      <button id="next" class="btn">Next Question</button>
+      <button id="submit" class="btn btn-success" style="display: none;">Submit Quiz</button>
+    </div>
+  </div>
+
+  <!-- End of Game Dynamic Summary Results Dashboard -->
+  <div id="results-flow" class="results-card">
+    <h2>Quiz Complete!</h2>
+    <p class="subtitle">Alhamdulillah, here is your structural performance record:</p>
+    <div class="score-display"><span id="scoreNum">0</span> / <span id="totalNum">0</span></div>
+    <p id="feedbackText" style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px;"></p>
+    <button onclick="window.location.reload();" class="btn">Try Again</button>
+  </div>
+</div>
+
+<script>
+const myQuestions = [
+  {
+    question: "1. How many verses are there in the Holy Quran, with the Bismillah counted for all chapters?",
+    answers: { a: "6348", b: "6666", c: "6236" },
+    correctAnswer: "a",
+    fact: "While there are 6,236 standalone numbered verses in the Quran, adding the unnumbered Bismillahs at the beginning of 112 Surahs (excluding Surah Al-Fatihah where it is numbered, and Surah At-Tawbah which lacks it) brings the total structural verse count to 6,348."
+  },
+  {
+    question: "2. Which Surah is famously referred to as the 'Heart of the Quran'?",
+    answers: { a: "Surah Al-Fatihah", b: "Surah Ya-Seen", c: "Surah Al-Mulk" },
+    correctAnswer: "b",
+    fact: "Prophet Muhammad (PBUH) stated in a famous Hadith recorded by Tirmidhi that everything has a heart, and the heart of the Quran is Surah Ya-Seen. It encapsulates profound lessons regarding life, death, and resurrection."
+  },
+  {
+    question: "3. Who was the first wife of the Prophet Muhammad (PBUH)?",
+    answers: { a: "Khadija bint Khuwaylid (RA)", b: "Aisha bint Abi Bakr (RA)", c: "Juwairiyah bint al-Harith (RA)" },
+    correctAnswer: "a",
+    fact: "Khadija (RA) was the very first person to accept Islam. She provided pivotal emotional, structural, and financial support to the Prophet (PBUH) during the earliest, most difficult years of the revelation."
+  },
+  {
+    question: "4. Which Surah is recommended as Sunnah to read daily as part of morning/Friday structures?",
+    answers: { a: "Surah Ar-Rahman", b: "Surah As-Sajdah", c: "Surah Al-Alaq (Iqra)" },
+    correctAnswer: "b",
+    fact: "It is authenticated Sunnah that the Prophet (PBUH) frequently recited Surah As-Sajdah (Chapter 32) along with Surah Al-Insan during the Fajr prayer congregation on Fridays."
+  },
+  {
+    question: "5. From an Islamic jurisprudence (Shariah) standpoint, which animal is completely prohibited from being kept, raised, or commercialized?",
+    answers: { a: "A lion cub", b: "A piglet", c: "A hen" },
+    correctAnswer: "b",
+    fact: "Swine (pigs) are explicitly classified as Najis al-Ayn (inherently impure) in Islamic law. Therefore, keeping, breeding, commercial trading, or providing shelter to them is strictly prohibited under Shariah guidelines."
+  },
+  {
+    question: "6. Which Surah is universally known as the 'Mother of the Quran' (Umm al-Quran)?",
+    answers: { a: "Surah Al-Fatihah", b: "Surah Ya-Seen", c: "Surah Al-Mulk" },
+    correctAnswer: "a",
+    fact: "Surah Al-Fatihah is called 'Umm al-Quran' because it beautifully summarizes the entire foundational essence of the Quran: praising Allah, affirming monotheism, and seeking guidance on the straight path."
+  },
+  {
+    question: "7. The structural location of the famous Verse of Light (Ayat an-Nur) is:",
+    answers: { a: "The 35th Verse of the 24th Chapter (Surah An-Nur)", b: "The 24th Verse of the 35th Chapter", c: "The 24th Verse of Surah An-Nur" },
+    correctAnswer: "a",
+    fact: "Ayat an-Nur is found precisely at Chapter 24 (Surah An-Nur), Verse 35. It provides an exceptionally beautiful, allegorical description of the light of Allah shining within the heart of a believer."
+  },
+  {
+    question: "8. The legendary Verse of the Throne (Ayat al-Kursi) is positioned at:",
+    answers: { a: "The 155th Verse of the 1st Chapter", b: "The 245th Verse of Surah Al-Baqarah", c: "The 255th Verse of the 2nd Chapter (Surah Al-Baqarah)" },
+    correctAnswer: "c",
+    fact: "Ayat al-Kursi is Verse 255 of Surah Al-Baqarah. It is the most powerful single verse in the entire Quran, famously recited for comprehensive spiritual protection and declaring Allah's absolute sovereignty."
+  },
+  {
+    question: "9. The historical 'Verse of the Perfection of Religion' (Ayat Ikmal ad-Din) is found at:",
+    answers: { a: "The 5th Verse of Surah Al-Ma'idah", b: "The 3rd Verse of Surah Al-Ma'idah", c: "The 4th Verse of Surah Al-Ma'idah" },
+    correctAnswer: "b",
+    fact: "Surah Al-Ma'idah (Chapter 5), Verse 3 was revealed on Mount Arafat during the Farewell Pilgrimage of the Prophet (PBUH), declaring: 'This day I have perfected for you your religion and completed My favor upon you...'"
+  },
+  {
+    question: "10. According to the Sunnah, approximately how many verses should ideally be recited during the Salat al-Fajr congregation?",
+    answers: { a: "60 to 100 verses", b: "100 to 120 verses", c: "10 to 30 verses" },
+    correctAnswer: "a",
+    fact: "Authentic compilations note that the Prophet (PBUH) normally preferred a lengthy and contemplative recitation during the two mandatory units of Fajr prayer, typically spanning between 60 to 100 verses total across both units."
+  }
+];
+
+const quizContainer = document.getElementById('quiz');
+const previousButton = document.getElementById("previous");
+const nextButton = document.getElementById("next");
+const submitButton = document.getElementById("submit");
+const progressBar = document.getElementById("myBar");
+const progressText = document.getElementById("progressText");
+
+let currentSlide = 0;
+// Track answers internally to enable real-time educational knowledge triggers
+let userSelections = {}; 
+
+function buildQuiz() {
+  const output = [];
+
+  myQuestions.forEach((currentQuestion, questionNumber) => {
+    const answers = [];
+    for (letter in currentQuestion.answers) {
+      answers.push(
+        `<label id="label-${questionNumber}-${letter}">
+          <input type="radio" name="question${questionNumber}" value="${letter}" onclick="handleOptionSelection(${questionNumber}, '${letter}')">
+          <strong>${letter.toUpperCase()}:</strong> &nbsp;${currentQuestion.answers[letter]}
+        </label>`
+      );
+    }
+
+    output.push(
+      `<div class="slide" id="slide-${questionNumber}">
+        <div class="question">${currentQuestion.question}</div>
+        <div class="answers-list">${answers.join("")}</div>
+        <div class="knowledge-panel" id="fact-${questionNumber}">
+          <div class="knowledge-title">💡 Beneficial Knowledge:</div>
+          <div>${currentQuestion.fact}</div>
+        </div>
+      </div>`
+    );
+  });
+
+  quizContainer.innerHTML = output.join('');
+}
+
+function handleOptionSelection(qNum, selectedLetter) {
+  userSelections[qNum] = selectedLetter;
+  const currentQuestion = myQuestions[qNum];
+  const factPanel = document.getElementById(`fact-${qNum}`);
+  
+  // Reset all label styles inside the current card group
+  for (let letter in currentQuestion.answers) {
+    const lbl = document.getElementById(`label-${qNum}-${letter}`);
+    lbl.style.borderColor = "#e2e8f0";
+    lbl.style.backgroundColor = "#f8fafc";
+    lbl.style.color = "var(--text-main)";
+  }
+
+  const selectedLabel = document.getElementById(`label-${qNum}-${selectedLetter}`);
+
+  // Highlight answer selected immediately for instant learning feedback
+  if (selectedLetter === currentQuestion.correctAnswer) {
+    selectedLabel.style.borderColor = "var(--success)";
+    selectedLabel.style.backgroundColor = "#ecfdf5";
+    selectedLabel.style.color = "#065f46";
+  } else {
+    selectedLabel.style.borderColor = "var(--error)";
+    selectedLabel.style.backgroundColor = "#fef2f2";
+    selectedLabel.style.color = "#991b1b";
+    
+    // Highlight correct fallback option implicitly
+    const correctLabel = document.getElementById(`label-${qNum}-${currentQuestion.correctAnswer}`);
+    correctLabel.style.borderColor = "var(--success)";
+  }
+
+  // Slide open the knowledge frame dynamically
+  factPanel.style.display = "block";
+}
+
+function showSlide(n) {
+  const slides = document.querySelectorAll(".slide");
+  slides[currentSlide].classList.remove('active-slide');
+  slides[n].classList.add('active-slide');
+  currentSlide = n;
+  
+  // Track navigation rendering properties cleanly
+  if (currentSlide === 0) {
+    previousButton.style.visibility = 'hidden';
+  } else {
+    previousButton.style.visibility = 'visible';
+  }
+
+  if (currentSlide === slides.length - 1) {
+    nextButton.style.display = 'none';
+    submitButton.style.display = 'inline-block';
+  } else {
+    nextButton.style.display = 'inline-block';
+    submitButton.style.display = 'none';
+  }
+
+  updateProgressBar();
+}
+
+function updateProgressBar() {
+  const total = myQuestions.length;
+  const currentVal = currentSlide + 1;
+  const calculatedPercent = (currentVal / total) * 100;
+  
+  progressBar.style.width = `${calculatedPercent}%`;
+  progressText.textContent = `Question ${currentVal} of ${total}`;
+}
+
+function showResults() {
+  let numCorrect = 0;
+
+  myQuestions.forEach((currentQuestion, questionNumber) => {
+    if (userSelections[questionNumber] === currentQuestion.correctAnswer) {
+      numCorrect++;
+    }
+  });
+
+  // Shift viewport over to results panel container
+  document.getElementById("quiz-flow").style.display = "none";
+  const resultsFlow = document.getElementById("results-flow");
+  resultsFlow.style.display = "block";
+
+  document.getElementById("scoreNum").textContent = numCorrect;
+  document.getElementById("totalNum").textContent = myQuestions.length;
+
+  // Grade classification evaluation block
+  let feedback = "";
+  const performanceRatio = numCorrect / myQuestions.length;
+
+  if (performanceRatio === 1) {
+    feedback = "Masha Allah! Perfect score. You possess excellent knowledge regarding foundational Islamic facts and historical timeline records.";
+  } else if (performanceRatio >= 0.7) {
+    feedback = "Barak Allahu Feekum! A highly impressive score. You have an exceptionally strong grasp over basic Islamic topics.";
+  } else {
+    feedback = "Alhamdulillah! An excellent effort. Go back over the questions you missed and read the beneficial knowledge blocks to help reinforce the terms.";
+  }
+
+  document.getElementById("feedbackText").textContent = feedback;
+}
+
+// Global Event Initialization Triggers
+buildQuiz();
+showSlide(0);
+
+nextButton.addEventListener("click", () => showSlide(currentSlide + 1));
+previousButton.addEventListener("click", () => showSlide(currentSlide - 1));
+submitButton.addEventListener('click', showResults);
+</script>
+
+</body>
+</html>
