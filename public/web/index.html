@@ -5,71 +5,130 @@
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <title>KY Chat</title>
   <style>
-    body { background-color: #333; font-size: 1.5em; padding: 0em 0.25em; font-family: monospace; }
-    pre { color: #fff; white-space: pre-wrap; word-wrap: break-word; text-shadow: 0 0 10px #ccc; margin: 0; }
-    #log { min-height: 200px; margin-bottom: 20px; }
-    #input { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; color: #fff; }
-    #input::before { content: "> "; color: #50fa7b; }
-  </style>
-  <script>
-    function log(message) {
-      document.getElementById("log").textContent += message + "\n";
+    body { 
+      background-color: #1e1e1e; 
+      color: #fff; 
+      font-size: 1.1em; 
+      padding: 10px; 
+      font-family: monospace; 
+      margin: 0;
     }
-  </script>
-  <!-- Loading Bugout library -->
-  <script src="https://chr15m.github.io/bugout/bugout.min.js" type="application/javascript"></script>
+    pre { 
+      color: #ddd; 
+      white-space: pre-wrap; 
+      word-wrap: break-word; 
+      margin: 0; 
+      padding: 10px; 
+      background: #2d2d2d; 
+      border-radius: 8px;
+      min-height: 300px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    #input-container {
+      display: flex;
+      background-color: #383838;
+      padding: 8px;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid #555;
+    }
+    #input { 
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: monospace;
+      font-size: 1.1em;
+      padding: 4px 8px;
+    }
+    #status {
+      margin: 8px 0;
+      font-size: 0.9em;
+      color: #4ade80;
+    }
+  </style>
+  <script src="https://chr15m.github.io/bugout/bugout.min.js"></script>
 </head>
 <body>
   <pre id="log"></pre>
-  <div id="input" contenteditable="true"></div>
+  <div id="status">Connecting to P2P network...</div>
+  <div id="input-container">
+    <div id="input" contenteditable="true" spellcheck="false"></div>
+  </div>
 
 <script>
-  log("Bismillah! السلام عليكم ورحمة الله وبركاته - KY Chat");
+  const logEl = document.getElementById("log");
+  const statusEl = document.getElementById("status");
+  const inputEl = document.getElementById("input");
 
-  // Initialize Bugout with a shared room identifier
-  // Note: For a completely private chat room, change "bugout-chat-tutorial" to a unique random phrase.
-  var b = Bugout("bugout-chat-tutorial");
-  
-  // Create a shorter shorthand nickname from the long cryptographic address string
-  function getHandle(address) {
-    return address.substring(0, 6) + "...";
+  function log(message, type = "info") {
+    const time = new Date().toLocaleTimeString();
+    let prefix = `[${time}] `;
+    if (type === "system") prefix += "[System] ";
+    if (type === "me") prefix += "You: ";
+    if (type === "error") prefix += "❌ ";
+    
+    logEl.textContent += prefix + message + "\n";
+    logEl.scrollTop = logEl.scrollHeight; // Auto-scroll
   }
 
-  log("My Address: " + b.address() + " [ " + getHandle(b.address()) + " ]");
+  log("Bismillah! السلام عليكم ورحمة الله وبركاته - KY Chat", "system");
 
-  // Triggered when another user connects to the room
-  b.on("seen", function(address) { 
-    log("[ System ]: User " + getHandle(address) + " has joined the chat."); 
+  // Initialize Bugout
+  const roomName = "ky-chat-room-2026"; // Change this for a private room
+  const b = new Bugout(roomName);
+
+  function getHandle(address) {
+    return address ? address.substring(0, 8) + "..." : "Unknown";
+  }
+
+  // Wait for Bugout to be ready
+  b.on("ready", function() {
+    log("Connected to P2P network! Your ID: " + getHandle(b.address()), "system");
+    statusEl.textContent = "✅ Connected | Room: " + roomName;
+    statusEl.style.color = "#4ade80";
   });
 
-  // Triggered when another user leaves/disconnects
+  b.on("seen", function(address) {
+    log("User " + getHandle(address) + " joined the chat.", "system");
+  });
+
   b.on("left", function(address) {
-    log("[ System ]: User " + getHandle(address) + " has left the chat.");
+    log("User " + getHandle(address) + " left the chat.", "system");
   });
 
-  // Triggered when a message is received from the network
   b.on("message", function(address, message) {
-    log(getHandle(address) + ": " + message);
+    if (address !== b.address()) { // Don't echo our own messages again
+      log(getHandle(address) + ": " + message);
+    }
   });
 
-  // Handle typing and hitting 'Enter' to send
-  document.getElementById("input").onkeydown = function(ev) {
-    if (ev.keyCode == 13) { // Enter key
-      ev.preventDefault(); // Stop a line break from creating inside contenteditable
+  // Send message on Enter
+  inputEl.addEventListener("keydown", function(ev) {
+    if (ev.key === "Enter") {
+      ev.preventDefault();
       
-      var msg = ev.target.innerText.trim();
+      const msg = inputEl.innerText.trim();
       if (msg.length === 0) return;
 
-      // Broadcast the message to all connected peers in the room
+      // Send to peers
       b.send(msg);
       
-      // Since b.send() broadcasts to *others*, manually log our own message locally
-      log(getHandle(b.address()) + " (Me): " + msg);
+      // Show locally
+      log(msg, "me");
       
-      // Clear the input area cleanly
-      ev.target.innerText = "";
+      // Clear input
+      inputEl.innerText = "";
     }
-  }
+  });
+
+  // Focus input automatically
+  setTimeout(() => inputEl.focus(), 500);
+
+  // Optional: Show debug info
+  console.log("Bugout initialized with room:", roomName);
 </script>
 </body>
 </html>
