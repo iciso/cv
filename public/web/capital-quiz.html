@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌍 Capital Cities Quiz · 50 Countries</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #f0f5fb;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px -8px rgba(0, 20, 40, 0.18);
+            padding: 2.2rem 2.2rem 2.8rem;
+            transition: 0.2s;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #0a2a3f;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            border-bottom: 3px solid #dce6ef;
+            padding-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+        h1 .badge {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2a6b8a;
+            background: #dce8f2;
+            padding: 0.15rem 1.2rem;
+            border-radius: 60px;
+            letter-spacing: 0.3px;
+        }
+        .subhead {
+            color: #3d6a84;
+            margin-bottom: 1.8rem;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .stats {
+            background: #eaf1f8;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a4058;
+        }
+        .stats span {
+            background: white;
+            padding: 0.05rem 0.7rem;
+            border-radius: 40px;
+            margin: 0 0.1rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin: 1.5rem 0 1.8rem;
+        }
+        .country-card {
+            background: #f8fbfe;
+            border: 2px solid #e2ebf3;
+            border-radius: 20px;
+            padding: 0.8rem 0.6rem 0.6rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.15s;
+            position: relative;
+            user-select: none;
+        }
+        .country-card:hover {
+            transform: translateY(-3px);
+            border-color: #8bb3cc;
+            box-shadow: 0 6px 16px rgba(0, 40, 70, 0.08);
+        }
+        .country-card .flag {
+            width: 100%;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #eef4f9;
+            border: 1px solid #d9e4ed;
+            margin-bottom: 0.4rem;
+        }
+        .country-card .name {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1a3f57;
+            line-height: 1.2;
+        }
+        .country-card .status {
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: block;
+            margin-top: 0.2rem;
+        }
+        .country-card .status.correct {
+            color: #1f8b5e;
+        }
+        .country-card .status.wrong {
+            color: #b13e4b;
+        }
+        .country-card .status.pending {
+            color: #8a9aa8;
+        }
+        .country-card.answered-correct {
+            background: #e6f5ef;
+            border-color: #309b6b;
+        }
+        .country-card.answered-wrong {
+            background: #fde9eb;
+            border-color: #c95a66;
+        }
+        .reset-btn {
+            background: #1a5f82;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.6rem 2rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 4px 12px rgba(26, 95, 130, 0.2);
+            letter-spacing: 0.3px;
+        }
+        .reset-btn:hover {
+            background: #0f4866;
+            transform: scale(0.97);
+        }
+        .reset-btn:active {
+            transform: scale(0.93);
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .footnote {
+            margin-top: 1.8rem;
+            border-top: 2px solid #dce8f2;
+            padding-top: 1.2rem;
+            font-size: 0.85rem;
+            color: #4f6f84;
+            text-align: center;
+        }
+        .footnote i {
+            background: #e6edf4;
+            padding: 0.1rem 1.2rem;
+            border-radius: 60px;
+            font-style: normal;
+        }
+        @media (max-width: 600px) {
+            .card { padding: 1.2rem; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+            h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>
+        🌍 Capital Cities
+        <span class="badge">50 countries</span>
+    </h1>
+    <div class="subhead">
+        <span>Click any country to guess its capital</span>
+        <span class="stats">✅ <span id="correctCount">0</span> &nbsp;·&nbsp; ❌ <span id="wrongCount">0</span> &nbsp;·&nbsp; ⏳ <span id="remainingCount">50</span></span>
+    </div>
+
+    <div class="grid" id="gridContainer"></div>
+
+    <div class="footer">
+        <button class="reset-btn" id="resetBtn">🔄 Reset Quiz</button>
+        <span style="font-size:0.85rem; color:#4f6f84;">💡 Type the capital city when prompted</span>
+    </div>
+
+    <div class="footnote">
+        <i>🇺🇳 Flags from flagcdn.com · 50 most recognised countries</i>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- 50 countries (no duplicates, includes original 21 + 29 new) -----
+        const COUNTRIES = [
+            // Original 21 (with updated UK, China capital)
+            { name: "USA", flag: "https://flagcdn.com/w320/us.png", capital: "Washington D.C." },
+            { name: "Brazil", flag: "https://flagcdn.com/w320/br.png", capital: "Brasilia" },
+            { name: "United Kingdom", flag: "https://flagcdn.com/w320/gb.png", capital: "London" },
+            { name: "Spain", flag: "https://flagcdn.com/w320/es.png", capital: "Madrid" },
+            { name: "Japan", flag: "https://flagcdn.com/w320/jp.png", capital: "Tokyo" },
+            { name: "France", flag: "https://flagcdn.com/w320/fr.png", capital: "Paris" },
+            { name: "Italy", flag: "https://flagcdn.com/w320/it.png", capital: "Rome" },
+            { name: "Germany", flag: "https://flagcdn.com/w320/de.png", capital: "Berlin" },
+            { name: "Argentina", flag: "https://flagcdn.com/w320/ar.png", capital: "Buenos Aires" },
+            { name: "South Africa", flag: "https://flagcdn.com/w320/za.png", capital: "Pretoria" },
+            { name: "Canada", flag: "https://flagcdn.com/w320/ca.png", capital: "Ottawa" },
+            { name: "Mexico", flag: "https://flagcdn.com/w320/mx.png", capital: "Mexico City" },
+            { name: "Egypt", flag: "https://flagcdn.com/w320/eg.png", capital: "Cairo" },
+            { name: "Russia", flag: "https://flagcdn.com/w320/ru.png", capital: "Moscow" },
+            { name: "Greece", flag: "https://flagcdn.com/w320/gr.png", capital: "Athens" },
+            { name: "Australia", flag: "https://flagcdn.com/w320/au.png", capital: "Canberra" },
+            { name: "China", flag: "https://flagcdn.com/w320/cn.png", capital: "Beijing" },
+            { name: "Portugal", flag: "https://flagcdn.com/w320/pt.png", capital: "Lisbon" },
+            { name: "Turkey", flag: "https://flagcdn.com/w320/tr.png", capital: "Ankara" },
+            { name: "Saudi Arabia", flag: "https://flagcdn.com/w320/sa.png", capital: "Riyadh" },
+            { name: "India", flag: "https://flagcdn.com/w320/in.png", capital: "New Delhi" },
+            // Additional 29 countries (no duplicates)
+            { name: "Afghanistan", flag: "https://flagcdn.com/w320/af.png", capital: "Kabul" },
+            { name: "Algeria", flag: "https://flagcdn.com/w320/dz.png", capital: "Algiers" },
+            { name: "Belgium", flag: "https://flagcdn.com/w320/be.png", capital: "Brussels" },
+            { name: "Chile", flag: "https://flagcdn.com/w320/cl.png", capital: "Santiago" },
+            { name: "Colombia", flag: "https://flagcdn.com/w320/co.png", capital: "Bogotá" },
+            { name: "Cuba", flag: "https://flagcdn.com/w320/cu.png", capital: "Havana" },
+            { name: "Denmark", flag: "https://flagcdn.com/w320/dk.png", capital: "Copenhagen" },
+            { name: "Ethiopia", flag: "https://flagcdn.com/w320/et.png", capital: "Addis Ababa" },
+            { name: "Finland", flag: "https://flagcdn.com/w320/fi.png", capital: "Helsinki" },
+            { name: "Ghana", flag: "https://flagcdn.com/w320/gh.png", capital: "Accra" },
+            { name: "Hungary", flag: "https://flagcdn.com/w320/hu.png", capital: "Budapest" },
+            { name: "Indonesia", flag: "https://flagcdn.com/w320/id.png", capital: "Jakarta" },
+            { name: "Iran", flag: "https://flagcdn.com/w320/ir.png", capital: "Tehran" },
+            { name: "Iraq", flag: "https://flagcdn.com/w320/iq.png", capital: "Baghdad" },
+            { name: "Ireland", flag: "https://flagcdn.com/w320/ie.png", capital: "Dublin" },
+            { name: "Israel", flag: "https://flagcdn.com/w320/il.png", capital: "Jerusalem" },
+            { name: "Kenya", flag: "https://flagcdn.com/w320/ke.png", capital: "Nairobi" },
+            { name: "Malaysia", flag: "https://flagcdn.com/w320/my.png", capital: "Kuala Lumpur" },
+            { name: "Netherlands", flag: "https://flagcdn.com/w320/nl.png", capital: "Amsterdam" },
+            { name: "New Zealand", flag: "https://flagcdn.com/w320/nz.png", capital: "Wellington" },
+            { name: "Nigeria", flag: "https://flagcdn.com/w320/ng.png", capital: "Abuja" },
+            { name: "Norway", flag: "https://flagcdn.com/w320/no.png", capital: "Oslo" },
+            { name: "Pakistan", flag: "https://flagcdn.com/w320/pk.png", capital: "Islamabad" },
+            { name: "Peru", flag: "https://flagcdn.com/w320/pe.png", capital: "Lima" },
+            { name: "Philippines", flag: "https://flagcdn.com/w320/ph.png", capital: "Manila" },
+            { name: "Poland", flag: "https://flagcdn.com/w320/pl.png", capital: "Warsaw" },
+            { name: "Romania", flag: "https://flagcdn.com/w320/ro.png", capital: "Bucharest" },
+            { name: "Sweden", flag: "https://flagcdn.com/w320/se.png", capital: "Stockholm" },
+            { name: "Ukraine", flag: "https://flagcdn.com/w320/ua.png", capital: "Kyiv" }
+        ];
+
+        // ----- state -----
+        let answered = {}; // key: country name -> 'correct' | 'wrong' | undefined
+
+        const grid = document.getElementById('gridContainer');
+        const correctSpan = document.getElementById('correctCount');
+        const wrongSpan = document.getElementById('wrongCount');
+        const remainingSpan = document.getElementById('remainingCount');
+
+        function updateStats() {
+            let correct = 0, wrong = 0;
+            for (const key in answered) {
+                if (answered[key] === 'correct') correct++;
+                else if (answered[key] === 'wrong') wrong++;
+            }
+            const remaining = COUNTRIES.length - correct - wrong;
+            correctSpan.textContent = correct;
+            wrongSpan.textContent = wrong;
+            remainingSpan.textContent = remaining;
+        }
+
+        function renderGrid() {
+            grid.innerHTML = '';
+            COUNTRIES.forEach((country, idx) => {
+                const card = document.createElement('div');
+                card.className = 'country-card';
+                const status = answered[country.name] || 'pending';
+                if (status === 'correct') card.classList.add('answered-correct');
+                else if (status === 'wrong') card.classList.add('answered-wrong');
+
+                const flagImg = document.createElement('img');
+                flagImg.className = 'flag';
+                flagImg.src = country.flag;
+                flagImg.alt = `Flag of ${country.name}`;
+                flagImg.loading = 'lazy';
+
+                const nameSpan = document.createElement('div');
+                nameSpan.className = 'name';
+                nameSpan.textContent = country.name;
+
+                const statusSpan = document.createElement('span');
+                statusSpan.className = `status ${status}`;
+                if (status === 'correct') statusSpan.textContent = '✅';
+                else if (status === 'wrong') statusSpan.textContent = '❌';
+                else statusSpan.textContent = '⏳';
+
+                card.appendChild(flagImg);
+                card.appendChild(nameSpan);
+                card.appendChild(statusSpan);
+
+                card.addEventListener('click', function() {
+                    // if already answered, skip
+                    if (answered[country.name]) return;
+
+                    const userAnswer = prompt(`What is the capital of ${country.name}?`);
+                    if (userAnswer === null) return; // cancelled
+
+                    const trimmed = userAnswer.trim();
+                    if (trimmed === '') {
+                        alert('Please enter a city name.');
+                        return;
+                    }
+
+                    // case-insensitive comparison
+                    const isCorrect = trimmed.toLowerCase() === country.capital.toLowerCase();
+                    answered[country.name] = isCorrect ? 'correct' : 'wrong';
+
+                    // update UI
+                    renderGrid();
+                    updateStats();
+
+                    if (isCorrect) {
+                        alert(`✅ Correct! The capital of ${country.name} is ${country.capital}.`);
+                    } else {
+                        alert(`❌ "${trimmed}" is not the capital of ${country.name}. The correct answer is ${country.capital}.`);
+                    }
+                });
+
+                grid.appendChild(card);
+            });
+            updateStats();
+        }
+
+        function resetQuiz() {
+            answered = {};
+            renderGrid();
+            updateStats();
+        }
+
+        document.getElementById('resetBtn').addEventListener('click', resetQuiz);
+
+        // initial render
+        renderGrid();
+
+        // expose for debugging
+        window.__quizData = { COUNTRIES, answered };
+    })();
+</script>
+</body>
+</html>
