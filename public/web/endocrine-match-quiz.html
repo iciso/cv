@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedMatch · Endocrine Quiz</title>
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #f4f9fc;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1.5rem;
+            color: #1a2e3f;
+        }
+        .quiz-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0,20,40,0.25);
+            padding: 2rem 2rem 2.5rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 3px solid #d0e4f0;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.8rem;
+            color: #0a2a44;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #2f6b8a;
+            margin-left: 0.5rem;
+        }
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background: #e7f0f7;
+            border-radius: 40px;
+            padding: 0.6rem 1.6rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+        .stats span {
+            font-weight: 500;
+            color: #1d4b66;
+        }
+        .stats .badge {
+            background: #1d4b66;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+        }
+        .question-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 1.5rem 1.8rem;
+            margin-bottom: 2.2rem;
+            box-shadow: 0 6px 18px rgba(0, 30, 50, 0.06);
+            border: 1px solid #e2edf5;
+            transition: box-shadow 0.2s;
+        }
+        .question-card:hover {
+            box-shadow: 0 10px 24px rgba(0, 40, 70, 0.08);
+        }
+        .q-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem;
+        }
+        .q-number {
+            background: #d7e6f0;
+            color: #11425e;
+            font-weight: 700;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+        }
+        .q-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #0c334a;
+        }
+        .match-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem 3rem;
+            margin-top: 0.8rem;
+        }
+        .match-left {
+            flex: 2 1 260px;
+        }
+        .match-right {
+            flex: 3 1 300px;
+            background: #f6fafd;
+            border-radius: 20px;
+            padding: 0.8rem 1.2rem 0.2rem 1.2rem;
+            border: 1px solid #dbe9f2;
+        }
+        .match-right .choice-item {
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #cddee9;
+        }
+        .match-right .choice-item:last-child {
+            border-bottom: none;
+        }
+        .choice-letter {
+            font-weight: 700;
+            color: #1a5a7a;
+            min-width: 24px;
+        }
+        .match-left .term-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.5rem 0;
+            flex-wrap: wrap;
+        }
+        .term-item label {
+            font-weight: 500;
+            min-width: 140px;
+            color: #103d55;
+        }
+        .term-item select {
+            background: white;
+            border: 1.5px solid #c4dae7;
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem 0.4rem 1rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #0a293d;
+            cursor: pointer;
+            transition: 0.15s;
+            min-width: 100px;
+        }
+        .term-item select:focus {
+            outline: none;
+            border-color: #2c7aa0;
+            box-shadow: 0 0 0 3px rgba(44, 122, 160, 0.2);
+        }
+        .term-item select.correct {
+            border-color: #1d9b6a;
+            background: #e5f6ef;
+        }
+        .term-item select.wrong {
+            border-color: #b13e4b;
+            background: #fde9eb;
+        }
+        .feedback-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.15rem 0.9rem;
+            border-radius: 40px;
+            margin-left: 0.6rem;
+        }
+        .feedback-badge.correct {
+            background: #b7e6d4;
+            color: #0b6040;
+        }
+        .feedback-badge.wrong {
+            background: #f8cfd3;
+            color: #9e2a38;
+        }
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2.5rem;
+            gap: 1rem 1.5rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: white;
+            border: 1.5px solid #b6d2e3;
+            padding: 0.6rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1a4f6e;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .btn-primary {
+            background: #1a5f82;
+            border-color: #1a5f82;
+            color: white;
+            box-shadow: 0 4px 10px rgba(26, 95, 130, 0.2);
+        }
+        .btn-primary:hover {
+            background: #0f4b68;
+            transform: scale(0.97);
+        }
+        .btn-secondary {
+            background: #eef5fa;
+            border-color: #c5dae8;
+        }
+        .btn-secondary:hover {
+            background: #dce9f2;
+        }
+        .score-box {
+            background: #dce9f2;
+            padding: 0.4rem 1.6rem;
+            border-radius: 60px;
+            font-weight: 600;
+            color: #08324a;
+        }
+        .footnote {
+            margin-top: 1.8rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #3f6d88;
+            border-top: 1px solid #d9e6f0;
+            padding-top: 1.5rem;
+        }
+        .footnote i {
+            font-style: normal;
+            background: #e1edf6;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+        }
+        @media (max-width: 700px) {
+            .quiz-wrapper { padding: 1.2rem; }
+            .match-grid { flex-direction: column; }
+            .term-item label { min-width: 100px; }
+        }
+	footer {
+      margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;
+      font-size: 0.95rem; color: #043c77; text-align: center; line-height: 1.8;
+    }
+    </style>
+</head>
+<body>
+<div class="quiz-wrapper">
+    <h1>🧬 MedMatch <small>endocrine · 22 questions</small></h1>
+    <div class="stats">
+        <span>📋 <span id="attemptCount">0</span> attempts · <span id="correctCount">0</span> correct</span>
+        <span class="badge">HCW · learning mode</span>
+    </div>
+
+    <!-- container for dynamic questions -->
+    <div id="quizContainer"></div>
+
+    <div class="action-bar">
+        <div class="btn-group">
+            <button class="btn btn-secondary" id="resetBtn">⟳ Reset all</button>
+            <button class="btn btn-primary" id="checkBtn">✔ Check answers</button>
+        </div>
+        <div class="score-box" id="scoreDisplay">0 / 0</div>
+    </div>
+    <div class="footnote">
+        <i>💡 Select answers, then check. Correct matches turn green · wrong ones red.</i>
+    </div>
+</div>
+<footer>
+    <i class="fa fa-home" aria-hidden="true" style="font-size:20px;color:teal;"></i> 
+    <a href="https://kyft.club/" style="color:#043c77; font-weight:bold; text-decoration:none;">KYFCT</a>: 
+    Uniting Families, <i class="far fa-heart" style="font-size:18px;color:red;"></i> Uniting the World.<br>
+    No <i class="far fa-copyright" style="font-size:16px;color:indigo;"></i>! Shared for the Ummah.
+  </footer>
+<script>
+    (function() {
+        // ------------------------------------------------------------
+        // QUIZ DATA – 22 matching questions (endocrine / hormone)
+        // Each question: { id, text, items: [ { term, correctIndex } ], choices: [string] }
+        // ------------------------------------------------------------
+        const QUIZ_DATA = [
+            { id: 1, text: 'Match the endocrine gland with its secretion.',
+                items: [
+                    { term: 'adenohypophysis', correctIndex: 3 },
+                    { term: 'neurohypophysis', correctIndex: 2 },
+                    { term: 'thyroid gland', correctIndex: 0 },
+                    { term: 'adrenal gland', correctIndex: 1 },
+                    { term: 'pineal gland', correctIndex: 4 }
+                ],
+                choices: ['calcitonin', 'aldosterone', 'ADH', 'TSH', 'melatonin'] },
+
+            { id: 2, text: 'Match the hormone with its primary function.',
+                items: [
+                    { term: 'FSH', correctIndex: 2 },
+                    { term: 'GH', correctIndex: 0 },
+                    { term: 'ACTH', correctIndex: 1 },
+                    { term: 'TSH', correctIndex: 4 },
+                    { term: 'ADH', correctIndex: 3 }
+                ],
+                choices: [
+                    'mobilizes fats, spares glucose, promotes protein synthesis',
+                    'stimulates adrenal cortex',
+                    'stimulates follicle development in ovaries',
+                    'kidney tubules reabsorb water',
+                    'stimulates T3/T4 production'
+                ] },
+
+            { id: 3, text: 'Match the hormone with the condition it balances.',
+                items: [
+                    { term: 'insulin', correctIndex: 3 },
+                    { term: 'ADH', correctIndex: 1 },
+                    { term: 'aldosterone', correctIndex: 0 },
+                    { term: 'thyroxine', correctIndex: 4 },
+                    { term: 'parathyroid hormone', correctIndex: 2 }
+                ],
+                choices: [
+                    'loss of Na⁺ from extracellular fluids',
+                    'dehydration & low blood pressure',
+                    'decrease in blood Ca²⁺',
+                    'high blood sugar',
+                    'decrease in body metabolism'
+                ] },
+
+            { id: 4, text: 'Match the hormone with its function.',
+                items: [
+                    { term: 'thyroid-stimulating hormone', correctIndex: 2 },
+                    { term: 'growth hormone', correctIndex: 4 },
+                    { term: 'oxytocin', correctIndex: 0 },
+                    { term: 'adrenocorticotropic hormone', correctIndex: 1 },
+                    { term: 'follicle-stimulating hormone', correctIndex: 3 }
+                ],
+                choices: [
+                    'increases uterine smooth muscle contractions',
+                    'causes adrenal cortex to produce hormones',
+                    'stimulates thyroxine production',
+                    'affects ovaries and testes',
+                    'causes mitosis and cell growth'
+                ] },
+
+            { id: 5, text: 'Match the hormone with release site and function.',
+                items: [
+                    { term: 'TSH', correctIndex: 2 },
+                    { term: 'FSH', correctIndex: 4 },
+                    { term: 'LH', correctIndex: 1 },
+                    { term: 'oxytocin', correctIndex: 3 },
+                    { term: 'ADH', correctIndex: 0 }
+                ],
+                choices: [
+                    'posterior pituitary; kidneys reabsorb water',
+                    'anterior pituitary; ovulation & testosterone',
+                    'anterior pituitary; thyroid synthesizes thyroxine',
+                    'posterior pituitary; uterine contractions',
+                    'anterior pituitary; follicle growth & spermatogenesis'
+                ] },
+
+            { id: 6, text: 'Match the hormone with its function.',
+                items: [
+                    { term: 'prolactin', correctIndex: 4 },
+                    { term: 'oxytocin', correctIndex: 2 },
+                    { term: 'thyroxine', correctIndex: 1 },
+                    { term: 'calcitonin', correctIndex: 0 },
+                    { term: 'parathyroid hormone', correctIndex: 3 }
+                ],
+                choices: [
+                    'may inhibit osteoclast activity',
+                    'increases metabolic rate',
+                    'stimulates milk ejection',
+                    'raises blood Ca²⁺',
+                    'stimulates milk production'
+                ] },
+
+            { id: 7, text: 'Match the hormone with the gland that produces it.',
+                items: [
+                    { term: 'calcitonin', correctIndex: 1 },
+                    { term: 'parathyroid hormone', correctIndex: 4 },
+                    { term: 'adrenocorticotropic hormone', correctIndex: 3 },
+                    { term: 'glucocorticoids', correctIndex: 0 },
+                    { term: 'epinephrine', correctIndex: 2 }
+                ],
+                choices: ['adrenal cortex', 'thyroid gland', 'adrenal medulla', 'pituitary gland', 'parathyroid glands'] },
+
+            { id: 8, text: 'Match the structure with the hormone it produces.',
+                items: [
+                    { term: 'pineal gland', correctIndex: 0 },
+                    { term: 'testes', correctIndex: 2 },
+                    { term: 'thymus', correctIndex: 4 },
+                    { term: 'heart', correctIndex: 1 },
+                    { term: 'placenta', correctIndex: 3 }
+                ],
+                choices: ['melatonin', 'atrial natriuretic peptide', 'testosterone', 'HCG', 'thymosin'] },
+
+            { id: 9, text: 'Match the hormone with its function.',
+                items: [
+                    { term: 'melatonin', correctIndex: 2 },
+                    { term: 'testosterone', correctIndex: 0 },
+                    { term: 'thymosin', correctIndex: 4 },
+                    { term: 'atrial natriuretic peptide', correctIndex: 1 },
+                    { term: 'HCG', correctIndex: 3 }
+                ],
+                choices: [
+                    'sexual maturity & sperm production',
+                    'reduces blood volume/pressure, Na⁺',
+                    'associated with drowsiness at night',
+                    'helps sustain pregnancy',
+                    'essential for normal immune response'
+                ] },
+
+            { id: 10, text: 'Match the tissue with the hormone it produces.',
+                items: [
+                    { term: 'adipose tissue', correctIndex: 3 },
+                    { term: 'skin', correctIndex: 4 },
+                    { term: 'kidney', correctIndex: 1 },
+                    { term: 'duodenum (small intestine)', correctIndex: 0 },
+                    { term: 'stomach', correctIndex: 2 }
+                ],
+                choices: ['cholecystokinin', 'erythropoietin', 'gastrin', 'leptin', 'cholecalciferol'] },
+
+            { id: 11, text: 'Match the hormone with its function.',
+                items: [
+                    { term: 'leptin', correctIndex: 1 },
+                    { term: 'cholecalciferol', correctIndex: 3 },
+                    { term: 'erythropoietin', correctIndex: 4 },
+                    { term: 'cholecystokinin', correctIndex: 2 },
+                    { term: 'gastrin', correctIndex: 0 }
+                ],
+                choices: [
+                    'stimulates stomach to release HCl',
+                    'binds to CNS appetite-control neurons',
+                    'stimulates release of bile',
+                    'activated to vitamin D; Ca²⁺ absorption',
+                    'stimulates RBC production'
+                ] },
+
+            { id: 12, text: 'Match the hormone with the organ that produces it.',
+                items: [
+                    { term: 'glucagon', correctIndex: 0 },
+                    { term: 'TSH', correctIndex: 2 },
+                    { term: 'thyroxine', correctIndex: 4 },
+                    { term: 'renin', correctIndex: 3 },
+                    { term: 'ADH', correctIndex: 1 }
+                ],
+                choices: ['pancreas', 'posterior pituitary (neurohypophysis)', 'anterior pituitary (adenohypophysis)',
+                    'kidneys', 'thyroid gland'] },
+
+            { id: 13, text: 'Match the hormone with its function.',
+                items: [
+                    { term: 'glucagon', correctIndex: 0 },
+                    { term: 'TSH', correctIndex: 3 },
+                    { term: 'thyroxine', correctIndex: 4 },
+                    { term: 'erythropoietin', correctIndex: 2 },
+                    { term: 'ADH', correctIndex: 1 }
+                ],
+                choices: [
+                    'increases blood sugar (liver)',
+                    'increases water reabsorption in kidney',
+                    'increases RBC production',
+                    'stimulates thyroid to produce thyroxine',
+                    'increases metabolic rate'
+                ] },
+
+            { id: 14, text: 'Match the hormone with its category.',
+                items: [
+                    { term: 'FSH and LH', correctIndex: 3 },
+                    { term: 'cortisol', correctIndex: 1 },
+                    { term: 'androgens', correctIndex: 2 },
+                    { term: 'aldosterone', correctIndex: 0 }
+                ],
+                choices: ['mineralocorticoids', 'glucocorticoids', 'gonadocorticoids', 'gonadotropins'] },
+
+            { id: 15, text: 'Match the hormone class with its function.',
+                items: [
+                    { term: 'gonadotropins', correctIndex: 1 },
+                    { term: 'glucocorticoids', correctIndex: 2 },
+                    { term: 'androgens', correctIndex: 3 },
+                    { term: 'mineralocorticoids', correctIndex: 0 }
+                ],
+                choices: [
+                    'regulate Na⁺ reabsorption & electrolyte levels',
+                    'regulate gonadal functions',
+                    'increase glucose, fatty acids, amino acids during stress',
+                    'masculinizing effects in large quantities'
+                ] },
+
+            { id: 16, text: 'Match the gland with the hormone it releases.',
+                items: [
+                    { term: 'posterior pituitary', correctIndex: 3 },
+                    { term: 'anterior pituitary', correctIndex: 4 },
+                    { term: 'pancreas', correctIndex: 2 },
+                    { term: 'adrenal cortex', correctIndex: 0 },
+                    { term: 'adrenal medulla', correctIndex: 1 }
+                ],
+                choices: ['aldosterone', 'epinephrine', 'insulin', 'antidiuretic hormone', 'growth hormone'] },
+
+            { id: 17, text: 'Match the hormone with its function.',
+                items: [
+                    { term: 'antidiuretic hormone', correctIndex: 0 },
+                    { term: 'growth hormone', correctIndex: 1 },
+                    { term: 'insulin', correctIndex: 4 },
+                    { term: 'aldosterone', correctIndex: 2 },
+                    { term: 'epinephrine', correctIndex: 3 }
+                ],
+                choices: [
+                    'kidneys conserve water',
+                    'stimulates stem cells to undergo mitosis',
+                    'increases Na⁺ reabsorption in kidneys',
+                    'increases cell reactions during sympathetic response',
+                    'facilitates glucose transport into cells'
+                ] },
+
+            { id: 18, text: 'Match the homeostatic imbalance with the hormone that restores balance.',
+                items: [
+                    { term: 'lowered blood Ca²⁺', correctIndex: 1 },
+                    { term: 'too much blood Ca²⁺', correctIndex: 4 },
+                    { term: 'elevated blood sugar', correctIndex: 0 },
+                    { term: 'decreased blood sugar (hypoglycemia)', correctIndex: 3 },
+                    { term: 'excessive loss of Na⁺', correctIndex: 2 }
+                ],
+                choices: ['insulin', 'parathyroid hormone', 'aldosterone', 'glucagon', 'calcitonin'] },
+
+            { id: 19, text: 'Match the condition with the gland that produces the corrective hormone.',
+                items: [
+                    { term: 'end of nine-month pregnancy', correctIndex: 3 },
+                    { term: 'loss of Na⁺ from profuse sweating', correctIndex: 0 },
+                    { term: 'high blood sugar from sweets', correctIndex: 1 },
+                    { term: 'drop in blood Ca²⁺ from inactivity', correctIndex: 2 },
+                    { term: 'delayed or stunted growth', correctIndex: 4 }
+                ],
+                choices: ['adrenal cortex', 'pancreas', 'parathyroid gland', 'posterior pituitary', 'anterior pituitary'] },
+
+            { id: 20, text: 'Match the imbalance with the hormone deficiency/overproduction.',
+                items: [
+                    { term: 'gigantism', correctIndex: 4 },
+                    { term: 'diabetes mellitus', correctIndex: 3 },
+                    { term: 'sympathetic nervous system overactivity', correctIndex: 0 },
+                    { term: "Graves' disease", correctIndex: 1 },
+                    { term: 'diabetes insipidus', correctIndex: 2 }
+                ],
+                choices: [
+                    'oversecretion of catecholamines',
+                    'hypersecretion of thyroid hormone',
+                    'hyposecretion of ADH',
+                    'insulin deficiency',
+                    'overproduction of GH'
+                ] },
+
+            { id: 21, text: 'Match the cell region with the principal hormone produced.',
+                items: [
+                    { term: 'zona reticularis', correctIndex: 2 },
+                    { term: 'zona glomerulosa', correctIndex: 0 },
+                    { term: 'zona fasciculata', correctIndex: 1 },
+                    { term: 'beta cells', correctIndex: 3 },
+                    { term: 'alpha cells', correctIndex: 4 }
+                ],
+                choices: ['mineralocorticoids', 'glucocorticoids', 'androgens', 'insulin', 'glucagon'] },
+
+            { id: 22, text: 'Match the control mechanism with its description.',
+                items: [
+                    { term: 'humoral', correctIndex: 2 },
+                    { term: 'neural', correctIndex: 1 },
+                    { term: 'hormonal', correctIndex: 0 }
+                ],
+                choices: [
+                    'hormone release dependent upon other hormone levels',
+                    'axons causing hormone release',
+                    'monitoring blood levels of substances and correcting them'
+                ] }
+        ];
+
+        // ----- state -----
+        let userSelections = {};   // key: "qIdx-itemIdx" -> selected index (number)
+        let feedbackState = {};    // key: same -> 'correct' | 'wrong' | undefined
+        let totalCorrect = 0;
+        let attemptCounter = 0;
+
+        const container = document.getElementById('quizContainer');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const correctSpan = document.getElementById('correctCount');
+        const attemptSpan = document.getElementById('attemptCount');
+
+        function renderQuiz() {
+            container.innerHTML = '';
+            let html = '';
+            QUIZ_DATA.forEach((q, qIdx) => {
+                const qId = q.id;
+                html += `<div class="question-card" data-qidx="${qIdx}">`;
+                html += `<div class="q-header"><span class="q-number">Q${qId}</span><span class="q-text">${q.text}</span></div>`;
+                html += `<div class="match-grid">`;
+                // left column: items with select
+                html += `<div class="match-left">`;
+                q.items.forEach((item, iIdx) => {
+                    const key = `${qIdx}-${iIdx}`;
+                    const selected = userSelections[key] !== undefined ? userSelections[key] : '';
+                    const fb = feedbackState[key] || '';
+                    let selectClass = '';
+                    if (fb === 'correct') selectClass = 'correct';
+                    else if (fb === 'wrong') selectClass = 'wrong';
+                    html += `<div class="term-item">`;
+                    html += `<label for="sel-${qIdx}-${iIdx}">${item.term}</label>`;
+                    html += `<select id="sel-${qIdx}-${iIdx}" class="${selectClass}" data-qidx="${qIdx}" data-iidx="${iIdx}">`;
+                    html += `<option value="">—</option>`;
+                    q.choices.forEach((choice, cIdx) => {
+                        const sel = (selected === cIdx) ? 'selected' : '';
+                        html += `<option value="${cIdx}" ${sel}>${String.fromCharCode(65 + cIdx)}. ${choice}</option>`;
+                    });
+                    html += `</select>`;
+                    if (fb === 'correct') html += `<span class="feedback-badge correct">✓</span>`;
+                    else if (fb === 'wrong') html += `<span class="feedback-badge wrong">✗</span>`;
+                    html += `</div>`;
+                });
+                html += `</div>`;
+                // right column: choices (lettered)
+                html += `<div class="match-right">`;
+                q.choices.forEach((choice, cIdx) => {
+                    html += `<div class="choice-item"><span class="choice-letter">${String.fromCharCode(65 + cIdx)}.</span> ${choice}</div>`;
+                });
+                html += `</div>`;
+                html += `</div></div>`;
+            });
+            container.innerHTML = html;
+
+            // attach event listeners to selects
+            document.querySelectorAll('select[data-qidx]').forEach(sel => {
+                sel.addEventListener('change', function(e) {
+                    const qIdx = parseInt(this.dataset.qidx);
+                    const iIdx = parseInt(this.dataset.iidx);
+                    const key = `${qIdx}-${iIdx}`;
+                    const val = this.value;
+                    if (val === '') {
+                        delete userSelections[key];
+                        delete feedbackState[key];
+                    } else {
+                        userSelections[key] = parseInt(val);
+                        // remove feedback if selection changes
+                        delete feedbackState[key];
+                    }
+                    // remove class
+                    this.classList.remove('correct', 'wrong');
+                    // remove sibling feedback badge
+                    const parent = this.parentElement;
+                    const badge = parent.querySelector('.feedback-badge');
+                    if (badge) badge.remove();
+                    updateScoreAndStats();
+                });
+            });
+            updateScoreAndStats();
+        }
+
+        function updateScoreAndStats() {
+            // count how many are correct among those with feedback
+            let correct = 0;
+            let total = 0;
+            for (const key in feedbackState) {
+                if (feedbackState[key] === 'correct') correct++;
+                total++;
+            }
+            totalCorrect = correct;
+            const totalAnswered = Object.keys(feedbackState).length;
+            scoreDisplay.textContent = `${correct} / ${totalAnswered}`;
+            correctSpan.textContent = correct;
+            attemptSpan.textContent = attemptCounter;
+        }
+
+        function checkAnswers() {
+            // gather all selections
+            let anyChange = false;
+            let newFeedback = {};
+
+            QUIZ_DATA.forEach((q, qIdx) => {
+                q.items.forEach((item, iIdx) => {
+                    const key = `${qIdx}-${iIdx}`;
+                    const selected = userSelections[key];
+                    if (selected === undefined) {
+                        // not answered, keep no feedback
+                        return;
+                    }
+                    const isCorrect = (selected === item.correctIndex);
+                    newFeedback[key] = isCorrect ? 'correct' : 'wrong';
+                    if (feedbackState[key] !== newFeedback[key]) anyChange = true;
+                });
+            });
+
+            // apply feedback
+            for (const key in newFeedback) {
+                feedbackState[key] = newFeedback[key];
+            }
+            // remove feedback for unanswered
+            for (const key in feedbackState) {
+                const [qIdx, iIdx] = key.split('-').map(Number);
+                if (userSelections[key] === undefined) {
+                    delete feedbackState[key];
+                }
+            }
+
+            // re-render to show badges and colors
+            renderQuiz();
+            // increment attempt if any feedback was applied
+            if (Object.keys(feedbackState).length > 0) {
+                attemptCounter++;
+                attemptSpan.textContent = attemptCounter;
+            }
+            updateScoreAndStats();
+        }
+
+        function resetAll() {
+            userSelections = {};
+            feedbackState = {};
+            totalCorrect = 0;
+            // do not reset attempt counter? we keep attempts for history
+            renderQuiz();
+            updateScoreAndStats();
+        }
+
+        // initial render
+        renderQuiz();
+
+        // event listeners
+        document.getElementById('checkBtn').addEventListener('click', checkAnswers);
+        document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+        // helper: re-run update after manual change (handled via change event)
+
+        // additional: sync score on load
+        updateScoreAndStats();
+
+    })();
+</script>
+</body>
+</html>
