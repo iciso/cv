@@ -7,15 +7,13 @@
   <style>
     body { background-color: #333; font-size: 1.5em; padding: 0em 0.25em; font-family: monospace; }
     pre { color: #fff; white-space: pre-wrap; word-wrap: break-word; text-shadow: 0 0 10px #ccc; margin: 0; }
-    #log { min-height: 200px; padding-bottom: 1em; }
+    #log { min-height: 200px; margin-bottom: 20px; }
     #input { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; color: #fff; }
-    #input::before { content: "> "; color: #aaa; }
+    #input::before { content: "> "; color: #50fa7b; }
   </style>
   <script>
     function log(message) {
       document.getElementById("log").textContent += message + "\n";
-      // Auto-scroll to the bottom when new messages arrive
-      window.scrollTo(0, document.body.scrollHeight);
     }
   </script>
   <!-- Loading Bugout library -->
@@ -23,45 +21,55 @@
 </head>
 <body>
   <pre id="log"></pre>
-  <pre id="input" contenteditable="true"></pre>
+  <div id="input" contenteditable="true"></div>
 
 <script>
   log("Bismillah! السلام عليكم ورحمة الله وبركاته - KY Chat");
 
-  // Initialize Bugout instance
+  // Initialize Bugout with a shared room identifier
+  // Note: For a completely private chat room, change "bugout-chat-tutorial" to a unique random phrase.
   var b = Bugout("bugout-chat-tutorial");
   
-  log(b.address() + " [ me ]");
+  // Create a shorter shorthand nickname from the long cryptographic address string
+  function getHandle(address) {
+    return address.substring(0, 6) + "...";
+  }
 
-  // Listen for when another peer connects
+  log("My Address: " + b.address() + " [ " + getHandle(b.address()) + " ]");
+
+  // Triggered when another user connects to the room
   b.on("seen", function(address) { 
-    log(address + " [ seen ]"); 
+    log("[ System ]: User " + getHandle(address) + " has joined the chat."); 
   });
 
-  // Listen for incoming messages
+  // Triggered when another user leaves/disconnects
+  b.on("left", function(address) {
+    log("[ System ]: User " + getHandle(address) + " has left the chat.");
+  });
+
+  // Triggered when a message is received from the network
   b.on("message", function(address, message) {
-    log(address + ": " + message);
+    log(getHandle(address) + ": " + message);
   });
 
-  // Handle message sending input
+  // Handle typing and hitting 'Enter' to send
   document.getElementById("input").onkeydown = function(ev) {
-    if (ev.key === "Enter" || ev.keyCode === 13) {
-      ev.preventDefault(); // Stop the default newline break
+    if (ev.keyCode == 13) { // Enter key
+      ev.preventDefault(); // Stop a line break from creating inside contenteditable
       
-      var text = ev.target.textContent.trim();
+      var msg = ev.target.innerText.trim();
+      if (msg.length === 0) return;
+
+      // Broadcast the message to all connected peers in the room
+      b.send(msg);
       
-      if (text.length > 0) {
-        // Send message out to the WebRTC swarm
-        b.send(text);
-        
-        // Locally log your own message so you can see it instantly
-        log(b.address() + ": " + text);
-        
-        // Clear the input box cleanly
-        ev.target.textContent = "";
-      }
+      // Since b.send() broadcasts to *others*, manually log our own message locally
+      log(getHandle(b.address()) + " (Me): " + msg);
+      
+      // Clear the input area cleanly
+      ev.target.innerText = "";
     }
-  };
+  }
 </script>
 </body>
 </html>
