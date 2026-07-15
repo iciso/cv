@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>🌳 Generations 3, 4, 5 · Family Tree Explorer</title>
+    <!-- Google Font & clean style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #f6f3f0;
+            font-family: 'Inter', sans-serif;
+            padding: 2rem 1.5rem;
+            color: #1e2a3a;
+        }
+        .app-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 36px;
+            box-shadow: 0 20px 50px -10px rgba(0,20,30,0.15);
+            padding: 2rem 2.2rem 2.8rem;
+        }
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 3px solid #d9d0c5;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.8rem;
+            color: #1d2e44;
+        }
+        h1 span {
+            background: #b8a48b;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.1rem 1.2rem;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+        }
+        .subhead {
+            background: #ece5dd;
+            border-radius: 60px;
+            padding: 0.8rem 1.8rem;
+            margin-bottom: 2.2rem;
+            font-weight: 500;
+            color: #2c3f52;
+            font-size: 0.95rem;
+            display: inline-block;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem 2.5rem;
+            margin-bottom: 1.8rem;
+        }
+        .col {
+            flex: 1 1 200px;
+            min-width: 180px;
+        }
+        .col label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+            color: #3b4f62;
+            margin-bottom: 0.4rem;
+        }
+        .col select {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 60px;
+            border: 2px solid #d6cdc2;
+            background: white;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #1f3142;
+            cursor: pointer;
+            transition: 0.15s;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%233b4f62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px;
+        }
+        .col select:focus {
+            outline: none;
+            border-color: #7f6b58;
+            box-shadow: 0 0 0 3px rgba(127, 107, 88, 0.15);
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 1rem;
+            margin: 1.2rem 0 1.8rem;
+        }
+        .btn {
+            background: white;
+            border: 2px solid #cdc0b3;
+            padding: 0.5rem 1.6rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2f4155;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            letter-spacing: 0.2px;
+        }
+        .btn:hover {
+            background: #ece3da;
+            border-color: #a6907b;
+            transform: scale(0.96);
+        }
+        .btn-primary {
+            background: #1d2e44;
+            border-color: #1d2e44;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #142233;
+            border-color: #142233;
+        }
+        .btn-success {
+            background: #2d6a4f;
+            border-color: #2d6a4f;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #1f523d;
+        }
+        .btn-gold {
+            background: #b68b5c;
+            border-color: #b68b5c;
+            color: white;
+        }
+        .btn-gold:hover {
+            background: #9e774a;
+        }
+        .result-panel {
+            background: #f2ede8;
+            border-radius: 28px;
+            padding: 1.5rem 2rem;
+            margin: 1.8rem 0 1.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            align-items: flex-start;
+        }
+        .result-panel textarea {
+            flex: 2 1 300px;
+            background: white;
+            border: 2px solid #d6cdc2;
+            border-radius: 20px;
+            padding: 0.9rem 1.2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 90px;
+            color: #1b2c3d;
+        }
+        .result-panel .name-box {
+            flex: 1 1 160px;
+            background: white;
+            border-radius: 60px;
+            padding: 0.6rem 1.6rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1d2e44;
+            border: 2px solid #d6cdc2;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+        }
+        .gallery {
+            margin-top: 1.8rem;
+            background: #faf8f6;
+            border-radius: 28px;
+            padding: 1.2rem 1.8rem 1.8rem;
+            border: 2px dashed #d6cdc2;
+            text-align: center;
+        }
+        .gallery img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            margin-top: 0.5rem;
+        }
+        .gallery .empty-message {
+            color: #8f7b68;
+            font-weight: 500;
+            padding: 1.2rem 0;
+        }
+        .footnote {
+            margin-top: 2.5rem;
+            border-top: 2px solid #e0d6cc;
+            padding-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #5b6f80;
+            text-align: center;
+        }
+        .footnote i {
+            background: #e8e0d8;
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px;
+            font-style: normal;
+        }
+        @media (max-width: 650px) {
+            .app-container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; flex-wrap: wrap; }
+            .row { gap: 1rem; }
+            .btn-group .btn { flex: 1 1 auto; }
+        }
+      footer {
+      margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;
+      font-size: 0.95rem; color: #043c77; text-align: center; line-height: 1.8;
+    }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <h1>🌳 Family Generations <span>3 · 4 · 5</span></h1>
+    <div class="subhead">👤 Asad Khan = Generation 1 · explore your ancestors</div>
+
+    <!-- dropdowns -->
+    <div class="row">
+        <div class="col">
+            <label for="gen3Select">🔹 Generation 3</label>
+            <select id="gen3Select">
+                <option value="">— select —</option>
+                <option value="Aiysha Bivi">Aiysha Bivi</option>
+                <option value="Rabiya Bivi">Rabiya Bivi</option>
+                <option value="A. K. Kattoo">A. K. Kattoo</option>
+                <option value="Ashiya Bivi">Ashiya Bivi</option>
+                <option value="Sara Bivi">Sara Bivi</option>
+                <option value="Usman Kattoo">Usman Kattoo</option>
+                <option value="Kathija Bivi-Kathuma">Kathija Bivi-Kathuma</option>
+                <option value="Haleema Bivi">Haleema Bivi</option>
+                <option value="Moosa Katoo">Moosa Katoo</option>
+                <option value="Hashim Katoo">Hashim Katoo</option>
+                <option value="Ebrahim Katoo">Ebrahim Katoo</option>
+            </select>
+        </div>
+        <div class="col">
+            <label for="gen4Select">🔸 Generation 4</label>
+            <select id="gen4Select">
+                <option value="">— select —</option>
+                <option value="Mohamed Essa">Mohamed Essa</option>
+                <option value="Mohamed Yusuf">Mohamed Yusuf</option>
+                <option value="Mohamed Jaffer">Mohamed Jaffer</option>
+                <option value="Khairun Nissa">Khairun Nissa</option>
+                <option value="Zulaika Bivi">Zulaika Bivi</option>
+                <option value="Zainaba Beevi">Zainaba Beevi</option>
+                <option value="Anwar Firoze">Anwar Firoze</option>
+                <option value="Adhila Beevi">Adhila Beevi</option>
+                <option value="Latheefa Banu">Latheefa Banu</option>
+                <option value="Noorjehan">Noorjehan</option>
+                <option value="Safia Wahab">Safia Wahab</option>
+                <option value="A. K. Ameen Khattu">A. K. Ameen Khattu</option>
+                <option value="Abdul Ghani Khan">Abdul Ghani Khan</option>
+            </select>
+        </div>
+        <div class="col">
+            <label for="gen5Select">🔹 Generation 5</label>
+            <select id="gen5Select">
+                <option value="">— select —</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- action buttons -->
+    <div class="btn-group">
+        <button class="btn" data-action="g3-name">📛 G3 Name</button>
+        <button class="btn" data-action="g3-rel">📜 G3 Relation</button>
+        <button class="btn" data-action="g4-name">📛 G4 Name</button>
+        <button class="btn" data-action="g4-rel">📜 G4 Relation</button>
+        <button class="btn btn-primary" data-action="show-choice">⭐ Show my choice</button>
+        <button class="btn btn-gold" data-action="green-guest">✨ Green + Chief Guest</button>
+        <button class="btn btn-success" data-action="masha">🤲 Masha Allah</button>
+    </div>
+
+    <!-- result panel -->
+    <div class="result-panel">
+        <div class="name-box" id="nameDisplay">👤 Relative</div>
+        <textarea id="relationDisplay" rows="4" placeholder="Relationship details will appear here…"></textarea>
+    </div>
+
+    <!-- gallery / image area -->
+    <div class="gallery" id="galleryArea">
+        <div class="empty-message">🖼️ Choose a relative &amp; click "Show my choice" or "Green + Chief Guest"</div>
+    </div>
+
+    <div class="footnote">
+        <i>💡 Select a Generation 3 → then Generation 4 updates. Select Gen 4 → Gen 5 updates. Explore!</i>
+    </div>
+</div>
+
+<footer>
+    <i class="fa fa-home" aria-hidden="true" style="font-size:20px;color:teal;"></i> 
+    <a href="https://kyft.club/" style="color:#043c77; font-weight:bold; text-decoration:none;">KYFCT</a>: 
+    Uniting Families, <i class="far fa-heart" style="font-size:18px;color:red;"></i> Uniting the World.<br>
+    No <i class="far fa-copyright" style="font-size:16px;color:indigo;"></i>! Shared for the Ummah.
+  </footer>
+
+<script>
+    (function() {
+        // ----- DATA -----
+        // Gen3 -> Gen4 mapping (used to populate Gen4 based on Gen3)
+        const gen3ToGen4 = {
+            "Aiysha Bivi": ["Mohamed Essa", "Mohamed Yusuf", "Mohamed Jaffer", "Khairun Nissa", "Zulaika Bivi"],
+            "Rabiya Bivi": ["Zainaba Beevi", "Anwar Firoze", "Mohamed Jaffer", "Hameeda Beevi", "Adhila Beevi", "Latheefa Banu", "Noorjehan"],
+            "A. K. Kattoo": ["Safia Wahab", "A. K. Ameen Khattu"],
+            "Ashiya Bivi": ["Abdul Ghani Khan"],
+            "Sara Bivi": ["Safia Wahab", "A. K. Ameen Khattu"],
+            "Usman Kattoo": ["Abdul Rahim K.-Naushad", "Katheeja Syed Hussain", "Abdul Rasheed", "Aslam Osman", "Mehrunissa"],
+            "Kathija Bivi-Kathuma": [],
+            "Haleema Bivi": [],
+            "Moosa Katoo": [],
+            "Hashim Katoo": [],
+            "Ebrahim Katoo": []
+        };
+
+        // Gen4 -> Gen5 mapping
+        const gen4ToGen5 = {
+            "Mohamed Essa": ["Abdul Hameed", "Shamshad Hashim", "Mohamed Rafique", "Zahida Shafique"],
+            "Mohamed Yusuf": ["Mohamed Yusuf did not marry"],
+            "Mohamed Jaffer": ["Haris Jaffer", "Harshad Jaffer", "Hasina Jaffer", "Haroon Jaffer"],
+            "Khairun Nissa": ["Imthiaz M. I.", "Feroza M. I.", "Fouzia M. I.", "Faizal M. I."],
+            "Zulaika Bivi": ["Gulshan Shihara"],
+            "Zainaba Beevi": ["Abdul Hameed", "Shamshad Hashim", "Mohamed Rafique", "Zahida Shafique"],
+            "Anwar Firoze": ["Anwar Firoze did not marry"],
+            "Hameeda Beevi": ["Shamshad Rafique", "Zeenath Shahid"],
+            "Adhila Beevi": ["Mahmood-ul Haque", "Ameen-ul Haque", "Zakir"],
+            "Latheefa Banu": ["Sherin Satish", "Sheik Shahiny"],
+            "Noorjehan": ["Abdul Majid", "Azghar Amanullah", "Rasheed Amanullah"],
+            "Safia Wahab": ["Rizwan Wahab", "Riaz Ahmed", "Remiza Anwar"],
+            "A. K. Ameen Khattu": ["Shabeer Ahamed A.", "Shakir Ahamed A.", "Rubina Sara A."],
+            "Abdul Ghani Khan": ["Shabeena Nasarudeen", "Ashique Khan", "Haseena Haris", "Amjath Khan", "Sihas Khan", "Rihas Khan"]
+        };
+
+        // Relationship texts (Gen3)
+        const gen3Relation = {
+            "Aiysha Bivi": "A R Kattoo is the first son of Asad Khan. His children: Abdul Kader Kattoo, Abdul Sattar Kattoo, Abdul Rahim Kattoo, Mohammed Kattoo, Zainab Beevi.",
+            "Rabiya Bivi": "Haji Ismail Kattoo is the second son of Asad Khan. His children: Haleema Bivi, Fathima Bivi, Bisha Bivi, Ameena Bivi, Moosa Kattoo, Sulaiman Kattoo, Zainab Bivi.",
+            "A. K. Kattoo": "Ebrahim Kattoo-I is the third son of Asad Khan. His children: Hawa Bivi and Zohara Bivi.",
+            "Ashiya Bivi": "Haji Essa Kattoo is the fourth son of Asad Khan. His children: Hashim Kattoo, Ebrahim Kattoo-II.",
+            "Sara Bivi": "Sara Bivi – relation details TBD.",
+            "Usman Kattoo": "Usman Kattoo – relation details TBD.",
+            "Kathija Bivi-Kathuma": "Kathija Bivi-Kathuma – relation details TBD.",
+            "Haleema Bivi": "Haleema Bivi – relation details TBD.",
+            "Moosa Katoo": "Moosa Katoo – relation details TBD.",
+            "Hashim Katoo": "Hashim Katoo – relation details TBD.",
+            "Ebrahim Katoo": "Ebrahim Katoo – relation details TBD."
+        };
+
+        // Relationship texts (Gen4)
+        const gen4Relation = {
+            "Mohamed Essa": "Mohamed Essa, son of Ebrahim Kattoo. Siblings: Abdul Sattar, Abdul Rahim, Mohammed, Zainab.",
+            "Mohamed Yusuf": "Mohamed Yusuf, son of Ebrahim Kattoo. He had no children.",
+            "Mohamed Jaffer": "Mohamed Jaffer (Gen4) – children: Haris, Harshad, Haseena, Haroon.",
+            "Khairun Nissa": "Khairun Nissa – children: Imthiaz, Feroza, Faizal, Fouzya.",
+            "Zulaika Bivi": "Zulaika Bivi – married Sirajudeen.",
+            "Zainaba Beevi": "Zainaba Beevi – relation details TBD.",
+            "Anwar Firoze": "Anwar Firoze did not marry.",
+            "Hameeda Beevi": "Hameeda Beevi – children: Shamshad Rafique, Zeenath Shahid.",
+            "Adhila Beevi": "Adhila Beevi – children: Mahmood-ul Haque, Ameen-ul Haque, Zakir.",
+            "Latheefa Banu": "Latheefa Banu – children: Sherin Satish, Sheik Shahiny.",
+            "Noorjehan": "Noorjehan – children: Abdul Majid, Azghar Amanullah, Rasheed Amanullah.",
+            "Safia Wahab": "Safia Wahab – children: Rizwan Wahab, Riaz Ahmed, Remiza Anwar.",
+            "A. K. Ameen Khattu": "A. K. Ameen Khattu – children: Shabeer Ahamed, Shakir Ahamed, Rubina Sara.",
+            "Abdul Ghani Khan": "Abdul Ghani Khan – children: Shabeena, Ashique, Haseena, Amjath, Sihas, Rihas."
+        };
+
+        // ----- DOM refs -----
+        const gen3Select = document.getElementById('gen3Select');
+        const gen4Select = document.getElementById('gen4Select');
+        const gen5Select = document.getElementById('gen5Select');
+        const nameDisplay = document.getElementById('nameDisplay');
+        const relationDisplay = document.getElementById('relationDisplay');
+        const galleryArea = document.getElementById('galleryArea');
+
+        // ----- helpers -----
+        function populateSelect(selectEl, optionsArray, defaultText = '— select —') {
+            selectEl.innerHTML = '';
+            const def = document.createElement('option');
+            def.value = '';
+            def.textContent = defaultText;
+            selectEl.appendChild(def);
+            optionsArray.forEach(val => {
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.textContent = val;
+                selectEl.appendChild(opt);
+            });
+        }
+
+        // update Gen4 based on Gen3 selection
+        function updateGen4() {
+            const g3 = gen3Select.value;
+            const children = gen3ToGen4[g3] || [];
+            populateSelect(gen4Select, children);
+            // reset gen5
+            gen5Select.innerHTML = '<option value="">— select —</option>';
+            // clear outputs
+            nameDisplay.textContent = '👤 Relative';
+            relationDisplay.value = '';
+            galleryArea.innerHTML = `<div class="empty-message">🖼️ Select and click a button to see results.</div>`;
+        }
+
+        // update Gen5 based on Gen4 selection
+        function updateGen5() {
+            const g4 = gen4Select.value;
+            const children = gen4ToGen5[g4] || [];
+            populateSelect(gen5Select, children);
+            // clear outputs
+            nameDisplay.textContent = '👤 Relative';
+            relationDisplay.value = '';
+            galleryArea.innerHTML = `<div class="empty-message">🖼️ Select and click a button to see results.</div>`;
+        }
+
+        // show name (from any select)
+        function showName(selectEl, label) {
+            const val = selectEl.value;
+            if (!val) {
+                nameDisplay.textContent = '⚠️ Please select a relative';
+                return;
+            }
+            nameDisplay.textContent = `👤 ${val}`;
+            // keep relation unchanged
+        }
+
+        function showRelation(selectEl, relationMap, label) {
+            const val = selectEl.value;
+            if (!val) {
+                relationDisplay.value = '⚠️ Please select a relative first.';
+                return;
+            }
+            const rel = relationMap[val] || '✨ Relationship details not yet recorded.';
+            relationDisplay.value = rel;
+            // optionally update name
+            nameDisplay.textContent = `👤 ${val}`;
+        }
+
+        // show choice (Gen5 selected)
+        function showChoice() {
+            const selected = [];
+            for (let opt of gen5Select.options) {
+                if (opt.selected && opt.value) selected.push(opt.value);
+            }
+            if (selected.length === 0) {
+                galleryArea.innerHTML = `<div class="empty-message">⚠️ Please select at least one Gen 5 relative.</div>`;
+                return;
+            }
+            let html = `<div style="text-align:left; background:white; padding:1rem; border-radius:20px;">`;
+            html += `<h3 style="margin-bottom:0.5rem;">⭐ My Choice</h3><ul style="list-style:none; padding:0;">`;
+            selected.forEach(name => {
+                html += `<li style="padding:0.3rem 0; border-bottom:1px solid #eee;">🧑 ${name}</li>`;
+            });
+            html += `</ul></div>`;
+            // also display image placeholder if any
+            const imgSrc = "https://media.giphy.com/media/f7N4x6tOUpP96DjMKf/source.gif";
+            html += `<img src="${imgSrc}" alt="Celebration" style="max-width:100%; border-radius:20px; margin-top:1rem;">`;
+            galleryArea.innerHTML = html;
+            nameDisplay.textContent = `⭐ ${selected.join(', ')}`;
+        }
+
+        // Green + Chief Guest (show choice + green text + guest image)
+        function greenGuest() {
+            showChoice(); // reuse
+            // also change name color to green
+            nameDisplay.style.color = '#1f7a4a';
+            // add chief guest image
+            const imgSrc = "https://media.giphy.com/media/f7N4x6tOUpP96DjMKf/source.gif";
+            const existingImg = galleryArea.querySelector('img');
+            if (existingImg) {
+                // replace or add caption
+                const wrap = document.createElement('div');
+                wrap.innerHTML = `<p style="font-weight:600; color:#b68b5c;">👑 Chief Guest</p>`;
+                galleryArea.appendChild(wrap);
+            } else {
+                galleryArea.innerHTML += `<img src="${imgSrc}" alt="Chief Guest" style="max-width:100%; border-radius:20px; margin-top:1rem;">`;
+            }
+        }
+
+        // Masha Allah – add image
+        function mashaAllah() {
+            const imgSrc = "https://media.giphy.com/media/f7N4x6tOUpP96DjMKf/source.gif";
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            img.alt = "Masha Allah";
+            img.style.maxWidth = "100%";
+            img.style.borderRadius = "20px";
+            img.style.marginTop = "0.8rem";
+            galleryArea.appendChild(img);
+            // also update text
+            const msg = document.createElement('div');
+            msg.style.fontWeight = '600';
+            msg.style.color = '#2d6a4f';
+            msg.style.marginTop = '0.5rem';
+            msg.textContent = '🤲 Masha Allah!';
+            galleryArea.appendChild(msg);
+        }
+
+        // ----- event listeners for dropdowns -----
+        gen3Select.addEventListener('change', function() {
+            updateGen4();
+            // clear name colour
+            nameDisplay.style.color = '';
+        });
+        gen4Select.addEventListener('change', function() {
+            updateGen5();
+            nameDisplay.style.color = '';
+        });
+
+        // ----- button actions -----
+        document.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const action = this.dataset.action;
+                switch(action) {
+                    case 'g3-name':
+                        showName(gen3Select, 'G3');
+                        break;
+                    case 'g3-rel':
+                        showRelation(gen3Select, gen3Relation, 'G3');
+                        break;
+                    case 'g4-name':
+                        showName(gen4Select, 'G4');
+                        break;
+                    case 'g4-rel':
+                        showRelation(gen4Select, gen4Relation, 'G4');
+                        break;
+                    case 'show-choice':
+                        showChoice();
+                        break;
+                    case 'green-guest':
+                        greenGuest();
+                        break;
+                    case 'masha':
+                        mashaAllah();
+                        break;
+                    default: break;
+                }
+            });
+        });
+
+        // init: populate Gen4 based on default Gen3
+        updateGen4();
+
+        // extra: if Gen4 has value on load (none) 
+        // expose to window for debugging
+        window.__family = { gen3ToGen4, gen4ToGen5, gen3Relation, gen4Relation };
+    })();
+</script>
+</body>
+</html>
