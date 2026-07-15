@@ -13,22 +13,23 @@
       font-family: monospace; 
       margin: 0;
     }
-    pre { 
+    #log { 
       color: #ddd; 
       white-space: pre-wrap; 
       word-wrap: break-word; 
       margin: 0; 
-      padding: 10px; 
+      padding: 15px; 
       background: #2d2d2d; 
       border-radius: 8px;
       min-height: 300px;
       max-height: 70vh;
       overflow-y: auto;
+      border: 1px solid #444;
     }
     #input-container {
       display: flex;
       background-color: #383838;
-      padding: 8px;
+      padding: 10px;
       border-radius: 8px;
       margin-top: 10px;
       border: 1px solid #555;
@@ -41,21 +42,21 @@
       color: #fff;
       font-family: monospace;
       font-size: 1.1em;
-      padding: 4px 8px;
+      padding: 6px 10px;
     }
     #status {
       margin: 8px 0;
-      font-size: 0.9em;
-      color: #4ade80;
+      font-size: 0.95em;
     }
+    .system { color: #4ade80; }
+    .me { color: #60a5fa; }
   </style>
-  <script src="https://chr15m.github.io/bugout/bugout.min.js"></script>
 </head>
 <body>
   <pre id="log"></pre>
-  <div id="status">Connecting to P2P network...</div>
+  <div id="status" class="system">Connecting to chat server...</div>
   <div id="input-container">
-    <div id="input" contenteditable="true" spellcheck="false"></div>
+    <div id="input" contenteditable="true" spellcheck="false" placeholder="Type message and press Enter..."></div>
   </div>
 
 <script>
@@ -63,72 +64,74 @@
   const statusEl = document.getElementById("status");
   const inputEl = document.getElementById("input");
 
-  function log(message, type = "info") {
-    const time = new Date().toLocaleTimeString();
-    let prefix = `[${time}] `;
-    if (type === "system") prefix += "[System] ";
-    if (type === "me") prefix += "You: ";
-    if (type === "error") prefix += "❌ ";
+  function log(message, type = "") {
+    const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    let cls = "";
+    if (type === "system") cls = "system";
+    if (type === "me") cls = "me";
     
-    logEl.textContent += prefix + message + "\n";
-    logEl.scrollTop = logEl.scrollHeight; // Auto-scroll
+    logEl.innerHTML += `<span class="${cls}">[${time}] ${message}</span><br>`;
+    logEl.scrollTop = logEl.scrollHeight;
   }
 
   log("Bismillah! السلام عليكم ورحمة الله وبركاته - KY Chat", "system");
 
-  // Initialize Bugout
-  const roomName = "ky-chat-room-2026"; // Change this for a private room
-  const b = new Bugout(roomName);
+  // === WebSocket Connection ===
+  // For testing: using a free public echo server
+  // In production, use your own WebSocket server
+  let ws = new WebSocket("wss://echo.websocket.events");
 
-  function getHandle(address) {
-    return address ? address.substring(0, 8) + "..." : "Unknown";
+  ws.onopen = () => {
+    statusEl.textContent = "✅ Connected to KY Chat Server";
+    statusEl.className = "system";
+    log("Connected successfully! You can now chat.", "system");
+  };
+
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (data.type === "message") {
+      log(data.handle + ": " + data.text);
+    }
+  };
+
+  ws.onerror = () => {
+    statusEl.textContent = "❌ Connection error. Try refreshing.";
+    statusEl.style.color = "#f87171";
+  };
+
+  ws.onclose = () => {
+    statusEl.textContent = "⚠️ Connection closed. Refresh to reconnect.";
+  };
+
+  function getHandle() {
+    // Simple handle based on time or you can ask user for name
+    return "User" + Math.floor(Math.random()*9999);
   }
 
-  // Wait for Bugout to be ready
-  b.on("ready", function() {
-    log("Connected to P2P network! Your ID: " + getHandle(b.address()), "system");
-    statusEl.textContent = "✅ Connected | Room: " + roomName;
-    statusEl.style.color = "#4ade80";
-  });
-
-  b.on("seen", function(address) {
-    log("User " + getHandle(address) + " joined the chat.", "system");
-  });
-
-  b.on("left", function(address) {
-    log("User " + getHandle(address) + " left the chat.", "system");
-  });
-
-  b.on("message", function(address, message) {
-    if (address !== b.address()) { // Don't echo our own messages again
-      log(getHandle(address) + ": " + message);
-    }
-  });
-
-  // Send message on Enter
+  // Send message
   inputEl.addEventListener("keydown", function(ev) {
     if (ev.key === "Enter") {
       ev.preventDefault();
-      
       const msg = inputEl.innerText.trim();
-      if (msg.length === 0) return;
+      if (msg.length === 0 || ws.readyState !== WebSocket.OPEN) return;
 
-      // Send to peers
-      b.send(msg);
+      const payload = {
+        type: "message",
+        handle: getHandle(),
+        text: msg
+      };
+
+      ws.send(JSON.stringify(payload));
       
-      // Show locally
-      log(msg, "me");
+      // Show our own message
+      log("You: " + msg, "me");
       
-      // Clear input
       inputEl.innerText = "";
     }
   });
 
-  // Focus input automatically
-  setTimeout(() => inputEl.focus(), 500);
-
-  // Optional: Show debug info
-  console.log("Bugout initialized with room:", roomName);
+  // Auto focus
+  setTimeout(() => inputEl.focus(), 300);
 </script>
 </body>
 </html>
