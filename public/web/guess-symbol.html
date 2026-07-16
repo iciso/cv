@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magic Square - Mind Reader</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #f43f5e;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    header {
+      text-align: center;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 2.2rem;
+      background: linear-gradient(to right, #818cf8, #e066ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Main Grid Layout */
+    .game-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    @media (min-width: 768px) {
+      .game-layout {
+        grid-template-columns: 350px 1fr;
+      }
+    }
+
+    /* Left panel (Instructions & Magic Square Target) */
+    .control-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .instructions {
+      background: rgba(15, 23, 42, 0.4);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+    }
+
+    .instructions ol {
+      margin: 0;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: var(--text-muted);
+    }
+
+    .instructions li strong {
+      color: var(--text-main);
+    }
+
+    /* The Magic Square Reveal box */
+    .magic-trigger {
+      background: linear-gradient(135deg, #1e1b4b, #311042);
+      border: 3px solid var(--primary);
+      border-radius: 16px;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+    }
+
+    .magic-trigger:hover {
+      transform: scale(1.02);
+      border-color: var(--accent);
+      box-shadow: 0 0 25px rgba(244, 63, 94, 0.4);
+    }
+
+    .magic-trigger .hint-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+    }
+
+    .magic-trigger .reveal-box {
+      font-size: 5.5rem;
+      font-weight: bold;
+      transition: transform 0.5s ease;
+    }
+
+    .action-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+
+    .action-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    /* Right panel (The Grid of Symbols) */
+    .grid-container {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 12px;
+      padding: 15px;
+      border: 1px solid #334155;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    /* Scrollbar Styling for modern aesthetic */
+    .grid-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    .grid-container::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.1);
+    }
+    .grid-container::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 4px;
+    }
+
+    .symbol-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+      gap: 8px;
+    }
+
+    .grid-item {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .grid-item .num {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: bold;
+    }
+
+    .grid-item .symbol {
+      font-size: 1.5rem;
+    }
+
+    .center-message {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .center-message h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    /* --- Math Explanation Modal Styles --- */
+    .info-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid #334155;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .info-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .math-modal {
+      background: var(--card-bg);
+      border: 1px solid #334155;
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 30px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .math-modal {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: var(--accent);
+    }
+
+    .math-modal h2 {
+      margin-top: 0;
+      color: #818cf8;
+      font-size: 1.6rem;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 10px;
+    }
+
+    .math-modal h3 {
+      color: var(--text-main);
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+
+    .math-modal p, .math-modal li {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .math-formula {
+      background: #0f172a;
+      padding: 12px;
+      border-radius: 8px;
+      font-family: monospace;
+      color: #38bdf8;
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 15px 0;
+      border: 1px solid #1e293b;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Magic Square</h1>
+      <p class="subtitle">A classic mathematical mind-reading experience</p>
+    </header>
+
+    <div class="game-layout">
+      <!-- Left Controls and Instructions -->
+      <div class="control-panel">
+        <div class="instructions">
+          <ol>
+            <li>Think of any <strong>two-digit number</strong> (e.g., 54).</li>
+            <li><strong>Subtract</strong> both of its digits from it (e.g., 54 - 5 - 4 = <strong>45</strong>).</li>
+            <li>Locate your resulting number in the chart and memorize its <strong>corresponding symbol</strong>.</li>
+            <li>Visualize the symbol clearly in your mind, then click on the <strong>Magic Square</strong> below.</li>
+          </ol>
+        </div>
+
+        <!-- The Target Magic Box -->
+        <div class="magic-trigger" id="magicBox" onclick="showReveal()">
+          <span class="hint-text" id="promptText">Click to Reveal</span>
+          <div class="reveal-box" id="mysterySymbol">?</div>
+        </div>
+
+        <button class="action-btn" id="restartBtn" style="display: none;" onclick="initGame()">Play Again</button>
+        <!-- Learn the Math Button -->
+        <button class="info-btn" onclick="toggleModal(true)">🧠 Learn the Math Behind the Magic</button>
+      </div>
+
+      <!-- Right Symbols Display -->
+      <div class="grid-container" id="gridContainer">
+        <div class="symbol-grid" id="symbolGrid"></div>
+      </div>
+    </div>
+  </div>
+<!-- Math Explanation Modal -->
+  <div class="modal-overlay" id="mathModalOverlay" onclick="toggleModal(false)">
+    <div class="math-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="toggleModal(false)">&times;</button>
+      <h2>The Math Behind the Magic</h2>
+      
+      <p>How does the computer always "read your mind"? It isn't magic—it is algebra!</p>
+      
+      <h3>1. The Algebra Formula</h3>
+      <p>Any two-digit number can be written based on its <strong>tens</strong> digit (let's call it <b>x</b>) and its <strong>ones</strong> digit (let's call it <b>y</b>). The actual value of that number is:</p>
+      <div class="math-formula">Original Number = 10x + y</div>
+      <p>The game asks you to subtract both digits from your original number:</p>
+      <div class="math-formula">Result = (10x + y) - (x + y)</div>
+      <p>If we simplify this algebra equation, the ones digit (<b>y</b>) completely cancels itself out:</p>
+      <div class="math-formula">Result = 10x - x = 9x</div>
+      <p>Because the answer is always <b>9x</b>, <strong>every single starting number yields a multiple of 9!</strong></p>
+
+      <h3>2. The Illusion Trap</h3>
+      <p>No matter which number you start with, your final calculated result can only ever be one of these nine numbers:</p>
+      <p style="text-align: center; font-weight: bold; color: #f43f5e; letter-spacing: 2px;">
+        9, 18, 27, 36, 45, 54, 63, 72, 81
+      </p>
+      <p>If you look closely at the table, the game secretly assigns the <strong>exact same symbol</strong> to all nine of these numbers! When you click the magic square, it simply displays that pre-arranged symbol.</p>
+
+      <button class="action-btn" style="margin-top: 20px;" onclick="toggleModal(false)">I Get It!</button>
+    </div>
+  </div>
+  <script>
+    // Selection of cross-platform safe emojis/symbols to replace legacy Wingdings
+    const symbolPool = [
+      "★", "🔮", "⚡", "🍀", "💎", "☀️", "🌙", "🔥", "🌈", "🎈", "🌸", "🍁", 
+      "🪐", "🍄", "🔑", "🛡️", "🧬", "🧪", "⚙️", "🧩", "🎯", "🎭", "🎨", "⚓", 
+      "🚀", "🛸", "🍿", "🍕", "🧁"
+    ];
+
+    let magicIndex = 0;
+    let chosenSymbol = "";
+
+    function initGame() {
+      // Pick a random symbol index to be the magic key
+      magicIndex = Math.floor(Math.random() * symbolPool.length);
+      chosenSymbol = symbolPool[magicIndex];
+
+      // Reset UI elements
+      document.getElementById("mysterySymbol").textContent = "?";
+      document.getElementById("mysterySymbol").style.transform = "none";
+      document.getElementById("promptText").textContent = "Click to Reveal";
+      document.getElementById("restartBtn").style.display = "none";
+      document.getElementById("gridContainer").style.display = "block";
+
+      const grid = document.getElementById("symbolGrid");
+      grid.innerHTML = "";
+
+      // Build grid backwards (99 down to 0) to preserve original behavior
+      for (let i = 99; i >= 0; i--) {
+        let currentSymbol;
+        
+        // Mathematical Trick: Any 2-digit number (10a + b) minus its digits (a + b) 
+        // always yields a multiple of 9 (9a). E.g., 54 - 5 - 4 = 45.
+        // Therefore, we assign the 'magic symbol' to all multiples of 9 below 90.
+        if (i % 9 === 0 && i < 89) {
+          currentSymbol = chosenSymbol;
+        } else {
+          // Fill everything else with random symbols from our pool
+          const randIndex = Math.floor(Math.random() * symbolPool.length);
+          currentSymbol = symbolPool[randIndex];
+        }
+
+        // Create Grid Item card
+        const card = document.createElement("div");
+        card.className = "grid-item";
+        card.innerHTML = `
+          <span class="num">${i}</span>
+          <span class="symbol">${currentSymbol}</span>
+        `;
+        grid.appendChild(card);
+      }
+    }
+
+    function showReveal() {
+      const mysteryBox = document.getElementById("mysterySymbol");
+      
+      // If already revealed, do nothing
+      if (mysteryBox.textContent !== "?") return;
+
+      // Fancy scale-up animation during reveal
+      mysteryBox.style.transform = "scale(0)";
+      
+      setTimeout(() => {
+        document.getElementById("promptText").textContent = "Your Thought:";
+        mysteryBox.textContent = chosenSymbol;
+        mysteryBox.style.transform = "scale(1)";
+        document.getElementById("restartBtn").style.display = "block";
+        document.getElementById("gridContainer").style.display = "none";
+      }, 150);
+    }
+    // Toggle Math Explanation Modal
+    function toggleModal(isOpen) {
+      const modal = document.getElementById("mathModalOverlay");
+      if (isOpen) {
+        modal.classList.add("active");
+        // Also listen for 'Escape' key to close the modal
+        document.addEventListener('keydown', handleEscClose);
+      } else {
+        modal.classList.remove("active");
+        document.removeEventListener('keydown', handleEscClose);
+      }
+    }
+
+    function handleEscClose(e) {
+      if (e.key === "Escape") {
+        toggleModal(false);
+      }
+    }
+    // Launch game on load
+    window.addEventListener("DOMContentLoaded", initGame);
+  </script>
+</body>
+</html>
