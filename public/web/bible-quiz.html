@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📖 Bible Knowledge Quiz · 15 Questions</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #f2f0eb;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            max-width: 820px;
+            width: 100%;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px -8px rgba(0, 20, 30, 0.15);
+            padding: 2.2rem 2.4rem 2.6rem;
+            transition: 0.2s;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #1a2e3f;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            border-bottom: 3px solid #e0d6cc;
+            padding-bottom: 0.7rem;
+            margin-bottom: 0.2rem;
+        }
+        h1 .badge {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #4a6a7a;
+            background: #e6ede8;
+            padding: 0.1rem 1.2rem;
+            border-radius: 60px;
+            letter-spacing: 0.3px;
+        }
+        .subhead {
+            color: #4d6a7a;
+            margin-bottom: 1.8rem;
+            font-size: 0.92rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            padding: 0.4rem 0;
+        }
+        .stats {
+            background: #e6ede8;
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1a4058;
+        }
+        .stats span {
+            background: white;
+            padding: 0 0.6rem;
+            border-radius: 40px;
+            margin: 0 0.1rem;
+        }
+        .quiz-panel {
+            background: #f8f6f2;
+            border-radius: 28px;
+            padding: 1.6rem 2rem;
+            border: 1px solid #e4ddd2;
+            margin: 1rem 0 1.2rem;
+        }
+        .question-row {
+            display: flex;
+            gap: 0.8rem;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 0.8rem;
+        }
+        .question-row .qnum {
+            font-weight: 700;
+            color: #2a5a6a;
+            background: #dce6e0;
+            padding: 0.1rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+        }
+        .question-row .qtext {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1a3a4a;
+            flex: 1;
+            min-width: 200px;
+        }
+        .choices-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem 1.5rem;
+            margin: 0.8rem 0 1rem;
+            padding-left: 0.5rem;
+        }
+        .choice-item {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+            padding: 0.2rem 0;
+            font-size: 0.95rem;
+        }
+        .choice-item .letter {
+            font-weight: 700;
+            color: #3a5a6a;
+            min-width: 20px;
+        }
+        .choice-item .text {
+            color: #1a3343;
+        }
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem 1rem;
+            margin: 0.8rem 0 0.2rem;
+            align-items: center;
+        }
+        .action-row label {
+            font-weight: 600;
+            color: #2a4a5a;
+            font-size: 0.9rem;
+        }
+        .action-row input[type="text"] {
+            padding: 0.4rem 0.8rem;
+            border: 2px solid #d6cdc2;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            width: 70px;
+            text-align: center;
+            font-weight: 600;
+            background: white;
+        }
+        .action-row input[type="text"]:focus {
+            outline: none;
+            border-color: #6a8a7a;
+            box-shadow: 0 0 0 3px rgba(106, 138, 122, 0.15);
+        }
+        .btn {
+            background: white;
+            border: 2px solid #c4bcb0;
+            padding: 0.45rem 1.5rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1a3a4a;
+            cursor: pointer;
+            transition: 0.15s;
+            letter-spacing: 0.2px;
+        }
+        .btn:hover {
+            background: #e6ede8;
+            border-color: #8a9a8a;
+            transform: scale(0.96);
+        }
+        .btn-primary {
+            background: #1a5a6a;
+            border-color: #1a5a6a;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #0f4250;
+            border-color: #0f4250;
+        }
+        .btn-secondary {
+            background: #d6cdc2;
+            border-color: #c4bcb0;
+        }
+        .btn-secondary:hover {
+            background: #c4bcb0;
+        }
+        .result-area {
+            background: #f0f0ea;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0 0.8rem;
+            border-left: 5px solid #6a8a7a;
+            min-height: 60px;
+            font-size: 0.95rem;
+            color: #1a3343;
+            line-height: 1.5;
+        }
+        .result-area .highlight {
+            font-weight: 700;
+            color: #1a5a4a;
+        }
+        .score-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem 2.5rem;
+            background: #e6ede8;
+            border-radius: 60px;
+            padding: 0.5rem 2rem;
+            margin-top: 0.8rem;
+            align-items: center;
+            justify-content: center;
+        }
+        .score-panel .item {
+            font-weight: 500;
+            color: #1a4058;
+            font-size: 0.9rem;
+        }
+        .score-panel .item strong {
+            background: white;
+            padding: 0.05rem 0.9rem;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+        .footnote {
+            margin-top: 1.8rem;
+            border-top: 2px solid #e0d6cc;
+            padding-top: 1.2rem;
+            font-size: 0.8rem;
+            color: #5a6f7a;
+            text-align: center;
+        }
+        .footnote i {
+            background: #e6ede8;
+            padding: 0.1rem 1.2rem;
+            border-radius: 60px;
+            font-style: normal;
+        }
+        @media (max-width: 600px) {
+            .card { padding: 1.2rem; }
+            .quiz-panel { padding: 1rem; }
+            .choices-grid { grid-template-columns: 1fr; }
+            .action-row { flex-direction: column; align-items: stretch; }
+            .action-row input[type="text"] { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>
+        📖 Bible Quiz
+        <span class="badge">15 questions · KJV</span>
+    </h1>
+    <div class="subhead">
+        <span>Test your knowledge of Scripture</span>
+        <span class="stats">📝 <span id="qCounter">0</span>/15</span>
+    </div>
+
+    <!-- main quiz form -->
+    <div class="quiz-panel" id="quizPanel">
+        <div class="question-row">
+            <span class="qnum" id="qNumDisplay">Q1</span>
+            <span class="qtext" id="qTextDisplay">Click "Start Quiz" to begin</span>
+        </div>
+        <div class="choices-grid" id="choicesContainer">
+            <div class="choice-item"><span class="letter">A.</span><span class="text" id="choiceA">—</span></div>
+            <div class="choice-item"><span class="letter">B.</span><span class="text" id="choiceB">—</span></div>
+            <div class="choice-item"><span class="letter">C.</span><span class="text" id="choiceC">—</span></div>
+            <div class="choice-item"><span class="letter">D.</span><span class="text" id="choiceD">—</span></div>
+        </div>
+        <div class="action-row">
+            <label for="userChoiceInput">Your choice (a–d):</label>
+            <input type="text" id="userChoiceInput" maxlength="1" placeholder="a" />
+            <button class="btn btn-primary" id="checkBtn">✔ Check Answer</button>
+            <button class="btn" id="nextBtn">→ Next Question</button>
+            <button class="btn btn-secondary" id="resetBtn">⟳ Start Over</button>
+        </div>
+        <div class="result-area" id="resultArea">
+            <span id="resultText">Press <strong>"Check Answer"</strong> after selecting your choice.</span>
+        </div>
+        <div class="score-panel">
+            <span class="item">🎯 Points: <strong id="scorePoints">0</strong></span>
+            <span class="item">📊 Percentage: <strong id="scorePercent">0%</strong></span>
+            <span class="item">🏅 Grade: <strong id="scoreGrade">—</strong></span>
+        </div>
+    </div>
+
+    <div class="footnote">
+        <i>📜 Based on the King James Version · Scripture references provided with each answer</i>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- QUIZ DATA (15 questions, same as original, enhanced) -----
+        const QUIZ = [
+            {
+                question: "What was the name of David's gigantic opponent?",
+                options: ["Solomon.", "Joseph.", "Goliath.", "Job."],
+                correct: 2, // 0-indexed
+                reference: "1 Samuel 17:4"
+            },
+            {
+                question: "What was the name of the Sea that Moses parted?",
+                options: ["Red.", "Atlantic.", "Baltic.", "Dead."],
+                correct: 0,
+                reference: "Exodus 15:22"
+            },
+            {
+                question: "What did Moses throw to the ground that became a serpent?",
+                options: ["a crown made of thistles.", "a staff.", "a stone tablet.", "a necklace made of beads."],
+                correct: 1,
+                reference: "Exodus 4:2,3"
+            },
+            {
+                question: "How many times did Samson lie to Delilah before telling her the truth?",
+                options: ["once.", "twice.", "three times.", "four times."],
+                correct: 2,
+                reference: "Judges 16:15"
+            },
+            {
+                question: "'Thus saith the Lord, The heaven is my throne, and the earth is my...'",
+                options: ["domain", "creation.", "temple.", "footstool."],
+                correct: 3,
+                reference: "Isaiah 66:1"
+            },
+            {
+                question: "What king reluctantly commanded Daniel be cast into the den of lions?",
+                options: ["Nebuchadnezzar", "Solomon.", "Darius.", "Belshazzar."],
+                correct: 2,
+                reference: "Daniel 6:9"
+            },
+            {
+                question: "What city did Joseph take Mary and the young child to following his dream?",
+                options: ["Nazareth", "Bethlehem.", "Jerusalem.", "Babylon."],
+                correct: 0,
+                reference: "Matthew 2:23"
+            },
+            {
+                question: "What were Shadrach, Meshach, and Abednego cast into?",
+                options: ["a tar pit", "a bottomless pit.", "quicksand.", "a fiery furnace."],
+                correct: 3,
+                reference: "Daniel 3:20"
+            },
+            {
+                question: "How many loaves of bread did Jesus feed four-thousand men (plus women and children) with?",
+                options: ["four", "seven", "eleven", "fifteen"],
+                correct: 1,
+                reference: "Matthew 15:38"
+            },
+            {
+                question: "Jesus said, 'it's easier for a camel to go through the eye of a needle, than for...'",
+                options: [
+                    "a rich man to enter the kingdom of God.",
+                    "a fool to accumulate wealth.",
+                    "a non-believer to acquire faith.",
+                    "a king to control his temptations."
+                ],
+                correct: 0,
+                reference: "Mark 10:25"
+            },
+            {
+                question: "Where was Jesus crucified?",
+                options: ["Cyrene.", "Arimathea.", "Golgotha.", "Galilee."],
+                correct: 2,
+                reference: "Matthew 27:33"
+            },
+            {
+                question: "How old was Noah when the flood waters were upon the earth?",
+                options: ["600.", "400.", "500.", "900."],
+                correct: 0,
+                reference: "Genesis 7:6"
+            },
+            {
+                question: "Thou shalt love thy _______ as thyself.",
+                options: ["wife.", "family.", "neighbor.", "mother."],
+                correct: 2,
+                reference: "Romans 13:9"
+            },
+            {
+                question: "'The Lord is my shepherd; I shall not want' is found in what book?",
+                options: ["Psalms.", "Job.", "Exodus.", "Luke."],
+                correct: 0,
+                reference: "Psalms 23:1"
+            },
+            {
+                question: "How long was Jonah in the belly of the fish?",
+                options: [
+                    "two nights and two days.",
+                    "three nights and three days.",
+                    "four nights and four days.",
+                    "five nights and five days."
+                ],
+                correct: 1,
+                reference: "Jonah 1:17"
+            }
+        ];
+
+        // ----- state -----
+        let currentIndex = 0;        // 0-based
+        let score = 0;
+        let answered = false;        // whether current question has been checked
+        let totalAttempted = 0;      // number of questions attempted (for percentage)
+
+        // DOM refs
+        const qNumDisplay = document.getElementById('qNumDisplay');
+        const qTextDisplay = document.getElementById('qTextDisplay');
+        const choiceA = document.getElementById('choiceA');
+        const choiceB = document.getElementById('choiceB');
+        const choiceC = document.getElementById('choiceC');
+        const choiceD = document.getElementById('choiceD');
+        const userChoiceInput = document.getElementById('userChoiceInput');
+        const resultText = document.getElementById('resultText');
+        const scorePoints = document.getElementById('scorePoints');
+        const scorePercent = document.getElementById('scorePercent');
+        const scoreGrade = document.getElementById('scoreGrade');
+        const qCounter = document.getElementById('qCounter');
+
+        // helpers
+        function getOptionLetter(index) {
+            return String.fromCharCode(97 + index); // a, b, c, d
+        }
+
+        function renderQuestion(index) {
+            const q = QUIZ[index];
+            if (!q) return;
+            qNumDisplay.textContent = `Q${index + 1}`;
+            qTextDisplay.textContent = q.question;
+            choiceA.textContent = q.options[0];
+            choiceB.textContent = q.options[1];
+            choiceC.textContent = q.options[2];
+            choiceD.textContent = q.options[3];
+            userChoiceInput.value = '';
+            resultText.innerHTML = 'Select your answer (a–d) and click <strong>"Check Answer"</strong>.';
+            answered = false;
+            qCounter.textContent = index + 1;
+            // update button states
+            document.getElementById('checkBtn').disabled = false;
+            // clear any highlight
+            document.querySelectorAll('.choice-item .text').forEach(el => el.style.color = '');
+        }
+
+        function updateScore() {
+            scorePoints.textContent = score;
+            const total = totalAttempted || 1;
+            const pct = Math.round((score / total) * 100);
+            scorePercent.textContent = pct + '%';
+            let grade = 'F';
+            if (pct >= 90) grade = 'A';
+            else if (pct >= 80) grade = 'B';
+            else if (pct >= 70) grade = 'C';
+            else if (pct >= 60) grade = 'D';
+            scoreGrade.textContent = grade;
+        }
+
+        function checkAnswer() {
+            if (answered) {
+                resultText.innerHTML = '⚠️ You already answered this question. Click <strong>"Next Question"</strong> to continue.';
+                return;
+            }
+
+            const raw = userChoiceInput.value.trim().toLowerCase();
+            if (!raw || !['a','b','c','d'].includes(raw)) {
+                resultText.innerHTML = '⚠️ Please enter a valid choice: <strong>a, b, c, or d</strong>.';
+                return;
+            }
+
+            const selectedIndex = raw.charCodeAt(0) - 97; // a=0, b=1, ...
+            const q = QUIZ[currentIndex];
+            const isCorrect = (selectedIndex === q.correct);
+            const correctLetter = getOptionLetter(q.correct);
+            const correctText = q.options[q.correct];
+
+            // highlight the correct answer in green
+            const choiceElements = [choiceA, choiceB, choiceC, choiceD];
+            choiceElements.forEach((el, idx) => {
+                if (idx === q.correct) el.style.color = '#1a7a4a';
+                else if (idx === selectedIndex && !isCorrect) el.style.color = '#b13e4b';
+                else el.style.color = '';
+            });
+
+            // update score
+            if (isCorrect) {
+                score++;
+                resultText.innerHTML = `✅ <strong>Correct!</strong> The answer is <strong>${correctLetter}. ${correctText}</strong>. (${q.reference})`;
+            } else {
+                resultText.innerHTML = `❌ <strong>Incorrect.</strong> The correct answer is <strong>${correctLetter}. ${correctText}</strong>. (${q.reference})`;
+            }
+
+            totalAttempted++;
+            answered = true;
+            updateScore();
+            document.getElementById('checkBtn').disabled = true;
+        }
+
+        function nextQuestion() {
+            if (!answered && totalAttempted > 0) {
+                // if not answered but we have attempted at least one, warn
+                // but we allow moving on (no penalty)
+            }
+            if (currentIndex < QUIZ.length - 1) {
+                currentIndex++;
+                renderQuestion(currentIndex);
+                // reset highlight
+                document.querySelectorAll('.choice-item .text').forEach(el => el.style.color = '');
+            } else {
+                // end of quiz
+                resultText.innerHTML = '🎉 <strong>End of Quiz!</strong> You have completed all 15 questions. Click "Start Over" to retake.';
+                document.getElementById('checkBtn').disabled = true;
+                qTextDisplay.textContent = '🏁 Quiz complete. Well done!';
+                // clear choices
+                choiceA.textContent = '—';
+                choiceB.textContent = '—';
+                choiceC.textContent = '—';
+                choiceD.textContent = '—';
+                userChoiceInput.value = '';
+                qNumDisplay.textContent = '🏁';
+            }
+        }
+
+        function resetQuiz() {
+            currentIndex = 0;
+            score = 0;
+            totalAttempted = 0;
+            answered = false;
+            renderQuestion(0);
+            updateScore();
+            document.querySelectorAll('.choice-item .text').forEach(el => el.style.color = '');
+            document.getElementById('checkBtn').disabled = false;
+            resultText.innerHTML = '🔄 Quiz reset. Click <strong>"Check Answer"</strong> after selecting your choice.';
+        }
+
+        // ----- event listeners -----
+        document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+        document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+        document.getElementById('resetBtn').addEventListener('click', resetQuiz);
+
+        // allow Enter key in input field
+        userChoiceInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                checkAnswer();
+            }
+        });
+
+        // auto-focus input
+        userChoiceInput.addEventListener('focus', function() { this.select(); });
+
+        // ----- initialise -----
+        renderQuestion(0);
+        updateScore();
+
+        // expose for debugging
+        window.__bibleQuiz = { QUIZ, currentIndex, score, totalAttempted };
+    })();
+</script>
+</body>
+</html>
