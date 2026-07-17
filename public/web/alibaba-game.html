@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🕌 Dawah Quest · Meet & Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Comic Neue', cursive, sans-serif;
+            background: linear-gradient(145deg, #f5efe6 0%, #e4d9cb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .game-container {
+            max-width: 860px;
+            width: 100%;
+            background: rgba(255, 248, 235, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 1.5rem 1.8rem 2rem;
+            box-shadow: 0 25px 60px -10px rgba(0, 20, 30, 0.25);
+            border: 2px solid rgba(200, 170, 130, 0.3);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            border-bottom: 3px solid #b8a080;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1rem;
+        }
+        .header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #2d1f0f;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .header h1 small {
+            font-family: 'Comic Neue', cursive;
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #7a5a3a;
+            background: #ede3d6;
+            padding: 0.1rem 1rem;
+            border-radius: 60px;
+        }
+        .header .hamburger {
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #5a3f2a;
+            transition: 0.2s;
+            padding: 0 0.5rem;
+        }
+        .header .hamburger:hover { transform: scale(1.1); color: #8a6a4a; }
+
+        .board {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 4px;
+            margin: 0.6rem 0 1rem;
+        }
+        .cell {
+            background: #fcf6ed;
+            border-radius: 14px;
+            padding: 0.3rem 0.15rem;
+            text-align: center;
+            border: 3px solid #dcc8b0;
+            min-height: 75px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.15s;
+            font-size: 0.6rem;
+            position: relative;
+        }
+        .cell .name {
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #3d2b1a;
+            line-height: 1.1;
+        }
+        .cell .religion {
+            font-size: 0.55rem;
+            color: #6a4f34;
+            background: #ede3d6;
+            padding: 0 0.3rem;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 1px 0;
+        }
+        .cell .symbol { font-size: 1.1rem; }
+        .cell .imaan-meter {
+            width: 80%;
+            height: 8px;
+            background: #e0d5c8;
+            border-radius: 10px;
+            margin: 2px auto;
+            overflow: hidden;
+            border: 1px solid #c4aa8a;
+        }
+        .cell .imaan-meter .fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            background: linear-gradient(90deg, #c0392b, #f39c12, #27ae60);
+        }
+        .cell .residents {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2px;
+            margin-top: 2px;
+        }
+        .cell.info-cell {
+            background: #e8ddd0;
+            border-color: #c4aa8a;
+            font-size: 0.6rem;
+            padding: 0.2rem;
+        }
+        .cell.info-cell .label {
+            font-weight: 700;
+            color: #3d2b1a;
+            font-size: 0.6rem;
+        }
+        .cell.start {
+            background: #d4e8d4;
+            border-color: #7a9a7a;
+        }
+        .cell.start .name { color: #1a5a2a; font-size: 0.8rem; }
+        .cell .owner-tag {
+            font-size: 0.5rem;
+            background: #2d5a3a;
+            color: white;
+            padding: 0 0.4rem;
+            border-radius: 10px;
+            margin-top: 1px;
+        }
+        .cell.highlight {
+            animation: pulse 0.6s ease 2;
+            border-color: #f39c12;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .token {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 1px;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .token-thief { background: radial-gradient(circle at 35% 35%, #e74c3c, #a93226); }
+        .token-ali { background: radial-gradient(circle at 35% 35%, #2ecc71, #1a7a3a); }
+
+        .info-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 4px;
+            margin: 0.4rem 0 0.8rem;
+        }
+        .info-box {
+            background: #fcf6ed;
+            border-radius: 14px;
+            padding: 0.3rem 0.2rem;
+            text-align: center;
+            border: 2px solid #dcc8b0;
+            font-size: 0.6rem;
+        }
+        .info-box .big {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #3d2b1a;
+        }
+        .info-box .label { color: #6a4f34; }
+
+        .btn {
+            background: #8a6a4a;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: 'Comic Neue', cursive;
+            box-shadow: 0 4px 12px rgba(60, 40, 20, 0.2);
+        }
+        .btn:hover { transform: scale(0.96); background: #6a4f34; }
+        .btn:active { transform: scale(0.92); }
+        .btn-primary { background: #1a7a4a; }
+        .btn-primary:hover { background: #0f5a32; }
+        .btn-danger { background: #a94a3a; }
+        .btn-danger:hover { background: #8a3a2a; }
+        .btn-gold { background: #b8860b; }
+        .btn-gold:hover { background: #9a7209; }
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: center;
+            margin: 0.6rem 0 0.2rem;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: rgba(20, 15, 10, 0.94);
+            overflow-y: auto;
+            transition: 0.5s;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .overlay.open { height: 100%; }
+        .overlay-content {
+            max-width: 600px;
+            padding: 2rem;
+            color: #f0e8dc;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            text-align: center;
+        }
+        .overlay-content h2 {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            color: #f5d6a0;
+            margin-bottom: 0.8rem;
+        }
+        .overlay-content .close-btn {
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #d4b68a;
+            background: none;
+            border: none;
+            position: fixed;
+            top: 20px;
+            right: 30px;
+        }
+        .overlay-content .close-btn:hover { color: #f5d6a0; }
+        .overlay-content .btn { margin-top: 0.8rem; }
+
+        .footer {
+            margin-top: 1.2rem;
+            border-top: 2px solid #dcc8b0;
+            padding-top: 0.8rem;
+            text-align: center;
+            font-size: 0.65rem;
+            color: #6a4f34;
+        }
+        .footer i { color: #8a5a3a; margin: 0 0.2rem; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: #fcf6ed;
+            border-radius: 30px;
+            padding: 2rem;
+            max-width: 480px;
+            width: 90%;
+            border: 3px solid #b8a080;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            0% { transform: translateY(30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .modal-box h2 {
+            font-family: 'Amiri', serif;
+            color: #2d1f0f;
+            margin-bottom: 0.5rem;
+        }
+        .modal-box p { color: #3d2b1a; margin-bottom: 1rem; font-size: 0.95rem; }
+        .modal-box .strategy-btn {
+            display: block;
+            width: 100%;
+            padding: 0.6rem;
+            margin: 0.4rem 0;
+            border: 2px solid #b8a080;
+            border-radius: 16px;
+            background: #f8f0e8;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: 0.15s;
+            color: #2d1f0f;
+        }
+        .modal-box .strategy-btn:hover {
+            background: #d4c8b8;
+            border-color: #8a6a4a;
+            transform: scale(1.02);
+        }
+        .modal-box .strategy-btn.correct { background: #7abd8a; border-color: #1a7a4a; }
+        .modal-box .strategy-btn.wrong { background: #e8a090; border-color: #a94a3a; }
+        .modal-box .skip-btn {
+            margin-top: 0.8rem;
+            background: #a94a3a;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: 0.15s;
+        }
+        .modal-box .skip-btn:hover { background: #8a3a2a; transform: scale(0.96); }
+
+        @media (max-width: 600px) {
+            .game-container { padding: 0.8rem; }
+            .board { gap: 3px; }
+            .cell { min-height: 60px; font-size: 0.5rem; padding: 0.15rem; }
+            .cell .name { font-size: 0.6rem; }
+            .info-panel { grid-template-columns: 1fr 1fr; }
+            .header h1 { font-size: 1.2rem; }
+        }
+        @media (max-width: 400px) {
+            .board { grid-template-columns: 1fr 1fr 1fr; }
+            .cell { min-height: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <div class="header">
+        <h1>🕌 Dawah Quest <small>Meet & Chat</small></h1>
+        <button class="hamburger" onclick="toggleOverlay()" aria-label="Instructions">☰</button>
+    </div>
+
+    <div class="board" id="boardContainer"></div>
+
+    <div class="info-panel" id="infoPanel">
+        <div class="info-box">
+            <div class="label">Current Turn</div>
+            <div class="big" id="turnDisplay">Ali</div>
+        </div>
+        <div class="info-box">
+            <div class="label">📢 Message</div>
+            <div id="messageDisplay" style="font-size:0.65rem;">Click "Meet & Chat" to begin</div>
+        </div>
+        <div class="info-box">
+            <div class="label">⚫ Thief's Influence</div>
+            <div class="big" id="thiefScore">0</div>
+        </div>
+        <div class="info-box">
+            <div class="label">🟢 Ali's Influence</div>
+            <div class="big" id="aliScore">0</div>
+        </div>
+    </div>
+
+    <div class="action-row">
+        <button class="btn btn-primary" id="rollBtn">💬 Meet & Chat</button>
+        <button class="btn btn-gold" id="resetBtn">⟳ New Game</button>
+    </div>
+
+    <div class="footer">
+        <i class="fa fa-home"></i> KYFCT: Uniting Families, <i class="fa fa-heart"></i> Uniting the World.
+        <br>"Invite to the way of your Lord with wisdom and good instruction." — Qur'an 16:125
+    </div>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay">
+    <button class="close-btn" onclick="toggleOverlay()">✕</button>
+    <div class="overlay-content">
+        <h2>📖 Dawah Quest</h2>
+        <p><strong>Ali</strong> and the <strong>Thief</strong> compete to guide people from 10 major world religions!</p>
+        <p>🎯 <strong>Goal:</strong> Increase the Imaan (faith) of each person by choosing the right Dawah strategy. The Thief tries to pull them away.</p>
+        <p>🔄 Click <strong>"Meet & Chat"</strong> to visit a person. You'll be given 3 Dawah strategies — choose wisely!</p>
+        <p>✨ Each correct strategy increases their Imaan-O-Meter toward Islam. Wrong strategies decrease it.</p>
+        <p>🏆 The game ends when all 10 people reach <strong>100% Imaan</strong> (Ali wins) or <strong>0%</strong> (Thief wins).</p>
+        <button class="btn" onclick="toggleOverlay()">👍 Begin Dawah!</button>
+    </div>
+</div>
+
+<!-- Dawah Strategy Modal -->
+<div class="modal-overlay" id="strategyModal">
+    <div class="modal-box">
+        <h2>💬 Dawah Strategy</h2>
+        <p id="modalPerson">Meeting <strong>John</strong> (✝️ Christian)</p>
+        <p id="modalContext">Choose the best approach:</p>
+        <div id="strategyButtons"></div>
+        <button class="skip-btn" onclick="closeStrategyModal()">⏭️ Skip (lose turn)</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- DATA: 10 Major Religions -----
+        const PEOPLE = [
+            { name: "John", religion: "Christianity", symbol: "✝️", imaan: 50 },
+            { name: "David", religion: "Judaism", symbol: "✡️", imaan: 50 },
+            { name: "Arjun", religion: "Hinduism", symbol: "🕉️", imaan: 50 },
+            { name: "Gautam", religion: "Buddhism", symbol: "☸️", imaan: 50 },
+            { name: "Guru", religion: "Sikhism", symbol: "🪯", imaan: 50 },
+            { name: "Lao", religion: "Taoism", symbol: "☯️", imaan: 50 },
+            { name: "Miko", religion: "Shinto", symbol: "⛩️", imaan: 50 },
+            { name: "Zara", religion: "Zoroastrianism", symbol: "🔥", imaan: 50 },
+            { name: "Ahmed", religion: "Jainism", symbol: "✋", imaan: 50 },
+            { name: "Kofi", religion: "Traditional African", symbol: "🌍", imaan: 50 }
+        ];
+
+        // Dawah strategies per religion
+        const STRATEGIES = {
+            "Christianity": {
+                context: "John believes Jesus is God's son. How do you respond?",
+                options: [
+                    { text: "Show that Jesus (peace be upon him) was a prophet and servant of God, not divine.", correct: true },
+                    { text: "Agree that Jesus is God and accept Christianity.", correct: false },
+                    { text: "Ignore his beliefs and talk about something else.", correct: false }
+                ]
+            },
+            "Judaism": {
+                context: "David follows the Torah but rejects prophethood after Moses. What do you say?",
+                options: [
+                    { text: "Explain that Muhammad (peace be upon him) is the final prophet mentioned in their scriptures.", correct: true },
+                    { text: "Say that Judaism is the only true religion.", correct: false },
+                    { text: "Criticize the Torah.", correct: false }
+                ]
+            },
+            "Hinduism": {
+                context: "Arjun believes in many gods. How do you approach him?",
+                options: [
+                    { text: "Share the concept of Tawhid (Oneness of God) and show the unity behind all creation.", correct: true },
+                    { text: "Accept all gods as equally valid.", correct: false },
+                    { text: "Tell him his religion is false.", correct: false }
+                ]
+            },
+            "Buddhism": {
+                context: "Gautam follows the Middle Path but doesn't believe in God. What do you say?",
+                options: [
+                    { text: "Show that belief in God gives purpose and that Islam completes the spiritual journey.", correct: true },
+                    { text: "Say Buddhism is better than Islam.", correct: false },
+                    { text: "Argue about philosophy.", correct: false }
+                ]
+            },
+            "Sikhism": {
+                context: "Guru believes in one God but rejects the finality of prophethood. How do you respond?",
+                options: [
+                    { text: "Show that the Qur'an confirms previous scriptures and Muhammad (pbuh) is the seal of prophets.", correct: true },
+                    { text: "Say Sikhism is wrong about everything.", correct: false },
+                    { text: "Ignore his beliefs.", correct: false }
+                ]
+            },
+            "Taoism": {
+                context: "Lao follows the Tao but doesn't believe in a personal God. What do you share?",
+                options: [
+                    { text: "Discuss how Islam teaches that God is close and responsive to sincere seekers.", correct: true },
+                    { text: "Criticize his philosophy.", correct: false },
+                    { text: "Say Taoism is not a religion.", correct: false }
+                ]
+            },
+            "Shinto": {
+                context: "Miko follows Shinto, focused on nature spirits. How do you approach?",
+                options: [
+                    { text: "Show that all creation points to one Creator, and Islam teaches gratitude to Him.", correct: true },
+                    { text: "Call his beliefs childish.", correct: false },
+                    { text: "Agree with everything he says.", correct: false }
+                ]
+            },
+            "Zoroastrianism": {
+                context: "Zara believes in a good and evil god. How do you clarify?",
+                options: [
+                    { text: "Explain that God is One, All-Powerful, and All-Merciful, and evil is a test from Him.", correct: true },
+                    { text: "Say Zoroastrianism is false.", correct: false },
+                    { text: "Accept dualism.", correct: false }
+                ]
+            },
+            "Jainism": {
+                context: "Ahmed practices non-violence and asceticism. What do you share?",
+                options: [
+                    { text: "Show that Islam also teaches mercy and kindness, but with balance in this world.", correct: true },
+                    { text: "Criticize his extreme practices.", correct: false },
+                    { text: "Say Jainism is wrong.", correct: false }
+                ]
+            },
+            "Traditional African": {
+                context: "Kofi follows ancestral traditions. How do you connect with him?",
+                options: [
+                    { text: "Share that Islam honors family and community, and that prophets were sent to every nation.", correct: true },
+                    { text: "Say his ancestors were wrong.", correct: false },
+                    { text: "Ignore his traditions.", correct: false }
+                ]
+            }
+        };
+
+        // ----- STATE -----
+        let people = [];
+        let aliScore = 0;
+        let thiefScore = 0;
+        let currentPlayer = 0; // 0 = Ali, 1 = Thief
+        let gameOver = false;
+        let selectedIndex = 0;
+        let gameStarted = false;
+
+        // DOM refs
+        const boardEl = document.getElementById('boardContainer');
+        const turnDisplay = document.getElementById('turnDisplay');
+        const messageDisplay = document.getElementById('messageDisplay');
+        const aliScoreEl = document.getElementById('aliScore');
+        const thiefScoreEl = document.getElementById('thiefScore');
+        const rollBtn = document.getElementById('rollBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const modal = document.getElementById('strategyModal');
+        const modalPerson = document.getElementById('modalPerson');
+        const modalContext = document.getElementById('modalContext');
+        const strategyBtns = document.getElementById('strategyButtons');
+
+        // ----- HELPERS -----
+        function getPlayerName(p) { return p === 0 ? 'Ali' : 'Thief'; }
+        function getPlayerColor(p) { return p === 0 ? '#27ae60' : '#c0392b'; }
+
+        function renderBoard() {
+            const layout = [
+                [7, 8, 9, 10],
+                [6, -1, -1, 11],
+                [5, -1, -1, 12],
+                [4, 3, 2, 1]
+            ];
+
+            let html = '';
+            for (let r = 0; r < layout.length; r++) {
+                for (let c = 0; c < layout[r].length; c++) {
+                    const idx = layout[r][c];
+                    if (idx === -1) {
+                        html += `<div class="cell info-cell">
+                            <div class="label">${c === 1 ? '📢' : '👥'}</div>
+                            <div style="font-size:0.5rem;color:#5a3f2a;">${c === 1 ? 'Meet & Chat' : 'Players'}</div>
+                        </div>`;
+                        continue;
+                    }
+                    if (idx === 1) {
+                        html += `<div class="cell start">
+                            <div class="name">🏁 Dawah Base</div>
+                            <div class="residents" id="residents-0"></div>
+                        </div>`;
+                        continue;
+                    }
+                    if (idx === 12) {
+                        html += `<div class="cell info-cell" style="background:#d4d4d4;">
+                            <div class="label">📊 Imaan</div>
+                            <div style="font-size:0.5rem;">Ali 🟢 · Thief ⚫</div>
+                        </div>`;
+                        continue;
+                    }
+                    const personIdx = idx - 2;
+                    if (personIdx >= 0 && personIdx < people.length) {
+                        const p = people[personIdx];
+                        const pct = Math.round(p.imaan);
+                        html += `<div class="cell" id="person-${personIdx}">
+                            <div class="symbol">${p.symbol}</div>
+                            <div class="name">${p.name}</div>
+                            <div class="religion">${p.religion}</div>
+                            <div class="imaan-meter"><div class="fill" style="width:${pct}%;"></div></div>
+                            <div style="font-size:0.5rem;color:#3d2b1a;">${pct}%</div>
+                            <div class="residents" id="residents-${personIdx+1}"></div>
+                            <div class="owner-tag" id="owner-${personIdx}" style="display:none;"></div>
+                        </div>`;
+                    }
+                }
+            }
+            boardEl.innerHTML = html;
+            updateTokens();
+        }
+
+        function updateTokens() {
+            for (let i = 0; i <= people.length; i++) {
+                const el = document.getElementById(`residents-${i}`);
+                if (el) el.innerHTML = '';
+            }
+            const startRes = document.getElementById('residents-0');
+            if (startRes) {
+                startRes.innerHTML = `<span class="token token-ali"></span><span class="token token-thief"></span>`;
+            }
+            people.forEach((p, idx) => {
+                const ownerEl = document.getElementById(`owner-${idx}`);
+                if (ownerEl) {
+                    if (p.imaan >= 80) {
+                        ownerEl.style.display = 'block';
+                        ownerEl.textContent = '🟢 Ali';
+                        ownerEl.style.background = '#1a7a4a';
+                    } else if (p.imaan <= 20) {
+                        ownerEl.style.display = 'block';
+                        ownerEl.textContent = '⚫ Thief';
+                        ownerEl.style.background = '#8a3a2a';
+                    } else {
+                        ownerEl.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        function checkWinCondition() {
+            // Only check if game has started
+            if (!gameStarted) return false;
+            
+            // Score tracking (based on majority influence)
+            const aliInfluence = people.filter(p => p.imaan >= 50).length;
+            const thiefInfluence = people.filter(p => p.imaan < 50).length;
+            
+            aliScore = aliInfluence;
+            thiefScore = thiefInfluence;
+            aliScoreEl.textContent = aliScore;
+            thiefScoreEl.textContent = thiefScore;
+
+            // CORRECTED: Ali only wins when EVERYONE reaches 100% Imaan
+            const allAtMaxImaan = people.every(p => p.imaan >= 100);
+            if (allAtMaxImaan) {
+                gameOver = true;
+                messageDisplay.textContent = '🎉 Ali wins! All people have fully embraced Islam! 🌟';
+                rollBtn.disabled = true;
+                rollBtn.textContent = '🏆 Game Over';
+                console.log('🏆 Ali wins! All 10 people reached 100% Imaan.');
+                return true;
+            }
+            
+            // CORRECTED: Thief only wins when EVERYONE drops to 0% Imaan
+            const allAtMinImaan = people.every(p => p.imaan <= 0);
+            if (allAtMinImaan) {
+                gameOver = true;
+                messageDisplay.textContent = '💔 Thief wins! All people have completely turned away.';
+                rollBtn.disabled = true;
+                rollBtn.textContent = '🏆 Game Over';
+                console.log('💔 Thief wins! All 10 people dropped to 0% Imaan.');
+                return true;
+            }
+            
+            return false;
+        }
+
+        function updateUI() {
+            aliScore = people.filter(p => p.imaan >= 50).length;
+            thiefScore = people.filter(p => p.imaan < 50).length;
+            aliScoreEl.textContent = aliScore;
+            thiefScoreEl.textContent = thiefScore;
+            turnDisplay.textContent = getPlayerName(currentPlayer);
+            turnDisplay.style.color = getPlayerColor(currentPlayer);
+
+            renderBoard();
+
+            // Check win condition only if game has started and not already over
+            if (gameStarted && !gameOver) {
+                checkWinCondition();
+            }
+        }
+
+        // ----- DAWAH STRATEGY MODAL -----
+        function openStrategyModal(personIdx) {
+            if (gameOver) {
+                messageDisplay.textContent = '🏁 Game is over. Click "New Game" to play again.';
+                return;
+            }
+            
+            const p = people[personIdx];
+            const strat = STRATEGIES[p.religion];
+            if (!strat) {
+                messageDisplay.textContent = `⚠️ No strategy defined for ${p.religion}. Skipping.`;
+                currentPlayer = (currentPlayer === 0) ? 1 : 0;
+                updateUI();
+                return;
+            }
+            selectedIndex = personIdx;
+            modalPerson.innerHTML = `Meeting <strong>${p.name}</strong> (${p.symbol} ${p.religion})`;
+            modalContext.textContent = strat.context;
+
+            strategyBtns.innerHTML = '';
+            strat.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'strategy-btn';
+                btn.textContent = `${String.fromCharCode(65 + idx)}. ${opt.text}`;
+                btn.dataset.correct = opt.correct ? 'true' : 'false';
+                btn.addEventListener('click', function() {
+                    handleStrategyChoice(personIdx, this.dataset.correct === 'true');
+                });
+                strategyBtns.appendChild(btn);
+            });
+            modal.classList.add('active');
+        }
+
+        window.closeStrategyModal = function() {
+            modal.classList.remove('active');
+            if (!gameOver) {
+                currentPlayer = (currentPlayer === 0) ? 1 : 0;
+                messageDisplay.textContent = `${getPlayerName(currentPlayer)}'s turn.`;
+                updateUI();
+            }
+        };
+
+        function handleStrategyChoice(personIdx, isCorrect) {
+            modal.classList.remove('active');
+            const p = people[personIdx];
+            
+            // Human player (Ali) choice impact
+            const change = isCorrect ? 15 : -15;
+            const oldImaan = p.imaan;
+            p.imaan = Math.min(100, Math.max(0, p.imaan + change));
+
+            // Mark game as started
+            if (!gameStarted) {
+                gameStarted = true;
+                console.log('🎮 Game started!');
+            }
+
+            const action = isCorrect ? '✅ chose a wise strategy' : '❌ chose a weak strategy';
+            const result = isCorrect ? 'improved' : 'dropped';
+            messageDisplay.textContent = `Ali ${action}! ${p.name}'s Imaan ${result} from ${oldImaan}% to ${p.imaan}%.`;
+
+            // Highlight the person's cell
+            const cell = document.getElementById(`person-${personIdx}`);
+            if (cell) {
+                cell.classList.remove('highlight');
+                void cell.offsetWidth;
+                cell.classList.add('highlight');
+            }
+
+            // Switch turn to the Thief
+            currentPlayer = 1;
+            updateUI();
+            
+            // Check win conditions first
+            if (gameStarted && !gameOver) {
+                if (checkWinCondition()) return;
+            }
+
+            // Automatically prompt or trigger the Thief's turn after a short delay for pacing
+            setTimeout(() => {
+                if (!gameOver) {
+                    meetAndChat(); // This will trigger the automated Thief turn we wrote in Step A
+                }
+            }, 1800); // 1.8-second delay so the player can read what happened first
+        }
+        
+        // ----- MEET & CHAT -----
+        function meetAndChat() {
+            if (gameOver) {
+                messageDisplay.textContent = '🏁 Game is over. Click "New Game" to play again.';
+                return;
+            }
+
+            if (currentPlayer === 0) {
+                // --- ALI'S TURN (Human Player) ---
+                // Pick a random person who isn't already fully guided (100%) or fully lost (0%)
+                let available = people.map((p, idx) => ({ idx, imaan: p.imaan }));
+                let candidates = available.filter(p => p.imaan > 0 && p.imaan < 100);
+                if (candidates.length === 0) candidates = available;
+
+                const pick = candidates[Math.floor(Math.random() * candidates.length)];
+                openStrategyModal(pick.idx);
+            } else {
+                // --- THIEF'S TURN (Automated Computer Opponent) ---
+                executeThiefTurn();
+            }
+        }
+
+        // ----- AUTOMATED THIEF AI -----
+        function executeThiefTurn() {
+            // Thief targets someone with higher Imaan to pull them down
+            let candidates = people
+                .map((p, idx) => ({ idx, ...p }))
+                .filter(p => p.imaan > 0);
+
+            if (candidates.length === 0) {
+                // If everyone is at 0, turn over
+                currentPlayer = 0;
+                updateUI();
+                return;
+            }
+
+            // Thief picks a random candidate to whisper doubts to
+            const target = candidates[Math.floor(Math.random() * candidates.length)];
+            
+            // Deduct Imaan (representing negative influence/doubts)
+            const oldImaan = target.imaan;
+            target.imaan = Math.max(0, target.imaan - 15);
+
+            messageDisplay.textContent = `😈 The Thief whispered doubts to ${target.name}. Their Imaan dropped from ${oldImaan}% to ${target.imaan}%!`;
+
+            // Highlight the affected cell
+            const cell = document.getElementById(`person-${target.idx}`);
+            if (cell) {
+                cell.classList.remove('highlight');
+                void cell.offsetWidth;
+                cell.classList.add('highlight');
+            }
+
+            // Switch turn back to Ali (the Player)
+            currentPlayer = 0;
+            updateUI();
+
+            // Check if this move ended the game
+            if (!gameOver) {
+                checkWinCondition();
+            }
+        }
+        // ----- RESET -----
+        function resetGame() {
+            people = PEOPLE.map(p => ({ ...p, imaan: 50 }));
+            aliScore = 0;
+            thiefScore = 0;
+            currentPlayer = 0;
+            gameOver = false;
+            gameStarted = false;
+            rollBtn.disabled = false;
+            rollBtn.textContent = '💬 Meet & Chat';
+            messageDisplay.textContent = '🔄 New game! Click "Meet & Chat" to start Dawah.';
+            modal.classList.remove('active');
+            updateUI();
+            console.log('🔄 Game reset. gameStarted =', gameStarted, 'gameOver =', gameOver);
+        }
+
+        // ----- OVERLAY -----
+        window.toggleOverlay = function() {
+            document.getElementById('overlay').classList.toggle('open');
+        };
+
+        // ----- EVENT LISTENERS -----
+        rollBtn.addEventListener('click', meetAndChat);
+        resetBtn.addEventListener('click', resetGame);
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeStrategyModal();
+        });
+
+        // Keyboard shortcut: Enter to roll
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !gameOver && !rollBtn.disabled) {
+                meetAndChat();
+            }
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeStrategyModal();
+            }
+        });
+
+        // ----- INIT -----
+        // Initialize the game
+        people = PEOPLE.map(p => ({ ...p, imaan: 50 }));
+        aliScore = 0;
+        thiefScore = 0;
+        currentPlayer = 0;
+        gameOver = false;
+        gameStarted = false;
+        rollBtn.disabled = false;
+        rollBtn.textContent = '💬 Meet & Chat';
+        messageDisplay.textContent = '🔄 Click "Meet & Chat" to start Dawah!';
+        updateUI();
+
+        console.log('🕌 Dawah Quest loaded! Click "Meet & Chat" to begin.');
+        console.log(`📊 ${people.length} people ready to meet.`);
+        console.log('✅ Game initialized with gameStarted =', gameStarted, 'gameOver =', gameOver);
+    })();
+</script>
+</body>
+</html>
