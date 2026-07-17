@@ -401,7 +401,7 @@
         <p>🎯 <strong>Goal:</strong> Increase the Imaan of each individual to 100% (Reverts) by choosing the optimal Dawah approach. An automated Thief works quietly in the background trying to whisper doubts.</p>
         <p>🔄 Click <strong>"Meet & Chat"</strong> to chat with a random netizen. Analyze the situation and choose the wisest strategy from the choices given.</p>
         <p>✨ Accurate wisdom moves their indicator closer to full security, and the right path, while poor strategies or internal doubts decrease it.</p>
-        <p>🏆 The quest achieves victory when majority of individuals reach <strong>100% Imaan.</strong>.</p>
+        <p>🏆 The quest achieves victory when half or majority of individuals reach <strong>100% Imaan.</strong>.</p>
         <button class="btn" onclick="toggleOverlay()">👍 Begin Dawah!</button>
         
         <div class="overlay-footer">
@@ -691,7 +691,7 @@
             }
             if ((trueReverts + trueStraying) === 12) {
                 if (trueReverts >= trueStraying) {
-                    triggerGameOver(true, "Victory! Ali Baba secured the majority of the netizens on the right path!");
+                    triggerGameOver(true, "Victory! Ali Baba secured half or the majority of the netizens on the right path!");
                 } else {
                     triggerGameOver(false, "Defeat! The Thief led the majority of the netizens astray.");
                 }
