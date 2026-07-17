@@ -23,12 +23,12 @@
             padding: 1rem;
         }
         .game-container {
-            max-width: 860px;
+            max-width: 960px;
             width: 100%;
-            background: rgba(255, 248, 235, 0.92);
+            background: rgba(255, 248, 235, 0.95);
             backdrop-filter: blur(4px);
-            border-radius: 48px;
-            padding: 1.5rem 1.8rem 2rem;
+            border-radius: 36px;
+            padding: 2rem;
             box-shadow: 0 25px 60px -10px rgba(0, 20, 30, 0.25);
             border: 2px solid rgba(200, 170, 130, 0.3);
         }
@@ -39,81 +39,82 @@
             flex-wrap: wrap;
             gap: 0.5rem;
             border-bottom: 3px solid #b8a080;
-            padding-bottom: 0.6rem;
-            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.2rem;
         }
         .header h1 {
             font-family: 'Amiri', serif;
-            font-size: 1.7rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #2d1f0f;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
         }
         .header h1 small {
             font-family: 'Comic Neue', cursive;
-            font-size: 0.7rem;
+            font-size: 0.9rem;
             font-weight: 400;
             color: #7a5a3a;
             background: #ede3d6;
-            padding: 0.1rem 1rem;
+            padding: 0.2rem 1.2rem;
             border-radius: 60px;
         }
         .header .hamburger {
-            font-size: 2rem;
+            font-size: 2.5rem;
             cursor: pointer;
             background: none;
             border: none;
             color: #5a3f2a;
             transition: 0.2s;
-            padding: 0 0.5rem;
+            padding: 0 0.8rem;
         }
         .header .hamburger:hover { transform: scale(1.1); color: #8a6a4a; }
 
         .board {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 4px;
-            margin: 0.6rem 0 1rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 1rem 0 1.5rem;
         }
         .cell {
             background: #fcf6ed;
-            border-radius: 14px;
-            padding: 0.3rem 0.15rem;
+            border-radius: 18px;
+            padding: 0.8rem 0.5rem;
             text-align: center;
             border: 3px solid #dcc8b0;
-            min-height: 75px;
+            min-height: 130px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             transition: 0.15s;
-            font-size: 0.6rem;
             position: relative;
         }
         .cell .name {
             font-weight: 700;
-            font-size: 0.7rem;
+            font-size: 1.1rem;
             color: #3d2b1a;
-            line-height: 1.1;
+            line-height: 1.2;
+            margin-bottom: 2px;
         }
         .cell .religion {
-            font-size: 0.55rem;
+            font-size: 0.8rem;
+            font-weight: 700;
             color: #6a4f34;
             background: #ede3d6;
-            padding: 0 0.3rem;
+            padding: 0.1rem 0.6rem;
             border-radius: 12px;
             display: inline-block;
-            margin: 1px 0;
+            margin: 4px 0;
         }
-        .cell .symbol { font-size: 1.1rem; }
+        .cell .symbol { font-size: 2rem; margin: 2px 0; }
         .cell .imaan-meter {
-            width: 80%;
-            height: 8px;
+            width: 90%;
+            height: 12px;
             background: #e0d5c8;
             border-radius: 10px;
-            margin: 2px auto;
+            margin: 6px auto;
             overflow: hidden;
             border: 1px solid #c4aa8a;
         }
@@ -123,107 +124,116 @@
             transition: width 0.5s ease;
             background: linear-gradient(90deg, #c0392b, #f39c12, #27ae60);
         }
-        .cell .residents {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2px;
-            margin-top: 2px;
-        }
-        .cell.info-cell {
-            background: #e8ddd0;
-            border-color: #c4aa8a;
-            font-size: 0.6rem;
-            padding: 0.2rem;
-        }
-        .cell.info-cell .label {
-            font-weight: 700;
-            color: #3d2b1a;
-            font-size: 0.6rem;
-        }
-        .cell.start {
-            background: #d4e8d4;
-            border-color: #7a9a7a;
-        }
-        .cell.start .name { color: #1a5a2a; font-size: 0.8rem; }
-        .cell .owner-tag {
-            font-size: 0.5rem;
-            background: #2d5a3a;
-            color: white;
-            padding: 0 0.4rem;
-            border-radius: 10px;
-            margin-top: 1px;
-        }
-        .cell.highlight {
-            animation: pulse 0.6s ease 2;
-            border-color: #f39c12;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .token {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            margin: 0 1px;
-            border: 2px solid white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        }
-        .token-thief { background: radial-gradient(circle at 35% 35%, #e74c3c, #a93226); }
-        .token-ali { background: radial-gradient(circle at 35% 35%, #2ecc71, #1a7a3a); }
-
-        .info-panel {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 4px;
-            margin: 0.4rem 0 0.8rem;
-        }
-        .info-box {
-            background: #fcf6ed;
-            border-radius: 14px;
-            padding: 0.3rem 0.2rem;
-            text-align: center;
-            border: 2px solid #dcc8b0;
-            font-size: 0.6rem;
-        }
-        .info-box .big {
+        .cell .imaan-text {
             font-size: 0.85rem;
             font-weight: 700;
             color: #3d2b1a;
         }
-        .info-box .label { color: #6a4f34; }
+        .cell .owner-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: #2d5a3a;
+            color: white;
+            padding: 0.1rem 0.5rem;
+            border-radius: 10px;
+            margin-top: 4px;
+        }
+        .cell.highlight {
+            animation: pulse 0.6s ease 2;
+            border-color: #f39c12;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.3);
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        /* Center Dashboard Board Placement */
+        .center-dashboard {
+            grid-column: span 2;
+            grid-row: span 2;
+            background: #ebdccb;
+            border: 3px dashed #b8a080;
+            border-radius: 24px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .center-msg-box {
+            background: #fcf6ed;
+            border-radius: 14px;
+            padding: 0.6rem;
+            border: 2px solid #c4aa8a;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .center-msg-box.ali-box { border-left: 6px solid #27ae60; }
+        .center-msg-box.thief-box { border-left: 6px solid #c0392b; }
+        .center-msg-box .title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #5a3f2a;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .center-msg-box .text {
+            font-size: 0.95rem;
+            color: #2d1f0f;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+        .score-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .score-item {
+            background: #fcf6ed;
+            border: 2px solid #c4aa8a;
+            border-radius: 12px;
+            padding: 0.4rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        .score-item span {
+            font-size: 1.1rem;
+            display: block;
+            margin-top: 2px;
+        }
 
         .btn {
             background: #8a6a4a;
             border: none;
             color: white;
             font-weight: 700;
-            font-size: 0.85rem;
-            padding: 0.5rem 1.5rem;
+            font-size: 1.2rem;
+            padding: 0.8rem 2.5rem;
             border-radius: 60px;
             cursor: pointer;
             transition: 0.15s;
             font-family: 'Comic Neue', cursive;
             box-shadow: 0 4px 12px rgba(60, 40, 20, 0.2);
         }
-        .btn:hover { transform: scale(0.96); background: #6a4f34; }
-        .btn:active { transform: scale(0.92); }
+        .btn:hover { transform: scale(0.97); background: #6a4f34; }
+        .btn:active { transform: scale(0.94); }
         .btn-primary { background: #1a7a4a; }
         .btn-primary:hover { background: #0f5a32; }
-        .btn-danger { background: #a94a3a; }
-        .btn-danger:hover { background: #8a3a2a; }
         .btn-gold { background: #b8860b; }
         .btn-gold:hover { background: #9a7209; }
+        
         .action-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 1rem;
             align-items: center;
             justify-content: center;
-            margin: 0.6rem 0 0.2rem;
+            margin-top: 0.5rem;
         }
 
         .overlay {
@@ -232,9 +242,9 @@
             left: 0;
             width: 100%;
             height: 0;
-            background: rgba(20, 15, 10, 0.94);
+            background: rgba(20, 15, 10, 0.96);
             overflow-y: auto;
-            transition: 0.5s;
+            transition: 0.4s ease-in-out;
             z-index: 1000;
             display: flex;
             justify-content: center;
@@ -242,21 +252,25 @@
         }
         .overlay.open { height: 100%; }
         .overlay-content {
-            max-width: 600px;
-            padding: 2rem;
+            max-width: 650px;
+            width: 90%;
+            padding: 2.5rem 2rem;
             color: #f0e8dc;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             line-height: 1.7;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
         .overlay-content h2 {
             font-family: 'Amiri', serif;
-            font-size: 1.8rem;
+            font-size: 2.5rem;
             color: #f5d6a0;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
         }
         .overlay-content .close-btn {
-            font-size: 2.5rem;
+            font-size: 3rem;
             cursor: pointer;
             color: #d4b68a;
             background: none;
@@ -266,17 +280,17 @@
             right: 30px;
         }
         .overlay-content .close-btn:hover { color: #f5d6a0; }
-        .overlay-content .btn { margin-top: 0.8rem; }
-
-        .footer {
-            margin-top: 1.2rem;
-            border-top: 2px solid #dcc8b0;
-            padding-top: 0.8rem;
-            text-align: center;
-            font-size: 0.65rem;
-            color: #6a4f34;
+        
+        /* Relocated Creative Footer Styles inside Instructions Overlay */
+        .overlay-footer {
+            margin-top: 2rem;
+            border-top: 2px solid #5a4530;
+            padding-top: 1.2rem;
+            font-size: 0.9rem;
+            color: #c4aa8a;
+            line-height: 1.5;
         }
-        .footer i { color: #8a5a3a; margin: 0 0.2rem; }
+        .overlay-footer i { color: #d4b68a; margin: 0 0.3rem; }
 
         .modal-overlay {
             position: fixed;
@@ -294,8 +308,8 @@
         .modal-box {
             background: #fcf6ed;
             border-radius: 30px;
-            padding: 2rem;
-            max-width: 480px;
+            padding: 2.5rem;
+            max-width: 550px;
             width: 90%;
             border: 3px solid #b8a080;
             text-align: center;
@@ -308,57 +322,50 @@
         .modal-box h2 {
             font-family: 'Amiri', serif;
             color: #2d1f0f;
-            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
         }
-        .modal-box p { color: #3d2b1a; margin-bottom: 1rem; font-size: 0.95rem; }
+        .modal-box p { color: #3d2b1a; margin-bottom: 1.2rem; font-size: 1.1rem; }
         .modal-box .strategy-btn {
             display: block;
             width: 100%;
-            padding: 0.6rem;
-            margin: 0.4rem 0;
+            padding: 0.9rem;
+            margin: 0.6rem 0;
             border: 2px solid #b8a080;
             border-radius: 16px;
             background: #f8f0e8;
             cursor: pointer;
             font-family: 'Comic Neue', cursive;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 1.05rem;
             transition: 0.15s;
             color: #2d1f0f;
+            text-align: left;
         }
         .modal-box .strategy-btn:hover {
             background: #d4c8b8;
             border-color: #8a6a4a;
-            transform: scale(1.02);
+            transform: scale(1.01);
         }
-        .modal-box .strategy-btn.correct { background: #7abd8a; border-color: #1a7a4a; }
-        .modal-box .strategy-btn.wrong { background: #e8a090; border-color: #a94a3a; }
         .modal-box .skip-btn {
-            margin-top: 0.8rem;
+            margin-top: 1rem;
             background: #a94a3a;
             color: white;
             border: none;
-            padding: 0.5rem 1.5rem;
+            padding: 0.6rem 2rem;
             border-radius: 60px;
             cursor: pointer;
             font-family: 'Comic Neue', cursive;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 1rem;
             transition: 0.15s;
         }
         .modal-box .skip-btn:hover { background: #8a3a2a; transform: scale(0.96); }
 
-        @media (max-width: 600px) {
-            .game-container { padding: 0.8rem; }
-            .board { gap: 3px; }
-            .cell { min-height: 60px; font-size: 0.5rem; padding: 0.15rem; }
-            .cell .name { font-size: 0.6rem; }
-            .info-panel { grid-template-columns: 1fr 1fr; }
-            .header h1 { font-size: 1.2rem; }
-        }
-        @media (max-width: 400px) {
-            .board { grid-template-columns: 1fr 1fr 1fr; }
-            .cell { min-height: 50px; }
+        @media (max-width: 768px) {
+            .board { grid-template-columns: repeat(2, 1fr); }
+            .center-dashboard { grid-column: span 2; }
+            .cell { min-height: 120px; }
         }
     </style>
 </head>
@@ -370,49 +377,31 @@
         <button class="hamburger" onclick="toggleOverlay()" aria-label="Instructions">☰</button>
     </div>
 
+    <!-- Symmetrical 4x4 Grid Board -->
     <div class="board" id="boardContainer"></div>
-
-    <div class="info-panel" id="infoPanel">
-        <div class="info-box">
-            <div class="label">Current Turn</div>
-            <div class="big" id="turnDisplay">Ali</div>
-        </div>
-        <div class="info-box">
-            <div class="label">📢 Message</div>
-            <div id="messageDisplay" style="font-size:0.65rem;">Click "Meet & Chat" to begin</div>
-        </div>
-        <div class="info-box">
-            <div class="label">⚫ Thief's Influence</div>
-            <div class="big" id="thiefScore">0</div>
-        </div>
-        <div class="info-box">
-            <div class="label">🟢 Ali's Influence</div>
-            <div class="big" id="aliScore">0</div>
-        </div>
-    </div>
 
     <div class="action-row">
         <button class="btn btn-primary" id="rollBtn">💬 Meet & Chat</button>
         <button class="btn btn-gold" id="resetBtn">⟳ New Game</button>
     </div>
-
-    <div class="footer">
-        <i class="fa fa-home"></i> KYFCT: Uniting Families, <i class="fa fa-heart"></i> Uniting the World.
-        <br>"Invite to the way of your Lord with wisdom and good instruction." — Qur'an 16:125
-    </div>
 </div>
 
-<!-- Overlay -->
+<!-- Overlay incorporating relocated instructions footer -->
 <div class="overlay" id="overlay">
     <button class="close-btn" onclick="toggleOverlay()">✕</button>
     <div class="overlay-content">
         <h2>📖 Dawah Quest</h2>
-        <p><strong>Ali</strong> and the <strong>Thief</strong> compete to guide people from 10 major world religions!</p>
-        <p>🎯 <strong>Goal:</strong> Increase the Imaan (faith) of each person by choosing the right Dawah strategy. The Thief tries to pull them away.</p>
-        <p>🔄 Click <strong>"Meet & Chat"</strong> to visit a person. You'll be given 3 Dawah strategies — choose wisely!</p>
-        <p>✨ Each correct strategy increases their Imaan-O-Meter toward Islam. Wrong strategies decrease it.</p>
-        <p>🏆 The game ends when all 10 people reach <strong>100% Imaan</strong> (Ali wins) or <strong>0%</strong> (Thief wins).</p>
+        <p><strong>Ali</strong> travels to interact with neighbors representing 12 different frameworks of belief, trying to share clarity and beautiful preaching.</p>
+        <p>🎯 <strong>Goal:</strong> Increase the Imaan of each individual to 100% by choosing the optimal Dawah approach. An automated Thief works quietly in the background trying to whisper doubts.</p>
+        <p>🔄 Click <strong>"Meet & Chat"</strong> to visit a random neighbor. Analyze the situation and choose the wisest strategy from the choices given.</p>
+        <p>✨ Accurate wisdom moves their indicator closer to full security, while poor strategies or internal doubts decrease it.</p>
+        <p>🏆 The quest achieves absolute victory when all 12 individuals reach <strong>100% Imaan</strong>.</p>
         <button class="btn" onclick="toggleOverlay()">👍 Begin Dawah!</button>
+        
+        <div class="overlay-footer">
+            🏢 KYFCT: Uniting Families, 🏛️ Uniting the World.
+            <br>"Invite to the way of your Lord with wisdom and good instruction." — Qur'an 16:125
+        </div>
     </div>
 </div>
 
@@ -420,16 +409,16 @@
 <div class="modal-overlay" id="strategyModal">
     <div class="modal-box">
         <h2>💬 Dawah Strategy</h2>
-        <p id="modalPerson">Meeting <strong>John</strong> (✝️ Christian)</p>
+        <p id="modalPerson">Meeting <strong>John</strong></p>
         <p id="modalContext">Choose the best approach:</p>
         <div id="strategyButtons"></div>
-        <button class="skip-btn" onclick="closeStrategyModal()">⏭️ Skip (lose turn)</button>
+        <button class="skip-btn" onclick="closeStrategyModal()">箱 Skip Turn</button>
     </div>
 </div>
 
 <script>
     (function() {
-        // ----- DATA: 10 Major Religions -----
+        // ----- DATA: 12 Symmetrical Grid Entities -----
         const PEOPLE = [
             { name: "John", religion: "Christianity", symbol: "✝️", imaan: 50 },
             { name: "David", religion: "Judaism", symbol: "✡️", imaan: 50 },
@@ -440,10 +429,11 @@
             { name: "Miko", religion: "Shinto", symbol: "⛩️", imaan: 50 },
             { name: "Zara", religion: "Zoroastrianism", symbol: "🔥", imaan: 50 },
             { name: "Ahmed", religion: "Jainism", symbol: "✋", imaan: 50 },
-            { name: "Kofi", religion: "Traditional African", symbol: "🌍", imaan: 50 }
+            { name: "Kofi", religion: "Traditional African", symbol: "🌍", imaan: 50 },
+            { name: "Ray", religion: "Agnosticism", symbol: "❓", imaan: 50 },
+            { name: "Sam", religion: "Atheism", symbol: "⚛️", imaan: 50 }
         ];
 
-        // Dawah strategies per religion
         const STRATEGIES = {
             "Christianity": {
                 context: "John believes Jesus is God's son. How do you respond?",
@@ -524,24 +514,38 @@
                     { text: "Say his ancestors were wrong.", correct: false },
                     { text: "Ignore his traditions.", correct: false }
                 ]
+            },
+            "Bagnosticism": { // Key alignment helper for array lookup consistency
+                context: "", options: []
+            },
+            "Agnosticism": {
+                context: "Ray believes the truth about God is completely unknowable. How do you approach?",
+                options: [
+                    { text: "Highlight the precise fine-tuning of cosmic order and the innate human need for divine meaning.", correct: true },
+                    { text: "Agree that looking for absolute truth is pointless.", correct: false },
+                    { text: "Tell him his uncertainty is a sin.", correct: false }
+                ]
+            },
+            "Atheism": {
+                context: "Sam rejects the concept of a Creator entirely, attributing everything to chance. What do you address?",
+                options: [
+                    { text: "Examine the philosophical impossibility of infinite regression, showing everything requires a First Cause.", correct: true },
+                    { text: "Argue aggressively about historical facts.", correct: false },
+                    { text: "Concede that material things are all that exist.", correct: false }
+                ]
             }
         };
 
         // ----- STATE -----
         let people = [];
-        let aliScore = 0;
-        let thiefScore = 0;
         let currentPlayer = 0; // 0 = Ali, 1 = Thief
         let gameOver = false;
-        let selectedIndex = 0;
         let gameStarted = false;
+        
+        let lastAliMsg = "Click 'Meet & Chat' to start dynamic Dawah updates.";
+        let lastThiefMsg = "Waiting to cause confusion...";
 
-        // DOM refs
         const boardEl = document.getElementById('boardContainer');
-        const turnDisplay = document.getElementById('turnDisplay');
-        const messageDisplay = document.getElementById('messageDisplay');
-        const aliScoreEl = document.getElementById('aliScore');
-        const thiefScoreEl = document.getElementById('thiefScore');
         const rollBtn = document.getElementById('rollBtn');
         const resetBtn = document.getElementById('resetBtn');
         const modal = document.getElementById('strategyModal');
@@ -549,82 +553,85 @@
         const modalContext = document.getElementById('modalContext');
         const strategyBtns = document.getElementById('strategyButtons');
 
-        // ----- HELPERS -----
-        function getPlayerName(p) { return p === 0 ? 'Ali' : 'Thief'; }
-        function getPlayerColor(p) { return p === 0 ? '#27ae60' : '#c0392b'; }
-
         function renderBoard() {
+            // Perfect 4x4 Grid Layout Matrix wrapping the unified message spaces
             const layout = [
-                [7, 8, 9, 10],
-                [6, -1, -1, 11],
-                [5, -1, -1, 12],
-                [4, 3, 2, 1]
+                [0, 1, 2, 3],
+                [4, -1, -1, 5],
+                [6, -1, -1, 7],
+                [8, 9, 10, 11]
             ];
 
             let html = '';
             for (let r = 0; r < layout.length; r++) {
                 for (let c = 0; c < layout[r].length; c++) {
                     const idx = layout[r][c];
+                    
                     if (idx === -1) {
-                        html += `<div class="cell info-cell">
-                            <div class="label">${c === 1 ? '📢' : '👥'}</div>
-                            <div style="font-size:0.5rem;color:#5a3f2a;">${c === 1 ? 'Meet & Chat' : 'Players'}</div>
-                        </div>`;
+                        // Render the composite dashboard block exactly once across its inner span
+                        if (r === 1 && c === 1) {
+                            const aliInfluence = people.filter(p => p.imaan >= 50).length;
+                            const thiefInfluence = people.filter(p => p.imaan < 50).length;
+
+                            html += `
+                            <div class="center-dashboard">
+                                <div class="center-msg-box ali-box">
+                                    <div class="title">🟢 Ali's Dawah Effort</div>
+                                    <div class="text" id="aliMsgBox">${lastAliMsg}</div>
+                                </div>
+                                <div class="center-msg-box thief-box">
+                                    <div class="title">⚫ Thief's Whispers</div>
+                                    <div class="text" id="thiefMsgBox">${lastThiefMsg}</div>
+                                </div>
+                                <div class="score-row">
+                                    <div class="score-item">
+                                        Ali's Safety
+                                        <span style="color: #1a7a4a;">${aliInfluence} / 12</span>
+                                    </div>
+                                    <div class="score-item">
+                                        Thief's Doubts
+                                        <span style="color: #a94a3a;">${thiefInfluence} / 12</span>
+                                    </div>
+                                </div>
+                            </div>`;
+                        }
                         continue;
                     }
-                    if (idx === 1) {
-                        html += `<div class="cell start">
-                            <div class="name">🏁 Dawah Base</div>
-                            <div class="residents" id="residents-0"></div>
-                        </div>`;
-                        continue;
-                    }
-                    if (idx === 12) {
-                        html += `<div class="cell info-cell" style="background:#d4d4d4;">
-                            <div class="label">📊 Imaan</div>
-                            <div style="font-size:0.5rem;">Ali 🟢 · Thief ⚫</div>
-                        </div>`;
-                        continue;
-                    }
-                    const personIdx = idx - 2;
-                    if (personIdx >= 0 && personIdx < people.length) {
-                        const p = people[personIdx];
+
+                    if (idx >= 0 && idx < people.length) {
+                        const p = people[idx];
                         const pct = Math.round(p.imaan);
-                        html += `<div class="cell" id="person-${personIdx}">
+                        html += `
+                        <div class="cell" id="person-${idx}">
+                            <div>
+                                <div class="name">${p.name}</div>
+                                <div class="religion">${p.religion}</div>
+                            </div>
                             <div class="symbol">${p.symbol}</div>
-                            <div class="name">${p.name}</div>
-                            <div class="religion">${p.religion}</div>
-                            <div class="imaan-meter"><div class="fill" style="width:${pct}%;"></div></div>
-                            <div style="font-size:0.5rem;color:#3d2b1a;">${pct}%</div>
-                            <div class="residents" id="residents-${personIdx+1}"></div>
-                            <div class="owner-tag" id="owner-${personIdx}" style="display:none;"></div>
+                            <div style="width: 100%;">
+                                <div class="imaan-meter"><div class="fill" style="width:${pct}%;"></div></div>
+                                <div class="imaan-text">${pct}%</div>
+                            </div>
+                            <div class="owner-tag" id="owner-${idx}" style="display:none;"></div>
                         </div>`;
                     }
                 }
             }
             boardEl.innerHTML = html;
-            updateTokens();
+            updateStatusTags();
         }
 
-        function updateTokens() {
-            for (let i = 0; i <= people.length; i++) {
-                const el = document.getElementById(`residents-${i}`);
-                if (el) el.innerHTML = '';
-            }
-            const startRes = document.getElementById('residents-0');
-            if (startRes) {
-                startRes.innerHTML = `<span class="token token-ali"></span><span class="token token-thief"></span>`;
-            }
+        function updateStatusTags() {
             people.forEach((p, idx) => {
                 const ownerEl = document.getElementById(`owner-${idx}`);
                 if (ownerEl) {
-                    if (p.imaan >= 80) {
+                    if (p.imaan >= 100) {
                         ownerEl.style.display = 'block';
-                        ownerEl.textContent = '🟢 Ali';
+                        ownerEl.textContent = '🟢 Protected';
                         ownerEl.style.background = '#1a7a4a';
-                    } else if (p.imaan <= 20) {
+                    } else if (p.imaan <= 0) {
                         ownerEl.style.display = 'block';
-                        ownerEl.textContent = '⚫ Thief';
+                        ownerEl.textContent = '⚫ Straying';
                         ownerEl.style.background = '#8a3a2a';
                     } else {
                         ownerEl.style.display = 'none';
@@ -634,37 +641,23 @@
         }
 
         function checkWinCondition() {
-            // Only check if game has started
             if (!gameStarted) return false;
-            
-            // Score tracking (based on majority influence)
-            const aliInfluence = people.filter(p => p.imaan >= 50).length;
-            const thiefInfluence = people.filter(p => p.imaan < 50).length;
-            
-            aliScore = aliInfluence;
-            thiefScore = thiefInfluence;
-            aliScoreEl.textContent = aliScore;
-            thiefScoreEl.textContent = thiefScore;
 
-            // CORRECTED: Ali only wins when EVERYONE reaches 100% Imaan
             const allAtMaxImaan = people.every(p => p.imaan >= 100);
             if (allAtMaxImaan) {
                 gameOver = true;
-                messageDisplay.textContent = '🎉 Ali wins! All people have fully embraced Islam! 🌟';
+                lastAliMsg = '🎉 Triumph! Every heart has established clear conviction! 🌟';
                 rollBtn.disabled = true;
                 rollBtn.textContent = '🏆 Game Over';
-                console.log('🏆 Ali wins! All 10 people reached 100% Imaan.');
                 return true;
             }
             
-            // CORRECTED: Thief only wins when EVERYONE drops to 0% Imaan
             const allAtMinImaan = people.every(p => p.imaan <= 0);
             if (allAtMinImaan) {
                 gameOver = true;
-                messageDisplay.textContent = '💔 Thief wins! All people have completely turned away.';
+                lastThiefMsg = '💔 Alert! Doubts have clouded the board entirely.';
                 rollBtn.disabled = true;
                 rollBtn.textContent = '🏆 Game Over';
-                console.log('💔 Thief wins! All 10 people dropped to 0% Imaan.');
                 return true;
             }
             
@@ -672,38 +665,25 @@
         }
 
         function updateUI() {
-            aliScore = people.filter(p => p.imaan >= 50).length;
-            thiefScore = people.filter(p => p.imaan < 50).length;
-            aliScoreEl.textContent = aliScore;
-            thiefScoreEl.textContent = thiefScore;
-            turnDisplay.textContent = getPlayerName(currentPlayer);
-            turnDisplay.style.color = getPlayerColor(currentPlayer);
-
             renderBoard();
-
-            // Check win condition only if game has started and not already over
             if (gameStarted && !gameOver) {
                 checkWinCondition();
             }
         }
 
-        // ----- DAWAH STRATEGY MODAL -----
         function openStrategyModal(personIdx) {
-            if (gameOver) {
-                messageDisplay.textContent = '🏁 Game is over. Click "New Game" to play again.';
-                return;
-            }
+            if (gameOver) return;
             
             const p = people[personIdx];
             const strat = STRATEGIES[p.religion];
             if (!strat) {
-                messageDisplay.textContent = `⚠️ No strategy defined for ${p.religion}. Skipping.`;
-                currentPlayer = (currentPlayer === 0) ? 1 : 0;
+                lastAliMsg = `⚠️ Encountered processing glitch targeting ${p.religion}.`;
+                currentPlayer = 1;
                 updateUI();
                 return;
             }
-            selectedIndex = personIdx;
-            modalPerson.innerHTML = `Meeting <strong>${p.name}</strong> (${p.symbol} ${p.religion})`;
+
+            modalPerson.innerHTML = `Speaking with <strong>${p.name}</strong> (${p.symbol} ${p.religion})`;
             modalContext.textContent = strat.context;
 
             strategyBtns.innerHTML = '';
@@ -723,9 +703,9 @@
         window.closeStrategyModal = function() {
             modal.classList.remove('active');
             if (!gameOver) {
-                currentPlayer = (currentPlayer === 0) ? 1 : 0;
-                messageDisplay.textContent = `${getPlayerName(currentPlayer)}'s turn.`;
+                currentPlayer = 1;
                 updateUI();
+                setTimeout(executeThiefTurn, 1400);
             }
         };
 
@@ -733,130 +713,100 @@
             modal.classList.remove('active');
             const p = people[personIdx];
             
-            // Human player (Ali) choice impact
-            const change = isCorrect ? 15 : -15;
+            const change = isCorrect ? 25 : -25;
             const oldImaan = p.imaan;
             p.imaan = Math.min(100, Math.max(0, p.imaan + change));
 
-            // Mark game as started
-            if (!gameStarted) {
-                gameStarted = true;
-                console.log('🎮 Game started!');
+            if (!gameStarted) gameStarted = true;
+
+            if (isCorrect) {
+                lastAliMsg = `✅ Success! Wise point advanced ${p.name}'s conviction to ${p.imaan}%.`;
+            } else {
+                lastAliMsg = `❌ Slip! Weak methodology dropped ${p.name}'s stance to ${p.imaan}%.`;
             }
 
-            const action = isCorrect ? '✅ chose a wise strategy' : '❌ chose a weak strategy';
-            const result = isCorrect ? 'improved' : 'dropped';
-            messageDisplay.textContent = `Ali ${action}! ${p.name}'s Imaan ${result} from ${oldImaan}% to ${p.imaan}%.`;
-
-            // Highlight the person's cell
             const cell = document.getElementById(`person-${personIdx}`);
             if (cell) {
-                cell.classList.remove('highlight');
-                void cell.offsetWidth;
                 cell.classList.add('highlight');
+                setTimeout(() => cell.classList.remove('highlight'), 1200);
             }
 
-            // Switch turn to the Thief
             currentPlayer = 1;
             updateUI();
             
-            // Check win conditions first
             if (gameStarted && !gameOver) {
-                if (checkWinCondition()) return;
+                if (checkWinCondition()) {
+                    renderBoard();
+                    return;
+                }
             }
 
-            // Automatically prompt or trigger the Thief's turn after a short delay for pacing
             setTimeout(() => {
-                if (!gameOver) {
-                    meetAndChat(); // This will trigger the automated Thief turn we wrote in Step A
-                }
-            }, 1800); // 1.8-second delay so the player can read what happened first
+                if (!gameOver) executeThiefTurn();
+            }, 1500);
         }
         
-        // ----- MEET & CHAT -----
         function meetAndChat() {
-            if (gameOver) {
-                messageDisplay.textContent = '🏁 Game is over. Click "New Game" to play again.';
-                return;
-            }
+            if (gameOver) return;
 
             if (currentPlayer === 0) {
-                // --- ALI'S TURN (Human Player) ---
-                // Pick a random person who isn't already fully guided (100%) or fully lost (0%)
                 let available = people.map((p, idx) => ({ idx, imaan: p.imaan }));
                 let candidates = available.filter(p => p.imaan > 0 && p.imaan < 100);
                 if (candidates.length === 0) candidates = available;
 
                 const pick = candidates[Math.floor(Math.random() * candidates.length)];
                 openStrategyModal(pick.idx);
-            } else {
-                // --- THIEF'S TURN (Automated Computer Opponent) ---
-                executeThiefTurn();
             }
         }
 
-        // ----- AUTOMATED THIEF AI -----
         function executeThiefTurn() {
-            // Thief targets someone with higher Imaan to pull them down
             let candidates = people
                 .map((p, idx) => ({ idx, ...p }))
-                .filter(p => p.imaan > 0);
+                .filter(p => p.imaan > 0 && p.imaan < 100);
 
             if (candidates.length === 0) {
-                // If everyone is at 0, turn over
                 currentPlayer = 0;
                 updateUI();
                 return;
             }
 
-            // Thief picks a random candidate to whisper doubts to
             const target = candidates[Math.floor(Math.random() * candidates.length)];
-            
-            // Deduct Imaan (representing negative influence/doubts)
             const oldImaan = target.imaan;
-            target.imaan = Math.max(0, target.imaan - 15);
+            target.imaan = Math.max(0, target.imaan - 25);
 
-            messageDisplay.textContent = `😈 The Thief whispered doubts to ${target.name}. Their Imaan dropped from ${oldImaan}% to ${target.imaan}%!`;
+            lastThiefMsg = `😈 Warning! Whispered complications reduced ${target.name}'s clarity down to ${target.imaan}%.`;
 
-            // Highlight the affected cell
             const cell = document.getElementById(`person-${target.idx}`);
             if (cell) {
-                cell.classList.remove('highlight');
-                void cell.offsetWidth;
                 cell.classList.add('highlight');
+                setTimeout(() => cell.classList.remove('highlight'), 1200);
             }
 
-            // Switch turn back to Ali (the Player)
             currentPlayer = 0;
             updateUI();
 
-            // Check if this move ended the game
             if (!gameOver) {
                 checkWinCondition();
             }
         }
-        // ----- RESET -----
+
         function resetGame() {
             people = PEOPLE.map(p => ({ ...p, imaan: 50 }));
-            aliScore = 0;
-            thiefScore = 0;
             currentPlayer = 0;
             gameOver = false;
             gameStarted = false;
             rollBtn.disabled = false;
             rollBtn.textContent = '💬 Meet & Chat';
-            messageDisplay.textContent = '🔄 New game! Click "Meet & Chat" to start Dawah.';
+            lastAliMsg = "Click 'Meet & Chat' to start dynamic Dawah updates.";
+            lastThiefMsg = "Waiting to cause confusion...";
             modal.classList.remove('active');
             updateUI();
-            console.log('🔄 Game reset. gameStarted =', gameStarted, 'gameOver =', gameOver);
         }
 
-        // ----- OVERLAY -----
         window.toggleOverlay = function() {
             document.getElementById('overlay').classList.toggle('open');
         };
 
-        // ----- EVENT LISTENERS -----
         rollBtn.addEventListener('click', meetAndChat);
         resetBtn.addEventListener('click', resetGame);
 
@@ -864,9 +814,8 @@
             if (e.target === modal) closeStrategyModal();
         });
 
-        // Keyboard shortcut: Enter to roll
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !gameOver && !rollBtn.disabled) {
+            if (e.key === 'Enter' && !gameOver && !rollBtn.disabled && currentPlayer === 0) {
                 meetAndChat();
             }
             if (e.key === 'Escape' && modal.classList.contains('active')) {
@@ -875,21 +824,8 @@
         });
 
         // ----- INIT -----
-        // Initialize the game
         people = PEOPLE.map(p => ({ ...p, imaan: 50 }));
-        aliScore = 0;
-        thiefScore = 0;
-        currentPlayer = 0;
-        gameOver = false;
-        gameStarted = false;
-        rollBtn.disabled = false;
-        rollBtn.textContent = '💬 Meet & Chat';
-        messageDisplay.textContent = '🔄 Click "Meet & Chat" to start Dawah!';
         updateUI();
-
-        console.log('🕌 Dawah Quest loaded! Click "Meet & Chat" to begin.');
-        console.log(`📊 ${people.length} people ready to meet.`);
-        console.log('✅ Game initialized with gameStarted =', gameStarted, 'gameOver =', gameOver);
     })();
 </script>
 </body>
