@@ -353,6 +353,19 @@
         }
         .modal-box .skip-btn:hover { background: #8a3a2a; transform: scale(0.96); }
 
+        /* Game Over Announcement Modal Styling */
+        .game-over-box {
+            border: 4px solid #b8a080;
+            background: #fdfaf4;
+        }
+        .game-over-title {
+            font-family: 'Amiri', serif;
+            font-size: 2.8rem !important;
+            margin-bottom: 0.5rem;
+        }
+        .game-over-title.win { color: #1a7a4a; }
+        .game-over-title.lose { color: #c0392b; }
+
         @media (max-width: 768px) {
             .board { grid-template-columns: repeat(2, 1fr); }
             .center-dashboard { grid-column: span 2; }
@@ -384,15 +397,15 @@
     <button class="close-btn" onclick="toggleOverlay()">✕</button>
     <div class="overlay-content">
         <h2>📖 Dawah Quest</h2>
-        <p><strong>Ali</strong> travels to interact with neighbors representing 12 different frameworks of belief, trying to share clarity and beautiful preaching.</p>
+        <p><strong>Ali</strong> interacts with netizens representing 12 different frameworks of belief, trying to share clarity and beautiful preaching.</p>
         <p>🎯 <strong>Goal:</strong> Increase the Imaan of each individual to 100% (Reverts) by choosing the optimal Dawah approach. An automated Thief works quietly in the background trying to whisper doubts.</p>
-        <p>🔄 Click <strong>"Meet & Chat"</strong> to visit a random neighbor. Analyze the situation and choose the wisest strategy from the choices given.</p>
-        <p>✨ Accurate wisdom moves their indicator closer to full security, while poor strategies or internal doubts decrease it.</p>
-        <p>🏆 The quest achieves absolute victory when all 12 individuals reach <strong>100% Imaan</strong>.</p>
+        <p>🔄 Click <strong>"Meet & Chat"</strong> to chat with a random netizen. Analyze the situation and choose the wisest strategy from the choices given.</p>
+        <p>✨ Accurate wisdom moves their indicator closer to full security, and the right path, while poor strategies or internal doubts decrease it.</p>
+        <p>🏆 The quest achieves victory when majority of individuals reach <strong>100% Imaan.</strong>.</p>
         <button class="btn" onclick="toggleOverlay()">👍 Begin Dawah!</button>
         
         <div class="overlay-footer">
-            🏢 KYFCT: Uniting Families, 🏛️ Uniting the World.
+            🏢 <a href="https://v0-bcdc.vercel.app/" style="color:#043c77; font-weight:bold; text-decoration:none;">BCDC</a> : Conveying the Correct Creed of Faith in an Era of Division, 🌍.
             <br>"Invite to the way of your Lord with wisdom and good instruction." — Qur'an 16:125
         </div>
     </div>
@@ -409,10 +422,24 @@
     </div>
 </div>
 
+<!-- Game Over Shout-out Modal -->
+<div class="modal-overlay" id="gameOverModal">
+    <div class="modal-box game-over-box">
+        <h2 id="gameOverTitle" class="game-over-title">🏆 Victory!</h2>
+        <p id="gameOverMsg">Every heart has established clear conviction!</p>
+        <div style="font-size: 1.3rem; font-weight: 700; margin: 1.5rem 0; color: #3d2b1a;">
+            Final Score:<br>
+            🟢 Reverts: <span id="finalReverts">0</span> / 12<br>
+            ⚫ Straying: <span id="finalStraying">0</span> / 12
+        </div>
+        <button class="btn btn-gold" onclick="resetGameFromModal()" style="font-size: 1.2rem; padding: 0.8rem 2.5rem;">⟳ Play Again</button>
+    </div>
+</div>
+
 <script>
     (function() {
         // ----- DATA: 12 Symmetrical Grid Entities -----
-        const PEOPLE = [
+        const ORIGINAL_PEOPLE = [
             { name: "John", religion: "Christianity", symbol: "✝️", imaan: 50 },
             { name: "David", religion: "Judaism", symbol: "✡️", imaan: 50 },
             { name: "Arjun", religion: "Hinduism", symbol: "🕉️", imaan: 50 },
@@ -421,7 +448,7 @@
             { name: "Lao", religion: "Taoism", symbol: "☯️", imaan: 50 },
             { name: "Miko", religion: "Shinto", symbol: "⛩️", imaan: 50 },
             { name: "Zara", religion: "Zoroastrianism", symbol: "🔥", imaan: 50 },
-            { name: "Ahmed", religion: "Jainism", symbol: "✋", imaan: 50 },
+            { name: "Suraj", religion: "Jainism", symbol: "✋", imaan: 50 },
             { name: "Kofi", religion: "Traditional African", symbol: "🌍", imaan: 50 },
             { name: "Ray", religion: "Agnosticism", symbol: "❓", imaan: 50 },
             { name: "Sam", religion: "Atheism", symbol: "⚛️", imaan: 50 }
@@ -440,7 +467,7 @@
                 context: "David follows the Torah but rejects prophethood after Moses. What do you say?",
                 options: [
                     { text: "Explain that Muhammad (peace be upon him) is the final prophet mentioned in their scriptures.", correct: true },
-                    { text: "Say that Judaism is the only true religion.", correct: false },
+                    { text: "Say Judaism is the only true religion.", correct: false },
                     { text: "Criticize the Torah.", correct: false }
                 ]
             },
@@ -493,7 +520,7 @@
                 ]
             },
             "Jainism": {
-                context: "Ahmed practices non-violence and asceticism. What do you share?",
+                context: "Suraj practices non-violence and asceticism. What do you share?",
                 options: [
                     { text: "Show that Islam also teaches mercy and kindness, but with balance in this world.", correct: true },
                     { text: "Criticize his extreme practices.", correct: false },
@@ -541,6 +568,13 @@
         const modalContext = document.getElementById('modalContext');
         const strategyBtns = document.getElementById('strategyButtons');
         
+        // Shout-out Modal Elements
+        const gameOverModal = document.getElementById('gameOverModal');
+        const gameOverTitle = document.getElementById('gameOverTitle');
+        const gameOverMsg = document.getElementById('gameOverMsg');
+        const finalReverts = document.getElementById('finalReverts');
+        const finalStraying = document.getElementById('finalStraying');
+
         // Top Badges
         const aliCounterEl = document.getElementById('aliCounter');
         const thiefCounterEl = document.getElementById('thiefCounter');
@@ -600,20 +634,22 @@
             }
             boardEl.innerHTML = html;
             
-            // Re-bind actions since buttons get re-generated inside innerHTML template loop
+            // Re-bind click events
             document.getElementById('rollBtn').addEventListener('click', meetAndChat);
             document.getElementById('resetBtn').addEventListener('click', resetGame);
             
             if (gameOver) {
-                document.getElementById('rollBtn').disabled = true;
-                document.getElementById('rollBtn').textContent = '🏆 Game Over';
+                const rBtn = document.getElementById('rollBtn');
+                rBtn.disabled = true;
+                rBtn.style.opacity = '0.5';
+                rBtn.style.cursor = 'not-allowed';
+                rBtn.textContent = '🏁 Game Over';
             }
 
             updateStatusTags();
         }
 
         function updateStatusTags() {
-            // Count true definitive actions
             const trueReverts = people.filter(p => p.imaan >= 100).length;
             const trueStraying = people.filter(p => p.imaan <= 0).length;
             
@@ -641,28 +677,52 @@
         function checkWinCondition() {
             if (!gameStarted) return false;
 
-            const allAtMaxImaan = people.every(p => p.imaan >= 100);
-            if (allAtMaxImaan) {
-                gameOver = true;
-                lastAliMsg = '🎉 Triumph! Every heart has established clear conviction! 🌟';
+            const trueReverts = people.filter(p => p.imaan >= 100).length;
+            const trueStraying = people.filter(p => p.imaan <= 0).length;
+
+            // End game conditions
+            if (trueReverts === 12) {
+                triggerGameOver(true, "Triumph! Every single heart has established clear conviction! 🌟");
                 return true;
             }
-            
-            const allAtMinImaan = people.every(p => p.imaan <= 0);
-            if (allAtMinImaan) {
-                gameOver = true;
-                lastThiefMsg = '💔 Alert! Doubts have clouded the board entirely.';
+            if (trueStraying === 12) {
+                triggerGameOver(false, "Loss! Doubts have clouded the board entirely.");
+                return true;
+            }
+            if ((trueReverts + trueStraying) === 12) {
+                if (trueReverts >= trueStraying) {
+                    triggerGameOver(true, "Victory! Ali Baba secured the majority of the netizens on the right path!");
+                } else {
+                    triggerGameOver(false, "Defeat! The Thief led the majority of the netizens astray.");
+                }
                 return true;
             }
             
             return false;
         }
 
-        function updateUI() {
-            renderBoard();
-            if (gameStarted && !gameOver) {
-                checkWinCondition();
+        function triggerGameOver(isWin, message) {
+            gameOver = true;
+            if (isWin) {
+                lastAliMsg = `🎉 ${message}`;
+                gameOverTitle.textContent = "🏆 Victory!";
+                gameOverTitle.className = "game-over-title win";
+            } else {
+                lastThiefMsg = `💔 ${message}`;
+                gameOverTitle.textContent = "💥 Game Over";
+                gameOverTitle.className = "game-over-title lose";
             }
+            gameOverMsg.textContent = message;
+            
+            finalReverts.textContent = people.filter(p => p.imaan >= 100).length;
+            finalStraying.textContent = people.filter(p => p.imaan <= 0).length;
+            
+            renderBoard();
+            
+            // Bring up the big shout out overlay
+            setTimeout(() => {
+                gameOverModal.classList.add('active');
+            }, 800);
         }
 
         function openStrategyModal(personIdx) {
@@ -673,7 +733,7 @@
             if (!strat) {
                 lastAliMsg = `⚠️ Encountered processing glitch targeting ${p.religion}.`;
                 currentPlayer = 1;
-                updateUI();
+                renderBoard();
                 return;
             }
 
@@ -698,100 +758,120 @@
             modal.classList.remove('active');
             if (!gameOver) {
                 currentPlayer = 1;
-                updateUI();
-                setTimeout(executeThiefTurn, 1400);
+                renderBoard();
+                setTimeout(executeThiefTurn, 1000);
             }
         };
 
         function handleStrategyChoice(personIdx, isCorrect) {
             modal.classList.remove('active');
-            const p = people[personIdx];
             
+            // Direct array mutation fixing the state mismatch bug
             const change = isCorrect ? 25 : -25;
-            p.imaan = Math.min(100, Math.max(0, p.imaan + change));
+            people[personIdx].imaan = Math.min(100, Math.max(0, people[personIdx].imaan + change));
 
             if (!gameStarted) gameStarted = true;
 
+            const name = people[personIdx].name;
+            const currentImaan = people[personIdx].imaan;
+
             if (isCorrect) {
-                lastAliMsg = `✅ Success! Wise point advanced ${p.name}'s conviction to ${p.imaan}%.`;
+                lastAliMsg = `✅ Success! Wise point advanced ${name}'s conviction to ${currentImaan}%.`;
             } else {
-                lastAliMsg = `❌ Slip! Weak methodology dropped ${p.name}'s stance to ${p.imaan}%.`;
+                lastAliMsg = `❌ Slip! Weak methodology dropped ${name}'s stance to ${currentImaan}%.`;
             }
 
+            renderBoard();
+            
             const cell = document.getElementById(`person-${personIdx}`);
             if (cell) {
                 cell.classList.add('highlight');
-                setTimeout(() => cell.classList.remove('highlight'), 1200);
+                setTimeout(() => cell.classList.remove('highlight'), 1000);
             }
+            
+            if (checkWinCondition()) return;
 
             currentPlayer = 1;
-            updateUI();
-            
-            if (gameStarted && !gameOver) {
-                if (checkWinCondition()) {
-                    renderBoard();
-                    return;
-                }
-            }
-
             setTimeout(() => {
                 if (!gameOver) executeThiefTurn();
-            }, 1500);
+            }, 1200);
         }
         
         function meetAndChat() {
             if (gameOver) return;
 
             if (currentPlayer === 0) {
-                let available = people.map((p, idx) => ({ idx, imaan: p.imaan }));
-                let candidates = available.filter(p => p.imaan > 0 && p.imaan < 100);
-                if (candidates.length === 0) candidates = available;
+                // Get people who haven't hit final ceilings or floors yet
+                let activeCandidates = [];
+                people.forEach((p, idx) => {
+                    if (p.imaan > 0 && p.imaan < 100) {
+                        activeCandidates.push(idx);
+                    }
+                });
 
-                const pick = candidates[Math.floor(Math.random() * candidates.length)];
-                openStrategyModal(pick.idx);
+                // Fallback to all profiles if board is saturated
+                if (activeCandidates.length === 0) {
+                    activeCandidates = people.map((_, idx) => idx);
+                }
+
+                const pickIdx = activeCandidates[Math.floor(Math.random() * activeCandidates.length)];
+                openStrategyModal(pickIdx);
             }
         }
 
         function executeThiefTurn() {
-            let candidates = people
-                .map((p, idx) => ({ idx, ...p }))
-                .filter(p => p.imaan > 0 && p.imaan < 100);
+            let activeCandidates = [];
+            people.forEach((p, idx) => {
+                if (p.imaan > 0 && p.imaan < 100) {
+                    activeCandidates.push(idx);
+                }
+            });
 
-            if (candidates.length === 0) {
+            if (activeCandidates.length === 0) {
                 currentPlayer = 0;
-                updateUI();
+                checkWinCondition();
+                renderBoard();
                 return;
             }
 
-            const target = candidates[Math.floor(Math.random() * candidates.length)];
-            target.imaan = Math.max(0, target.imaan - 25);
+            const targetIdx = activeCandidates[Math.floor(Math.random() * activeCandidates.length)];
+            
+            // Mutating target scale properly
+            people[targetIdx].imaan = Math.max(0, people[targetIdx].imaan - 25);
+            
+            const name = people[targetIdx].name;
+            const currentImaan = people[targetIdx].imaan;
 
-            lastThiefMsg = `😈 Warning! Whispered complications reduced ${target.name}'s clarity down to ${target.imaan}%.`;
+            lastThiefMsg = `😈 Warning! Whispered complications reduced ${name}'s clarity down to ${currentImaan}%.`;
 
-            const cell = document.getElementById(`person-${target.idx}`);
+            renderBoard();
+
+            const cell = document.getElementById(`person-${targetIdx}`);
             if (cell) {
                 cell.classList.add('highlight');
-                setTimeout(() => cell.classList.remove('highlight'), 1200);
+                setTimeout(() => cell.classList.remove('highlight'), 1000);
             }
+
+            if (checkWinCondition()) return;
 
             currentPlayer = 0;
-            updateUI();
-
-            if (!gameOver) {
-                checkWinCondition();
-            }
         }
 
         function resetGame() {
-            people = PEOPLE.map(p => ({ ...p, imaan: 50 }));
+            people = ORIGINAL_PEOPLE.map(p => ({ ...p, imaan: 50 }));
             currentPlayer = 0;
             gameOver = false;
             gameStarted = false;
             lastAliMsg = "Click 'Meet & Chat' to start dynamic Dawah updates.";
             lastThiefMsg = "Waiting to cause confusion...";
             modal.classList.remove('active');
-            updateUI();
+            gameOverModal.classList.remove('active');
+            renderBoard();
         }
+
+        window.resetGameFromModal = function() {
+            resetGame();
+        };
 
         window.toggleOverlay = function() {
             document.getElementById('overlay').classList.toggle('open');
@@ -802,18 +882,13 @@
         });
 
         document.addEventListener('keydown', function(e) {
-            const rollBtnActive = document.getElementById('rollBtn');
-            if (e.key === 'Enter' && !gameOver && rollBtnActive && !rollBtnActive.disabled && currentPlayer === 0) {
+            if (e.key === 'Enter' && !gameOver && currentPlayer === 0 && !modal.classList.contains('active')) {
                 meetAndChat();
-            }
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeStrategyModal();
             }
         });
 
         // ----- INIT -----
-        people = PEOPLE.map(p => ({ ...p, imaan: 50 }));
-        updateUI();
+        resetGame();
     })();
 </script>
 </body>
