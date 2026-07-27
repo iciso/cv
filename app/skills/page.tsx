@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ArrowLeft, Asterisk, BrainCircuit, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
   BookOpen, Brain, Cpu, ChartBar, Database, Globe, Lightbulb, Monitor, Palette, 
-  Play, Rocket, Search, Settings, Shield, Smartphone, Sparkles, Star, Trophy, Users, Workflow, Zap 
+  Play, Rocket, Scale, Search, Settings, Shield, Smartphone, Sparkles, Star, Trophy, Users, Workflow, Zap 
 } from "lucide-react"
 
 export default function SkillsPage() {
@@ -214,6 +214,12 @@ const certifications = [
     description: "Teaches how to evaluate AI outputs, detect flawed reasoning, recognize cognitive biases and logical fallacies, and make sound, human-centered decisions.",
     url: "https://www.sololearn.com/certificates/CC-NJTTDEPO",
     icon: <BrainCircuit size={24} />,
+  },
+  {
+    name: "Bias Detection and Mitigation in AI",
+    description: "Equips trainees with skills to design, evaluate, and monitor AI systems that are fairer, more transparent, and more trustworthy.",
+    url: "https://www.sololearn.com/certificates/CC-NCMMTYQA",
+    icon: <Scale size={24} />,
   },
   {
     name: "PHP",
