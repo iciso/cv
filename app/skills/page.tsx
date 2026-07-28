@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { ArrowLeft, Asterisk, BrainCircuit, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
-  BookOpen, Brain, Cpu, ChartBar, Database, Globe, Lightbulb, Monitor, Palette, 
+  BookOpen, Bot, Brain, Cpu, ChartBar, Database, Globe, Lightbulb, Monitor, Palette, 
   Play, Rocket, Scale, Search, Settings, Shield, Smartphone, Sparkles, Star, Trophy, Users, Workflow, Zap 
 } from "lucide-react"
 
@@ -220,6 +220,12 @@ const certifications = [
     description: "Equips trainees with skills to design, evaluate, and monitor AI systems that are fairer, more transparent, and more trustworthy.",
     url: "https://www.sololearn.com/certificates/CC-NCMMTYQA",
     icon: <Scale size={24} />,
+  },
+  {
+    name: "AI Agents for Beginners: How They Work (Python)",
+    description: "How to build a tiny working agent of your own — and understand how an agent thinks, acts, and observes in a loop, how it uses tools, memory, and planning, and run real Python code.",
+    url: "https://www.sololearn.com/certificates/CC-AMAGLBRJ",
+    icon: <Bot size={24} />,
   },
   {
     name: "PHP",
