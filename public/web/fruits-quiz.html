@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🍎 Fruits Quiz · 50 Fruits</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #f0f5fb;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px -8px rgba(0, 20, 40, 0.18);
+            padding: 2.2rem 2.2rem 2.8rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #0a2a3f;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            border-bottom: 3px solid #dce6ef;
+            padding-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+        h1 .badge {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2a6b8a;
+            background: #dce8f2;
+            padding: 0.15rem 1.2rem;
+            border-radius: 60px;
+        }
+        .subhead {
+            color: #3d6a84;
+            margin-bottom: 1.8rem;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .stats {
+            background: #eaf1f8;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a4058;
+        }
+        .stats span {
+            background: white;
+            padding: 0.05rem 0.7rem;
+            border-radius: 40px;
+            margin: 0 0.1rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.9rem;
+            margin: 1.5rem 0 1.8rem;
+        }
+        .fruit-card {
+            background: #f8fbfe;
+            border: 2px solid #e2ebf3;
+            border-radius: 20px;
+            padding: 0.9rem 0.6rem 0.7rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.15s;
+            position: relative;
+            user-select: none;
+        }
+        .fruit-card:hover {
+            transform: translateY(-4px);
+            border-color: #8bb3cc;
+            box-shadow: 0 8px 18px rgba(0, 40, 70, 0.1);
+        }
+        .fruit-card .fruit-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin: 0 auto 0.5rem;
+            display: block;
+            border-radius: 12px;
+        }
+        .fruit-card .status {
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: block;
+            margin-top: 0.25rem;
+        }
+        .fruit-card .status.correct { color: #1f8b5e; }
+        .fruit-card .status.wrong   { color: #b13e4b; }
+        .fruit-card .status.pending { color: #8a9aa8; }
+        .fruit-card.answered-correct {
+            background: #e6f5ef;
+            border-color: #309b6b;
+        }
+        .fruit-card.answered-wrong {
+            background: #fde9eb;
+            border-color: #c95a66;
+        }
+        .reset-btn {
+            background: #1a5f82;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.6rem 2rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 4px 12px rgba(26, 95, 130, 0.2);
+        }
+        .reset-btn:hover {
+            background: #0f4866;
+            transform: scale(0.97);
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .footnote {
+            margin-top: 1.8rem;
+            border-top: 2px solid #dce8f2;
+            padding-top: 1.2rem;
+            font-size: 0.85rem;
+            color: #4f6f84;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .card { padding: 1.2rem; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+            h1 { font-size: 1.6rem; }
+            .fruit-card .fruit-img { width: 65px; height: 65px; }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>
+        🍎 Fruits Quiz
+        <span class="badge">50 fruits</span>
+    </h1>
+    <div class="subhead">
+        <span>Click any fruit and type its name</span>
+        <span class="stats">
+            ✅ <span id="correctCount">0</span> &nbsp;·&nbsp;
+            ❌ <span id="wrongCount">0</span> &nbsp;·&nbsp;
+            ⏳ <span id="remainingCount">50</span>
+        </span>
+    </div>
+
+    <div class="grid" id="gridContainer"></div>
+
+    <div class="footer">
+        <button class="reset-btn" id="resetBtn">🔄 Reset Quiz</button>
+        <span style="font-size:0.85rem; color:#4f6f84;">💡 Spelling must be correct (case-insensitive)</span>
+    </div>
+
+    <div class="footnote">
+        <i>Fruit images from Twemoji & Wikimedia · Fun learning for all ages</i>
+    </div>
+</div>
+
+<script>
+(function() {
+    // 50 common fruits with reliable image URLs
+    const FRUITS = [
+        { name: "Apple",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34e.png" },
+        { name: "Banana",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34c.png" },
+        { name: "Orange",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34a.png" },
+        { name: "Grapes",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f347.png" },
+        { name: "Strawberry", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f353.png" },
+        { name: "Watermelon", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f349.png" },
+        { name: "Pineapple",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34d.png" },
+        { name: "Mango",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f96d.png" },
+        { name: "Peach",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f351.png" },
+        { name: "Cherry",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f352.png" },
+        { name: "Lemon",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34b.png" },
+        { name: "Pear",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f350.png" },
+        { name: "Kiwi",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f95d.png" },
+        { name: "Coconut",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f965.png" },
+        { name: "Avocado",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f951.png" },
+        { name: "Blueberry",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad0.png" },
+        { name: "Raspberry",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f353.png" },
+        { name: "Blackberry", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad2.png" },
+        { name: "Pomegranate",img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad9.png" },
+        { name: "Fig",        img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
+        { name: "Papaya",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f96d.png" },
+        { name: "Guava",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad7.png" },
+        { name: "Lychee",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad8.png" },
+        { name: "Dragon Fruit", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad0.png" },
+        { name: "Passion Fruit", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad5.png" },
+        { name: "Cantaloupe", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f348.png" },
+        { name: "Honeydew",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f348.png" },
+        { name: "Plum",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fada.png" },
+        { name: "Apricot",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f351.png" },
+        { name: "Nectarine",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f351.png" },
+        { name: "Grapefruit", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34a.png" },
+        { name: "Lime",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34b.png" },
+        { name: "Tangerine",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34a.png" },
+        { name: "Clementine", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34a.png" },
+        { name: "Persimmon",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad5.png" },
+        { name: "Starfruit",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad5.png" },
+        { name: "Jackfruit",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
+        { name: "Durian",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
+        { name: "Rambutan",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad8.png" },
+        { name: "Longan",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad8.png" },
+        { name: "Mulberry",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad2.png" },
+        { name: "Cranberry",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad0.png" },
+        { name: "Gooseberry", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad2.png" },
+        { name: "Elderberry", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad2.png" },
+        { name: "Quince",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f350.png" },
+        { name: "Medlar",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f350.png" },
+        { name: "Soursop",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
+        { name: "Custard Apple", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
+        { name: "Breadfruit", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
+        { name: "Tamarind",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" }
+    ];
+
+    let answered = {};
+
+    const grid = document.getElementById('gridContainer');
+    const correctSpan = document.getElementById('correctCount');
+    const wrongSpan = document.getElementById('wrongCount');
+    const remainingSpan = document.getElementById('remainingCount');
+
+    function updateStats() {
+        let correct = 0, wrong = 0;
+        for (const key in answered) {
+            if (answered[key] === 'correct') correct++;
+            else if (answered[key] === 'wrong') wrong++;
+        }
+        correctSpan.textContent = correct;
+        wrongSpan.textContent = wrong;
+        remainingSpan.textContent = FRUITS.length - correct - wrong;
+    }
+
+    function renderGrid() {
+        grid.innerHTML = '';
+        FRUITS.forEach((fruit) => {
+            const card = document.createElement('div');
+            card.className = 'fruit-card';
+            const status = answered[fruit.name] || 'pending';
+
+            if (status === 'correct') card.classList.add('answered-correct');
+            else if (status === 'wrong') card.classList.add('answered-wrong');
+
+            const img = document.createElement('img');
+            img.className = 'fruit-img';
+            img.src = fruit.img;
+            img.alt = 'Fruit';
+            img.loading = 'lazy';
+
+            const statusSpan = document.createElement('span');
+            statusSpan.className = `status ${status}`;
+            statusSpan.textContent = status === 'correct' ? '✅' :
+                                     status === 'wrong'   ? '❌' : '⏳';
+
+            card.appendChild(img);
+            card.appendChild(statusSpan);
+
+            card.addEventListener('click', () => {
+                if (answered[fruit.name]) return;
+
+                const userAnswer = prompt(`What is the name of this fruit?`);
+                if (userAnswer === null) return;
+
+                const trimmed = userAnswer.trim().toLowerCase();
+                if (!trimmed) {
+                    alert('Please type a fruit name.');
+                    return;
+                }
+
+                // Accept common variations
+                const correctNames = [
+                    fruit.name.toLowerCase(),
+                    fruit.name.toLowerCase().replace(/\s+/g, ''),
+                    fruit.name.toLowerCase().replace('fruit', '').trim()
+                ];
+
+                const isCorrect = correctNames.some(n => 
+                    trimmed === n || 
+                    trimmed === n + 's' ||
+                    trimmed.includes(n)
+                );
+
+                answered[fruit.name] = isCorrect ? 'correct' : 'wrong';
+                renderGrid();
+                updateStats();
+
+                if (isCorrect) {
+                    alert(`✅ Correct! It is a ${fruit.name}.`);
+                } else {
+                    alert(`❌ Not quite. The correct answer is "${fruit.name}".`);
+                }
+            });
+
+            grid.appendChild(card);
+        });
+        updateStats();
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        answered = {};
+        renderGrid();
+    });
+
+    renderGrid();
+})();
+</script>
+</body>
+</html>
