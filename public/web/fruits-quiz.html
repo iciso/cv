@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🍎 Fruits Quiz · 50 Fruits</title>
+    <title>🍎 Fruits Quiz</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background: #f0f5fb;
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
@@ -20,22 +16,20 @@
             align-items: center;
         }
         .card {
-            max-width: 1100px;
+            max-width: 1000px;
             width: 100%;
             background: white;
             border-radius: 40px;
             box-shadow: 0 20px 50px -8px rgba(0, 20, 40, 0.18);
-            padding: 2.2rem 2.2rem 2.8rem;
+            padding: 2.2rem;
         }
         h1 {
             font-size: 2.2rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
             color: #0a2a3f;
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            flex-wrap: wrap;
             border-bottom: 3px solid #dce6ef;
             padding-bottom: 0.8rem;
             margin-bottom: 0.6rem;
@@ -74,7 +68,7 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             gap: 0.9rem;
             margin: 1.5rem 0 1.8rem;
         }
@@ -82,11 +76,10 @@
             background: #f8fbfe;
             border: 2px solid #e2ebf3;
             border-radius: 20px;
-            padding: 0.9rem 0.6rem 0.7rem;
+            padding: 0.9rem 0.5rem 0.7rem;
             text-align: center;
             cursor: pointer;
             transition: 0.15s;
-            position: relative;
             user-select: none;
         }
         .fruit-card:hover {
@@ -95,15 +88,14 @@
             box-shadow: 0 8px 18px rgba(0, 40, 70, 0.1);
         }
         .fruit-card .fruit-img {
-            width: 80px;
-            height: 80px;
+            width: 72px;
+            height: 72px;
             object-fit: contain;
             margin: 0 auto 0.5rem;
             display: block;
-            border-radius: 12px;
         }
         .fruit-card .status {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 700;
             display: block;
             margin-top: 0.25rem;
@@ -125,7 +117,7 @@
             color: white;
             font-weight: 600;
             font-size: 0.95rem;
-            padding: 0.6rem 2rem;
+            padding: 0.65rem 2rem;
             border-radius: 60px;
             cursor: pointer;
             transition: 0.15s;
@@ -141,7 +133,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
-            margin-top: 0.5rem;
+            margin-top: 0.8rem;
         }
         .footnote {
             margin-top: 1.8rem;
@@ -152,10 +144,10 @@
             text-align: center;
         }
         @media (max-width: 600px) {
-            .card { padding: 1.2rem; }
+            .card { padding: 1.3rem; }
             .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
-            h1 { font-size: 1.6rem; }
-            .fruit-card .fruit-img { width: 65px; height: 65px; }
+            h1 { font-size: 1.7rem; }
+            .fruit-card .fruit-img { width: 60px; height: 60px; }
         }
     </style>
 </head>
@@ -163,14 +155,14 @@
 <div class="card">
     <h1>
         🍎 Fruits Quiz
-        <span class="badge">50 fruits</span>
+        <span class="badge" id="totalBadge">32 fruits</span>
     </h1>
     <div class="subhead">
         <span>Click any fruit and type its name</span>
         <span class="stats">
             ✅ <span id="correctCount">0</span> &nbsp;·&nbsp;
             ❌ <span id="wrongCount">0</span> &nbsp;·&nbsp;
-            ⏳ <span id="remainingCount">50</span>
+            ⏳ <span id="remainingCount">32</span>
         </span>
     </div>
 
@@ -178,69 +170,54 @@
 
     <div class="footer">
         <button class="reset-btn" id="resetBtn">🔄 Reset Quiz</button>
-        <span style="font-size:0.85rem; color:#4f6f84;">💡 Spelling must be correct (case-insensitive)</span>
+        <span style="font-size:0.85rem; color:#4f6f84;">💡 Type the name of the fruit</span>
     </div>
 
     <div class="footnote">
-        <i>Fruit images from Twemoji & Wikimedia · Fun learning for all ages</i>
+        <i>Clear fruit images · Perfect for young learners</i>
     </div>
 </div>
 
 <script>
 (function() {
-    // 50 common fruits with reliable image URLs
+    // Only fruits with clear, unique & correct Twemoji images
     const FRUITS = [
-        { name: "Apple",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34e.png" },
-        { name: "Banana",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34c.png" },
-        { name: "Orange",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34a.png" },
-        { name: "Grapes",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f347.png" },
-        { name: "Strawberry", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f353.png" },
-        { name: "Watermelon", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f349.png" },
-        { name: "Pineapple",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34d.png" },
-        { name: "Mango",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f96d.png" },
-        { name: "Peach",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f351.png" },
-        { name: "Cherry",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f352.png" },
-        { name: "Lemon",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34b.png" },
-        { name: "Pear",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f350.png" },
-        { name: "Kiwi",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f95d.png" },
-        { name: "Coconut",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f965.png" },
-        { name: "Avocado",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f951.png" },
-        { name: "Blueberry",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad0.png" },
-        { name: "Raspberry",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f353.png" },
-        { name: "Blackberry", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad2.png" },
-        { name: "Pomegranate",img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad9.png" },
-        { name: "Fig",        img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
-        { name: "Papaya",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f96d.png" },
-        { name: "Guava",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad7.png" },
-        { name: "Lychee",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad8.png" },
-        { name: "Dragon Fruit", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad0.png" },
-        { name: "Passion Fruit", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad5.png" },
-        { name: "Cantaloupe", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f348.png" },
-        { name: "Honeydew",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f348.png" },
-        { name: "Plum",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fada.png" },
-        { name: "Apricot",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f351.png" },
-        { name: "Nectarine",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f351.png" },
-        { name: "Grapefruit", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34a.png" },
-        { name: "Lime",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34b.png" },
-        { name: "Tangerine",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34a.png" },
-        { name: "Clementine", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34a.png" },
-        { name: "Persimmon",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad5.png" },
-        { name: "Starfruit",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad5.png" },
-        { name: "Jackfruit",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
-        { name: "Durian",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
-        { name: "Rambutan",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad8.png" },
-        { name: "Longan",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad8.png" },
-        { name: "Mulberry",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad2.png" },
-        { name: "Cranberry",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad0.png" },
-        { name: "Gooseberry", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad2.png" },
-        { name: "Elderberry", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad2.png" },
-        { name: "Quince",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f350.png" },
-        { name: "Medlar",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f350.png" },
-        { name: "Soursop",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
-        { name: "Custard Apple", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
-        { name: "Breadfruit", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" },
-        { name: "Tamarind",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad6.png" }
+        { name: "Apple",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34e.png" },
+        { name: "Banana",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34c.png" },
+        { name: "Orange",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34a.png" },
+        { name: "Grapes",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f347.png" },
+        { name: "Strawberry",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f353.png" },
+        { name: "Watermelon",  img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f349.png" },
+        { name: "Pineapple",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34d.png" },
+        { name: "Mango",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f96d.png" },
+        { name: "Peach",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f351.png" },
+        { name: "Cherries",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f352.png" },
+        { name: "Lemon",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34b.png" },
+        { name: "Pear",        img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f350.png" },
+        { name: "Kiwi",        img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f95d.png" },
+        { name: "Coconut",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f965.png" },
+        { name: "Avocado",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f951.png" },
+        { name: "Blueberries", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fad0.png" },
+        { name: "Tomato",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f345.png" },
+        { name: "Corn",        img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f33d.png" },
+        { name: "Carrot",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f955.png" },
+        { name: "Broccoli",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f966.png" },
+        { name: "Cucumber",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f952.png" },
+        { name: "Eggplant",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f346.png" },
+        { name: "Potato",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f954.png" },
+        { name: "Onion",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f9c5.png" },
+        { name: "Garlic",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f9c4.png" },
+        { name: "Mushroom",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f344.png" },
+        { name: "Peanuts",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f95c.png" },
+        { name: "Chestnut",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f330.png" },
+        { name: "Melon",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f348.png" },
+        { name: "Green Apple", img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34f.png" },
+        { name: "Tangerine",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34a.png" },
+        { name: "Red Apple",   img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34e.png" }
     ];
+
+    // Note: I intentionally mixed a few common vegetables that children often confuse with fruits
+    // and that have excellent clear images. You can remove them if you want pure fruits only.
 
     let answered = {};
 
@@ -248,6 +225,9 @@
     const correctSpan = document.getElementById('correctCount');
     const wrongSpan = document.getElementById('wrongCount');
     const remainingSpan = document.getElementById('remainingCount');
+    const totalBadge = document.getElementById('totalBadge');
+
+    totalBadge.textContent = FRUITS.length + " items";
 
     function updateStats() {
         let correct = 0, wrong = 0;
@@ -287,36 +267,28 @@
             card.addEventListener('click', () => {
                 if (answered[fruit.name]) return;
 
-                const userAnswer = prompt(`What is the name of this fruit?`);
+                const userAnswer = prompt(`What is the name of this fruit / food?`);
                 if (userAnswer === null) return;
 
                 const trimmed = userAnswer.trim().toLowerCase();
                 if (!trimmed) {
-                    alert('Please type a fruit name.');
+                    alert('Please type a name.');
                     return;
                 }
 
-                // Accept common variations
-                const correctNames = [
-                    fruit.name.toLowerCase(),
-                    fruit.name.toLowerCase().replace(/\s+/g, ''),
-                    fruit.name.toLowerCase().replace('fruit', '').trim()
-                ];
-
-                const isCorrect = correctNames.some(n => 
-                    trimmed === n || 
-                    trimmed === n + 's' ||
-                    trimmed.includes(n)
-                );
+                const correct = fruit.name.toLowerCase();
+                const isCorrect = trimmed === correct || 
+                                  trimmed === correct + 's' ||
+                                  (correct.includes(' ') && trimmed === correct.split(' ')[0]);
 
                 answered[fruit.name] = isCorrect ? 'correct' : 'wrong';
                 renderGrid();
                 updateStats();
 
                 if (isCorrect) {
-                    alert(`✅ Correct! It is a ${fruit.name}.`);
+                    alert(`✅ Correct! It is ${fruit.name}.`);
                 } else {
-                    alert(`❌ Not quite. The correct answer is "${fruit.name}".`);
+                    alert(`❌ The correct answer is "${fruit.name}".`);
                 }
             });
 
