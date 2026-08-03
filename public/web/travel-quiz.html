@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>✈️ Travel Quiz</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #f0f5fb;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            max-width: 1050px;
+            width: 100%;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px -8px rgba(0, 20, 40, 0.18);
+            padding: 2.2rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0a2a3f;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 3px solid #dce6ef;
+            padding-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+        h1 .badge {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2a6b8a;
+            background: #dce8f2;
+            padding: 0.15rem 1.2rem;
+            border-radius: 60px;
+        }
+        .subhead {
+            color: #3d6a84;
+            margin-bottom: 1.8rem;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .stats {
+            background: #eaf1f8;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a4058;
+        }
+        .stats span {
+            background: white;
+            padding: 0.05rem 0.7rem;
+            border-radius: 40px;
+            margin: 0 0.1rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 0.9rem;
+            margin: 1.5rem 0 1.8rem;
+        }
+        .item-card {
+            background: #f8fbfe;
+            border: 2px solid #e2ebf3;
+            border-radius: 20px;
+            padding: 0.9rem 0.5rem 0.7rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.15s;
+            user-select: none;
+        }
+        .item-card:hover {
+            transform: translateY(-4px);
+            border-color: #8bb3cc;
+            box-shadow: 0 8px 18px rgba(0, 40, 70, 0.1);
+        }
+        .item-card .item-img {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+            margin: 0 auto 0.5rem;
+            display: block;
+        }
+        .item-card .status {
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: block;
+            margin-top: 0.25rem;
+        }
+        .item-card .status.correct { color: #1f8b5e; }
+        .item-card .status.wrong   { color: #b13e4b; }
+        .item-card .status.pending { color: #8a9aa8; }
+        .item-card.answered-correct {
+            background: #e6f5ef;
+            border-color: #309b6b;
+        }
+        .item-card.answered-wrong {
+            background: #fde9eb;
+            border-color: #c95a66;
+        }
+        .reset-btn {
+            background: #1a5f82;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.65rem 2rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 4px 12px rgba(26, 95, 130, 0.2);
+        }
+        .reset-btn:hover {
+            background: #0f4866;
+            transform: scale(0.97);
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.8rem;
+        }
+        .footnote {
+            margin-top: 1.8rem;
+            border-top: 2px solid #dce8f2;
+            padding-top: 1.2rem;
+            font-size: 0.85rem;
+            color: #4f6f84;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .card { padding: 1.3rem; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+            h1 { font-size: 1.7rem; }
+            .item-card .item-img { width: 60px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>
+        ✈️ Travel Quiz
+        <span class="badge" id="totalBadge">26 items</span>
+    </h1>
+    <div class="subhead">
+        <span>Click any item and type its name</span>
+        <span class="stats">
+            ✅ <span id="correctCount">0</span> &nbsp;·&nbsp;
+            ❌ <span id="wrongCount">0</span> &nbsp;·&nbsp;
+            ⏳ <span id="remainingCount">26</span>
+        </span>
+    </div>
+
+    <div class="grid" id="gridContainer"></div>
+
+    <div class="footer">
+        <button class="reset-btn" id="resetBtn">🔄 Reset Quiz</button>
+        <span style="font-size:0.85rem; color:#4f6f84;">💡 Type the name of the item</span>
+    </div>
+
+    <div class="footnote">
+        <i>Clear Twemoji images · Vehicles, luggage & travel items</i>
+    </div>
+</div>
+
+<script>
+(function() {
+    // Clear, distinct Twemoji images for travel-related items
+    const ITEMS = [
+        { name: "Airplane",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2708.png" },
+        { name: "Helicopter",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f681.png" },
+        { name: "Train",          img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f686.png" },
+        { name: "Metro",          img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f687.png" },
+        { name: "Bus",            img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f68c.png" },
+        { name: "Taxi",           img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f695.png" },
+        { name: "Car",            img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f697.png" },
+        { name: "Police Car",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f693.png" },
+        { name: "Ambulance",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f691.png" },
+        { name: "Fire Engine",    img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f692.png" },
+        { name: "Truck",          img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f69a.png" },
+        { name: "Bicycle",        img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6b2.png" },
+        { name: "Motorcycle",     img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3cd.png" },
+        { name: "Scooter",        img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6f5.png" },
+        { name: "Ship",           img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6a2.png" },
+        { name: "Speedboat",      img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6a4.png" },
+        { name: "Sailboat",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/26f5.png" },
+        { name: "Ferry",          img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6f3.png" },
+        { name: "Luggage",        img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f9f3.png" },
+        { name: "Backpack",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f392.png" },
+        { name: "Passport",       img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6c2.png" },
+        { name: "Ticket",         img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3ab.png" },
+        { name: "Map",            img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f5fa.png" },
+        { name: "Compass",        img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f9ed.png" },
+        { name: "Anchor",         img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2693.png" },
+        { name: "Rocket",         img: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f680.png" }
+    ];
+
+    let answered = {};
+
+    const grid = document.getElementById('gridContainer');
+    const correctSpan = document.getElementById('correctCount');
+    const wrongSpan = document.getElementById('wrongCount');
+    const remainingSpan = document.getElementById('remainingCount');
+    const totalBadge = document.getElementById('totalBadge');
+
+    totalBadge.textContent = ITEMS.length + " items";
+
+    function updateStats() {
+        let correct = 0, wrong = 0;
+        for (const key in answered) {
+            if (answered[key] === 'correct') correct++;
+            else if (answered[key] === 'wrong') wrong++;
+        }
+        correctSpan.textContent = correct;
+        wrongSpan.textContent = wrong;
+        remainingSpan.textContent = ITEMS.length - correct - wrong;
+    }
+
+    function renderGrid() {
+        grid.innerHTML = '';
+        ITEMS.forEach((item) => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            const status = answered[item.name] || 'pending';
+
+            if (status === 'correct') card.classList.add('answered-correct');
+            else if (status === 'wrong') card.classList.add('answered-wrong');
+
+            const img = document.createElement('img');
+            img.className = 'item-img';
+            img.src = item.img;
+            img.alt = 'Travel item';
+            img.loading = 'lazy';
+
+            const statusSpan = document.createElement('span');
+            statusSpan.className = `status ${status}`;
+            statusSpan.textContent = status === 'correct' ? '✅' :
+                                     status === 'wrong'   ? '❌' : '⏳';
+
+            card.appendChild(img);
+            card.appendChild(statusSpan);
+
+            card.addEventListener('click', () => {
+                if (answered[item.name]) return;
+
+                const userAnswer = prompt(`What is the name of this item?`);
+                if (userAnswer === null) return;
+
+                const trimmed = userAnswer.trim().toLowerCase();
+                if (!trimmed) {
+                    alert('Please type a name.');
+                    return;
+                }
+
+                const correct = item.name.toLowerCase();
+                const isCorrect = trimmed === correct || 
+                                  trimmed === correct + 's' ||
+                                  (correct.includes(' ') && trimmed === correct.split(' ').slice(-1)[0]);
+
+                answered[item.name] = isCorrect ? 'correct' : 'wrong';
+                renderGrid();
+                updateStats();
+
+                if (isCorrect) {
+                    alert(`✅ Correct! It is a ${item.name}.`);
+                } else {
+                    alert(`❌ The correct answer is "${item.name}".`);
+                }
+            });
+
+            grid.appendChild(card);
+        });
+        updateStats();
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        answered = {};
+        renderGrid();
+    });
+
+    renderGrid();
+})();
+</script>
+</body>
+</html>
