@@ -382,7 +382,7 @@ export default function Home() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {interactiveWebPages.slice(0, 6).map((page, index) => (
+              {interactiveWebPages.map((page, index) => (
                 <div
                   key={index}
                   className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1 flex flex-col justify-between"
@@ -406,15 +406,6 @@ export default function Home() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-6 text-center">
-              <Link
-                href="/interactive-web"
-                className="inline-flex items-center bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition-colors"
-              >
-                View All 38 Interactive Web Pages <ChevronRight className="ml-1" size={16} />
-              </Link>
             </div>
           </div>
         </section>
