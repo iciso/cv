@@ -27,6 +27,7 @@ import {
   Layers,
   Rss,
   Database,
+  Terminal,
 } from "lucide-react"
 
 export default function Home() {
@@ -62,6 +63,12 @@ export default function Home() {
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
                   Apps
+                </Link>
+                <Link
+                  href="#interactive-web"
+                  className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
+                >
+                  Interactive Web
                 </Link>
                 <Link
                   href="#books"
@@ -170,7 +177,7 @@ export default function Home() {
           </p>
         </section>
 
-          {/* Apps Section */}
+        {/* Apps Section */}
         <section id="apps" className="mb-16 scroll-mt-20">
           <div className="flex items-center mb-6">
             <Globe className="mr-2 text-teal-600" size={28} />
@@ -214,7 +221,7 @@ export default function Home() {
                 </div>
               </div>
 
-                  {/* Jamath App */}
+              {/* Jamath App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
                   <Image
@@ -295,7 +302,6 @@ export default function Home() {
                 </div>
               </div>
 
-              
               {/* Iqrar App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
@@ -323,7 +329,6 @@ export default function Home() {
                 </div>
               </div>
 
-              
               {/* ACLS Trainer App */}
               <div className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1">
                 <div className="h-48 relative">
@@ -362,7 +367,48 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Interactive Educational Engines & Web Apps Section */}
+        <section id="interactive-web" className="mb-16 scroll-mt-20">
+          <div className="flex items-center mb-6">
+            <Terminal className="mr-2 text-teal-600" size={28} />
+            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+              Interactive Educational Engines & Web Apps
+            </h2>
+          </div>
 
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <p className="text-lg text-gray-700 mb-8">
+              Interactive web pages are the mainstay of online education, which Rafique has used best and won the MacArthur Award for two consecutive years in the 90s. Below is the curated suite of modular HTML educational games, evaluative quizzes, and algorithmic calculators.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {interactiveWebPages.map((page, index) => (
+                <div
+                  key={index}
+                  className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1 flex flex-col justify-between"
+                >
+                  <div className="p-5">
+                    <span className="inline-block px-2 py-1 bg-teal-50 text-teal-700 text-xs font-semibold rounded mb-2">
+                      {page.category}
+                    </span>
+                    <h3 className="text-lg font-bold text-teal-800 mb-2">{page.title}</h3>
+                    <p className="text-gray-600 text-sm mb-4">{page.description}</p>
+                  </div>
+                  <div className="px-5 pb-5 pt-0">
+                    <a
+                      href={page.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-800"
+                    >
+                      Launch Web Module <ExternalLink className="ml-1" size={14} />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Books Section */}
         <section id="books" className="mb-16 scroll-mt-20">
@@ -449,73 +495,73 @@ export default function Home() {
           </div>
         </section>
 
-           {/* Recent Papers Section */}
-              <section id="recent-papers" className="mb-16 scroll-mt-20">
-                <div className="flex items-center mb-6">
-                  <FileText className="mr-2 text-teal-600" size={28} />
-                  <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
-                    Recent Papers
-                  </h2>
-                </div>
-              
-                <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {recentPapers.map((paper, index) => (
-                      <div
-                        key={index}
-                        className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
-                      >
-                        <div className="p-6">
-                          <h4 className="text-xl font-bold text-teal-700 mb-4">{paper.title}</h4>
-                          <p className="text-gray-600 mb-6">{paper.description}</p>
-                          <a
-                            href={paper.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
-                          >
-                            Read Paper <ExternalLink className="ml-2" size={16} />
-                          </a>
-                        </div>
-                      </div>
-                    ))}
+        {/* Recent Papers Section */}
+        <section id="recent-papers" className="mb-16 scroll-mt-20">
+          <div className="flex items-center mb-6">
+            <FileText className="mr-2 text-teal-600" size={28} />
+            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+              Recent Papers
+            </h2>
+          </div>
+        
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {recentPapers.map((paper, index) => (
+                <div
+                  key={index}
+                  className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div className="p-6">
+                    <h4 className="text-xl font-bold text-teal-700 mb-4">{paper.title}</h4>
+                    <p className="text-gray-600 mb-6">{paper.description}</p>
+                    <a
+                      href={paper.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                    >
+                      Read Paper <ExternalLink className="ml-2" size={16} />
+                    </a>
                   </div>
                 </div>
-              </section>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                            {/* JVRC Research & AI Workflows Section */}
-              <section id="jvrc-research" className="mb-16 scroll-mt-20">
-                <div className="flex items-center mb-6">
-                  <Layers className="mr-2 text-teal-600" size={28} />
-                  <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
-                    JVRC Research & AI Workflows
-                  </h2>
-                </div>
+        {/* JVRC Research & AI Workflows Section */}
+        <section id="jvrc-research" className="mb-16 scroll-mt-20">
+          <div className="flex items-center mb-6">
+            <Layers className="mr-2 text-teal-600" size={28} />
+            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+              JVRC Research & AI Workflows
+            </h2>
+          </div>
 
-                <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {jvrcWorkflows.map((workflow, index) => (
-                      <div
-                        key={index}
-                        className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
-                      >
-                        <div className="p-6">
-                          <h4 className="text-xl font-bold text-teal-700 mb-4">{workflow.title}</h4>
-                          <p className="text-gray-600 mb-6">{workflow.description}</p>
-                          <a
-                            href={workflow.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
-                          >
-                            View Slide Deck <ExternalLink className="ml-2" size={16} />
-                          </a>
-                        </div>
-                      </div>
-                    ))}
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {jvrcWorkflows.map((workflow, index) => (
+                <div
+                  key={index}
+                  className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div className="p-6">
+                    <h4 className="text-xl font-bold text-teal-700 mb-4">{workflow.title}</h4>
+                    <p className="text-gray-600 mb-6">{workflow.description}</p>
+                    <a
+                      href={workflow.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                    >
+                      View Slide Deck <ExternalLink className="ml-2" size={16} />
+                    </a>
                   </div>
                 </div>
-              </section>
+              ))}
+            </div>
+          </div>
+        </section>
         
         {/* Blogs Section */}
         <section id="blogs" className="mb-16 scroll-mt-20">
@@ -822,22 +868,22 @@ export default function Home() {
               <p className="text-gray-600">Diploma Course in Islamic Studies</p>
             </div>
 
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-bold text-teal-700 mb-2">B.M.A.I.S.</h3>
-                <h4 className="text-lg font-medium text-gray-700 mb-1">
-                  International Open University, Banjul, The Gambia
-                </h4>
-                <p className="text-gray-600 mb-2">Presently in Final Semester</p>
-                <p className="text-gray-600 mb-3">Bridge to Masters in Islamic Studies</p>
-                <a
-                  href="/iou-marks.png"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium"
-                >
-                  View Marksheet <ExternalLink className="ml-1" size={16} />
-                </a>
-              </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold text-teal-700 mb-2">B.M.A.I.S.</h3>
+              <h4 className="text-lg font-medium text-gray-700 mb-1">
+                International Open University, Banjul, The Gambia
+              </h4>
+              <p className="text-gray-600 mb-2">Presently in Final Semester</p>
+              <p className="text-gray-600 mb-3">Bridge to Masters in Islamic Studies</p>
+              <a
+                href="/iou-marks.png"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium"
+              >
+                View Marksheet <ExternalLink className="ml-1" size={16} />
+              </a>
+            </div>
             
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold text-teal-700 mb-2">Fellowship for Leadership Development</h3>
@@ -860,78 +906,30 @@ export default function Home() {
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-bold text-teal-700 mb-4">IT Certifications</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Web Development Fundamentals</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">JavaScript</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">HTML</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">CSS</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Introduction to LLMs</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Prompt Engineering</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Machine Learning</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Project Planning with AI</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Generative AI in Practice</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Responsive Web Design</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Vibe Coding</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Data Analytics with AI</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Think Creatively with AI</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Social Media Marketing with AI</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Search Engine Optimization(SEO) with AI</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Data Literacy with AI</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">PHP</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Game Development with JS</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Angular + Nest JS</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">jQuery</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">React & Redux</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Python Core</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Python Data Structures</span>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <span className="font-medium">Data Science</span>
-              </div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Web Development Fundamentals</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">JavaScript</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">HTML</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">CSS</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Introduction to LLMs</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Prompt Engineering</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Machine Learning</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Project Planning with AI</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Generative AI in Practice</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Responsive Web Design</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Vibe Coding</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Data Analytics with AI</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Think Creatively with AI</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Social Media Marketing with AI</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Search Engine Optimization(SEO) with AI</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Data Literacy with AI</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">PHP</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Game Development with JS</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Angular + Nest JS</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">jQuery</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">React & Redux</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Python Core</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Python Data Structures</span></div>
+              <div className="bg-gray-50 p-3 rounded-md"><span className="font-medium">Data Science</span></div>
             </div>
             <div className="mt-4">
               <Link href="/skills" className="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium">
@@ -1343,7 +1341,7 @@ const bookChapters = [
   },
 ]
 
-      const recentPapers = [
+const recentPapers = [
   {
   "title": "From vertical silos to integrated care: administrative agility and normalization of HIV services in Tamil Nadu, India",
   "description": "An analysis of the strategic transition of HIV services in Tamil Nadu from vertical silos to an integrated care model, emphasizing the impact of administrative agility and service normalization.",
@@ -1371,9 +1369,9 @@ const bookChapters = [
     description: "A comprehensive repository of all India Hypertension Control Initiative (IHCI) reports.",
     url: "https://cvemrafi.vercel.app/km",
   },
-  ]
+]
 
-  const jvrcWorkflows = [
+const jvrcWorkflows = [
   {
     title: "HIV-1 Resistance Genomic Workflow",
     description: "An AI-integrated analysis of molecular data structures that bridges viral agility, resistance mutations, and clinical treatment optimization.",
@@ -1399,6 +1397,47 @@ const bookChapters = [
     description: "Application of advanced AI models to synthesize evidence across HIV-CVD genomics and proteomics, establishing a new niche for integrated research leadership.",
     url: "https://drive.google.com/file/d/1Tfef3CortDj4MRpktMWhqoaJvdsz96x9/view?usp=sharing"
   }
+]
+
+const interactiveWebPages = [
+  { title: "COVID Memory Game", category: "Game Engine", description: "Micro-cognitive memory puzzle web app for virus structural identification.", url: "/web/12-covid-memory.html" },
+  { title: "Alert Quiz", category: "Assessment", description: "Interactive testing framework for situational safety and alert protocols.", url: "/web/alert-quiz.html" },
+  { title: "Alibaba Game", category: "Interactive App", description: "Engaging web-based interactive entertainment module.", url: "/web/alibaba-game.html" },
+  { title: "Animals Quiz", category: "Educational Quiz", description: "Educational taxonomy and natural science quiz module.", url: "/web/animals-quiz.html" },
+  { title: "Arabic Quiz", category: "Language Tool", description: "Interactive linguistic quiz engine for Arabic language learners.", url: "/web/arabic-quiz.html" },
+  { title: "ASCII Logo Generator", category: "Developer Tool", description: "Text-based visual design utility and branding component.", url: "/web/ascii-logo.html" },
+  { title: "Bible Quiz", category: "Interfaith Module", description: "Comparative theological and scriptural knowledge quiz framework.", url: "/web/bible-quiz.html" },
+  { title: "Birds Quiz", category: "Educational Quiz", description: "Ornithological educational engagement tool.", url: "/web/birds-quiz.html" },
+  { title: "Capital Quiz", category: "Geography", description: "Global capitals interactive knowledge testing application.", url: "/web/capital-quiz.html" },
+  { title: "Endocrine Match Quiz", category: "Medical Training", description: "Interactive clinical matching engine for endocrine systems.", url: "/web/endocrine-match-quiz.html" },
+  { title: "Flowers Quiz", category: "Educational Quiz", description: "Botanical identification and interactive flora learning quiz.", url: "/web/flowers-quiz.html" },
+  { title: "Fruits Quiz", category: "Educational Quiz", description: "Nutrition and botanical classification assessment tool.", url: "/web/fruits-quiz.html" },
+  { title: "Guess Symbol", category: "Interactive Game", description: "Pattern and icon recognition cognitive exercise engine.", url: "/web/guess-symbol.html" },
+  { title: "Home Office Quiz", category: "Productivity", description: "Workspace safety and protocol evaluation checklist tool.", url: "/web/home-office-quiz.html" },
+  { title: "Islam Match", category: "Islamic Studies", description: "Interactive card-matching educational engine for core Islamic principles.", url: "/web/islam-match.html" },
+  { title: "Islamic Months Quiz", category: "Islamic Studies", description: "Hijri calendar and sacred milestone assessment module.", url: "/web/islamic-months-quiz.html" },
+  { title: "Islamophobia Quiz", category: "Social Awareness", description: "Educational module addressing misconceptions and promoting dialogue.", url: "/web/islamophobia-quiz.html" },
+  { title: "KBC Game Engine", category: "Interactive Trivia", description: "Game show style dynamic knowledge testing web application.", url: "/web/kbc.html" },
+  { title: "KY English Quiz", category: "Language Tool", description: "Comprehensive English proficiency diagnostic module.", url: "/web/ky-english-quiz.html" },
+  { title: "KY Gen Choice", category: "Decision Engine", description: "Interactive generational choice selection framework.", url: "/web/ky-gen-choice.html" },
+  { title: "KY Islam Basics", category: "Islamic Studies", description: "Foundational teachings and core creed education engine.", url: "/web/ky-islam-basics.html" },
+  { title: "KY Islam Easy Quiz", category: "Islamic Studies", description: "Accessible beginner quiz module for Islamic knowledge.", url: "/web/ky-islam-easy-quiz.html" },
+  { title: "KY Trees (K)", category: "Knowledge Tree", description: "Hierarchical concept visualization and branching tree engine.", url: "/web/ky-k-trees.html" },
+  { title: "KY Khan Trees", category: "Knowledge Tree", description: "Structured topical node tree navigation architecture.", url: "/web/ky-khan-trees.html" },
+  { title: "KY News Scroll", category: "Dynamic Feed", description: "Real-time news ticker and content broadcast display script.", url: "/web/ky-news-scroll.html" },
+  { title: "KY General Quiz", category: "Assessment", description: "Multi-disciplinary general knowledge quiz component.", url: "/web/ky-quiz.html" },
+  { title: "KY Stats", category: "Data Analytics", description: "Statistical dashboard and interactive metric evaluator.", url: "/web/ky-stats.html" },
+  { title: "KY Takaful Details", category: "Islamic Finance", description: "Cooperative insurance structural breakdown and calculation module.", url: "/web/ky-takaful-details.html" },
+  { title: "KY Trees (Y)", category: "Knowledge Tree", description: "Alternative branching concept mapping visualization app.", url: "/web/ky-y-trees.html" },
+  { title: "KY News Feed", category: "Dynamic Feed", description: "Curated community update and article listing interface.", url: "/web/kynews.html" },
+  { title: "NCD Estimator", category: "Clinical Calculator", description: "Non-communicable disease risk quantification utility.", url: "/web/ncd-estimator.html" },
+  { title: "Number Trick", category: "Interactive Game", description: "Algorithmic logic puzzle and mathematical engagement tool.", url: "/web/number-trick.html" },
+  { title: "Qawaid COVID", category: "Public Health", description: "Rule-based public health guidance engine during pandemic parameters.", url: "/web/qawaid-covid.html" },
+  { title: "Takaful Quiz", category: "Islamic Finance", description: "Testing engine covering Islamic cooperative financial systems.", url: "/web/takaful-quiz.html" },
+  { title: "TMC77 Canary", category: "Diagnostic Tool", description: "System monitoring and feedback test utility script.", url: "/web/tmc77-canary.html" },
+  { title: "Travel Quiz", category: "Interactive Module", description: "Geography and international travel safety quiz application.", url: "/web/travel-quiz.html" },
+  { title: "Vegetables Quiz", category: "Educational Quiz", description: "Nutritional science and dietary identification quiz module.", url: "/web/vegetables-quiz.html" },
+  { title: "WHO COVID Quiz", category: "Public Health", description: "Global health guideline validation and trivia module.", url: "/web/who-covid-quiz.html" }
 ]
 
 const blogs = [
