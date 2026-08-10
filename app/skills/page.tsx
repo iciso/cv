@@ -66,9 +66,9 @@ export default function SkillsPage() {
 
 const certifications = [
   {
-    name: "Web Development Fundamentals",
+    name: "Diploma in Web Media (Pentasoft 2002)",
     description: "Comprehensive course covering the basics of web development technologies and practices.",
-    url: "https://www.sololearn.com/Certificate/1141-19469613/jpg",
+    url: "/diploma-webmedia-marks.jpg",
     icon: <Globe size={24} />,
   },
   {
@@ -226,6 +226,12 @@ const certifications = [
     description: "How to build a tiny working agent of your own — and understand how an agent thinks, acts, and observes in a loop, how it uses tools, memory, and planning, and run real Python code.",
     url: "https://www.sololearn.com/certificates/CC-AMAGLBRJ",
     icon: <Bot size={24} />,
+  },
+  {
+    name: "Web Development Fundamentals",
+    description: "Comprehensive course covering the basics of web development technologies and practices.",
+    url: "https://www.sololearn.com/Certificate/1141-19469613/jpg",
+    icon: <Globe size={24} />,
   },
   {
     name: "PHP",
