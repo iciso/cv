@@ -24,7 +24,7 @@ const bcdcPresentations = [
   { title: "The Prophetic Pause", description: "An Islamic Emotional Intelligence(IEI) Framework for Anger Mastery.", url: "https://drive.google.com/file/d/1HFidUH-aSlePFTHqi0mk0fZ-MjS2l3tT/view?usp=sharing" },
   { title: "Dawah Psychology Field Guide", description: "Navigating Setbacks, Sustaining Sincerity, and Following the Prophetic Way", url: "https://drive.google.com/file/d/1U-Z7gUv69QsgYrSXnv3u8H4ZbuyflAta/view?usp=sharing" },
   { title: "The Firawnic Archetype", description: "Understanding the Negative Archetypes and the Lessons they teach us.", url: "https://drive.google.com/file/d/1E7LyEoeSKRKRWzviT7tZ2LoLmhy0LCec/view?usp=sharing" },
-  { title: "Secure Your Own Oxygen Mask", description: "A Comprehensive Guide to Self Care before others and its Islamic Rationale", url: "https://drive.google.com/file/d/1gZt6_We9IUu27EiJU11P2kauXk71gu8q/view?usp=sharing" }
+  { title: "Secure Your Own Oxygen Mask", description: "A Comprehensive Guide to Self Care before others and its Islamic Rationale", url: "https://drive.google.com/file/d/1gZt6_We9IUu27EiJU11P2kauXk71gu8q/view?usp=sharing" },
   { title: "Bridging Islamic Psychology and Psychiatry", description: "Proposes an integrated framework connecting traditional Islamic psychological insights with modern clinical psychiatry.", url: "https://drive.google.com/file/d/1isDcyTH6XX1sDiswaoBbWwDSb9piZGe0/view?usp=sharing" },
 ]
 
