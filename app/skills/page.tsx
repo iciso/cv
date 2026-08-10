@@ -68,7 +68,7 @@ const certifications = [
   {
     name: "Diploma in Web Media: Pentasoft 2002",
     description: "Comprehensive course covering the basics of web development technologies and practices.",
-    url: "/diploma-webmedia-marks.jpg",
+    url: "/webmedia-certificate.jpg",
     icon: <Globe size={24} />,
   },
    {
