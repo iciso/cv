@@ -90,7 +90,7 @@ export default function InteractiveWebPage() {
       {/* Footer */}
       <footer className="bg-teal-800 text-white py-6">
         <div className="container mx-auto px-4 text-center text-teal-200">
-          <p>No &copy; {new Date().getFullYear()} Made with &#10084; by Rafique with Creative Commons (CC) license for the world to copy and learn.</p>
+          <p>No &copy; Made in {new Date().getFullYear()} with &#10084; by Rafique using Creative Commons (CC) license for the world to copy and learn.</p>
         </div>
       </footer>
     </div>
