@@ -528,7 +528,7 @@ export default function Home() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
                     >
-                      Read Paper <ExternalLink className="ml-2" size={16} />
+                      {paper.buttonLabel || "Read Paper"} <ExternalLink className="ml-2" size={16} />
                     </a>
                   </div>
                 </div>
@@ -1376,6 +1376,7 @@ const recentPapers = [
     title: "All IHCI Reports Collection",
     description: "A comprehensive repository of all India Hypertension Control Initiative (IHCI) reports.",
     url: "https://cvemrafi.vercel.app/km",
+    buttonLabel: "See All IHCI Dashboards",
   },
 ]
 
