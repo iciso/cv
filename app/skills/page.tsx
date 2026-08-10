@@ -71,6 +71,12 @@ const certifications = [
     url: "/diploma-webmedia-marks.jpg",
     icon: <Globe size={24} />,
   },
+   {
+    name: "European Computer Driving License Certificate (Swiss Informatics Society 2008)",
+    description: "Passed in all modules of ECDL Syllabus Version 4.0. covering Windows, MS Office, Outlook, & IE",
+    url: "/european-computer-driving-licence.jpg",
+    icon: <Monitor size={24} />,
+  },
   {
     name: "JavaScript",
     description: "Core JavaScript programming concepts, functions, objects, DOM manipulation, and more.",
