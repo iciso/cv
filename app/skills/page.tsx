@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, Asterisk, BrainCircuit, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
+import { ArrowLeft, Atom, Asterisk, BrainCircuit, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
   BookOpen, Bot, Brain, Cpu, ChartBar, Database, Globe, Lightbulb, Monitor, Palette, 
   Play, Rocket, Scale, Search, Settings, Shield, Smartphone, Sparkles, Star, Trophy, Users, Workflow, Zap 
 } from "lucide-react"
@@ -66,16 +66,16 @@ export default function SkillsPage() {
 
 const certifications = [
   {
-    name: "Diploma in Web Media (Pentasoft 2002)",
+    name: "Diploma in Web Media: Pentasoft 2002",
     description: "Comprehensive course covering the basics of web development technologies and practices.",
     url: "/diploma-webmedia-marks.jpg",
     icon: <Globe size={24} />,
   },
    {
-    name: "European Computer Driving License Certificate (Swiss Informatics Society 2008)",
+    name: "European Computer Driving License: Swiss Informatics Society 2008",
     description: "Passed in all modules of ECDL Syllabus Version 4.0. covering Windows, MS Office, Outlook, & IE",
     url: "/european-computer-driving-licence.jpg",
-    icon: <Monitor size={24} />,
+    icon: <Atom size={24} />,
   },
   {
     name: "JavaScript",
