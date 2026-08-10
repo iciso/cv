@@ -1,6 +1,12 @@
 import Link from "next/link"
 import { ArrowLeft, ExternalLink, FileText } from "lucide-react"
 
+function getDownloadUrl(viewUrl: string) {
+  const match = viewUrl.match(/\/d\/([a-zA-Z0-9_-]+)/)
+  if (!match) return viewUrl
+  return `https://drive.google.com/uc?export=download&id=${match[1]}`
+}
+
 const bcdcPresentations = [
   { title: "The Point of Return: Neurobiology of Sacred Resilience", description: "Explores the neurobiological mechanisms underlying resilience through a lens of faith and spiritual return.", url: "https://drive.google.com/file/d/19nfDGMu0Y6D9D-EkGj3k6q8pgoPKgiTB/view?usp=sharing" },
   { title: "The Lens of Eternity: How Death Changes the Scale of Reality", description: "A philosophical and theological examination of how the awareness of death reorients human perception of reality.", url: "https://drive.google.com/file/d/1J8GVRITBIXn2rdBW8Zj8OwJzaarIvuOB/view?usp=sharing" },
@@ -48,9 +54,24 @@ export default function BCDCPage() {
               <FileText className="text-teal-600 mb-4" size={32} />
               <h3 className="text-lg font-bold text-teal-800 mb-3">{item.title}</h3>
               <p className="text-sm text-gray-600 mb-6 flex-grow">{item.description}</p>
-              <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center bg-teal-600 text-white py-2 px-4 rounded hover:bg-teal-700 transition-colors">
-                View Deck <ExternalLink className="ml-2" size={16} />
-              </a>
+             <div className="flex flex-col sm:flex-row gap-2">
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center bg-teal-600 text-white py-2 px-4 rounded hover:bg-teal-700 transition-colors flex-1"
+                    >
+                      View Deck <ExternalLink className="ml-2" size={16} />
+                    </a>
+                    <a
+                      href={getDownloadUrl(item.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center bg-teal-800 text-white py-2 px-4 rounded hover:bg-teal-900 transition-colors flex-1"
+                    >
+                      Download
+                    </a>
+                  </div>
             </div>
           ))}
         </div>
