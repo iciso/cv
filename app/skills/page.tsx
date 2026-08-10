@@ -227,6 +227,12 @@ const certifications = [
     url: "https://www.sololearn.com/certificates/CC-NCMMTYQA",
     icon: <Scale size={24} />,
   },
+   {
+    name: "Critical Thinking - AI Era Practice",
+    description: "Drill the escape moves against a live AI across 15 hands-on challenging bias traps. Spot the flaw, check the numbers, trace the source, own the call.",
+    url: "https://www.sololearn.com/certificates/CC-DRDEQQ9Y",
+    icon: <Cpu size={24} />,
+  },
   {
     name: "AI Agents for Beginners: How They Work (Python)",
     description: "How to build a tiny working agent of your own — and understand how an agent thinks, acts, and observes in a loop, how it uses tools, memory, and planning, and run real Python code.",
