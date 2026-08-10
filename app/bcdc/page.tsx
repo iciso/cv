@@ -16,6 +16,15 @@ const bcdcPresentations = [
   { title: "The Abrahamic Bioethics Handbook: Mapping Medical Ethics across 3 Faiths", description: "Maps bioethics and bedside guidance across the Abrahamic faiths to support religiously diverse patients and HCWs", url: "https://drive.google.com/file/d/1qGQhxPrIz_c9skNdP3kRG6yLtV4h0POH/view?usp=sharing" },
   { title: "Islamic Marriage Blueprint: A guide to Islamic Marriage for new Muslims", description: "Provides a blueprint for a blessed home after marriage", url: "https://drive.google.com/file/d/1JhX0G6sTJ-nmQEOpEW5PJcsztAuswbmM/view?usp=sharing" },
   { title: "The Foundation of the Heart: Understanding the Six Pillars of Faith or Iman in Islam", description: "Understanding the Architecture of Faith in Islam", url: "https://drive.google.com/file/d/1vjU_UgJqQh3wC815GhWRDBO1J_L_p8y-/view?usp=sharing" },
+  { title: "Islamic Worship & Practices: The Illuminated Blueprint of Islam", description: "A guide to the five pillars and daily practices of a Muslim.", url: "https://drive.google.com/file/d/10iKdurEJa2ccxuJ1pHF7QYtPnkU0YHCC/view?usp=sharing" },
+  { title: "Salah: The Sacred Rhythm", description: "The Path of Devotion: A Complete Guide to Salah", url: "https://drive.google.com/file/d/1hBD3JS8l9QPI1mivDTRzmZD9SL6F8UQM/view?usp=sharing" },
+  { title: "Wudu Essentials", description: "An essential guide to ritual purification before prayer", url: "https://drive.google.com/file/d/1W-ZwkvbCnzQgLigfm4qNXuwWneFQlx4d/view?usp=sharing" },
+  { title: "The Constellation of Quranic Signs", description: "Quranic Lessons for all generations", url: "https://drive.google.com/file/d/1vNN5vgT1j5HfIPRqCKNGHcQXQgvjKR8y/view?usp=sharing" },
+  { title: "Aggregating Atomic Habits", description: "Based on the concepts of James Clear", url: "https://drive.google.com/file/d/1YUkouNcQYrMUgU8Op3MCpjfYqBWu9b5o/view?usp=sharing" },
+  { title: "The Prophetic Pause", description: "An Islamic Emotional Intelligence(IEI) Framework for Anger Mastery.", url: "https://drive.google.com/file/d/1HFidUH-aSlePFTHqi0mk0fZ-MjS2l3tT/view?usp=sharing" },
+  { title: "Dawah Psychology Field Guide", description: "Navigating Setbacks, Sustaining Sincerity, and Following the Prophetic Way", url: "https://drive.google.com/file/d/1U-Z7gUv69QsgYrSXnv3u8H4ZbuyflAta/view?usp=sharing" },
+  { title: "The Firawnic Archetype", description: "Understanding the Negative Archetypes and the Lessons they teach us.", url: "https://drive.google.com/file/d/1E7LyEoeSKRKRWzviT7tZ2LoLmhy0LCec/view?usp=sharing" },
+  { title: "Secure Your Own Oxygen Mask", description: "A Comprehensive Guide to Self Care before others and its Islamic Rationale", url: "https://drive.google.com/file/d/1gZt6_We9IUu27EiJU11P2kauXk71gu8q/view?usp=sharing" }
   { title: "Bridging Islamic Psychology and Psychiatry", description: "Proposes an integrated framework connecting traditional Islamic psychological insights with modern clinical psychiatry.", url: "https://drive.google.com/file/d/1isDcyTH6XX1sDiswaoBbWwDSb9piZGe0/view?usp=sharing" },
 ]
 
@@ -28,7 +37,7 @@ export default function BCDCPage() {
             <ArrowLeft className="mr-2" size={20} /> Back to CV
           </Link>
           <h1 className="text-3xl md:text-4xl font-bold">BCDC Research Slide Decks</h1>
-          <p className="mt-2 text-teal-100">Academic presentations currently pending Shariah Board review.</p>
+          <p className="mt-2 text-teal-100">Academic presentations done for BCDC, the first twelve are currently pending Shariah Board review.</p>
         </div>
       </header>
 
