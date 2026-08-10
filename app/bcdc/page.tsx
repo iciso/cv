@@ -14,6 +14,7 @@ const bcdcPresentations = [
   { title: "Resonance and Distinction: Spiritual Themes in Quran and Bible", description: "A comparative study identifying shared spiritual themes and distinct revelations across both texts.", url: "https://drive.google.com/file/d/1-jTMr7o58z0CCqFHYW6oLW2QJGRum8nl/view?usp=sharing" },
   { title: "The Mirror and The Scales: Judicial Ethics from Prophet Dawud (AS)", description: "Extracts timeless lessons on justice, ethics, and leadership from the life of Prophet Dawud (AS).", url: "https://drive.google.com/file/d/1BWXCkQSnlcOSZOcnaFo_YBujHHXqvDV3/view?usp=sharing" },
   { title: "The Abrahamic Bioethics Handbook: Mapping Medical Ethics across 3 Faiths", description: "Maps bioethics and bedside guidance across the Abrahamic faiths to support religiously diverse patients and HCWs", url: "https://drive.google.com/file/d/1qGQhxPrIz_c9skNdP3kRG6yLtV4h0POH/view?usp=sharing" },
+  { title: "Bridging Islamic Psychology and Psychiatry", description: "Proposes an integrated framework connecting traditional Islamic psychological insights with modern clinical psychiatry.", url: "https://drive.google.com/file/d/1isDcyTH6XX1sDiswaoBbWwDSb9piZGe0/view?usp=sharing" },
   { title: "Islamic Marriage Blueprint: A guide to Islamic Marriage for new Muslims", description: "Provides a blueprint for a blessed home after marriage", url: "https://drive.google.com/file/d/1JhX0G6sTJ-nmQEOpEW5PJcsztAuswbmM/view?usp=sharing" },
   { title: "The Foundation of the Heart: Understanding the Six Pillars of Faith or Iman in Islam", description: "Understanding the Architecture of Faith in Islam", url: "https://drive.google.com/file/d/1vjU_UgJqQh3wC815GhWRDBO1J_L_p8y-/view?usp=sharing" },
   { title: "Islamic Worship & Practices: The Illuminated Blueprint of Islam", description: "A guide to the five pillars and daily practices of a Muslim.", url: "https://drive.google.com/file/d/10iKdurEJa2ccxuJ1pHF7QYtPnkU0YHCC/view?usp=sharing" },
@@ -25,7 +26,6 @@ const bcdcPresentations = [
   { title: "Dawah Psychology Field Guide", description: "Navigating Setbacks, Sustaining Sincerity, and Following the Prophetic Way", url: "https://drive.google.com/file/d/1U-Z7gUv69QsgYrSXnv3u8H4ZbuyflAta/view?usp=sharing" },
   { title: "The Firawnic Archetype", description: "Understanding the Negative Archetypes and the Lessons they teach us.", url: "https://drive.google.com/file/d/1E7LyEoeSKRKRWzviT7tZ2LoLmhy0LCec/view?usp=sharing" },
   { title: "Secure Your Own Oxygen Mask", description: "A Comprehensive Guide to Self Care before others and its Islamic Rationale", url: "https://drive.google.com/file/d/1gZt6_We9IUu27EiJU11P2kauXk71gu8q/view?usp=sharing" },
-  { title: "Bridging Islamic Psychology and Psychiatry", description: "Proposes an integrated framework connecting traditional Islamic psychological insights with modern clinical psychiatry.", url: "https://drive.google.com/file/d/1isDcyTH6XX1sDiswaoBbWwDSb9piZGe0/view?usp=sharing" },
 ]
 
 export default function BCDCPage() {
