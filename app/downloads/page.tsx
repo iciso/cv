@@ -22,9 +22,14 @@ const cvProfiles = [
     description: "Focuses on community health systems, UN-level knowledge management, and large-scale public health interventions.",
     file: "/cv-public-health.pdf"
   },
+   {
+    title: "AI, App, IT & Islamic Studies Profile",
+    description: "Rafique, the Digital Architect of Faith with his AI and App development skills bridges Technical Mastery with Islamic Scholarship for Dawah.",
+    file: "/cv-ai-app-islamic.pdf"
+  },
   {
     title: "Islamic Studies & Interfaith Profile",
-    description: "Focuses on Bridge to Masters expertise, neurobiological research in spiritual resilience, and comparative interfaith studies.",
+    description: "Shows Rafique's Bridge to Masters expertise, neurobiological research in spiritual resilience, and comparative interfaith studies.",
     file: "/cv-islamic-interfaith.pdf"
   }
 ];
