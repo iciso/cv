@@ -130,6 +130,7 @@ const interactiveWebPages = [
   { title: "KY Takaful Details", category: "Islamic Finance", description: "Cooperative insurance structural breakdown and calculation module.", url: "/web/ky-takaful-details.html" },
   { title: "KY Trees (Y)", category: "Knowledge Tree", description: "Alternative branching concept mapping visualization app.", url: "/web/ky-y-trees.html" },
   { title: "KY News Feed", category: "Dynamic Feed", description: "Curated community update and article listing interface.", url: "/web/kynews.html" },
+  { title: "Medical Quotes", category: "Medical Insights & Aphorisms", description: "Renders collection of Medical Quotes.", url: "/web/medical-quotes.html" }, 
   { title: "NCD Estimator", category: "Clinical Calculator", description: "Non-communicable disease risk quantification utility.", url: "/web/ncd-estimator.html" },
   { title: "Number Trick", category: "Interactive Game", description: "Algorithmic logic puzzle and mathematical engagement tool.", url: "/web/number-trick.html" },
   { title: "Qawaid COVID", category: "Public Health", description: "Rule-based public health guidance engine during pandemic parameters.", url: "/web/qawaid-covid.html" },
