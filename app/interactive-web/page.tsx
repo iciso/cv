@@ -110,6 +110,7 @@ const interactiveWebPages = [
   { title: "Endocrine Match Quiz", category: "Medical Training", description: "Interactive clinical matching engine for endocrine systems.", url: "/web/endocrine-match-quiz.html" },
   { title: "Flowers Quiz", category: "Educational Quiz", description: "Botanical identification and interactive flora learning quiz.", url: "/web/flowers-quiz.html" },
   { title: "Fruits Quiz", category: "Educational Quiz", description: "Nutrition and botanical classification assessment tool.", url: "/web/fruits-quiz.html" },
+  { title: "Graph Using PlotLy", category: "Interactive Demo", description: "Three different graph types used in one grid.", url: "/web/graph-plotly.html" },
   { title: "Guess Symbol", category: "Interactive Game", description: "Pattern and icon recognition cognitive exercise engine.", url: "/web/guess-symbol.html" },
   { title: "Home Office Quiz", category: "Productivity", description: "Workspace safety and protocol evaluation checklist tool.", url: "/web/home-office-quiz.html" },
   { title: "Islam Match", category: "Islamic Studies", description: "Interactive card-matching educational engine for core Islamic principles.", url: "/web/islam-match.html" },
