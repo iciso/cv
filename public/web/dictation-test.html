@@ -464,37 +464,45 @@
     }
 
     function populateVoices() {
-      if ('speechSynthesis' in window) {
-        synthesisVoices = window.speechSynthesis.getVoices();
-        const select = document.getElementById("selectVoices");
-        select.innerHTML = "";
+  if ('speechSynthesis' in window) {
+    // Filter the system voices to only include English locales (e.g., en-US, en-GB, en-AU, en-IN)
+    synthesisVoices = window.speechSynthesis.getVoices().filter(voice => 
+      voice.lang.toLowerCase().startsWith('en')
+    );
 
-        synthesisVoices.forEach((voice) => {
-          const option = document.createElement("option");
-          option.textContent = `${voice.name} (${voice.lang})`;
-          option.value = voice.name;
-          select.appendChild(option);
-        });
-      }
+    const select = document.getElementById("selectVoices");
+    select.innerHTML = "";
+
+    // Fallback if no specific English voice tag is returned
+    if (synthesisVoices.length === 0) {
+      synthesisVoices = window.speechSynthesis.getVoices();
     }
 
-    function playAudio(i) {
-      const text = getSentenceAt(i);
-      if (!text) return;
+    synthesisVoices.forEach((voice) => {
+      const option = document.createElement("option");
+      option.textContent = `${voice.name} (${voice.lang})`;
+      option.value = voice.name;
+      select.appendChild(option);
+    });
+  }
+}
 
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        const select = document.getElementById("selectVoices");
-        const selectedVoiceName = select.value;
+function playAudio(i) {
+  const text = getSentenceAt(i);
+  if (!text) return;
 
-        const voiceObj = synthesisVoices.find(v => v.name === selectedVoiceName);
-        if (voiceObj) utterance.voice = voiceObj;
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    const select = document.getElementById("selectVoices");
+    const selectedVoiceName = select.value;
 
-        window.speechSynthesis.speak(utterance);
-      }
-    }
+    const voiceObj = synthesisVoices.find(v => v.name === selectedVoiceName);
+    if (voiceObj) utterance.voice = voiceObj;
 
+    window.speechSynthesis.speak(utterance);
+  }
+}
     function loadSentences() {
       const select = document.getElementById("selectSentences");
       select.innerHTML = "";
