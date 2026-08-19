@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Medical Quotes</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-color: #f0f4f8;
+      --card-bg: #ffffff;
+      --primary-color: #1a365d;
+      --accent-color: #2b6cb0;
+      --text-main: #2d3748;
+      --text-muted: #718096;
+      --border-color: #e2e8f0;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 650px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--primary-color);
+      margin: 0 0 10px 0;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .quote-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .quote-content {
+      opacity: 1;
+      transition: opacity 0.3s ease-in-out;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .quote-content.fading {
+      opacity: 0;
+    }
+
+    .quote-icon {
+      font-size: 1.8rem;
+      color: var(--accent-color);
+      margin-bottom: 12px;
+      opacity: 0.3;
+    }
+
+    blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      line-height: 1.6;
+      color: var(--primary-color);
+      margin: 0 0 16px 0;
+    }
+
+    .author {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    .author::before {
+      content: "— ";
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-color);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--primary-color);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <header>
+      <h1><i class="fa-solid fa-user-doctor"></i> Medical Insights & Aphorisms</h1>
+      <p>A curated collection of timeless wisdom from medicine and healthcare history.</p>
+    </header>
+
+    <main class="quote-card">
+      <div id="quoteContent" class="quote-content">
+        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+        <blockquote id="saying">Loading quote...</blockquote>
+        <div id="author" class="author">Author</div>
+      </div>
+
+      <div class="card-actions">
+        <div class="action-btns">
+          <a id="tweetShare" class="btn btn-outline" target="_blank" rel="noopener noreferrer" title="Share on X">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+          <button id="copyBtn" class="btn btn-outline" onclick="copyQuote();" title="Copy to Clipboard">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+
+        <button class="btn btn-primary" onclick="generateNewQuote();">
+          <i class="fa-solid fa-shuffle"></i> New Quote
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast">Quote copied to clipboard!</div>
+
+  <script>
+const medicalQuotes = [
+
+  {
+    id: 1,
+    sentence: "To study the phenomena of disease without books is to sail an uncharted sea, while to study books without patients is not to go to sea at all.",
+    author: "Sir William Osler"
+  },
+
+  {
+    id: 2,
+    sentence: "Wherever the art of Medicine is loved, there is also a love of Humanity.",
+    author: "Hippocrates"
+  },
+
+  {
+    id: 3,
+    sentence: "Cure sometimes, treat often, comfort always.",
+    author: "Hippocrates"
+  },
+
+  {
+    id: 4,
+    sentence: "The secret of the care of the patient is in caring for the patient.",
+    author: "Dr. Francis Weld Peabody"
+  },
+
+  {
+    id: 5,
+    sentence: "The physician should not treat the disease, but the patient who is suffering from it.",
+    author: "Maimonides"
+  },
+
+  {
+    id: 6,
+    sentence: "The best interest of the patient is the only interest to be considered.",
+    author: "Dr. William J. Mayo"
+  },
+
+  {
+    id: 7,
+    sentence: "Medicine is an imperfect science, an enterprise of constantly changing knowledge, uncertain information, and fallible individuals.",
+    author: "Dr. Atul Gawande"
+  },
+
+  {
+    id: 8,
+    sentence: "The good physician treats the disease; the great physician treats the patient who has the disease.",
+    author: "Sir William Osler"
+  },
+
+  {
+    id: 9,
+    sentence: "It is not easy to be a pioneer, but if you can be, the idea that you are helping others who come after you is a great reward.",
+    author: "Dr. Elizabeth Blackwell"
+  },
+
+  {
+    id: 10,
+    sentence: "Medicine is not only a science; it is also an art. It does not consist of compounding pills and plasters; it deals with the very processes of life.",
+    author: "Paracelsus"
+  },
+
+  {
+    id: 11,
+    sentence: "The physician's highest calling, his only calling, is to make the sick man healthy—to cure him when he can; when he cannot, to alleviate his suffering and to prolong his life.",
+    author: "Dr. William Osler"
+  },
+
+  {
+    id: 12,
+    sentence: "The first duty of the physician is to educate the masses not to take medicine.",
+    author: "Sir William Osler"
+  },
+
+  {
+    id: 13,
+    sentence: "Patients don't care how much you know until they know how much you care.",
+    author: "Dr. Paul Kalanithi"
+  },
+
+  {
+    id: 14,
+    sentence: "Listen to your patient; he is telling you the diagnosis.",
+    author: "Sir William Osler"
+  },
+
+  {
+    id: 15,
+    sentence: "The art of medicine consists of amusing the patient while nature cures the disease.",
+    author: "Voltaire"
+  },
+
+  {
+    id: 16,
+    sentence: "Healing is a matter of time, but it is sometimes also a matter of opportunity.",
+    author: "Hippocrates"
+  },
+
+  {
+    id: 17,
+    sentence: "The greatest medicine of all is to teach people how not to need it.",
+    author: "Hippocrates"
+  },
+
+  {
+    id: 18,
+    sentence: "Walking is man's best medicine.",
+    author: "Hippocrates"
+  },
+
+  {
+    id: 19,
+    sentence: "Where there is no hope, it is incumbent on us to invent it.",
+    author: "Albert Camus"
+  },
+
+  {
+    id: 20,
+    sentence: "The good physician knows that medicine is not merely about treating illness, but about caring for the person who has it.",
+    author: "Dr. Abraham Verghese"
+  },
+
+  {
+    id: 21,
+    sentence: "The human heart is not a simple organ, and neither is the human being who carries it.",
+    author: "Dr. Atul Gawande"
+  },
+
+  {
+    id: 22,
+    sentence: "Every patient you see is a lesson in much more than the malady from which he suffers.",
+    author: "Sir William Osler"
+  },
+
+  {
+    id: 23,
+    sentence: "The practice of medicine is an art, based on science.",
+    author: "Sir William Osler"
+  },
+
+  {
+    id: 24,
+    sentence: "The physician must be the first to admit what he does not know.",
+    author: "Dr. Atul Gawande"
+  },
+
+  {
+    id: 25,
+    sentence: "In nothing do men more nearly approach the gods than in giving health to men.",
+    author: "Cicero"
+  },
+
+  {
+    id: 26,
+    sentence: "The best doctor is the one who inspires the most hope.",
+    author: "Samuel Taylor Coleridge"
+  },
+
+  {
+    id: 27,
+    sentence: "It is much more important to know what sort of a patient has a disease than what sort of a disease a patient has.",
+    author: "Sir William Osler"
+  },
+
+  {
+    id: 28,
+    sentence: "The treatment of a disease may be entirely impersonal; the care of a patient must be completely personal.",
+    author: "Dr. Paul Kalanithi"
+  },
+
+  {
+    id: 29,
+    sentence: "The purpose of human life is to serve, and to show compassion and the will to help others.",
+    author: "Albert Schweitzer"
+  },
+
+  {
+    id: 30,
+    sentence: "Sometimes, the most important thing we can do for a patient is simply to be there.",
+    author: "Dr. Paul Kalanithi"
+  },
+
+  {
+    id: 31,
+    sentence: "The greatest error in the treatment of diseases is that there are physicians for the body and physicians for the soul, although the two cannot be separated.",
+    author: "Plato"
+  },
+
+  {
+    id: 32,
+    sentence: "Science is the father of knowledge, but opinion breeds ignorance.",
+    author: "Hippocrates"
+  },
+
+  {
+    id: 33,
+    sentence: "A wise man should consider that health is the greatest of human blessings, and learn how by his own thought to derive benefit from his illnesses.",
+    author: "Hippocrates"
+  },
+
+  {
+    id: 34,
+    sentence: "The natural healing force within each one of us is the greatest force in getting well.",
+    author: "Hippocrates"
+  },
+
+  {
+    id: 35,
+    sentence: "The doctor of the future will give no medicine, but will interest their patients in the care of the human frame, in diet, and in the cause and prevention of disease.",
+    author: "Thomas Edison"
+  },
+
+  {
+    id: 36,
+    sentence: "The first wealth is health.",
+    author: "Ralph Waldo Emerson"
+  },
+
+  {
+    id: 37,
+    sentence: "It is health that is real wealth and not pieces of gold and silver.",
+    author: "Mahatma Gandhi"
+  },
+
+  {
+    id: 38,
+    sentence: "To cure sometimes, to relieve often, and to comfort always.",
+    author: "Edward Livingston Trudeau"
+  },
+
+  {
+    id: 39,
+    sentence: "The patient is not an interruption of our work; the patient is the purpose of it.",
+    author: "Dr. Anonymous"
+  },
+
+  {
+    id: 40,
+    sentence: "Good doctors use both their hearts and their minds.",
+    author: "Dr. Benjamin Spock"
+  }
+
+];
+
+    let currentQuoteId = null;
+
+    function getRandomQuote() {
+      let availableQuotes = medicalQuotes.filter(q => q.id !== currentQuoteId);
+      let randomIndex = Math.floor(Math.random() * availableQuotes.length);
+      return availableQuotes[randomIndex];
+    }
+
+    function renderQuote(quote) {
+      currentQuoteId = quote.id;
+      const contentEl = document.getElementById("quoteContent");
+      
+      // Fade out effect
+      contentEl.classList.add("fading");
+
+      setTimeout(() => {
+        document.getElementById("saying").textContent = quote.sentence;
+        document.getElementById("author").textContent = quote.author;
+        
+        // Update Share Link for X / Twitter
+        const tweetText = encodeURIComponent(`"${quote.sentence}" — ${quote.author}`);
+        document.getElementById("tweetShare").href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+
+        // Fade in effect
+        contentEl.classList.remove("fading");
+      }, 300);
+    }
+
+    function generateNewQuote() {
+      const quote = getRandomQuote();
+      renderQuote(quote);
+    }
+
+    function copyQuote() {
+      const sentence = document.getElementById("saying").textContent;
+      const author = document.getElementById("author").textContent;
+      const fullText = `"${sentence}" — ${author}`;
+
+      navigator.clipboard.writeText(fullText).then(() => {
+        showToast();
+      });
+    }
+
+    function showToast() {
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2500);
+    }
+
+    // Initialize on load
+    window.addEventListener("DOMContentLoaded", () => {
+      generateNewQuote();
+    });
+  </script>
+</body>
+
+</html>
