@@ -107,6 +107,7 @@ const interactiveWebPages = [
   { title: "Bible Quiz", category: "Interfaith Module", description: "Comparative theological and scriptural knowledge quiz framework.", url: "/web/bible-quiz.html" },
   { title: "Birds Quiz", category: "Educational Quiz", description: "Ornithological educational engagement tool.", url: "/web/birds-quiz.html" },
   { title: "Capital Quiz", category: "Geography", description: "Global capitals interactive knowledge testing application.", url: "/web/capital-quiz.html" },
+  { title: "Dictation Test", category: "English Language", description: "Interactive English Language comprehension test.", url: "/web/dictation-test.html" },
   { title: "Endocrine Match Quiz", category: "Medical Training", description: "Interactive clinical matching engine for endocrine systems.", url: "/web/endocrine-match-quiz.html" },
   { title: "Flowers Quiz", category: "Educational Quiz", description: "Botanical identification and interactive flora learning quiz.", url: "/web/flowers-quiz.html" },
   { title: "Fruits Quiz", category: "Educational Quiz", description: "Nutrition and botanical classification assessment tool.", url: "/web/fruits-quiz.html" },
