@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLCP Rival Quiz -- The Constellation</title>
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #7db343;
+      --primary-dark: #629232;
+      --header-bg: #4a636e;
+      --bg-color: #f4f7f6;
+      --card-bg: #ffffff;
+      --text-dark: #2d3748;
+      --text-muted: #718096;
+      --border-color: #e2e8f0;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .quiz-card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Header & Progress Bar */
+    .quiz-header {
+      background-color: var(--header-bg);
+      color: #fff;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quiz-header h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 100%;
+      background-color: var(--primary-color);
+      transition: width 0.4s linear;
+    }
+
+    /* Match Info / Challengers */
+    .challengers-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .player-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border-color);
+      background-color: #edf2f7;
+    }
+
+    .player-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .score-board {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--header-bg);
+      background: #edf2f7;
+      padding: 6px 16px;
+      border-radius: 20px;
+      letter-spacing: 2px;
+    }
+
+    /* Question & Options */
+    .quiz-body {
+      padding: 24px;
+      flex: 1;
+    }
+
+    .question-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      min-height: 50px;
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      background-color: #fff;
+    }
+
+    .option-label:hover {
+      border-color: var(--primary-color);
+      background-color: #f7faf5;
+    }
+
+    .option-input {
+      display: none;
+    }
+
+    .option-radio {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--text-muted);
+      border-radius: 50%;
+      margin-right: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .option-radio::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background-color: #fff;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .option-input:checked + .option-label {
+      border-color: var(--primary-color);
+      background-color: #f0f7e8;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .option-input:checked + .option-label .option-radio {
+      border-color: var(--primary-color);
+      background-color: var(--primary-color);
+    }
+
+    .option-input:checked + .option-label .option-radio::after {
+      opacity: 1;
+    }
+
+    /* Actions Footer */
+    .quiz-footer {
+      padding: 16px 24px 24px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background-color: var(--primary-color);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn:disabled {
+      background-color: #cbd5e0;
+      cursor: not-allowed;
+    }
+
+    /* Overlay / Results Modal */
+    .result-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--card-bg);
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px 24px;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .result-header h2 {
+      color: var(--header-bg);
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+
+    .versus-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin: 24px 0;
+    }
+
+    .player-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .player-card img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 3px solid var(--primary-color);
+    }
+
+    .vs-badge {
+      background-color: #ed8936;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+
+    .result-status {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .final-score {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="quiz-card">
+    <!-- Header -->
+    <header class="quiz-header">
+      <h1><i class="fa-solid fa-graduation-cap"></i> CLCP Rival Quiz</h1>
+      <span class="player-name">The Constellation</span>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <!-- Match Bar -->
+    <div class="challengers-bar">
+      <div class="player-profile">
+        <img id="userAvatar" class="avatar" alt="User Avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235C7A87'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>">
+        <div>
+          <div class="player-name">You</div>
+        </div>
+      </div>
+
+      <div id="scoreDisplay" class="score-board">0 : 0</div>
+
+      <div class="player-profile">
+        <div>
+          <div class="player-name" style="text-align: right;">Rival Bot</div>
+        </div>
+        <img id="botAvatar" class="avatar" alt="Rival Bot" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237db343'><path d='M12 2a2 2 0 012 2v1h1a3 3 0 013 3v2a4 4 0 014 4v5a2 2 0 01-2 2h-1v1a2 2 0 01-2 2H7a2 2 0 01-2-2v-1H4a2 2 0 01-2-2v-5a4 4 0 014-4V8a3 3 0 013-3h1V4a2 2 0 012-2zm-3 8a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm6 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z'/></svg>">
+      </div>
+    </div>
+
+    <!-- Question Body -->
+    <main class="quiz-body">
+      <div id="questionText" class="question-title">Loading question...</div>
+
+      <div class="options-group" id="optionsContainer">
+        <!-- Dynamically Generated Option Labels -->
+      </div>
+    </main>
+
+    <!-- Footer Action -->
+    <footer class="quiz-footer">
+      <button id="submitBtn" class="btn" onclick="submitAnswer();">
+        Submit Answer <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </footer>
+
+    <!-- Result Screen Overlay -->
+    <div id="resultScreen" class="result-screen">
+      <div class="result-header">
+        <h2>Match Completed</h2>
+        <p class="final-score">Final Score</p>
+      </div>
+
+      <div class="versus-container">
+        <div class="player-card">
+          <img id="resultUserImg" src="" alt="User">
+          <span class="player-name">You</span>
+        </div>
+        <div class="vs-badge">VS</div>
+        <div class="player-card">
+          <img id="resultBotImg" src="" alt="Bot">
+          <span class="player-name">Rival Bot</span>
+        </div>
+      </div>
+
+      <div>
+        <div id="resultTitle" class="result-status">You Won!</div>
+        <div id="resultScore" class="score-board" style="display: inline-block;">0 : 0</div>
+      </div>
+
+      <button class="btn" onclick="restartGame();">
+        <i class="fa-solid fa-rotate-right"></i> Rematch
+      </button>
+    </div>
+  </div>
+
+  <!-- Audio Resources -->
+  <audio id="sndWin" src="https://raw.githubusercontent.com/EdwardDunn/Platform-Game/master/Audio/win_sound.wav" preload="auto"></audio>
+  <audio id="sndLose" src="https://raw.githubusercontent.com/EdwardDunn/Platform-Game/master/Audio/gameover.wav" preload="auto"></audio>
+  <audio id="sndDraw" src="https://saantonandre.github.io/sfx/player_damaged.wav" preload="auto"></audio>
+
+  <script>
+    const quizQuestions = [
+      {
+        que: "In CLCP, which is more important?",
+        option: [
+          "Both progress and process are equally important",
+          "Progress to the dream is more important than process",
+          "Process is more important than dream",
+          "Both process and progress are not important"
+        ],
+        crt: "Process is more important than dream"
+      },
+      {
+        que: "The Constellation means:",
+        option: [
+          "Only Members of the Communities that form The Constellation",
+          "All those who follow CLCP in their lives",
+          "Only the founders of The Constellation",
+          "Only Founders, Board, and Voting Members"
+        ],
+        crt: "All those who follow CLCP in their lives"
+      },
+      {
+        que: "CLCP stands for:",
+        option: [
+          "Community Life Competency Process",
+          "Community Life Competence Practice",
+          "Competence for Life Community Process",
+          "Community Life Competence Process"
+        ],
+        crt: "Community Life Competence Process"
+      },
+      {
+        que: "In CLCP, the abbreviation SALT could stand for:",
+        option: [
+          "Support Appreciate Learn Transfer",
+          "All answers are correct",
+          "Share Act Link Trust",
+          "Stimulate Analyze Listen Team"
+        ],
+        crt: "All answers are correct"
+      },
+      {
+        que: "The Creative Commons License used by The Constellation allows:",
+        option: [
+          "We can share only",
+          "We can use it commercially, if we attribute",
+          "We can share and adapt without attributing, provided we use it non-commercially",
+          "We can share and adapt, provided we attribute, and use it non-commercially"
+        ],
+        crt: "We can share and adapt, provided we attribute, and use it non-commercially"
+      }
+    ];
+
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let userScore = 0;
+    let botScore = 0;
+    let timeRemaining = 40;
+    let timerInterval = null;
+    let isGameOver = false;
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function initGame() {
+      currentQuestions = shuffleArray(quizQuestions);
+      currentIndex = 0;
+      userScore = 0;
+      botScore = 0;
+      isGameOver = false;
+
+      document.getElementById("resultScreen").style.display = "none";
+      updateScoreBoard();
+      loadQuestion(currentIndex);
+      startTimer();
+    }
+
+    function loadQuestion(index) {
+      if (index >= currentQuestions.length) {
+        endGame();
+        return;
+      }
+
+      timeRemaining = 40;
+      const q = currentQuestions[index];
+      document.getElementById("questionText").textContent = `${index + 1}. ${q.que}`;
+
+      const optionsContainer = document.getElementById("optionsContainer");
+      optionsContainer.innerHTML = "";
+
+      const shuffledOptions = shuffleArray(q.option);
+
+      shuffledOptions.forEach((optText, i) => {
+        const inputId = `opt_${i}`;
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "quizOption";
+        radio.id = inputId;
+        radio.value = optText;
+        radio.className = "option-input";
+
+        const label = document.createElement("label");
+        label.htmlFor = inputId;
+        label.className = "option-label";
+
+        const customRadio = document.createElement("span");
+        customRadio.className = "option-radio";
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = optText;
+
+        label.appendChild(customRadio);
+        label.appendChild(textSpan);
+
+        optionsContainer.appendChild(radio);
+        optionsContainer.appendChild(label);
+      });
+
+      updateProgressBar();
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (!isGameOver) {
+          timeRemaining--;
+          updateProgressBar();
+
+          if (timeRemaining <= 0) {
+            handleTimeout();
+          }
+        }
+      }, 250);
+    }
+
+    function updateProgressBar() {
+      const bar = document.getElementById("progressBar");
+      const percentage = Math.max(0, (timeRemaining / 40) * 100);
+      bar.style.width = `${percentage}%`;
+    }
+
+    function updateScoreBoard() {
+      document.getElementById("scoreDisplay").textContent = `${userScore} : ${botScore}`;
+    }
+
+    function handleTimeout() {
+      // Advance question on timeout without user points
+      botScore += Math.floor(Math.random() * 2);
+      updateScoreBoard();
+      currentIndex++;
+      loadQuestion(currentIndex);
+    }
+
+    function submitAnswer() {
+      const selectedOption = document.querySelector('input[name="quizOption"]:checked');
+      if (!selectedOption) {
+        alert("Please select an answer before submitting.");
+        return;
+      }
+
+      const userAnswer = selectedOption.value;
+      const currentQ = currentQuestions[currentIndex];
+
+      if (userAnswer === currentQ.crt) {
+        userScore++;
+      }
+
+      // Simulate rival bot performance
+      botScore += Math.floor(Math.random() * 2);
+
+      updateScoreBoard();
+      currentIndex++;
+
+      if (currentIndex < currentQuestions.length) {
+        loadQuestion(currentIndex);
+      } else {
+        endGame();
+      }
+    }
+
+    function endGame() {
+      isGameOver = true;
+      clearInterval(timerInterval);
+
+      const resultScreen = document.getElementById("resultScreen");
+      const resultTitle = document.getElementById("resultTitle");
+      const resultScore = document.getElementById("resultScore");
+
+      document.getElementById("resultUserImg").src = document.getElementById("userAvatar").src;
+      document.getElementById("resultBotImg").src = document.getElementById("botAvatar").src;
+
+      resultScore.textContent = `${userScore} : ${botScore}`;
+
+      if (userScore > botScore) {
+        resultTitle.textContent = "You Won!";
+        playSound("sndWin");
+      } else if (botScore > userScore) {
+        resultTitle.textContent = "You Lose";
+        playSound("sndLose");
+      } else {
+        resultTitle.textContent = "It's a Draw";
+        playSound("sndDraw");
+      }
+
+      resultScreen.style.display = "flex";
+    }
+
+    function playSound(id) {
+      try {
+        const audio = document.getElementById(id);
+        if (audio) {
+          audio.currentTime = 0;
+          audio.play().catch(() => {});
+        }
+      } catch (e) {
+        // Safe catch for browsers blocking autoplay audio
+      }
+    }
+
+    function restartGame() {
+      initGame();
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initGame();
+    });
+  </script>
+</body>
+</html>
