@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PTE MAGIC -- Dictation Practice Test</title>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-color: #f4f7f6;
+      --card-bg: #ffffff;
+      --primary-color: #2b6cb0;
+      --primary-hover: #2c5282;
+      --secondary-color: #4a5568;
+      --secondary-hover: #2d3748;
+      --accent-color: #dd6b20;
+      --accent-hover: #c05621;
+      --text-main: #2d3748;
+      --border-color: #e2e8f0;
+      --success-color: #38a169;
+      --error-color: #e53e3e;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      margin: 0;
+      padding: 32px 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border-color);
+    }
+
+    header {
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin: 0 0 8px 0;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info-badge {
+      font-size: 0.9rem;
+      color: #718096;
+      font-weight: normal;
+    }
+
+    .control-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    select, textarea, input[type="text"] {
+      font-family: inherit;
+      font-size: 0.95rem;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background-color: #fff;
+      color: var(--text-main);
+      transition: border-color 0.2s;
+    }
+
+    select {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15);
+    }
+
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      background-color: var(--primary-color);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-hover);
+    }
+
+    .btn-accent {
+      background-color: var(--accent-color);
+    }
+
+    .btn-accent:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .section-block {
+      margin-bottom: 24px;
+    }
+
+    .results-panel {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      background-color: #edf2f7;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .options-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+      margin-top: 24px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: normal;
+      font-size: 0.9rem;
+    }
+
+    .checkbox-label input {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <header>
+      <h1><i class="fa-solid fa-file-audio"></i> PTE Dictation Practice</h1>
+      <div id="info" class="info-badge">110 Most Repeated Sentences</div>
+    </header>
+
+    <!-- Voice Selection & Primary Controls -->
+    <div class="control-group section-block">
+      <label for="selectVoices"><i class="fa-solid fa-user-gear"></i> Voice:</label>
+      <select id="selectVoices"></select>
+    </div>
+
+    <div class="control-group section-block">
+      <button type="button" class="btn" onclick="onSpeakSentence();">
+        <i class="fa-solid fa-volume-high"></i> Repeat Audio
+      </button>
+      <button type="button" class="btn btn-secondary" onclick="onNextSen();">
+        <i class="fa-solid fa-forward"></i> Next Sentence
+      </button>
+      <button type="button" class="btn btn-secondary" onclick="onNext();">
+        <i class="fa-solid fa-shuffle"></i> Random Sentence
+      </button>
+    </div>
+
+    <!-- User Input Section -->
+    <div class="section-block">
+      <label for="txtInput"><i class="fa-solid fa-keyboard"></i> Type Your Answer:</label>
+      <textarea id="txtInput" placeholder="Listen to the audio and type sentence here..."></textarea>
+    </div>
+
+    <!-- Actions & Answer Check -->
+    <div class="control-group">
+      <button type="button" class="btn btn-accent" onclick="countIncorrect();">
+        <i class="fa-solid fa-spell-check"></i> Check Answer
+      </button>
+      <button type="button" class="btn btn-secondary" onclick="showAnswer();">
+        <i class="fa-solid fa-eye"></i> Show Answer
+      </button>
+    </div>
+
+    <!-- Results Display -->
+    <div id="divCount" class="results-panel" style="display: none;"></div>
+
+    <!-- Correct Answer Display -->
+    <div class="section-block" style="margin-top: 20px;">
+      <label for="txtAnswer"><i class="fa-solid fa-circle-check"></i> Reference Sentence:</label>
+      <textarea id="txtAnswer" readonly placeholder="Reference answer will appear here..."></textarea>
+    </div>
+
+    <!-- Footer Options & Navigation -->
+    <div class="options-bar">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <label for="selectSentences">Sentence #:</label>
+        <select id="selectSentences" style="min-width: 100px;"></select>
+      </div>
+
+      <label class="checkbox-label">
+        <input type="checkbox" id="chkIgnoreGroupTitle" onchange="loadSentences();" checked> Ignore Group Titles
+      </label>
+
+      <label class="checkbox-label">
+        <input type="checkbox" id="chkAlwaysShowAnswer"> Always Show Answer
+      </label>
+    </div>
+  </div>
+
+  <script>
+    const sentences = [
+      "Number of sentences -- 110 most repeated sentences",
+      "",
+      "She used to be the editor of the student newspaper",
+      "The lecture tomorrow will discuss educational policies in the United States",
+      "Mutually exclusive events can be described as either complementary or opposite",
+      "The students were instructed to submit their assignments before Friday",
+      "The placement test of mathematics and statistics is offered to every semester",
+      "The article illustrates a number of very interesting experiments",
+      "It is hard to anticipate all the different characters that they react",
+      "The business policy seminar includes an internship with a local firm",
+      "Remember to review all sources before drawing any conclusions",
+      "University departments should carefully monitor articles and other publications by faculty",
+      "Your lowest quiz grade has been omitted from the calculations",
+      "We cannot consider an increase in price at this stage",
+      "The qualification will be assessed by using the criterion-referenced to approach",
+      "Students were instructed to submit their assignments by Friday",
+      "The massive accumulation of data is converted into a communicable argument",
+      "Student concession cards can be obtained by completing an application form",
+      "A party was thrown in a small meeting room",
+      "An aerial photograph was promptly registered for a thorough evaluation",
+      "Behind the garage, there is a flat car drawn by mules",
+      "I thought it was thrown in the small meeting room",
+      "Everyone must evacuate the premises during the fire drill",
+      "Free campus tours run daily during summer for prospective students",
+      "Remember to sign the attendance register before leaving the hall",
+      "Those students seeking for further extension should talk to their faculties for more information",
+      "Most students have not considered these issues before",
+      "Many graduates studying journalism get jobs in communications field",
+      "Before submitting your dissertation, your advisor must approve your application",
+      "Synopsis contains the most important information",
+      "Native speakers are always exempted from the exams in their own language",
+      "While reconciliation is desirable, the basic underlying issue must first be addressed",
+      "The theme of the instrumental work exhibits a more demure, compositional style",
+      "Participants are initially selected from a range of foundation subjects",
+      "The untapped potential of using the sun is enormous",
+      "Good research delivers practical benefits for real people",
+      "Review all resources before drawing your conclusion",
+      "Assignments should be submitted to the department before the deadline",
+      "The undergraduates need some specific sources to analyse a specific program",
+      "If finance is the cause of concern, a scholarship will be available",
+      "Clinical placement in nursing prepares students for professional practice",
+      "The library holds a substantial collection of materials in economic history",
+      "It is hard to anticipate all the different characters that were in the act",
+      "The city's founder created a set of rules that became to law",
+      "The museum is closed on the first Monday of each month",
+      "Mutually exclusive events are neither complementary nor opposing",
+      "The results of the study underscored the discoveries from early detections",
+      "A typical task of this course involves a study of society",
+      "We can't consider an increase in the price at this stage",
+      "The artists tied the conservative politicians earned their roles of critics",
+      "Radio is a popular form of entertainment throughout the world",
+      "The ways in which people communicate are constantly changing",
+      "The commissioner will portion a fund among the authorities",
+      "Tribes try to work with each other to build monolithic statues",
+      "The summer course has been cancelled due to insufficient enrolment",
+      "The two variables in the study were very closely correlated",
+      "The sociology department is highly regarded worldwide",
+      "There is a welcome party for all new students each term",
+      "The plight of wildlife has been ignored by many developers",
+      "The teacher asked the group to commence the task",
+      "The nation achieved its prosperity by opening its port for trade",
+      "Railway made long distance travel possible for everyone",
+      "Graduates from journalism get jobs in communications field",
+      "The new media has transformed the traditional national boundaries",
+      "An archaeologist's new discovery stands out in previous overlooked foundations",
+      "We study science to understand and appreciate the world around us",
+      "The scientists are always asking the government for more money",
+      "The history of this university is long and interesting",
+      "Important details are missing from the summary",
+      "The development in information technology has greatly changed the way people work",
+      "Tours operate all year around but the busiest dry season runs from May",
+      "There are still many people struggling in the lab",
+      "Supply and demand is one of the most fundamental factors in the academic economics",
+      "You may need to purchase an academic gown before the commencement",
+      "Chemistry building is located at the entrance to the campus",
+      "It might not be possible to solve the problem easily",
+      "A celebrated theory is still a great source of controversy",
+      "Animals raised in captivity behave differently from their wild counterparts",
+      "Climate change is an accepted theory among a group of reputable scientists",
+      "You can contact all your tutors by email",
+      "Teaching assistants will receive a monthly stipend for housing",
+      "Calculators may not be used during the examination",
+      "All evaluation papers are reviewed by the university personnel",
+      "When workers ask for higher wages, the companies often raise prices",
+      "The study of archaeology requires extensive international field work",
+      "The same issue featured both explanations of the problem",
+      "Art is an expression of creative skill and imagination",
+      "You must be able to work in a team",
+      "Undergraduate students may pay their interest within specific programs",
+      "He landed his job in a prestigious law firm",
+      "All evaluation forms will be reviewed by the university personnel",
+      "They were struggling last year to make their services paid",
+      "Control systems in manufacturing require a high level of accuracy",
+      "There is a pharmacy on campus near the bookstore",
+      "Tribes vied with each other to build monolithic statues",
+      "Observers waited nervously with bated breath for the concert",
+      "Observers waited nervously and hold the breath for the concert",
+      "There are many branches of medical studies",
+      "The course considerably emphasizes on the critical thinking skills",
+      "Novelists write things about things they know about",
+      "The poster of this play is hung in the large lecture theatre",
+      "An architect requires problem-solving skills and an eye of design",
+      "There is a difference between mass production and batch production",
+      "Students should take advantage of the online resources before attending the lecture",
+      "He was constantly looking for ways to bring industry and agriculture closely together",
+      "A good research assistant is not afraid to ask questions",
+      "The qualification will be assessed by using a conference criteria to approach",
+      "Teaching assistants will receive a monthly stipend for housing"
+    ];
+
+    let g_currentItem = 2;
+    let synthesisVoices = [];
+
+    function getSentenceAt(i) {
+      if (!sentences[i]) return "";
+      return sentences[i].trim();
+    }
+
+    function isIgnoreGroupTitle() {
+      return document.getElementById("chkIgnoreGroupTitle").checked;
+    }
+
+    function isAlwaysShowAnswer() {
+      return document.getElementById("chkAlwaysShowAnswer").checked;
+    }
+
+    function showAnswer() {
+      const txt = document.getElementById("txtAnswer");
+      let ans = getSentenceAt(g_currentItem);
+      if (ans) {
+        ans = ans.charAt(0).toUpperCase() + ans.slice(1);
+        if (!ans.endsWith(".")) ans += ".";
+      }
+      txt.value = ans;
+    }
+
+    function clearTextField(id) {
+      document.getElementById(id).value = "";
+    }
+
+    function onSpeakSentence() {
+      const sel = document.getElementById("selectSentences");
+      sel.value = g_currentItem.toString();
+      playAudio(g_currentItem);
+      if (isAlwaysShowAnswer()) {
+        showAnswer();
+      }
+    }
+
+    function onNextSen() {
+      clearTextField("txtAnswer");
+      clearTextField("txtInput");
+      document.getElementById("divCount").style.display = "none";
+      if (g_currentItem < sentences.length - 1) {
+        g_currentItem++;
+      } else {
+        g_currentItem = 2;
+      }
+      onSpeakSentence();
+    }
+
+    function onNext() {
+      clearTextField("txtAnswer");
+      clearTextField("txtInput");
+      document.getElementById("divCount").style.display = "none";
+      const total = sentences.length - 1;
+      g_currentItem = Math.floor(Math.random() * (total - 2 + 1)) + 2;
+      onSpeakSentence();
+    }
+
+    function cleanWord(word) {
+      return word.toLowerCase().replace(/[^\w]/g, "");
+    }
+
+    function countIncorrect() {
+      showAnswer();
+      const refText = document.getElementById("txtAnswer").value;
+      const userText = document.getElementById("txtInput").value;
+
+      const refWords = refText.split(/\s+/).map(cleanWord).filter(Boolean);
+      const userWords = userText.split(/\s+/).map(cleanWord).filter(Boolean);
+
+      let correctCount = 0;
+      const tempUserWords = [...userWords];
+
+      refWords.forEach(rWord => {
+        const idx = tempUserWords.indexOf(rWord);
+        if (idx !== -1) {
+          correctCount++;
+          tempUserWords.splice(idx, 1);
+        }
+      });
+
+      const incorrectCount = Math.max(0, refWords.length - correctCount);
+      const accuracy = refWords.length > 0 ? Math.round((correctCount / refWords.length) * 100) : 0;
+
+      const resultsDiv = document.getElementById("divCount");
+      resultsDiv.style.display = "flex";
+      resultsDiv.innerHTML = `
+        <span><i class="fa-solid fa-xmark" style="color: var(--error-color);"></i> Incorrect: <strong>${incorrectCount}</strong></span>
+        <span><i class="fa-solid fa-check" style="color: var(--success-color);"></i> Correct: <strong>${correctCount} / ${refWords.length}</strong></span>
+        <span><i class="fa-solid fa-chart-line"></i> Accuracy: <strong>${accuracy}%</strong></span>
+      `;
+    }
+
+    function populateVoices() {
+      if ('speechSynthesis' in window) {
+        synthesisVoices = window.speechSynthesis.getVoices();
+        const select = document.getElementById("selectVoices");
+        select.innerHTML = "";
+
+        synthesisVoices.forEach((voice) => {
+          const option = document.createElement("option");
+          option.textContent = `${voice.name} (${voice.lang})`;
+          option.value = voice.name;
+          select.appendChild(option);
+        });
+      }
+    }
+
+    function playAudio(i) {
+      const text = getSentenceAt(i);
+      if (!text) return;
+
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        const select = document.getElementById("selectVoices");
+        const selectedVoiceName = select.value;
+
+        const voiceObj = synthesisVoices.find(v => v.name === selectedVoiceName);
+        if (voiceObj) utterance.voice = voiceObj;
+
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function loadSentences() {
+      const select = document.getElementById("selectSentences");
+      select.innerHTML = "";
+
+      for (let i = 2; i < sentences.length; i++) {
+        const option = document.createElement("option");
+        option.textContent = i.toString();
+        option.value = i.toString();
+        
+        if (getSentenceAt(i).startsWith("GROUP") && isIgnoreGroupTitle()) {
+          option.disabled = true;
+        }
+        select.appendChild(option);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      loadSentences();
+
+      const select = document.getElementById("selectSentences");
+      select.onchange = function () {
+        g_currentItem = parseInt(this.value);
+        playAudio(g_currentItem);
+        if (isAlwaysShowAnswer()) showAnswer();
+      };
+
+      populateVoices();
+      if ('speechSynthesis' in window && speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoices;
+      }
+    });
+  </script>
+</body>
+
+</html>

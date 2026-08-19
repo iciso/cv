@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Average Covered Charges & Avg. Medicare Payments vs Total Discharges by Florida Facility, 2011</title>
+
+  <!-- Official Modern Plotly.js CDN -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+
+  <style>
+    :root {
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-color: #333333;
+      --border-color: #e9ecef;
+      --accent-color: #0056b3;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+    }
+
+    .chart-container {
+      width: 100%;
+      min-height: 700px;
+    }
+
+    blockquote {
+      margin: 24px 0 0 0;
+      padding: 12px 16px;
+      background-color: var(--bg-color);
+      border-left: 4px solid var(--accent-color);
+      font-size: 0.9rem;
+      color: #555555;
+      border-radius: 0 6px 6px 0;
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 4px;
+      font-style: normal;
+    }
+
+    blockquote a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    blockquote a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Plotly Graph Container -->
+    <div id="plotly-graph" class="chart-container"></div>
+
+    <!-- Attribution Block -->
+    <blockquote>
+      <strong>Prepared by:</strong> Andy Merhaut (August 9, 2016)
+      <cite>
+        <strong>Source:</strong> 
+        <a href="https://data.cms.gov/Medicare/Inpatient-Prospective-Payment-System-IPPS-Provider/97k6-zzx3" target="_blank" rel="noopener noreferrer">
+          CMS Inpatient Prospective Payment System (IPPS) Data
+        </a>
+      </cite>
+    </blockquote>
+  </div>
+
+  <script>
+    const facilities = [
+      "FLORIDA HOSPITAL", "NORTH FLORIDA REGIONAL MEDICAL CENTER", "MUNROE REGIONAL MEDICAL CENTER",
+      "SARASOTA MEMORIAL HOSPITAL", "OCALA REGIONAL MEDICAL CENTER", "OAK HILL HOSPITAL",
+      "CITRUS MEMORIAL HOSPITAL", "ORLANDO HEALTH", "NAPLES COMMUNITY HOSPITAL",
+      "HOLMES REGIONAL MEDICAL CENTER", "JACKSON MEMORIAL HOSPITAL", "GULF COAST MEDICAL CENTER LEE MEM HEALTH SYSTEM",
+      "CAPE CORAL HOSPITAL", "BAPTIST MEDICAL CENTER", "ST VINCENT'S MEDICAL CENTER SOUTHSIDE",
+      "ST VINCENT'S MEDICAL CENTER", "DELRAY MEDICAL CENTER", "DOCTORS HOSPITAL OF SARASOTA",
+      "BLAKE MEDICAL CENTER", "FAWCETT MEMORIAL HOSPITAL", "PHYSICIANS REGIONAL MEDICAL CENTER - PINE RIDGE",
+      "MAYO CLINIC", "MARTIN MEMORIAL MEDICAL CENTER", "UNIVERSITY OF MIAMI HOSPITAL",
+      "WEST FLORIDA HOSPITAL", "LEE MEMORIAL HOSPITAL", "MORTON PLANT HOSPITAL",
+      "SEVEN RIVERS REGIONAL MEDICAL CENTER", "SACRED HEART HOSPITAL", "BETHESDA MEMORIAL HOSPITAL",
+      "BAPTIST HOSPITAL", "CENTRAL FLORIDA REGIONAL HOSPITAL", "FLORIDA HOSPITAL HEARTLAND MEDICAL CENTER",
+      "HALIFAX HEALTH MEDICAL CENTER", "FLAGLER HOSPITAL", "BAY MEDICAL CENTER",
+      "FLORIDA HOSPITAL CARROLLWOOD", "MOUNT SINAI MEDICAL CENTER", "VENICE REGIONAL MEDICAL CENTER",
+      "BOCA RATON REGIONAL HOSPITAL", "LEESBURG REGIONAL MEDICAL CENTER", "SHANDS HOSPITAL AT THE UNIVERSITY OF FLORIDA",
+      "LARGO MEDICAL CENTER", "VILLAGES REGIONAL HOSPITAL, THE", "HEART OF FLORIDA REGIONAL MEDICAL CENTER",
+      "GULF BREEZE HOSPITAL", "BRANDON REGIONAL HOSPITAL", "MEASE HOSPITAL DUNEDIN",
+      "JFK MEDICAL CENTER", "WINTER HAVEN HOSPITAL", "ST JOSEPH'S HOSPITAL",
+      "TAMPA GENERAL HOSPITAL", "HOLY CROSS HOSPITAL INC", "ST LUCIE MEDICAL CENTER",
+      "HEALTH CENTRAL", "PARRISH MEDICAL CENTER", "GULF COAST MEDICAL CENTER",
+      "JUPITER MEDICAL CENTER", "FORT WALTON BEACH MEDICAL CENTER", "MANATEE MEMORIAL HOSPITAL",
+      "EDWARD WHITE HOSPITAL", "REGIONAL MEDICAL CENTER BAYONET POINT", "MEMORIAL REGIONAL HOSPITAL",
+      "BAYFRONT MEDICAL CENTER INC", "FLORIDA HOSPITAL FISH MEMORIAL", "BARTOW REGIONAL MEDICAL CENTER",
+      "CHARLOTTE REGIONAL MEDICAL CENTER", "HELEN ELLIS MEMORIAL HOSPITAL", "INDIAN RIVER MEDICAL CENTER",
+      "MEDICAL CENTER OF TRINITY", "PEACE RIVER REGIONAL MEDICAL CENTER", "SACRED HEART HOSPITAL ON THE EMERALD COAST",
+      "FLORIDA HOSPITAL MEMORIAL MEDICAL CENTER", "OSCEOLA REGIONAL MEDICAL CENTER", "AVENTURA HOSPITAL AND MEDICAL CENTER",
+      "CORAL GABLES HOSPITAL", "CAPITAL REGIONAL MEDICAL CENTER", "BAPTIST HOSPITAL OF MIAMI INC",
+      "TALLAHASSEE MEMORIAL HEALTHCARE", "SOUTH MIAMI HOSPITAL, INC", "LARKIN COMMUNITY HOSPITAL",
+      "UNIVERSITY HOSPITAL AND MEDICAL CENTER", "MEASE COUNTRYSIDE HOSPITAL", "ST MARY'S MEDICAL CENTER",
+      "BROWARD HEALTH BROWARD GENERAL MEDICAL CENTER", "SOUTH LAKE HOSPITAL", "BROOKSVILLE REGIONAL HOSPITAL",
+      "FLORIDA HOSPITAL TAMPA", "DOCTORS HOSPITAL INC", "MERCY HOSPITAL INC",
+      "WUESTHOFF MEDICAL CENTER - MELBOURNE"
+    ];
+
+    const trace1 = {
+      x: facilities,
+      y: ["267", "235", "197", "180", "166", "165", "162", "147", "145", "136", "130", "130", "128", "126", "113", "106", "105", "100", "94", "94", "90", "88", "81", "80", "77", "76", "75", "72", "71", "67", "67", "66", "65", "60", "59", "56", "54", "53", "53", "53", "50", "48", "48", "47", "46", "46", "45", "44", "42", "41", "40", "40", "39", "39", "38", "37", "37", "35", "33", "30", "30", "30", "29", "28", "27", "25", "23", "23", "23", "23", "22", "22", "21", "21", "21", "21", "21", "20", "19", "19", "19", "19", "18", "18", "16", "15", "15", "15", "14", "12", "11"],
+      name: "Total Discharges",
+      type: "bar",
+      marker: {
+        color: "rgb(213, 213, 213)"
+      }
+    };
+
+    const trace2 = {
+      x: facilities,
+      y: ["173.59971", "124.86365", "94.70712", "116.60953", "99.39207", "107.07178", "93.76585", "115.57224", "52.33865", "94.01113", "99.43561", "122.90821", "119.94235", "115.17172", "91.18843", "95.86272", "104.91039", "110.6118", "95.59027", "148.07015", "102.00865", "87.48434", "108.24522", "117.81945", "143.99635", "93.41278", "102.66037", "134.53065", "124.60776", "72.52134", "90.7911", "126.64406", "63.49184", "84.39696", "81.38672", "75.96428", "153.73557", "96.35737", "125.76479", "98.37481", "99.6967", "113.20837", "199.13595", "69.2417", "138.24965", "99.13506", "175.87048", "93.74902", "114.00997", "79.79509", "114.27815", "194.46592", "129.28864", "115.57074", "71.95502", "110.44432", "145.34621", "112.52282", "140.93281", "121.8532", "164.67243", "67.51193", "66.35189", "131.02439", "80.47737", "165.78584", "95.15256", "53.18191", "51.28213", "141.62704", "111.66109", "115.2615", "70.09828", "172.32585", "154.58438", "147.31319", "107.64819", "200.4577", "52.20605", "134.69957", "65.543", "118.189", "145.10272", "161.72816", "72.10075", "102.37733", "119.24793", "157.50306", "172.51314", "128.6725", "86.57072"],
+      name: "Average Covered Charges, $1000s",
+      type: "scatter",
+      mode: "lines+markers",
+      line: {
+        color: "rgb(68, 68, 68)",
+        shape: "spline",
+        width: 2
+      },
+      marker: {
+        color: "rgb(68, 68, 68)",
+        size: 6
+      }
+    };
+
+    const trace3 = {
+      x: facilities,
+      y: ["24.76344", "19.23217", "17.83089", "20.1003", "17.91884", "15.15647", "16.822", "22.00121", "20.90314", "18.56203", "39.40036", "21.49506", "19.38994", "21.22467", "19.39529", "20.66522", "19.95385", "17.78032", "18.81174", "18.21262", "19.26562", "22.45294", "20.35669", "29.10146", "17.96451", "20.45155", "19.9828", "19.22511", "23.96466", "23.12792", "18.86314", "19.19843", "21.03056", "22.37941", "22.68494", "20.30194", "21.5514", "24.32411", "19.70935", "20.4513", "19.74988", "30.9895", "20.55922", "16.20597", "21.25817", "17.94791", "19.59726", "18.16806", "21.49454", "20.29982", "23.51722", "26.6551", "22.68048", "19.45569", "20.99857", "25.24494", "20.61962", "20.31728", "18.24951", "24.867", "20.14516", "18.2164", "23.49831", "24.14175", "19.96266", "18.20372", "16.87386", "16.76343", "19.99317", "18.68665", "21.17731", "19.73131", "20.05257", "22.7058", "23.4158", "28.92857", "20.5359", "27.77575", "22.00163", "25.03357", "30.20689", "20.56473", "17.99188", "27.94016", "28.78193", "20.2378", "17.47006", "17.44386", "25.3155", "27.43591", "17.12836"],
+      name: "Average Medicare Payments, $1000s",
+      type: "scatter",
+      mode: "lines+markers",
+      line: {
+        color: "rgb(23, 190, 207)",
+        shape: "spline",
+        width: 2
+      },
+      marker: {
+        color: "rgb(23, 190, 207)",
+        size: 6
+      }
+    };
+
+    const layout = {
+      title: {
+        text: "Average Covered Charges & Avg. Medicare Payments vs Total Discharges by Florida Facility, 2011 (DRG 460)",
+        font: {
+          family: "'Open Sans', verdana, arial, sans-serif",
+          size: 16,
+          color: "#333"
+        },
+        pad: {
+          b: 10 // Adds padding below the title text
+        }
+      },
+      autosize: true,
+      paper_bgcolor: "#fff",
+      plot_bgcolor: "#fff",
+      hovermode: "closest",
+      font: {
+        family: "'Open Sans', verdana, arial, sans-serif",
+        size: 12,
+        color: "#444"
+      },
+      legend: {
+        orientation: "h",
+        x: 0,
+        y: 1.02, // Lowered from 1.12 to clear title overlap
+        xanchor: "left",
+        yanchor: "bottom"
+      },
+      xaxis: {
+        type: "category",
+        showgrid: true,
+        gridcolor: "#eeeeee",
+        tickangle: -45,
+        tickfont: {
+          size: 10
+        }
+      },
+      yaxis: {
+        type: "linear",
+        showgrid: true,
+        gridcolor: "#eeeeee",
+        zeroline: true,
+        zerolinecolor: "#444"
+      },
+      margin: {
+        l: 60,
+        r: 40,
+        b: 180,
+        t: 100, // Increased top margin from 80 to 100px
+        pad: 4
+      }
+    };
+
+    const config = {
+      responsive: true,
+      displayModeBar: true,
+      displaylogo: false
+    };
+
+    // Render Graph
+    Plotly.newPlot("plotly-graph", [trace1, trace2, trace3], layout, config);
+  </script>
+
+</body>
+
+</html>
