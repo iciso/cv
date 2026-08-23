@@ -1,160 +1,483 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamophobia Fact Finder · Number Trick</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(145deg, #fdf6ee 0%, #f5eadc 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+        .container {
+            max-width: 720px;
+            width: 100%;
+            background: rgba(255, 252, 245, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 2rem 2rem 2.5rem;
+            box-shadow: 0 25px 50px -8px rgba(60, 40, 20, 0.18);
+            border: 2px solid rgba(210, 180, 140, 0.25);
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: #3d2b1a;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        h1 span {
+            font-size: 1rem;
+            background: #dcc8b0;
+            color: #3d2b1a;
+            padding: 0.1rem 1rem;
+            border-radius: 60px;
+            font-weight: 500;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: #5a4a3a;
+            margin-bottom: 1.8rem;
+            border-bottom: 2px solid #dcc8b0;
+            padding-bottom: 0.8rem;
+        }
+        .grid-container {
+            background: #fcf6ed;
+            border-radius: 28px;
+            padding: 1.2rem 0.8rem;
+            margin: 1rem 0;
+            border: 2px solid #dcc8b0;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .grid-container pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #3d2b1a;
+            background: #f8f0e8;
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid #dcc8b0;
+            display: inline-block;
+            margin: 0.2rem 0;
+        }
+        .grid-container .message {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #3d2b1a;
+            margin: 0.2rem 0;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin: 1.2rem 0 0.5rem;
+        }
+        .btn {
+            background: #8a6a4a;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.6rem 2rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            box-shadow: 0 4px 12px rgba(60, 40, 20, 0.15);
+            min-width: 100px;
+        }
+        .btn:hover {
+            transform: scale(0.96);
+            background: #6a4f34;
+        }
+        .btn-primary {
+            background: #1a7a4a;
+        }
+        .btn-primary:hover {
+            background: #0f5a32;
+        }
+        .btn-secondary {
+            background: #b8860b;
+        }
+        .btn-secondary:hover {
+            background: #9a7209;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .fact-box {
+            background: #f0ece4;
+            border-radius: 28px;
+            padding: 1.5rem 1.8rem;
+            margin: 1.5rem 0 0.8rem;
+            border-left: 8px solid #b8860b;
+            text-align: left;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #2d1f0f;
+            display: none;
+        }
+        .fact-box .number {
+            font-weight: 700;
+            color: #8a6a4a;
+            font-size: 0.9rem;
+        }
+        .fact-box .fact-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #3d2b1a;
+            margin-bottom: 0.3rem;
+        }
+        .fact-box .fact-desc {
+            color: #3d2b1a;
+        }
+        .restart-area {
+            margin-top: 1rem;
+        }
+        .footer {
+            margin-top: 2rem;
+            border-top: 2px solid #dcc8b0;
+            padding-top: 1rem;
+            font-size: 0.8rem;
+            color: #6a4f34;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; }
+            .grid-container pre { font-size: 0.75rem; padding: 0.5rem; }
+            .btn { min-width: 80px; padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
 
-    <script type="text/javascript" src="script.js"></script>
-    <title>Guess Number</title>
-<STYLE>
-// Created by KYFT
+<div class="container">
+    <h1>🕊️ Islamophobia <span>Fact Finder</span></h1>
+    <div class="subhead">Think of a whole number from <strong>0 to 31</strong> and answer the questions.</div>
 
-h1{
-    font-family: Roboto;
-    text-align: center;
-    font-size: 100px;
-}
+    <!-- dynamic content -->
+    <div id="gameArea">
+        <div class="grid-container" id="gridDisplay">
+            <div class="message">Ready? Click <strong>"Start"</strong> below.</div>
+        </div>
 
-div{
-    font-family: roboto;
-    text-align: center;
-    font-size: 30px;
-}
+        <div class="btn-group" id="buttonGroup">
+            <button class="btn btn-primary" id="startBtn">Start</button>
+        </div>
+    </div>
 
-button {
-  border-radius: 30px;
-  font-family: Roboto;
-  color: #ffffff;
-  font-size: 20px;
-  background: mediumvioletred;
-  padding: 10px 20px 10px 20px;
-}
+    <!-- fact reveal -->
+    <div class="fact-box" id="factBox">
+        <div class="number" id="factNumber">#0</div>
+        <div class="fact-title" id="factTitle">Fact Title</div>
+        <div class="fact-desc" id="factDesc">Detailed explanation about Islamophobia.</div>
+    </div>
 
-body {
-    background-color: papayawhip;
-}
+    <div class="restart-area">
+        <button class="btn btn-secondary" id="restartBtn" style="display:none;">🔄 Play Again</button>
+    </div>
 
-
-</STYLE> 
+    <div class="footer">
+        🌙 Learn, reflect, and share — combating Islamophobia with knowledge.
+    </div>
+</div>
 
 <script>
+    (function() {
+        // ----- 32 Islamophobia facts (indices 0–31) -----
+        const FACTS = [
+            {
+                title: "Islam means submission to God",
+                desc: "It is a faith of peace, mercy, and complete trust in the One Creator. Muslims believe in the same God as Jews and Christians."
+            },
+            {
+                title: "Jihad means 'struggle', not 'holy war'",
+                desc: "The greater Jihad is the inner struggle against evil desires. Lesser Jihad is self-defense, strictly regulated and never aggressive."
+            },
+            {
+                title: "Muslims revere all prophets",
+                desc: "They believe in Abraham, Moses, Jesus, and Muhammad (peace be upon them all) as messengers of God, without distinction."
+            },
+            {
+                title: "Islam condemns terrorism",
+                desc: "The Qur'an says: 'Do not transgress limits; God does not love transgressors.' Killing innocent civilians is forbidden."
+            },
+            {
+                title: "The Qur'an promotes justice and compassion",
+                desc: "It commands fairness in dealing with all people, even enemies, and emphasizes charity, forgiveness, and humility."
+            },
+            {
+                title: "Muslim women have rights",
+                desc: "They can own property, work, seek education, and choose their spouses. The hijab is a personal choice of modesty."
+            },
+            {
+                title: "Sharia is about moral conduct",
+                desc: "It covers personal ethics, worship, and social justice. Harsh punishments are rarely applied and have strict evidentiary requirements."
+            },
+            {
+                title: "Freedom of religion is protected",
+                desc: "The Qur'an states: 'There is no compulsion in religion.' Historical Islamic empires allowed diverse faiths to flourish."
+            },
+            {
+                title: "Muslims are a diverse community",
+                desc: "Only ~15% of Muslims are Arab. The largest Muslim populations are in Indonesia, Pakistan, India, and Bangladesh."
+            },
+            {
+                title: "Prophet Muhammad was a mercy to the worlds",
+                desc: "He taught kindness to animals, neighbours, and even enemies. His character was described as the living Qur'an."
+            },
+            {
+                title: "Islamic civilization advanced science",
+                desc: "Muslim scholars preserved and expanded Greek philosophy, developed algebra, and made breakthroughs in medicine and astronomy."
+            },
+            {
+                title: "The hijab is a symbol of devotion",
+                desc: "It represents modesty and obedience to God, not oppression. Many Muslim women choose it freely and take pride in it."
+            },
+            {
+                title: "All humans are equal in Islam",
+                desc: "The Prophet's farewell sermon declared: 'No Arab is superior to a non-Arab, nor a white to a black, except by piety.'"
+            },
+            {
+                title: "Muslims respect other scriptures",
+                desc: "The Qur'an confirms the Torah and the Gospel as divine revelations, and urges Muslims to believe in them."
+            },
+            {
+                title: "Islamic finance is ethical",
+                desc: "It prohibits interest (riba) and gambling, encouraging risk-sharing, asset-backing, and social responsibility."
+            },
+            {
+                title: "Fasting develops empathy",
+                desc: "Ramadan fasting trains self-control and reminds Muslims of the plight of the hungry, fostering charity and community."
+            },
+            {
+                title: "Hajj unites the world",
+                desc: "The pilgrimage to Mecca brings millions from every race and nation together, symbolising the universal brotherhood of Islam."
+            },
+            {
+                title: "Seeking knowledge is a duty",
+                desc: "The Prophet said: 'Seeking knowledge is an obligation upon every Muslim.' This includes both religious and worldly sciences."
+            },
+            {
+                title: "Prayer connects to God",
+                desc: "The five daily prayers are moments of reflection, gratitude, and spiritual renewal, helping to stay mindful of God."
+            },
+            {
+                title: "The Islamic calendar is lunar",
+                desc: "It helps Muslims track religious observances like Ramadan and Hajj, which move through the seasons over years."
+            },
+            {
+                title: "Belief in angels and the Last Day",
+                desc: "Muslims believe in angels, divine books, and the Day of Judgment, which gives moral accountability and hope."
+            },
+            {
+                title: "Islam rejects racism",
+                desc: "The Prophet's last sermon explicitly condemned racial and tribal superiority, affirming that all humans come from Adam."
+            },
+            {
+                title: "Extremists are a tiny minority",
+                desc: "The vast majority of Muslims reject terrorism and violence. Polls show overwhelming opposition to groups like ISIS."
+            },
+            {
+                title: "Islamic art avoids idolatry",
+                desc: "It focuses on geometric patterns, calligraphy, and arabesque designs that reflect the beauty of creation without depicting God."
+            },
+            {
+                title: "Honesty in business is required",
+                desc: "The Qur'an commands fair measure and weight, and the Prophet praised truthful merchants as being with the prophets."
+            },
+            {
+                title: "Zakat is obligatory charity",
+                desc: "Muslims give 2.5% of their savings yearly to the poor, purifying wealth and reducing inequality."
+            },
+            {
+                title: "Mary (Maryam) is honoured",
+                desc: "The Qur'an dedicates a chapter to Mary and mentions her as the best of women, and Jesus is a revered prophet."
+            },
+            {
+                title: "Scientific insights in the Qur'an",
+                desc: "It describes embryological stages, the expansion of the universe, and the water cycle, aligning with modern science."
+            },
+            {
+                title: "Rights of non-Muslims are protected",
+                desc: "Islamic law guarantees freedom of worship, property rights, and legal protection for non-Muslim citizens in Muslim lands."
+            },
+            {
+                title: "The 'Islamic State' is not Islamic",
+                desc: "Mainstream Islamic scholars and leaders condemn the ideology of extremist groups, which violates core Islamic principles."
+            },
+            {
+                title: "Islamophobia harms society",
+                desc: "It leads to discrimination, hate crimes, and social division. It is a form of prejudice that must be countered with education."
+            },
+            {
+                title: "Dialogue is the best remedy",
+                desc: "Building relationships, sharing personal stories, and learning about Islam directly from Muslims breaks down stereotypes."
+            }
+        ];
 
-// Created by KYFT
+        // ----- Game state -----
+        let kj = 0;                 // accumulated number (0-31)
+        let step = 0;              // 0=start, 1-5 questions
+        const gridData = [
+            { bit: 16, grid: "17  25  30  22\n23  31  16  29\n19  27  20  24\n26  21  28  18" },
+            { bit: 2,  grid: " 7   2  10  15\n23  18  31  26\n 3  27  11  19\n 6  30  14  22" },
+            { bit: 8,  grid: "24  12   8  28\n 9  30  10  29\n25  15  13  27\n31  26  11  14" },
+            { bit: 1,  grid: "31   1   7  25\n23   9  15  17\n29   3  11  27\n21   5  13  19" },
+            { bit: 4,  grid: "20  28  12   4\n 5  31  21  29\n13   6  22  30\n 7  14  23  15" }
+        ];
 
-    
-var kj = 0;
-function Direction(Choice){
-// The choice of the first buttons 
-    if(Choice == "okay"){
-        document.getElementById("result").innerHTML = "<center>~~~~~~~~~~~~<br><br>Do you see your number below? <br><pre>17  25  30  22<br><br>23  31  16  29<br><br>19  27  20  24<br><br>26  21  28  18</pre>";
-        document.getElementById('okay').style.display = 'none';
-                document.getElementById("result").style.display = 'inline';
-        document.getElementById('yes').style.display = 'inline';
-        document.getElementById("no").style.display = 'inline';
-    }
-}
-        
-function Direction2(Choice){
+        // DOM refs
+        const gridDisplay = document.getElementById('gridDisplay');
+        const buttonGroup = document.getElementById('buttonGroup');
+        const startBtn = document.getElementById('startBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const factBox = document.getElementById('factBox');
+        const factNumber = document.getElementById('factNumber');
+        const factTitle = document.getElementById('factTitle');
+        const factDesc = document.getElementById('factDesc');
 
-if(Choice == 'yes'){ kj+=16;}        
-            document.getElementById("result2").innerHTML = "<center>~~~~~~~~~~~~<br><br>How about here? <br><pre> 7   2  10  15<br><br>23  18  31  26<br><br> 3  27  11  19<br><br> 6  30  14  22</pre>";
-        document.getElementById('yes').style.display = 'none';
-        document.getElementById("no").style.display = 'none';
-        document.getElementById("result2").style.display = 'inline';
-        document.getElementById('yes2').style.display = 'inline';
-             document.getElementById('no2').style.display = 'inline';
-}
+        // ----- Helper: clear and set buttons -----
+        function setButtons(buttons) {
+            buttonGroup.innerHTML = '';
+            buttons.forEach(b => {
+                const btn = document.createElement('button');
+                btn.className = `btn ${b.class || 'btn-primary'}`;
+                btn.textContent = b.label;
+                btn.id = b.id || '';
+                btn.addEventListener('click', b.action);
+                buttonGroup.appendChild(btn);
+            });
+        }
 
-function Direction3(Choice){
-if(Choice == 'yes2'){ kj+=2;}
-            document.getElementById("result3").innerHTML = "<center>~~~~~~~~~~~~<br><br>I need to be sure. Do you see it here? <br><pre>24  12   8  28<br><br> 9  30  10  29<br><br>25  15  13  27<br><br>31  26  11  14</pre>";
-        document.getElementById('yes2').style.display = 'none';
-        document.getElementById("no2").style.display = 'none';
-        document.getElementById("result3").style.display = 'inline';
-        document.getElementById('yes3').style.display = 'inline';
-             document.getElementById('no3').style.display = 'inline';  
-        
-}
+        // ----- Display grid -----
+        function showGrid(content, message) {
+            gridDisplay.innerHTML = '';
+            if (message) {
+                const msg = document.createElement('div');
+                msg.className = 'message';
+                msg.textContent = message;
+                gridDisplay.appendChild(msg);
+            }
+            if (content) {
+                const pre = document.createElement('pre');
+                pre.textContent = content;
+                gridDisplay.appendChild(pre);
+            }
+        }
 
-function Direction4(Choice){
-if(Choice == 'yes3'){ kj+=8;}
-            document.getElementById("result4").innerHTML = "<center>~~~~~~~~~~~~<br><br>We're almost done. Is your number here? <br><pre>31   1   7  25<br><br>23   9  15  17<br><br>29   3  11  27<br><br>21   5  13  19</pre>";
-        document.getElementById('yes3').style.display = 'none';
-        document.getElementById("no3").style.display = 'none';
-        document.getElementById("result4").style.display = 'inline';
-        document.getElementById('yes4').style.display = 'inline';
-             document.getElementById('no4').style.display = 'inline';  
-        
-}     
+        // ----- Steps -----
+        function step0() {
+            kj = 0;
+            step = 0;
+            factBox.style.display = 'none';
+            restartBtn.style.display = 'none';
+            showGrid(null, 'Think of a number 0–31. Click "Start" when ready.');
+            setButtons([
+                { label: 'Start', class: 'btn-primary', action: step1 }
+            ]);
+        }
 
-function Direction5(Choice){
-if(Choice == 'yes4'){ kj+=1;}
-            document.getElementById("result5").innerHTML = "<center>~~~~~~~~~~~~<br><br>Finally, do you see your number below? <br><pre>20  28  12   4<br><br> 5  31  21  29<br><br>13   6  22  30<br><br> 7  14  23  15</pre>";
-        document.getElementById('yes4').style.display = 'none';
-        document.getElementById("no4").style.display = 'none';
-        document.getElementById("result5").style.display = 'inline';
-        document.getElementById('yes5').style.display = 'inline';
-             document.getElementById('no5').style.display = 'inline';  
-        
-} 
+        function step1() {
+            step = 1;
+            showGrid(gridData[0].grid, 'Do you see your number below?');
+            setButtons([
+                { label: 'Yes', class: 'btn-primary', action: () => { kj += 16; step2(); } },
+                { label: 'No', class: 'btn-secondary', action: step2 }
+            ]);
+        }
 
-function Direction6(Choice){
-if(Choice == 'yes5'){ kj+=4;}
-            document.getElementById("result6").innerHTML = "<center>~~~~~~~~~~~~<br><br><h4>Your number is "+kj+"</h4><br>🎊🎉🎊🎉🎊<br>😂😊😯😆💞💓👍🌹";
-        document.getElementById('yes5').style.display = 'none';
-        document.getElementById("no5").style.display = 'none';
-        document.getElementById("result6").style.display = 'inline'; 
-        
-}      
-        
-    
-</script> 
-</head>
+        function step2() {
+            step = 2;
+            showGrid(gridData[1].grid, 'How about here?');
+            setButtons([
+                { label: 'Yes', class: 'btn-primary', action: () => { kj += 2; step3(); } },
+                { label: 'No', class: 'btn-secondary', action: step3 }
+            ]);
+        }
 
-<body>
-    <h1 align="center">A NUMBER TRICK 🌹</h1>
-    
-<div>
-    <p>Before we begin, choose a whole number between 0 and 31.</p>
-</div>
+        function step3() {
+            step = 3;
+            showGrid(gridData[2].grid, 'I need to be sure. Do you see it here?');
+            setButtons([
+                { label: 'Yes', class: 'btn-primary', action: () => { kj += 8; step4(); } },
+                { label: 'No', class: 'btn-secondary', action: step4 }
+            ]);
+        }
 
-<div id="result"></div>
-<div id="result2"></div>
-<div id="result3"></div>
-<div id="result4"></div>
-<div id="result5"></div>
-<div id="result6"></div>
+        function step4() {
+            step = 4;
+            showGrid(gridData[3].grid, 'Almost done. Is your number here?');
+            setButtons([
+                { label: 'Yes', class: 'btn-primary', action: () => { kj += 1; step5(); } },
+                { label: 'No', class: 'btn-secondary', action: step5 }
+            ]);
+        }
 
-<hr width="340px" />
-<br>
-<div>
-    <button id="okay"  onclick="Direction('okay')">OKAY</button>
-</div>
-<!-- the first buttons run the function Direction() when clicked --> 
+        function step5() {
+            step = 5;
+            showGrid(gridData[4].grid, 'Finally, do you see your number below?');
+            setButtons([
+                { label: 'Yes', class: 'btn-primary', action: () => { kj += 4; revealFact(); } },
+                { label: 'No', class: 'btn-secondary', action: revealFact }
+            ]);
+        }
 
-<div>
-    <button id="yes" style="display: none" onclick="Direction2('yes')">YES</button>
-    <button id="no" style="display: none" onclick="Direction2('no')">NO</button>
-</div>
+        // ----- Reveal fact -----
+        function revealFact() {
+            const index = kj; // 0–31
+            const fact = FACTS[index] || FACTS[0];
+            factNumber.textContent = `#${index}`;
+            factTitle.textContent = fact.title;
+            factDesc.textContent = fact.desc;
+            factBox.style.display = 'block';
+            restartBtn.style.display = 'inline-block';
 
-<div>
-    <button id="yes2" style="display: none" onclick="Direction3('yes2')">YES</button>
-    <button id="no2" style="display: none" onclick="Direction3('no2')">NO</button>
-</div>
+            // Show final message
+            showGrid(null, `✨ Your number is ${index}!`);
+            setButtons([]); // remove buttons
+        }
 
-<div>
-    <button id="yes3" style="display: none" onclick="Direction4('yes3')">YES</button>
-    <button id="no3" style="display: none" onclick="Direction4('no3')">NO</button>
-</div>
+        // ----- Restart -----
+        function restartGame() {
+            step0();
+        }
 
+        // ----- Event listeners -----
+        startBtn.addEventListener('click', step1);
+        restartBtn.addEventListener('click', restartGame);
 
-<div>
-    <button id="yes4" style="display: none" onclick="Direction5('yes4')">YES</button>
-    <button id="no4" style="display: none" onclick="Direction5('no4')">NO</button>
-</div>
+        // ----- Initialize -----
+        step0();
 
-
-<div>
-    <button id="yes5" style="display: none" onclick="Direction6('yes5')">YES</button>
-    <button id="no5" style="display: none" onclick="Direction6('no5')">NO</button>
-</div>
+        // Expose for debugging
+        window.__game = { kj, step, FACTS, restartGame };
+    })();
+</script>
 
 </body>
 </html>
