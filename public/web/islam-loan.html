@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outcomes of a Loan in Islamic Fiqh</title>
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #0d5c56;
+      --bg: #f0fdfa;
+      --card: #ffffff;
+      --text: #134e4a;
+      --accent: #14b8a6;
+      --gold: #d97706;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: linear-gradient(160deg, #f0fdfa 0%, #ccfbf1 100%);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 1.5rem 1rem 3rem;
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #0f766e;
+      opacity: 0.9;
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .outcome-card {
+      background: white;
+      border: 2px solid #99f6e4;
+      border-radius: 18px;
+      padding: 1.2rem 1rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--text);
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.08);
+      user-select: none;
+    }
+
+    .outcome-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.15);
+      background: #f0fdfa;
+    }
+
+    .outcome-card.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-dark);
+    }
+
+    .detail-panel {
+      background: white;
+      border-radius: 24px;
+      padding: 1.8rem 1.6rem;
+      box-shadow: 0 15px 40px rgba(15, 118, 110, 0.12);
+      display: none;
+      animation: slideUp 0.35s ease;
+      border: 1px solid #99f6e4;
+    }
+
+    .detail-panel.show {
+      display: block;
+    }
+
+    .detail-panel h2 {
+      color: var(--primary);
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      background: #ccfbf1;
+      color: var(--primary-dark);
+      padding: 0.2rem 0.7rem;
+      border-radius: 50px;
+      font-weight: 600;
+    }
+
+    .section {
+      margin: 1.2rem 0;
+    }
+
+    .section h3 {
+      font-size: 1rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .section p {
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    .evidence {
+      background: #f0fdfa;
+      border-left: 4px solid var(--accent);
+      padding: 0.9rem 1.1rem;
+      border-radius: 0 12px 12px 0;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .virtue {
+      background: #fffbeb;
+      border-left: 4px solid var(--gold);
+      padding: 0.9rem 1.1rem;
+      border-radius: 0 12px 12px 0;
+      margin: 1rem 0;
+    }
+
+    .virtue strong {
+      color: #92400e;
+    }
+
+    .tip {
+      background: #ecfdf5;
+      border-radius: 12px;
+      padding: 0.9rem 1.1rem;
+      margin-top: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .close-btn {
+      display: block;
+      margin: 1.5rem auto 0;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .close-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.55rem; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .outcome-card { font-size: 0.95rem; padding: 1rem 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Outcomes of a Loan in Islamic Fiqh</h1>
+      <p class="subtitle">
+        Click any outcome below to explore its ruling, evidence from Quran & Sunnah, 
+        and what is most beloved to Allah.
+      </p>
+    </header>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="detail-panel" id="detailPanel">
+      <h2 id="detailTitle"></h2>
+      <div id="detailContent"></div>
+      <button class="close-btn" id="closeBtn">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const outcomes = [
+      {
+        id: 1,
+        title: "1. Debtor Repays the Loan",
+        short: "Debtor pays back",
+        content: `
+          <div class="section">
+            <h3>Definition & Ruling</h3>
+            <p>The primary and default outcome of a <strong>Qard</strong> (loan). The debtor (madīn) is religiously and legally obligated to return the exact equivalent of what was borrowed.</p>
+          </div>
+          <div class="evidence">
+            <strong>Evidence:</strong> The Prophet ﷺ said: “The soul of the believer is suspended because of his debt until it is paid off.” (Tirmidhi, Ibn Majah – authentic). Delaying repayment when one is able is injustice (Muslim).
+          </div>
+          <div class="virtue">
+            <strong>In the sight of Allah:</strong> Fulfilling the obligation is obligatory and highly rewarded. Intentionally delaying when able is a major sin.
+          </div>
+          <div class="tip">
+            💡 <strong>Practical tip:</strong> Always document the loan (Quran 2:282) and repay as soon as possible. The best debtor is the one who is eager to settle.
+          </div>
+        `
+      },
+      {
+        id: 2,
+        title: "2. Conciliation (Ṣulḥ) between the Parties",
+        short: "Conciliation / Ṣulḥ",
+        content: `
+          <div class="section">
+            <h3>Definition & Ruling</h3>
+            <p>Both parties agree to settle the debt on mutually acceptable terms (partial reduction, delayed payment, or other arrangement). Ṣulḥ is strongly encouraged in Islam.</p>
+          </div>
+          <div class="evidence">
+            <strong>Evidence:</strong> “Settlement is better” (Quran 4:128). The Prophet ﷺ said: “Reconciliation between people is charity” (related meanings in many narrations).
+          </div>
+          <div class="virtue">
+            <strong>In the sight of Allah:</strong> Highly praised. It preserves relationships and removes hardship. Better than prolonged dispute.
+          </div>
+          <div class="tip">
+            💡 <strong>Practical tip:</strong> Prefer peaceful settlement over litigation. Many scholars consider a fair ṣulḥ superior to insisting on every last dirham when hardship exists.
+          </div>
+        `
+      },
+      {
+        id: 3,
+        title: "3. Collateral / Pledge (Rahn)",
+        short: "Collateral (Rahn)",
+        content: `
+          <div class="section">
+            <h3>Definition & Ruling</h3>
+            <p>The debtor gives an asset as security (rahn). The creditor holds it until the debt is paid. If the debtor defaults, the asset can be sold to recover the debt (with excess returned).</p>
+          </div>
+          <div class="evidence">
+            <strong>Evidence:</strong> The Prophet ﷺ himself pawned his armour to a Jew (Bukhari & Muslim). Quran 2:283 permits documentation and security when a scribe is not available.
+          </div>
+          <div class="virtue">
+            <strong>In the sight of Allah:</strong> Permissible and practical. It protects the creditor’s right without oppression if done fairly.
+          </div>
+          <div class="tip">
+            💡 <strong>Practical tip:</strong> The pledged item remains the property of the debtor. The creditor may not use it for personal benefit unless agreed in a Shariah-compliant way (maintenance fees are allowed in modern practice).
+          </div>
+        `
+      },
+      {
+        id: 4,
+        title: "4. Suretyship / Guarantee (Kafālah)",
+        short: "Suretyship (Kafālah)",
+        content: `
+          <div class="section">
+            <h3>Definition & Ruling</h3>
+            <p>A third party (kafil) guarantees that the debtor will pay. The creditor can demand payment from either the original debtor or the guarantor.</p>
+          </div>
+          <div class="evidence">
+            <strong>Evidence:</strong> Kafālah is established by consensus (ijmāʿ) and practice of the Companions. It is a tabarruʿ (voluntary) contract of guarantee.
+          </div>
+          <div class="virtue">
+            <strong>In the sight of Allah:</strong> A noble act of assistance. The guarantor is rewarded for helping a brother, but must be careful not to over-commit.
+          </div>
+          <div class="tip">
+            💡 <strong>Practical tip:</strong> Only guarantee what you can actually pay. The Prophet ﷺ refused to pray the funeral of a person who had unpaid debt until someone guaranteed it.
+          </div>
+        `
+      },
+      {
+        id: 5,
+        title: "5. Guarantor Pays the Loan",
+        short: "Guarantor pays",
+        content: `
+          <div class="section">
+            <h3>Definition & Ruling</h3>
+            <p>When the original debtor fails, the kafil (guarantor) pays the creditor. The guarantor then has the right to reclaim the amount from the original debtor.</p>
+          </div>
+          <div class="evidence">
+            <strong>Evidence:</strong> This is the natural consequence of a valid kafālah contract according to all four madhāhib.
+          </div>
+          <div class="virtue">
+            <strong>In the sight of Allah:</strong> Honourable fulfilment of a promise. The guarantor who pays and then gently seeks repayment is praised.
+          </div>
+          <div class="tip">
+            💡 <strong>Practical tip:</strong> After paying, treat the original debtor with kindness. Do not turn the guarantee into a source of conflict.
+          </div>
+        `
+      },
+      {
+        id: 6,
+        title: "6. Transfer of Debt (Ḥawālah)",
+        short: "Ḥawālah (Transfer)",
+        content: `
+          <div class="section">
+            <h3>Definition & Ruling</h3>
+            <p>The debtor transfers the obligation to a third party (who usually owes the debtor). The original debtor is released, and the creditor now claims from the new person.</p>
+          </div>
+          <div class="evidence">
+            <strong>Evidence:</strong> The Prophet ﷺ said: “Procrastination in paying debts by a wealthy person is injustice. So, if your debt is transferred to a rich person, you should accept it.” (Bukhari & Muslim)
+          </div>
+          <div class="virtue">
+            <strong>In the sight of Allah:</strong> Permissible and often beneficial. It is a facilitation (taysīr) for people.
+          </div>
+          <div class="tip">
+            💡 <strong>Practical tip:</strong> Accept a ḥawālah to a solvent person. Refusing a valid transfer to a rich person without reason is discouraged.
+          </div>
+        `
+      },
+      {
+        id: 7,
+        title: "7. Agency to Collect (Wakālah)",
+        short: "Wakālah (Agency)",
+        content: `
+          <div class="section">
+            <h3>Definition & Ruling</h3>
+            <p>The creditor appoints an agent (wakīl) to collect the debt on his behalf. The agent acts within the scope of the authorisation.</p>
+          </div>
+          <div class="evidence">
+            <strong>Evidence:</strong> Wakālah is a valid and widely used contract in Islamic commercial law, supported by the practice of the Prophet ﷺ and Companions.
+          </div>
+          <div class="virtue">
+            <strong>In the sight of Allah:</strong> Permissible. Useful for practical recovery without the creditor having to pursue personally.
+          </div>
+          <div class="tip">
+            💡 <strong>Practical tip:</strong> Clearly define the agent’s authority in writing to avoid disputes. The agent should act honestly and gently.
+          </div>
+        `
+      },
+      {
+        id: 8,
+        title: "8. Judicial Interdiction / Court Action",
+        short: "Judicial action",
+        content: `
+          <div class="section">
+            <h3>Definition & Ruling</h3>
+            <p>When the debtor is able but refuses to pay, the creditor may take the matter to a Shariah court. The judge can order payment, restrict the debtor’s disposal of assets (ḥajr), or enforce sale of assets.</p>
+          </div>
+          <div class="evidence">
+            <strong>Evidence:</strong> The Islamic judicial system has authority to enforce rights. The Prophet ﷺ said the rich person who delays is unjust.
+          </div>
+          <div class="virtue">
+            <strong>In the sight of Allah:</strong> Permissible when necessary to recover a right. However, it should be the last resort after gentle reminders and offers of respite.
+          </div>
+          <div class="tip">
+            💡 <strong>Practical tip:</strong> Exhaust private conciliation first. Going to court is allowed but can damage relationships; use it when the debtor is deliberately withholding.
+          </div>
+        `
+      },
+      {
+        id: 9,
+        title: "9. Mortgage / Security Arrangement",
+        short: "Mortgage (related to Rahn)",
+        content: `
+          <div class="section">
+            <h3>Definition & Ruling</h3>
+            <p>Closely related to Rahn. An asset is designated as security. In modern terms this can resemble a mortgage, provided the conditions of rahn are met (no interest, clear ownership, etc.).</p>
+          </div>
+          <div class="evidence">
+            <strong>Evidence:</strong> Same foundation as Rahn (Quran 2:283 and the Prophet’s own practice of pledging his armour).
+          </div>
+          <div class="virtue">
+            <strong>In the sight of Allah:</strong> Permissible as long as it remains free of riba and gharar.
+          </div>
+          <div class="tip">
+            💡 <strong>Practical tip:</strong> Ensure the arrangement is pure rahn or a Shariah-compliant security. Avoid conventional interest-based mortgages.
+          </div>
+        `
+      },
+      {
+        id: 10,
+        title: "10. Creditor Forgives the Loan (Ibrā’)",
+        short: "Forgiveness of Debt",
+        content: `
+          <div class="section">
+            <h3>Definition & Ruling</h3>
+            <p>The creditor voluntarily cancels the debt, wholly or partially, as an act of charity (ṣadaqah). This is one of the most virtuous outcomes.</p>
+          </div>
+          <div class="evidence">
+            <strong>Evidence:</strong> “And if someone is in hardship, then [let there be] postponement until [a time of] ease. But if you give [from your right as] charity, then it is better for you, if you only knew.” (Quran 2:280)<br><br>
+            The Prophet ﷺ said: “Whoever gives respite to a debtor in difficulty or forgives him, Allah will shade him under His Throne on the Day when there is no shade but His.” (Muslim & Tirmidhi)
+          </div>
+          <div class="virtue">
+            <strong>In the sight of Allah:</strong> This is the <em>best</em> and most beloved outcome when the debtor is in genuine difficulty. It earns immense reward and can be a means of Allah forgiving the creditor’s own sins.
+          </div>
+          <div class="tip">
+            💡 <strong>Practical tip:</strong> If you are able, forgive part or all of a difficult debt. The Prophet ﷺ told of a man who was forgiven by Allah solely because he used to tell his servants: “Forgive the insolvent, perhaps Allah will forgive us.”
+          </div>
+        `
+      }
+    ];
+
+    const grid = document.getElementById('grid');
+    const detailPanel = document.getElementById('detailPanel');
+    const detailTitle = document.getElementById('detailTitle');
+    const detailContent = document.getElementById('detailContent');
+    const closeBtn = document.getElementById('closeBtn');
+
+    // Build cards
+    outcomes.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'outcome-card';
+      card.textContent = item.short;
+      card.dataset.id = item.id;
+      card.addEventListener('click', () => showDetail(item, card));
+      grid.appendChild(card);
+    });
+
+    function showDetail(item, card) {
+      // Remove previous active
+      document.querySelectorAll('.outcome-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+
+      detailTitle.innerHTML = item.title + ' <span class="badge">Fiqh Outcome</span>';
+      detailContent.innerHTML = item.content;
+      detailPanel.classList.add('show');
+
+      // Scroll to panel on mobile
+      detailPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    closeBtn.addEventListener('click', () => {
+      detailPanel.classList.remove('show');
+      document.querySelectorAll('.outcome-card').forEach(c => c.classList.remove('active'));
+    });
+  </script>
+</body>
+</html>
