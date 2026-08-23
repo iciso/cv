@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Islamic Terms Matching Quiz</title>
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #0d5c56;
+      --bg: #f0fdfa;
+      --card: #ffffff;
+      --text: #134e4a;
+      --muted: #5eead4;
+      --correct: #059669;
+      --wrong: #dc2626;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 1.5rem 1rem;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container {
+      max-width: 820px;
+      width: 100%;
+      background: var(--card);
+      border-radius: 28px;
+      box-shadow: 0 20px 50px -12px rgba(15, 118, 110, 0.18);
+      padding: 2rem 1.8rem 2.5rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      color: #0f766e;
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #e0f2f1;
+      border-radius: 20px;
+      margin: 1.2rem 0 1.8rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.4s ease;
+      border-radius: 20px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .stats span {
+      background: #f0fdfa;
+      padding: 0.3rem 1rem;
+      border-radius: 50px;
+    }
+
+    .question-card {
+      background: #f8fffe;
+      border: 2px solid #ccfbf1;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .question-number {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.6rem;
+    }
+
+    .definition {
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+      color: #134e4a;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.7rem;
+    }
+
+    .option-btn {
+      background: white;
+      border: 2px solid #99f6e4;
+      border-radius: 14px;
+      padding: 0.7rem 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: #ccfbf1;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    .option-btn.correct {
+      background: #d1fae5;
+      border-color: var(--correct);
+      color: #065f46;
+    }
+
+    .option-btn.wrong {
+      background: #fee2e2;
+      border-color: var(--wrong);
+      color: #991b1b;
+    }
+
+    .feedback {
+      margin-top: 1.3rem;
+      padding: 1.1rem 1.3rem;
+      border-radius: 16px;
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: #ecfdf5;
+      border-left: 5px solid var(--correct);
+    }
+
+    .feedback.wrong {
+      background: #fef2f2;
+      border-left: 5px solid var(--wrong);
+    }
+
+    .feedback h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feedback p {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #1e3a3a;
+    }
+
+    .tip {
+      margin-top: 0.7rem;
+      padding-top: 0.7rem;
+      border-top: 1px dashed #a7f3d0;
+      font-size: 0.9rem;
+      color: #065f46;
+    }
+
+    .next-btn, .restart-btn {
+      display: none;
+      margin: 1.5rem auto 0;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.85rem 2.2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(15, 118, 110, 0.25);
+    }
+
+    .next-btn:hover, .restart-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .next-btn.show, .restart-btn.show {
+      display: block;
+    }
+
+    .final-score {
+      text-align: center;
+      padding: 2rem 1rem;
+      display: none;
+    }
+
+    .final-score.show {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .final-score h2 {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #ccfbf1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 1.2rem auto;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 1.5rem 1.2rem; }
+      h1 { font-size: 1.6rem; }
+      .options { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Match Islamic Terms</h1>
+      <p class="subtitle">Match each definition with the correct Islamic term</p>
+    </header>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="stats">
+      <span>✅ <span id="correctCount">0</span></span>
+      <span>❌ <span id="wrongCount">0</span></span>
+      <span>Q <span id="currentQ">1</span>/<span id="totalQ">8</span></span>
+    </div>
+
+    <div id="quizArea">
+      <!-- Questions injected here -->
+    </div>
+
+    <button class="next-btn" id="nextBtn">Next Question →</button>
+
+    <div class="final-score" id="finalScore">
+      <h2>Quiz Complete!</h2>
+      <div class="score-circle" id="scoreCircle">0/8</div>
+      <p id="finalMessage" style="margin: 1rem 0 1.5rem; line-height: 1.5;"></p>
+      <button class="restart-btn show" id="restartBtn">🔄 Try Again</button>
+    </div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        definition: "The belief that there is only one supreme being.",
+        answer: "monotheism",
+        options: ["charity", "creed", "faith", "fast", "Islam", "monotheism", "pilgrimage", "prayer"],
+        explanation: "Monotheism (Tawhid) is the foundation of Islam. Allah is One, unique, and has no partners.",
+        tip: "Practical tip: Reflect on Tawhid daily by saying “La ilaha illallah” with understanding. It strengthens pure faith."
+      },
+      {
+        definition: "There is no God worthy of worship except Allah.",
+        answer: "creed",
+        options: ["charity", "creed", "faith", "fast", "Islam", "monotheism", "pilgrimage", "prayer"],
+        explanation: "This is the Shahada (testimony of faith), the core creed of Islam: “Ash-hadu an la ilaha illallah…”",
+        tip: "Practical tip: The Shahada is the first pillar of Islam. Saying it sincerely with belief enters one into the fold of Islam."
+      },
+      {
+        definition: "Any particular religion and its teachings.",
+        answer: "faith",
+        options: ["charity", "creed", "faith", "fast", "Islam", "monotheism", "pilgrimage", "prayer"],
+        explanation: "Faith (Iman) in Islam means believing in Allah, His angels, books, messengers, the Last Day, and divine decree.",
+        tip: "Practical tip: Strengthen your Iman by reading a small portion of the Quran daily and reflecting on its meanings."
+      },
+      {
+        definition: "A usually long trip undertaken for religious purposes, such as to visit a holy place.",
+        answer: "pilgrimage",
+        options: ["charity", "creed", "faith", "fast", "Islam", "monotheism", "pilgrimage", "prayer"],
+        explanation: "In Islam this is Hajj (or Umrah). Hajj is one of the five pillars and is obligatory once in a lifetime for those who are able.",
+        tip: "Practical tip: Even if you cannot go yet, learn the rituals of Hajj and make sincere intention (niyyah) — Allah rewards intentions."
+      },
+      {
+        definition: "Abstinence from food and sin.",
+        answer: "fast",
+        options: ["charity", "creed", "faith", "fast", "Islam", "monotheism", "pilgrimage", "prayer"],
+        explanation: "Fasting (Sawm) in Ramadan is obligatory. It includes abstaining from food, drink, and sinful speech/actions from dawn to sunset.",
+        tip: "Practical tip: Fasting trains self-control. Use the hunger to remember the poor and increase charity and good deeds."
+      },
+      {
+        definition: "The act of asking God to use His power / communicating with Allah.",
+        answer: "prayer",
+        options: ["charity", "creed", "faith", "fast", "Islam", "monotheism", "pilgrimage", "prayer"],
+        explanation: "Salah (prayer) is the second pillar of Islam. Muslims pray five times daily facing the Kaaba.",
+        tip: "Practical tip: Guard your five daily prayers. They are the first thing a person will be questioned about on the Day of Judgment."
+      },
+      {
+        definition: "The true religion of Allah, with the last and final Prophet being Muhammad (peace be upon him).",
+        answer: "Islam",
+        options: ["charity", "creed", "faith", "fast", "Islam", "monotheism", "pilgrimage", "prayer"],
+        explanation: "Islam means “submission to the will of Allah.” It is the final revelation for all of humanity until the Day of Judgment.",
+        tip: "Practical tip: Live Islam by combining belief with action — prayer, kindness, honesty, and seeking knowledge."
+      },
+      {
+        definition: "Something given to a person or persons in need.",
+        answer: "charity",
+        options: ["charity", "creed", "faith", "fast", "Islam", "monotheism", "pilgrimage", "prayer"],
+        explanation: "In Islam this includes Zakat (obligatory) and Sadaqah (voluntary). Charity purifies wealth and the soul.",
+        tip: "Practical tip: Give regularly, even if small. The Prophet ﷺ said the best charity is that given when you have little."
+      }
+    ];
+
+    let currentIndex = 0;
+    let correct = 0;
+    let wrong = 0;
+    let answered = false;
+
+    const quizArea = document.getElementById('quizArea');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressFill = document.getElementById('progressFill');
+    const correctCount = document.getElementById('correctCount');
+    const wrongCount = document.getElementById('wrongCount');
+    const currentQ = document.getElementById('currentQ');
+    const totalQ = document.getElementById('totalQ');
+    const finalScore = document.getElementById('finalScore');
+    const scoreCircle = document.getElementById('scoreCircle');
+    const finalMessage = document.getElementById('finalMessage');
+    const restartBtn = document.getElementById('restartBtn');
+
+    totalQ.textContent = quizData.length;
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function updateProgress() {
+      const percent = ((currentIndex) / quizData.length) * 100;
+      progressFill.style.width = percent + '%';
+      currentQ.textContent = currentIndex + 1;
+      correctCount.textContent = correct;
+      wrongCount.textContent = wrong;
+    }
+
+    function showQuestion() {
+      if (currentIndex >= quizData.length) {
+        showFinal();
+        return;
+      }
+
+      answered = false;
+      nextBtn.classList.remove('show');
+      const q = quizData[currentIndex];
+      const options = shuffle([...q.options]);
+
+      quizArea.innerHTML = `
+        <div class="question-card">
+          <div class="question-number">Question ${currentIndex + 1} of ${quizData.length}</div>
+          <div class="definition">${q.definition}</div>
+          <div class="options" id="options">
+            ${options.map(opt => `<button class="option-btn" data-value="${opt}">${opt}</button>`).join('')}
+          </div>
+          <div class="feedback" id="feedback"></div>
+        </div>
+      `;
+
+      document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', () => handleAnswer(btn, q));
+      });
+
+      updateProgress();
+    }
+
+    function handleAnswer(btn, q) {
+      if (answered) return;
+      answered = true;
+
+      const selected = btn.dataset.value;
+      const isCorrect = selected === q.answer;
+      const allBtns = document.querySelectorAll('.option-btn');
+
+      allBtns.forEach(b => {
+        b.disabled = true;
+        if (b.dataset.value === q.answer) {
+          b.classList.add('correct');
+        } else if (b === btn && !isCorrect) {
+          b.classList.add('wrong');
+        }
+      });
+
+      const feedback = document.getElementById('feedback');
+      feedback.classList.add('show', isCorrect ? 'correct' : 'wrong');
+
+      if (isCorrect) {
+        correct++;
+        feedback.innerHTML = `
+          <h3>✅ Correct!</h3>
+          <p><strong>${q.answer}</strong> — ${q.explanation}</p>
+          <div class="tip">💡 ${q.tip}</div>
+        `;
+      } else {
+        wrong++;
+        feedback.innerHTML = `
+          <h3>❌ Not quite</h3>
+          <p>The correct term is <strong>${q.answer}</strong>.</p>
+          <p>${q.explanation}</p>
+          <div class="tip">💡 ${q.tip}</div>
+        `;
+      }
+
+      updateProgress();
+      nextBtn.classList.add('show');
+    }
+
+    function showFinal() {
+      quizArea.innerHTML = '';
+      nextBtn.classList.remove('show');
+      finalScore.classList.add('show');
+      scoreCircle.textContent = `${correct}/${quizData.length}`;
+
+      let msg = '';
+      if (correct === quizData.length) {
+        msg = "MashaAllah! Perfect score. May Allah increase you in beneficial knowledge.";
+      } else if (correct >= 6) {
+        msg = "Excellent work! You have a solid understanding of these important terms.";
+      } else if (correct >= 4) {
+        msg = "Good effort! Review the explanations to strengthen your knowledge.";
+      } else {
+        msg = "Keep learning. Every step toward understanding Islam is rewarded by Allah.";
+      }
+      finalMessage.textContent = msg;
+    }
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex++;
+      showQuestion();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      currentIndex = 0;
+      correct = 0;
+      wrong = 0;
+      finalScore.classList.remove('show');
+      showQuestion();
+    });
+
+    // Start
+    showQuestion();
+  </script>
+</body>
+</html>
