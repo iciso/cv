@@ -38,7 +38,7 @@ export default function InteractiveWebPage() {
           <div className="flex items-center mb-6">
             <Terminal className="mr-2 text-teal-600" size={28} />
             <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
-              All 43 Interactive Web Modules
+              All 44 Interactive Web Modules
             </h2>
           </div>
 
