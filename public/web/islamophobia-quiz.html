@@ -29,6 +29,7 @@
             box-shadow: 0 25px 50px -8px rgba(60, 40, 20, 0.18);
             border: 2px solid rgba(210, 180, 140, 0.25);
             text-align: center;
+            position: relative;
         }
         h1 {
             font-family: 'Segoe UI', Roboto, sans-serif;
@@ -53,15 +54,36 @@
         .subhead {
             font-size: 1rem;
             color: #5a4a3a;
-            margin-bottom: 1.8rem;
+            margin-bottom: 0.8rem;
             border-bottom: 2px solid #dcc8b0;
             padding-bottom: 0.8rem;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 0.5rem;
+        }
+        .toolbar button {
+            background: none;
+            border: 2px solid #b8a080;
+            color: #5a4a3a;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+        }
+        .toolbar button:hover {
+            background: #dcc8b0;
+            border-color: #8a6a4a;
         }
         .grid-container {
             background: #fcf6ed;
             border-radius: 28px;
             padding: 1.2rem 0.8rem;
-            margin: 1rem 0;
+            margin: 0.8rem 0;
             border: 2px solid #dcc8b0;
             min-height: 160px;
             display: flex;
@@ -165,11 +187,96 @@
             font-size: 0.8rem;
             color: #6a4f34;
         }
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: #fcf6ed;
+            border-radius: 40px;
+            max-width: 580px;
+            width: 100%;
+            padding: 2rem 2.2rem;
+            border: 3px solid #b8a080;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: left;
+        }
+        .modal-box h2 {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-weight: 700;
+            color: #3d2b1a;
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .modal-box .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #8a6a4a;
+            background: none;
+            border: none;
+            transition: 0.15s;
+        }
+        .modal-box .close-btn:hover {
+            color: #3d2b1a;
+            transform: scale(1.1);
+        }
+        .modal-box p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #3d2b1a;
+            margin: 0.8rem 0;
+        }
+        .modal-box ul {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+        .modal-box ul li {
+            margin: 0.3rem 0;
+            font-size: 0.95rem;
+        }
+        .modal-box .highlight {
+            background: #ede3d6;
+            padding: 0.1rem 0.4rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .modal-box .note {
+            background: #f0ece4;
+            border-left: 4px solid #b8860b;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
         @media (max-width: 600px) {
             .container { padding: 1.2rem; }
             h1 { font-size: 1.6rem; }
             .grid-container pre { font-size: 0.75rem; padding: 0.5rem; }
             .btn { min-width: 80px; padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+            .modal-box { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -179,7 +286,12 @@
     <h1>🕊️ Islamophobia <span>Fact Finder</span></h1>
     <div class="subhead">Think of a whole number from <strong>0 to 31</strong> and answer the questions.</div>
 
-    <!-- dynamic content -->
+    <!-- Toolbar: How it works button -->
+    <div class="toolbar">
+        <button id="howItWorksBtn">📖 How it works</button>
+    </div>
+
+    <!-- Game area -->
     <div id="gameArea">
         <div class="grid-container" id="gridDisplay">
             <div class="message">Ready? Click <strong>"Start"</strong> below.</div>
@@ -190,7 +302,7 @@
         </div>
     </div>
 
-    <!-- fact reveal -->
+    <!-- Fact reveal -->
     <div class="fact-box" id="factBox">
         <div class="number" id="factNumber">#0</div>
         <div class="fact-title" id="factTitle">Fact Title</div>
@@ -203,6 +315,31 @@
 
     <div class="footer">
         🌙 Learn, reflect, and share — combating Islamophobia with knowledge.
+    </div>
+</div>
+
+<!-- Modal: How it works -->
+<div class="modal-overlay" id="howModal">
+    <div class="modal-box">
+        <button class="close-btn" id="modalCloseBtn">&times;</button>
+        <h2>🧠 How the trick works</h2>
+        <p><strong>This is a mathematical puzzle, not magic.</strong> It uses binary numbers (base‑2) to guess your number.</p>
+        <p>Each of the five grids represents a specific <strong>binary place value</strong>:</p>
+        <ul>
+            <li><span class="highlight">Grid 1</span> → value <strong>16</strong></li>
+            <li><span class="highlight">Grid 2</span> → value <strong>2</strong></li>
+            <li><span class="highlight">Grid 3</span> → value <strong>8</strong></li>
+            <li><span class="highlight">Grid 4</span> → value <strong>1</strong></li>
+            <li><span class="highlight">Grid 5</span> → value <strong>4</strong></li>
+        </ul>
+        <p>Every number from 0 to 31 can be uniquely expressed as a sum of these values. By asking if your number appears in each grid, we determine which values to add together.</p>
+        <p>For example, the number <strong>25</strong> = 16 + 8 + 1, so it appears in grids 1, 3, and 4, but not in grids 2 and 5.</p>
+        <div class="note">
+            <strong>🕌 Islamic perspective:</strong> Islam strictly forbids magic (sihr) and fortune‑telling. This trick uses pure logic and mathematics — it is a fun educational tool, not an occult practice. The goal is to learn about Islamophobia, not to predict the future or claim supernatural knowledge.
+        </div>
+        <p style="text-align:center; margin-top:0.5rem;">
+            <button class="btn btn-primary" id="modalGotItBtn">Got it!</button>
+        </p>
     </div>
 </div>
 
@@ -361,6 +498,28 @@
         const factTitle = document.getElementById('factTitle');
         const factDesc = document.getElementById('factDesc');
 
+        // Modal refs
+        const modalOverlay = document.getElementById('howModal');
+        const howBtn = document.getElementById('howItWorksBtn');
+        const modalClose = document.getElementById('modalCloseBtn');
+        const modalGotIt = document.getElementById('modalGotItBtn');
+
+        // ----- Modal controls -----
+        function openModal() {
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        howBtn.addEventListener('click', openModal);
+        modalClose.addEventListener('click', closeModal);
+        modalGotIt.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) closeModal();
+        });
+
         // ----- Helper: clear and set buttons -----
         function setButtons(buttons) {
             buttonGroup.innerHTML = '';
@@ -457,9 +616,8 @@
             factBox.style.display = 'block';
             restartBtn.style.display = 'inline-block';
 
-            // Show final message
             showGrid(null, `✨ Your number is ${index}!`);
-            setButtons([]); // remove buttons
+            setButtons([]);
         }
 
         // ----- Restart -----
