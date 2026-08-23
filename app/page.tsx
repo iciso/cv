@@ -62,7 +62,7 @@ export default function Home() {
                   href="#skills"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
-                  Skills
+                  IT Skills
                 </Link>
                 <Link
                   href="#apps"
