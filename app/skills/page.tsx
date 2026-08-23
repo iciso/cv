@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, Atom, Asterisk, BrainCircuit, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
+import { ArrowLeft, Atom, Asterisk, BrainCircuit, CodeXml, ExternalLink, Mail, Linkedin, Github, Twitter, Facebook, Code, 
   BookOpen, Bot, Brain, Cpu, ChartBar, Database, Globe, Lightbulb, Monitor, Palette, 
   Play, Rocket, Scale, Search, Settings, Shield, Smartphone, Sparkles, Star, Trophy, Users, Workflow, Zap 
 } from "lucide-react"
@@ -22,9 +22,9 @@ export default function SkillsPage() {
 
       <main className="container mx-auto px-4 py-12">
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h2 className="text-2xl font-bold text-teal-700 mb-6">IT Certifications (40 Courses)</h2>
+          <h2 className="text-2xl font-bold text-teal-700 mb-6">IT Certifications (50+ Courses)</h2>
           <p className="text-gray-700 mb-6">
-            Dr. Rafique has completed 40+ courses (programming, AI, data science, web development) at SoloLearn and other platforms,
+            Dr. Rafique has completed 50+ courses (programming, AI, data science, web development) at SoloLearn and other platforms,
             demonstrating his commitment to continuous learning and technical skill development.
           </p>
 
@@ -130,6 +130,12 @@ const certifications = [
     description: "AI techniques that create new content and ideas, like images and videos, and also reuse them.",
     url: "https://www.sololearn.com/certificates/CC-J89AVCVT",
     icon: <Zap size={24} />,
+  },
+    {
+    name: "TypeScript for Beginners: Code in the AI Era",
+    description: "Build programs from scratch, understand the types that make code trustworthy, and read AI-written code with confidence.",
+    url: "https://www.sololearn.com/certificates/CC-3SKE0ENE",
+    icon: <CodeXml size={24} />,
   },
   {
     name: "Responsive Web Design",
