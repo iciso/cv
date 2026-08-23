@@ -131,6 +131,7 @@ const interactiveWebPages = [
   { title: "KY Takaful Details", category: "Islamic Finance", description: "Cooperative insurance structural breakdown and calculation module.", url: "/web/ky-takaful-details.html" },
   { title: "KY Trees (Y)", category: "Knowledge Tree", description: "Alternative branching concept mapping visualization app.", url: "/web/ky-y-trees.html" },
   { title: "KY News Feed", category: "Dynamic Feed", description: "Curated community update and article listing interface.", url: "/web/kynews.html" },
+  { title: "Loan Outcomes", category: "Islamic Studies", description: "Explore the Fiqh of Loans, its ruling, evidence from Quran & Sunnah, and what Allah loves.", url: "/web/islam-loan.html" },
   { title: "Match Islamic Terms", category: "Matching Quiz", description: "A Beginner's minimalist matching quiz of Islamic terms.", url: "/web/match-islamic-terms.html" },
   { title: "Medical Quotes", category: "Medical Insights & Aphorisms", description: "Renders collection of Medical Quotes.", url: "/web/medical-quotes.html" }, 
   { title: "NCD Estimator", category: "Clinical Calculator", description: "Non-communicable disease risk quantification utility.", url: "/web/ncd-estimator.html" },
