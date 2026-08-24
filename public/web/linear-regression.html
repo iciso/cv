@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ML Linear Regression · Interactive Training</title>
+    <!-- Plotly for charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f5f7fa;
+            padding: 1.5rem;
+            color: #1e2a3a;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 50px -8px rgba(0,0,0,0.08);
+            padding: 2rem 2.5rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #0a2942;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        h1 small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #4a6a8a;
+            background: #e8edf3;
+            padding: 0.1rem 1rem;
+            border-radius: 60px;
+        }
+        .subhead {
+            color: #4a6a8a;
+            margin-bottom: 1.8rem;
+            border-bottom: 2px solid #e8edf3;
+            padding-bottom: 0.6rem;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        @media (max-width: 700px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .container { padding: 1.2rem; }
+        }
+        .chart-box {
+            background: #fafcfe;
+            border-radius: 20px;
+            border: 1px solid #e2eaf1;
+            padding: 0.5rem;
+        }
+        #myPlot {
+            width: 100%;
+            height: 400px;
+        }
+        .control-panel {
+            background: #f8faff;
+            border-radius: 20px;
+            padding: 1.5rem 1.2rem;
+            border: 1px solid #e2eaf1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .control-panel .section-title {
+            font-weight: 600;
+            color: #0a2942;
+            font-size: 1rem;
+            border-bottom: 2px solid #dce4ed;
+            padding-bottom: 0.3rem;
+        }
+        .iter-control {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .iter-control label {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .iter-control input[type="number"] {
+            width: 80px;
+            padding: 0.4rem 0.6rem;
+            border: 2px solid #d0dae6;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: center;
+        }
+        .iter-control input[type="number"]:focus {
+            outline: none;
+            border-color: #2a7a9e;
+            box-shadow: 0 0 0 3px rgba(42, 122, 158, 0.12);
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.2rem 0;
+        }
+        .btn {
+            background: white;
+            border: 2px solid #d0dae6;
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e3a5a;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .btn:hover {
+            background: #e8edf3;
+            border-color: #8aaabc;
+            transform: scale(0.96);
+        }
+        .btn-primary {
+            background: #1a5f82;
+            border-color: #1a5f82;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #0f4866;
+            border-color: #0f4866;
+        }
+        .btn-success {
+            background: #2a7a5a;
+            border-color: #2a7a5a;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #1d6046;
+            border-color: #1d6046;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            background: #f0f5fc;
+            border-radius: 16px;
+            padding: 0.8rem 1rem;
+            margin-top: 0.2rem;
+        }
+        .metrics .item {
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #d0dae6;
+            padding: 0.2rem 0;
+        }
+        .metrics .item:last-child {
+            border-bottom: none;
+        }
+        .metrics .label {
+            color: #3a5a7a;
+        }
+        .metrics .value {
+            font-weight: 700;
+            color: #0a2942;
+        }
+        .explanation {
+            margin-top: 2rem;
+            background: #f8faff;
+            border-radius: 24px;
+            padding: 1.5rem 2rem;
+            border: 1px solid #e2eaf1;
+        }
+        .explanation h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0a2942;
+            margin-bottom: 0.8rem;
+        }
+        .explanation p {
+            margin: 0.6rem 0;
+            line-height: 1.7;
+            color: #1e3a5a;
+        }
+        .explanation .highlight {
+            background: #e8edf3;
+            padding: 0.1rem 0.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .explanation .term {
+            font-weight: 700;
+            color: #1a5f82;
+        }
+        .explanation ul {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+        .explanation ul li {
+            margin: 0.3rem 0;
+        }
+        .footer {
+            margin-top: 2rem;
+            border-top: 2px solid #e2eaf1;
+            padding-top: 1rem;
+            font-size: 0.8rem;
+            color: #4a6a8a;
+            text-align: center;
+        }
+        .reset-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 0.5rem;
+        }
+        .reset-area .btn {
+            background: #e8edf3;
+            border-color: #c0cedc;
+            color: #3a5a7a;
+        }
+        .reset-area .btn:hover {
+            background: #d0dae6;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📊 Linear Regression <small>Interactive Training</small></h1>
+    <div class="subhead">House prices vs. size — watch the line fit the data as you train</div>
+
+    <div class="grid-2">
+        <!-- Chart -->
+        <div class="chart-box">
+            <div id="myPlot"></div>
+        </div>
+
+        <!-- Controls & Metrics -->
+        <div class="control-panel">
+            <div>
+                <div class="section-title">🎯 Training Controls</div>
+                <div class="iter-control">
+                    <label for="iterInput">Iterations:</label>
+                    <input type="number" id="iterInput" value="100" min="1" max="10000" step="10" />
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="trainBtn">▶ Train</button>
+                    <button class="btn" id="train10">10</button>
+                    <button class="btn" id="train50">50</button>
+                    <button class="btn" id="train100">100</button>
+                    <button class="btn" id="train500">500</button>
+                    <button class="btn" id="train1000">1000</button>
+                </div>
+                <div class="reset-area">
+                    <button class="btn" id="resetBtn">⟳ Reset</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-title">📈 Model Metrics</div>
+                <div class="metrics" id="metricsDisplay">
+                    <div class="item"><span class="label">Slope (weight)</span><span class="value" id="slopeVal">0.10</span></div>
+                    <div class="item"><span class="label">Bias (intercept)</span><span class="value" id="biasVal">1.00</span></div>
+                    <div class="item"><span class="label">Cost (error)</span><span class="value" id="costVal">—</span></div>
+                    <div class="item"><span class="label">R² (goodness)</span><span class="value" id="r2Val">—</span></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-title">📖 Equation</div>
+                <div style="font-size:1rem; font-weight:500; color:#0a2942; background:#eef4fa; padding:0.4rem 1rem; border-radius:12px; text-align:center;" id="equationDisplay">
+                    Price = 0.10 × Size + 1.00
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Explanation -->
+    <div class="explanation" id="explanation">
+        <h2>🧠 Understanding Linear Regression</h2>
+        <p><span class="term">Linear regression</span> finds the straight line that best fits a set of data points. In our example, we are predicting house <strong>price</strong> (in millions) from <strong>size</strong> (in square meters).</p>
+        <p>The line is defined by two numbers:</p>
+        <ul>
+            <li><span class="term">Slope (weight)</span> – how much the price increases for each extra square meter. A steeper slope means size matters more.</li>
+            <li><span class="term">Bias (intercept)</span> – the base price when size is zero (just a mathematical anchor).</li>
+        </ul>
+        <p><span class="term">Training</span> is the process of adjusting these two numbers to reduce the <span class="term">cost</span> – the average squared error between the line and the actual data points. Each <span class="term">iteration</span> takes a small step to improve the fit.</p>
+        <p><span class="highlight">More iterations</span> usually lead to a lower cost and a more accurate line, but after a certain point, the improvement becomes tiny. The graph updates in real‑time, and you can see how the slope and bias evolve.</p>
+        <p>The <span class="term">R² score</span> (0–1) tells you how well the line explains the data. 1.0 means perfect prediction; 0.0 means no better than guessing.</p>
+        <p>Try training with different iteration counts to see how the line converges. <strong>Reset</strong> to start over from the initial guess.</p>
+    </div>
+
+    <div class="footer">
+        Built with Plotly · No external ML libraries — pure JavaScript gradient descent
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- Data (house size vs price) -----
+        const xArray = [32,53,61,47,59,55,52,39,48,52,45,54,44,58,56,48,44,60];
+        const yArray = [31,68,62,71,87,78,79,59,75,71,55,82,62,75,81,60,82,97];
+        const points = xArray.length;
+
+        // ----- Trainer class -----
+        function Trainer(xArr, yArr) {
+            this.xArr = xArr;
+            this.yArr = yArr;
+            this.points = points;
+            this.learnc = 0.000001;
+            this.weight = 0.1;
+            this.bias = 1.0;
+            this.cost = 0;
+            this.history = []; // store cost per training step (optional)
+        }
+
+        Trainer.prototype.costError = function() {
+            let total = 0;
+            for (let i = 0; i < this.points; i++) {
+                const pred = this.weight * this.xArr[i] + this.bias;
+                total += (this.yArr[i] - pred) ** 2;
+            }
+            return total / this.points;
+        };
+
+        Trainer.prototype.updateWeights = function() {
+            let w_deriv = 0, b_deriv = 0;
+            for (let i = 0; i < this.points; i++) {
+                const pred = this.weight * this.xArr[i] + this.bias;
+                const error = this.yArr[i] - pred;
+                w_deriv += -2 * error * this.xArr[i];
+                b_deriv += -2 * error;
+            }
+            this.weight -= (w_deriv / this.points) * this.learnc;
+            this.bias -= (b_deriv / this.points) * this.learnc;
+        };
+
+        Trainer.prototype.train = function(iter) {
+            for (let i = 0; i < iter; i++) {
+                this.updateWeights();
+            }
+            this.cost = this.costError();
+            return this.cost;
+        };
+
+        Trainer.prototype.reset = function() {
+            this.weight = 0.1;
+            this.bias = 1.0;
+            this.cost = 0;
+        };
+
+        // ----- Create instance -----
+        let myTrainer = new Trainer(xArray, yArray);
+
+        // ----- Plotly setup -----
+        const layout = {
+            xaxis: { range: [0, 100], title: "Size (m²)", gridcolor: '#e8edf3' },
+            yaxis: { range: [0, 100], title: "Price (million)", gridcolor: '#e8edf3' },
+            title: "House Prices vs. Size",
+            margin: { l: 50, r: 20, t: 40, b: 50 },
+            legend: { orientation: 'h', y: 1.05 },
+            hovermode: 'closest',
+            plot_bgcolor: '#fafcfe',
+            paper_bgcolor: '#fafcfe'
+        };
+
+        function getLinePoints(weight, bias) {
+            const xVals = [];
+            const yVals = [];
+            for (let x = 0; x <= 100; x += 5) {
+                xVals.push(x);
+                yVals.push(weight * x + bias);
+            }
+            return { x: xVals, y: yVals };
+        }
+
+        function updatePlot(weight, bias) {
+            const line = getLinePoints(weight, bias);
+            const data = [
+                {
+                    x: xArray,
+                    y: yArray,
+                    mode: 'markers',
+                    marker: { color: '#1a5f82', size: 8 },
+                    name: 'Data'
+                },
+                {
+                    x: line.x,
+                    y: line.y,
+                    mode: 'lines',
+                    line: { color: '#d17c3b', width: 3 },
+                    name: 'Fitted line'
+                }
+            ];
+            Plotly.react('myPlot', data, layout);
+        }
+
+        // ----- Update metrics & equation -----
+        function updateMetrics() {
+            const w = myTrainer.weight;
+            const b = myTrainer.bias;
+            const cost = myTrainer.cost;
+
+            // Compute R²
+            let meanY = 0;
+            for (let i = 0; i < points; i++) meanY += yArray[i];
+            meanY /= points;
+            let ssTot = 0, ssRes = 0;
+            for (let i = 0; i < points; i++) {
+                ssTot += (yArray[i] - meanY) ** 2;
+                const pred = w * xArray[i] + b;
+                ssRes += (yArray[i] - pred) ** 2;
+            }
+            const r2 = 1 - (ssRes / ssTot);
+
+            document.getElementById('slopeVal').textContent = w.toFixed(4);
+            document.getElementById('biasVal').textContent = b.toFixed(4);
+            document.getElementById('costVal').textContent = cost.toFixed(2);
+            document.getElementById('r2Val').textContent = r2.toFixed(4);
+
+            document.getElementById('equationDisplay').textContent =
+                `Price = ${w.toFixed(4)} × Size + ${b.toFixed(4)}`;
+        }
+
+        // ----- Train function -----
+        function train(iter) {
+            if (iter <= 0) return;
+            myTrainer.train(iter);
+            updatePlot(myTrainer.weight, myTrainer.bias);
+            updateMetrics();
+        }
+
+        // ----- Reset -----
+        function resetModel() {
+            myTrainer.reset();
+            updatePlot(myTrainer.weight, myTrainer.bias);
+            updateMetrics();
+        }
+
+        // ----- Initial render -----
+        updatePlot(myTrainer.weight, myTrainer.bias);
+        updateMetrics();
+
+        // ----- Event listeners -----
+        document.getElementById('trainBtn').addEventListener('click', function() {
+            const val = parseInt(document.getElementById('iterInput').value, 10);
+            if (!isNaN(val) && val > 0) train(val);
+        });
+
+        document.getElementById('train10').addEventListener('click', function() { train(10); });
+        document.getElementById('train50').addEventListener('click', function() { train(50); });
+        document.getElementById('train100').addEventListener('click', function() { train(100); });
+        document.getElementById('train500').addEventListener('click', function() { train(500); });
+        document.getElementById('train1000').addEventListener('click', function() { train(1000); });
+
+        document.getElementById('resetBtn').addEventListener('click', resetModel);
+
+        // Allow Enter key on input
+        document.getElementById('iterInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('trainBtn').click();
+            }
+        });
+
+        // ----- Expose to console for debugging -----
+        window.__trainer = myTrainer;
+        window.__train = train;
+        window.__reset = resetModel;
+    })();
+</script>
+
+</body>
+</html>
