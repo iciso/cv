@@ -38,7 +38,7 @@ export default function InteractiveWebPage() {
           <div className="flex items-center mb-6">
             <Terminal className="mr-2 text-teal-600" size={28} />
             <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
-              All 44 Interactive Web Modules
+              All 45 Interactive Web Modules
             </h2>
           </div>
 
@@ -131,6 +131,7 @@ const interactiveWebPages = [
   { title: "KY Takaful Details", category: "Islamic Finance", description: "Cooperative insurance structural breakdown and calculation module.", url: "/web/ky-takaful-details.html" },
   { title: "KY Trees (Y)", category: "Knowledge Tree", description: "Alternative branching concept mapping visualization app.", url: "/web/ky-y-trees.html" },
   { title: "KY News Feed", category: "Dynamic Feed", description: "Curated community update and article listing interface.", url: "/web/kynews.html" },
+  { title: "Linear Regression - ML", category: "Interactive ML Training", description: "Interactive graph which trains the straight line to best fits a set of data points", url: "/web/linear-regression.html" },
   { title: "Loan Outcomes", category: "Islamic Studies", description: "Explore the Fiqh of Loans, its ruling, evidence from Quran & Sunnah, and what Allah loves.", url: "/web/islam-loan.html" },
   { title: "Match Islamic Terms", category: "Matching Quiz", description: "A Beginner's minimalist matching quiz of Islamic terms.", url: "/web/match-islamic-terms.html" },
   { title: "Medical Quotes", category: "Medical Insights & Aphorisms", description: "Renders collection of Medical Quotes.", url: "/web/medical-quotes.html" }, 
