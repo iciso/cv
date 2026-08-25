@@ -106,6 +106,7 @@ const interactiveWebPages = [
   { title: "ASCII Logo Generator", category: "Developer Tool", description: "Text-based visual design utility and branding component.", url: "/web/ascii-logo.html" },
   { title: "Bible Quiz", category: "Interfaith Module", description: "Comparative theological and scriptural knowledge quiz framework.", url: "/web/bible-quiz.html" },
   { title: "Birds Quiz", category: "Educational Quiz", description: "Ornithological educational engagement tool.", url: "/web/birds-quiz.html" },
+  { title: "Canary GORAP", category: "Dawah Dialogue", description: "Teaches GORAP method of Dawah in a fun interactive way.", url: "/web/canary-gorap.html" },
   { title: "Capital Quiz", category: "Geography", description: "Global capitals interactive knowledge testing application.", url: "/web/capital-quiz.html" },
   { title: "CLCP Rival Quiz", category: "Community Life Competence Process", description: "Quiz rivalry with a Bot on CLCP.", url: "/web/clcp-rival-quiz.html" },
   { title: "Dictation Test", category: "English Language", description: "Interactive English Language comprehension test.", url: "/web/dictation-test.html" },
