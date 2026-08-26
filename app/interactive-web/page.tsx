@@ -142,7 +142,6 @@ const interactiveWebPages = [
   { title: "Number Trick", category: "Interactive Game", description: "Algorithmic logic puzzle and mathematical engagement tool.", url: "/web/number-trick.html" },
   { title: "Qawaid COVID", category: "Public Health", description: "Rule-based public health guidance engine during pandemic parameters.", url: "/web/qawaid-covid.html" },
   { title: "Takaful Quiz", category: "Islamic Finance", description: "Testing engine covering Islamic cooperative financial systems.", url: "/web/takaful-quiz.html" },
-  { title: "TMC77 Canary", category: "Diagnostic Tool", description: "System monitoring and feedback test utility script.", url: "/web/tmc77-canary.html" },
   { title: "Travel Quiz", category: "Interactive Module", description: "Geography and international travel safety quiz application.", url: "/web/travel-quiz.html" },
   { title: "Vegetables Quiz", category: "Educational Quiz", description: "Nutritional science and dietary identification quiz module.", url: "/web/vegetables-quiz.html" },
   { title: "WHO COVID Quiz", category: "Public Health", description: "Global health guideline validation and trivia module.", url: "/web/who-covid-quiz.html" }
