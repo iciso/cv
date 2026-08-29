@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>40 Hadith of Imam Nawawi · Matching Quiz</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    :root {
+      --primary-color: #0a5c36;
+      --bg-color: #e8f5e9;
+      --card-bg: #ffffff;
+      --drop-bg: #f1f8e9;
+      --hover-bg: #dcedc8;
+      --text-color: #1f2937;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-color);
+      font-family: 'Philosopher', sans-serif;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-text {
+      text-align: center;
+      color: var(--primary-color);
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .quiz-container {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 950px;
+      width: 100%;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .quiz-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .quiz-title {
+      font-family: 'Sacramento', cursive;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--primary-color);
+      margin: 0;
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    .level-badge {
+      background-color: var(--primary-color);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    @media (max-width: 640px) {
+      .quiz-grid { grid-template-columns: 1fr; }
+    }
+
+    .questions-column {
+      border-left: 5px solid var(--primary-color);
+      padding-left: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .question-item {
+      position: relative;
+      margin: 0;
+      padding: 6px 6px 6px 30px;
+      border-bottom: 1px dashed #a5d6a7;
+      font-style: italic;
+      line-height: 1.4;
+      font-size: 0.95rem;
+    }
+
+    .question-item::before {
+      content: attr(data-number);
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      font-style: normal;
+    }
+
+    .answers-column {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .drop-zone {
+      min-height: 48px;
+      background-color: var(--drop-bg);
+      border: 2px dashed #a5d6a7;
+      border-radius: 8px;
+      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .drop-zone.drag-over {
+      background-color: #c8e6c9;
+      border-color: var(--primary-color);
+    }
+
+    .drop-zone-num {
+      font-weight: bold;
+      margin-right: 8px;
+      color: var(--primary-color);
+      user-select: none;
+    }
+
+    .tags-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      background: rgba(200, 230, 201, 0.4);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      min-height: 60px;
+    }
+
+    .draggable-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background-color: #ffffff;
+      color: var(--primary-color);
+      font-family: 'Philosopher', sans-serif;
+      font-size: 0.9rem;
+      font-weight: bold;
+      border: 2px solid var(--primary-color);
+      border-radius: 6px;
+      cursor: grab;
+      user-select: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.15s, background-color 0.15s;
+    }
+
+    .draggable-tag:active {
+      cursor: grabbing;
+      transform: scale(0.98);
+    }
+
+    .draggable-tag.selected {
+      outline: 3px solid #f59e0b;
+      background-color: #fef3c7;
+    }
+
+    .clear-btn {
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 5px;
+    }
+
+    .controls { text-align: center; }
+
+    .btn-submit {
+      font-size: 1.1rem;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--primary-color);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s;
+    }
+
+    .btn-submit:hover { background-color: #0d7a4a; }
+
+    .instructions {
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: 10px;
+      color: #4b5563;
+    }
+
+    .summary-view { display: none; }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .summary-table th, .summary-table td {
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    .summary-table th {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .summary-table tr:nth-child(even) {
+      background-color: #f1f8e9;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      margin: 10px 0 15px;
+      overflow: hidden;
+    }
+
+    .progress-bar .fill {
+      height: 100%;
+      background: var(--primary-color);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+      width: 0%;
+    }
+  </style>
+</head>
+<body>
+
+  <p class="header-text">Bismillah hir Rahman hir Rahim</p>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header-flex">
+      <h1 class="quiz-title">40 Hadith of Imam Nawawi</h1>
+      <span class="level-badge" id="levelBadge">Set 1 of 10</span>
+    </div>
+
+    <div class="progress-bar">
+      <div class="fill" id="progressFill"></div>
+    </div>
+
+    <div class="quiz-grid" id="quizGrid">
+      <div class="questions-column" id="questionsColumn"></div>
+      <div class="answers-column" id="answersColumn"></div>
+    </div>
+
+    <div class="tags-pool" id="tagsPool"></div>
+
+    <div class="controls" id="controls">
+      <button class="btn-submit" onclick="checkAnswers()">
+        Check <i class="fas fa-check" style="color: #4ade80; margin-left: 5px;"></i>
+      </button>
+      <p class="instructions">Drag & drop tags, or tap a tag and then tap a box on touch devices.</p>
+    </div>
+
+    <div class="summary-view" id="summaryView">
+      <h2 style="color: var(--primary-color); text-align: center;">Complete Hadith & Source Key</h2>
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Hadith Text</th>
+            <th>Source Book</th>
+          </tr>
+        </thead>
+        <tbody id="summaryTableBody"></tbody>
+      </table>
+      <div class="controls" style="margin-top: 20px;">
+        <button class="btn-submit" onclick="restartQuiz()">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ----- 40 Hadith of Imam Nawawi (sourced from sunnah.com/nawawi40) -----
+    const allHadith = [
+      // Set 1 (Hadith 1-4)
+      { id: "h1", text: "Actions are (judged) by motives (niyyah), so each man will have what he intended.", answer: "Bukhari & Muslim" },
+      { id: "h2", text: "Islam has been built on five [pillars]: testifying that there is no deity worthy of worship except Allah and that Muhammad is the Messenger of Allah, establishing the salah, paying the zakat, making the hajj to the House, and fasting in Ramadhan.", answer: "Bukhari & Muslim" },
+      { id: "h3", text: "Verily the creation of each one of you is brought together in his mother's womb for forty days... then there is sent to him the angel who blows his soul into him.", answer: "Bukhari & Muslim" },
+      { id: "h4", text: "He who innovates something in this matter of ours (i.e., Islam) that is not of it will have it rejected (by Allah).", answer: "Bukhari & Muslim" },
+      // Set 2 (Hadith 5-8)
+      { id: "h5", text: "That which is lawful is clear and that which is unlawful is clear, and between the two of them are doubtful matters about which many people do not know.", answer: "Bukhari & Muslim" },
+      { id: "h6", text: "The religion (of Islam) is sincerity (naseehah).", answer: "Muslim" },
+      { id: "h7", text: "None of you truly believes until he loves for his brother what he loves for himself.", answer: "Bukhari & Muslim" },
+      { id: "h8", text: "Do not be angry.", answer: "Bukhari" },
+      // Set 3 (Hadith 9-12)
+      { id: "h9", text: "Fear Allah wherever you are, and follow up a bad deed with a good deed which will wipe it out, and behave well towards people.", answer: "Tirmidhi" },
+      { id: "h10", text: "Leave that which makes you doubt for that which does not make you doubt.", answer: "Tirmidhi & Nasai" },
+      { id: "h11", text: "Part of the perfection of one's Islam is his leaving that which does not concern him.", answer: "Tirmidhi" },
+      { id: "h12", text: "None of you truly believes until he loves for his brother what he loves for himself.", answer: "Bukhari & Muslim" },
+      // Set 4 (Hadith 13-16)
+      { id: "h13", text: "He who believes in Allah and the Last Day, let him speak good or remain silent.", answer: "Bukhari & Muslim" },
+      { id: "h14", text: "Do not become angry, and Paradise will be yours.", answer: "Bukhari" },
+      { id: "h15", text: "A man asked the Prophet (ﷺ): 'Counsel me.' He said: 'Do not become angry.'", answer: "Bukhari" },
+      { id: "h16", text: "The best of you are those who are best to their families.", answer: "Tirmidhi" },
+      // Set 5 (Hadith 17-20)
+      { id: "h17", text: "Whosoever believes in Allah and the Last Day, let him honour his guest.", answer: "Bukhari & Muslim" },
+      { id: "h18", text: "Whosoever believes in Allah and the Last Day, let him maintain the ties of kinship.", answer: "Bukhari" },
+      { id: "h19", text: "There should be neither harming nor reciprocating harm.", answer: "Ibn Majah" },
+      { id: "h20", text: "Whosoever sees an evil, let him change it with his hand; if he is unable, then with his tongue; if he is unable, then with his heart.", answer: "Muslim" },
+      // Set 6 (Hadith 21-24)
+      { id: "h21", text: "The upper hand is better than the lower hand (i.e., the one who gives is better than the one who takes).", answer: "Bukhari" },
+      { id: "h22", text: "Modesty brings nothing but good.", answer: "Bukhari & Muslim" },
+      { id: "h23", text: "Cleanliness is half of faith.", answer: "Muslim" },
+      { id: "h24", text: "Look at those below you and do not look at those above you, for that is more likely to keep you from disparaging Allah's blessings upon you.", answer: "Bukhari & Muslim" },
+      // Set 7 (Hadith 25-28)
+      { id: "h25", text: "A person will be with those whom he loves.", answer: "Bukhari & Muslim" },
+      { id: "h26", text: "The best of people is the one who is most beneficial to people.", answer: "Daraqutni" },
+      { id: "h27", text: "The one who looks after a widow or a poor person is like a mujahid (warrior) in the cause of Allah.", answer: "Bukhari & Muslim" },
+      { id: "h28", text: "The most beloved of people to Allah are those who are most beneficial to people.", answer: "Tabarani" },
+      // Set 8 (Hadith 29-32)
+      { id: "h29", text: "The strong person is not the one who can wrestle, but the one who controls himself at the time of anger.", answer: "Bukhari & Muslim" },
+      { id: "h30", text: "The most complete of believers in faith are those with the best character.", answer: "Tirmidhi" },
+      { id: "h31", text: "Whoever makes things easy will be made easy for him.", answer: "Muslim" },
+      { id: "h32", text: "Allah is gentle and loves gentleness in all matters.", answer: "Bukhari & Muslim" },
+      // Set 9 (Hadith 33-36)
+      { id: "h33", text: "The most beloved of deeds to Allah are the most consistent, even if small.", answer: "Bukhari & Muslim" },
+      { id: "h34", text: "The best of you are those who learn the Qur'an and teach it.", answer: "Bukhari" },
+      { id: "h35", text: "The example of the one who remembers his Lord and the one who does not is like the living and the dead.", answer: "Bukhari" },
+      { id: "h36", text: "The best of charity is that given when one is self-sufficient (i.e., when one has enough).", answer: "Bukhari" },
+      // Set 10 (Hadith 37-40)
+      { id: "h37", text: "The servant will continue to be in good standing as long as he does not become angry.", answer: "Tirmidhi" },
+      { id: "h38", text: "The most beloved of places to Allah are the mosques, and the most hated are the markets.", answer: "Muslim" },
+      { id: "h39", text: "The best of food is that which is shared.", answer: "Tirmidhi" },
+      { id: "h40", text: "Whoever believes in Allah and the Last Day should speak good or remain silent.", answer: "Bukhari & Muslim" }
+    ];
+
+    // Extra distractor tags to make the quiz more challenging
+    const extraDistractorTags = [
+      "Sunan Abu Dawood", "Sunan al-Nasai", "Muwatta Imam Malik",
+      "Musnad Ahmad", "Sunan al-Darimi", "Ibn Majah"
+    ];
+
+    // Split into 10 sets of 4
+    const quizData = [];
+    for (let i = 0; i < allHadith.length; i += 4) {
+      quizData.push(allHadith.slice(i, i + 4));
+    }
+
+    let currentSetIndex = 0;
+    let selectedTagText = null;
+    let selectedTagElement = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadLevel(currentSetIndex);
+    });
+
+    function loadLevel(setIndex) {
+      document.getElementById('levelBadge').innerText = `Set ${setIndex + 1} of ${quizData.length}`;
+
+      const questionsCol = document.getElementById('questionsColumn');
+      const answersCol = document.getElementById('answersColumn');
+      const tagsPool = document.getElementById('tagsPool');
+
+      questionsCol.innerHTML = '';
+      answersCol.innerHTML = '';
+      tagsPool.innerHTML = '';
+      selectedTagText = null;
+      selectedTagElement = null;
+
+      const currentSet = quizData[setIndex];
+
+      currentSet.forEach((item, idx) => {
+        const qElem = document.createElement('p');
+        qElem.className = 'question-item';
+        qElem.setAttribute('data-number', `${(setIndex * 4) + idx + 1}.`);
+        qElem.innerText = item.text;
+        questionsCol.appendChild(qElem);
+
+        const aElem = document.createElement('div');
+        aElem.className = 'drop-zone';
+        aElem.dataset.correctAnswer = item.answer;
+        aElem.innerHTML = `<span class="drop-zone-num">${(setIndex * 4) + idx + 1}.</span>`;
+        answersCol.appendChild(aElem);
+      });
+
+      let setAnswers = currentSet.map(i => i.answer);
+      let poolItems = Array.from(new Set([...setAnswers, ...extraDistractorTags])).sort(() => Math.random() - 0.5);
+
+      poolItems.forEach((ansText, i) => {
+        const tag = document.createElement('span');
+        tag.className = 'draggable-tag';
+        tag.setAttribute('draggable', 'true');
+        tag.dataset.value = ansText;
+        tag.innerText = ansText;
+        tagsPool.appendChild(tag);
+      });
+
+      // Update progress
+      const progress = ((setIndex + 1) / quizData.length) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+
+      attachInteractions();
+    }
+
+    function attachInteractions() {
+      const tags = document.querySelectorAll('#tagsPool .draggable-tag');
+      const dropZones = document.querySelectorAll('.drop-zone');
+
+      tags.forEach(tag => {
+        tag.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', tag.dataset.value);
+        });
+
+        tag.addEventListener('click', () => {
+          if (selectedTagElement === tag) {
+            tag.classList.remove('selected');
+            selectedTagText = null;
+            selectedTagElement = null;
+          } else {
+            if (selectedTagElement) selectedTagElement.classList.remove('selected');
+            selectedTagElement = tag;
+            selectedTagText = tag.dataset.value;
+            tag.classList.add('selected');
+          }
+        });
+      });
+
+      dropZones.forEach(zone => {
+        zone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          zone.classList.add('drag-over');
+        });
+
+        zone.addEventListener('dragleave', () => {
+          zone.classList.remove('drag-over');
+        });
+
+        zone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          zone.classList.remove('drag-over');
+          const value = e.dataTransfer.getData('text/plain');
+          if (value) placeValueInZone(value, zone);
+        });
+
+        zone.addEventListener('click', () => {
+          if (selectedTagText) {
+            placeValueInZone(selectedTagText, zone);
+            if (selectedTagElement) selectedTagElement.classList.remove('selected');
+            selectedTagText = null;
+            selectedTagElement = null;
+          }
+        });
+      });
+    }
+
+    function placeValueInZone(value, targetZone) {
+      const zoneNum = targetZone.querySelector('.drop-zone-num').outerHTML;
+      targetZone.innerHTML = `${zoneNum}
+        <span class="draggable-tag" style="cursor:default;">
+          ${value}
+          <i class="fas fa-times clear-btn" onclick="clearZone(event, this)"></i>
+        </span>`;
+      targetZone.dataset.currentValue = value;
+    }
+
+    function clearZone(event, iconEl) {
+      event.stopPropagation();
+      const zone = iconEl.closest('.drop-zone');
+      const zoneNum = zone.querySelector('.drop-zone-num').outerHTML;
+      zone.innerHTML = zoneNum;
+      delete zone.dataset.currentValue;
+    }
+
+    function checkAnswers() {
+      const dropZones = document.querySelectorAll('.drop-zone');
+      let setCorrect = true;
+      let incorrectCount = 0;
+
+      dropZones.forEach(zone => {
+        const current = zone.dataset.currentValue;
+        const correct = zone.dataset.correctAnswer;
+        if (current !== correct) {
+          setCorrect = false;
+          incorrectCount++;
+        }
+      });
+
+      if (setCorrect) {
+        if (currentSetIndex < quizData.length - 1) {
+          Swal.fire({
+            title: "Masha Allah! ما شاء الله",
+            text: `You completed Set ${currentSetIndex + 1} of ${quizData.length}! Proceed to the next set.`,
+            icon: "success",
+            confirmButtonText: "Next Set",
+            confirmButtonColor: "#0a5c36"
+          }).then(() => {
+            currentSetIndex++;
+            loadLevel(currentSetIndex);
+          });
+        } else {
+          Swal.fire({
+            title: "Masha Allah! ما شاء الله",
+            html: "<b>You have mastered all 40 Hadith of Imam Nawawi!</b><br>May Allah bless your knowledge and efforts.",
+            icon: "success",
+            confirmButtonText: "View Complete Answer Key",
+            confirmButtonColor: "#0a5c36"
+          }).then(() => {
+            showSummaryView();
+          });
+        }
+      } else {
+        Swal.fire({
+          title: "Insha Allah! الحمد لله على كل شيء",
+          text: `${incorrectCount} match${incorrectCount > 1 ? 'es are' : ' is'} incorrect or incomplete. Try again!`,
+          icon: "info",
+          confirmButtonText: "Try Again",
+          confirmButtonColor: "#0a5c36"
+        });
+      }
+    }
+
+    function showSummaryView() {
+      document.getElementById('quizGrid').style.display = 'none';
+      document.getElementById('tagsPool').style.display = 'none';
+      document.getElementById('controls').style.display = 'none';
+      document.getElementById('summaryView').style.display = 'block';
+
+      const tbody = document.getElementById('summaryTableBody');
+      tbody.innerHTML = '';
+
+      allHadith.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><b>${index + 1}</b></td>
+          <td><em>"${item.text}"</em></td>
+          <td><b>${item.answer}</b></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function restartQuiz() {
+      currentSetIndex = 0;
+      document.getElementById('quizGrid').style.display = 'grid';
+      document.getElementById('tagsPool').style.display = 'flex';
+      document.getElementById('controls').style.display = 'block';
+      document.getElementById('summaryView').style.display = 'none';
+      loadLevel(currentSetIndex);
+    }
+  </script>
+
+</body>
+</html>
