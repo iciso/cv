@@ -103,6 +103,7 @@ const interactiveWebPages = [
   { title: "Alibaba Game", category: "Interactive App", description: "Engaging web-based interactive entertainment module.", url: "/web/alibaba-game.html" },
   { title: "Animals Quiz", category: "Educational Quiz", description: "Educational taxonomy and natural science quiz module.", url: "/web/animals-quiz.html" },
   { title: "Arabic Quiz", category: "Language Tool", description: "Interactive linguistic quiz engine for Arabic language learners.", url: "/web/arabic-quiz.html" },
+  { title: "Arabic Animals Quiz", category: "Language Tool", description: "Interactive linguistic Matching quiz for learning Arabic vocabulary.", url: "/web/arabic-animals-birds.html" },
   { title: "ASCII Logo Generator", category: "Developer Tool", description: "Text-based visual design utility and branding component.", url: "/web/ascii-logo.html" },
   { title: "Bible Quiz", category: "Interfaith Module", description: "Comparative theological and scriptural knowledge quiz framework.", url: "/web/bible-quiz.html" },
   { title: "Birds Quiz", category: "Educational Quiz", description: "Ornithological educational engagement tool.", url: "/web/birds-quiz.html" },
