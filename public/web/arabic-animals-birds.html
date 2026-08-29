@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>🐪 Arabic Animals & Birds · Drag & Match</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(145deg, #f5efe6 0%, #e8ddcd 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .game-container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 248, 235, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 2rem 1.8rem 2.2rem;
+            box-shadow: 0 25px 50px -8px rgba(60, 40, 20, 0.18);
+            border: 2px solid rgba(200, 170, 130, 0.3);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3d2b1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            border-bottom: 3px solid #d4b68a;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1rem;
+        }
+        h1 small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #7a5a3a;
+            background: #ede3d6;
+            padding: 0.1rem 1rem;
+            border-radius: 60px;
+        }
+        .score-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: #3d2b1a;
+            background: #ede3d6;
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
+        }
+        .score-area .score {
+            background: white;
+            padding: 0.1rem 1rem;
+            border-radius: 40px;
+        }
+        .level-indicator {
+            background: white;
+            padding: 0.1rem 1rem;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #8a6a4a;
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        .btn:hover {
+            background: #6a4f34;
+            transform: scale(0.96);
+        }
+        .btn-secondary {
+            background: #5a7a8a;
+        }
+        .btn-secondary:hover {
+            background: #4a5a6a;
+        }
+        .btn-success {
+            background: #2a7a5a;
+        }
+        .btn-success:hover {
+            background: #1d6046;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .game-board {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        .column {
+            flex: 1 1 250px;
+            min-width: 200px;
+            background: #fcf6ed;
+            border-radius: 28px;
+            padding: 1rem 0.8rem;
+            border: 2px solid #dcc8b0;
+            min-height: 300px;
+        }
+        .column h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #5a3f2a;
+            border-bottom: 2px dashed #d4b68a;
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.8rem;
+        }
+        .draggable-item {
+            background: #ffffff;
+            border: 2px solid #b8a080;
+            border-radius: 60px;
+            padding: 0.6rem 0.8rem;
+            margin: 0.4rem 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            transition: 0.1s;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            direction: rtl;
+            font-family: 'Segoe UI', 'Noto Naskh Arabic', 'Arial', sans-serif;
+        }
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+        .draggable-item.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+        .draggable-item.placed {
+            background: #d4e8d4;
+            border-color: #5a8a5a;
+            cursor: default;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .drop-zone {
+            background: #f8f0e8;
+            border: 3px dashed #c4aa8a;
+            border-radius: 60px;
+            padding: 0.6rem 0.8rem;
+            margin: 0.4rem 0;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1a1a1a;
+            transition: 0.15s;
+        }
+        .drop-zone.drag-over {
+            border-color: #8a6a4a;
+            background: #ede3d6;
+            transform: scale(1.02);
+        }
+        .drop-zone.matched {
+            background: #d4e8d4;
+            border-color: #5a8a5a;
+            border-style: solid;
+            color: #1a5a2a;
+            font-weight: 700;
+        }
+        .drop-zone .matched-text {
+            font-weight: 700;
+        }
+        .message-area {
+            margin: 1.2rem 0 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #3d2b1a;
+            min-height: 2.5rem;
+        }
+        .message-area .highlight {
+            color: #1a7a4a;
+        }
+        .footer {
+            margin-top: 1.5rem;
+            border-top: 2px solid #dcc8b0;
+            padding-top: 1rem;
+            font-size: 0.8rem;
+            color: #6a4f34;
+        }
+        @media (max-width: 600px) {
+            .game-container { padding: 1.2rem; }
+            h1 { font-size: 1.5rem; }
+            .column { flex: 1 1 100%; min-width: 0; }
+            .draggable-item { font-size: 1rem; padding: 0.5rem; }
+            .drop-zone { font-size: 0.9rem; min-height: 44px; }
+        }
+        .drag-ghost { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <h1>
+        🐪 Arabic Animals & Birds
+        <small>Drag &amp; Match</small>
+    </h1>
+
+    <div class="score-area">
+        <span>🏆 Score: <span class="score" id="scoreDisplay">0</span></span>
+        <span class="level-indicator" id="levelDisplay">Level 1</span>
+        <span id="statusMessage">Match the animals!</span>
+        <div class="btn-group">
+            <button class="btn btn-secondary" id="resetBtn">⟳ Reset</button>
+            <button class="btn btn-success" id="nextBtn">➡️ Next Set</button>
+        </div>
+    </div>
+
+    <div class="game-board" id="gameBoard">
+        <div class="column" id="dragColumn">
+            <h2>🇸🇦 Arabic name</h2>
+            <div id="dragList"></div>
+        </div>
+        <div class="column" id="dropColumn">
+            <h2>🇬🇧 English meaning</h2>
+            <div id="dropList"></div>
+        </div>
+    </div>
+
+    <div class="message-area" id="messageArea">
+        Drag an Arabic name to its English match.
+    </div>
+
+    <div class="footer">
+        🌙 Animals mentioned in the Qur'an &amp; common species · Learn Arabic vocabulary
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- Extended ANIMAL DATA (60+ animals) -----
+        const ALL_ANIMALS = [
+            // Quranic & common (first 10)
+            { ar: "أسَد", en: "Lion" },
+            { ar: "فِيل", en: "Elephant" },
+            { ar: "حِصَان", en: "Horse" },
+            { ar: "جَمَل", en: "Camel" },
+            { ar: "بَقَرَة", en: "Cow" },
+            { ar: "شَاة", en: "Sheep" },
+            { ar: "كَلْب", en: "Dog" },
+            { ar: "نَمْلَة", en: "Ant" },
+            { ar: "نَحْلَة", en: "Bee" },
+            { ar: "غُرَاب", en: "Crow" },
+            // Zoo animals (10)
+            { ar: "نَمْر", en: "Tiger" },
+            { ar: "دُبّ", en: "Bear" },
+            { ar: "قِرْد", en: "Monkey" },
+            { ar: "حِمَار", en: "Donkey" },
+            { ar: "ثَعْلَب", en: "Fox" },
+            { ar: "ذِئْب", en: "Wolf" },
+            { ar: "أَرْنَب", en: "Rabbit" },
+            { ar: "غَزَال", en: "Gazelle" },
+            { ar: "حَيَّة", en: "Snake" },
+            { ar: "ضَبُع", en: "Hyena" },
+            // Birds & others (10)
+            { ar: "عُصْفُور", en: "Sparrow" },
+            { ar: "نَسْر", en: "Eagle" },
+            { ar: "بُومَة", en: "Owl" },
+            { ar: "بَطَّة", en: "Duck" },
+            { ar: "دَجَاجَة", en: "Chicken" },
+            { ar: "حَمَامَة", en: "Dove" },
+            { ar: "هَوْدَهِد", en: "Hoopoe" },
+            { ar: "صَقْر", en: "Falcon" },
+            { ar: "لَقْلَق", en: "Stork" },
+            { ar: "طَاوُوس", en: "Peacock" },
+            // Domestic & more (10)
+            { ar: "قِطَّة", en: "Cat" },
+            { ar: "مَاعِز", en: "Goat" },
+            { ar: "خِنْزِير", en: "Pig" },
+            { ar: "جَامُوس", en: "Buffalo" },
+            { ar: "حِمَار", en: "Donkey" }, // duplicate? Remove
+            { ar: "بَغْل", en: "Mule" },
+            { ar: "نَاقَة", en: "She-camel" },
+            { ar: "فَرَس", en: "Mare" },
+            { ar: "جَدْي", en: "Kid (goat)" },
+            { ar: "خَرُوف", en: "Lamb" },
+            // Exotic (10)
+            { ar: "زَرَافَة", en: "Giraffe" },
+            { ar: "فَرَس نَهْر", en: "Hippopotamus" },
+            { ar: "وَحِيد القَرْن", en: "Rhinoceros" },
+            { ar: "تَمْسَاح", en: "Crocodile" },
+            { ar: "سَلْحَفَاة", en: "Turtle" },
+            { ar: "ضِفْدَع", en: "Frog" },
+            { ar: "سَمَكَة", en: "Fish" },
+            { ar: "حُوت", en: "Whale" },
+            { ar: "دَلْفِين", en: "Dolphin" },
+            { ar: "قُنْفُذ", en: "Hedgehog" },
+            // More common (10)
+            { ar: "حَبَّار", en: "Squid" }, 
+            { ar: "عَنْكَبُوت", en: "Spider" },
+            { ar: "عَقْرَب", en: "Scorpion" },
+            { ar: "جُرَذ", en: "Rat" },
+            { ar: "فَأْر", en: "Mouse" },
+            { ar: "سُنجَاب", en: "Squirrel" },
+            { ar: "وَطْوَاط", en: "Bat" },
+            { ar: "نَعَامَة", en: "Ostrich" },
+            { ar: "بَجَعَة", en: "Pelican" },
+            { ar: "نُورَس", en: "Gull" }
+        ];
+
+        // Remove any duplicates (by English name) to keep clean
+        const seen = new Set();
+        const ANIMALS = ALL_ANIMALS.filter(a => {
+            if (seen.has(a.en)) return false;
+            seen.add(a.en);
+            return true;
+        });
+
+        // Set size per level
+        const SET_SIZE = 10;
+        const TOTAL_ANIMALS = ANIMALS.length;
+        const TOTAL_SETS = Math.ceil(TOTAL_ANIMALS / SET_SIZE);
+
+        // Shuffle function (Fisher-Yates)
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // ----- Game state -----
+        let currentSetIndex = 0; // 0-based
+        let currentAnimals = [];
+        let dropAnimals = [];
+        let matched = {};
+        let score = 0;
+
+        // DOM refs
+        const dragList = document.getElementById('dragList');
+        const dropList = document.getElementById('dropList');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const levelDisplay = document.getElementById('levelDisplay');
+        const messageArea = document.getElementById('messageArea');
+        const resetBtn = document.getElementById('resetBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // ----- Load a specific set -----
+        function loadSet(setIndex) {
+            if (setIndex >= TOTAL_SETS) {
+                // All sets completed
+                messageArea.innerHTML = '🎉 <span class="highlight">Congratulations! You\'ve learned all animals!</span>';
+                nextBtn.disabled = true;
+                // Clear game board
+                dragList.innerHTML = '';
+                dropList.innerHTML = '';
+                scoreDisplay.textContent = '0';
+                levelDisplay.textContent = `🏁 Complete!`;
+                return;
+            }
+
+            currentSetIndex = setIndex;
+            const start = setIndex * SET_SIZE;
+            const end = Math.min(start + SET_SIZE, TOTAL_ANIMALS);
+            const setAnimals = ANIMALS.slice(start, end);
+
+            // Shuffle independently for each column
+            const baseAnimals = shuffle([...setAnimals]);
+            currentAnimals = shuffle([...baseAnimals]);
+            dropAnimals = shuffle([...baseAnimals]);
+
+            matched = {};
+            score = 0;
+            updateScore();
+            levelDisplay.textContent = `Level ${setIndex + 1} of ${TOTAL_SETS}`;
+            nextBtn.disabled = false;
+
+            // Render drag items (Arabic names)
+            dragList.innerHTML = '';
+            currentAnimals.forEach((animal, index) => {
+                const div = document.createElement('div');
+                div.className = 'draggable-item';
+                div.textContent = animal.ar;
+                div.dataset.en = animal.en;
+                div.dataset.index = index;
+                div.draggable = true;
+                div.id = 'drag-' + index;
+
+                div.addEventListener('dragstart', onDragStart);
+                div.addEventListener('dragend', onDragEnd);
+                div.addEventListener('touchstart', onTouchStart, { passive: false });
+                div.addEventListener('touchmove', onTouchMove, { passive: false });
+                div.addEventListener('touchend', onTouchEnd, { passive: false });
+
+                dragList.appendChild(div);
+            });
+
+            // Render drop zones (English names)
+            dropList.innerHTML = '';
+            dropAnimals.forEach((animal, index) => {
+                const div = document.createElement('div');
+                div.className = 'drop-zone';
+                div.textContent = animal.en;
+                div.dataset.en = animal.en;
+                div.dataset.index = index;
+                div.id = 'drop-' + index;
+
+                div.addEventListener('dragover', onDragOver);
+                div.addEventListener('dragenter', onDragEnter);
+                div.addEventListener('dragleave', onDragLeave);
+                div.addEventListener('drop', onDrop);
+
+                dropList.appendChild(div);
+            });
+
+            messageArea.innerHTML = `Level ${setIndex + 1}: Drag Arabic names to English meanings.`;
+            document.querySelectorAll('.draggable-item.placed').forEach(el => el.classList.remove('placed'));
+        }
+
+        // ----- Drag & Drop handlers (same as before) -----
+        let draggedItem = null;
+
+        function onDragStart(e) {
+            draggedItem = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', this.dataset.en);
+        }
+
+        function onDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.drop-zone.drag-over').forEach(el => el.classList.remove('drag-over'));
+        }
+
+        function onDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function onDragEnter(e) {
+            e.preventDefault();
+            this.classList.add('drag-over');
+        }
+
+        function onDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function onDrop(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+
+            const en = e.dataTransfer.getData('text/plain');
+            if (!en) return;
+
+            if (this.classList.contains('matched')) {
+                messageArea.innerHTML = '⚠️ This is already matched!';
+                return;
+            }
+
+            const dragEl = document.querySelector(`.draggable-item[data-en="${en}"]`);
+            if (!dragEl) return;
+
+            if (dragEl.classList.contains('placed')) {
+                messageArea.innerHTML = '⚠️ This item has already been placed!';
+                return;
+            }
+
+            const dropEn = this.dataset.en;
+            if (dropEn === en) {
+                this.classList.add('matched');
+                const arabicText = dragEl.textContent;
+                this.innerHTML = `<span class="matched-text">✅ ${arabicText} → ${dropEn}</span>`;
+
+                dragEl.classList.add('placed');
+                dragEl.draggable = false;
+
+                score++;
+                updateScore();
+
+                if (score === currentAnimals.length) {
+                    messageArea.innerHTML = `🎉 <span class="highlight">Level ${currentSetIndex + 1} complete! Click "Next Set" to continue.</span>`;
+                    // Optionally auto-advance? No, let user click.
+                } else {
+                    messageArea.innerHTML = `✅ Correct! (${score}/${currentAnimals.length})`;
+                }
+            } else {
+                messageArea.innerHTML = `❌ Not a match. Try again!`;
+                this.style.borderColor = '#b13e4b';
+                setTimeout(() => { this.style.borderColor = ''; }, 300);
+            }
+        }
+
+        // ----- Touch events (mobile) -----
+        let touchDragEl = null;
+        let dragData = null;
+
+        function onTouchStart(e) {
+            touchDragEl = this;
+            dragData = { en: this.dataset.en, el: this };
+            this.classList.add('dragging');
+            e.preventDefault();
+        }
+
+        function onTouchMove(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+            document.querySelectorAll('.drop-zone.drag-over').forEach(el => el.classList.remove('drag-over'));
+            if (elem && elem.classList && elem.classList.contains('drop-zone')) {
+                elem.classList.add('drag-over');
+            }
+        }
+
+        function onTouchEnd(e) {
+            e.preventDefault();
+            if (!touchDragEl) return;
+
+            touchDragEl.classList.remove('dragging');
+            const touch = e.changedTouches[0];
+            const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+
+            document.querySelectorAll('.drop-zone.drag-over').forEach(el => el.classList.remove('drag-over'));
+
+            if (elem && elem.classList && elem.classList.contains('drop-zone')) {
+                const en = touchDragEl.dataset.en;
+                const customData = { getData: (type) => en };
+                onDrop.call(elem, { preventDefault: () => {}, dataTransfer: customData, target: elem });
+            } else {
+                messageArea.innerHTML = '👆 Drop on an English word.';
+            }
+
+            touchDragEl = null;
+            dragData = null;
+        }
+
+        // ----- Update score -----
+        function updateScore() {
+            scoreDisplay.textContent = score;
+        }
+
+        // ----- Reset to first set -----
+        function resetGame() {
+            loadSet(0);
+            messageArea.innerHTML = '🔄 Reset to Level 1. Drag to match.';
+        }
+
+        // ----- Next set -----
+        function nextSet() {
+            // Check if current level is complete (all matched)
+            if (score < currentAnimals.length) {
+                messageArea.innerHTML = '⚠️ Please complete all matches before moving to the next set.';
+                return;
+            }
+            loadSet(currentSetIndex + 1);
+        }
+
+        // ----- Initialise -----
+        loadSet(0);
+
+        // Event listeners
+        resetBtn.addEventListener('click', resetGame);
+        nextBtn.addEventListener('click', nextSet);
+
+        // Global cleanup
+        document.addEventListener('dragover', (e) => e.preventDefault());
+        document.addEventListener('drop', (e) => e.preventDefault());
+
+        // Expose for debugging
+        window.__game = { resetGame, nextSet, ANIMALS, loadSet };
+    })();
+</script>
+
+</body>
+</html>
