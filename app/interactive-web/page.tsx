@@ -123,6 +123,7 @@ const interactiveWebPages = [
   { title: "Islamophobia Quiz", category: "Social Awareness", description: "Educational module addressing misconceptions and promoting dialogue.", url: "/web/islamophobia-quiz.html" },
   { title: "KBC Game Engine", category: "Interactive Trivia", description: "Game show style dynamic knowledge testing web application.", url: "/web/kbc.html" },
   { title: "KY English Quiz", category: "Language Tool", description: "Comprehensive English proficiency diagnostic module.", url: "/web/ky-english-quiz.html" },
+  { title: "KY Faman-Liman Match", category: "Language Tool", description: "Master the two high-frequency particles فَمَنْ and لِمَنْ", url: "/web/ky-famnan-liman.html" },
   { title: "KY FAQ-English", category: "Knowledge Sharing", description: "Interactive page in English with answers to questions on KY Family Trust", url: "/web/ky-faq.html" },
   { title: "KY FAQ-Malayalam", category: "Knowledge Sharing", description: "Interactive page in Malayalam with answers to questions on KY Family Trust", url: "/web/ky-faqm.html" },
   { title: "KY Gen Choice", category: "Decision Engine", description: "Interactive generational choice selection framework.", url: "/web/ky-gen-choice.html" },
