@@ -227,4 +227,10 @@ const blogs = [
       "History and development of the Community Life Competence Process methodology. This blog explores the origins and evolution of CLCP as an approach to community-driven responses to health and social challenges.",
     url: "http://tinyurl.com/25lf9k5",
   },
+   {
+    title: "When The Mountains Spoke",
+    description:
+      "A poem that juxtaposes the devastating reality of a sudden Himalayan flood with humanity's clinical search for scientific blame, ultimately urging a look inward at the profound spiritual signs of Providence.",
+    url: "http://rafime.blogspot.com/",
+  },
 ]
