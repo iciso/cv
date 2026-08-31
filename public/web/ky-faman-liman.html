@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuranMatch · Faman & Liman (Arabic + English)</title>
+  <title>Faman & Liman Match · اِسْمُ شَرْط - Conditional Noun & اِسْمُ مَوْصُول - Relative Pronoun</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,7 +22,7 @@
       padding: 2rem 2rem 2.5rem;
     }
     h1 {
-      font-size: 2.05rem;
+      font-size: 2.1rem;
       font-weight: 600;
       display: flex;
       align-items: center;
@@ -33,17 +33,17 @@
       color: #0a2a44;
     }
     h1 small {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 400;
       color: #2f6b8a;
-      margin-left: 0.4rem;
+      margin-left: 0.5rem;
     }
     .intro {
       background: #eef6fb;
       border-radius: 16px;
       padding: 1.2rem 1.5rem;
       margin-bottom: 1.8rem;
-      font-size: 0.97rem;
+      font-size: 0.98rem;
       line-height: 1.55;
       color: #1a3f55;
     }
@@ -79,7 +79,7 @@
       align-items: baseline;
       gap: 1rem;
       flex-wrap: wrap;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
     }
     .q-number {
       background: #d7e6f0;
@@ -98,8 +98,9 @@
       display: flex;
       flex-wrap: wrap;
       gap: 2rem 2.5rem;
+      margin-top: 0.8rem;
     }
-    .match-left { flex: 2 1 320px; }
+    .match-left { flex: 2 1 300px; }
     .match-right {
       flex: 3 1 300px;
       background: #f6fafd;
@@ -123,79 +124,6 @@
       color: #1a5a7a;
       min-width: 22px;
     }
-    .verse-block {
-      background: #f8fbfd;
-      border-radius: 16px;
-      padding: 1rem 1.1rem;
-      margin-bottom: 1.1rem;
-      border: 1px solid #e2edf5;
-    }
-    .verse-block:last-child { margin-bottom: 0; }
-    .arabic-line {
-      font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif;
-      font-size: 1.28rem;
-      direction: rtl;
-      text-align: right;
-      color: #0c3b4d;
-      line-height: 1.7;
-      margin-bottom: 0.35rem;
-    }
-    .english-line {
-      font-size: 0.95rem;
-      color: #1a455c;
-      font-weight: 500;
-      margin-bottom: 0.7rem;
-    }
-    .dropdown-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem 1.2rem;
-      align-items: center;
-    }
-    .dropdown-group {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .dropdown-group label {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #2f6b8a;
-      min-width: 55px;
-    }
-    select {
-      background: white;
-      border: 1.5px solid #c4dae7;
-      border-radius: 40px;
-      padding: 0.38rem 1rem;
-      font-weight: 500;
-      font-size: 0.9rem;
-      color: #0a293d;
-      cursor: pointer;
-      min-width: 140px;
-    }
-    select:focus {
-      outline: none;
-      border-color: #2c7aa0;
-      box-shadow: 0 0 0 3px rgba(44, 122, 160, 0.2);
-    }
-    select.correct {
-      border-color: #1d9b6a;
-      background: #e5f6ef;
-    }
-    select.wrong {
-      border-color: #b13e4b;
-      background: #fde9eb;
-    }
-    .feedback-badge {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 0.12rem 0.7rem;
-      border-radius: 40px;
-    }
-    .feedback-badge.correct { background: #b7e6d4; color: #0b6040; }
-    .feedback-badge.wrong { background: #f8cfd3; color: #9e2a38; }
     .explanation-box {
       background: #e8f5e9;
       border-left: 4px solid #2e7d32;
@@ -220,6 +148,70 @@
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    .term-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #eef3f7;
+    }
+    .term-item:last-child { border-bottom: none; }
+    .term-arabic {
+      font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif;
+      font-size: 1.25rem;
+      direction: rtl;
+      text-align: right;
+      color: #0c3b4d;
+      line-height: 1.7;
+      background: #f8fbfd;
+      padding: 0.4rem 0.7rem;
+      border-radius: 10px;
+    }
+    .term-english {
+      font-size: 0.95rem;
+      color: #1a455c;
+      font-weight: 500;
+    }
+    .term-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-top: 0.3rem;
+      flex-wrap: wrap;
+    }
+    .term-item select {
+      background: white;
+      border: 1.5px solid #c4dae7;
+      border-radius: 40px;
+      padding: 0.4rem 1.1rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #0a293d;
+      cursor: pointer;
+      min-width: 150px;
+    }
+    .term-item select:focus {
+      outline: none;
+      border-color: #2c7aa0;
+      box-shadow: 0 0 0 3px rgba(44, 122, 160, 0.2);
+    }
+    .term-item select.correct {
+      border-color: #1d9b6a;
+      background: #e5f6ef;
+    }
+    .term-item select.wrong {
+      border-color: #b13e4b;
+      background: #fde9eb;
+    }
+    .feedback-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.85rem;
+      border-radius: 40px;
+    }
+    .feedback-badge.correct { background: #b7e6d4; color: #0b6040; }
+    .feedback-badge.wrong { background: #f8cfd3; color: #9e2a38; }
     .action-bar {
       display: flex;
       flex-wrap: wrap;
@@ -285,23 +277,23 @@
     @media (max-width: 700px) {
       .quiz-wrapper { padding: 1.2rem; }
       .match-grid { flex-direction: column; }
-      .arabic-line { font-size: 1.15rem; }
+      .term-arabic { font-size: 1.15rem; }
     }
   </style>
 </head>
 <body>
 <div class="quiz-wrapper">
-  <h1>📖 QuranMatch <small>Faman (فَمَنْ) & Liman (لِمَنْ) · Arabic + English</small></h1>
+  <h1>📖 Faman-Liman Match <small>اِسْمُ شَرْط - Conditional Noun & اِسْمُ مَوْصُول - Relative Pronoun</small></h1>
 
   <div class="intro">
-    <strong>New scoring rule:</strong> Each verse has two questions — one for the <strong>Arabic</strong> and one for the <strong>English</strong>.  
-    You get <strong>0.5 marks</strong> for each correct dropdown.  
-    Full <strong>1 mark</strong> is awarded only when both the Arabic and English of the same verse are answered correctly.
+    <strong>Goal:</strong> Master the two high-frequency particles <strong>فَمَنْ</strong> (“So whoever / Then whosoever”) and <strong>لِمَنْ</strong> (“For whomever / To whom”).  
+    Each question shows the original Arabic of the verse together with its English meaning.  
+    Select the correct particle. After checking, a short explanation appears on the right.
   </div>
 
   <div class="stats">
-    <span>📋 Attempts: <span id="attemptCount">0</span> · Score: <span id="correctCount">0</span></span>
-    <span class="badge">Quran Learners · Arabic + English</span>
+    <span>📋 Attempts: <span id="attemptCount">0</span> · Correct: <span id="correctCount">0</span></span>
+    <span class="badge">Quran Learners · Arabic</span>
   </div>
 
   <div id="quizContainer"></div>
@@ -311,13 +303,13 @@
       <button class="btn btn-secondary" id="resetBtn">⟳ Reset all</button>
       <button class="btn btn-primary" id="checkBtn">✔ Check answers</button>
     </div>
-    <div class="score-box" id="scoreDisplay">0.0 / 0.0</div>
+    <div class="score-box" id="scoreDisplay">0 / 0</div>
   </div>
 
   <div class="motivation" id="motivationMsg"></div>
 
   <div class="footnote">
-    <i>💡 Answer both the Arabic and English dropdowns for each verse. 0.5 + 0.5 = 1 full mark.</i>
+    <i>💡 Read the Arabic + English → choose فَمَنْ or لِمَنْ → Check. Explanations appear on the right.</i>
   </div>
 </div>
 
@@ -330,191 +322,257 @@
 
 <script>
 (function() {
-  // Each item now has arabic + english, both worth 0.5
   const QUIZ_DATA = [
     {
       id: 1,
-      text: "Match the particle for both the Arabic and the English of each verse.",
+      text: "Match the verse with the correct particle.",
       items: [
-        {
-          arabic: "فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ",
+        { 
+          arabic: "_ يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ",
           english: "99:7 – So whoever does an atom’s weight of good will see it",
           correctIndex: 0,
-          explanation: "فَمَنْ introduces the conditional of accountability: whoever does good will see its result."
+          explanation: "فَمَنْ introduces the conditional: whoever does good → will see its result. Classic cause-and-effect structure of accountability."
         },
-        {
-          arabic: "يَغْفِرُ لِمَن يَشَاءُ وَيُعَذِّبُ مَن يَشَاءُ",
+        { 
+          arabic: "يَغْفِرُ _ يَشَاءُ وَيُعَذِّبُ مَن يَشَاءُ",
           english: "2:284 – …and He forgives whomever He wills and punishes whomever He wills",
           correctIndex: 1,
-          explanation: "لِمَنْ marks the recipient of Allah’s forgiveness — pure divine sovereignty."
+          explanation: "لِمَنْ marks the recipient of Allah’s action (forgiveness). It expresses pure divine sovereignty."
         },
-        {
-          arabic: "فَمَن شَاءَ فَلْيُؤْمِن وَمَن شَاءَ فَلْيَكْفُرْ",
+        { 
+          arabic: "_ شَاءَ فَلْيُؤْمِن وَمَن شَاءَ فَلْيَكْفُرْ",
           english: "18:29 – So whoever wills – let him believe; and whoever wills – let him disbelieve",
           correctIndex: 0,
-          explanation: "فَمَنْ places the choice of belief or disbelief on human free will."
+          explanation: "فَمَنْ highlights human free will and choice. The particle places responsibility on the individual."
         },
-        {
-          arabic: "وَلِمَنْ خَافَ مَقَامَ رَبِّهِ جَنَّتَانِ",
+        { 
+          arabic: "وَ_ خَافَ مَقَامَ رَبِّهِ جَنَّتَانِ",
           english: "55:46 – But for he who has feared the position of his Lord are two gardens",
           correctIndex: 1,
-          explanation: "لِمَنْ reserves the two gardens exclusively for those who fear their Lord’s standing."
+          explanation: "لِمَنْ reserves the reward exclusively for those who fear the standing before their Lord."
         },
-        {
-          arabic: "فَمَن تَبِعَ هُدَايَ فَلَا خَوْفٌ عَلَيْهِمْ",
+        { 
+          arabic: "_ تَبِعَ هُدَايَ فَلَا خَوْفٌ عَلَيْهِمْ",
           english: "2:38 – Then whoever follows My guidance – there will be no fear concerning them",
           correctIndex: 0,
-          explanation: "فَمَنْ links following guidance with the result of safety and freedom from fear."
+          explanation: "فَمَنْ links following guidance with the consequence of safety and freedom from fear."
         }
       ],
       choices: ["فَمَنْ (Faman)", "لِمَنْ (Liman)"]
     },
     {
       id: 2,
-      text: "Conditional consequence of deeds – answer both Arabic and English.",
+      text: "Which particle introduces a conditional consequence of deeds?",
       items: [
-        {
-          arabic: "فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ",
+        { 
+          arabic: "_ يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ",
           english: "99:7 – good deeds of an atom’s weight",
           correctIndex: 0,
-          explanation: "Classic فَمَنْ structure of action → consequence."
+          explanation: "فَمَنْ + verb of action creates the classic “whoever does X will see Y” pattern of accountability."
         },
-        {
+        { 
           arabic: "وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ",
           english: "99:8 – evil deeds of an atom’s weight",
           correctIndex: 0,
-          explanation: "Same pattern as 99:7 — individual responsibility for every deed."
+          explanation: "Same structure as 99:7. The particle keeps the focus on individual responsibility for every action."
         },
-        {
-          arabic: "فَمَنْ أُوتِيَ كِتَابَهُ بِيَمِينِهِ",
+        { 
+          arabic: "_ أُوتِيَ كِتَابَهُ بِيَمِينِهِ",
           english: "17:71 – whoever is given his record in his right hand",
           correctIndex: 0,
-          explanation: "فَمَنْ introduces the group who receive their book in the right hand."
+          explanation: "فَمَنْ introduces the fortunate group who receive their book in the right hand — a result of their deeds."
         },
-        {
-          arabic: "فَمَن يَعْمَلْ مِنَ الصَّالِحَاتِ وَهُوَ مُؤْمِنٌ",
+        { 
+          arabic: "_ يَعْمَلْ مِنَ الصَّالِحَاتِ وَهُوَ مُؤْمِنٌ",
           english: "21:94 – whoever does righteous deeds while he is a believer",
           correctIndex: 0,
-          explanation: "فَمَنْ sets the condition of righteous deeds + faith."
+          explanation: "فَمَنْ sets the condition: righteous deeds + faith → acceptance and reward."
         }
       ],
-      choices: ["فَمَنْ (Faman)", "لِمَنْ (Liman)"]
+      choices: ["فَمَنْ (Faman) – “So whoever / Then whoever”", "لِمَنْ (Liman) – “For whom / To whom”"]
     },
     {
       id: 3,
-      text: "Allah’s sovereign distribution – answer both sides.",
+      text: "Which particle is used for Allah’s sovereign distribution?",
       items: [
-        {
-          arabic: "قُلْ إِنَّ رَبِّي يَبْسُطُ الرِّزْقَ لِمَن يَشَاءُ",
-          english: "34:39 – My Lord extends provision for whomever He wills",
+        { 
+          arabic: "قُلْ إِنَّ رَبِّي يَبْسُطُ الرِّزْقَ _ يَشَاءُ",
+          english: "34:39 – Say, Indeed my Lord extends provision for whomever He wills",
           correctIndex: 1,
-          explanation: "لِمَنْ marks the recipient of rizq according to Allah’s will."
+          explanation: "لِمَنْ points to the recipient of rizq. It emphasises that provision is given according to Allah’s will."
         },
-        {
-          arabic: "يَهَبُ لِمَن يَشَاءُ إِنَاثًا وَيَهَبُ لِمَن يَشَاءُ الذُّكُورَ",
-          english: "42:49 – He grants females or males to whomever He wills",
+        { 
+          arabic: "يَهَبُ _ يَشَاءُ إِنَاثًا وَيَهَبُ _ يَشَاءُ الذُّكُورَ",
+          english: "42:49 – He grants to whomever He wills female offspring, and grants to whomever He wills males",
           correctIndex: 1,
-          explanation: "لِمَنْ shows divine will in granting children."
+          explanation: "لِمَنْ marks the beneficiary of Allah’s gift of children — a clear statement of divine will."
         },
-        {
-          arabic: "لِمَنِ الْمُلْكُ الْيَوْمَ ۖ لِلَّهِ الْوَاحِدِ الْقَهَّارِ",
-          english: "40:16 – To whom belongs the sovereignty this Day?",
+        { 
+          arabic: "_ الْمُلْكُ الْيَوْمَ ۖ لِلَّهِ الْوَاحِدِ الْقَهَّارِ",
+          english: "40:16 – To whom belongs the sovereignty this Day? To Allah, the One, the Prevailing",
           correctIndex: 1,
-          explanation: "لِمَنْ asks about ownership; the answer is only Allah."
+          explanation: "لِمَنْ asks “to whom?” and the answer is only Allah. Perfect example of ownership and sovereignty."
         },
-        {
-          arabic: "يَغْفِرُ لِمَن يَشَاءُ وَيُعَذِّبُ مَن يَشَاءُ",
+        { 
+          arabic: "يَغْفِرُ _ يَشَاءُ وَيُعَذِّبُ مَن يَشَاءُ",
           english: "2:284 – He forgives whomever He wills",
           correctIndex: 1,
-          explanation: "لِمَنْ expresses that forgiveness is granted to whom Allah wills."
+          explanation: "لِمَنْ shows that forgiveness is granted to whom Allah wills — pure divine prerogative."
         }
       ],
       choices: ["فَمَنْ (Faman)", "لِمَنْ (Liman)"]
     },
     {
       id: 4,
-      text: "Legal dispensations (exceptions) – both Arabic and English.",
+      text: "Match the legal-dispensation verse with the correct particle.",
       items: [
-        {
-          arabic: "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ",
+        { 
+          arabic: "_ كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ",
           english: "2:184 – whoever among you is ill or on a journey (fasting)",
           correctIndex: 0,
-          explanation: "فَمَنْ introduces the exception for hardship during fasting."
+          explanation: "فَمَنْ introduces the exception for those with hardship. It softens the ruling with mercy."
         },
-        {
-          arabic: "فَمَنِ اضْطُرَّ غَيْرَ بَاغٍ وَلَا عَادٍ",
-          english: "2:173 – whoever is forced by necessity (dietary law)",
+        { 
+          arabic: "_ اضْطُرَّ غَيْرَ بَاغٍ وَلَا عَادٍ",
+          english: "2:173 – whoever is forced by necessity (neither desiring nor transgressing)",
           correctIndex: 0,
-          explanation: "فَمَنْ opens the concession of necessity (darūrah)."
+          explanation: "فَمَنْ opens the door of necessity (darūrah). The particle signals a temporary legal concession."
         },
-        {
-          arabic: "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ بِهِ أَذًى مِّن رَّأْسِهِ",
-          english: "2:196 – whoever is ill or has an ailment of the head (Hajj)",
+        { 
+          arabic: "_ كَانَ مِنكُم مَّرِيضًا أَوْ بِهِ أَذًى مِّن رَّأْسِهِ",
+          english: "2:196 – whoever among you is ill or has an ailment of the head (Hajj)",
           correctIndex: 0,
-          explanation: "فَمَنْ marks the person allowed a substitute due to difficulty."
+          explanation: "Again فَمَنْ marks the person facing difficulty, allowing a substitute (fidyah) out of mercy."
         }
       ],
-      choices: ["فَمَنْ (Faman)", "لِمَنْ (Liman)"]
+      choices: ["فَمَنْ (Faman) – introduces the exception", "لِمَنْ (Liman)"]
     },
     {
       id: 5,
-      text: "Guidance and free will – answer both.",
+      text: "Match the guidance / free-will context with the particle.",
       items: [
-        {
-          arabic: "فَمَن شَاءَ فَلْيُؤْمِن وَمَن شَاءَ فَلْيَكْفُرْ",
+        { 
+          arabic: "_ شَاءَ فَلْيُؤْمِن وَمَن شَاءَ فَلْيَكْفُرْ",
           english: "18:29 – whoever wills let him believe…",
           correctIndex: 0,
-          explanation: "فَمَنْ emphasises personal choice in faith."
+          explanation: "فَمَنْ places the choice squarely on the human being. Faith or disbelief is a personal decision."
         },
-        {
-          arabic: "فَمَنِ اهْتَدَىٰ فَإِنَّمَا يَهْتَدِي لِنَفْسِهِ",
+        { 
+          arabic: "_ اهْتَدَىٰ فَإِنَّمَا يَهْتَدِي لِنَفْسِهِ",
           english: "10:108 – whoever is guided is only guided for his own soul",
           correctIndex: 0,
-          explanation: "فَمَنْ shows that the benefit of guidance returns to the self."
+          explanation: "فَمَنْ shows that guidance benefits the one who accepts it — the consequence returns to the self."
         },
-        {
-          arabic: "فَمَن شَاءَ ذَكَرَهُ",
+        { 
+          arabic: "_ شَاءَ ذَكَرَهُ",
           english: "74:55 – So whoever wills will take heed of it",
           correctIndex: 0,
-          explanation: "فَمَنْ leaves taking heed as an open choice."
+          explanation: "فَمَنْ again emphasises free will: taking heed is open to whoever chooses to do so."
         },
-        {
-          arabic: "فَمَن تَبِعَ هُدَايَ فَلَا خَوْفٌ عَلَيْهِمْ",
+        { 
+          arabic: "_ تَبِعَ هُدَايَ فَلَا خَوْفٌ عَلَيْهِمْ",
           english: "2:38 – whoever follows My guidance – no fear",
           correctIndex: 0,
-          explanation: "فَمَنْ links following guidance with security."
+          explanation: "فَمَنْ links the action of following guidance with the beautiful result of security."
         }
       ],
       choices: ["فَمَنْ (Faman)", "لِمَنْ (Liman)"]
     },
     {
       id: 6,
-      text: "Reward reserved for the God-fearing.",
+      text: "Match the “reward reserved for the God-fearing” verse.",
       items: [
-        {
-          arabic: "وَلِمَنْ خَافَ مَقَامَ رَبِّهِ جَنَّتَانِ",
+        { 
+          arabic: "وَ_ خَافَ مَقَامَ رَبِّهِ جَنَّتَانِ",
           english: "55:46 – for he who feared the standing before his Lord are two gardens",
           correctIndex: 1,
-          explanation: "لِمَنْ exclusively reserves the two gardens for those with khawf."
+          explanation: "لِمَنْ exclusively reserves the two gardens for those who have khawf of their Lord’s standing."
         },
-        {
-          arabic: "ذَٰلِكَ لِمَنْ خَشِيَ رَبَّهُ",
+        { 
+          arabic: "ذَٰلِكَ _ خَشِيَ رَبَّهُ",
           english: "98:8 – That is for him who has feared his Lord",
           correctIndex: 1,
-          explanation: "لِمَنْ limits the reward to the one who has khashyah."
+          explanation: "لِمَنْ limits the ultimate reward to the one who possesses khashyah (reverential fear)."
         },
-        {
-          arabic: "لِّمَن كَانَ يَرْجُو اللَّهَ وَالْيَوْمَ الْآخِرَ",
-          english: "33:21 – for him whose hope is in Allah and the Last Day",
+        { 
+          arabic: "لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ _ كَانَ يَرْجُو اللَّهَ وَالْيَوْمَ الْآخِرَ",
+          english: "33:21 – a good example for him whose hope is in Allah and the Last Day",
           correctIndex: 1,
-          explanation: "لِمَنْ identifies those for whom the Prophet ﷺ is the excellent model."
+          explanation: "لِمَنْ identifies the people for whom the Prophet ﷺ is an excellent model — those who hope in Allah."
+        }
+      ],
+      choices: ["فَمَنْ (Faman)", "لِمَنْ (Liman) – “for the one who…”"]
+    },
+    {
+      id: 7,
+      text: "Choose the particle that best fits the grammatical role.",
+      items: [
+        { 
+          arabic: "—",
+          english: "Introduces a conditional clause of action → consequence",
+          correctIndex: 0,
+          explanation: "This is the core function of فَمَنْ: it opens a condition that leads to a result."
+        },
+        { 
+          arabic: "—",
+          english: "Marks the beneficiary or recipient of a divine act",
+          correctIndex: 1,
+          explanation: "لِمَنْ points to the person who receives something from Allah (rizq, forgiveness, reward, etc.)."
+        },
+        { 
+          arabic: "—",
+          english: "Often appears with “yashā’u” (He wills) for Allah’s will",
+          correctIndex: 1,
+          explanation: "The combination لِمَن يَشَاءُ is a frequent Quranic pattern expressing pure divine will."
+        },
+        { 
+          arabic: "—",
+          english: "Frequently opens legal exceptions (“whoever is ill…”)",
+          correctIndex: 0,
+          explanation: "فَمَنْ is the preferred particle when the Quran grants a concession due to hardship."
+        }
+      ],
+      choices: ["فَمَنْ (Faman)", "لِمَنْ (Liman)"]
+    },
+    {
+      id: 8,
+      text: "Final mixed practice – identify the particle in the actual Quranic wording.",
+      items: [
+        { 
+          arabic: "_ يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ",
+          english: "99:7",
+          correctIndex: 0,
+          explanation: "Classic فَمَنْ of accountability — every atom of good will be seen."
+        },
+        { 
+          arabic: "وَ_ خَافَ مَقَامَ رَبِّهِ جَنَّتَانِ",
+          english: "55:46",
+          correctIndex: 1,
+          explanation: "لِمَنْ reserves the two gardens exclusively for the one who feared his Lord’s standing."
+        },
+        { 
+          arabic: "_ شَاءَ فَلْيُؤْمِن وَمَن شَاءَ فَلْيَكْفُرْ",
+          english: "18:29",
+          correctIndex: 0,
+          explanation: "فَمَنْ (and وَمَنْ) place the choice of belief or disbelief on the human will."
+        },
+        { 
+          arabic: "يَغْفِرُ _ يَشَاءُ وَيُعَذِّبُ مَن يَشَاءُ",
+          english: "2:284",
+          correctIndex: 1,
+          explanation: "لِمَنْ marks those to whom Allah grants forgiveness according to His will."
+        },
+        { 
+          arabic: "_ كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ",
+          english: "2:184",
+          correctIndex: 0,
+          explanation: "فَمَنْ opens the legal exception for the sick and the traveller during fasting."
         }
       ],
       choices: ["فَمَنْ (Faman)", "لِمَنْ (Liman)"]
     }
   ];
 
-  // State: key = "qIdx-itemIdx-type" (type = 'ar' or 'en')
   let userSelections = {};
   let feedbackState = {};
   let attemptCounter = 0;
@@ -532,68 +590,50 @@
       html += `<div class="q-header"><span class="q-number">Q${q.id}</span><span class="q-text">${q.text}</span></div>`;
       html += `<div class="match-grid">`;
 
-      // Left side – verses with two dropdowns each
+      // Left
       html += `<div class="match-left">`;
       q.items.forEach((item, iIdx) => {
-        const keyAr = `${qIdx}-${iIdx}-ar`;
-        const keyEn = `${qIdx}-${iIdx}-en`;
-        const selAr = userSelections[keyAr] !== undefined ? userSelections[keyAr] : '';
-        const selEn = userSelections[keyEn] !== undefined ? userSelections[keyEn] : '';
-        const fbAr = feedbackState[keyAr] || '';
-        const fbEn = feedbackState[keyEn] || '';
+        const key = `${qIdx}-${iIdx}`;
+        const selected = userSelections[key] !== undefined ? userSelections[key] : '';
+        const fb = feedbackState[key] || '';
+        let selectClass = fb === 'correct' ? 'correct' : (fb === 'wrong' ? 'wrong' : '');
 
-        html += `<div class="verse-block">`;
-        html += `<div class="arabic-line">${item.arabic}</div>`;
-        html += `<div class="english-line">${item.english}</div>`;
-        html += `<div class="dropdown-row">`;
-
-        // Arabic dropdown
-        html += `<div class="dropdown-group">`;
-        html += `<label>Arabic</label>`;
-        html += `<select class="${fbAr}" data-key="${keyAr}">`;
-        html += `<option value="">—</option>`;
+        html += `<div class="term-item">`;
+        if (item.arabic && item.arabic !== "—") {
+          html += `<div class="term-arabic">${item.arabic}</div>`;
+        }
+        html += `<div class="term-english">${item.english}</div>`;
+        html += `<div class="term-controls">`;
+        html += `<select class="${selectClass}" data-qidx="${qIdx}" data-iidx="${iIdx}">`;
+        html += `<option value="">— select —</option>`;
         q.choices.forEach((choice, cIdx) => {
-          html += `<option value="${cIdx}" ${selAr === cIdx ? 'selected' : ''}>${String.fromCharCode(65+cIdx)}. ${choice}</option>`;
+          const sel = selected === cIdx ? 'selected' : '';
+          html += `<option value="${cIdx}" ${sel}>${String.fromCharCode(65 + cIdx)}. ${choice}</option>`;
         });
         html += `</select>`;
-        if (fbAr === 'correct') html += `<span class="feedback-badge correct">✓ 0.5</span>`;
-        else if (fbAr === 'wrong') html += `<span class="feedback-badge wrong">✗</span>`;
-        html += `</div>`;
-
-        // English dropdown
-        html += `<div class="dropdown-group">`;
-        html += `<label>English</label>`;
-        html += `<select class="${fbEn}" data-key="${keyEn}">`;
-        html += `<option value="">—</option>`;
-        q.choices.forEach((choice, cIdx) => {
-          html += `<option value="${cIdx}" ${selEn === cIdx ? 'selected' : ''}>${String.fromCharCode(65+cIdx)}. ${choice}</option>`;
-        });
-        html += `</select>`;
-        if (fbEn === 'correct') html += `<span class="feedback-badge correct">✓ 0.5</span>`;
-        else if (fbEn === 'wrong') html += `<span class="feedback-badge wrong">✗</span>`;
-        html += `</div>`;
-
+        if (fb === 'correct') html += `<span class="feedback-badge correct">✓</span>`;
+        else if (fb === 'wrong') html += `<span class="feedback-badge wrong">✗</span>`;
         html += `</div></div>`;
       });
       html += `</div>`;
 
-      // Right side
+      // Right
       html += `<div class="match-right">`;
       html += `<div class="choice-list">`;
       q.choices.forEach((choice, cIdx) => {
-        html += `<div class="choice-item"><span class="choice-letter">${String.fromCharCode(65+cIdx)}.</span> ${choice}</div>`;
+        html += `<div class="choice-item"><span class="choice-letter">${String.fromCharCode(65 + cIdx)}.</span> ${choice}</div>`;
       });
       html += `</div>`;
       html += `<div class="explanation-area" id="exp-${qIdx}"></div>`;
       html += `</div></div></div>`;
     });
-
     container.innerHTML = html;
 
-    // Event listeners
-    document.querySelectorAll('select[data-key]').forEach(sel => {
+    document.querySelectorAll('select[data-qidx]').forEach(sel => {
       sel.addEventListener('change', function() {
-        const key = this.dataset.key;
+        const qIdx = parseInt(this.dataset.qidx);
+        const iIdx = parseInt(this.dataset.iidx);
+        const key = `${qIdx}-${iIdx}`;
         if (this.value === '') {
           delete userSelections[key];
           delete feedbackState[key];
@@ -619,23 +659,16 @@
       if (!expArea) return;
       let content = '';
       q.items.forEach((item, iIdx) => {
-        const keyAr = `${qIdx}-${iIdx}-ar`;
-        const keyEn = `${qIdx}-${iIdx}-en`;
-        const fbAr = feedbackState[keyAr];
-        const fbEn = feedbackState[keyEn];
-
-        if (fbAr || fbEn) {
-          let status = '';
-          if (fbAr === 'correct' && fbEn === 'correct') {
-            status = `<strong>✓ Full mark (1.0)</strong> – both Arabic and English correct.`;
-          } else if (fbAr === 'correct' || fbEn === 'correct') {
-            status = `<strong>✓ Partial (0.5)</strong> – one side correct.`;
-          } else {
-            status = `<strong>✗ Incorrect</strong>`;
-          }
-          content += `<div class="explanation-box show ${fbAr === 'wrong' || fbEn === 'wrong' ? 'wrong-exp' : ''}">
-            ${status}<br>
-            Correct particle: <strong>${q.choices[item.correctIndex]}</strong><br>
+        const key = `${qIdx}-${iIdx}`;
+        const fb = feedbackState[key];
+        if (fb === 'correct') {
+          content += `<div class="explanation-box show">
+            <strong>✓ Correct</strong><br>${item.explanation}
+          </div>`;
+        } else if (fb === 'wrong') {
+          content += `<div class="explanation-box show wrong-exp">
+            <strong>✗ Not correct</strong><br>
+            The right particle is <strong>${q.choices[item.correctIndex]}</strong>.<br>
             ${item.explanation}
           </div>`;
         }
@@ -645,30 +678,28 @@
   }
 
   function updateScore() {
-    let score = 0;
-    let maxPossible = 0;
-
+    let correct = 0;
+    let totalAnswered = 0;
     for (const key in feedbackState) {
-      maxPossible += 0.5;
-      if (feedbackState[key] === 'correct') score += 0.5;
+      totalAnswered++;
+      if (feedbackState[key] === 'correct') correct++;
     }
-
-    scoreDisplay.textContent = `${score.toFixed(1)} / ${maxPossible.toFixed(1)}`;
-    correctSpan.textContent = score.toFixed(1);
+    scoreDisplay.textContent = `${correct} / ${totalAnswered}`;
+    correctSpan.textContent = correct;
     attemptSpan.textContent = attemptCounter;
 
-    if (maxPossible === 0) {
+    if (totalAnswered === 0) {
       motivationMsg.textContent = '';
     } else {
-      const percent = Math.round((score / maxPossible) * 100);
+      const percent = Math.round((correct / totalAnswered) * 100);
       if (percent === 100) {
-        motivationMsg.textContent = "MashaAllah! Perfect score on both Arabic and English.";
+        motivationMsg.textContent = "MashaAllah! Perfect understanding of the particles.";
       } else if (percent >= 80) {
-        motivationMsg.textContent = "Excellent! You are connecting the Arabic and English well.";
+        motivationMsg.textContent = "Excellent work! You are grasping the nuances well.";
       } else if (percent >= 60) {
-        motivationMsg.textContent = "Good progress. Focus on matching the particle in both languages.";
+        motivationMsg.textContent = "Good progress. Review the explanations to strengthen the difference.";
       } else {
-        motivationMsg.textContent = "Keep practising. Answering both Arabic and English correctly gives the full mark.";
+        motivationMsg.textContent = "Keep going. Read each explanation carefully — the distinction will become clear.";
       }
     }
   }
@@ -677,13 +708,11 @@
     let hasAnswers = false;
     QUIZ_DATA.forEach((q, qIdx) => {
       q.items.forEach((item, iIdx) => {
-        ['ar', 'en'].forEach(type => {
-          const key = `${qIdx}-${iIdx}-${type}`;
-          if (userSelections[key] !== undefined) {
-            hasAnswers = true;
-            feedbackState[key] = (userSelections[key] === item.correctIndex) ? 'correct' : 'wrong';
-          }
-        });
+        const key = `${qIdx}-${iIdx}`;
+        if (userSelections[key] !== undefined) {
+          hasAnswers = true;
+          feedbackState[key] = (userSelections[key] === item.correctIndex) ? 'correct' : 'wrong';
+        }
       });
     });
     if (hasAnswers) attemptCounter++;
