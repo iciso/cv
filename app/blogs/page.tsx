@@ -231,6 +231,6 @@ const blogs = [
     title: "When The Mountains Spoke",
     description:
       "A poem that juxtaposes the devastating reality of a sudden Himalayan flood with humanity's clinical search for scientific blame, ultimately urging a look inward at the profound spiritual signs of Providence.",
-    url: "http://rafime.blogspot.com/",
+    url: "https://emrafi.wordpress.com/2026/08/31/when-the-mountains-spoke/",
   },
 ]
