@@ -13,6 +13,8 @@
       --text: #134e4a;
       --accent: #14b8a6;
       --gold: #d97706;
+      --success: #16a34a;
+      --error: #dc2626;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,8 +48,26 @@
       color: #0f766e;
       opacity: 0.9;
       max-width: 620px;
-      margin: 0 auto;
+      margin: 0 auto 1.2rem;
       line-height: 1.5;
+    }
+
+    .quiz-toggle-btn {
+      background: var(--gold);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.2s;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
+    }
+
+    .quiz-toggle-btn:hover {
+      background: #b45309;
+      transform: translateY(-2px);
     }
 
     .grid {
@@ -85,7 +105,7 @@
       border-color: var(--primary-dark);
     }
 
-    .detail-panel {
+    .detail-panel, .quiz-panel {
       background: white;
       border-radius: 24px;
       padding: 1.8rem 1.6rem;
@@ -93,18 +113,20 @@
       display: none;
       animation: slideUp 0.35s ease;
       border: 1px solid #99f6e4;
+      margin-bottom: 2rem;
     }
 
-    .detail-panel.show {
+    .detail-panel.show, .quiz-panel.show {
       display: block;
     }
 
-    .detail-panel h2 {
+    .detail-panel h2, .quiz-panel h2 {
       color: var(--primary);
       font-size: 1.4rem;
       margin-bottom: 0.8rem;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 0.5rem;
     }
 
@@ -161,9 +183,59 @@
       font-size: 0.95rem;
     }
 
-    .close-btn {
-      display: block;
-      margin: 1.5rem auto 0;
+    /* Quiz Specific Styles */
+    .quiz-q {
+      background: #f0fdfa;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      border: 1px solid #ccfbf1;
+      transition: border-left 0.2s ease;
+    }
+
+    .quiz-q p {
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .quiz-q select {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--accent);
+      background: white;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+    }
+
+    .quiz-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .quiz-result {
+      margin-top: 1.5rem;
+      padding: 1.2rem;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+      display: none;
+    }
+
+    .quiz-feedback {
+      font-size: 0.85rem;
+      margin-top: 0.4rem;
+      font-weight: normal;
+    }
+
+    .correct-ans { border-left: 5px solid var(--success) !important; }
+    .wrong-ans { border-left: 5px solid var(--error) !important; }
+
+    .close-btn, .submit-btn {
       background: var(--primary);
       color: white;
       border: none;
@@ -174,7 +246,7 @@
       transition: 0.2s;
     }
 
-    .close-btn:hover {
+    .close-btn:hover, .submit-btn:hover {
       background: var(--primary-dark);
     }
 
@@ -198,7 +270,21 @@
         Click any outcome below to explore its ruling, evidence from Quran & Sunnah, 
         and what is most beloved to Allah.
       </p>
+      <button class="quiz-toggle-btn" id="quizToggleBtn">📝 Take 10-Question Quiz</button>
     </header>
+
+    <!-- Quiz Panel -->
+    <div class="quiz-panel" id="quizPanel">
+      <h2><span>Islamic Loan Fiqh Quiz</span> <span class="badge">10 Questions</span></h2>
+      <form id="quizForm">
+        <div id="quizQuestions"></div>
+        <div class="quiz-result" id="quizResult"></div>
+        <div class="quiz-actions">
+          <button type="button" class="submit-btn" id="submitQuizBtn">Submit Quiz</button>
+          <button type="button" class="close-btn" id="closeQuizBtn">Close Quiz</button>
+        </div>
+      </form>
+    </div>
 
     <div class="grid" id="grid"></div>
 
@@ -414,13 +500,82 @@
       }
     ];
 
+    // Clean term names without leading numbers for reliable matching
+    const quizQuestionsData = [
+      {
+        question: "What is the primary and default outcome of a Qard (loan) where the debtor returns the exact equivalent?",
+        correct: "Debtor Repays the Loan"
+      },
+      {
+        question: "When both parties agree to settle a debt on mutually acceptable terms (such as partial reduction), this is called:",
+        correct: "Conciliation (Ṣulḥ) between the Parties"
+      },
+      {
+        question: "What is the contract where a debtor gives a physical asset as security to be held until repayment?",
+        correct: "Collateral / Pledge (Rahn)"
+      },
+      {
+        question: "A voluntary contract where a third party guarantees that the debtor will pay is known as:",
+        correct: "Suretyship / Guarantee (Kafālah)"
+      },
+      {
+        question: "If the debtor defaults and the third-party guarantor settles the debt on their behalf, what outcome occurred?",
+        correct: "Guarantor Pays the Loan"
+      },
+      {
+        question: "The process of transferring a debt obligation from the original debtor to a third party is:",
+        correct: "Transfer of Debt (Ḥawālah)"
+      },
+      {
+        question: "Appointing an agent (wakīl) to collect debt on the creditor's behalf is known as:",
+        correct: "Agency to Collect (Wakālah)"
+      },
+      {
+        question: "Seeking court intervention (e.g. ḥajr) when a solvent debtor deliberately refuses to pay is:",
+        correct: "Judicial Interdiction / Court Action"
+      },
+      {
+        question: "Designating an asset as a modern Shariah-compliant security arrangement (free of Ribā) is related to:",
+        correct: "Mortgage / Security Arrangement"
+      },
+      {
+        question: "The voluntary cancellation of debt by the creditor as charity (Ibrā’) is classified as:",
+        correct: "Creditor Forgives the Loan (Ibrā’)"
+      }
+    ];
+
     const grid = document.getElementById('grid');
     const detailPanel = document.getElementById('detailPanel');
     const detailTitle = document.getElementById('detailTitle');
     const detailContent = document.getElementById('detailContent');
     const closeBtn = document.getElementById('closeBtn');
 
-    // Build cards
+    const quizToggleBtn = document.getElementById('quizToggleBtn');
+    const quizPanel = document.getElementById('quizPanel');
+    const quizQuestionsContainer = document.getElementById('quizQuestions');
+    const submitQuizBtn = document.getElementById('submitQuizBtn');
+    const closeQuizBtn = document.getElementById('closeQuizBtn');
+    const quizResult = document.getElementById('quizResult');
+
+    // Clean option strings (removes leading digits/dots)
+    const cleanOptions = outcomes.map(o => o.title.replace(/^\d+\.\s*/, '').trim());
+
+    // Helper: Fisher-Yates array shuffle
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    // Clean string helper for bulletproof comparison
+    function cleanString(str) {
+      return str.replace(/^\d+\.\s*/, '').trim();
+    }
+
+    // Build outcomes grid
     outcomes.forEach(item => {
       const card = document.createElement('div');
       card.className = 'outcome-card';
@@ -431,21 +586,109 @@
     });
 
     function showDetail(item, card) {
-      // Remove previous active
       document.querySelectorAll('.outcome-card').forEach(c => c.classList.remove('active'));
       card.classList.add('active');
 
       detailTitle.innerHTML = item.title + ' <span class="badge">Fiqh Outcome</span>';
       detailContent.innerHTML = item.content;
       detailPanel.classList.add('show');
+      quizPanel.classList.remove('show');
 
-      // Scroll to panel on mobile
       detailPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     closeBtn.addEventListener('click', () => {
       detailPanel.classList.remove('show');
       document.querySelectorAll('.outcome-card').forEach(c => c.classList.remove('active'));
+    });
+
+    let currentShuffledQuestions = [];
+
+    // Render Quiz Questions
+    function initQuiz() {
+      quizQuestionsContainer.innerHTML = '';
+      quizResult.style.display = 'none';
+
+      // Randomize question order for learning retention
+      currentShuffledQuestions = shuffleArray(quizQuestionsData);
+
+      currentShuffledQuestions.forEach((q, idx) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'quiz-q';
+        qDiv.id = `q-container-${idx}`;
+
+        const label = document.createElement('p');
+        label.textContent = `${idx + 1}. ${q.question}`;
+        qDiv.appendChild(label);
+
+        const select = document.createElement('select');
+        select.id = `q-${idx}`;
+
+        const defaultOpt = document.createElement('option');
+        defaultOpt.value = "";
+        defaultOpt.textContent = "-- Select Islamic Term / Outcome --";
+        select.appendChild(defaultOpt);
+
+        // Randomize option order in dropdown so answers cannot be guessed by sequence
+        const randomizedOptions = shuffleArray(cleanOptions);
+        randomizedOptions.forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt;
+          option.textContent = opt;
+          select.appendChild(option);
+        });
+
+        const feedback = document.createElement('div');
+        feedback.className = 'quiz-feedback';
+        feedback.id = `fb-${idx}`;
+
+        qDiv.appendChild(select);
+        qDiv.appendChild(feedback);
+        quizQuestionsContainer.appendChild(qDiv);
+      });
+    }
+
+    quizToggleBtn.addEventListener('click', () => {
+      initQuiz();
+      detailPanel.classList.remove('show');
+      document.querySelectorAll('.outcome-card').forEach(c => c.classList.remove('active'));
+      quizPanel.classList.add('show');
+      quizPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    closeQuizBtn.addEventListener('click', () => {
+      quizPanel.classList.remove('show');
+    });
+
+    submitQuizBtn.addEventListener('click', () => {
+      let score = 0;
+
+      currentShuffledQuestions.forEach((q, idx) => {
+        const select = document.getElementById(`q-${idx}`);
+        const container = document.getElementById(`q-container-${idx}`);
+        const feedback = document.getElementById(`fb-${idx}`);
+        
+        const userAns = cleanString(select.value);
+        const correctAns = cleanString(q.correct);
+
+        container.classList.remove('correct-ans', 'wrong-ans');
+
+        if (userAns !== "" && userAns === correctAns) {
+          score++;
+          container.classList.add('correct-ans');
+          feedback.innerHTML = `<span style="color: var(--success); font-weight: bold;">✓ Correct!</span>`;
+        } else {
+          container.classList.add('wrong-ans');
+          feedback.innerHTML = `<span style="color: var(--error); font-weight: bold;">✗ Incorrect.</span> Correct Answer: <strong>${q.correct}</strong>`;
+        }
+      });
+
+      quizResult.style.display = 'block';
+      quizResult.style.background = score >= 7 ? '#dcfce7' : '#fee2e2';
+      quizResult.style.color = score >= 7 ? '#15803d' : '#b91c1c';
+      quizResult.innerHTML = `Your Score: ${score} / 10 (${(score / 10) * 100}%)`;
+      
+      quizResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   </script>
 </body>
