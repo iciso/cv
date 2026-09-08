@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arabic Hink Pink: Rhyming Riddles</title>
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #0d9488;
+      --primary-dark: #0f766e;
+      --accent: #d97706;
+      --bg: #f8fafc;
+      --card-bg-1: #f0fdfa;
+      --card-bg-2: #fffbeb;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --arabic-font: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f766e 0%, #1e293b 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      color: var(--text);
+    }
+
+    main {
+      width: 100%;
+      max-width: 680px;
+      position: relative;
+    }
+
+    /* SLIDE STYLES */
+    .slide {
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      padding: 2.5rem;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 500px;
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    /* Start Slide */
+    .slide.start {
+      background: linear-gradient(180deg, #ffffff 0%, #f0fdfa 100%);
+      text-align: center;
+      justify-content: center;
+    }
+
+    .start h1 {
+      font-size: 2.2rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .start p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    /* Round Banner Slide */
+    .slide.round-intro {
+      background: #f0fdfa;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .round-badge {
+      background: #ccfbf1;
+      color: var(--primary-dark);
+      font-weight: 700;
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .round-title {
+      font-size: 2rem;
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+    }
+
+    .round-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 450px;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+
+    /* QA Slide Layout */
+    .slide-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .progress-text {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .slide-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex-grow: 1;
+      justify-content: center;
+    }
+
+    .english-clue {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Reveal Answer Box */
+    .answer-box {
+      width: 100%;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 20px;
+      padding: 1.5rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.35s ease;
+      visibility: hidden;
+    }
+
+    .answer-box.visible {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+      background: #fffbeb;
+      border: 2px solid var(--accent);
+    }
+
+    .arabic-pair {
+      font-family: var(--arabic-font);
+      font-size: 2.5rem;
+      direction: rtl;
+      color: var(--primary-dark);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .transliteration {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .vocab-breakdown {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.5;
+      border-top: 1px solid #fef3c7;
+      padding-top: 0.8rem;
+    }
+
+    /* Buttons */
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.9rem 2.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(13, 148, 136, 0.35);
+    }
+
+    .btn-secondary {
+      background: var(--accent);
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
+    }
+
+    .btn-secondary:hover {
+      background: #b45309;
+      box-shadow: 0 6px 16px rgba(217, 119, 6, 0.35);
+    }
+
+    /* Finish Slide */
+    .slide.finish {
+      background: #0f766e;
+      color: white;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .finish h2 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .finish p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      .slide {
+        padding: 1.5rem;
+        min-height: 440px;
+      }
+      .start h1 { font-size: 1.8rem; }
+      .english-clue { font-size: 1.25rem; }
+      .arabic-pair { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <main id="appContainer">
+    <!-- Slides rendered dynamically by JavaScript -->
+  </main>
+
+  <script>
+    const gameData = [
+      {
+        type: "start",
+        title: "Arabic Hink Pink",
+        subtitle: "Learn Arabic vocabulary through 40 fun, two-word rhyming riddles! Read the English clue, guess the rhyming Arabic pair, and reveal the full breakdown."
+      },
+      // ROUND 1: Hink Pink (20 Questions)
+      {
+        type: "round-intro",
+        badge: "Round 1",
+        title: "Hink Pink (Short Rhymes)",
+        desc: "20 rhyming pairs featuring concise and rhythmic Arabic root patterns."
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 1/20",
+        clue: "A Big Door",
+        arabic: "بَابٌ كَبِيرٌ",
+        translit: "Bāb Kabīr",
+        breakdown: "<b>Bāb (بَاب)</b> = Door | <b>Kabīr (كَبِير)</b> = Big"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 2/20",
+        clue: "A Beautiful House",
+        arabic: "بَيْتٌ جَمِيلٌ",
+        translit: "Bayt Jamīl",
+        breakdown: "<b>Bayt (بَيْت)</b> = House | <b>Jamīl (جَمِيل)</b> = Beautiful"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 3/20",
+        clue: "Light of the Moon",
+        arabic: "نُورُ الْقَمَرِ",
+        translit: "Nūr al-Qamar",
+        breakdown: "<b>Nūr (نُور)</b> = Light | <b>Qamar (قَمَر)</b> = Moon"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 4/20",
+        clue: "A Sweet Voice",
+        arabic: "صَوْتٌ عَذْبٌ",
+        translit: "Ṣawt ‘Aḏb",
+        breakdown: "<b>Ṣawt (صَوْت)</b> = Voice / Sound | <b>‘Aḏb (عَذْب)</b> = Sweet / Pleasant"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 5/20",
+        clue: "A Bright Star",
+        arabic: "نَجْمٌ مُنِيرٌ",
+        translit: "Najm Munīr",
+        breakdown: "<b>Najm (نَجْم)</b> = Star | <b>Munīr (مُنِير)</b> = Luminous / Bright"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 6/20",
+        clue: "A Wise Sheikh / Old Man",
+        arabic: "شَيْخٌ حَكِيمٌ",
+        translit: "Shaykh Ḥakīm",
+        breakdown: "<b>Shaykh (شَيْخ)</b> = Elder / Scholar | <b>Ḥakīm (حَكِيم)</b> = Wise"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 7/20",
+        clue: "A High Mountain",
+        arabic: "جَبَلٌ عَظِيمٌ",
+        translit: "Jabal ‘Aẓīm",
+        breakdown: "<b>Jabal (جَبَل)</b> = Mountain | <b>‘Aẓīm (عَظِيم)</b> = Great / Mighty"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 8/20",
+        clue: "A Broad Sea",
+        arabic: "بَحْرٌ عَرِيضٌ",
+        translit: "Baḥr ‘Arīḍ",
+        breakdown: "<b>Baḥr (بَحْر)</b> = Sea / Ocean | <b>‘Arīḍ (عَرِيض)</b> = Wide / Broad"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 9/20",
+        clue: "A Fast Bird",
+        arabic: "طَيْرٌ سَرِيعٌ",
+        translit: "Ṭayr Sarī‘",
+        breakdown: "<b>Ṭayr (طَيْر)</b> = Bird | <b>Sarī‘ (سَرِيع)</b> = Fast / Swift"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 10/20",
+        clue: "A Deep Well",
+        arabic: "بِئْرٌ عَمِيقٌ",
+        translit: "Bi’r ‘Amīq",
+        breakdown: "<b>Bi’r (بِئْر)</b> = Well | <b>‘Amīq (عَمِيق)</b> = Deep"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 11/20",
+        clue: "Clear Truth",
+        arabic: "حَقٌّ مُبِينٌ",
+        translit: "Ḥaqq Mubīn",
+        breakdown: "<b>Ḥaqq (حَقّ)</b> = Truth / Right | <b>Mubīn (مُبِين)</b> = Clear / Manifest"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 12/20",
+        clue: "A Brave Horseman",
+        arabic: "فَارِسٌ شُجَاعٌ",
+        translit: "Fāris Shujā‘",
+        breakdown: "<b>Fāris (فَارِس)</b> = Knight / Horseman | <b>Shujā‘ (شُجَاع)</b> = Brave"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 13/20",
+        clue: "Cold Ice",
+        arabic: "ثَلْجٌ بَارِدٌ",
+        translit: "Thalj Bārid",
+        breakdown: "<b>Thalj (ثَلْج)</b> = Snow / Ice | <b>Bārid (بَارِد)</b> = Cold"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 14/20",
+        clue: "A Generous Heart",
+        arabic: "قَلْبٌ كَرِيمٌ",
+        translit: "Qalb Karīm",
+        breakdown: "<b>Qalb (قَلْب)</b> = Heart | <b>Karīm (كَرِيم)</b> = Generous / Noble"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 15/20",
+        clue: "A Pleasant Morning",
+        arabic: "صَبَاحٌ جَمِيلٌ",
+        translit: "Ṣabāḥ Jamīl",
+        breakdown: "<b>Ṣabāḥ (صَبَاح)</b> = Morning | <b>Jamīl (جَمِيل)</b> = Beautiful / Pleasant"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 16/20",
+        clue: "A Small Fish",
+        arabic: "سَمَكٌ صَغِيرٌ",
+        translit: "Samak Ṣaghīr",
+        breakdown: "<b>Samak (سَمَك)</b> = Fish | <b>Ṣaghīr (صَغِير)</b> = Small"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 17/20",
+        clue: "Pure Water",
+        arabic: "مَاءٌ طَاهِرٌ",
+        translit: "Mā’ Ṭāhir",
+        breakdown: "<b>Mā’ (مَاء)</b> = Water | <b>Ṭāhir (طَاهِر)</b> = Pure / Clean"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 18/20",
+        clue: "A Long Day",
+        arabic: "يَوْمٌ طَوِيلٌ",
+        translit: "Yawm Ṭawīl",
+        breakdown: "<b>Yawm (يَوْم)</b> = Day | <b>Ṭawīl (طَوِيل)</b> = Long"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 19/20",
+        clue: "A New Pen",
+        arabic: "قَلَمٌ جَدِيدٌ",
+        translit: "Qalam Jadīd",
+        breakdown: "<b>Qalam (قَلَم)</b> = Pen | <b>Jadīd (جَدِيد)</b> = New"
+      },
+      {
+        type: "qa",
+        badge: "Round 1 • 20/20",
+        clue: "A High Wall",
+        arabic: "سُورٌ عَظِيمٌ",
+        translit: "Sūr ‘Aẓīm",
+        breakdown: "<b>Sūr (سُور)</b> = Wall / Fence | <b>‘Aẓīm (عَظِيم)</b> = Great / Massive"
+      },
+
+      // ROUND 2: Hinky Pinky (20 Questions)
+      {
+        type: "round-intro",
+        badge: "Round 2",
+        title: "Hinky Pinky (Extended Rhymes)",
+        desc: "20 multi-syllable rhyming phrases with rich rhythmic cadence."
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 1/20",
+        clue: "Heavy Rain",
+        arabic: "مَطَرٌ غَزِيرٌ",
+        translit: "Maṭar Ghazīr",
+        breakdown: "<b>Maṭar (مَطَر)</b> = Rain | <b>Ghazīr (غَزِير)</b> = Heavy / Abundant"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 2/20",
+        clue: "A Happy Child",
+        arabic: "وَلَدٌ سَعِيدٌ",
+        translit: "Walad Sa‘īd",
+        breakdown: "<b>Walad (وَلَد)</b> = Child / Boy | <b>Sa‘īd (سَعِيد)</b> = Happy"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 3/20",
+        clue: "A Fragrant Flower",
+        arabic: "زَهْرَةٌ عَطِرَةٌ",
+        translit: "Zahrah ‘Aṭirah",
+        breakdown: "<b>Zahrah (زَهْرَة)</b> = Flower | <b>‘Aṭirah (عَطِرَة)</b> = Fragrant"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 4/20",
+        clue: "A Ripe Fruit",
+        arabic: "ثَمَرَةٌ نَاضِجَةٌ",
+        translit: "Thamarah Nāḍijah",
+        breakdown: "<b>Thamarah (ثَمَرَة)</b> = Fruit | <b>Nāḍijah (نَاضِجَة)</b> = Ripe"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 5/20",
+        clue: "A Playful Cat",
+        arabic: "قِطَّةٌ لَعُوبٌ",
+        translit: "Qiṭṭah La‘ūb",
+        breakdown: "<b>Qiṭṭah (قِطَّة)</b> = Cat | <b>La‘ūb (لَعُوب)</b> = Playful"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 6/20",
+        clue: "A Green Tree",
+        arabic: "شَجَرَةٌ خَضْرَاءُ",
+        translit: "Shajarah Khaḍrā’",
+        breakdown: "<b>Shajarah (شَجَرَة)</b> = Tree | <b>Khaḍrā’ (خَضْرَاء)</b> = Green"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 7/20",
+        clue: "A Peaceful Night",
+        arabic: "لَيْلَةٌ هَادِئَةٌ",
+        translit: "Laylah Hādi’ah",
+        breakdown: "<b>Laylah (لَيْلَة)</b> = Night | <b>Hādi’ah (هَادِئَة)</b> = Quiet / Peaceful"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 8/20",
+        clue: "A Useful Book",
+        arabic: "كِتَابٌ مُفِيدٌ",
+        translit: "Kitāb Mufīd",
+        breakdown: "<b>Kitāb (كِتَاب)</b> = Book | <b>Mufīd (مُفِيد)</b> = Useful / Beneficial"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 9/20",
+        clue: "A Diligent Student",
+        arabic: "طَالِبٌ مُجْتَهِدٌ",
+        translit: "Ṭālib Mujtahid",
+        breakdown: "<b>Ṭālib (طَالِب)</b> = Student | <b>Mujtahid (مُجْتَهِد)</b> = Hardworking"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 10/20",
+        clue: "A Kind Teacher",
+        arabic: "مُعَلِّمٌ لَطِيفٌ",
+        translit: "Mu‘allim Laṭīf",
+        breakdown: "<b>Mu‘allim (مُعَلِّم)</b> = Teacher | <b>Laṭīf (لَطِيف)</b> = Gentle / Kind"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 11/20",
+        clue: "A Green Garden",
+        arabic: "حَدِيقَةٌ غَنَّاءُ",
+        translit: "Ḥadīqah Ghannā’",
+        breakdown: "<b>Ḥadīqah (حَدِيقَة)</b> = Garden | <b>Ghannā’ (غَنَّاء)</b> = Lush / Verdant"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 12/20",
+        clue: "A Spacious Room",
+        arabic: "غُرْفَةٌ وَاسِعَةٌ",
+        translit: "Ghurfah Wāsi‘ah",
+        breakdown: "<b>Ghurfah (غُرْفَة)</b> = Room | <b>Wāsi‘ah (وَاسِعَة)</b> = Spacious / Wide"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 13/20",
+        clue: "A Fast Car",
+        arabic: "سَيَّارَةٌ سَرِيعَةٌ",
+        translit: "Sayyārah Sarī‘ah",
+        breakdown: "<b>Sayyārah (سَيَّارَة)</b> = Car | <b>Sarī‘ah (سَرِيعَة)</b> = Fast"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 14/20",
+        clue: "Delicious Food",
+        arabic: "طَعَامٌ لَذِيذٌ",
+        translit: "Ṭa‘ām Laḏīḏ",
+        breakdown: "<b>Ṭa‘ām (طَعَام)</b> = Food | <b>Laḏīḏ (لَذِيذ)</b> = Delicious"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 15/20",
+        clue: "A High Cloud",
+        arabic: "سَحَابَةٌ عَالِيَةٌ",
+        translit: "Saḥābah ‘Āliyah",
+        breakdown: "<b>Saḥābah (سَحَابَة)</b> = Cloud | <b>‘Āliyah (عَالِيَة)</b> = High / Elevated"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 16/20",
+        clue: "A Bright Light",
+        arabic: "ضَوْءٌ سَاطِعٌ",
+        translit: "Ḍaw’ Sāṭi‘",
+        breakdown: "<b>Ḍaw’ (ضَوْء)</b> = Light | <b>Sāṭi‘ (سَاطِع)</b> = Radiant / Bright"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 17/20",
+        clue: "An Active Ant",
+        arabic: "نَمْلَةٌ نَشِيطَةٌ",
+        translit: "Namlah Nashīṭah",
+        breakdown: "<b>Namlah (نَمْلَة)</b> = Ant | <b>Nashīṭah (نَشِيطَة)</b> = Energetic / Active"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 18/20",
+        clue: "A Small Butterfly",
+        arabic: "فَرَاشَةٌ صَغِيرَةٌ",
+        translit: "Farāshah Ṣaghīrah",
+        breakdown: "<b>Farāshah (فَرَاشَة)</b> = Butterfly | <b>Ṣaghīrah (صَغِيرَة)</b> = Small"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 19/20",
+        clue: "A Pleasant Trip",
+        arabic: "رِحْلَةٌ مُمْتِعَةٌ",
+        translit: "Riḥlah Mumti‘ah",
+        breakdown: "<b>Riḥlah (رِحْلَة)</b> = Journey / Trip | <b>Mumti‘ah (مُمْتِعَة)</b> = Enjoyable"
+      },
+      {
+        type: "qa",
+        badge: "Round 2 • 20/20",
+        clue: "A Clear Story",
+        arabic: "قِصَّةٌ وَاضِحَةٌ",
+        translit: "Qiṣṣah Wāḍiḥah",
+        breakdown: "<b>Qiṣṣah (قِصَّة)</b> = Story | <b>Wāḍiḥah (وَاضِحَة)</b> = Clear / Evident"
+      },
+      {
+        type: "finish",
+        title: "ممتاز جداً! (Mumtāz Jiddan!)",
+        subtitle: "Incredible job! You've mastered all 40 Arabic Hink Pink riddles!"
+      }
+    ];
+
+    let currentSlide = 0;
+    const container = document.getElementById("appContainer");
+
+    function renderSlide(index) {
+      const data = gameData[index];
+      container.innerHTML = "";
+
+      const slideEl = document.createElement("section");
+      slideEl.className = `slide ${data.type} active`;
+
+      if (data.type === "start") {
+        slideEl.innerHTML = `
+          <div>
+            <h1>${data.title}</h1>
+            <p>${data.subtitle}</p>
+          </div>
+          <button class="btn" onclick="nextSlide()">Let's Get Started</button>
+        `;
+      } 
+      else if (data.type === "round-intro") {
+        slideEl.innerHTML = `
+          <div>
+            <span class="round-badge">${data.badge}</span>
+            <h2 class="round-title">${data.title}</h2>
+            <p class="round-desc">${data.desc}</p>
+          </div>
+          <button class="btn" onclick="nextSlide()">Start Round</button>
+        `;
+      } 
+      else if (data.type === "qa") {
+        slideEl.innerHTML = `
+          <div class="slide-header">
+            <span class="round-badge">${data.badge}</span>
+            <span class="progress-text">Slide ${index} of ${gameData.length - 2}</span>
+          </div>
+          <div class="slide-content">
+            <div class="english-clue">"${data.clue}"</div>
+            <div class="answer-box" id="answerBox">
+              <div class="arabic-pair">${data.arabic}</div>
+              <div class="transliteration">${data.translit}</div>
+              <div class="vocab-breakdown">${data.breakdown}</div>
+            </div>
+          </div>
+          <button class="btn btn-secondary" id="actionBtn" onclick="revealAnswer()">Show Answer</button>
+        `;
+      } 
+      else if (data.type === "finish") {
+        slideEl.innerHTML = `
+          <div>
+            <h2>${data.title}</h2>
+            <p>${data.subtitle}</p>
+          </div>
+          <button class="btn" style="background: white; color: var(--primary-dark);" onclick="restartGame()">Play Again</button>
+        `;
+        triggerConfetti();
+      }
+
+      container.appendChild(slideEl);
+    }
+
+    function revealAnswer() {
+      const box = document.getElementById("answerBox");
+      const btn = document.getElementById("actionBtn");
+
+      if (box && !box.classList.contains("visible")) {
+        box.classList.add("visible");
+        btn.textContent = "Next Slide";
+        btn.className = "btn";
+        btn.onclick = nextSlide;
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < gameData.length - 1) {
+        currentSlide++;
+        renderSlide(currentSlide);
+      }
+    }
+
+    function restartGame() {
+      currentSlide = 0;
+      renderSlide(currentSlide);
+    }
+
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 150,
+          spread: 90,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    // Initialize first slide
+    renderSlide(0);
+  </script>
+</body>
+</html>
