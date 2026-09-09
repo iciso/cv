@@ -545,7 +545,7 @@ export default function Home() {
                           download
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors"
+                          className="inline-flex items-center bg-green-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors"
                         >
                           Download PDF <FileText className="ml-2" size={16} />
                         </a>
