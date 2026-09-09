@@ -83,7 +83,7 @@ export default function Home() {
                   Books
                 </Link>
                 <Link
-                  href="#-papers"
+                  href="#recent-papers"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
                   Papers
@@ -509,8 +509,55 @@ export default function Home() {
           </div>
         </section>
 
-                {/*  Papers Section */}
-           <section id="recent-papers"
+        {/* Recent Papers Section */}
+        <section id="recent-papers" className="mb-16 scroll-mt-20">
+          <div className="flex items-center mb-6">
+            <FileText className="mr-2 text-teal-600" size={28} />
+            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+              Recent Papers
+            </h2>
+          </div>
+        
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {recentPapers.map((paper, index) => (
+                <div
+                  key={index}
+                  className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div className="p-6 flex flex-col h-full justify-between">
+                    <div>
+                      <h4 className="text-xl font-bold text-teal-700 mb-4">{paper.title}</h4>
+                      <p className="text-gray-600 mb-6">{paper.description}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                      <a
+                        href={paper.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                      >
+                        {paper.buttonLabel || "Read Paper"} <ExternalLink className="ml-2" size={16} />
+                      </a>
+                      {paper.downloadUrl && (
+                        <a
+                          href={paper.downloadUrl}
+                          download
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors"
+                        >
+                          Download PDF <FileText className="ml-2" size={16} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* JVRC Research & AI Workflows Section */}
         <section id="jvrc-research" className="mb-16 scroll-mt-20">
           <div className="flex items-center mb-6">
