@@ -510,54 +510,7 @@ export default function Home() {
         </section>
 
                 {/*  Papers Section */}
-            <section id="-papers" className="mb-16 scroll-mt-20">
-              <div className="flex items-center mb-6">
-                <FileText className="mr-2 text-teal-600" size={28} />
-                <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
-                  Recent Papers
-                </h2>
-              </div>
-            
-              <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {recentPapers.map((paper, index) => (
-                    <div
-                      key={index}
-                      className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
-                    >
-                      <div className="p-6">
-                        <h4 className="text-xl font-bold text-teal-700 mb-4">{paper.title}</h4>
-                        <p className="text-gray-600 mb-6">{paper.description}</p>
-                        
-                        {/* Button Container */}
-                        <div className="flex flex-wrap gap-3">
-                          {/* View Paper Button */}
-                          <a
-                            href={paper.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
-                          >
-                            {paper.buttonLabel || "Read Paper"} <ExternalLink className="ml-2" size={16} />
-                          </a>
-            
-                          {/* Download PDF Button */}
-                          <a
-                            href="/TN-HIV-Review-Paper.pdf"
-                            download="TN-HIV-Review-Paper.pdf"
-                            className="inline-flex items-center border border-teal-600 text-teal-600 px-4 py-2 rounded-md hover:bg-teal-50 transition-colors"
-                          >
-                            Download PDF <Download className="ml-2" size={16} />
-                          </a>
-                        </div>
-            
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
+           <section id="recent-papers"
         {/* JVRC Research & AI Workflows Section */}
         <section id="jvrc-research" className="mb-16 scroll-mt-20">
           <div className="flex items-center mb-6">
@@ -1375,12 +1328,12 @@ const recentPapers = [
     title: "From vertical silos to integrated care: administrative agility and normalization of HIV services in Tamil Nadu, India",
     description: "An analysis of the strategic transition of HIV services in Tamil Nadu from vertical silos to an integrated care model, emphasizing the impact of administrative agility and service normalization.",
     url: "https://link.springer.com/article/10.1186/s12981-026-00897-y",
-    downloadUrl: "/TN-HIV-Review-Paper.pdf" 
+    downloadUrl: "https://cvemrafi.vercel.app/TN-HIV-Review-Paper.pdf"
   },
   {
-  "title": "Assessing the Knowledge Attitude and Practice Among the Intern Doctors About the Recent NACO Guidelines on Post Exposure Prophylaxis of HIV: A Questionnaire Based Study",
-  "description": "A descriptive observational study highlighting critical knowledge gaps and inconsistent practices among intern doctors regarding HIV PEP protocols, emphasizing the need for structured training and institutional safety support.",
-  "url": "https://drive.google.com/file/d/1TkcJA1HCTgmVA2WLut4CZyDabW1YLJ1x/view?usp=sharing"
+    title: "Assessing the Knowledge Attitude and Practice Among the Intern Doctors About the Recent NACO Guidelines on Post Exposure Prophylaxis of HIV: A Questionnaire Based Study",
+    description: "A descriptive observational study highlighting critical knowledge gaps and inconsistent practices among intern doctors regarding HIV PEP protocols, emphasizing the need for structured training and institutional safety support.",
+    url: "https://drive.google.com/file/d/1TkcJA1HCTgmVA2WLut4CZyDabW1YLJ1x/view?usp=sharing"
   }, 
   {
     title: "The India Hypertension Control Initiative–early outcomes in 26 districts across five states of India, 2018–2020",
