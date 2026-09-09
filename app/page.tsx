@@ -509,39 +509,54 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Recent Papers Section */}
-        <section id="recent-papers" className="mb-16 scroll-mt-20">
-          <div className="flex items-center mb-6">
-            <FileText className="mr-2 text-teal-600" size={28} />
-            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
-              Recent Papers
-            </h2>
-          </div>
-        
-          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {recentPapers.map((paper, index) => (
-                <div
-                  key={index}
-                  className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
-                >
-                  <div className="p-6">
-                    <h4 className="text-xl font-bold text-teal-700 mb-4">{paper.title}</h4>
-                    <p className="text-gray-600 mb-6">{paper.description}</p>
-                    <a
-                      href={paper.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                {/* Recent Papers Section */}
+            <section id="recent-papers" className="mb-16 scroll-mt-20">
+              <div className="flex items-center mb-6">
+                <FileText className="mr-2 text-teal-600" size={28} />
+                <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
+                  Recent Papers
+                </h2>
+              </div>
+            
+              <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {recentPapers.map((paper, index) => (
+                    <div
+                      key={index}
+                      className="border rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1"
                     >
-                      {paper.buttonLabel || "Read Paper"} <ExternalLink className="ml-2" size={16} />
-                    </a>
-                  </div>
+                      <div className="p-6">
+                        <h4 className="text-xl font-bold text-teal-700 mb-4">{paper.title}</h4>
+                        <p className="text-gray-600 mb-6">{paper.description}</p>
+                        
+                        {/* Button Container */}
+                        <div className="flex flex-wrap gap-3">
+                          {/* View Paper Button */}
+                          <a
+                            href={paper.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors"
+                          >
+                            {paper.buttonLabel || "Read Paper"} <ExternalLink className="ml-2" size={16} />
+                          </a>
+            
+                          {/* Download PDF Button */}
+                          <a
+                            href="/TN-HIV-Review-Paper.pdf"
+                            download="TN-HIV-Review-Paper.pdf"
+                            className="inline-flex items-center border border-teal-600 text-teal-600 px-4 py-2 rounded-md hover:bg-teal-50 transition-colors"
+                          >
+                            Download PDF <Download className="ml-2" size={16} />
+                          </a>
+                        </div>
+            
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+              </div>
+            </section>
 
         {/* JVRC Research & AI Workflows Section */}
         <section id="jvrc-research" className="mb-16 scroll-mt-20">
