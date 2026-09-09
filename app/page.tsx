@@ -1375,7 +1375,7 @@ const recentPapers = [
     title: "From vertical silos to integrated care: administrative agility and normalization of HIV services in Tamil Nadu, India",
     description: "An analysis of the strategic transition of HIV services in Tamil Nadu from vertical silos to an integrated care model, emphasizing the impact of administrative agility and service normalization.",
     url: "https://link.springer.com/article/10.1186/s12981-026-00897-y",
-    downloadUrl: "https://cvemrafi.vercel.app/TN-HIV-Review-Paper.pdf"
+    downloadUrl: "https://drive.google.com/uc?export=download&id=1wvocYpRK4wiIAhA46johXxTRQN55ilH9"
   },
   {
     title: "Assessing the Knowledge Attitude and Practice Among the Intern Doctors About the Recent NACO Guidelines on Post Exposure Prophylaxis of HIV: A Questionnaire Based Study",
