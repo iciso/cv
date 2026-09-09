@@ -83,7 +83,7 @@ export default function Home() {
                   Books
                 </Link>
                 <Link
-                  href="#recent-papers"
+                  href="#-papers"
                   className="bg-teal-800 text-white px-6 py-2 rounded-full font-medium hover:bg-teal-900 transition-colors"
                 >
                   Papers
@@ -509,8 +509,8 @@ export default function Home() {
           </div>
         </section>
 
-                {/* Recent Papers Section */}
-            <section id="recent-papers" className="mb-16 scroll-mt-20">
+                {/*  Papers Section */}
+            <section id="-papers" className="mb-16 scroll-mt-20">
               <div className="flex items-center mb-6">
                 <FileText className="mr-2 text-teal-600" size={28} />
                 <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-2 flex-grow">
@@ -1372,9 +1372,10 @@ const bookChapters = [
 
 const recentPapers = [
   {
-  "title": "From vertical silos to integrated care: administrative agility and normalization of HIV services in Tamil Nadu, India",
-  "description": "An analysis of the strategic transition of HIV services in Tamil Nadu from vertical silos to an integrated care model, emphasizing the impact of administrative agility and service normalization.",
-  "url": "https://link.springer.com/article/10.1186/s12981-026-00897-y"
+    title: "From vertical silos to integrated care: administrative agility and normalization of HIV services in Tamil Nadu, India",
+    description: "An analysis of the strategic transition of HIV services in Tamil Nadu from vertical silos to an integrated care model, emphasizing the impact of administrative agility and service normalization.",
+    url: "https://link.springer.com/article/10.1186/s12981-026-00897-y",
+    downloadUrl: "/TN-HIV-Review-Paper.pdf" 
   },
   {
   "title": "Assessing the Knowledge Attitude and Practice Among the Intern Doctors About the Recent NACO Guidelines on Post Exposure Prophylaxis of HIV: A Questionnaire Based Study",
