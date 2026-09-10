@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>25 Prophets in Islam — Their Beautiful Missions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #0d5c56;
+      --bg: #f0fdfa;
+      --text: #134e4a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      background: linear-gradient(160deg, #f0fdfa 0%, #ccfbf1 100%);
+      color: var(--text);
+      padding: 1.5rem 1rem 3rem;
+      min-height: 100vh;
+    }
+    .container { max-width: 980px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 2rem; }
+    h1 {
+      font-size: 1.85rem;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+    .subtitle { font-size: 1rem; color: #0f766e; opacity: 0.9; }
+    .intro {
+      background: white;
+      border-radius: 20px;
+      padding: 1.3rem 1.5rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 8px 25px rgba(15,118,110,0.08);
+      font-size: 0.97rem;
+      line-height: 1.55;
+    }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background: #e0f2f1;
+      border-radius: 50px;
+      padding: 0.7rem 1.5rem;
+      margin-bottom: 1.8rem;
+      gap: 0.8rem;
+    }
+    .stats span { font-weight: 600; color: #0f4c47; }
+    .badge {
+      background: var(--primary);
+      color: white;
+      padding: 0.25rem 1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+    }
+    .question-card {
+      background: white;
+      border-radius: 22px;
+      padding: 1.5rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 6px 20px rgba(0,40,30,0.06);
+      border: 1px solid #d1fae5;
+    }
+    .q-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+    .q-number {
+      background: #ccfbf1;
+      color: var(--primary-dark);
+      font-weight: 700;
+      padding: 0.25rem 1rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+    }
+    .q-text {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #0f4c47;
+    }
+    .mission-item {
+      background: #f8fffe;
+      border-radius: 16px;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1rem;
+      border: 1px solid #e0f2f1;
+    }
+    .mission-item:last-child { margin-bottom: 0; }
+    .mission-ar {
+      font-family: 'Amiri', serif;
+      font-size: 1.22rem;
+      direction: rtl;
+      text-align: right;
+      color: #0c4a43;
+      line-height: 1.7;
+      margin-bottom: 0.4rem;
+    }
+    .mission-en {
+      font-size: 0.97rem;
+      color: #1e4a45;
+      margin-bottom: 0.8rem;
+      line-height: 1.45;
+    }
+    .select-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    select {
+      background: white;
+      border: 2px solid #99f6e4;
+      border-radius: 40px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #0f4c47;
+      min-width: 230px;
+      cursor: pointer;
+    }
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15,118,110,0.15);
+    }
+    select.correct {
+      border-color: #059669;
+      background: #d1fae5;
+    }
+    select.wrong {
+      border-color: #dc2626;
+      background: #fee2e2;
+    }
+    .feedback-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+    }
+    .feedback-badge.correct { background: #a7f3d0; color: #065f46; }
+    .feedback-badge.wrong { background: #fecaca; color: #991b1b; }
+    .explanation {
+      margin-top: 0.7rem;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      display: none;
+    }
+    .explanation.show { display: block; animation: fadeIn 0.35s ease; }
+    .explanation.correct-exp {
+      background: #ecfdf5;
+      border-left: 4px solid #059669;
+      color: #065f46;
+    }
+    .explanation.wrong-exp {
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+      color: #7f1d1d;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .btn-group { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .btn {
+      border: none;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px rgba(15,118,110,0.25);
+    }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    .btn-secondary {
+      background: #e0f2f1;
+      color: #0f4c47;
+    }
+    .btn-secondary:hover { background: #ccfbf1; }
+    .score-box {
+      background: #ccfbf1;
+      padding: 0.55rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      color: #0f4c47;
+      font-size: 1.05rem;
+    }
+    .motivation {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #0f766e;
+      min-height: 1.6rem;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #99f6e4;
+      font-size: 0.9rem;
+      color: #3f6b66;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      select { min-width: 100%; }
+      .mission-ar { font-size: 1.12rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🌙✨ 25 Prophets in Islam<br>Their Beautiful Missions ✨🌙</h1>
+      <p class="subtitle">Authentic descriptions drawn mainly from the Quran</p>
+    </header>
+
+    <div class="intro">
+      <strong>How to play:</strong> Read the mission in Arabic and English.  
+      Choose the correct Prophet from the dropdown.  
+      After checking you will receive a short authentic note to help you remember the Quranic context.
+    </div>
+
+    <div class="stats">
+      <span>📋 Attempts: <span id="attemptCount">0</span> · Correct: <span id="correctCount">0</span></span>
+      <span class="badge">Quran-based Learning</span>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div class="action-bar">
+      <div class="btn-group">
+        <button class="btn btn-secondary" id="resetBtn">⟳ Reset</button>
+        <button class="btn btn-primary" id="checkBtn">✔ Check Answers</button>
+      </div>
+      <div class="score-box" id="scoreDisplay">0 / 0</div>
+    </div>
+
+    <div class="motivation" id="motivationMsg"></div>
+
+    <div class="footer">
+      One Message • One Truth • All Prophets called to the worship of Allah alone<br>
+      Made for learners of the Quran and the stories of the Anbiya
+    </div>
+  </div>
+
+<script>
+(function() {
+  const PROPHETS = [
+    "Adam (آدم)",
+    "Idris (إدريس)",
+    "Nuh (نوح)",
+    "Hud (هود)",
+    "Salih (صالح)",
+    "Ibrahim (إبراهيم)",
+    "Lut (لوط)",
+    "Ismail (إسماعيل)",
+    "Ishaq (إسحاق)",
+    "Yaqub (يعقوب)",
+    "Yusuf (يوسف)",
+    "Ayyub (أيوب)",
+    "Shuayb (شعيب)",
+    "Musa (موسى)",
+    "Harun (هارون)",
+    "Dhul-Kifl (ذو الكفل)",
+    "Dawud (داود)",
+    "Sulayman (سليمان)",
+    "Ilyas (إلياس)",
+    "Al-Yasa (اليسع)",
+    "Yunus (يونس)",
+    "Zakariyya (زكريا)",
+    "Yahya (يحيى)",
+    "Isa (عيسى)",
+    "Muhammad ﷺ (محمد)"
+  ];
+
+  const QUIZ_DATA = [
+    {
+      id: 1,
+      text: "The Beginning — Adam to Salih",
+      items: [
+        {
+          ar: "أوّل إنسان وأوّل نبيّ — علّمه الله الأسماء كلّها واستخلفه في الأرض",
+          en: "The first human and first Prophet — Allah taught him the names of all things and appointed him as a khalifah on earth.",
+          correct: "Adam (آدم)",
+          tip: "Quran 2:30-31. When the angels could not name the things, Adam did — a sign of the knowledge Allah gave him."
+        },
+        {
+          ar: "رُفع مكاناً عليّاً وكان من الصدّيقين الذين دعاهم الله إلى الحق",
+          en: "Raised to a high place and was among the truthful whom Allah called to the truth.",
+          correct: "Idris (إدريس)",
+          tip: "Quran 19:56-57. Allah says of him: “And We raised him to a high station.”"
+        },
+        {
+          ar: "لبث في قومه ألف سنة إلا خمسين عاماً ودعاهم إلى عبادة الله وحده وبنى الفلك",
+          en: "Stayed among his people for 950 years, called them to worship Allah alone, and built the Ark.",
+          correct: "Nuh (نوح)",
+          tip: "Quran 29:14. He is one of the five Ulul-Azm (Prophets of strong resolve)."
+        },
+        {
+          ar: "أرسل إلى عاد الذين كانوا ذوي قوة وبأس شديد ليعبدوا الله وحده",
+          en: "Sent to the people of ‘Ad who were strong and mighty, calling them to worship Allah alone.",
+          correct: "Hud (هود)",
+          tip: "Quran 7:65, 11:50. His people were destroyed by a furious wind."
+        },
+        {
+          ar: "أرسل إلى ثمود وآتاه الله ناقةً آيةً لهم من الصخرة",
+          en: "Sent to the people of Thamud and Allah gave him the she-camel as a clear sign from the rock.",
+          correct: "Salih (صالح)",
+          tip: "Quran 7:73, 11:64. The people hamstrung the she-camel and were seized by the punishment."
+        }
+      ]
+    },
+    {
+      id: 2,
+      text: "Ibrahim and His Family",
+      items: [
+        {
+          ar: "اتخذه الله خليلاً ودعا إلى التوحيد الخالص وابتُلي بذبح ابنه",
+          en: "Allah took him as an intimate friend (Khalil). He called to pure Tawhid and was tested with the command to sacrifice his son.",
+          correct: "Ibrahim (إبراهيم)",
+          tip: "Quran 4:125, 37:102-107. He is the father of many Prophets and a model of complete submission."
+        },
+        {
+          ar: "أنذر قومه من الفاحشة التي كانوا يأتونها في ناديهم",
+          en: "Warned his people against the shameful act they used to commit openly in their gatherings.",
+          correct: "Lut (لوط)",
+          tip: "Quran 7:80-81, 26:165-166. His people were destroyed for their persistent immorality."
+        },
+        {
+          ar: "كان صادق الوعد وساعد أباه في رفع قواعد البيت الحرام",
+          en: "True to his promise; he helped his father raise the foundations of the Sacred House (Kaaba).",
+          correct: "Ismail (إسماعيل)",
+          tip: "Quran 19:54, 2:127. He is the ancestor of the Arabs and of Prophet Muhammad ﷺ."
+        },
+        {
+          ar: "بُشّر به إبراهيم بعد إسماعيل وكان من الصالحين الذين أتمّ الله عليهم نعمته",
+          en: "Glad tidings of him were given to Ibrahim after Ismail; he was among the righteous upon whom Allah completed His favour.",
+          correct: "Ishaq (إسحاق)",
+          tip: "Quran 11:71, 37:112. He continued the prophetic lineage in the land of Canaan."
+        },
+        {
+          ar: "أبو الأسباط وصبر على فراق يوسف ودعا أبناءه إلى عبادة الله وحده",
+          en: "Father of the twelve tribes; he endured the separation from Yusuf and called his sons to worship Allah alone.",
+          correct: "Yaqub (يعقوب)",
+          tip: "Quran 12:13, 2:133. He is also known as Israel."
+        }
+      ]
+    },
+    {
+      id: 3,
+      text: "Yusuf, Ayyub, Shuayb & Musa",
+      items: [
+        {
+          ar: "صبر على السجن وفراق أهله ثم عفا عن إخوته وأصبح على خزائن الأرض",
+          en: "Patient in prison and separation from family; later he forgave his brothers and was placed in charge of the storehouses of the land.",
+          correct: "Yusuf (يوسف)",
+          tip: "The whole of Surah Yusuf. Allah says: “Indeed, he was one of Our chosen servants.” (12:24)"
+        },
+        {
+          ar: "نادى ربّه أنّي مسّني الضرّ وأنت أرحم الراحمين فصبر صبراً جميلاً",
+          en: "He called upon his Lord: “Indeed, adversity has touched me, and You are the Most Merciful of the merciful,” and he showed beautiful patience.",
+          correct: "Ayyub (أيوب)",
+          tip: "Quran 21:83-84, 38:41-44. Allah restored his health and family after his long trial."
+        },
+        {
+          ar: "أرسل إلى أهل مدين ينهاهم عن نقص المكيال والميزان والفساد في الأرض",
+          en: "Sent to the people of Madyan, forbidding them from giving short measure and weight and from spreading corruption on earth.",
+          correct: "Shuayb (شعيب)",
+          tip: "Quran 7:85, 11:84-85. He is often called the eloquent speaker of the Prophets."
+        },
+        {
+          ar: "أرسل إلى فرعون وملئه ليخرج بني إسرائيل من العذاب وأُوتي التوراة",
+          en: "Sent to Pharaoh and his chiefs to bring the Children of Israel out of oppression, and he was given the Torah.",
+          correct: "Musa (موسى)",
+          tip: "Quran 20:24, 7:103-105. He is the most mentioned Prophet in the Quran."
+        },
+        {
+          ar: "أخو موسى ووزيره الذي شدّ الله به أزره في الدعوة",
+          en: "The brother of Musa and his helper; Allah strengthened Musa through him in the call.",
+          correct: "Harun (هارون)",
+          tip: "Quran 20:29-36, 25:35. He was known for his eloquence and loyalty."
+        }
+      ]
+    },
+    {
+      id: 4,
+      text: "Dawud to Yunus",
+      items: [
+        {
+          ar: "آتيناه الحكمة وفصل الخطاب وألنّا له الحديد وعلّمناه الزبور",
+          en: "We gave him wisdom and decisive speech, softened iron for him, and taught him the Zabur.",
+          correct: "Dawud (داود)",
+          tip: "Quran 21:79, 34:10, 17:55. He combined prophethood with just kingship."
+        },
+        {
+          ar: "سخّر الله له الريح والجنّ وعلّمه منطق الطير وأوتي من كل شيء",
+          en: "Allah subjected the wind and the jinn to him, taught him the language of birds, and gave him of all things.",
+          correct: "Sulayman (سليمان)",
+          tip: "Quran 27:16-17, 34:12, 38:36. He is a model of gratitude and just rule."
+        },
+        {
+          ar: "قال لقومه: أتدعون بعلاً وتذرون أحسن الخالقين",
+          en: "He said to his people: “Do you call upon Baal and leave the Best of creators?”",
+          correct: "Ilyas (إلياس)",
+          tip: "Quran 37:123-126. He called the Israelites away from the worship of Baal."
+        },
+        {
+          ar: "من الأنبياء الذين أثنى الله عليهم مع إسماعيل واليسع وذي الكفل",
+          en: "One of the Prophets whom Allah praised together with Ismail, Al-Yasa and Dhul-Kifl.",
+          correct: "Al-Yasa (اليسع)",
+          tip: "Quran 6:86, 38:48. He continued the guidance among the Children of Israel."
+        },
+        {
+          ar: "ابتلعه الحوت وهو مليم ثم نادى في الظلمات أن لا إله إلا أنت سبحانك",
+          en: "The fish swallowed him while he was blameworthy; then he called out in the darknesses: “There is no god but You; glory be to You.”",
+          correct: "Yunus (يونس)",
+          tip: "Quran 21:87, 37:139-148. His people believed after him and were saved."
+        }
+      ]
+    },
+    {
+      id: 5,
+      text: "The Final Prophets",
+      items: [
+        {
+          ar: "دعا ربّه نداءً خفيّاً أن يهب له من لدنه ذرّيةً طيّبة",
+          en: "He called upon his Lord with a quiet call that He would grant him pure offspring from Himself.",
+          correct: "Zakariyya (زكريا)",
+          tip: "Quran 19:2-7, 3:38. He was given Yahya in his old age."
+        },
+        {
+          ar: "آتاه الله الحكم صبيّاً وكان مصدّقاً بكلمة من الله وحصوراً ونبيّاً",
+          en: "Allah gave him wisdom while still a boy; he was confirming a Word from Allah, noble, chaste, and a Prophet.",
+          correct: "Yahya (يحيى)",
+          tip: "Quran 19:12, 3:39. He confirmed the coming of Isa."
+        },
+        {
+          ar: "وُلد من غير أب، وأُوتي الإنجيل، وكلّم الناس في المهد، وكان وجيهاً في الدنيا والآخرة",
+          en: "Born without a father, given the Injil, spoke to people in the cradle, and was held in honour in this world and the Hereafter.",
+          correct: "Isa (عيسى)",
+          tip: "Quran 3:45-49, 19:30. Muslims believe he was not crucified but raised by Allah."
+        },
+        {
+          ar: "خاتم النبيين والمرسلين، أرسله الله إلى الناس كافة بشيراً ونذيراً",
+          en: "The Seal of the Prophets and Messengers; Allah sent him to all mankind as a bearer of glad tidings and a warner.",
+          correct: "Muhammad ﷺ (محمد)",
+          tip: "Quran 33:40, 34:28, 7:158. Believing in him is part of the testimony of faith."
+        },
+        {
+          ar: "من الأنبياء الذين صبروا وكانوا من الأخيار",
+          en: "One of the Prophets who were patient and were among the chosen.",
+          correct: "Dhul-Kifl (ذو الكفل)",
+          tip: "Quran 21:85, 38:48. He is mentioned alongside Ismail and Idris as among the patient."
+        }
+      ]
+    }
+  ];
+
+  let userSelections = {};
+  let feedbackState = {};
+  let attemptCounter = 0;
+
+  const container = document.getElementById('quizContainer');
+  const scoreDisplay = document.getElementById('scoreDisplay');
+  const correctSpan = document.getElementById('correctCount');
+  const attemptSpan = document.getElementById('attemptCount');
+  const motivationMsg = document.getElementById('motivationMsg');
+
+  function renderQuiz() {
+    let html = '';
+    QUIZ_DATA.forEach((q, qIdx) => {
+      html += `<div class="question-card">`;
+      html += `<div class="q-header"><span class="q-number">Part ${q.id}</span><span class="q-text">${q.text}</span></div>`;
+
+      q.items.forEach((item, iIdx) => {
+        const key = `${qIdx}-${iIdx}`;
+        const selected = userSelections[key] || '';
+        const fb = feedbackState[key] || '';
+
+        html += `<div class="mission-item">`;
+        html += `<div class="mission-ar">${item.ar}</div>`;
+        html += `<div class="mission-en">${item.en}</div>`;
+        html += `<div class="select-row">`;
+        html += `<select class="${fb}" data-key="${key}">`;
+        html += `<option value="">— Choose the Prophet —</option>`;
+        PROPHETS.forEach(p => {
+          html += `<option value="${p}" ${selected === p ? 'selected' : ''}>${p}</option>`;
+        });
+        html += `</select>`;
+        if (fb === 'correct') html += `<span class="feedback-badge correct">✓ Correct</span>`;
+        else if (fb === 'wrong') html += `<span class="feedback-badge wrong">✗</span>`;
+        html += `</div>`;
+
+        if (fb) {
+          const isCorrect = fb === 'correct';
+          html += `<div class="explanation show ${isCorrect ? 'correct-exp' : 'wrong-exp'}">
+            ${isCorrect ? '✓ Well done!' : '✗ The correct answer is <strong>' + item.correct + '</strong>.'}<br>
+            ${item.tip}
+          </div>`;
+        }
+        html += `</div>`;
+      });
+      html += `</div>`;
+    });
+
+    container.innerHTML = html;
+
+    document.querySelectorAll('select[data-key]').forEach(sel => {
+      sel.addEventListener('change', function() {
+        const key = this.dataset.key;
+        if (this.value === '') {
+          delete userSelections[key];
+          delete feedbackState[key];
+        } else {
+          userSelections[key] = this.value;
+          delete feedbackState[key];
+        }
+        this.classList.remove('correct', 'wrong');
+        renderQuiz();
+      });
+    });
+
+    updateScore();
+  }
+
+  function updateScore() {
+    let correct = 0;
+    let total = 0;
+    for (const key in feedbackState) {
+      total++;
+      if (feedbackState[key] === 'correct') correct++;
+    }
+    scoreDisplay.textContent = `${correct} / ${total}`;
+    correctSpan.textContent = correct;
+    attemptSpan.textContent = attemptCounter;
+
+    if (total === 0) {
+      motivationMsg.textContent = '';
+    } else {
+      const percent = Math.round((correct / total) * 100);
+      if (percent === 100) {
+        motivationMsg.textContent = "MashaAllah! You have connected the Prophets with their authentic Quranic missions.";
+      } else if (percent >= 80) {
+        motivationMsg.textContent = "Excellent! Your knowledge of the stories of the Anbiya is strong.";
+      } else if (percent >= 60) {
+        motivationMsg.textContent = "Good progress. The short notes will help you remember the Quranic context.";
+      } else {
+        motivationMsg.textContent = "Keep going. Every correct answer brings you closer to the stories of the Prophets.";
+      }
+    }
+  }
+
+  function checkAnswers() {
+    let hasAnswers = false;
+    QUIZ_DATA.forEach((q, qIdx) => {
+      q.items.forEach((item, iIdx) => {
+        const key = `${qIdx}-${iIdx}`;
+        if (userSelections[key]) {
+          hasAnswers = true;
+          feedbackState[key] = (userSelections[key] === item.correct) ? 'correct' : 'wrong';
+        }
+      });
+    });
+    if (hasAnswers) attemptCounter++;
+    renderQuiz();
+  }
+
+  function resetAll() {
+    userSelections = {};
+    feedbackState = {};
+    motivationMsg.textContent = '';
+    renderQuiz();
+  }
+
+  document.getElementById('checkBtn').addEventListener('click', checkAnswers);
+  document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+  renderQuiz();
+})();
+</script>
+</body>
+</html>
