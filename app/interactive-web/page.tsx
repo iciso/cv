@@ -138,7 +138,7 @@ const interactiveWebPages = [
   { title: "KY Takaful Details", category: "Islamic Finance", description: "Cooperative insurance structural breakdown and calculation module.", url: "/web/ky-takaful-details.html" },
   { title: "KY Trees (Y)", category: "Knowledge Tree", description: "Alternative branching concept mapping visualization app.", url: "/web/ky-y-trees.html" },
   { title: "KY Xmas Dreams", category: "Interactive Xmas Explorer", description: "To think about the Truth of Xmas and its celebrations.", url: "/web/xmas-dreams.html" },
-  { title: "Life Choices", category: "Spiritual Cleansing", description: "Interactive quiz that cleanses the soul by training on life-choices", url: "/web/life-choices.html" },
+  { title: "Life Choices", category: "Spiritual Cleansing", description: "Interactive quiz that cleanses the soul by training on life-choices", url: "/web/life-choices-quiz.html" },
   { title: "Linear Regression - ML", category: "Interactive ML Training", description: "Interactive graph which trains the straight line to best fit a set of data points", url: "/web/linear-regression.html" },
   { title: "Loan Outcomes Quiz", category: "Islamic Studies", description: "Explore the Fiqh of Loans, its ruling, evidence from Quran & Sunnah, and play its quiz.", url: "/web/islam-loan.html" },
   { title: "Match Islamic Terms", category: "Matching Quiz", description: "A Beginner's minimalist matching quiz of Islamic terms.", url: "/web/match-islamic-terms.html" },
