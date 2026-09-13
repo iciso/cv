@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>The 14 Arkans of Salah (Pillars of Prayer)</title>
+  
+  <!-- Bootstrap 5 CSS & FontAwesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary-color: #0d6efd;
+      --secondary-color: #0f5132;
+      --gold-accent: #d4af37;
+      --bg-light: #f8f9fa;
+      --card-border-radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-light);
+      color: #212529;
+    }
+
+    .arabic-text {
+      font-family: 'Amiri', serif;
+      font-size: 1.35rem;
+      color: #0f5132;
+      direction: rtl;
+    }
+
+    /* Header Styling */
+    .hero-header {
+      background: linear-gradient(135deg, #0f5132 0%, #1e4620 100%);
+      color: #ffffff;
+      padding: 3rem 1rem;
+      border-bottom: 5px solid var(--gold-accent);
+    }
+
+    .headinginfo-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 10px 15px;
+      text-align: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .headinginfo-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold-accent);
+      margin: 0;
+    }
+
+    .headinginfo-text {
+      font-size: 0.85rem;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Grid & Cards */
+    .card-arkan {
+      border: none;
+      border-radius: var(--card-border-radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-arkan:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .arkan-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 36px;
+      height: 36px;
+      background-color: #0f5132;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .card-arkan .card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      padding-top: 3.2rem;
+    }
+
+    .arkan-icon {
+      font-size: 2.2rem;
+      color: var(--gold-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-arkan {
+      background-color: #0f5132;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      transition: background-color 0.2s;
+    }
+
+    .btn-arkan:hover {
+      background-color: #146c43;
+      color: white;
+    }
+
+    /* Interactive Quiz Section */
+    .quiz-section {
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      padding: 2rem;
+      margin-top: 3rem;
+      border-top: 4px solid var(--gold-accent);
+    }
+
+    .quiz-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid #0f5132;
+    }
+
+    .modal-header {
+      background-color: #0f5132;
+      color: white;
+    }
+
+    .modal-header .btn-close {
+      filter: invert(1);
+    }
+
+    .hadith-quote {
+      font-style: italic;
+      background: #e8f5e9;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border-left: 3px solid #0f5132;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Header -->
+  <header class="hero-header mb-4">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-12 col-lg-5 mb-3 mb-lg-0">
+          <h1 class="fw-bold mb-2">THE 14 ARKANS OF SALAH</h1>
+          <p class="lead mb-0 fs-6">The essential pillars required for a valid Islamic prayer, designed for new Muslims and learners.</p>
+        </div>
+        <div class="col-12 col-lg-7">
+          <div class="row g-2 justify-content-center justify-content-lg-end">
+            <div class="col-6 col-sm-3">
+              <div class="headinginfo-card">
+                <p class="headinginfo-number">14</p>
+                <p class="headinginfo-text">Pillars (Arkan)</p>
+              </div>
+            </div>
+            <div class="col-6 col-sm-3">
+              <div class="headinginfo-card">
+                <p class="headinginfo-number">20</p>
+                <p class="headinginfo-text">Quiz Questions</p>
+              </div>
+            </div>
+            <div class="col-6 col-sm-3">
+              <div class="headinginfo-card">
+                <p class="headinginfo-number">7</p>
+                <p class="headinginfo-text">Sujood Parts</p>
+              </div>
+            </div>
+            <div class="col-6 col-sm-3">
+              <div class="headinginfo-card">
+                <p class="headinginfo-number">100%</p>
+                <p class="headinginfo-text">Focus (Khushoo)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container mb-5">
+    
+    <!-- 14 Pillars Interactive Grid -->
+    <div id="arkan-grid" class="row g-3">
+      <!-- Injected dynamically via JS -->
+    </div>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section mt-5" id="quiz-anchor">
+      <div class="text-center mb-4">
+        <h2 class="fw-bold text-success"><i class="fa-solid fa-graduation-cap me-2"></i>Comprehensive Knowledge Check (20 Questions)</h2>
+        <p class="text-muted">Test your understanding of every Pillar of Salah with Qur'anic and Hadith references.</p>
+      </div>
+
+      <form id="quiz-form">
+        <div id="quiz-questions-container">
+          <!-- Quiz items injected dynamically -->
+        </div>
+
+        <div class="text-center mt-4">
+          <button type="button" class="btn btn-success btn-lg px-5 shadow-sm" onclick="submitQuiz()">
+            <i class="fa-solid fa-paper-plane me-2"></i>Submit Quiz
+          </button>
+        </div>
+      </form>
+
+      <div id="quiz-results" class="mt-4 d-none">
+        <!-- Results rendered here -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Arkan Details Modal -->
+  <div class="modal fade" id="arkanModal" tabindex="-1" aria-labelledby="arkanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title id-title" id="arkanModalLabel">Pillar Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-body-content">
+          <!-- Modal content injected dynamically -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Data Structure for the 14 Arkans (Pillars) of Salah
+    const arkansData = [
+      {
+        id: 1,
+        title: "Qiyam (Standing)",
+        arabic: "القيام مع القدرة",
+        icon: "fa-person",
+        shortDesc: "Standing upright during obligatory prayers if physically capable.",
+        details: "One must stand upright during obligatory prayers if able. Prophet Muhammad ﷺ told Imran ibn Husayn: 'Pray standing; if you cannot, then sitting; and if you cannot, then on your side.' (Sahih al-Bukhari 1117).",
+        tips: "Keep your weight balanced on both feet and fix your gaze on the place of prostration."
+      },
+      {
+        id: 2,
+        title: "Takbirat al-Ihram",
+        arabic: "تكبيرة الإحرام",
+        icon: "fa-hands",
+        shortDesc: "The opening 'Allahu Akbar' that enters you into the state of prayer.",
+        details: "Saying 'Allahu Akbar' (Allah is the Greatest) at the start of prayer. The Prophet ﷺ said: 'The key to prayer is purification, its prohibition is the Takbir, and its permission is the Taslim.' (Sunan Abi Dawud 61).",
+        tips: "Raise your hands shoulder or ear level when pronouncing the Takbir."
+      },
+      {
+        id: 3,
+        title: "Reciting Surah Al-Fatiha",
+        arabic: "قراءة الفاتحة",
+        icon: "fa-book-quran",
+        shortDesc: "Reciting the opening chapter of the Qur'an in every Rakat.",
+        details: "Surah Al-Fatiha must be recited in every unit (Rakat). The Prophet ﷺ said: 'There is no prayer for the one who does not recite the Opening of the Book (Al-Fatiha).' (Sahih al-Bukhari 756).",
+        tips: "Recite slowly and deliberately, reflecting on each verse."
+      },
+      {
+        id: 4,
+        title: "Ruku' (Bowing)",
+        arabic: "الركوع",
+        icon: "fa-child-reaching",
+        shortDesc: "Bowing with back flat and hands resting on the knees.",
+        details: "Allah commands in the Qur'an: 'O you who have believed, bow and prostrate and worship your Lord...' (Surah Al-Hajj 22:77). Your back should be flat and level.",
+        tips: "Grasp your knees firmly with fingers spread apart."
+      },
+      {
+        id: 5,
+        title: "Rising from Ruku'",
+        arabic: "الرفع من الركوع",
+        icon: "fa-arrow-up-long",
+        shortDesc: "Returning upwards from the bowing posture.",
+        details: "Rising back up from Ruku' to a full upright position before proceeding to Sujood. The Prophet ﷺ always raised his head until his spine straightened completely.",
+        tips: "Say 'Sami'Allahu liman hamidah' (Allah hears the one who praises Him) while rising."
+      },
+      {
+        id: 6,
+        title: "I'tidal (Standing Straight)",
+        arabic: "الاعتدال قائماً",
+        icon: "fa-child",
+        shortDesc: "Standing completely straight and at ease after bowing.",
+        details: "Pausing in a fully upright standing position after rising from Ruku'. The Prophet ﷺ said to the man who prayed poorly: 'Then rise until you stand upright and feel at ease.' (Sahih al-Bukhari 757).",
+        tips: "Ensure all vertebrae settle back into place; say 'Rabbana wa lakal-hamd'."
+      },
+      {
+        id: 7,
+        title: "Sujood (Prostration)",
+        arabic: "السجود",
+        icon: "fa-person-dots-from-line",
+        shortDesc: "Prostrating firmly on 7 limbs/parts of the body.",
+        details: "The Prophet ﷺ said: 'I have been commanded to prostrate on seven bones: the forehead (and he pointed to his nose), both hands, both knees, and the ends of both feet.' (Sahih al-Bukhari 812).",
+        tips: "Keep elbows raised off the floor and away from your sides."
+      },
+      {
+        id: 8,
+        title: "Rising from Sujood",
+        arabic: "الرفع من السجود",
+        icon: "fa-arrow-up",
+        shortDesc: "Lifting the head and body up from prostration.",
+        details: "Lifting your head and torso from Sujood to transition into the sitting position. It is an essential link between the two prostrations.",
+        tips: "Say 'Allahu Akbar' while moving up."
+      },
+      {
+        id: 9,
+        title: "Sitting Between Sujoods",
+        arabic: "الجلسة بين السجدتين",
+        icon: "fa-chair",
+        shortDesc: "Sitting calmly between the two prostrations.",
+        details: "Sitting upright on your left foot with the right foot upright (Iftirash) between the first and second prostration. The Prophet ﷺ used to pause here until every bone returned to its joint.",
+        tips: "Recite 'Rabbighfir li' (My Lord, forgive me) during this pause."
+      },
+      {
+        id: 10,
+        title: "At-Tuma'ninah (Tranquility)",
+        arabic: "الطمأنينة",
+        icon: "fa-heart",
+        shortDesc: "Maintaining calm and stillness in every physical posture.",
+        details: "Being at ease and remaining motionless in each physical posture. The Prophet ﷺ told the worshipper who rushed: 'Go back and pray, for you have not prayed.' (Sahih al-Bukhari 757).",
+        tips: "Never rush; pause long enough for every bone to settle in place."
+      },
+      {
+        id: 11,
+        title: "Final Tashahhud",
+        arabic: "التشهد الأخير",
+        icon: "fa-hands-praying",
+        shortDesc: "Reciting the testimony and greetings in the final sitting.",
+        details: "Reciting the prescribed testimony (Attahiyyatu lillahi...) taught by the Prophet ﷺ to Ibn Mas'ud: 'When one of you sits in prayer, let him say: All compliments, prayers, and pure actions are due to Allah...'",
+        tips: "Point the index finger of the right hand toward the Qiblah as a symbol of Tawhid (Oneness of God)."
+      },
+      {
+        id: 12,
+        title: "Sitting for Final Tashahhud",
+        arabic: "الجلوس للتشهد الأخير",
+        icon: "fa-user-clock",
+        shortDesc: "The physical act of sitting to recite the final Tashahhud & Taslim.",
+        details: "Remaining seated for the entire duration required to complete the final Tashahhud and the concluding Taslim.",
+        tips: "In prayers with 3 or 4 Rakats, sit in Tawarruk position (left foot under right leg, left buttock on ground)."
+      },
+      {
+        id: 13,
+        title: "The Taslim (Salutation)",
+        arabic: "التسليم",
+        icon: "fa-bell",
+        shortDesc: "Ending prayer by saying 'As-salamu alaykum wa rahmatullah'.",
+        details: "Saying 'As-salamu alaykum wa rahmatullah' (Peace and mercy of Allah be upon you) while turning the head. The Prophet ﷺ said: '...and its permission [to exit] is the Taslim.' (Sunan Abi Dawud 61).",
+        tips: "Turn your head enough so that someone behind you can see your cheek."
+      },
+      {
+        id: 14,
+        title: "Tartib (Proper Order)",
+        arabic: "الترتيب",
+        icon: "fa-list-ol",
+        shortDesc: "Performing all pillars sequentially without skipping or swapping.",
+        details: "Executing each pillar in the exact order established by the Sunnah. Prophet Muhammad ﷺ commanded: 'Pray as you have seen me praying.' (Sahih al-Bukhari 631).",
+        tips: "Follow the natural flow of prayer sequentially step-by-step."
+      }
+    ];
+
+    // Expanded 20-Question Quiz Dataset covering every Rukn with Hadith/Quran quotes
+    const quizQuestions = [
+      {
+        q: "The Prophet ﷺ said: 'Pray as you have seen me praying' (Sahih al-Bukhari 631). Which Rukn requires performing all actions in exact sequential order?",
+        options: ["At-Tuma'ninah (Tranquility)", "Tartib (Proper Order)", "Final Tashahhud", "Qiyam (Standing)"],
+        answer: 1,
+        explain: "Tartib (Pillar #14) means keeping the exact order taught by the Prophet ﷺ. Swapping or skipping steps invalidates prayer."
+      },
+      {
+        q: "In Sahih al-Bukhari (1117), the Prophet ﷺ told Imran ibn Husayn: 'Pray standing; if you cannot, then sitting...' Which Rukn (Pillar #1) does this verse address?",
+        options: ["Qiyam (Standing with capacity)", "Sitting for Tashahhud", "I'tidal", "Sujood"],
+        answer: 0,
+        explain: "Qiyam is an essential pillar in obligatory prayers for those physically capable. If incapacitated, sitting is permitted."
+      },
+      {
+        q: "The Prophet ﷺ stated: 'The key to prayer is purification, its prohibition is the Takbir, and its permission is the Taslim' (Sunan Abi Dawud 61). What is the opening Takbir called?",
+        options: ["Takbirat al-Ruku'", "Takbirat al-Ihram", "Takbirat al-Sujood", "Taslim"],
+        answer: 1,
+        explain: "Takbirat al-Ihram (Pillar #2) is the initial 'Allahu Akbar' that prohibits non-prayer actions."
+      },
+      {
+        q: "The Prophet ﷺ explicitly taught: 'There is no prayer for the one who does not recite the Opening of the Book' (Sahih al-Bukhari 756). Which Surah is this?",
+        options: ["Surah Al-Ikhlas", "Surah Al-Fatiha", "Surah Al-Nas", "Surah Al-Falaq"],
+        answer: 1,
+        explain: "Surah Al-Fatiha (Pillar #3) must be recited in every single Rakat for the prayer to be valid."
+      },
+      {
+        q: "Allah subhanahu wa ta'ala says in the Qur'an: 'O you who have believed, bow and prostrate and worship your Lord...' (Surah Al-Hajj 22:77). Which pillar refers to bowing?",
+        options: ["Sujood", "Ruku'", "I'tidal", "Qiyam"],
+        answer: 1,
+        explain: "Ruku' (Pillar #4) is bowing down with hands resting on knees and back level."
+      },
+      {
+        q: "When returning upwards from the bowing posture (Rising from Ruku' - Pillar #5), what phrase is sunnah to recite while rising?",
+        options: ["Subhana Rabbiyal A'la", "Sami'Allahu liman hamidah", "Astaghfirullah", "Allahu Akbar"],
+        answer: 1,
+        explain: "When rising from Ruku', the worshipper says 'Sami'Allahu liman hamidah' (Allah hears the one who praises Him)."
+      },
+      {
+        q: "In the famous Hadith of 'The Man Who Prayed Badly' (Hadith Musi' Salatah), the Prophet ﷺ told him: 'Then rise until you stand upright and feel at ease.' Which Pillar (#6) is this?",
+        options: ["I'tidal (Standing Straight after Ruku')", "Final Tashahhud", "Qiyam", "Sitting Between Sujoods"],
+        answer: 0,
+        explain: "I'tidal is coming back to a complete, straight, and restful standing posture after bowing."
+      },
+      {
+        q: "The Messenger of Allah ﷺ said: 'I have been commanded to prostrate on seven bones...' (Sahih al-Bukhari 812). Which Pillar (#7) is this?",
+        options: ["Ruku'", "Sujood", "Jalsa", "Qiyam"],
+        answer: 1,
+        explain: "Sujood is prostration on 7 body parts: forehead/nose, both palms, both knees, and toes of both feet."
+      },
+      {
+        q: "Which seven limbs must touch the ground during Sujood as mentioned in authentic Hadith?",
+        options: [
+          "Forehead/Nose, 2 Palms, 2 Knees, Toes of 2 Feet",
+          "Forehead, 2 Elbows, 2 Knees, 2 Feet",
+          "Nose, 2 Palms, 2 Thighs, 2 Feet",
+          "Forehead, 2 Hands, 2 Shoulders, 2 Feet"
+        ],
+        answer: 0,
+        explain: "Forehead/nose count as 1 area, along with 2 hands, 2 knees, and the toes of both feet (total 7)."
+      },
+      {
+        q: "What is Pillar #8, which transitions the worshipper out of the first prostration?",
+        options: ["Rising from Sujood", "Rising from Ruku'", "Taslim", "Takbirat al-Ihram"],
+        answer: 0,
+        explain: "Rising from Sujood is an essential movement lifting the head and body off the floor."
+      },
+      {
+        q: "Between the two prostrations, a worshipper must sit calmly (Pillar #9). What supplicatory phrase is recommended during this sitting?",
+        options: ["Rabbighfir li (My Lord, forgive me)", "Subhanallah", "Alhamdulillah", "La ilaha illallah"],
+        answer: 0,
+        explain: "It is Sunnah to recite 'Rabbighfir li, Rabbighfir li' while sitting between the two prostrations."
+      },
+      {
+        q: "The Prophet ﷺ told a companion who rushed his prayer: 'Go back and pray, for you have not prayed' (Sahih al-Bukhari 757). Which vital Pillar (#10) was missing?",
+        options: ["At-Tuma'ninah (Tranquility and Stillness)", "Reciting long Surahs", "Raising hands high", "Wearing a turban"],
+        answer: 0,
+        explain: "At-Tuma'ninah requires stillness and calmness in every posture long enough for all joints to settle."
+      },
+      {
+        q: "Which recitation forms Pillar #11 during the last sitting of prayer?",
+        options: ["Surah Al-Yasin", "Final Tashahhud (Attahiyyatu...)", "Ayat al-Kursi", "Du'a Qunut"],
+        answer: 1,
+        explain: "The Final Tashahhud (bearing witness to Tawhid and the Prophethood of Muhammad ﷺ) is Pillar #11."
+      },
+      {
+        q: "Pillar #12 distinguishes the physical posture required to recite the final testimony. What is it?",
+        options: ["Sitting for the Final Tashahhud", "Standing in Qiyam", "Prostrating in Sujood", "Bowing in Ruku'"],
+        answer: 0,
+        explain: "The physical act of sitting long enough to complete the Final Tashahhud and Taslim is Pillar #12."
+      },
+      {
+        q: "The Prophet ﷺ said: '...and its permission [to exit prayer] is the Taslim' (Sunan Abi Dawud 61). What phrase constitutes the Taslim (Pillar #13)?",
+        options: [
+          "As-salamu alaykum wa rahmatullah",
+          "Subhanallahi wa bihamdihi",
+          "Astaghfirullah al-Azim",
+          "Alhamdulillah Rabbil Alamin"
+        ],
+        answer: 0,
+        explain: "The Taslim is saying 'As-salamu alaykum wa rahmatullah' while turning the head to conclude the prayer."
+      },
+      {
+        q: "If a person deliberately omits a Pillar (Rukn) of prayer, can it be compensated merely by Sujood al-Sahw (Prostration of Forgetfulness)?",
+        options: [
+          "No, a pillar must be performed; omitting it deliberately invalidates the prayer.",
+          "Yes, Sujood al-Sahw fixes everything.",
+          "Yes, as long as you ask for forgiveness.",
+          "No, but paying charity replaces it."
+        ],
+        answer: 0,
+        explain: "A Rukn (Pillar) is mandatory. If omitted, the unit or entire prayer is invalid unless the pillar itself is actually performed."
+      },
+      {
+        q: "Allah says in the Qur'an: 'And establish prayer and give Zakah and bow with those who bow' (Surah Al-Baqarah 2:43). What does this emphasize regarding congregational prayer and Ruku'?",
+        options: [
+          "Salah and its physical movements are divine obligations.",
+          "Prayer is optional.",
+          "Zakah replaces Salah.",
+          "Bowing is only for previous nations."
+        ],
+        answer: 0,
+        explain: "Establishing Salah with its designated pillars like Ruku' is directly commanded in the Qur'an."
+      },
+      {
+        q: "In Surah Al-Muzzammil (73:20), Allah commands: '...so recite what is easy from the Qur'an.' Which pillar relies on Quranic recitation after Takbir?",
+        options: ["Recitation of Surah Al-Fatiha", "At-Tuma'ninah", "Taslim", "I'tidal"],
+        answer: 0,
+        explain: "Reciting Al-Fatiha (and additional verses) fulfills the divine command to recite the Qur'an during Salah."
+      },
+      {
+        q: "Why is At-Tuma'ninah (Tranquility) considered a pillar in EVERY physical posture (Ruku', Sujood, Sitting, Standing)?",
+        options: [
+          "Because prayer without stillness lacks devotion and valid execution as taught by the Prophet ﷺ.",
+          "To make the prayer as long as possible.",
+          "It is only required for elderly worshippers.",
+          "It is just a recommended Sunnah."
+        ],
+        answer: 0,
+        explain: "Without pausing until bones rest in place, the movement is incomplete and rejected as per Hadith Musi' Salatah."
+      },
+      {
+        q: "How many total Arkans (Pillars) must a new Muslim learn to properly establish valid Salah?",
+        options: ["10 Pillars", "12 Pillars", "14 Pillars", "17 Pillars"],
+        answer: 2,
+        explain: "There are 14 core Arkans (Pillars) agreed upon by major Islamic jurisprudence schools."
+      }
+    ];
+
+    // Render Grid Cards using Loop
+    function renderGrid() {
+      const gridContainer = document.getElementById('arkan-grid');
+      let html = '';
+
+      for (let i = 0; i < arkansData.length; i++) {
+        const item = arkansData[i];
+        html += `
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card card-arkan" onclick="openModal(${item.id})">
+              <div class="arkan-badge">${item.id}</div>
+              <div class="card-body">
+                <div>
+                  <div class="arkan-icon"><i class="fa-solid ${item.icon}"></i></div>
+                  <h5 class="fw-bold fs-6 mb-1">${item.title}</h5>
+                  <div class="arabic-text mb-2">${item.arabic}</div>
+                  <p class="text-muted small">${item.shortDesc}</p>
+                </div>
+                <button class="btn btn-arkan mt-2"><i class="fa-solid fa-circle-info me-1"></i> Learn More</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      gridContainer.innerHTML = html;
+    }
+
+    // Render Quiz using Loop
+    function renderQuiz() {
+      const quizContainer = document.getElementById('quiz-questions-container');
+      let html = '';
+
+      for (let i = 0; i < quizQuestions.length; i++) {
+        const qItem = quizQuestions[i];
+        html += `
+          <div class="quiz-card">
+            <h6 class="fw-bold mb-3"><span class="badge bg-success me-2">Q${i + 1}</span> ${qItem.q}</h6>
+            <div class="row g-2">
+        `;
+
+        for (let j = 0; j < qItem.options.length; j++) {
+          html += `
+            <div class="col-12 col-md-6">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question_${i}" id="q_${i}_opt_${j}" value="${j}">
+                <label class="form-check-label w-100" for="q_${i}_opt_${j}">
+                  ${qItem.options[j]}
+                </label>
+              </div>
+            </div>
+          `;
+        }
+
+        html += `
+            </div>
+          </div>
+        `;
+      }
+      quizContainer.innerHTML = html;
+    }
+
+    // Open Detail Modal
+    function openModal(id) {
+      const item = arkansData.find(a => a.id === id);
+      if (!item) return;
+
+      document.getElementById('arkanModalLabel').innerText = `Pillar ${item.id}: ${item.title}`;
+      document.getElementById('modal-body-content').innerHTML = `
+        <div class="text-center mb-3">
+          <i class="fa-solid ${item.icon} text-success display-4 mb-2"></i>
+          <div class="arabic-text fs-3">${item.arabic}</div>
+        </div>
+        <h6 class="fw-bold text-success"><i class="fa-solid fa-book-open me-2"></i>Description & Evidence</h6>
+        <p>${item.details}</p>
+        <hr>
+        <h6 class="fw-bold text-success"><i class="fa-solid fa-lightbulb me-2"></i>Practical Tip for Beginners</h6>
+        <p class="text-muted bg-light p-3 rounded border-start border-4 border-success">${item.tips}</p>
+      `;
+
+      const myModal = new bootstrap.Modal(document.getElementById('arkanModal'));
+      myModal.show();
+    }
+
+    // Calculate & Display Quiz Results
+    function submitQuiz() {
+      let score = 0;
+      let total = quizQuestions.length;
+      let resultsHtml = `<div class="card p-3 border-0 bg-light">
+        <h4 class="fw-bold text-center mb-3">Quiz Summary & Key Takeaways</h4>`;
+
+      for (let i = 0; i < total; i++) {
+        const selectedOpt = document.querySelector(`input[name="question_${i}"]:checked`);
+        const qItem = quizQuestions[i];
+
+        if (selectedOpt && parseInt(selectedOpt.value) === qItem.answer) {
+          score++;
+          resultsHtml += `
+            <div class="alert alert-success py-2 mb-2">
+              <i class="fa-solid fa-circle-check me-2"></i><strong>Q${i + 1}: Correct!</strong> ${qItem.explain}
+            </div>
+          `;
+        } else {
+          const userAnsText = selectedOpt ? qItem.options[parseInt(selectedOpt.value)] : "No answer selected";
+          resultsHtml += `
+            <div class="alert alert-danger py-2 mb-2">
+              <i class="fa-solid fa-circle-xmark me-2"></i><strong>Q${i + 1}: Incorrect.</strong><br>
+              <small>Your answer: ${userAnsText}</small><br>
+              <small><strong>Correct answer:</strong> ${qItem.options[qItem.answer]}</small><br>
+              <small class="text-dark">${qItem.explain}</small>
+            </div>
+          `;
+        }
+      }
+
+      const percentage = Math.round((score / total) * 100);
+      resultsHtml = `
+        <div class="alert ${percentage >= 75 ? 'alert-success' : 'alert-warning'} text-center fs-5 mb-4 fw-bold">
+          You scored ${score} out of ${total} (${percentage}%)
+        </div>
+      ` + resultsHtml + `</div>`;
+
+      const resultsContainer = document.getElementById('quiz-results');
+      resultsContainer.innerHTML = resultsHtml;
+      resultsContainer.classList.remove('d-none');
+
+      // Scroll smoothly to results
+      resultsContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Initialize Page
+    document.addEventListener("DOMContentLoaded", function() {
+      renderGrid();
+      renderQuiz();
+    });
+  </script>
+</body>
+</html>
