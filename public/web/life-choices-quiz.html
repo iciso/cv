@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Choices We Face | Nafs or Allah?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --accent: #10b981;
+    --accent-dark: #059669;
+    --danger: #ef4444;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: #334155;
+    --gold: #fbbf24;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: linear-gradient(160deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 4rem;
+  }
+  header {
+    text-align: center;
+    padding: 2rem 0 1.5rem;
+  }
+  header h1 {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  header .arabic-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.6rem;
+    color: var(--accent);
+    direction: rtl;
+    margin-bottom: 0.8rem;
+  }
+  header p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .progress-wrap {
+    margin: 1.5rem 0 1rem;
+  }
+  .progress-bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #34d399);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+  .question-num {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+  .question-text {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1.4rem;
+    color: #e2e8f0;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .option-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    width: 100%;
+    padding: 1rem 1.15rem;
+    background: #0f172a;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: #134e4a;
+  }
+  .option-btn:disabled { cursor: default; }
+  .option-btn.correct {
+    border-color: var(--accent);
+    background: rgba(16, 185, 129, 0.15);
+  }
+  .option-btn.wrong {
+    border-color: var(--danger);
+    background: rgba(239, 68, 68, 0.12);
+  }
+  .option-en { font-weight: 600; }
+  .option-ar {
+    font-family: 'Amiri', serif;
+    font-size: 1.25rem;
+    direction: rtl;
+    color: var(--gold);
+  }
+  .feedback {
+    margin-top: 1.4rem;
+    padding: 1.1rem;
+    border-radius: 12px;
+    display: none;
+    animation: fadeIn 0.35s ease;
+  }
+  .feedback.show { display: block; }
+  .feedback.good {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid var(--accent);
+  }
+  .feedback.bad {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--danger);
+  }
+  .feedback h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .feedback p {
+    font-size: 0.92rem;
+    color: #cbd5e1;
+    margin-bottom: 0.6rem;
+  }
+  .evidence {
+    font-size: 0.88rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 0.7rem;
+    margin-top: 0.5rem;
+  }
+  .evidence .ar {
+    font-family: 'Amiri', serif;
+    direction: rtl;
+    display: block;
+    margin: 0.4rem 0;
+    color: #a5b4fc;
+    font-size: 1.05rem;
+  }
+  .nav {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.4rem;
+  }
+  .btn {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #064e3b;
+  }
+  .btn-primary:hover { background: var(--accent-dark); color: white; }
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .btn-secondary:hover { border-color: var(--muted); color: var(--text); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .start-screen, .end-screen {
+    text-align: center;
+  }
+  .start-screen h2, .end-screen h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    color: var(--gold);
+  }
+  .start-screen p, .end-screen p {
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+  }
+  .score-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 6px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem auto;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .hidden { display: none !important; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="arabic-title">الاختيارات التي نواجهها كل يوم</div>
+    <h1>The Choices We Face</h1>
+    <p>Every moment is a crossroads between the Nafs and the path of Allah. Choose wisely. Learn Arabic. Strengthen your īmān.</p>
+  </header>
+
+  <!-- START SCREEN -->
+  <div id="start-screen" class="card start-screen">
+    <h2>Ready to Choose?</h2>
+    <p>This short quiz presents 35 powerful contrasts. For each pair, select the path that leads to Allah. After every answer you will receive a brief explanation with a Qurʾānic verse or authentic ḥadīth — and both English & Arabic so you can grow in language and faith together.</p>
+    <button class="btn btn-primary" onclick="startQuiz()">Begin the Journey</button>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen" class="hidden">
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-text">
+        <span id="progress-label">Question 1 of 35</span>
+        <span id="score-label">Score: 0</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="question-num" id="q-num">Choice 1</div>
+      <div class="question-text" id="q-text"></div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="nav">
+        <button class="btn btn-secondary" id="btn-prev" onclick="prevQuestion()" disabled>Previous</button>
+        <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- END SCREEN -->
+  <div id="end-screen" class="card end-screen hidden">
+    <h2>May Allah Accept Your Choices</h2>
+    <div class="score-circle" id="final-score">0/35</div>
+    <p id="end-message"></p>
+    <p style="margin-top:1rem;font-size:0.9rem;color:var(--muted);">
+      Remember: the real test is not this quiz — it is the next moment you face a whisper of the Nafs.
+    </p>
+    <button class="btn btn-primary" style="margin-top:1.2rem;" onclick="restartQuiz()">Take Again</button>
+  </div>
+
+  <footer>
+    Built for seekers of knowledge · Arabic + English · Qurʾān & Sunnah
+  </footer>
+</div>
+
+<script>
+const quizData = [
+  {
+    id: 1,
+    prompt: "When desire rises in the heart, which path do you take?",
+    options: [
+      { en: "Temptation / Lust", ar: "الشهوة / الهوى", correct: false },
+      { en: "Chastity & Self-restraint", ar: "العِفَّة", correct: true }
+    ],
+    feedbackGood: "Choosing ʿiffah protects the heart and brings light to the soul.",
+    feedbackBad: "Following raw desire darkens the heart and opens the door to greater sins.",
+    evidence: "Allah says: «قُل لِّلْمُؤْمِنِينَ يَغُضُّوا مِنْ أَبْصَارِهِمْ وَيَحْفَظُوا فُرُوجَهُمْ» — “Tell the believing men to lower their gaze and guard their private parts.” (Qurʾān 24:30)"
+  },
+  {
+    id: 2,
+    prompt: "In a moment of intense anger, what do you choose?",
+    options: [
+      { en: "Anger / Rage", ar: "الغضب", correct: false },
+      { en: "Forbearance", ar: "الحِلْم", correct: true }
+    ],
+    feedbackGood: "Ḥilm is strength under control. The strong one is not the one who wrestles others, but the one who controls himself when angry.",
+    feedbackBad: "Uncontrolled anger is a fire that burns both the one who carries it and those around him.",
+    evidence: "The Prophet ﷺ said: «لَيْسَ الشَّدِيدُ بِالصُّرَعَةِ، إِنَّمَا الشَّدِيدُ الَّذِي يَمْلِكُ نَفْسَهُ عِنْدَ الْغَضَبِ» — “The strong person is not the one who throws others down; the strong one is the one who controls himself when angry.” (Bukhārī & Muslim)"
+  },
+  {
+    id: 3,
+    prompt: "When the tongue itches to speak about someone absent…",
+    options: [
+      { en: "Backbiting", ar: "الغِيبَة", correct: false },
+      { en: "Remembrance of Allah", ar: "الذِّكْر", correct: true }
+    ],
+    feedbackGood: "Turning the tongue to dhikr instead of gheebah is a sign of a living heart.",
+    feedbackBad: "Gheebah is the food of the people of the Fire. It destroys good deeds faster than fire destroys dry wood.",
+    evidence: "The Prophet ﷺ defined it: «أَتَدْرُونَ مَا الْغِيبَةُ؟» … «ذِكْرُكَ أَخَاكَ بِمَا يَكْرَهُ» — “Do you know what backbiting is? … It is to mention about your brother that which he dislikes.” (Muslim 2589). Allah also says: «وَلَا يَغْتَب بَّعْضُكُم بَعْضًا» (49:12)."
+  },
+  {
+    id: 4,
+    prompt: "When you see someone blessed with something you lack…",
+    options: [
+      { en: "Envy / Jealousy", ar: "الحَسَد", correct: false },
+      { en: "Gratitude", ar: "الشُّكْر", correct: true }
+    ],
+    feedbackGood: "Shukr turns every blessing into more blessing. Envy consumes good deeds.",
+    feedbackBad: "Hasad is discontent with the decree of Allah. It eats good deeds the way fire eats wood.",
+    evidence: "«وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ» — “And from the evil of the envier when he envies.” (113:5). The Prophet ﷺ said: “Beware of envy, for envy consumes good deeds just as fire consumes wood.” (Abū Dāwūd)"
+  },
+  {
+    id: 5,
+    prompt: "When the ego wants to rise above others…",
+    options: [
+      { en: "Arrogance / Pride", ar: "الكِبْر / العُجْب", correct: false },
+      { en: "Humility", ar: "التَّوَاضُع", correct: true }
+    ],
+    feedbackGood: "Tawāḍuʿ raises a person in the sight of Allah. The one who humbles himself for Allah, Allah raises him.",
+    feedbackBad: "Kibr is the first sin of Iblīs. No one with an atom’s weight of arrogance will enter Paradise.",
+    evidence: "The Prophet ﷺ said: «لَا يَدْخُلُ الْجَنَّةَ مَنْ كَانَ فِي قَلْبِهِ مِثْقَالُ ذَرَّةٍ مِنْ كِبْرٍ» — “No one who has an atom’s weight of arrogance in his heart will enter Paradise.” (Muslim)"
+  },
+  {
+    id: 6,
+    prompt: "When the heart feels the pull of more and more…",
+    options: [
+      { en: "Greed", ar: "الطَّمَع / الشُّحّ", correct: false },
+      { en: "Contentment", ar: "القَنَاعَة", correct: true }
+    ],
+    feedbackGood: "Qanāʿah is the treasure that never runs out. The rich one is the one content with what Allah has given.",
+    feedbackBad: "Greed is a bottomless pit. The more you feed it, the hungrier it becomes.",
+    evidence: "The Prophet ﷺ said: «قَدْ أَفْلَحَ مَنْ أَسْلَمَ وَرُزِقَ كَفَافًا وَقَنَّعَهُ اللَّهُ بِمَا آتَاهُ» — “Successful is the one who accepts Islam, is provided with sufficiency, and Allah makes him content with what He has given him.” (Muslim)"
+  },
+  {
+    id: 7,
+    prompt: "When someone wrongs you…",
+    options: [
+      { en: "Revenge", ar: "الانْتِقَام", correct: false },
+      { en: "Pardon / Forgiveness", ar: "العَفْو", correct: true }
+    ],
+    feedbackGood: "ʿAfw is the character of the Prophets. Allah loves those who pardon.",
+    feedbackBad: "Revenge may feel sweet for a moment, but it leaves bitterness in the heart and distance from Allah’s mercy.",
+    evidence: "«وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ ۗ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ» — “…who restrain anger and pardon people — and Allah loves the doers of good.” (3:134)"
+  },
+  {
+    id: 8,
+    prompt: "When conflict arises between brothers…",
+    options: [
+      { en: "Argument / Division", ar: "الْخِصَام / الْفُرْقَة", correct: false },
+      { en: "Reconciliation", ar: "الصُّلْح", correct: true }
+    ],
+    feedbackGood: "Ṣulḥ is better. Making peace between people is among the highest of deeds.",
+    feedbackBad: "Prolonging conflict only benefits Shayṭān and weakens the ummah.",
+    evidence: "«وَالصُّلْحُ خَيْرٌ» — “And reconciliation is better.” (4:128). The Prophet ﷺ said that making peace between people is better than voluntary fasting, prayer and charity."
+  },
+  {
+    id: 9,
+    prompt: "When the self wants recognition and praise…",
+    options: [
+      { en: "Showing off / Ostentation", ar: "الرِّيَاء", correct: false },
+      { en: "Sincerity", ar: "الإِخْلَاص", correct: true }
+    ],
+    feedbackGood: "Ikhlāṣ turns even a small deed into something weighty on the Scale.",
+    feedbackBad: "Riyāʾ is the hidden shirk. It can nullify deeds that appeared great.",
+    evidence: "The first people to be judged on the Day of Judgment will include those who did deeds for show. The Prophet ﷺ warned that riyāʾ is more hidden than the crawling of an ant. (Aḥmad)"
+  },
+  {
+    id: 10,
+    prompt: "When hardship or loss strikes…",
+    options: [
+      { en: "Despair", ar: "الْيَأْس / الْقُنُوط", correct: false },
+      { en: "Hope in Allah’s Mercy", ar: "الرَّجَاء", correct: true }
+    ],
+    feedbackGood: "Rajāʾ keeps the heart attached to Allah even in the darkest night.",
+    feedbackBad: "Despair of Allah’s mercy is itself a major sin. Only those who reject faith despair of His mercy.",
+    evidence: "«قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ» — “Say: O My servants who have transgressed against themselves, do not despair of the mercy of Allah.” (39:53)"
+  },
+  {
+    id: 11,
+    prompt: "When people may criticise or mock your practice of Islam…",
+    options: [
+      { en: "Fear of people", ar: "خَوْفُ النَّاس", correct: false },
+      { en: "God-consciousness", ar: "تَقْوَى اللَّهِ", correct: true }
+    ],
+    feedbackGood: "Taqwā of Allah frees you from the slavery of public opinion.",
+    feedbackBad: "Fear of people is a chain that prevents many from speaking the truth or acting upon it.",
+    evidence: "«فَلَا تَخَافُوهُمْ وَخَافُونِ إِن كُنتُم مُّؤْمِنِينَ» — “So do not fear them, but fear Me if you are [true] believers.” (3:175)"
+  },
+  {
+    id: 12,
+    prompt: "When doubt whispers about the truth of the religion…",
+    options: [
+      { en: "Doubt", ar: "الشَّكّ", correct: false },
+      { en: "Certainty", ar: "الْيَقِين", correct: true }
+    ],
+    feedbackGood: "Yaqīn is the fruit of knowledge, reflection, and sincere duʿāʾ.",
+    feedbackBad: "Doubt left unchecked becomes a disease that weakens īmān.",
+    evidence: "The Companions asked the Prophet ﷺ about whispers of doubt. He taught them to seek refuge in Allah and say: “I believe in Allah.” Certainty grows with knowledge and consistent worship."
+  },
+  {
+    id: 13,
+    prompt: "When a trial or difficulty descends…",
+    options: [
+      { en: "Complaint & Impatience", ar: "الْجَزَع", correct: false },
+      { en: "Patience", ar: "الصَّبْر", correct: true }
+    ],
+    feedbackGood: "Ṣabr is half of īmān. Allah is with the patient.",
+    feedbackBad: "Impatience only increases the pain and distances one from the reward.",
+    evidence: "«يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ» — “O you who believe, seek help through patience and prayer. Indeed, Allah is with the patient.” (2:153)"
+  },
+  {
+    id: 14,
+    prompt: "When success or blessing comes…",
+    options: [
+      { en: "Self-praise / Attribution to self", ar: "الْعُجْب", correct: false },
+      { en: "Gratitude to Allah", ar: "الشُّكْر", correct: true }
+    ],
+    feedbackGood: "Shukr multiplies blessings. “If you are grateful, I will surely increase you.”",
+    feedbackBad: "Attributing success only to yourself is a form of forgetfulness of the true Giver.",
+    evidence: "«لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ» — “If you are grateful, I will surely increase you [in favour].” (14:7)"
+  },
+  {
+    id: 15,
+    prompt: "After falling into a sin…",
+    options: [
+      { en: "Persistence in sin + despair", ar: "الإِصْرَار + الْيَأْس", correct: false },
+      { en: "Immediate repentance", ar: "التَّوْبَة", correct: true }
+    ],
+    feedbackGood: "Tawbah is the door that is always open until the sun rises from the west or the soul reaches the throat.",
+    feedbackBad: "Staying in sin and despairing of mercy is a double loss.",
+    evidence: "«إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ» — “Indeed, Allah loves those who are constantly repentant and loves those who purify themselves.” (2:222). The Prophet ﷺ said that the one who repents from sin is like one who has no sin."
+  },
+  {
+    id: 16,
+    prompt: "When the Nafs pulls one way and revelation the other…",
+    options: [
+      { en: "Following the Nafs", ar: "اتِّبَاعُ النَّفْس", correct: false },
+      { en: "Following Revelation", ar: "اتِّبَاعُ الْوَحْي", correct: true }
+    ],
+    feedbackGood: "The believer’s desires become subordinate to what the Messenger brought.",
+    feedbackBad: "The Nafs al-ammārah bi-al-sūʾ constantly commands evil unless restrained by knowledge and taqwā.",
+    evidence: "«وَنَفْسٍ وَمَا سَوَّاهَا فَأَلْهَمَهَا فُجُورَهَا وَتَقْوَاهَا» — “And by the soul and He who proportioned it, and inspired it with its wickedness and its righteousness.” (91:7-8). The Prophet ﷺ said: “None of you truly believes until his desires are subordinate to what I have brought.”"
+  },
+  {
+    id: 17,
+    prompt: "When a whisper comes from the left…",
+    options: [
+      { en: "Shayṭān’s whisper", ar: "وَسْوَسَةُ الشَّيْطَان", correct: false },
+      { en: "Allah’s guidance", ar: "هِدَايَةُ اللَّهِ", correct: true }
+    ],
+    feedbackGood: "Recognising the source of the thought is the first step to victory.",
+    feedbackBad: "Shayṭān’s strategy is gradual. He begins with a whisper and ends with a major sin if unchallenged.",
+    evidence: "«إِنَّ الشَّيْطَانَ لَكُمْ عَدُوٌّ فَاتَّخِذُوهُ عَدُوًّا» — “Indeed, Shayṭān is an enemy to you, so take him as an enemy.” (35:6). Seek refuge: Aʿūdhu billāhi minash-shayṭānir-rajīm."
+  },
+  {
+    id: 18,
+    prompt: "When the world offers temporary pleasure…",
+    options: [
+      { en: "Immediate gratification", ar: "اللَّذَّةُ الْعَاجِلَة", correct: false },
+      { en: "Eternal reward", ar: "الثَّوَابُ الْآجِل", correct: true }
+    ],
+    feedbackGood: "The intelligent one prefers what lasts over what vanishes.",
+    feedbackBad: "Trading the Ākhirah for a fleeting moment of dunya is the worst transaction.",
+    evidence: "«بَلْ تُؤْثِرُونَ الْحَيَاةَ الدُّنْيَا وَالْآخِرَةُ خَيْرٌ وَأَبْقَىٰ» — “But you prefer the worldly life, while the Hereafter is better and more lasting.” (87:16-17)"
+  },
+  {
+    id: 19,
+    prompt: "When the heart becomes attached to this temporary world…",
+    options: [
+      { en: "This fleeting life", ar: "الْحَيَاةُ الدُّنْيَا", correct: false },
+      { en: "The Eternal Life", ar: "الْحَيَاةُ الْآخِرَة", correct: true }
+    ],
+    feedbackGood: "The Ākhirah is the true home. Everything in this world is a means, not the goal.",
+    feedbackBad: "Loving the dunya more than the meeting with Allah is a sign of a heart that has forgotten its origin.",
+    evidence: "«وَمَا الْحَيَاةُ الدُّنْيَا إِلَّا مَتَاعُ الْغُرُورِ» — “And the life of this world is nothing but the enjoyment of delusion.” (3:185)"
+  },
+  {
+    id: 20,
+    prompt: "When suspicion about a fellow Muslim arises…",
+    options: [
+      { en: "Suspicion / Bad opinion", ar: "سُوءُ الظَّنّ", correct: false },
+      { en: "Good opinion", ar: "حُسْنُ الظَّنّ", correct: true }
+    ],
+    feedbackGood: "Husn al-ẓann protects the heart and preserves brotherhood.",
+    feedbackBad: "Many relationships are destroyed by assumptions that were never verified.",
+    evidence: "«يَا أَيُّهَا الَّذِينَ آمَنُوا اجْتَنِبُوا كَثِيرًا مِّنَ الظَّنِّ إِنَّ بَعْضَ الظَّنِّ إِثْمٌ» — “O you who believe, avoid much [negative] assumption. Indeed, some assumption is sin.” (49:12)"
+  },
+  {
+    id: 21,
+    prompt: "When the choice is between following the crowd or the Sunnah…",
+    options: [
+      { en: "Following the crowd", ar: "اتِّبَاعُ الْجُمْهُور", correct: false },
+      { en: "Following the Sunnah", ar: "اتِّبَاعُ السُّنَّة", correct: true }
+    ],
+    feedbackGood: "The saved group is the one that holds to what the Prophet ﷺ and his Companions were upon.",
+    feedbackBad: "Majority is not a proof of truth. Truth is what Allah and His Messenger legislated.",
+    evidence: "The Prophet ﷺ said that his ummah would split into many groups, and the saved one is “that which I and my Companions are upon.”"
+  },
+  {
+    id: 22,
+    prompt: "When money or advantage can be gained through dishonest means…",
+    options: [
+      { en: "Dishonesty / Fraud", ar: "الْغِشّ / الْخِيَانَة", correct: false },
+      { en: "Trustworthiness", ar: "الْأَمَانَة", correct: true }
+    ],
+    feedbackGood: "Amānah is a sign of complete īmān. The believer is the one people can trust with their wealth and secrets.",
+    feedbackBad: "Betrayal of trust is a characteristic of the hypocrite.",
+    evidence: "The Prophet ﷺ said: “The signs of the hypocrite are three: when he speaks he lies, when he promises he breaks it, and when he is entrusted he betrays.” (Bukhārī & Muslim)"
+  },
+  {
+    id: 23,
+    prompt: "When the opportunity for unlawful income appears…",
+    options: [
+      { en: "Ribā / Unlawful earnings", ar: "الرِّبَا / الْحَرَام", correct: false },
+      { en: "Ḥalāl earnings", ar: "الْكَسْبُ الْحَلَال", correct: true }
+    ],
+    feedbackGood: "A little ḥalāl is better than much ḥarām. Barakah lives only in the pure.",
+    feedbackBad: "Ribā is a declaration of war from Allah and His Messenger.",
+    evidence: "«يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَذَرُوا مَا بَقِيَ مِنَ الرِّبَا» — “O you who believe, fear Allah and give up what remains of interest…” (2:278)"
+  },
+  {
+    id: 24,
+    prompt: "When the self wants to waste time and energy…",
+    options: [
+      { en: "Wastefulness / Excess", ar: "الْإِسْرَاف", correct: false },
+      { en: "Moderation & Gratitude", ar: "الْاِعْتِدَال + الشُّكْر", correct: true }
+    ],
+    feedbackGood: "Allah does not love the wasteful. Balance is part of the prophetic way.",
+    feedbackBad: "Isrāf is a characteristic of the brothers of the devils.",
+    evidence: "«وَلَا تُسْرِفُوا ۚ إِنَّهُ لَا يُحِبُّ الْمُسْرِفِينَ» — “And do not spend wastefully. Indeed, He does not like the wasteful.” (6:141)"
+  },
+  {
+    id: 25,
+    prompt: "When the gaze falls on something forbidden…",
+    options: [
+      { en: "Unlawful gaze", ar: "النَّظَرُ الْمُحَرَّم", correct: false },
+      { en: "Lowering the gaze", ar: "غَضُّ الْبَصَر", correct: true }
+    ],
+    feedbackGood: "Lowering the gaze is a form of jihād that brings light to the heart.",
+    feedbackBad: "The first glance is forgiven; the second is a choice and a sin.",
+    evidence: "«قُل لِّلْمُؤْمِنِينَ يَغُضُّوا مِنْ أَبْصَارِهِمْ» — “Tell the believing men to lower their gaze…” (24:30). The Prophet ﷺ told ʿAlī: do not follow the first glance with a second."
+  },
+  {
+    id: 26,
+    prompt: "When family ties are strained…",
+    options: [
+      { en: "Breaking ties", ar: "قَطِيعَةُ الرَّحِم", correct: false },
+      { en: "Maintaining kinship", ar: "صِلَةُ الرَّحِم", correct: true }
+    ],
+    feedbackGood: "Ṣilat al-raḥim increases lifespan and provision, and is a cause of entering Paradise.",
+    feedbackBad: "The one who severs the ties of kinship will not enter Paradise.",
+    evidence: "The Prophet ﷺ said: “The one who severs the ties of kinship will not enter Paradise.” (Bukhārī & Muslim)"
+  },
+  {
+    id: 27,
+    prompt: "When parents make a request that is difficult…",
+    options: [
+      { en: "Disobedience", ar: "عُقُوقُ الْوَالِدَيْن", correct: false },
+      { en: "Dutifulness to parents", ar: "بِرُّ الْوَالِدَيْن", correct: true }
+    ],
+    feedbackGood: "Birr al-wālidayn is next only to Tawḥīd in the scale of deeds.",
+    feedbackBad: "ʿUqūq is one of the major sins that bring punishment in this life and the next.",
+    evidence: "«وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا» — “And your Lord has decreed that you worship none but Him, and that you be dutiful to your parents.” (17:23)"
+  },
+  {
+    id: 28,
+    prompt: "When the self wants to take rather than give…",
+    options: [
+      { en: "Selfishness", ar: "الْأَنَانِيَّة", correct: false },
+      { en: "Altruism / Preferring others", ar: "الْإِيثَار", correct: true }
+    ],
+    feedbackGood: "Īthār is the character of the Anṣār who preferred the Muhājirūn over themselves even when in need.",
+    feedbackBad: "A heart closed to giving is a heart that has not tasted the sweetness of īmān fully.",
+    evidence: "«وَيُؤْثِرُونَ عَلَىٰ أَنفُسِهِمْ وَلَوْ كَانَ بِهِمْ خَصَاصَةٌ» — “…and they give others preference over themselves even though they are in need…” (59:9)"
+  },
+  {
+    id: 29,
+    prompt: "When the heart is about to complain about others…",
+    options: [
+      { en: "Complaining about people", ar: "الشَّكْوَى مِنَ النَّاس", correct: false },
+      { en: "Making duʿāʾ for them", ar: "الدُّعَاءُ لَهُمْ", correct: true }
+    ],
+    feedbackGood: "Turning complaint into duʿāʾ transforms poison into medicine.",
+    feedbackBad: "Complaining to creation rarely solves the problem and often increases resentment.",
+    evidence: "The Prophet ﷺ taught us to make duʿāʾ for those who wrong us and to leave their account to Allah. The best response is often silence and sincere prayer."
+  },
+  {
+    id: 30,
+    prompt: "When the choice is between worldly applause and Allah’s acceptance…",
+    options: [
+      { en: "Dunyā’s applause", ar: "ثَنَاءُ النَّاس", correct: false },
+      { en: "Allah’s acceptance", ar: "رِضَا اللَّهِ", correct: true }
+    ],
+    feedbackGood: "What people think of you ends at the grave. What Allah knows of you lasts forever.",
+    feedbackBad: "Living for the praise of people is a form of slavery that never satisfies.",
+    evidence: "The Prophet ﷺ said that if Allah loves a person, He calls Jibrīl and the inhabitants of the heavens love him, and acceptance is placed for him on earth. Seek the love of Allah, and the love of the righteous will follow."
+  },
+  {
+    id: 31,
+    prompt: "When the self wants to expose the faults of others…",
+    options: [
+      { en: "Exposing faults", ar: "فَضْحُ الْعُيُوب", correct: false },
+      { en: "Covering faults", ar: "السَّتْر", correct: true }
+    ],
+    feedbackGood: "Whoever covers the fault of a Muslim, Allah will cover his faults on the Day of Judgment.",
+    feedbackBad: "Seeking out and spreading the faults of others is a sign of a diseased heart.",
+    evidence: "The Prophet ﷺ said: “Whoever covers the faults of a Muslim, Allah will cover his faults in this world and the Hereafter.” (Muslim)"
+  },
+  {
+    id: 32,
+    prompt: "When the choice is between Hellfire and Paradise…",
+    options: [
+      { en: "Path leading to Hellfire", ar: "طَرِيقُ النَّار", correct: false },
+      { en: "Path leading to Jannah", ar: "طَرِيقُ الْجَنَّة", correct: true }
+    ],
+    feedbackGood: "Every choice is a step toward one of the two eternal abodes. Choose the path of the Prophets.",
+    feedbackBad: "No one chooses the Fire intentionally, yet many walk toward it by neglecting the small daily choices.",
+    evidence: "«فَأَمَّا مَن طَغَىٰ وَآثَرَ الْحَيَاةَ الدُّنْيَا فَإِنَّ الْجَحِيمَ هِيَ الْمَأْوَىٰ وَأَمَّا مَنْ خَافَ مَقَامَ رَبِّهِ وَنَهَى النَّفْسَ عَنِ الْهَوَىٰ فَإِنَّ الْجَنَّةَ هِيَ الْمَأْوَىٰ» — (79:37-41)"
+  },
+  {
+    id: 33,
+    prompt: "When death is remembered…",
+    options: [
+      { en: "Death unprepared", ar: "مَوْتٌ عَلَى غَفْلَة", correct: false },
+      { en: "Meeting Allah prepared", ar: "لِقَاءُ اللَّهِ عَلَى اسْتِعْدَاد", correct: true }
+    ],
+    feedbackGood: "The intelligent one prepares for the meeting with Allah every day.",
+    feedbackBad: "Death comes suddenly to many. The only preparation that matters is īmān and righteous deeds.",
+    evidence: "The Prophet ﷺ said: “Frequently remember the destroyer of pleasures (death).” Preparation is through repentance, good deeds, and leaving this world with a heart that loves to meet Allah."
+  },
+  {
+    id: 34,
+    prompt: "When the heart is between two pulls…",
+    options: [
+      { en: "Following Shayṭān", ar: "اتِّبَاعُ الشَّيْطَان", correct: false },
+      { en: "Following Ar-Raḥmān", ar: "اتِّبَاعُ الرَّحْمَٰن", correct: true }
+    ],
+    feedbackGood: "The party of Ar-Raḥmān is the successful one. Choose your alliance carefully.",
+    feedbackBad: "Shayṭān only invites to the Fire. His promises are deception.",
+    evidence: "«اللَّهُ وَلِيُّ الَّذِينَ آمَنُوا يُخْرِجُهُم مِّنَ الظُّلُمَاتِ إِلَى النُّورِ ۖ وَالَّذِينَ كَفَرُوا أَوْلِيَاؤُهُمُ الطَّاغُوتُ» — “Allah is the ally of those who believe… but those who disbelieve — their allies are the ṭāghūt.” (2:257)"
+  },
+  {
+    id: 35,
+    prompt: "The final and most encompassing choice…",
+    options: [
+      { en: "Following the Nafs", ar: "اتِّبَاعُ النَّفْس", correct: false },
+      { en: "Following Allah", ar: "اتِّبَاعُ اللَّهِ وَرَسُولِهِ", correct: true }
+    ],
+    feedbackGood: "This is the choice of every moment. May Allah make us of those who choose Him.",
+    feedbackBad: "The Nafs will never be satisfied. Only the pleasure of Allah brings lasting peace.",
+    evidence: "«وَمَن يُطِعِ اللَّهَ وَرَسُولَهُ فَقَدْ فَازَ فَوْزًا عَظِيمًا» — “And whoever obeys Allah and His Messenger has certainly attained a great attainment.” (33:71). And: “None of you truly believes until his desires are subordinate to what I have brought.”"
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = new Array(quizData.length).fill(false);
+let selected = new Array(quizData.length).fill(null);
+
+function startQuiz() {
+  document.getElementById('start-screen').classList.add('hidden');
+  document.getElementById('quiz-screen').classList.remove('hidden');
+  document.getElementById('end-screen').classList.add('hidden');
+  current = 0;
+  score = 0;
+  answered = new Array(quizData.length).fill(false);
+  selected = new Array(quizData.length).fill(null);
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = quizData[current];
+  document.getElementById('q-num').textContent = `Choice ${current + 1} of ${quizData.length}`;
+  document.getElementById('q-text').textContent = q.prompt;
+  document.getElementById('progress-label').textContent = `Question ${current + 1} of ${quizData.length}`;
+  document.getElementById('score-label').textContent = `Score: ${score}`;
+  document.getElementById('progress-fill').style.width = `${((current) / quizData.length) * 100}%`;
+
+  const optionsEl = document.getElementById('options');
+  optionsEl.innerHTML = '';
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-en">${opt.en}</span><span class="option-ar">${opt.ar}</span>`;
+    if (answered[current]) {
+      btn.disabled = true;
+      if (selected[current] === idx) {
+        btn.classList.add(opt.correct ? 'correct' : 'wrong');
+      } else if (opt.correct) {
+        btn.classList.add('correct');
+      }
+    } else {
+      btn.onclick = () => selectOption(idx);
+    }
+    optionsEl.appendChild(btn);
+  });
+
+  const fb = document.getElementById('feedback');
+  if (answered[current]) {
+    showFeedback(selected[current]);
+  } else {
+    fb.classList.remove('show', 'good', 'bad');
+    fb.innerHTML = '';
+  }
+
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = !answered[current];
+  if (current === quizData.length - 1 && answered[current]) {
+    document.getElementById('btn-next').textContent = 'See Results';
+  } else {
+    document.getElementById('btn-next').textContent = 'Next';
+  }
+}
+
+function selectOption(idx) {
+  if (answered[current]) return;
+  const q = quizData[current];
+  selected[current] = idx;
+  answered[current] = true;
+  if (q.options[idx].correct) score++;
+  renderQuestion();
+}
+
+function showFeedback(idx) {
+  const q = quizData[current];
+  const isCorrect = q.options[idx].correct;
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback show ' + (isCorrect ? 'good' : 'bad');
+  fb.innerHTML = `
+    <h3>${isCorrect ? '✓ Correct choice' : '✗ This path leads away from Allah'}</h3>
+    <p>${isCorrect ? q.feedbackGood : q.feedbackBad}</p>
+    <div class="evidence">${q.evidence}</div>
+  `;
+}
+
+function nextQuestion() {
+  if (current < quizData.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    showEnd();
+  }
+}
+
+function prevQuestion() {
+  if (current > 0) {
+    current--;
+    renderQuestion();
+  }
+}
+
+function showEnd() {
+  document.getElementById('quiz-screen').classList.add('hidden');
+  document.getElementById('end-screen').classList.remove('hidden');
+  document.getElementById('final-score').textContent = `${score}/${quizData.length}`;
+  const pct = Math.round((score / quizData.length) * 100);
+  let msg = '';
+  if (pct >= 90) msg = 'Excellent. May Allah make your outer choices match an inner state of taqwā.';
+  else if (pct >= 70) msg = 'Good effort. Keep refining the daily choices — that is where the real struggle lies.';
+  else if (pct >= 50) msg = 'A reminder that the path requires constant vigilance. Return often and ask Allah for steadfastness.';
+  else msg = 'This is a call to begin again. The door of tawbah and learning is always open.';
+  document.getElementById('end-message').textContent = msg;
+}
+
+function restartQuiz() {
+  startQuiz();
+}
+</script>
+</body>
+</html>
