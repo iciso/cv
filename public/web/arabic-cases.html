@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arabic Cases · Qur'anic Examples · Nominative · Accusative · Genitive</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  /* ═══════════════ Design tokens ═══════════════ */
+  :root {
+    --bg: #f5f2eb;
+    --bg-2: #ebe5da;
+    --card: #ffffff;
+    --ink: #16202e;
+    --ink-soft: #46536a;
+    --muted: #8a8577;
+    --line: #e2dbcd;
+    --line-strong: #cfc7b4;
+
+    --primary: #0d5c4a;
+    --primary-dark: #083d31;
+    --primary-soft: #e3f0eb;
+
+    --nom: #1e5b9c;
+    --nom-soft: #e6f0fa;
+    --acc: #b66a17;
+    --acc-soft: #fdf3e3;
+    --gen: #6a3e8c;
+    --gen-soft: #f2ecf9;
+
+    --correct: #1e9d6b;
+    --correct-soft: #e3f6ed;
+    --wrong: #d94a3d;
+    --wrong-soft: #fdecea;
+
+    --quran: #a67c00;
+    --quran-soft: #fdf6e3;
+
+    --shadow-sm: 0 1px 3px rgba(22,32,46,.06);
+    --shadow-md: 0 6px 18px rgba(22,32,46,.08);
+    --shadow-lg: 0 24px 60px -16px rgba(22,32,46,.25);
+
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+
+    /* Arabic type scale — every value is >= the option-card size (1.55rem) */
+    --ar-base:    1.60rem;   /* inline Arabic inside prose */
+    --ar-mid:     1.70rem;   /* case-head labels, marker values */
+    --ar-large:   1.80rem;   /* example sentences, full verses */
+    --ar-option:  1.55rem;   /* option buttons — reference size */
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 12% 5%, #fff9ee 0%, transparent 42%),
+      radial-gradient(circle at 88% 95%, #eef5f0 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Reusable Arabic text class */
+  .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    direction: rtl;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--primary-dark);
+    display: inline-block;
+  }
+
+  /* ═══════════════ Top sticky bar ═══════════════ */
+  .top-bar {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(245,242,235,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: 0.85rem 1.25rem 0.7rem;
+  }
+  .top-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.55rem; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+
+  .brand { display: flex; align-items: center; gap: 0.55rem; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); }
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-family: 'Noto Naskh Arabic', serif;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
+  }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.78rem; color: var(--muted); margin-left: 0.3rem; }
+
+  .stats { display: flex; gap: 0.5rem; font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; }
+  .stats .pill { background: var(--card); border: 1px solid var(--line); padding: 0.22rem 0.75rem; border-radius: var(--radius-pill); font-variant-numeric: tabular-nums; }
+  .stats .pill .val { color: var(--primary); }
+
+  .progress-track { height: 6px; background: var(--bg-2); border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary) 0%, #1e9d6b 100%);
+    border-radius: var(--radius-pill);
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* ═══════════════ Layout ═══════════════ */
+  .wrap { max-width: 900px; margin: 0 auto; padding: 1.6rem 1.25rem 6rem; }
+
+  /* ═══════════════ Hero ═══════════════ */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a7060 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.6rem 1.7rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; right: -50px; top: -50px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(255,255,255,.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero h1 { font-family: 'Amiri', serif; font-size: 1.85rem; font-weight: 700; margin: 0 0 0.4rem; letter-spacing: .2px; }
+  .hero h1 .ar { color: #fff; font-size: 1.75rem; }
+  .hero p { margin: 0; font-size: .96rem; opacity: .96; max-width: 62ch; }
+  .hero .quran-banner {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: var(--radius-pill);
+    padding: 0.22rem 0.85rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 0.7rem;
+    letter-spacing: .3px;
+  }
+
+  /* ═══════════════ Section header ═══════════════ */
+  .section-head {
+    display: flex; align-items: baseline; gap: .7rem;
+    margin: 2.2rem 0 1rem;
+    padding-bottom: .55rem;
+    border-bottom: 2px solid var(--line);
+  }
+  .section-head .num {
+    font-family: 'Amiri', serif;
+    background: var(--primary); color: #fff;
+    width: 30px; height: 30px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: .9rem;
+    flex-shrink: 0;
+  }
+  .section-head h2 {
+    margin: 0; font-family: 'Amiri', serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--primary);
+  }
+  .section-head .sub {
+    color: var(--muted); font-size: .82rem; margin-left: auto;
+    font-family: 'Inter', sans-serif; font-weight: 500;
+  }
+
+  /* ═══════════════ Grammar reference — case cards ═══════════════ */
+  .case-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.3rem 1.4rem 1.4rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+  }
+  .case-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+  }
+  .case-card.nom::before { background: var(--nom); }
+  .case-card.acc::before { background: var(--acc); }
+  .case-card.gen::before { background: var(--gen); }
+
+  .case-head {
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: .6rem;
+    margin-bottom: .5rem;
+  }
+  .case-head h3 {
+    margin: 0; font-family: 'Inter', sans-serif;
+    font-size: 1.15rem; font-weight: 700;
+  }
+  .case-card.nom .case-head h3 { color: var(--nom); }
+  .case-card.acc .case-head h3 { color: var(--acc); }
+  .case-card.gen .case-head h3 { color: var(--gen); }
+
+  .case-head .ar-label {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: var(--ar-mid);
+    direction: rtl;
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .case-head .tr-label {
+    font-size: .82rem; font-style: italic;
+    color: var(--muted);
+  }
+
+  .case-body { font-size: .92rem; color: var(--ink-soft); }
+  .case-body .lead { margin: .4rem 0 .8rem; }
+  .case-body strong { color: var(--ink); }
+  .case-body .ar {
+    font-size: var(--ar-base);
+    margin: 0 .15rem;
+    vertical-align: middle;
+  }
+
+  .marker-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: .5rem;
+    margin: .7rem 0 1rem;
+  }
+  .marker-box {
+    background: var(--bg-2);
+    border-radius: var(--radius-sm);
+    padding: .55rem .75rem;
+    font-size: .82rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .4rem;
+  }
+  .marker-box .lbl { color: var(--muted); font-weight: 500; }
+  .marker-box .val {
+    font-family: 'Noto Naskh Arabic', serif;
+    direction: rtl;
+    font-size: var(--ar-mid);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .case-card.nom .marker-box { background: var(--nom-soft); }
+  .case-card.acc .marker-box { background: var(--acc-soft); }
+  .case-card.gen .marker-box { background: var(--gen-soft); }
+
+  .ex-list { margin: .3rem 0 0; padding: 0; list-style: none; }
+  .ex-list li {
+    padding: .7rem .7rem;
+    border-top: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: .3rem;
+  }
+  .ex-list li:first-child { border-top: none; }
+
+  .ex-top {
+    display: flex; align-items: flex-start;
+    gap: .6rem; flex-wrap: wrap;
+  }
+  .ex-ar {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: var(--ar-large);
+    direction: rtl;
+    color: var(--ink);
+    line-height: 1.7;
+    flex: 1 1 auto;
+    min-width: 200px;
+    font-weight: 600;
+  }
+  .ex-ar .hl { font-weight: 700; }
+  .case-card.nom .ex-ar .hl { color: var(--nom); }
+  .case-card.acc .ex-ar .hl { color: var(--acc); }
+  .case-card.gen .ex-ar .hl { color: var(--gen); }
+
+  .quran-badge {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    background: var(--quran-soft);
+    color: var(--quran);
+    border: 1px solid rgba(166,124,0,.25);
+    border-radius: var(--radius-pill);
+    padding: 0.12rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: .3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+
+  .ex-tr { font-size: .82rem; font-style: italic; color: var(--muted); }
+  .ex-en { font-size: .9rem; color: var(--ink-soft); }
+  .ex-note {
+    font-size: .86rem;
+    margin-top: .2rem;
+    padding-left: .7rem;
+    border-left: 3px solid var(--line-strong);
+    color: var(--ink-soft);
+  }
+  .ex-note .ar { font-size: var(--ar-base); }
+
+  /* ═══════════════ Quiz filter ═══════════════ */
+  .filter-bar {
+    display: flex; flex-wrap: wrap; gap: .4rem;
+    margin: .5rem 0 1rem;
+    padding: .3rem;
+    background: var(--bg-2);
+    border-radius: var(--radius-pill);
+    width: fit-content;
+  }
+  .filter-btn {
+    appearance: none; border: none; cursor: pointer;
+    font-family: inherit; font-weight: 600; font-size: .85rem;
+    padding: .42rem 1rem;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--ink-soft);
+    transition: background .18s, color .18s;
+  }
+  .filter-btn:hover { background: rgba(255,255,255,.6); }
+  .filter-btn.active {
+    background: var(--card);
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+  }
+  .filter-btn .count {
+    font-weight: 500; font-size: .75rem;
+    color: var(--muted); margin-left: .35rem;
+  }
+  .filter-btn.active .count { color: var(--primary); }
+
+  /* ═══════════════ Quiz cards ═══════════════ */
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.2rem 1.05rem;
+    margin-bottom: .9rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color .2s, box-shadow .2s;
+    animation: cardIn .35s ease both;
+    scroll-margin-top: 100px;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .question-card[hidden] { display: none; }
+
+  .question-card.answered.is-correct { border-color: rgba(30,157,107,.5); }
+  .question-card.answered.is-wrong  { border-color: rgba(217,74,61,.45); }
+
+  .q-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .35rem; flex-wrap: wrap; }
+  .q-num {
+    flex-shrink: 0;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-weight: 700; font-size: .78rem;
+    padding: .22rem .6rem;
+    border-radius: var(--radius-pill);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-prompt {
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--ink);
+    flex: 1 1 auto;
+  }
+  .q-prompt .blank {
+    display: inline-block;
+    min-width: 90px;
+    border-bottom: 2px solid var(--primary);
+    margin: 0 .15rem;
+  }
+
+  .q-context {
+    margin: .1rem 0 .7rem;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .q-context .hint { font-style: italic; color: var(--muted); }
+
+  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+  @media (max-width: 640px) { .options { grid-template-columns: 1fr; } }
+
+  .option-btn {
+    appearance: none; cursor: pointer;
+    background: #fdfbf7;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .85rem .6rem .7rem;
+    font-family: inherit;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: .35rem;
+    min-height: 96px;
+    text-align: center;
+    transition: border-color .15s, background .15s, transform .08s, box-shadow .15s;
+    position: relative;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+  .option-btn:disabled { cursor: default; }
+
+  .option-btn .ar {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: var(--ar-option);
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1.3;
+    direction: rtl;
+  }
+  .option-btn .tr {
+    font-size: .72rem;
+    font-style: italic;
+    color: var(--muted);
+    letter-spacing: .2px;
+  }
+  .option-btn.correct {
+    background: var(--correct-soft);
+    border-color: var(--correct);
+  }
+  .option-btn.correct .ar { color: #0f6a48; }
+  .option-btn.correct::after {
+    content: "✓ correct";
+    position: absolute; top: 6px; right: 9px;
+    font-size: .62rem; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+    color: var(--correct);
+  }
+  .option-btn.wrong {
+    background: var(--wrong-soft);
+    border-color: var(--wrong);
+    opacity: .88;
+  }
+  .option-btn.wrong .ar { color: #a83329; }
+  .option-btn.wrong::after {
+    content: "✗ your pick";
+    position: absolute; top: 6px; right: 9px;
+    font-size: .62rem; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+    color: var(--wrong);
+  }
+
+  /* ═══════════════ Explanation ═══════════════ */
+  .explanation {
+    margin-top: .9rem;
+    border-radius: var(--radius-md);
+    padding: .95rem 1rem;
+    background: #faf8f3;
+    border-left: 4px solid var(--muted);
+    font-size: .9rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    animation: expIn .3s ease both;
+  }
+  @keyframes expIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .explanation.hidden { display: none; }
+  .explanation.is-correct { border-left-color: var(--correct); background: #f4fbf8; }
+  .explanation.is-wrong   { border-left-color: var(--wrong);   background: #fdf6f5; }
+
+  .exp-title {
+    font-weight: 700; font-size: .8rem;
+    letter-spacing: .4px; text-transform: uppercase;
+    margin-bottom: .4rem;
+    display: flex; align-items: center; gap: .4rem;
+    flex-wrap: wrap;
+  }
+  .explanation.is-correct .exp-title { color: var(--correct); }
+  .explanation.is-wrong   .exp-title { color: var(--wrong); }
+
+  .case-tag {
+    font-size: .68rem; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+    padding: .1rem .55rem;
+    border-radius: var(--radius-pill);
+  }
+  .case-tag.nom { background: var(--nom-soft); color: var(--nom); }
+  .case-tag.acc { background: var(--acc-soft); color: var(--acc); }
+  .case-tag.gen { background: var(--gen-soft); color: var(--gen); }
+
+  .full-sentence-wrap {
+    display: flex; align-items: flex-start;
+    gap: .55rem; flex-wrap: wrap;
+    margin: .5rem 0 .25rem;
+  }
+  .explanation .full-sentence {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: var(--ar-large);
+    direction: rtl;
+    color: var(--ink);
+    line-height: 1.8;
+    flex: 1 1 auto;
+    min-width: 220px;
+    font-weight: 600;
+  }
+  .explanation .full-sentence .hl {
+    font-weight: 700;
+    padding: 0 .15rem;
+    border-radius: 4px;
+  }
+  .case-nom .full-sentence .hl { background: var(--nom-soft); color: var(--nom); }
+  .case-acc .full-sentence .hl { background: var(--acc-soft); color: var(--acc); }
+  .case-gen .full-sentence .hl { background: var(--gen-soft); color: var(--gen); }
+
+  .explanation .tr-line {
+    font-size: .82rem; font-style: italic; color: var(--muted);
+    margin: .1rem 0 .55rem;
+  }
+  .explanation .reason { color: var(--ink-soft); font-size: .9rem; }
+  .explanation .reason .ar {
+    font-size: var(--ar-base);
+    margin: 0 .15rem;
+    vertical-align: middle;
+  }
+
+  /* ═══════════════ Bottom action ═══════════════ */
+  .bottom-actions { display: flex; justify-content: center; margin-top: 1.8rem; }
+
+  .btn {
+    appearance: none; border: none;
+    font-family: inherit; font-weight: 600;
+    font-size: 1rem; padding: .85rem 2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: transform .1s, background .15s, box-shadow .15s, opacity .15s;
+    letter-spacing: .2px;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    box-shadow: 0 6px 18px -4px rgba(13,92,74,.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -6px rgba(13,92,74,.5);
+  }
+  .btn-primary:disabled {
+    background: #cfc8b8; color: #8a8577;
+    cursor: not-allowed; box-shadow: none;
+  }
+  .btn-secondary {
+    background: var(--card);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-secondary:hover { background: var(--primary-soft); }
+
+  /* ═══════════════ Results overlay ═══════════════ */
+  .results-overlay {
+    position: fixed; inset: 0;
+    background: rgba(22,32,46,.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 100;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 1.25rem;
+    overflow-y: auto;
+    animation: fadeIn .25s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .results-overlay.hidden { display: none; }
+
+  .results-card {
+    background: var(--card);
+    max-width: 700px; width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.6rem 1.5rem;
+    box-shadow: var(--shadow-lg);
+    margin: auto;
+    animation: popIn .35s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .results-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 1rem; margin-bottom: 1rem;
+  }
+  .results-header h2 {
+    margin: 0; font-family: 'Amiri', serif;
+    font-size: 1.5rem; color: var(--primary);
+  }
+  .close-btn {
+    appearance: none; border: none;
+    background: var(--bg-2);
+    width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem;
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s;
+    flex-shrink: 0;
+  }
+  .close-btn:hover { background: #ddd5c5; }
+
+  .score-hero {
+    text-align: center;
+    padding: 1.1rem 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, #f4fbf8 100%);
+    margin-bottom: 1.1rem;
+  }
+  .score-big {
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--primary); line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-big .out { color: var(--muted); font-weight: 500; font-size: 1.5rem; }
+  .score-pct { font-size: 1.05rem; font-weight: 600; color: var(--ink-soft); margin-top: .2rem; }
+  .score-msg {
+    margin-top: .55rem; font-size: .9rem;
+    color: var(--ink-soft); max-width: 48ch;
+    margin-left: auto; margin-right: auto;
+  }
+  .score-msg .ar { font-size: var(--ar-base); color: var(--primary); }
+
+  /* Per-case breakdown */
+  .breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .5rem;
+    margin-bottom: 1.2rem;
+  }
+  @media (max-width: 480px) { .breakdown { grid-template-columns: 1fr; } }
+  .breakdown .item {
+    background: var(--bg-2);
+    border-radius: var(--radius-md);
+    padding: .65rem .8rem;
+    text-align: center;
+  }
+  .breakdown .item .name { font-size: .72rem; text-transform: uppercase; letter-spacing: .5px; font-weight: 700; }
+  .breakdown .item .score { font-size: 1.35rem; font-weight: 700; margin-top: .15rem; font-variant-numeric: tabular-nums; }
+  .breakdown .item.nom .name { color: var(--nom); }
+  .breakdown .item.nom .score { color: var(--nom); }
+  .breakdown .item.acc .name { color: var(--acc); }
+  .breakdown .item.acc .score { color: var(--acc); }
+  .breakdown .item.gen .name { color: var(--gen); }
+  .breakdown .item.gen .score { color: var(--gen); }
+
+  .review-list {
+    display: flex; flex-direction: column; gap: .55rem;
+    max-height: 44vh; overflow-y: auto;
+    padding-right: 4px; margin-bottom: 1.15rem;
+  }
+  .review-item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .7rem .85rem;
+    font-size: .86rem;
+  }
+  .review-item.ok { border-left: 4px solid var(--correct); }
+  .review-item.no { border-left: 4px solid var(--wrong); }
+  .review-q { font-weight: 600; color: var(--ink); margin-bottom: .25rem; display: flex; gap: .45rem; align-items: baseline; flex-wrap: wrap; }
+  .review-line {
+    color: var(--ink-soft); display: flex; gap: .45rem; align-items: baseline;
+    flex-wrap: wrap; margin-top: .2rem;
+  }
+  .review-line .ar {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: var(--ar-base);
+    direction: rtl; color: var(--primary-dark);
+    font-weight: 700;
+  }
+  .review-line .tr { font-style: italic; color: var(--muted); font-size: .78rem; }
+  .review-line .tag {
+    font-size: .66rem; text-transform: uppercase; letter-spacing: .4px;
+    font-weight: 700; padding: .05rem .5rem; border-radius: var(--radius-pill);
+  }
+  .review-line .tag.ok { background: var(--correct-soft); color: var(--correct); }
+  .review-line .tag.no { background: var(--wrong-soft); color: var(--wrong); }
+
+  .results-actions { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+
+  /* ═══════════════ Footer ═══════════════ */
+  .footer {
+    text-align: center; font-size: .78rem; color: var(--muted);
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ TOP BAR ═══════════════ -->
+<header class="top-bar">
+  <div class="top-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="mark">إ</span>
+        <span>Arabic Cases <small>· Qur'anic Examples</small></span>
+      </div>
+      <div class="stats">
+        <span class="pill">Score <span class="val" id="scoreDisplay">0 / 0</span></span>
+        <span class="pill"><span id="progressText">0%</span></span>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero">
+    <h1>Arabic Cases — <span class="ar">الإِعْرَاب</span></h1>
+    <p>A beginner's guide to the three core cases — <strong>Nominative</strong>, <strong>Accusative</strong>, and <strong>Genitive</strong> — taught entirely through the words of the <strong>Noble Qur'an</strong>. Each example carries its verse reference so you can read it in context.</p>
+    <div class="quran-banner">
+      <span>📖</span> All examples from the Noble Qur'an
+    </div>
+  </section>
+
+  <!-- ═══════════════ SECTION 1: GRAMMAR REFERENCE ═══════════════ -->
+  <div class="section-head">
+    <span class="num">1</span>
+    <h2>Understanding the Three Cases</h2>
+    <span class="sub">Read before the quiz</span>
+  </div>
+
+  <!-- ── Nominative ── -->
+  <article class="case-card nom">
+    <div class="case-head">
+      <h3>Nominative</h3>
+      <span class="ar-label">مَرْفُوع</span>
+      <span class="tr-label">(marfū' · "raised")</span>
+    </div>
+    <div class="case-body">
+      <p class="lead">The <strong>default</strong> case. Used for the <strong>subject</strong> of a nominal sentence (the topic) or verbal sentence (the doer), and for the <strong>predicate</strong> (the information about the subject).</p>
+
+      <div class="marker-row">
+        <div class="marker-box"><span class="lbl">Singular</span><span class="val">ـُ</span></div>
+        <div class="marker-box"><span class="lbl">Dual</span><span class="val">ـَانِ</span></div>
+        <div class="marker-box"><span class="lbl">Masc. plural</span><span class="val">ـُونَ</span></div>
+        <div class="marker-box"><span class="lbl">Fem. plural</span><span class="val">ـَاتُ</span></div>
+      </div>
+
+      <ul class="ex-list">
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar"><span class="hl">الْحَمْدُ</span> لِلَّهِ رَبِّ الْعَالَمِينَ</span>
+            <span class="quran-badge">📖 1:2</span>
+          </div>
+          <span class="ex-tr">al-ḥamdu lillāhi rabbi al-'ālamīn</span>
+          <span class="ex-en">All praise is for Allah, Lord of all worlds.</span>
+          <span class="ex-note"><span class="ar">الْحَمْدُ</span> is the <strong>subject</strong> (mubtada') → nominative with <strong>ـُ</strong>.</span>
+        </li>
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar"><span class="hl">اللَّهُ</span> نُورُ السَّمَاوَاتِ وَالْأَرْضِ</span>
+            <span class="quran-badge">📖 24:35</span>
+          </div>
+          <span class="ex-tr">Allāhu nūru as-samāwāti wal-arḍ</span>
+          <span class="ex-en">Allah is the Light of the heavens and the earth.</span>
+          <span class="ex-note"><span class="ar">اللَّهُ</span> is the subject of a nominal sentence → <strong>ـُ</strong>.</span>
+        </li>
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar"><span class="hl">الشَّمْسُ</span> وَالْقَمَرُ بِحُسْبَانٍ</span>
+            <span class="quran-badge">📖 55:5</span>
+          </div>
+          <span class="ex-tr">ash-shamsu wal-qamaru bi-ḥusbān</span>
+          <span class="ex-en">The sun and the moon follow a precise calculation.</span>
+          <span class="ex-note"><span class="ar">الشَّمْسُ</span> is a subject → nominative <strong>ـُ</strong>.</span>
+        </li>
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar"><span class="hl">الرَّحْمَنُ</span> عَلَى الْعَرْشِ اسْتَوَى</span>
+            <span class="quran-badge">📖 20:5</span>
+          </div>
+          <span class="ex-tr">ar-Raḥmānu 'alā al-'arshi istawā</span>
+          <span class="ex-en">The Most Merciful rose over the Throne.</span>
+          <span class="ex-note"><span class="ar">الرَّحْمَنُ</span> is the doer (fā'il) of the verb <span class="ar">اسْتَوَى</span> → nominative <strong>ـُ</strong>.</span>
+        </li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ── Accusative ── -->
+  <article class="case-card acc">
+    <div class="case-head">
+      <h3>Accusative</h3>
+      <span class="ar-label">مَنْصُوب</span>
+      <span class="tr-label">(manṣūb · "set up")</span>
+    </div>
+    <div class="case-body">
+      <p class="lead">Used for the <strong>direct object</strong> of a verb (the thing acted upon), and for the noun that follows the particle <span class="ar">إِنَّ</span> ("indeed").</p>
+
+      <div class="marker-row">
+        <div class="marker-box"><span class="lbl">Singular</span><span class="val">ـَ</span></div>
+        <div class="marker-box"><span class="lbl">Dual</span><span class="val">ـَيْنِ</span></div>
+        <div class="marker-box"><span class="lbl">Masc. plural</span><span class="val">ـِينَ</span></div>
+        <div class="marker-box"><span class="lbl">Fem. plural</span><span class="val">ـَاتِ</span></div>
+      </div>
+
+      <ul class="ex-list">
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar">إِنَّا أَعْطَيْنَاكَ <span class="hl">الْكَوْثَرَ</span></span>
+            <span class="quran-badge">📖 108:1</span>
+          </div>
+          <span class="ex-tr">innā a'ṭaynāka al-Kawthar</span>
+          <span class="ex-en">Indeed, We have given you al-Kawthar.</span>
+          <span class="ex-note"><span class="ar">الْكَوْثَرَ</span> is the direct object of <span class="ar">أَعْطَيْنَا</span> → accusative with <strong>ـَ</strong>.</span>
+        </li>
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar">إِنَّ <span class="hl">الْإِنْسَانَ</span> لَفِي خُسْرٍ</span>
+            <span class="quran-badge">📖 103:2</span>
+          </div>
+          <span class="ex-tr">inna al-insāna lafī khusr</span>
+          <span class="ex-en">Indeed, mankind is in loss.</span>
+          <span class="ex-note">After <span class="ar">إِنَّ</span>, <span class="ar">الْإِنْسَانَ</span> takes the accusative <strong>ـَ</strong>.</span>
+        </li>
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar">اعْبُدُوا <span class="hl">اللَّهَ</span></span>
+            <span class="quran-badge">📖 2:21</span>
+          </div>
+          <span class="ex-tr">u'budū Allāh</span>
+          <span class="ex-en">Worship Allah.</span>
+          <span class="ex-note"><span class="ar">اللَّهَ</span> is the direct object of the imperative verb → accusative <strong>ـَ</strong>.</span>
+        </li>
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar">اهْدِنَا <span class="hl">الصِّرَاطَ</span> الْمُسْتَقِيمَ</span>
+            <span class="quran-badge">📖 1:6</span>
+          </div>
+          <span class="ex-tr">ihdinā aṣ-ṣirāṭa al-mustaqīm</span>
+          <span class="ex-en">Guide us to the straight path.</span>
+          <span class="ex-note"><span class="ar">الصِّرَاطَ</span> is the direct object of <span class="ar">اهْدِنَا</span> → accusative <strong>ـَ</strong>. The adjective <span class="ar">الْمُسْتَقِيمَ</span> agrees with it.</span>
+        </li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ── Genitive ── -->
+  <article class="case-card gen">
+    <div class="case-head">
+      <h3>Genitive</h3>
+      <span class="ar-label">مَجْرُور</span>
+      <span class="tr-label">(majrūr · "pulled down")</span>
+    </div>
+    <div class="case-body">
+      <p class="lead">Used <strong>after a preposition</strong> (<span class="ar">فِي، مِنْ، إِلَى، عَلَى، بِ، لِ</span>) and for the <strong>second term of a possessive construction</strong> (iḍāfah: "the book <em>of</em> the student").</p>
+
+      <div class="marker-row">
+        <div class="marker-box"><span class="lbl">Singular</span><span class="val">ـِ</span></div>
+        <div class="marker-box"><span class="lbl">Dual</span><span class="val">ـَيْنِ</span></div>
+        <div class="marker-box"><span class="lbl">Masc. plural</span><span class="val">ـِينَ</span></div>
+        <div class="marker-box"><span class="lbl">Fem. plural</span><span class="val">ـَاتِ</span></div>
+      </div>
+
+      <p style="font-size:.85rem;background:var(--gen-soft);padding:.6rem .85rem;border-radius:8px;margin:.3rem 0 .6rem;">
+        ⚠️ <strong>Watch out:</strong> In the dual and sound plurals, <em>accusative and genitive look identical</em> (<span class="ar">ـَيْنِ</span>, <span class="ar">ـِينَ</span>). The difference is only visible on <strong>singular</strong> nouns — ḍammah (ـُ) is nominative, fatḥah (ـَ) is accusative, kasrah (ـِ) is genitive.
+      </p>
+
+      <ul class="ex-list">
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar">بِسْمِ <span class="hl">اللَّهِ</span> الرَّحْمَنِ الرَّحِيمِ</span>
+            <span class="quran-badge">📖 1:1</span>
+          </div>
+          <span class="ex-tr">bismi Allāhi ar-Raḥmāni ar-Raḥīm</span>
+          <span class="ex-en">In the name of Allah, the Most Merciful, the Most Compassionate.</span>
+          <span class="ex-note"><span class="ar">اللَّهِ</span> follows the preposition <span class="ar">بِسْمِ</span> → genitive with <strong>ـِ</strong>.</span>
+        </li>
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar">الْحَمْدُ لِلَّهِ رَبِّ <span class="hl">الْعَالَمِينَ</span></span>
+            <span class="quran-badge">📖 1:2</span>
+          </div>
+          <span class="ex-tr">al-ḥamdu lillāhi rabbi al-'ālamīn</span>
+          <span class="ex-en">All praise is for Allah, Lord of all worlds.</span>
+          <span class="ex-note"><span class="ar">الْعَالَمِينَ</span> is the second term of iḍāfah (possessive with <span class="ar">رَبِّ</span>) → genitive with <strong>ـِينَ</strong>.</span>
+        </li>
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar">فِي <span class="hl">قُلُوبِهِمْ</span> مَرَضٌ</span>
+            <span class="quran-badge">📖 2:10</span>
+          </div>
+          <span class="ex-tr">fī qulūbihim maraḍ</span>
+          <span class="ex-en">In their hearts is a disease.</span>
+          <span class="ex-note">After <span class="ar">فِي</span> → genitive; the possessive pronoun <span class="ar">ـهِمْ</span> makes the noun implicitly definite.</span>
+        </li>
+        <li>
+          <div class="ex-top">
+            <span class="ex-ar">عَلَى <span class="hl">الْعَرْشِ</span> اسْتَوَى</span>
+            <span class="quran-badge">📖 20:5</span>
+          </div>
+          <span class="ex-tr">'alā al-'arshi istawā</span>
+          <span class="ex-en">He rose over the Throne.</span>
+          <span class="ex-note">After <span class="ar">عَلَى</span> → genitive with <strong>ـِ</strong>.</span>
+        </li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ═══════════════ SECTION 2: QUIZ ═══════════════ -->
+  <div class="section-head">
+    <span class="num">2</span>
+    <h2>Case Quiz — 30 Questions</h2>
+    <span class="sub">10 per case · All Qur'anic</span>
+  </div>
+
+  <p style="margin:0 0 .5rem;color:var(--ink-soft);font-size:.92rem;">
+    Every question is drawn from the Noble Qur'an. Fill each blank with the Arabic word carrying the <strong>correct case ending</strong> for that position. You'll see the full verse, its transliteration, and an explanation after each answer.
+  </p>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All <span class="count">30</span></button>
+    <button class="filter-btn" data-filter="nominative">Nominative <span class="count">10</span></button>
+    <button class="filter-btn" data-filter="accusative">Accusative <span class="count">10</span></button>
+    <button class="filter-btn" data-filter="genitive">Genitive <span class="count">10</span></button>
+  </div>
+
+  <div id="questionList"></div>
+
+  <div class="bottom-actions">
+    <button class="btn btn-primary" id="showResults" disabled>Answer all questions to see results</button>
+  </div>
+
+  <p class="footer">All Qur'anic verses cited by chapter:verse. An educational resource for new Muslims and English-speaking Arabic learners.</p>
+
+</main>
+
+<!-- ═══════════════ RESULTS OVERLAY ═══════════════ -->
+<div class="results-overlay hidden" id="resultsOverlay" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+  <div class="results-card">
+    <div class="results-header">
+      <h2 id="resultsTitle">Your Results</h2>
+      <button class="close-btn" id="closeResults" aria-label="Close results">✕</button>
+    </div>
+
+    <div class="score-hero">
+      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">30</span></span></div>
+      <div class="score-pct" id="finalPct">0%</div>
+      <p class="score-msg" id="finalMsg"></p>
+    </div>
+
+    <div class="breakdown" id="breakdown">
+      <div class="item nom"><div class="name">Nominative</div><div class="score" id="breakNom">0/10</div></div>
+      <div class="item acc"><div class="name">Accusative</div><div class="score" id="breakAcc">0/10</div></div>
+      <div class="item gen"><div class="name">Genitive</div><div class="score" id="breakGen">0/10</div></div>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+
+    <div class="results-actions">
+      <button class="btn btn-secondary" id="tryAgain">↺ Try Again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   QUESTION BANK — 30 questions
+   All questions are based on Qur'anic phrases with verse references.
+   ══════════════════════════════════════════════════════════════════════ */
+
+const QUESTIONS = [
+
+/* ═════════════════════ NOMINATIVE (10) ═════════════════════ */
+
+{ caseType:'nominative',
+  ref:'Qur\'an 1:2',
+  prompt:'"All praise is for Allah, Lord of all worlds."',
+  hint:'Pick the word for "All praise" (the subject of the sentence)',
+  full:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',
+  fullTr:'al-ḥamdu lillāhi rabbi al-\'ālamīn',
+  fullEn:'All praise is for Allah, Lord of all worlds.',
+  correct:{ ar:'الْحَمْدُ', tr:'al-ḥamdu' },
+  wrong:[ { ar:'الْحَمْدَ', tr:'al-ḥamda' }, { ar:'الْحَمْدِ', tr:'al-ḥamdi' } ],
+  reason:'As the <strong>subject (mubtada\')</strong> of a nominal sentence, <span class="ar">الْحَمْدُ</span> takes the <strong>nominative</strong> <strong>ـُ</strong>. This verse opens the Fātiḥah — the first chapter of the Qur\'an.'
+},
+
+{ caseType:'nominative',
+  ref:'Qur\'an 24:35',
+  prompt:'"___ is the Light of the heavens and the earth."',
+  hint:'Pick the word for "Allah" (the subject of this nominal sentence)',
+  full:'اللَّهُ نُورُ السَّمَاوَاتِ وَالْأَرْضِ',
+  fullTr:'Allāhu nūru as-samāwāti wal-arḍ',
+  fullEn:'Allah is the Light of the heavens and the earth.',
+  correct:{ ar:'اللَّهُ', tr:'Allāhu' },
+  wrong:[ { ar:'اللَّهَ', tr:'Allāha' }, { ar:'اللَّهِ', tr:'Allāhi' } ],
+  reason:'The subject of a nominal sentence is <strong>nominative</strong>. The divine name <span class="ar">اللَّهُ</span> therefore takes <strong>ـُ</strong>.'
+},
+
+{ caseType:'nominative',
+  ref:'Qur\'an 48:29',
+  prompt:'"Muhammad is the ___ of Allah."',
+  hint:'Pick the word for "Messenger" (the predicate of the sentence)',
+  full:'مُحَمَّدٌ رَسُولُ اللَّهِ',
+  fullTr:'Muḥammadun rasūlu Allāh',
+  fullEn:'Muhammad is the Messenger of Allah.',
+  correct:{ ar:'رَسُولُ', tr:'rasūlu' },
+  wrong:[ { ar:'رَسُولَ', tr:'rasūla' }, { ar:'رَسُولِ', tr:'rasūli' } ],
+  reason:'As the <strong>predicate (khabar)</strong> of the nominal sentence, <span class="ar">رَسُولُ</span> is <strong>nominative</strong>. The word <span class="ar">اللَّهِ</span> after it is genitive (iḍāfah).'
+},
+
+{ caseType:'nominative',
+  ref:'Qur\'an 112:1',
+  prompt:'"He is Allah, ___."',
+  hint:'Pick the word for "the One" (the predicate)',
+  full:'هُوَ اللَّهُ أَحَدٌ',
+  fullTr:'huwa Allāhu aḥad',
+  fullEn:'He is Allah, the One.',
+  correct:{ ar:'أَحَدٌ', tr:'aḥadun' },
+  wrong:[ { ar:'أَحَدًا', tr:'aḥadan' }, { ar:'أَحَدٍ', tr:'aḥadin' } ],
+  reason:'<span class="ar">أَحَدٌ</span> is the <strong>predicate</strong> of the nominal sentence — it describes Allah — so it is nominative with the tanwīn ḍammah <strong>ـٌ</strong>.'
+},
+
+{ caseType:'nominative',
+  ref:'Qur\'an 55:5',
+  prompt:'"The ___ and the moon follow a precise calculation."',
+  hint:'Pick the word for "sun" (the subject)',
+  full:'الشَّمْسُ وَالْقَمَرُ بِحُسْبَانٍ',
+  fullTr:'ash-shamsu wal-qamaru bi-ḥusbān',
+  fullEn:'The sun and the moon follow a precise calculation.',
+  correct:{ ar:'الشَّمْسُ', tr:'ash-shamsu' },
+  wrong:[ { ar:'الشَّمْسَ', tr:'ash-shamsa' }, { ar:'الشَّمْسِ', tr:'ash-shamsi' } ],
+  reason:'<span class="ar">الشَّمْسُ</span> is the <strong>subject (mubtada\')</strong> of the sentence → nominative <strong>ـُ</strong>. The conjunction <span class="ar">وَ</span> makes <span class="ar">الْقَمَرُ</span> share the same case.'
+},
+
+{ caseType:'nominative',
+  ref:'Qur\'an 20:5',
+  prompt:'"The Most Merciful rose over the Throne."',
+  hint:'Pick the word for "The Most Merciful" (the doer of the verb)',
+  full:'الرَّحْمَنُ عَلَى الْعَرْشِ اسْتَوَى',
+  fullTr:'ar-Raḥmānu \'alā al-\'arshi istawā',
+  fullEn:'The Most Merciful rose over the Throne.',
+  correct:{ ar:'الرَّحْمَنُ', tr:'ar-Raḥmānu' },
+  wrong:[ { ar:'الرَّحْمَنَ', tr:'ar-Raḥmāna' }, { ar:'الرَّحْمَنِ', tr:'ar-Raḥmāni' } ],
+  reason:'The <strong>doer (fā\'il)</strong> of a verb is always <strong>nominative</strong>. Here the verb <span class="ar">اسْتَوَى</span> ("rose") has as its doer <span class="ar">الرَّحْمَنُ</span>.'
+},
+
+{ caseType:'nominative',
+  ref:'Qur\'an 110:1',
+  prompt:'"When the ___ of Allah comes, and the conquest."',
+  hint:'Pick the word for "help / victory" (the doer of the verb)',
+  full:'إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ',
+  fullTr:'idhā jā\'a naṣru Allāhi wal-fatḥ',
+  fullEn:'When the help of Allah comes, and the conquest.',
+  correct:{ ar:'نَصْرُ', tr:'naṣru' },
+  wrong:[ { ar:'نَصْرَ', tr:'naṣra' }, { ar:'نَصْرِ', tr:'naṣri' } ],
+  reason:'<span class="ar">نَصْرُ</span> is the <strong>doer</strong> of the verb <span class="ar">جَاءَ</span> → nominative <strong>ـُ</strong>. The word <span class="ar">اللَّهِ</span> is genitive (iḍāfah).'
+},
+
+{ caseType:'nominative',
+  ref:'Qur\'an 50:19',
+  prompt:'"And the agony of death came with the truth."',
+  hint:'Pick the phrase "agony of death" (the doer of the verb)',
+  full:'وَجَاءَتْ سَكْرَةُ الْمَوْتِ بِالْحَقِّ',
+  fullTr:'wa jā\'at sakratu al-mawti bil-ḥaqq',
+  fullEn:'And the agony of death came with the truth.',
+  correct:{ ar:'سَكْرَةُ', tr:'sakratu' },
+  wrong:[ { ar:'سَكْرَةَ', tr:'sakrata' }, { ar:'سَكْرَةِ', tr:'sakrati' } ],
+  reason:'<span class="ar">سَكْرَةُ</span> is the <strong>doer</strong> of the feminine verb <span class="ar">جَاءَتْ</span> → nominative <strong>ـُ</strong>. Note that feminine verbs take a silent <span class="ar">ـتْ</span>.'
+},
+
+{ caseType:'nominative',
+  ref:'Qur\'an 83:6',
+  prompt:'"The Day when ___ will stand before the Lord of all worlds."',
+  hint:'Pick the word for "mankind" (the doer)',
+  full:'يَوْمَ يَقُومُ النَّاسُ لِرَبِّ الْعَالَمِينَ',
+  fullTr:'yawma yaqūmu an-nāsu li-rabbi al-\'ālamīn',
+  fullEn:'The Day when mankind will stand before the Lord of all worlds.',
+  correct:{ ar:'النَّاسُ', tr:'an-nāsu' },
+  wrong:[ { ar:'النَّاسَ', tr:'an-nāsa' }, { ar:'النَّاسِ', tr:'an-nāsi' } ],
+  reason:'<span class="ar">النَّاسُ</span> is the <strong>doer</strong> of the verb <span class="ar">يَقُومُ</span> ("stands") → nominative <strong>ـُ</strong>.'
+},
+
+{ caseType:'nominative',
+  ref:'Qur\'an 5:98',
+  prompt:'"And Allah is ___, ___."',
+  hint:'Pick the word for "Forgiving" (the predicate)',
+  full:'وَاللَّهُ غَفُورٌ رَحِيمٌ',
+  fullTr:'wa Allāhu ghafūrun raḥīm',
+  fullEn:'And Allah is Forgiving, Merciful.',
+  correct:{ ar:'غَفُورٌ', tr:'ghafūrun' },
+  wrong:[ { ar:'غَفُورًا', tr:'ghafūran' }, { ar:'غَفُورٍ', tr:'ghafūrin' } ],
+  reason:'<span class="ar">غَفُورٌ</span> is the <strong>predicate (khabar)</strong> of the nominal sentence — describing the subject <span class="ar">اللَّهُ</span> — so it is nominative with the tanwīn ḍammah <strong>ـٌ</strong>. The adjective <span class="ar">رَحِيمٌ</span> follows the same case.'
+},
+
+/* ═════════════════════ ACCUSATIVE (10) ═════════════════════ */
+
+{ caseType:'accusative',
+  ref:'Qur\'an 108:1',
+  prompt:'"Indeed, We have given you ___. (a river in Paradise)"',
+  hint:'Pick the word for "al-Kawthar" (the direct object)',
+  full:'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ',
+  fullTr:'innā a\'ṭaynāka al-Kawthar',
+  fullEn:'Indeed, We have given you al-Kawthar.',
+  correct:{ ar:'الْكَوْثَرَ', tr:'al-Kawthara' },
+  wrong:[ { ar:'الْكَوْثَرُ', tr:'al-Kawtharu' }, { ar:'الْكَوْثَرِ', tr:'al-Kawthari' } ],
+  reason:'The <strong>direct object (maf\'ūl bihi)</strong> of the verb <span class="ar">أَعْطَيْنَا</span> ("We gave") is accusative. <span class="ar">الْكَوْثَرَ</span> takes the fatḥah <strong>ـَ</strong>.'
+},
+
+{ caseType:'accusative',
+  ref:'Qur\'an 103:2',
+  prompt:'"Indeed, ___ is in loss."',
+  hint:'Pick the word for "mankind" (after the particle إِنَّ)',
+  full:'إِنَّ الْإِنْسَانَ لَفِي خُسْرٍ',
+  fullTr:'inna al-insāna lafī khusr',
+  fullEn:'Indeed, mankind is in loss.',
+  correct:{ ar:'الْإِنْسَانَ', tr:'al-insāna' },
+  wrong:[ { ar:'الْإِنْسَانُ', tr:'al-insānu' }, { ar:'الْإِنْسَانِ', tr:'al-insāni' } ],
+  reason:'After the particle <span class="ar">إِنَّ</span> ("indeed"), the following noun is always <strong>accusative</strong> — <span class="ar">الْإِنْسَانَ</span> takes <strong>ـَ</strong>.'
+},
+
+{ caseType:'accusative',
+  ref:'Qur\'an 2:21',
+  prompt:'"O mankind! ___ your Lord."',
+  hint:'Pick the word for "worship" plus the word "Allah" (direct object)',
+  full:'اعْبُدُوا اللَّهَ',
+  fullTr:'u\'budū Allāh',
+  fullEn:'Worship Allah.',
+  correct:{ ar:'اللَّهَ', tr:'Allāha' },
+  wrong:[ { ar:'اللَّهُ', tr:'Allāhu' }, { ar:'اللَّهِ', tr:'Allāhi' } ],
+  reason:'<span class="ar">اللَّهَ</span> is the <strong>direct object</strong> of the imperative verb <span class="ar">اعْبُدُوا</span> ("worship") → accusative <strong>ـَ</strong>.'
+},
+
+{ caseType:'accusative',
+  ref:'Qur\'an 1:6',
+  prompt:'"Guide us to the ___ path."',
+  hint:'Pick the word for "path" (the direct object of "guide us")',
+  full:'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ',
+  fullTr:'ihdinā aṣ-ṣirāṭa al-mustaqīm',
+  fullEn:'Guide us to the straight path.',
+  correct:{ ar:'الصِّرَاطَ', tr:'aṣ-ṣirāṭa' },
+  wrong:[ { ar:'الصِّرَاطُ', tr:'aṣ-ṣirāṭu' }, { ar:'الصِّرَاطِ', tr:'aṣ-ṣirāṭi' } ],
+  reason:'<span class="ar">الصِّرَاطَ</span> is the <strong>direct object</strong> of <span class="ar">اهْدِنَا</span> ("guide us") → accusative <strong>ـَ</strong>. The adjective <span class="ar">الْمُسْتَقِيمَ</span> also takes the accusative to agree with it.'
+},
+
+{ caseType:'accusative',
+  ref:'Qur\'an 2:153',
+  prompt:'"Indeed, ___ is with the patient."',
+  hint:'Pick the word for "Allah" (after the particle إِنَّ)',
+  full:'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ',
+  fullTr:'inna Allāha ma\'a aṣ-ṣābirīn',
+  fullEn:'Indeed, Allah is with the patient.',
+  correct:{ ar:'اللَّهَ', tr:'Allāha' },
+  wrong:[ { ar:'اللَّهُ', tr:'Allāhu' }, { ar:'اللَّهِ', tr:'Allāhi' } ],
+  reason:'After <span class="ar">إِنَّ</span>, the divine name <span class="ar">اللَّهَ</span> is <strong>accusative</strong> — <strong>ـَ</strong>. This is one of the most recognisable patterns in the Qur\'an.'
+},
+
+{ caseType:'accusative',
+  ref:'Qur\'an 35:6',
+  prompt:'"Indeed, ___ is your clear enemy."',
+  hint:'Pick the word for "Satan" (after the particle إِنَّ)',
+  full:'إِنَّ الشَّيْطَانَ لَكُمْ عَدُوٌّ',
+  fullTr:'inna ash-shayṭāna lakum \'aduww',
+  fullEn:'Indeed, Satan is your enemy.',
+  correct:{ ar:'الشَّيْطَانَ', tr:'ash-shayṭāna' },
+  wrong:[ { ar:'الشَّيْطَانُ', tr:'ash-shayṭānu' }, { ar:'الشَّيْطَانِ', tr:'ash-shayṭāni' } ],
+  reason:'After the particle <span class="ar">إِنَّ</span>, the noun <span class="ar">الشَّيْطَانَ</span> is <strong>accusative</strong> → <strong>ـَ</strong>.'
+},
+
+{ caseType:'accusative',
+  ref:'Qur\'an 4:103',
+  prompt:'"Indeed, ___ has been decreed upon the believers at fixed times."',
+  hint:'Pick the word for "prayer" (after the particle إِنَّ)',
+  full:'إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا',
+  fullTr:'inna aṣ-ṣalāta kānat \'alā al-mu\'minīna kitāban mawqūtā',
+  fullEn:'Indeed, prayer has been decreed upon the believers at fixed times.',
+  correct:{ ar:'الصَّلَاةَ', tr:'aṣ-ṣalāta' },
+  wrong:[ { ar:'الصَّلَاةُ', tr:'aṣ-ṣalātu' }, { ar:'الصَّلَاةِ', tr:'aṣ-ṣalāti' } ],
+  reason:'After <span class="ar">إِنَّ</span>, the word <span class="ar">الصَّلَاةَ</span> takes the <strong>accusative</strong> — <strong>ـَ</strong>. This verse is famously cited on the fixed times of the daily prayers.'
+},
+
+{ caseType:'accusative',
+  ref:'Qur\'an 82:13',
+  prompt:'"Indeed, the ___ will be in bliss."',
+  hint:'Pick the word for "righteous" (after the particle إِنَّ)',
+  full:'إِنَّ الْأَبْرَارَ لَفِي نَعِيمٍ',
+  fullTr:'inna al-abrāra lafī na\'īm',
+  fullEn:'Indeed, the righteous will be in bliss.',
+  correct:{ ar:'الْأَبْرَارَ', tr:'al-abrāra' },
+  wrong:[ { ar:'الْأَبْرَارُ', tr:'al-abrāru' }, { ar:'الْأَبْرَارِ', tr:'al-abrāri' } ],
+  reason:'After <span class="ar">إِنَّ</span>, <span class="ar">الْأَبْرَارَ</span> is <strong>accusative</strong> with the fatḥah <strong>ـَ</strong>.'
+},
+
+{ caseType:'accusative',
+  ref:'Qur\'an 2:194',
+  prompt:'"And ___ Allah, and know that Allah is with the righteous."',
+  hint:'Pick the word for "fear" (imperative) plus "Allah" (direct object)',
+  full:'وَاتَّقُوا اللَّهَ',
+  fullTr:'wattaqū Allāh',
+  fullEn:'And fear Allah.',
+  correct:{ ar:'اللَّهَ', tr:'Allāha' },
+  wrong:[ { ar:'اللَّهُ', tr:'Allāhu' }, { ar:'اللَّهِ', tr:'Allāhi' } ],
+  reason:'<span class="ar">اللَّهَ</span> is the <strong>direct object</strong> of the verb <span class="ar">اتَّقُوا</span> ("fear") → accusative <strong>ـَ</strong>.'
+},
+
+{ caseType:'accusative',
+  ref:'Qur\'an 15:45',
+  prompt:'"Indeed, the ___ will be among gardens and springs."',
+  hint:'Pick the word for "God-conscious" (after the particle إِنَّ, sound masculine plural)',
+  full:'إِنَّ الْمُتَّقِينَ فِي جَنَّاتٍ وَعُيُونٍ',
+  fullTr:'inna al-muttaqīna fī jannātin wa \'uyūn',
+  fullEn:'Indeed, the God-conscious will be among gardens and springs.',
+  correct:{ ar:'الْمُتَّقِينَ', tr:'al-muttaqīna' },
+  wrong:[ { ar:'الْمُتَّقُونَ', tr:'al-muttaqūna' }, { ar:'الْمُتَّقُ', tr:'al-muttaqu' } ],
+  reason:'Sound masculine plural after <span class="ar">إِنَّ</span> → <strong>accusative</strong> ending <strong>ـِينَ</strong>. (In the nominative it would be <span class="ar">ـُونَ</span>.)'
+},
+
+/* ═════════════════════ GENITIVE (10) ═════════════════════ */
+
+{ caseType:'genitive',
+  ref:'Qur\'an 1:1',
+  prompt:'"In the name of ___ , the Most Merciful, the Most Compassionate."',
+  hint:'Pick the word for "Allah" (after the preposition بِسْمِ)',
+  full:'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ',
+  fullTr:'bismi Allāhi ar-Raḥmāni ar-Raḥīm',
+  fullEn:'In the name of Allah, the Most Merciful, the Most Compassionate.',
+  correct:{ ar:'اللَّهِ', tr:'Allāhi' },
+  wrong:[ { ar:'اللَّهُ', tr:'Allāhu' }, { ar:'اللَّهَ', tr:'Allāha' } ],
+  reason:'After the preposition <span class="ar">بِسْمِ</span> ("in the name of"), the noun is <strong>genitive</strong> with the kasrah <strong>ـِ</strong>. This is the phrase Muslims say before every action.'
+},
+
+{ caseType:'genitive',
+  ref:'Qur\'an 1:2',
+  prompt:'"All praise is ___ ."',
+  hint:'Pick the phrase "for Allah" (after the preposition لِ)',
+  full:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',
+  fullTr:'al-ḥamdu lillāhi rabbi al-\'ālamīn',
+  fullEn:'All praise is for Allah, Lord of all worlds.',
+  correct:{ ar:'لِلَّهِ', tr:'lillāhi' },
+  wrong:[ { ar:'لِلَّهُ', tr:'lillāhu' }, { ar:'لِلَّهَ', tr:'lillāha' } ],
+  reason:'After the preposition <span class="ar">لِ</span> ("for / belonging to"), the divine name becomes <strong>genitive</strong> → <strong>ـِ</strong>.'
+},
+
+{ caseType:'genitive',
+  ref:'Qur\'an 113:2',
+  prompt:'"From the ___ of what He created."',
+  hint:'Pick the word for "evil" (after the preposition مِنْ)',
+  full:'مِنْ شَرِّ مَا خَلَقَ',
+  fullTr:'min sharri mā khalaq',
+  fullEn:'From the evil of what He created.',
+  correct:{ ar:'شَرِّ', tr:'sharri' },
+  wrong:[ { ar:'شَرُّ', tr:'sharru' }, { ar:'شَرَّ', tr:'sharra' } ],
+  reason:'After the preposition <span class="ar">مِنْ</span> ("from"), the noun takes the <strong>genitive</strong> → <strong>ـِ</strong>. Note also the iḍāfah with the following <span class="ar">مَا</span>.'
+},
+
+{ caseType:'genitive',
+  ref:'Qur\'an 2:10',
+  prompt:'"In their ___ is a disease."',
+  hint:'Pick the word for "hearts" with the attached pronoun "their" (after the preposition فِي)',
+  full:'فِي قُلُوبِهِمْ مَرَضٌ',
+  fullTr:'fī qulūbihim maraḍ',
+  fullEn:'In their hearts is a disease.',
+  correct:{ ar:'قُلُوبِهِمْ', tr:'qulūbihim' },
+  wrong:[ { ar:'قُلُوبُهُمْ', tr:'qulūbuhum' }, { ar:'قُلُوبَهُمْ', tr:'qulūbahum' } ],
+  reason:'After <span class="ar">فِي</span> ("in"), the noun <span class="ar">قُلُوبِهِمْ</span> is <strong>genitive</strong>. Even with the attached possessive pronoun, the case marker sits on the noun.'
+},
+
+{ caseType:'genitive',
+  ref:'Qur\'an 20:5',
+  prompt:'"He rose over the ___."',
+  hint:'Pick the word for "Throne" (after the preposition عَلَى)',
+  full:'الرَّحْمَنُ عَلَى الْعَرْشِ اسْتَوَى',
+  fullTr:'ar-Raḥmānu \'alā al-\'arshi istawā',
+  fullEn:'The Most Merciful rose over the Throne.',
+  correct:{ ar:'الْعَرْشِ', tr:'al-\'arshi' },
+  wrong:[ { ar:'الْعَرْشُ', tr:'al-\'arshu' }, { ar:'الْعَرْشَ', tr:'al-\'arsha' } ],
+  reason:'After the preposition <span class="ar">عَلَى</span> ("upon / over"), <span class="ar">الْعَرْشِ</span> takes the <strong>genitive</strong> → <strong>ـِ</strong>.'
+},
+
+{ caseType:'genitive',
+  ref:'Qur\'an 7:180',
+  prompt:'"And ___ belong the most beautiful names."',
+  hint:'Pick the phrase "to Allah" (after the preposition لِ)',
+  full:'وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى',
+  fullTr:'wa lillāhi al-asmā\'u al-ḥusnā',
+  fullEn:'And to Allah belong the most beautiful names.',
+  correct:{ ar:'لِلَّهِ', tr:'lillāhi' },
+  wrong:[ { ar:'لِلَّهُ', tr:'lillāhu' }, { ar:'لِلَّهَ', tr:'lillāha' } ],
+  reason:'After <span class="ar">لِ</span> ("belonging to"), the divine name is <strong>genitive</strong> → <strong>ـِ</strong>.'
+},
+
+{ caseType:'genitive',
+  ref:'Qur\'an 2:8',
+  prompt:'"And among ___ are those who say, \'We believe\'."',
+  hint:'Pick the word for "mankind" (after the preposition مِنْ)',
+  full:'وَمِنَ النَّاسِ مَنْ يَقُولُ آمَنَّا',
+  fullTr:'wa mina an-nāsi man yaqūlu āmannā',
+  fullEn:'And among mankind are those who say, "We believe".',
+  correct:{ ar:'النَّاسِ', tr:'an-nāsi' },
+  wrong:[ { ar:'النَّاسُ', tr:'an-nāsu' }, { ar:'النَّاسَ', tr:'an-nāsa' } ],
+  reason:'After the preposition <span class="ar">مِنْ</span> ("from / among"), <span class="ar">النَّاسِ</span> takes the <strong>genitive</strong> → <strong>ـِ</strong>.'
+},
+
+{ caseType:'genitive',
+  ref:'Qur\'an 2:200',
+  prompt:'"… in the ___ and the Hereafter."',
+  hint:'Pick the word for "world" (after the preposition فِي)',
+  full:'فِي الدُّنْيَا وَالْآخِرَةِ',
+  fullTr:'fī ad-dunyā wal-ākhirah',
+  fullEn:'… in this world and the Hereafter.',
+  correct:{ ar:'الدُّنْيَا', tr:'ad-dunyā' },
+  wrong:[ { ar:'الدُّنْيَاْ', tr:'ad-dunyā (nominative form)' }, { ar:'الدُّنْيَاَ', tr:'ad-dunyā (accusative form)' } ],
+  reason:'<span class="ar">الدُّنْيَا</span> is a diptote-like noun: after a preposition it appears with the <strong>genitive</strong> kasrah implied but not written — its ending shape does not change. Arabic grammar treats it as majrūr nonetheless. The following <span class="ar">الْآخِرَةِ</span> clearly shows the genitive kasrah.'
+},
+
+{ caseType:'genitive',
+  ref:'Qur\'an 48:29',
+  prompt:'"Muhammad is the Messenger of ___."',
+  hint:'Pick the word for "Allah" (second term of the iḍāfah)',
+  full:'مُحَمَّدٌ رَسُولُ اللَّهِ',
+  fullTr:'Muḥammadun rasūlu Allāhi',
+  fullEn:'Muhammad is the Messenger of Allah.',
+  correct:{ ar:'اللَّهِ', tr:'Allāhi' },
+  wrong:[ { ar:'اللَّهُ', tr:'Allāhu' }, { ar:'اللَّهَ', tr:'Allāha' } ],
+  reason:'The <strong>second term of an iḍāfah (possessive construction)</strong> is always <strong>genitive</strong> → <strong>ـِ</strong>. Here <span class="ar">رَسُولُ اللَّهِ</span> means "the Messenger of Allah".'
+},
+
+{ caseType:'genitive',
+  ref:'Qur\'an 2:190',
+  prompt:'"… in the ___ of Allah."',
+  hint:'Pick the phrase "way / path" (after the preposition فِي, in iḍāfah)',
+  full:'فِي سَبِيلِ اللَّهِ',
+  fullTr:'fī sabīli Allāh',
+  fullEn:'… in the way of Allah.',
+  correct:{ ar:'سَبِيلِ', tr:'sabīli' },
+  wrong:[ { ar:'سَبِيلُ', tr:'sabīlu' }, { ar:'سَبِيلَ', tr:'sabīla' } ],
+  reason:'<span class="ar">سَبِيلِ</span> is <strong>genitive</strong> because it follows the preposition <span class="ar">فِي</span>. The word <span class="ar">اللَّهِ</span> is genitive as the second term of iḍāfah.'
+}
+
+];
+
+/* ══════════════════════════════════════════════════════════════════════
+   STATE
+   ══════════════════════════════════════════════════════════════════════ */
+const TOTAL = QUESTIONS.length;
+let answered = 0;
+let correct  = 0;
+const userAnswers = new Array(TOTAL).fill(null);
+const perCaseStats = { nominative:{ correct:0, answered:0, total:0 },
+                       accusative:{ correct:0, answered:0, total:0 },
+                       genitive:  { correct:0, answered:0, total:0 } };
+
+QUESTIONS.forEach(q => perCaseStats[q.caseType].total++);
+
+/* ══════════════════════════════════════════════════════════════════════
+   UTILITIES
+   ══════════════════════════════════════════════════════════════════════ */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const CASE_LABEL = { nominative:'Nominative', accusative:'Accusative', genitive:'Genitive' };
+const CASE_CLASS = { nominative:'nom', accusative:'acc', genitive:'gen' };
+
+/* Highlight the target word inside the full Arabic sentence. */
+function highlightSentence(fullSentence, targetWord) {
+  const safeTarget = targetWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(safeTarget);
+  return fullSentence.replace(re, `<span class="hl">${targetWord}</span>`);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   RENDER QUESTIONS
+   ══════════════════════════════════════════════════════════════════════ */
+function renderQuestions() {
+  const list = document.getElementById('questionList');
+  list.innerHTML = '';
+
+  const indices = shuffle([...Array(TOTAL).keys()]);
+
+  for (let displayIndex = 0; displayIndex < indices.length; displayIndex++) {
+    const qIdx = indices[displayIndex];
+    const q = QUESTIONS[qIdx];
+    const options = shuffle([q.correct, ...q.wrong]);
+
+    const card = document.createElement('article');
+    card.className = 'question-card case-' + CASE_CLASS[q.caseType];
+    card.dataset.qIndex = qIdx;
+    card.dataset.caseType = q.caseType;
+
+    card.innerHTML = `
+      <div class="q-head">
+        <span class="q-num">Q${displayIndex + 1}</span>
+        <span class="q-prompt">${q.prompt.replace('___', '<span class="blank"></span>')}</span>
+      </div>
+      <div class="q-context">
+        <span class="quran-badge">📖 ${q.ref}</span>
+        <span class="hint">${q.hint}</span>
+      </div>
+      <div class="options"></div>
+      <div class="explanation hidden"></div>
+    `;
+
+    const optWrap = card.querySelector('.options');
+    for (const opt of options) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'option-btn';
+      btn.dataset.correct = (opt.ar === q.correct.ar) ? 'true' : 'false';
+      btn.dataset.ar = opt.ar;
+      btn.dataset.tr = opt.tr;
+      btn.innerHTML = `
+        <span class="ar" dir="rtl">${opt.ar}</span>
+        <span class="tr">${opt.tr}</span>
+      `;
+      btn.addEventListener('click', () => handleAnswer(qIdx, btn, card, q));
+      optWrap.appendChild(btn);
+    }
+
+    list.appendChild(card);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   HANDLE ANSWER
+   ══════════════════════════════════════════════════════════════════════ */
+function handleAnswer(qIdx, btn, card, q) {
+  if (card.dataset.answered === 'true') return;
+  card.dataset.answered = 'true';
+
+  const isCorrect = btn.dataset.correct === 'true';
+  const chosenAr = btn.dataset.ar;
+  const chosenTr = btn.dataset.tr;
+
+  userAnswers[qIdx] = { correct:isCorrect, chosenAr, chosenTr };
+
+  card.querySelectorAll('.option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.correct === 'true') b.classList.add('correct');
+    if (b === btn && !isCorrect)       b.classList.add('wrong');
+  });
+
+  card.classList.add('answered');
+  card.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+
+  const exp = card.querySelector('.explanation');
+  exp.classList.remove('hidden');
+  exp.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+
+  const highlightedSentence = highlightSentence(q.full, q.correct.ar);
+  const caseClass = CASE_CLASS[q.caseType];
+
+  exp.innerHTML = `
+    <div class="exp-title">
+      ${isCorrect ? '✓ Correct' : '✗ Not quite'}
+      <span class="case-tag ${caseClass}">${CASE_LABEL[q.caseType]}</span>
+      <span class="quran-badge">📖 ${q.ref}</span>
+    </div>
+    <div class="full-sentence-wrap">
+      <span class="full-sentence">${highlightedSentence}</span>
+    </div>
+    <div class="tr-line">${q.fullTr} — "${q.fullEn}"</div>
+    <div class="reason">${q.reason}</div>
+  `;
+
+  answered++;
+  if (isCorrect) correct++;
+  perCaseStats[q.caseType].answered++;
+  if (isCorrect) perCaseStats[q.caseType].correct++;
+
+  updateStats();
+
+  setTimeout(() => {
+    card.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }, 120);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   STATS
+   ══════════════════════════════════════════════════════════════════════ */
+function updateStats() {
+  document.getElementById('scoreDisplay').textContent = `${correct} / ${answered}`;
+
+  const pct = Math.round((answered / TOTAL) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '%';
+
+  const btn = document.getElementById('showResults');
+  if (answered === TOTAL) {
+    btn.disabled = false;
+    btn.textContent = '🎉 Show My Results';
+  } else {
+    const remaining = TOTAL - answered;
+    btn.textContent = `Answer ${remaining} more to see results`;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   FILTER
+   ══════════════════════════════════════════════════════════════════════ */
+document.getElementById('filterBar').addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const filter = btn.dataset.filter;
+  document.querySelectorAll('.question-card').forEach(card => {
+    if (filter === 'all' || card.dataset.caseType === filter) {
+      card.hidden = false;
+    } else {
+      card.hidden = true;
+    }
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ══════════════════════════════════════════════════════════════════════
+   RESULTS
+   ══════════════════════════════════════════════════════════════════════ */
+function showResults() {
+  const pct = Math.round((correct / TOTAL) * 100);
+  document.getElementById('finalScore').textContent = correct;
+  document.getElementById('finalTotal').textContent = TOTAL;
+  document.getElementById('finalPct').textContent = pct + '%';
+
+  let msg;
+  if (pct === 100)      msg = 'ما شاء الله! A perfect score — you have mastered the three cases through the words of the Qur\'an.';
+  else if (pct >= 80)   msg = 'Excellent! You have a strong grasp of the case system. Review the missed items below.';
+  else if (pct >= 60)   msg = 'Good effort. Focus especially on the ones you missed — the case markers will become second nature with practice.';
+  else                  msg = 'Keep practising! Re-read the grammar reference at the top and try again — the Qur\'anic examples will help it stick.';
+
+  document.getElementById('finalMsg').textContent = msg;
+
+  document.getElementById('breakNom').textContent =
+    `${perCaseStats.nominative.correct}/${perCaseStats.nominative.total}`;
+  document.getElementById('breakAcc').textContent =
+    `${perCaseStats.accusative.correct}/${perCaseStats.accusative.total}`;
+  document.getElementById('breakGen').textContent =
+    `${perCaseStats.genitive.correct}/${perCaseStats.genitive.total}`;
+
+  const review = document.getElementById('reviewList');
+  review.innerHTML = '';
+
+  QUESTIONS.forEach((q, i) => {
+    const ua = userAnswers[i];
+    if (!ua) return;
+
+    const correctOpt = q.correct;
+    const item = document.createElement('div');
+    item.className = 'review-item ' + (ua.correct ? 'ok' : 'no');
+
+    let html = `<div class="review-q">Q${i + 1}. ${q.prompt} <span class="case-tag ${CASE_CLASS[q.caseType]}">${CASE_LABEL[q.caseType]}</span> <span class="quran-badge">📖 ${q.ref}</span></div>`;
+
+    if (ua.correct) {
+      html += `
+        <div class="review-line">
+          <span class="tag ok">Your answer</span>
+          <span class="ar" dir="rtl">${ua.chosenAr}</span>
+          <span class="tr">${ua.chosenTr}</span>
+        </div>`;
+    } else {
+      html += `
+        <div class="review-line">
+          <span class="tag no">You chose</span>
+          <span class="ar" dir="rtl">${ua.chosenAr}</span>
+          <span class="tr">${ua.chosenTr}</span>
+        </div>
+        <div class="review-line">
+          <span class="tag ok">Correct</span>
+          <span class="ar" dir="rtl">${correctOpt.ar}</span>
+          <span class="tr">${correctOpt.tr}</span>
+        </div>`;
+    }
+
+    item.innerHTML = html;
+    review.appendChild(item);
+  });
+
+  document.getElementById('resultsOverlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeResults() {
+  document.getElementById('resultsOverlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   RESET
+   ══════════════════════════════════════════════════════════════════════ */
+function resetQuiz() {
+  answered = 0;
+  correct = 0;
+  userAnswers.fill(null);
+  perCaseStats.nominative.correct = 0;
+  perCaseStats.nominative.answered = 0;
+  perCaseStats.accusative.correct = 0;
+  perCaseStats.accusative.answered = 0;
+  perCaseStats.genitive.correct = 0;
+  perCaseStats.genitive.answered = 0;
+
+  document.body.style.overflow = '';
+  document.getElementById('resultsOverlay').classList.add('hidden');
+
+  renderQuestions();
+  updateStats();
+
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+  document.querySelectorAll('.question-card').forEach(c => { c.hidden = false; });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   EVENT WIRING
+   ══════════════════════════════════════════════════════════════════════ */
+document.getElementById('showResults').addEventListener('click', showResults);
+document.getElementById('closeResults').addEventListener('click', closeResults);
+document.getElementById('tryAgain').addEventListener('click', resetQuiz);
+
+document.getElementById('resultsOverlay').addEventListener('click', (e) => {
+  if (e.target.id === 'resultsOverlay') closeResults();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeResults();
+});
+
+/* ══════════════════════════════════════════════════════════════════════
+   BOOT
+   ══════════════════════════════════════════════════════════════════════ */
+renderQuestions();
+updateStats();
+</script>
+
+</body>
+</html>
