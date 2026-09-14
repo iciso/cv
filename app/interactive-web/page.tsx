@@ -102,6 +102,7 @@ const interactiveWebPages = [
   { title: "Alert Quiz", category: "Assessment", description: "Interactive testing framework for situational safety and alert protocols.", url: "/web/alert-quiz.html" },
   { title: "Alibaba Game", category: "Interactive App", description: "Engaging web-based interactive entertainment module.", url: "/web/alibaba-game.html" },
   { title: "Animals Quiz", category: "Educational Quiz", description: "Educational taxonomy and natural science quiz module.", url: "/web/animals-quiz.html" },
+  { title: "Arabic Cases", category: "Arabic Grammar", description: "Teaches Cases of Arabic Nouns with a quiz module.", url: "/web/arabic-cases.html" },
   { title: "Arabic Quiz", category: "Language Tool", description: "Interactive linguistic quiz engine for Arabic language learners.", url: "/web/arabic-quiz.html" },
   { title: "Arabic Animals Quiz", category: "Language Tool", description: "Arabic animal and bird names in a fun, interactive drag-and-match quiz.", url: "/web/arabic-animals-birds.html" },
   { title: "Arkans of Salah", category: "Salah Learner & Quiz", description: "Interactive page on 14 Arkans of Salah and its quiz.", url: "/web/arkans-salah.html" },
