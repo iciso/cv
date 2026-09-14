@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quranic Arabic Wordfind · Word Search Puzzle</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-2: #ebe4d6;
+    --card: #ffffff;
+    --ink: #1a2332;
+    --ink-soft: #4a5568;
+    --muted: #8a8577;
+    --line: #e3dccc;
+    --primary: #0d5c4a;
+    --primary-dark: #084034;
+    --primary-soft: #e6f2ee;
+    --correct: #1e9d6b;
+    --correct-soft: #e3f6ed;
+    --wrong: #d94a3d;
+    --wrong-soft: #fdecea;
+    --gold: #c79b3b;
+    --gold-soft: #fdf6e3;
+    --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
+    --shadow-md: 0 4px 16px rgba(26,35,50,.08);
+    --shadow-lg: 0 20px 50px -12px rgba(26,35,50,.22);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, #fff9ee 0%, transparent 40%),
+      radial-gradient(circle at 85% 90%, #eef5f0 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .top-bar {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(245,242,235,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: .85rem 1.25rem .7rem;
+  }
+  .top-inner { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: .55rem; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); font-size: 1.15rem; }
+  .brand .mark {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-family: 'Noto Naskh Arabic', serif;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: .78rem; color: var(--muted); margin-left: .25rem; }
+  .stats { display: flex; gap: .5rem; font-size: .82rem; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; }
+  .stats .pill { background: var(--card); border: 1px solid var(--line); padding: .22rem .75rem; border-radius: var(--radius-pill); font-variant-numeric: tabular-nums; }
+  .stats .pill .val { color: var(--primary); }
+  .progress-track { height: 6px; background: var(--bg-2); border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary) 0%, #1e9d6b 100%);
+    border-radius: var(--radius-pill);
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 1.5rem 1.25rem 5rem; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a7060 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.7rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; right: -50px; top: -50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero h1 { font-family: 'Amiri', serif; font-size: 1.75rem; font-weight: 700; margin: 0 0 .35rem; }
+  .hero p { margin: 0; font-size: .95rem; opacity: .96; max-width: 60ch; }
+
+  .game-area { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: .5rem; }
+
+  .puzzle-wrap {
+    flex: 1 1 420px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  #puzzle {
+    display: grid;
+    gap: 2px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    cursor: crosshair;
+  }
+  .cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fcfaf5;
+    border-radius: 6px;
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: clamp(1rem, 3.2vw, 1.55rem);
+    font-weight: 700;
+    color: var(--primary-dark);
+    transition: background .12s, color .12s, transform .08s;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cell.selecting { background: #fde9b8; color: #8a6a10; transform: scale(.95); }
+  .cell.found { background: var(--correct-soft); color: #0f6a48; }
+  .cell.found::after {
+    content: "";
+    position: absolute; inset: 2px;
+    border-radius: 6px;
+    border: 2px solid var(--correct);
+    pointer-events: none;
+  }
+
+  .words-wrap {
+    flex: 1 1 280px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1.2rem;
+    box-shadow: var(--shadow-sm);
+    height: fit-content;
+  }
+  .words-wrap h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0 0 .7rem;
+    padding-bottom: .45rem;
+    border-bottom: 2px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+  }
+  .word-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6rem;
+    padding: .55rem .7rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: .3rem;
+    background: #faf8f3;
+    border: 1px solid transparent;
+    transition: background .15s, border-color .15s, opacity .3s;
+  }
+  .word-item.done {
+    background: var(--correct-soft);
+    border-color: rgba(30,157,107,.3);
+    opacity: .7;
+  }
+  .word-item .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1.2;
+  }
+  .word-item .info { text-align: right; min-width: 0; }
+  .word-item .tr { font-size: .8rem; font-weight: 600; color: var(--ink); }
+  .word-item .en { font-size: .75rem; color: var(--muted); font-style: italic; }
+  .word-item.done .ar { color: #0f6a48; }
+
+  .controls { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1rem; }
+  .btn {
+    appearance: none; border: none;
+    font-family: inherit; font-weight: 600;
+    font-size: .9rem; padding: .6rem 1.4rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: transform .1s, background .15s, box-shadow .15s;
+    letter-spacing: .2px;
+  }
+  .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 14px -4px rgba(13,92,74,.4); }
+  .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+  .btn-secondary { background: var(--card); color: var(--primary); border: 2px solid var(--primary); }
+  .btn-secondary:hover { background: var(--primary-soft); }
+
+  .message {
+    margin-top: 1rem;
+    padding: .8rem 1.1rem;
+    border-radius: var(--radius-md);
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    font-size: .9rem;
+    font-weight: 500;
+    display: none;
+  }
+  .message.show { display: block; }
+  .message .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    direction: rtl;
+    display: inline-block;
+    margin: 0 .2rem;
+    vertical-align: middle;
+  }
+
+  .footer {
+    text-align: center; font-size: .78rem; color: var(--muted);
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 620px) {
+    .game-area { flex-direction: column; }
+    .puzzle-wrap { padding: .6rem; }
+    .words-wrap { padding: .9rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="mark">ع</span>
+        <span>Quranic Wordfind <small>· Arabic</small></span>
+      </div>
+      <div class="stats">
+        <span class="pill">Found <span class="val" id="foundCount">0 / 0</span></span>
+        <span class="pill" id="timerDisplay">00:00</span>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>🔍 Quranic Arabic Wordfind</h1>
+    <p>Find the Arabic words hidden in the grid. Each word comes from the Noble Qur'an. Drag or tap across letters in any direction — horizontal, vertical, or diagonal — forwards or backwards.</p>
+  </section>
+
+  <div class="game-area">
+    <div class="puzzle-wrap">
+      <div id="puzzle"></div>
+    </div>
+
+    <div class="words-wrap">
+      <h2>📖 Words to find</h2>
+      <div id="wordList"></div>
+
+      <div class="controls">
+        <button class="btn btn-primary" id="newPuzzleBtn">🔄 New Puzzle</button>
+        <button class="btn btn-secondary" id="revealBtn">👁️ Reveal All</button>
+      </div>
+
+      <div class="message" id="message"></div>
+    </div>
+  </div>
+
+  <p class="footer">Words sourced from the Noble Qur'an · Interactive wordfind puzzle</p>
+</main>
+
+<script>
+(function() {
+  /* ═══════════════════════════════════════════════════════════════
+     WORD BANK — authentic Quranic Arabic vocabulary
+     ═══════════════════════════════════════════════════════════════ */
+  const WORD_BANK = [
+    { ar: 'الله',      tr: 'Allāh',      en: 'God' },
+    { ar: 'رَبّ',       tr: 'Rabb',       en: 'Lord; Sustainer' },
+    { ar: 'دِين',       tr: 'Dīn',        en: 'Religion; way of life' },
+    { ar: 'هُدَى',      tr: 'Hudā',       en: 'Guidance' },
+    { ar: 'نُور',       tr: 'Nūr',        en: 'Light' },
+    { ar: 'قَلْب',      tr: 'Qalb',       en: 'Heart' },
+    { ar: 'حَقّ',       tr: 'Ḥaqq',       en: 'Truth; what is right' },
+    { ar: 'صَبْر',      tr: 'Ṣabr',       en: 'Patience' },
+    { ar: 'إِيمَان',    tr: 'Īmān',       en: 'Faith; belief' },
+    { ar: 'عِلْم',      tr: 'ʿIlm',       en: 'Knowledge' },
+    { ar: 'صِرَاط',     tr: 'Ṣirāṭ',      en: 'Path; way' },
+    { ar: 'رَحْمَة',    tr: 'Raḥmah',     en: 'Mercy' },
+    { ar: 'شُكْر',      tr: 'Shukr',      en: 'Gratitude' },
+    { ar: 'جَنَّة',     tr: 'Jannah',     en: 'Paradise' },
+    { ar: 'نَار',       tr: 'Nār',        en: 'Hellfire' },
+    { ar: 'صَلَاة',     tr: 'Ṣalāh',      en: 'Prayer' },
+    { ar: 'زَكَاة',     tr: 'Zakāh',      en: 'Almsgiving; charity' },
+    { ar: 'نَبِيّ',     tr: 'Nabī',       en: 'Prophet' },
+    { ar: 'رَسُول',     tr: 'Rasūl',      en: 'Messenger' },
+    { ar: 'تَقْوَى',    tr: 'Taqwā',      en: 'God-consciousness' },
+    { ar: 'تَوْبَة',    tr: 'Tawbah',     en: 'Repentance' },
+    { ar: 'ذِكْر',      tr: 'Dhikr',      en: 'Remembrance of Allah' },
+    { ar: 'كِتَاب',     tr: 'Kitāb',      en: 'Book' },
+    { ar: 'يَوْم',      tr: 'Yawm',       en: 'Day' },
+    { ar: 'لَيْل',      tr: 'Layl',       en: 'Night' },
+    { ar: 'حَمْد',      tr: 'Ḥamd',       en: 'Praise' },
+    { ar: 'عَبْد',      tr: 'ʿAbd',       en: 'Servant; slave' },
+    { ar: 'خَلْق',      tr: 'Khalq',      en: 'Creation' }
+  ];
+
+  function stripDiacritics(s) {
+    return s.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, '');
+  }
+
+  /* ═══════════════════ STATE ═══════════════════ */
+  const GRID_SIZE = 14;
+  let grid = [];
+  let placements = [];
+  let foundWords = new Set();
+  let totalWords = 0;
+
+  let isSelecting = false;
+  let selectionPath = [];
+  let startTime = null;
+  let timerInterval = null;
+
+  const puzzleEl = document.getElementById('puzzle');
+  const wordListEl = document.getElementById('wordList');
+  const foundCountEl = document.getElementById('foundCount');
+  const progressFill = document.getElementById('progressFill');
+  const messageEl = document.getElementById('message');
+  const timerDisplay = document.getElementById('timerDisplay');
+
+  /* ═══════════════════ PUZZLE GENERATION ═══════════════════ */
+  function generatePuzzle() {
+    const shuffled = [...WORD_BANK].sort(() => Math.random() - 0.5);
+    const selected = shuffled.slice(0, 12);
+
+    grid = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(''));
+    placements = [];
+    foundWords = new Set();
+    totalWords = selected.length;
+
+    const directions = [
+      [0, 1], [0, -1], [1, 0], [-1, 0],
+      [1, 1], [-1, -1], [1, -1], [-1, 1]
+    ];
+
+    selected.forEach(item => {
+      const letters = stripDiacritics(item.ar).split('');
+      let placed = false;
+      let attempts = 0;
+
+      while (!placed && attempts < 300) {
+        attempts++;
+        const dir = directions[Math.floor(Math.random() * directions.length)];
+        const len = letters.length;
+
+        const maxRow = GRID_SIZE - 1;
+        const maxCol = GRID_SIZE - 1;
+        let startR, startC;
+
+        if (dir[0] >= 0) startR = Math.floor(Math.random() * (maxRow - (dir[0] * (len - 1)) + 1));
+        else startR = Math.floor(Math.random() * (maxRow + 1)) + (dir[0] * (len - 1)) * -1;
+        if (dir[1] >= 0) startC = Math.floor(Math.random() * (maxCol - (dir[1] * (len - 1)) + 1));
+        else startC = Math.floor(Math.random() * (maxCol + 1)) + (dir[1] * (len - 1)) * -1;
+
+        if (startR < 0) startR = 0;
+        if (startC < 0) startC = 0;
+        if (startR + dir[0] * (len - 1) > maxRow) startR = maxRow - dir[0] * (len - 1);
+        if (startC + dir[1] * (len - 1) > maxCol) startC = maxCol - dir[1] * (len - 1);
+        if (startR < 0 || startC < 0) continue;
+
+        let fits = true;
+        const coords = [];
+        for (let i = 0; i < len; i++) {
+          const r = startR + dir[0] * i;
+          const c = startC + dir[1] * i;
+          if (r < 0 || r >= GRID_SIZE || c < 0 || c >= GRID_SIZE) { fits = false; break; }
+          if (grid[r][c] !== '' && grid[r][c] !== letters[i]) { fits = false; break; }
+          coords.push({ r, c });
+        }
+
+        if (fits) {
+          coords.forEach((pos, i) => { grid[pos.r][pos.c] = letters[i]; });
+          placements.push({
+            ar: item.ar,
+            arClean: stripDiacritics(item.ar),
+            tr: item.tr,
+            en: item.en,
+            coords
+          });
+          placed = true;
+        }
+      }
+    });
+
+    const fillLetters = ['ا','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','ه','و','ي'];
+    for (let r = 0; r < GRID_SIZE; r++) {
+      for (let c = 0; c < GRID_SIZE; c++) {
+        if (grid[r][c] === '') {
+          grid[r][c] = fillLetters[Math.floor(Math.random() * fillLetters.length)];
+        }
+      }
+    }
+
+    totalWords = placements.length;
+    renderPuzzle();
+    renderWordList();
+    resetTimer();
+    updateStats();
+    hideMessage();
+  }
+
+  /* ═══════════════════ RENDER PUZZLE ═══════════════════ */
+  function renderPuzzle() {
+    puzzleEl.innerHTML = '';
+    puzzleEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
+
+    for (let r = 0; r < GRID_SIZE; r++) {
+      for (let c = 0; c < GRID_SIZE; c++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.dataset.r = r;
+        cell.dataset.c = c;
+        cell.textContent = grid[r][c];
+        cell.setAttribute('role', 'gridcell');
+        cell.setAttribute('aria-label', `Row ${r + 1} column ${c + 1}: ${grid[r][c]}`);
+        cell.addEventListener('pointerdown', onPointerDown);
+        puzzleEl.appendChild(cell);
+      }
+    }
+  }
+
+  /* ═══════════════════ SELECTION LOGIC (FIXED) ═══════════════════
+     Bug fix: previously we called `setPointerCapture()` on the starting
+     cell, which made the browser route ALL subsequent pointer events
+     back to that one cell — so `pointerenter` never fired on the
+     neighbouring cells.
+
+     Fix: we now listen for `pointermove` on the document, and use
+     `document.elementFromPoint()` to discover which cell the pointer
+     is currently over. This works identically for mouse, touch and
+     pen, and it never blocks natural pointer flow.
+     ═══════════════════════════════════════════════════════════════ */
+
+  function getCell(r, c) {
+    return puzzleEl.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
+  }
+
+  function clearSelectionHighlight() {
+    puzzleEl.querySelectorAll('.cell.selecting').forEach(el => el.classList.remove('selecting'));
+  }
+
+  function onPointerDown(e) {
+    // Only respond to the primary pointer button
+    if (e.button !== undefined && e.button !== 0 && e.pointerType === 'mouse') return;
+    e.preventDefault();
+
+    const r = parseInt(this.dataset.r, 10);
+    const c = parseInt(this.dataset.c, 10);
+
+    isSelecting = true;
+    selectionPath = [{ r, c }];
+
+    clearSelectionHighlight();
+    const cell = getCell(r, c);
+    if (cell) cell.classList.add('selecting');
+  }
+
+  function onPointerMove(e) {
+    if (!isSelecting) return;
+
+    // Find which cell the pointer is over
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    if (!el) return;
+    const cell = el.closest && el.closest('.cell');
+    if (!cell || !puzzleEl.contains(cell)) return;
+
+    const r = parseInt(cell.dataset.r, 10);
+    const c = parseInt(cell.dataset.c, 10);
+
+    const start = selectionPath[0];
+    if (!start) return;
+
+    // Ignore if same as last selected cell
+    const last = selectionPath[selectionPath.length - 1];
+    if (last && last.r === r && last.c === c) return;
+
+    // Enforce straight line: horizontal, vertical, or exact diagonal
+    const dr = r - start.r;
+    const dc = c - start.c;
+    if (dr !== 0 && dc !== 0 && Math.abs(dr) !== Math.abs(dc)) return;
+
+    // Rebuild the path from start to (r,c) as a straight line
+    const steps = Math.max(Math.abs(dr), Math.abs(dc));
+    const stepR = dr === 0 ? 0 : dr / steps;
+    const stepC = dc === 0 ? 0 : dc / steps;
+
+    clearSelectionHighlight();
+    selectionPath = [];
+    for (let i = 0; i <= steps; i++) {
+      const rr = start.r + stepR * i;
+      const cc = start.c + stepC * i;
+      selectionPath.push({ r: rr, c: cc });
+      const cc2 = getCell(rr, cc);
+      if (cc2) cc2.classList.add('selecting');
+    }
+  }
+
+  function onPointerUp(e) {
+    if (!isSelecting) return;
+    isSelecting = false;
+    finaliseSelection();
+  }
+
+  function finaliseSelection() {
+    if (selectionPath.length < 2) {
+      clearSelectionHighlight();
+      selectionPath = [];
+      return;
+    }
+
+    const selectedWord = selectionPath.map(p => grid[p.r][p.c]).join('');
+    const reversed = selectedWord.split('').reverse().join('');
+
+    const match = placements.find(p => {
+      if (foundWords.has(p.ar)) return false;
+      return p.arClean === selectedWord || p.arClean === reversed;
+    });
+
+    if (match) {
+      foundWords.add(match.ar);
+      match.coords.forEach(pos => {
+        const cell = getCell(pos.r, pos.c);
+        if (cell) cell.classList.add('found');
+      });
+      clearSelectionHighlight();
+      updateStats();
+      showMessage(`✅ Found <span class="ar">${match.ar}</span> — <strong>${match.tr}</strong> (${match.en})`, 'success');
+      if (foundWords.size === totalWords) {
+        showMessage('🎉 Masha\'Allah! You found all the words!', 'success');
+        stopTimer();
+      }
+    } else {
+      // Brief shake feedback
+      const flashCoords = selectionPath.slice();
+      clearSelectionHighlight();
+      flashCoords.forEach(p => {
+        const cell = getCell(p.r, p.c);
+        if (cell) {
+          cell.style.background = '#fdecea';
+          setTimeout(() => { cell.style.background = ''; }, 250);
+        }
+      });
+    }
+
+    selectionPath = [];
+  }
+
+  /* ═══════════════════ WORD LIST ═══════════════════ */
+  function renderWordList() {
+    wordListEl.innerHTML = '';
+    placements.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'word-item' + (foundWords.has(p.ar) ? ' done' : '');
+      div.dataset.ar = p.ar;
+      div.innerHTML = `
+        <span class="ar" dir="rtl">${p.ar}</span>
+        <span class="info">
+          <span class="tr">${p.tr}</span><br>
+          <span class="en">${p.en}</span>
+        </span>
+      `;
+      wordListEl.appendChild(div);
+    });
+  }
+
+  function updateWordList() {
+    placements.forEach(p => {
+      const el = wordListEl.querySelector(`.word-item[data-ar="${p.ar}"]`);
+      if (el) {
+        if (foundWords.has(p.ar)) el.classList.add('done');
+        else el.classList.remove('done');
+      }
+    });
+  }
+
+  /* ═══════════════════ STATS & TIMER ═══════════════════ */
+  function updateStats() {
+    foundCountEl.textContent = `${foundWords.size} / ${totalWords}`;
+    const pct = totalWords ? Math.round((foundWords.size / totalWords) * 100) : 0;
+    progressFill.style.width = pct + '%';
+    updateWordList();
+  }
+
+  function resetTimer() {
+    stopTimer();
+    startTime = null;
+    timerDisplay.textContent = '00:00';
+    startTimer();
+  }
+
+  function startTimer() {
+    if (timerInterval) clearInterval(timerInterval);
+    startTime = Date.now();
+    timerInterval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const m = String(Math.floor(elapsed / 60)).padStart(2, '0');
+      const s = String(elapsed % 60).padStart(2, '0');
+      timerDisplay.textContent = `${m}:${s}`;
+    }, 500);
+  }
+
+  function stopTimer() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  }
+
+  /* ═══════════════════ MESSAGES ═══════════════════ */
+  function showMessage(html, type) {
+    messageEl.innerHTML = html;
+    messageEl.classList.add('show');
+    if (type === 'success') {
+      messageEl.style.background = 'var(--correct-soft)';
+      messageEl.style.color = '#0f6a48';
+    } else {
+      messageEl.style.background = 'var(--primary-soft)';
+      messageEl.style.color = 'var(--primary-dark)';
+    }
+  }
+
+  function hideMessage() {
+    messageEl.classList.remove('show');
+  }
+
+  /* ═══════════════════ REVEAL ALL ═══════════════════ */
+  function revealAll() {
+    placements.forEach(p => {
+      if (!foundWords.has(p.ar)) {
+        foundWords.add(p.ar);
+        p.coords.forEach(pos => {
+          const cell = getCell(pos.r, pos.c);
+          if (cell) cell.classList.add('found');
+        });
+      }
+    });
+    updateStats();
+    showMessage('👁️ All words revealed. Click <strong>New Puzzle</strong> to play again.', 'success');
+    stopTimer();
+  }
+
+  /* ═══════════════════ INIT ═══════════════════ */
+  function init() {
+    generatePuzzle();
+
+    document.getElementById('newPuzzleBtn').addEventListener('click', generatePuzzle);
+    document.getElementById('revealBtn').addEventListener('click', revealAll);
+
+    // Global pointer listeners (fixed): tracking movement beyond the start cell
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerup', onPointerUp);
+    document.addEventListener('pointercancel', onPointerUp);
+
+    // Prevent page scroll / selection while dragging on the puzzle
+    puzzleEl.addEventListener('touchstart', (e) => {
+      if (e.cancelable) e.preventDefault();
+    }, { passive: false });
+    puzzleEl.addEventListener('contextmenu', (e) => e.preventDefault());
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
