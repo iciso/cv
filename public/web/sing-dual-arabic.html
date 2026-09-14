@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Arabic Singular · Dual · Plural Quiz</title>
+<title>Arabic Singular · Dual · Plural Quiz — 40 Questions</title>
 
 <!-- Fonts: Inter for English, Noto Naskh Arabic for beautiful Arabic -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +28,7 @@
     --wrong: #d94a3d;
     --wrong-soft: #fdecea;
     --gold: #c79b3b;
+    --gold-soft: #fdf6e3;
     --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
     --shadow-md: 0 4px 16px rgba(26,35,50,.08);
     --shadow-lg: 0 20px 50px -12px rgba(26,35,50,.22);
@@ -35,10 +36,14 @@
     --radius-md: 16px;
     --radius-lg: 24px;
     --radius-pill: 999px;
+
+    /* Arabic type scale — matches the option-card size */
+    --ar-option: 1.55rem;
+    --ar-explain: 1.40rem;
+    --ar-inline: 1.20rem;
   }
 
   * { box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -59,14 +64,14 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(245, 241, 232, 0.92);
+    background: rgba(245, 241, 232, 0.94);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
-    padding: 0.9rem 1.25rem 0.75rem;
+    padding: 0.85rem 1.25rem 0.7rem;
   }
   .top-bar-inner {
-    max-width: 780px;
+    max-width: 820px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -92,14 +97,15 @@
     font-family: 'Noto Naskh Arabic', serif;
     background: var(--primary);
     color: #fff;
-    width: 30px; height: 30px;
+    width: 32px; height: 32px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.95rem;
+    font-size: 1rem;
     direction: rtl;
   }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.78rem; color: var(--muted); margin-left: 0.25rem; }
   .stats {
     display: flex;
     align-items: center;
@@ -107,6 +113,7 @@
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--ink-soft);
+    flex-wrap: wrap;
   }
   .stats .pill {
     background: var(--card);
@@ -134,7 +141,7 @@
 
   /* ---------- Layout ---------- */
   .wrap {
-    max-width: 780px;
+    max-width: 820px;
     margin: 0 auto;
     padding: 1.5rem 1.25rem 5rem;
   }
@@ -160,7 +167,7 @@
   }
   .intro h1 {
     font-family: 'Amiri', serif;
-    font-size: 1.7rem;
+    font-size: 1.75rem;
     font-weight: 700;
     margin: 0 0 0.4rem;
     letter-spacing: 0.2px;
@@ -168,8 +175,21 @@
   .intro p {
     margin: 0;
     font-size: 0.95rem;
-    opacity: 0.95;
-    max-width: 56ch;
+    opacity: 0.96;
+    max-width: 58ch;
+  }
+  .intro .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: var(--radius-pill);
+    padding: 0.22rem 0.85rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 0.7rem;
+    letter-spacing: 0.3px;
   }
 
   /* ---------- Grammar reference ---------- */
@@ -224,20 +244,64 @@
   .ref-body dd { margin: 0; }
   .ref-body .ar {
     font-family: 'Noto Naskh Arabic', 'Amiri', serif;
-    font-size: 1.15rem;
+    font-size: var(--ar-inline);
     color: var(--primary-dark);
     direction: rtl;
     display: inline-block;
     margin: 0 0.15rem;
+    font-weight: 600;
   }
   .ref-body .example {
     background: var(--primary-soft);
     border-radius: var(--radius-sm);
-    padding: 0.6rem 0.85rem;
+    padding: 0.7rem 0.9rem;
     margin-top: 0.9rem;
     font-size: 0.87rem;
-    line-height: 1.75;
+    line-height: 1.9;
   }
+  .ref-body .example .ar {
+    font-size: var(--ar-explain);
+    font-weight: 700;
+  }
+
+  /* ---------- Filter bar ---------- */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0 0 1.1rem;
+    padding: 0.35rem;
+    background: var(--bg-2);
+    border-radius: var(--radius-pill);
+  }
+  .filter-btn {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding: 0.42rem 0.95rem;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--ink-soft);
+    transition: background 0.18s, color 0.18s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .filter-btn:hover { background: rgba(255,255,255,.6); }
+  .filter-btn.active {
+    background: var(--card);
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+  }
+  .filter-btn .count {
+    font-weight: 500;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .filter-btn.active .count { color: var(--primary); }
 
   /* ---------- Question cards ---------- */
   .question-card {
@@ -247,13 +311,15 @@
     padding: 1.15rem 1.15rem 1.05rem;
     margin-bottom: 0.95rem;
     box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+    transition: box-shadow 0.2s, border-color 0.2s;
     animation: cardIn 0.35s ease both;
+    scroll-margin-top: 100px;
   }
   @keyframes cardIn {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+  .question-card[hidden] { display: none; }
   .question-card.answered { border-color: var(--line); }
   .question-card.answered.is-correct { border-color: rgba(30,157,107,.45); }
   .question-card.answered.is-wrong { border-color: rgba(217,74,61,.4); }
@@ -262,14 +328,15 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.55rem;
+    flex-wrap: wrap;
   }
   .q-num {
     flex-shrink: 0;
     background: var(--primary-soft);
     color: var(--primary);
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     padding: 0.2rem 0.6rem;
     border-radius: var(--radius-pill);
     font-variant-numeric: tabular-nums;
@@ -279,6 +346,27 @@
     font-weight: 600;
     color: var(--ink);
     letter-spacing: 0.1px;
+    flex: 1 1 auto;
+  }
+  .q-category {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    padding: 0.15rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--gold-soft);
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .q-ref {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--primary-soft);
+    padding: 0.15rem 0.6rem;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
   }
 
   /* ---------- Options ---------- */
@@ -296,7 +384,7 @@
     border: 2px solid var(--line);
     background: #fdfbf7;
     border-radius: var(--radius-md);
-    padding: 0.75rem 0.6rem 0.65rem;
+    padding: 0.85rem 0.6rem 0.7rem;
     cursor: pointer;
     font-family: inherit;
     display: flex;
@@ -305,8 +393,9 @@
     gap: 0.35rem;
     transition: border-color 0.15s, background 0.15s, transform 0.08s, box-shadow 0.15s;
     text-align: center;
-    min-height: 84px;
+    min-height: 92px;
     justify-content: center;
+    position: relative;
   }
   .option-btn:hover:not(:disabled) {
     border-color: var(--primary);
@@ -319,10 +408,10 @@
 
   .option-btn .ar {
     font-family: 'Noto Naskh Arabic', 'Amiri', serif;
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: var(--ar-option);
+    font-weight: 700;
     color: var(--primary-dark);
-    line-height: 1.3;
+    line-height: 1.35;
     direction: rtl;
   }
   .option-btn .tr {
@@ -340,7 +429,7 @@
   .option-btn.correct::after {
     content: "✓ correct";
     position: absolute;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.5px;
     color: var(--correct);
@@ -348,17 +437,16 @@
     top: 6px;
     right: 9px;
   }
-  .option-btn { position: relative; }
   .option-btn.wrong {
     background: var(--wrong-soft);
     border-color: var(--wrong);
-    opacity: 0.85;
+    opacity: 0.88;
   }
   .option-btn.wrong .ar { color: #a83329; }
   .option-btn.wrong::after {
     content: "✗ your pick";
     position: absolute;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.5px;
     color: var(--wrong);
@@ -371,11 +459,11 @@
   .explanation {
     margin-top: 0.9rem;
     border-radius: var(--radius-md);
-    padding: 0.85rem 1rem;
+    padding: 0.95rem 1rem;
     background: #faf8f3;
     border-left: 4px solid var(--muted);
     font-size: 0.9rem;
-    line-height: 1.7;
+    line-height: 1.75;
     color: var(--ink-soft);
     animation: expIn 0.3s ease both;
   }
@@ -389,7 +477,7 @@
 
   .exp-title {
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     letter-spacing: 0.4px;
     text-transform: uppercase;
     margin-bottom: 0.35rem;
@@ -399,13 +487,14 @@
 
   .explanation .ar {
     font-family: 'Noto Naskh Arabic', 'Amiri', serif;
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: var(--ar-explain);
+    font-weight: 700;
     color: var(--primary-dark);
     direction: rtl;
     display: inline-block;
     margin: 0 0.15rem;
     vertical-align: middle;
+    line-height: 1.5;
   }
   .explanation .tr {
     font-style: italic;
@@ -413,6 +502,18 @@
     font-size: 0.85rem;
   }
   .explanation strong { color: var(--ink); }
+
+  .explanation .ref-line {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--primary-soft);
+    color: var(--primary);
+    padding: 0.1rem 0.6rem;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.3px;
+  }
 
   /* ---------- Bottom actions ---------- */
   .bottom-actions {
@@ -475,7 +576,7 @@
 
   .results-card {
     background: var(--card);
-    max-width: 640px;
+    max-width: 680px;
     width: 100%;
     border-radius: var(--radius-lg);
     padding: 1.75rem 1.6rem 1.5rem;
@@ -543,7 +644,7 @@
     margin-top: 0.55rem;
     font-size: 0.92rem;
     color: var(--ink-soft);
-    max-width: 42ch;
+    max-width: 46ch;
     margin-left: auto;
     margin-right: auto;
   }
@@ -579,9 +680,10 @@
   }
   .review-line .ar {
     font-family: 'Noto Naskh Arabic', 'Amiri', serif;
-    font-size: 1.1rem;
+    font-size: var(--ar-explain);
     direction: rtl;
     color: var(--primary-dark);
+    font-weight: 700;
   }
   .review-line .tr { font-style: italic; color: var(--muted); font-size: 0.8rem; }
   .review-line .tag {
@@ -612,7 +714,6 @@
     border-top: 1px solid var(--line);
   }
 
-  /* ---------- Reduced motion ---------- */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -629,7 +730,7 @@
     <div class="top-row">
       <div class="brand">
         <span class="arabic-mark">ع</span>
-        <span>Singular · Dual · Plural</span>
+        <span>Singular · Dual · Plural <small>· 40 questions</small></span>
       </div>
       <div class="stats">
         <span class="pill">Score <span class="val" id="scoreDisplay">0 / 0</span></span>
@@ -648,7 +749,8 @@
   <!-- Intro -->
   <section class="intro">
     <h1>Arabic Numbers: One · Two · Many</h1>
-    <p>Arabic is one of the few languages with a <strong>three-number system</strong> — singular for one, <strong>dual</strong> for exactly two, and plural for three or more. Pick the correct Arabic form for each English phrase.</p>
+    <p>Arabic has a <strong>three-number system</strong> — <em>singular</em> for one, <em>dual</em> for exactly two, and <em>plural</em> for three or more. Master 40 essential words across family, faith, nature, and everyday life.</p>
+    <div class="pill">📖 Includes Qur'anic vocabulary</div>
   </section>
 
   <!-- Grammar reference -->
@@ -669,11 +771,25 @@
       <div class="example">
         <strong>How the dual is built:</strong><br>
         • <em>Masculine nouns</em> add <span class="ar">ـَان</span> (−ān): <span class="ar">كِتَاب</span> → <span class="ar">كِتَابَان</span><br>
-        • <em>Feminine nouns</em> add <span class="ar">ـتَان</span> (−tān): <span class="ar">مُسْلِمَة</span> → <span class="ar">مُسْلِمَتَان</span><br>
+        • <em>Feminine nouns</em> add <span class="ar">ـتَان</span> (−tān): <span class="ar">مُسْلِمَة</span> → <span class="ar">مُسْلِمَتَان</span><br><br>
         <strong>Plurals</strong> are either <em>sound</em> (regular suffix) — <span class="ar">مُسْلِمُون</span>, <span class="ar">مُسْلِمَات</span> — or <em>broken</em> (the word's shape changes) — <span class="ar">كُتُب</span>, <span class="ar">بُيُوت</span>.
       </div>
     </div>
   </details>
+
+  <!-- Filter bar -->
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All <span class="count">40</span></button>
+    <button class="filter-btn" data-filter="family">Family <span class="count">7</span></button>
+    <button class="filter-btn" data-filter="believers">Believers <span class="count">5</span></button>
+    <button class="filter-btn" data-filter="objects">Objects <span class="count">5</span></button>
+    <button class="filter-btn" data-filter="nature">Nature <span class="count">5</span></button>
+    <button class="filter-btn" data-filter="body">Body <span class="count">4</span></button>
+    <button class="filter-btn" data-filter="prophets">Prophets <span class="count">4</span></button>
+    <button class="filter-btn" data-filter="pronouns">Pronouns <span class="count">4</span></button>
+    <button class="filter-btn" data-filter="time">Time <span class="count">3</span></button>
+    <button class="filter-btn" data-filter="adjectives">Adjectives <span class="count">3</span></button>
+  </div>
 
   <!-- Questions injected here -->
   <div id="questionList"></div>
@@ -695,7 +811,7 @@
     </div>
 
     <div class="score-hero">
-      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">12</span></span></div>
+      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">40</span></span></div>
       <div class="score-pct" id="finalPct">0%</div>
       <p class="score-msg" id="finalMsg"></p>
     </div>
@@ -710,120 +826,461 @@
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   Question bank — 12 questions covering singular / dual / plural
-   Each: correct answer + 2 distractors showing the same root in
-   the other two numbers, so the learner must know the pattern.
+   40 questions covering singular / dual / plural across 9 categories.
+   Each has: category, optional Qur'anic reference, prompt,
+   3 options (1 correct + 2 distractors from the same root), and
+   a rich explanation.
    ═══════════════════════════════════════════════════════════════ */
 const QUESTIONS = [
+  /* ══════════ FAMILY (7) ══════════ */
   {
-    prompt: "One book",
+    category: 'family',
+    prompt: "One brother",
     options: [
-      { ar: "كِتَاب",   tr: "kitāb",   correct: true  },
-      { ar: "كِتَابَان", tr: "kitābān", correct: false },
-      { ar: "كُتُب",    tr: "kutub",   correct: false }
+      { ar: "أَخ",     tr: "akh",     correct: true  },
+      { ar: "أَخَوَان", tr: "akhawān", correct: false },
+      { ar: "إِخْوَة",  tr: "ikhwah",  correct: false }
     ],
-    explanation: `<span class="ar">كِتَاب</span> <span class="tr">(kitāb)</span> is the <strong>singular</strong> — one book. The <strong>dual</strong> <span class="ar">كِتَابَان</span> <span class="tr">(kitābān)</span> means two books; the <strong>broken plural</strong> <span class="ar">كُتُب</span> <span class="tr">(kutub)</span> means three or more.`
+    explanation: `<span class="ar">أَخ</span> <span class="tr">(akh)</span> is the <strong>singular</strong> — one brother. The <strong>dual</strong> <span class="ar">أَخَوَان</span> <span class="tr">(akhawān)</span> reveals the hidden <span class="ar">و</span> of the root; the <strong>broken plural</strong> <span class="ar">إِخْوَة</span> <span class="tr">(ikhwah)</span> means three or more brothers.`
   },
   {
-    prompt: "Two books",
+    category: 'family',
+    prompt: "Two brothers",
     options: [
-      { ar: "كِتَاب",   tr: "kitāb",   correct: false },
-      { ar: "كِتَابَان", tr: "kitābān", correct: true  },
-      { ar: "كُتُب",    tr: "kutub",   correct: false }
+      { ar: "أَخ",     tr: "akh",     correct: false },
+      { ar: "أَخَوَان", tr: "akhawān", correct: true  },
+      { ar: "إِخْوَة",  tr: "ikhwah",  correct: false }
     ],
-    explanation: `The <strong>dual</strong> <span class="ar">كِتَابَان</span> <span class="tr">(kitābān)</span> is formed by adding <span class="ar">ـَان</span> (−ān) to the singular <span class="ar">كِتَاب</span>. Arabic uses the dual for <em>exactly two</em> — a distinct form most languages don't have.`
+    explanation: `The <strong>dual</strong> <span class="ar">أَخَوَان</span> <span class="tr">(akhawān)</span> restores the <span class="ar">و</span> that disappeared in the singular <span class="ar">أَخ</span>. Arabic uses the dual for <em>exactly two</em>.`
   },
   {
-    prompt: "Three books (or more)",
+    category: 'family',
+    prompt: "Three sisters (or more)",
     options: [
-      { ar: "كِتَاب",   tr: "kitāb",   correct: false },
-      { ar: "كِتَابَان", tr: "kitābān", correct: false },
-      { ar: "كُتُب",    tr: "kutub",   correct: true  }
+      { ar: "أُخْت",    tr: "ukht",    correct: false },
+      { ar: "أُخْتَان",  tr: "ukhtān",  correct: false },
+      { ar: "أَخَوَات",  tr: "akhawāt", correct: true  }
     ],
-    explanation: `<span class="ar">كُتُب</span> <span class="tr">(kutub)</span> is a <strong>broken plural</strong> — the vowel pattern changes internally rather than adding a suffix. Arabic has many broken plural patterns, so plurals must be memorised word by word.`
+    explanation: `<span class="ar">أَخَوَات</span> <span class="tr">(akhawāt)</span> is the <strong>sound feminine plural</strong> of <span class="ar">أُخْت</span> ("sister"). The dual is <span class="ar">أُخْتَان</span> <span class="tr">(ukhtān)</span> — the <span class="ar">ة</span> opens into <span class="ar">ت</span>.`
   },
   {
-    prompt: "One Muslim man",
+    category: 'family',
+    prompt: "Two fathers",
+    options: [
+      { ar: "أَب",     tr: "ab",     correct: false },
+      { ar: "أَبَوَان", tr: "abawān", correct: true  },
+      { ar: "آبَاء",   tr: "ābā'",   correct: false }
+    ],
+    explanation: `The <strong>dual</strong> <span class="ar">أَبَوَان</span> <span class="tr">(abawān)</span> literally means "two fathers" but is <em>idiomatically used for "parents"</em> (father and mother together) in Arabic. The broken plural is <span class="ar">آبَاء</span> <span class="tr">(ābā')</span> = fathers.`
+  },
+  {
+    category: 'family',
+    prompt: "Three mothers (or more)",
+    options: [
+      { ar: "أُمّ",      tr: "umm",      correct: false },
+      { ar: "أُمَّان",   tr: "ummān",    correct: false },
+      { ar: "أُمَّهَات", tr: "ummahāt",  correct: true  }
+    ],
+    explanation: `<span class="ar">أُمَّهَات</span> <span class="tr">(ummahāt)</span> is the <strong>sound feminine plural</strong> of <span class="ar">أُمّ</span> ("mother"). The dual <span class="ar">أُمَّان</span> <span class="tr">(ummān)</span> means two mothers.`
+  },
+  {
+    category: 'family',
+    prompt: "One son",
+    options: [
+      { ar: "اِبْن",   tr: "ibn",    correct: true  },
+      { ar: "اِبْنَان", tr: "ibnān",  correct: false },
+      { ar: "أَبْنَاء", tr: "abnā'",  correct: false }
+    ],
+    explanation: `<span class="ar">اِبْن</span> <span class="tr">(ibn)</span> is the <strong>singular</strong> — one son. The dual <span class="ar">اِبْنَان</span> <span class="tr">(ibnān)</span> = two sons; the broken plural <span class="ar">أَبْنَاء</span> <span class="tr">(abnā')</span> = three or more sons.`
+  },
+  {
+    category: 'family',
+    prompt: "Two daughters",
+    options: [
+      { ar: "بِنْت",    tr: "bint",    correct: false },
+      { ar: "بِنْتَان",  tr: "bintān",  correct: true  },
+      { ar: "بَنَات",   tr: "banāt",   correct: false }
+    ],
+    explanation: `The <strong>feminine dual</strong> <span class="ar">بِنْتَان</span> <span class="tr">(bintān)</span> = two daughters. Adding <span class="ar">ـتَان</span> (−tān) to the singular <span class="ar">بِنْت</span>. The plural <span class="ar">بَنَات</span> <span class="tr">(banāt)</span> = three or more daughters.`
+  },
+
+  /* ══════════ BELIEVERS & PEOPLE (5) ══════════ */
+  {
+    category: 'believers',
+    ref: "Qur'an 2:128",
+    prompt: "One who submits (Muslim man)",
     options: [
       { ar: "مُسْلِم",    tr: "muslim",   correct: true  },
       { ar: "مُسْلِمَان",  tr: "muslimān", correct: false },
       { ar: "مُسْلِمُون",  tr: "muslimūn", correct: false }
     ],
-    explanation: `<span class="ar">مُسْلِم</span> <span class="tr">(muslim)</span> is the <strong>singular</strong>. This word takes a <em>sound</em> (regular) masculine plural: <span class="ar">مُسْلِمُون</span> <span class="tr">(muslimūn)</span> for three or more.`
+    explanation: `<span class="ar">مُسْلِم</span> <span class="tr">(muslim)</span> is the <strong>singular</strong>. Its plural is the <strong>sound masculine plural</strong> <span class="ar">مُسْلِمُون</span> <span class="tr">(muslimūn)</span>. The Qur'an mentions <span class="ar">مُسْلِمِينَ</span> in many places.`
   },
   {
-    prompt: "Two Muslim men",
-    options: [
-      { ar: "مُسْلِم",    tr: "muslim",   correct: false },
-      { ar: "مُسْلِمَان",  tr: "muslimān", correct: true  },
-      { ar: "مُسْلِمُون",  tr: "muslimūn", correct: false }
-    ],
-    explanation: `The <strong>dual</strong> is <span class="ar">مُسْلِمَان</span> <span class="tr">(muslimān)</span> — the singular plus <span class="ar">ـَان</span> (−ān). Arabic uses the dual for pairs, so "two Muslim men" gets its own form distinct from both singular and plural.`
-  },
-  {
-    prompt: "Three Muslim men (or more)",
-    options: [
-      { ar: "مُسْلِم",    tr: "muslim",   correct: false },
-      { ar: "مُسْلِمَان",  tr: "muslimān", correct: false },
-      { ar: "مُسْلِمُون",  tr: "muslimūn", correct: true  }
-    ],
-    explanation: `<span class="ar">مُسْلِمُون</span> <span class="tr">(muslimūn)</span> is the <strong>sound masculine plural</strong> — just add <span class="ar">ـُونَ</span> (−ūna) to the singular. This is the regular pattern for most masculine nouns denoting people.`
-  },
-  {
-    prompt: "One Muslim woman",
-    options: [
-      { ar: "مُسْلِمَة",   tr: "muslimah",   correct: true  },
-      { ar: "مُسْلِمَتَان", tr: "muslimatān", correct: false },
-      { ar: "مُسْلِمَات",  tr: "muslimāt",   correct: false }
-    ],
-    explanation: `<span class="ar">مُسْلِمَة</span> <span class="tr">(muslimah)</span> is the <strong>feminine singular</strong>, ending in the round <span class="ar">ة</span> (tā' marbūṭah). This ending is key to how the dual and plural are built.`
-  },
-  {
-    prompt: "Two Muslim women",
-    options: [
-      { ar: "مُسْلِمَة",   tr: "muslimah",   correct: false },
-      { ar: "مُسْلِمَتَان", tr: "muslimatān", correct: true  },
-      { ar: "مُسْلِمَات",  tr: "muslimāt",   correct: false }
-    ],
-    explanation: `The <strong>feminine dual</strong> is <span class="ar">مُسْلِمَتَان</span> <span class="tr">(muslimatān)</span> — the <span class="ar">ة</span> opens into <span class="ar">ت</span> and takes <span class="ar">ـَان</span> (−ān). Compare the masculine dual <span class="ar">مُسْلِمَان</span>: same meaning of "two", different ending.`
-  },
-  {
+    category: 'believers',
     prompt: "Three Muslim women (or more)",
     options: [
       { ar: "مُسْلِمَة",   tr: "muslimah",   correct: false },
       { ar: "مُسْلِمَتَان", tr: "muslimatān", correct: false },
       { ar: "مُسْلِمَات",  tr: "muslimāt",   correct: true  }
     ],
-    explanation: `<span class="ar">مُسْلِمَات</span> <span class="tr">(muslimāt)</span> is the <strong>sound feminine plural</strong>, built by adding <span class="ar">ـَات</span> (−āt) to the singular stem. This is the regular plural for most feminine nouns.`
+    explanation: `<span class="ar">مُسْلِمَات</span> <span class="tr">(muslimāt)</span> is the <strong>sound feminine plural</strong> — add <span class="ar">ـَات</span> (−āt) to the singular stem <span class="ar">مُسْلِمَة</span>. The dual is <span class="ar">مُسْلِمَتَان</span> <span class="tr">(muslimatān)</span>.`
   },
   {
-    prompt: "Two students (male)",
+    category: 'believers',
+    ref: "Qur'an 8:2",
+    prompt: "One believer (in faith)",
     options: [
-      { ar: "طَالِب",    tr: "ṭālib",   correct: false },
-      { ar: "طَالِبَان",  tr: "ṭālibān", correct: true  },
-      { ar: "طُلَّاب",    tr: "ṭullāb",  correct: false }
+      { ar: "مُؤْمِن",    tr: "mu'min",   correct: true  },
+      { ar: "مُؤْمِنَان",  tr: "mu'minān", correct: false },
+      { ar: "مُؤْمِنُون",  tr: "mu'minūn", correct: false }
     ],
-    explanation: `The <strong>dual</strong> <span class="ar">طَالِبَان</span> <span class="tr">(ṭālibān)</span> takes the regular <span class="ar">ـَان</span> suffix. Its plural <span class="ar">طُلَّاب</span> <span class="tr">(ṭullāb)</span> is a <strong>broken plural</strong> — note the doubled middle letter and the completely different vowel pattern.`
+    explanation: `<span class="ar">مُؤْمِن</span> <span class="tr">(mu'min)</span> = one believer. Its <strong>sound masculine plural</strong> is <span class="ar">مُؤْمِنُون</span> <span class="tr">(mu'minūn)</span> = believers. The Qur'an opens Sūrat al-Mu'minūn with <span class="ar">قَدْ أَفْلَحَ الْمُؤْمِنُونَ</span> — "Successful indeed are the believers."`
   },
   {
-    prompt: "Two brothers",
+    category: 'believers',
+    prompt: "Three teachers (or more)",
     options: [
-      { ar: "أَخ",      tr: "akh",      correct: false },
-      { ar: "أَخَوَان",  tr: "akhawān",  correct: true  },
-      { ar: "إِخْوَة",   tr: "ikhwah",   correct: false }
+      { ar: "مُعَلِّم",    tr: "mu'allim",   correct: false },
+      { ar: "مُعَلِّمَان",  tr: "mu'allimān", correct: false },
+      { ar: "مُعَلِّمُون",  tr: "mu'allimūn", correct: true  }
     ],
-    explanation: `The <strong>dual</strong> <span class="ar">أَخَوَان</span> <span class="tr">(akhawān)</span> reveals a hidden letter: the singular <span class="ar">أَخ</span> <span class="tr">(akh)</span> actually stems from <em>akhaw</em>, so the dual brings back the <span class="ar">و</span>. The plural <span class="ar">إِخْوَة</span> <span class="tr">(ikhwah)</span> is a broken plural.`
+    explanation: `<span class="ar">مُعَلِّمُون</span> <span class="tr">(mu'allimūn)</span> = three or more male teachers (sound masculine plural). The dual is <span class="ar">مُعَلِّمَان</span> <span class="tr">(mu'allimān)</span> = two teachers.`
   },
   {
-    prompt: "You two (speaking to two people)",
+    category: 'believers',
+    prompt: "Two male students",
     options: [
-      { ar: "أَنْتَ",    tr: "anta",    correct: false },
-      { ar: "أَنْتُمَا",  tr: "antumā",  correct: true  },
-      { ar: "أَنْتُم",   tr: "antum",   correct: false }
+      { ar: "طَالِب",   tr: "ṭālib",   correct: false },
+      { ar: "طَالِبَان", tr: "ṭālibān", correct: true  },
+      { ar: "طُلَّاب",   tr: "ṭullāb",  correct: false }
     ],
-    explanation: `Pronouns also have duals! <span class="ar">أَنْتَ</span> <span class="tr">(anta)</span> = you (one male), <span class="ar">أَنْتُمَا</span> <span class="tr">(antumā)</span> = you two, <span class="ar">أَنْتُم</span> <span class="tr">(antum)</span> = you all (masculine plural). Arabic requires the speaker to know <em>exactly how many people</em> they are addressing.`
+    explanation: `The <strong>dual</strong> <span class="ar">طَالِبَان</span> <span class="tr">(ṭālibān)</span> = two students. Its plural <span class="ar">طُلَّاب</span> <span class="tr">(ṭullāb)</span> is a <strong>broken plural</strong> — the vowel pattern changes completely (note the doubled <span class="ar">ل</span>).`
+  },
+
+  /* ══════════ OBJECTS (5) ══════════ */
+  {
+    category: 'objects',
+    ref: "Qur'an 2:2",
+    prompt: "Three books (or more)",
+    options: [
+      { ar: "كِتَاب",   tr: "kitāb",   correct: false },
+      { ar: "كِتَابَان", tr: "kitābān", correct: false },
+      { ar: "كُتُب",    tr: "kutub",   correct: true  }
+    ],
+    explanation: `<span class="ar">كُتُب</span> <span class="tr">(kutub)</span> is the <strong>broken plural</strong> of <span class="ar">كِتَاب</span> ("book"). The Qur'an begins: <span class="ar">ذَٰلِكَ الْكِتَابُ</span> — "This is the Book." The plural appears in <span class="ar">كُتُبٌ قَيِّمَةٌ</span> (98:3) — "precious books".`
+  },
+  {
+    category: 'objects',
+    ref: "Qur'an 2:125",
+    prompt: "One house",
+    options: [
+      { ar: "بَيْت",   tr: "bayt",   correct: true  },
+      { ar: "بَيْتَان", tr: "baytān", correct: false },
+      { ar: "بُيُوت",  tr: "buyūt",  correct: false }
+    ],
+    explanation: `<span class="ar">بَيْت</span> <span class="tr">(bayt)</span> = one house. Plural <span class="ar">بُيُوت</span> <span class="tr">(buyūt)</span> is a broken plural. The Qur'an calls the Ka'bah <span class="ar">الْبَيْت</span> — "the House" (2:125).`
+  },
+  {
+    category: 'objects',
+    prompt: "Two pens",
+    options: [
+      { ar: "قَلَم",   tr: "qalam",   correct: false },
+      { ar: "قَلَمَان", tr: "qalamān", correct: true  },
+      { ar: "أَقْلَام", tr: "aqlām",   correct: false }
+    ],
+    explanation: `The <strong>dual</strong> <span class="ar">قَلَمَان</span> <span class="tr">(qalamān)</span> = two pens. Plural <span class="ar">أَقْلَام</span> <span class="tr">(aqlām)</span> = pens (broken plural). The Qur'an mentions <span class="ar">الْقَلَم</span> in Sūrah 68 — "By the pen and what they inscribe."`
+  },
+  {
+    category: 'objects',
+    prompt: "Three doors (or more)",
+    options: [
+      { ar: "بَاب",    tr: "bāb",    correct: false },
+      { ar: "بَابَان",  tr: "bābān",  correct: false },
+      { ar: "أَبْوَاب", tr: "abwāb",  correct: true  }
+    ],
+    explanation: `<span class="ar">أَبْوَاب</span> <span class="tr">(abwāb)</span> is the <strong>broken plural</strong> of <span class="ar">بَاب</span> ("door"). The Qur'an often pairs the phrase <span class="ar">الْجَنَّة</span> with doors — <span class="ar">وَأَبْوَابٍ</span> (38:50) — "and doors".`
+  },
+  {
+    category: 'objects',
+    ref: "Qur'an 2:144",
+    prompt: "Two mosques",
+    options: [
+      { ar: "مَسْجِد",    tr: "masjid",   correct: false },
+      { ar: "مَسْجِدَان",  tr: "masjidān", correct: true  },
+      { ar: "مَسَاجِد",   tr: "masājid",  correct: false }
+    ],
+    explanation: `The <strong>dual</strong> <span class="ar">مَسْجِدَان</span> <span class="tr">(masjidān)</span> = two mosques. Plural <span class="ar">مَسَاجِد</span> <span class="tr">(masājid)</span> = three or more mosques (broken plural). The word literally means "place of prostration".`
+  },
+
+  /* ══════════ NATURE (5) ══════════ */
+  {
+    category: 'nature',
+    ref: "Qur'an 36:38",
+    prompt: "One sun",
+    options: [
+      { ar: "شَمْس",   tr: "shams",   correct: true  },
+      { ar: "شَمْسَان", tr: "shamsān", correct: false },
+      { ar: "شُمُوس",  tr: "shumūs",  correct: false }
+    ],
+    explanation: `<span class="ar">شَمْس</span> <span class="tr">(shams)</span> = the sun (feminine noun). Dual <span class="ar">شَمْسَان</span> <span class="tr">(shamsān)</span> = two suns (grammatically valid, though there is only one). Plural <span class="ar">شُمُوس</span> <span class="tr">(shumūs)</span>. The Qur'an says <span class="ar">وَالشَّمْسُ تَجْرِي</span> — "And the sun runs [its course]."`
+  },
+  {
+    category: 'nature',
+    ref: "Qur'an 54:1",
+    prompt: "One moon",
+    options: [
+      { ar: "قَمَر",   tr: "qamar",   correct: true  },
+      { ar: "قَمَرَان", tr: "qamarān", correct: false },
+      { ar: "أَقْمَار", tr: "aqmār",   correct: false }
+    ],
+    explanation: `<span class="ar">قَمَر</span> <span class="tr">(qamar)</span> = the moon. Dual <span class="ar">قَمَرَان</span> <span class="tr">(qamarān)</span>; plural <span class="ar">أَقْمَار</span> <span class="tr">(aqmār)</span> — broken plural. The Qur'an opens Sūrah 54: <span class="ar">اقْتَرَبَتِ السَّاعَةُ وَانشَقَّ الْقَمَرُ</span>.`
+  },
+  {
+    category: 'nature',
+    ref: "Qur'an 16:16",
+    prompt: "Three stars (or more)",
+    options: [
+      { ar: "نَجْم",   tr: "najm",   correct: false },
+      { ar: "نَجْمَان", tr: "najmān", correct: false },
+      { ar: "نُجُوم",  tr: "nujūm",  correct: true  }
+    ],
+    explanation: `<span class="ar">نُجُوم</span> <span class="tr">(nujūm)</span> is the <strong>broken plural</strong> of <span class="ar">نَجْم</span> ("star"). The Qur'an says <span class="ar">وَبِالنَّجْمِ هُمْ يَهْتَدُونَ</span> (16:16) — "And by the stars they are guided."`
+  },
+  {
+    category: 'nature',
+    prompt: "Two trees",
+    options: [
+      { ar: "شَجَرَة",   tr: "shajarah",   correct: false },
+      { ar: "شَجَرَتَان", tr: "shajaratān", correct: true  },
+      { ar: "شَجَرَات",  tr: "shajarāt",   correct: false }
+    ],
+    explanation: `The <strong>feminine dual</strong> <span class="ar">شَجَرَتَان</span> <span class="tr">(shajaratān)</span> = two trees. The <span class="ar">ة</span> opens into <span class="ar">ت</span> before <span class="ar">ـَان</span>. Plural <span class="ar">شَجَرَات</span> <span class="tr">(shajarāt)</span> = trees.`
+  },
+  {
+    category: 'nature',
+    ref: "Qur'an 78:7",
+    prompt: "One mountain",
+    options: [
+      { ar: "جَبَل",   tr: "jabal",   correct: true  },
+      { ar: "جَبَلَان", tr: "jabalān", correct: false },
+      { ar: "جِبَال",  tr: "jibāl",   correct: false }
+    ],
+    explanation: `<span class="ar">جَبَل</span> <span class="tr">(jabal)</span> = one mountain. Plural <span class="ar">جِبَال</span> <span class="tr">(jibāl)</span> — a broken plural. The Qur'an says <span class="ar">وَالْجِبَالَ أَوْتَادًا</span> (78:7) — "And the mountains as stakes."`
+  },
+
+  /* ══════════ BODY (4) ══════════ */
+  {
+    category: 'body',
+    ref: "Qur'an 55:50",
+    prompt: "Two eyes",
+    options: [
+      { ar: "عَيْن",    tr: "'ayn",     correct: false },
+      { ar: "عَيْنَان",  tr: "'aynān",   correct: true  },
+      { ar: "عُيُون",   tr: "'uyūn",    correct: false }
+    ],
+    explanation: `The <strong>dual</strong> <span class="ar">عَيْنَان</span> <span class="tr">('aynān)</span> = two eyes. The plural <span class="ar">عُيُون</span> <span class="tr">('uyūn)</span> = eyes / springs (the word also means "spring of water"). The Qur'an: <span class="ar">فِيهِمَا عَيْنَانِ تَجْرِيَانِ</span> (55:50) — "In them are two springs flowing."`
+  },
+  {
+    category: 'body',
+    ref: "Qur'an 5:64",
+    prompt: "Two hands",
+    options: [
+      { ar: "يَد",    tr: "yad",    correct: false },
+      { ar: "يَدَان",  tr: "yadān",  correct: true  },
+      { ar: "أَيْدِي", tr: "aydī",  correct: false }
+    ],
+    explanation: `The <strong>dual</strong> <span class="ar">يَدَان</span> <span class="tr">(yadān)</span> = two hands. Plural <span class="ar">أَيْدِي</span> <span class="tr">(aydī)</span> = hands (broken plural). The Qur'an says <span class="ar">بَلْ يَدَاهُ مَبْسُوطَتَانِ</span> (5:64) — "Rather, both His hands are extended."`
+  },
+  {
+    category: 'body',
+    ref: "Qur'an 13:28",
+    prompt: "Three hearts (or more)",
+    options: [
+      { ar: "قَلْب",   tr: "qalb",   correct: false },
+      { ar: "قَلْبَان", tr: "qalbān", correct: false },
+      { ar: "قُلُوب",  tr: "qulūb",  correct: true  }
+    ],
+    explanation: `<span class="ar">قُلُوب</span> <span class="tr">(qulūb)</span> is the <strong>broken plural</strong> of <span class="ar">قَلْب</span> ("heart"). The Qur'an says <span class="ar">أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ</span> — "Surely in the remembrance of Allah do hearts find rest."`
+  },
+  {
+    category: 'body',
+    prompt: "Two feet",
+    options: [
+      { ar: "قَدَم",    tr: "qadam",   correct: false },
+      { ar: "قَدَمَان",  tr: "qadamān", correct: true  },
+      { ar: "أَقْدَام",  tr: "aqdām",   correct: false }
+    ],
+    explanation: `The <strong>dual</strong> <span class="ar">قَدَمَان</span> <span class="tr">(qadamān)</span> = two feet. Plural <span class="ar">أَقْدَام</span> <span class="tr">(aqdām)</span> = three or more feet (broken plural).`
+  },
+
+  /* ══════════ PROPHETS & SCRIPTURE (4) ══════════ */
+  {
+    category: 'prophets',
+    ref: "Qur'an 33:40",
+    prompt: "One prophet",
+    options: [
+      { ar: "نَبِيّ",    tr: "nabī",    correct: true  },
+      { ar: "نَبِيَّان",  tr: "nabiyyān", correct: false },
+      { ar: "أَنْبِيَاء", tr: "anbiyā'", correct: false }
+    ],
+    explanation: `<span class="ar">نَبِيّ</span> <span class="tr">(nabī)</span> = one prophet. Its plural is <span class="ar">أَنْبِيَاء</span> <span class="tr">(anbiyā')</span> — a broken plural. The Qur'an says <span class="ar">وَلَٰكِن رَّسُولَ اللَّهِ وَخَاتَمَ النَّبِيِّينَ</span> (33:40) — "…but he is the Messenger of Allah and the Seal of the Prophets."`
+  },
+  {
+    category: 'prophets',
+    ref: "Qur'an 48:29",
+    prompt: "One messenger",
+    options: [
+      { ar: "رَسُول",    tr: "rasūl",   correct: true  },
+      { ar: "رَسُولَان",  tr: "rasūlān", correct: false },
+      { ar: "رُسُل",     tr: "rusul",   correct: false }
+    ],
+    explanation: `<span class="ar">رَسُول</span> <span class="tr">(rasūl)</span> = one messenger. Plural <span class="ar">رُسُل</span> <span class="tr">(rusul)</span> — broken plural. The Qur'an repeatedly states <span class="ar">مُحَمَّدٌ رَسُولُ اللَّهِ</span> — "Muhammad is the Messenger of Allah."`
+  },
+  {
+    category: 'prophets',
+    ref: "Qur'an 2:252",
+    prompt: "Three verses / signs (or more)",
+    options: [
+      { ar: "آيَة",   tr: "āyah",   correct: false },
+      { ar: "آيَتَان", tr: "āyatān", correct: false },
+      { ar: "آيَات",  tr: "āyāt",   correct: true  }
+    ],
+    explanation: `<span class="ar">آيَات</span> <span class="tr">(āyāt)</span> = verses / signs (sound feminine plural). Dual <span class="ar">آيَتَان</span> <span class="tr">(āyatān)</span> = two verses. Singular <span class="ar">آيَة</span> <span class="tr">(āyah)</span> = one verse or sign. The Qur'an is composed of <span class="ar">آيَات</span> — signs — in both the literal and spiritual sense.`
+  },
+  {
+    category: 'prophets',
+    ref: "Qur'an 2:211",
+    prompt: "One blessing",
+    options: [
+      { ar: "نِعْمَة",    tr: "ni'mah",   correct: true  },
+      { ar: "نِعْمَتَان",  tr: "ni'matān", correct: false },
+      { ar: "نِعَم",      tr: "ni'am",    correct: false }
+    ],
+    explanation: `<span class="ar">نِعْمَة</span> <span class="tr">(ni'mah)</span> = one blessing. Dual <span class="ar">نِعْمَتَان</span> <span class="tr">(ni'matān)</span>; plural <span class="ar">نِعَم</span> <span class="tr">(ni'am)</span> — broken plural. The Qur'an asks <span class="ar">وَبِنِعْمَةِ اللَّهِ هُمْ يَكْفُرُونَ</span> — "And it is the favour of Allah that they deny."`
+  },
+
+  /* ══════════ PRONOUNS (4) ══════════ */
+  {
+    category: 'pronouns',
+    prompt: "You two (speaking to two males)",
+    options: [
+      { ar: "أَنْتَ",    tr: "anta",   correct: false },
+      { ar: "أَنْتُمَا",  tr: "antumā", correct: true  },
+      { ar: "أَنْتُم",   tr: "antum",  correct: false }
+    ],
+    explanation: `Pronouns also have duals! <span class="ar">أَنْتَ</span> <span class="tr">(anta)</span> = you (one male); <span class="ar">أَنْتُمَا</span> <span class="tr">(antumā)</span> = you two; <span class="ar">أَنْتُم</span> <span class="tr">(antum)</span> = you all (masc. plural). Arabic requires the speaker to know <em>exactly how many people</em> they are addressing.`
+  },
+  {
+    category: 'pronouns',
+    prompt: "Three females (subject pronoun)",
+    options: [
+      { ar: "هِيَ",   tr: "hiya",  correct: false },
+      { ar: "هُمَا",  tr: "humā",  correct: false },
+      { ar: "هُنَّ",  tr: "hunna", correct: true  }
+    ],
+    explanation: `<span class="ar">هُنَّ</span> <span class="tr">(hunna)</span> = they (three or more females). Dual <span class="ar">هُمَا</span> <span class="tr">(humā)</span> = they two. Singular <span class="ar">هِيَ</span> <span class="tr">(hiya)</span> = she.`
+  },
+  {
+    category: 'pronouns',
+    prompt: "They two (two people, either gender)",
+    options: [
+      { ar: "هُوَ",   tr: "huwa", correct: false },
+      { ar: "هُمَا",  tr: "humā", correct: true  },
+      { ar: "هُم",    tr: "hum",  correct: false }
+    ],
+    explanation: `The <strong>dual</strong> pronoun <span class="ar">هُمَا</span> <span class="tr">(humā)</span> = "they two" — used for exactly two people (male or female, in mixed or female-only contexts). <span class="ar">هُوَ</span> = he (one), <span class="ar">هُم</span> = they (masc. plural).`
+  },
+  {
+    category: 'pronouns',
+    prompt: "You two (speaking to two females)",
+    options: [
+      { ar: "أَنْتِ",    tr: "anti",   correct: false },
+      { ar: "أَنْتُنَّ",  tr: "antunna", correct: false },
+      { ar: "أَنْتُمَا",  tr: "antumā", correct: true  }
+    ],
+    explanation: `Interestingly, the dual <span class="ar">أَنْتُمَا</span> <span class="tr">(antumā)</span> is used whether you address <em>two males, two females, or a mixed pair</em> — the dual neutralises gender. The feminine plural <span class="ar">أَنْتُنَّ</span> <span class="tr">(antunna)</span> is used for three or more females.`
+  },
+
+  /* ══════════ TIME (3) ══════════ */
+  {
+    category: 'time',
+    ref: "Qur'an 1:4",
+    prompt: "Three days (or more)",
+    options: [
+      { ar: "يَوْم",   tr: "yawm",   correct: false },
+      { ar: "يَوْمَان", tr: "yawmān", correct: false },
+      { ar: "أَيَّام",  tr: "ayyām",  correct: true  }
+    ],
+    explanation: `<span class="ar">أَيَّام</span> <span class="tr">(ayyām)</span> = three or more days. Dual <span class="ar">يَوْمَان</span> <span class="tr">(yawmān)</span> = two days. Singular <span class="ar">يَوْم</span> <span class="tr">(yawm)</span> = one day. The Qur'an speaks of <span class="ar">مَالِكِ يَوْمِ الدِّينِ</span> — "Master of the Day of Judgement."`
+  },
+  {
+    category: 'time',
+    ref: "Qur'an 2:185",
+    prompt: "One month",
+    options: [
+      { ar: "شَهْر",   tr: "shahr",   correct: true  },
+      { ar: "شَهْرَان", tr: "shahrān", correct: false },
+      { ar: "شُهُور",  tr: "shuhūr",  correct: false }
+    ],
+    explanation: `<span class="ar">شَهْر</span> <span class="tr">(shahr)</span> = one month. Dual <span class="ar">شَهْرَان</span> <span class="tr">(shahrān)</span>; plural <span class="ar">شُهُور</span> <span class="tr">(shuhūr)</span>. The Qur'an says <span class="ar">شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ</span> — "The month of Ramaḍān in which the Qur'an was revealed."`
+  },
+  {
+    category: 'time',
+    prompt: "Two years",
+    options: [
+      { ar: "سَنَة",   tr: "sanah",   correct: false },
+      { ar: "سَنَتَان", tr: "sanatān", correct: true  },
+      { ar: "سِنِين",  tr: "sinīn",   correct: false }
+    ],
+    explanation: `The <strong>feminine dual</strong> <span class="ar">سَنَتَان</span> <span class="tr">(sanatān)</span> = two years. Plural <span class="ar">سِنِين</span> <span class="tr">(sinīn)</span> = three or more years — broken plural. The Qur'an speaks of <span class="ar">سِنِينَ</span> in the story of Yūsuf.`
+  },
+
+  /* ══════════ ADJECTIVES (3) ══════════ */
+  {
+    category: 'adjectives',
+    prompt: "Two big (masculine things)",
+    options: [
+      { ar: "كَبِير",    tr: "kabīr",    correct: false },
+      { ar: "كَبِيرَان",  tr: "kabīrān",  correct: true  },
+      { ar: "كِبَار",    tr: "kibār",    correct: false }
+    ],
+    explanation: `The <strong>dual</strong> of the adjective <span class="ar">كَبِير</span> ("big") is <span class="ar">كَبِيرَان</span> <span class="tr">(kabīrān)</span> — add <span class="ar">ـَان</span> for two. Its broken plural is <span class="ar">كِبَار</span> <span class="tr">(kibār)</span>. Adjectives agree with their nouns in number, gender, and case.`
+  },
+  {
+    category: 'adjectives',
+    prompt: "Three new things (or more)",
+    options: [
+      { ar: "جَدِيد",    tr: "jadīd",    correct: false },
+      { ar: "جَدِيدَان",  tr: "jadīdān",  correct: false },
+      { ar: "جُدُد",     tr: "judud",    correct: true  }
+    ],
+    explanation: `<span class="ar">جُدُد</span> <span class="tr">(judud)</span> is the <strong>broken plural</strong> of <span class="ar">جَدِيد</span> ("new"). The dual is <span class="ar">جَدِيدَان</span> <span class="tr">(jadīdān)</span>.`
+  },
+  {
+    category: 'adjectives',
+    prompt: "One small (masculine thing)",
+    options: [
+      { ar: "صَغِير",    tr: "ṣaghīr",   correct: true  },
+      { ar: "صَغِيرَان",  tr: "ṣaghīrān", correct: false },
+      { ar: "صِغَار",    tr: "ṣighār",   correct: false }
+    ],
+    explanation: `<span class="ar">صَغِير</span> <span class="tr">(ṣaghīr)</span> = one small (masc.). Its dual <span class="ar">صَغِيرَان</span> <span class="tr">(ṣaghīrān)</span> = two small; its broken plural <span class="ar">صِغَار</span> <span class="tr">(ṣighār)</span> = three or more small.`
   }
 ];
+
+/* ═══════════════════ Category metadata ═══════════════════ */
+const CATEGORY_LABELS = {
+  family:     'Family',
+  believers:  'Believers',
+  objects:    'Objects',
+  nature:     'Nature',
+  body:       'Body',
+  prophets:   'Prophets',
+  pronouns:   'Pronouns',
+  time:       'Time',
+  adjectives: 'Adjectives'
+};
 
 /* ═══════════════════ State ═══════════════════ */
 const TOTAL = QUESTIONS.length;
@@ -846,22 +1303,29 @@ function renderQuestions() {
   const list = document.getElementById('questionList');
   list.innerHTML = '';
 
-  for (let i = 0; i < QUESTIONS.length; i++) {
-    const q = QUESTIONS[i];
+  // Shuffle the question order once per page load
+  const order = shuffle([...Array(TOTAL).keys()]);
 
-    // Shuffle options so the correct answer isn't always in the same position
+  for (let displayIndex = 0; displayIndex < order.length; displayIndex++) {
+    const qIndex = order[displayIndex];
+    const q = QUESTIONS[qIndex];
+
+    // Shuffle the options so the correct one isn't always in the same slot
     const shuffled = shuffle(q.options);
 
     const card = document.createElement('article');
     card.className = 'question-card';
-    card.dataset.index = i;
+    card.dataset.index = qIndex;
+    card.dataset.category = q.category;
 
     // Header
     const head = document.createElement('div');
     head.className = 'q-head';
     head.innerHTML = `
-      <span class="q-num">Q${i + 1}</span>
+      <span class="q-num">Q${displayIndex + 1}</span>
       <span class="q-prompt">${q.prompt}</span>
+      <span class="q-category">${CATEGORY_LABELS[q.category] || q.category}</span>
+      ${q.ref ? `<span class="q-ref">📖 ${q.ref}</span>` : ''}
     `;
     card.appendChild(head);
 
@@ -869,17 +1333,18 @@ function renderQuestions() {
     const optWrap = document.createElement('div');
     optWrap.className = 'options';
 
-    for (let j = 0; j < shuffled.length; j++) {
-      const opt = shuffled[j];
+    for (const opt of shuffled) {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'option-btn';
       btn.dataset.correct = opt.correct ? 'true' : 'false';
+      btn.dataset.ar = opt.ar;
+      btn.dataset.tr = opt.tr;
       btn.innerHTML = `
         <span class="ar" dir="rtl">${opt.ar}</span>
         <span class="tr">${opt.tr}</span>
       `;
-      btn.addEventListener('click', () => handleAnswer(i, btn, card, q));
+      btn.addEventListener('click', () => handleAnswer(qIndex, btn, card, q));
       optWrap.appendChild(btn);
     }
     card.appendChild(optWrap);
@@ -899,8 +1364,8 @@ function handleAnswer(qIndex, btn, card, q) {
   card.dataset.answered = 'true';
 
   const isCorrect = btn.dataset.correct === 'true';
-  const chosenAr = btn.querySelector('.ar').textContent;
-  const chosenTr = btn.querySelector('.tr').textContent;
+  const chosenAr = btn.dataset.ar;
+  const chosenTr = btn.dataset.tr;
 
   userAnswers[qIndex] = {
     correct: isCorrect,
@@ -924,9 +1389,15 @@ function handleAnswer(qIndex, btn, card, q) {
   const exp = card.querySelector('.explanation');
   exp.classList.remove('hidden');
   exp.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+
+  const refHtml = q.ref
+    ? `<span class="ref-line">📖 ${q.ref}</span>`
+    : '';
+
   exp.innerHTML = `
     <div class="exp-title">${isCorrect ? '✓ Correct' : '✗ Not quite'}</div>
     <div>${q.explanation}</div>
+    ${refHtml}
   `;
 
   // Update totals
@@ -934,7 +1405,7 @@ function handleAnswer(qIndex, btn, card, q) {
   if (isCorrect) correct++;
   updateStats();
 
-  // Scroll the card into view so the learner reads the explanation
+  // Gently scroll the card into view
   setTimeout(() => {
     card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 120);
@@ -958,6 +1429,26 @@ function updateStats() {
   }
 }
 
+/* ═══════════════════ Filter ═══════════════════ */
+document.getElementById('filterBar').addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const filter = btn.dataset.filter;
+  document.querySelectorAll('.question-card').forEach(card => {
+    if (filter === 'all' || card.dataset.category === filter) {
+      card.hidden = false;
+    } else {
+      card.hidden = true;
+    }
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 /* ═══════════════════ Results overlay ═══════════════════ */
 function showResults() {
   const pct = Math.round((correct / TOTAL) * 100);
@@ -968,13 +1459,13 @@ function showResults() {
 
   let msg;
   if (pct === 100) {
-    msg = 'ما شاء الله! A perfect score — you understand the Arabic three-number system.';
+    msg = 'ما شاء الله! A perfect score — you have mastered the Arabic three-number system.';
   } else if (pct >= 80) {
-    msg = 'Excellent work! You have a strong grasp of singular, dual, and plural forms.';
+    msg = 'Excellent work! You have a strong grasp of singular, dual, and plural forms across all categories.';
   } else if (pct >= 60) {
-    msg = 'Good effort! Review the questions you missed — especially the dual forms.';
+    msg = 'Good effort! Review the questions you missed — especially the dual and broken plural forms.';
   } else {
-    msg = 'Keep practising! Read the grammar reference again and try once more.';
+    msg = 'Keep practising! Read the grammar reference again and try once more — with 40 words, you will get there.';
   }
   document.getElementById('finalMsg').textContent = msg;
 
@@ -988,7 +1479,6 @@ function showResults() {
     const item = document.createElement('div');
     item.className = 'review-item ' + (ua && ua.correct ? 'ok' : 'no');
 
-    // Find correct option
     const correctOpt = q.options.find(o => o.correct);
 
     let linesHtml = '';
@@ -1034,6 +1524,10 @@ function resetQuiz() {
   document.getElementById('resultsOverlay').classList.add('hidden');
   renderQuestions();
   updateStats();
+  // Reset filter to "All"
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+  document.querySelectorAll('.question-card').forEach(c => { c.hidden = false; });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1042,12 +1536,10 @@ document.getElementById('showResults').addEventListener('click', showResults);
 document.getElementById('closeResults').addEventListener('click', closeResults);
 document.getElementById('tryAgain').addEventListener('click', resetQuiz);
 
-// Close results when clicking outside the card
 document.getElementById('resultsOverlay').addEventListener('click', (e) => {
   if (e.target.id === 'resultsOverlay') closeResults();
 });
 
-// Close results with Escape
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeResults();
 });
