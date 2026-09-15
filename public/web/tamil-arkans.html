@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ta" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>தொழுகையின் 14 அர்கான்கள் (முக்கிய தூண்கள்)</title>
+  
+  <!-- Bootstrap 5 CSS & FontAwesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary-color: #0d6efd;
+      --secondary-color: #0f5132;
+      --gold-accent: #d4af37;
+      --bg-light: #f8f9fa;
+      --card-border-radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-light);
+      color: #212529;
+    }
+
+    .arabic-text {
+      font-family: 'Amiri', serif;
+      font-size: 1.35rem;
+      color: #0f5132;
+      direction: rtl;
+    }
+
+    /* Header Styling */
+    .hero-header {
+      background: linear-gradient(135deg, #0f5132 0%, #1e4620 100%);
+      color: #ffffff;
+      padding: 3rem 1rem;
+      border-bottom: 5px solid var(--gold-accent);
+    }
+
+    .headinginfo-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 10px 15px;
+      text-align: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .headinginfo-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold-accent);
+      margin: 0;
+    }
+
+    .headinginfo-text {
+      font-size: 0.85rem;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Grid & Cards */
+    .card-arkan {
+      border: none;
+      border-radius: var(--card-border-radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-arkan:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .arkan-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 36px;
+      height: 36px;
+      background-color: #0f5132;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .card-arkan .card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      padding-top: 3.2rem;
+    }
+
+    .arkan-icon {
+      font-size: 2.2rem;
+      color: var(--gold-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-arkan {
+      background-color: #0f5132;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      transition: background-color 0.2s;
+    }
+
+    .btn-arkan:hover {
+      background-color: #146c43;
+      color: white;
+    }
+
+    /* Interactive Quiz Section */
+    .quiz-section {
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      padding: 2rem;
+      margin-top: 3rem;
+      border-top: 4px solid var(--gold-accent);
+    }
+
+    .quiz-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid #0f5132;
+    }
+
+    .modal-header {
+      background-color: #0f5132;
+      color: white;
+    }
+
+    .modal-header .btn-close {
+      filter: invert(1);
+    }
+
+    .hadith-quote {
+      font-style: italic;
+      background: #e8f5e9;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border-left: 3px solid #0f5132;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Header -->
+  <header class="hero-header mb-4">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-12 col-lg-5 mb-3 mb-lg-0">
+          <h1 class="fw-bold mb-2">தொழுகையின் 14 அர்கான்கள்</h1>
+          <p class="lead mb-0 fs-6">புதிய முஸ்லிம்களுக்கும் கற்பவர்களுக்கும் தொழுகை செல்லுபடியாவதற்கு தேவையான அத்தியாவசிய தூண்கள்.</p>
+        </div>
+        <div class="col-12 col-lg-7">
+          <div class="row g-2 justify-content-center justify-content-lg-end">
+            <div class="col-6 col-sm-3">
+              <div class="headinginfo-card">
+                <p class="headinginfo-number">14</p>
+                <p class="headinginfo-text">தூண்கள் (அர்கான்கள்)</p>
+              </div>
+            </div>
+            <div class="col-6 col-sm-3">
+              <div class="headinginfo-card">
+                <p class="headinginfo-number">20</p>
+                <p class="headinginfo-text">கুইஸ் வினாக்கள்</p>
+              </div>
+            </div>
+            <div class="col-6 col-sm-3">
+              <div class="headinginfo-card">
+                <p class="headinginfo-number">7</p>
+                <p class="headinginfo-text">ஸஜ்தா உறுப்புகள்</p>
+              </div>
+            </div>
+            <div class="col-6 col-sm-3">
+              <div class="headinginfo-card">
+                <p class="headinginfo-number">100%</p>
+                <p class="headinginfo-text">மனஒருமைப்பாடு (ஃகுஷூஃ)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container mb-5">
+    
+    <!-- 14 Pillars Interactive Grid -->
+    <div id="arkan-grid" class="row g-3">
+      <!-- Injected dynamically via JS -->
+    </div>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section mt-5" id="quiz-anchor">
+      <div class="text-center mb-4">
+        <h2 class="fw-bold text-success"><i class="fa-solid fa-graduation-cap me-2"></i>முழுமையான அறிவுப் சோதனை (20 வினாக்கள்)</h2>
+        <p class="text-muted">திருக்குர்ஆன் மற்றும் ஹதீஸ் ஆதாரங்களுடன் தொழுகையின் ஒவ்வொரு தூணையும் பற்றிய உங்கள் புரிதலை சோதிக்கவும்.</p>
+      </div>
+
+      <form id="quiz-form">
+        <div id="quiz-questions-container">
+          <!-- Quiz items injected dynamically -->
+        </div>
+
+        <div class="text-center mt-4">
+          <button type="button" class="btn btn-success btn-lg px-5 shadow-sm" onclick="submitQuiz()">
+            <i class="fa-solid fa-paper-plane me-2"></i>பதில்களை சமர்ப்பிக்கவும்
+          </button>
+        </div>
+      </form>
+
+      <div id="quiz-results" class="mt-4 d-none">
+        <!-- Results rendered here -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Arkan Details Modal -->
+  <div class="modal fade" id="arkanModal" tabindex="-1" aria-labelledby="arkanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title id-title" id="arkanModalLabel">தூணின் விவரங்கள்</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-body-content">
+          <!-- Modal content injected dynamically -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">மூடுக</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Data Structure for the 14 Arkans (Pillars) of Salah in Tamil
+    const arkansData = [
+      {
+        id: 1,
+        title: "கியாம் (நிற்பது)",
+        arabic: "القيام مع القدرة",
+        icon: "fa-person",
+        shortDesc: "உடல் தகுதி இருக்கும் பட்சத்தில் கடமையான தொழுகைகளில் நேராக நிற்பது.",
+        details: "இயன்றவர்கள் கடமையான தொழுகைகளில் நேராக நிற்க வேண்டும். இம்ரான் இப்னு ஹுஸைன் (ரலி) அவர்களிடம் நபிகள் நாயகம் ﷺ கூறினார்கள்: 'நின்று தொழுவீராக; இயலாவிட்டால் உட்கார்ந்து தொழுவீராக; அதற்கும் இயலாவிட்டால் படுத்துக் கொண்டு தொழுவீராக.' (ஸஹீஹுல் புகாரி: 1117).",
+        tips: "இரண்டு பாதங்களிலும் சமமாக எடையை வைத்து, ஸஜ்தா செய்யும் இடத்தை நோக்கி பார்வையை வையுங்கள்."
+      },
+      {
+        id: 2,
+        title: "தக்பீரத்துல் இஹ்ராம்",
+        arabic: "تكبيرة الإحرام",
+        icon: "fa-hands",
+        shortDesc: "தொழுகைக்குள் நுழையும் ஆரம்ப 'அல்லாஹு அக்பர்' தக்பீர்.",
+        details: "'அல்லாஹு அக்பர்' (அல்லாஹ் மிக பெரியவன்) என்று கூறி தொழுகையைத் தொடங்குவது. நபிகள் நாயகம் ﷺ கூறினார்கள்: 'தொழுகையின் திறவுகோல் தூய்மையாகும்; அதன் ஆரம்பம் (உலக விஷயங்களைத் தடுப்பது) தக்பீர் ஆகும்; அதன் முடிவு தஸ்லீம் ஆகும்.' (ஸுனன் அபீ தாவூத்: 61).",
+        tips: "தக்பீர் சொல்லும்போது கைகளை தோள்பட்டை அல்லது காது வரை உயர்த்தவும்."
+      },
+      {
+        id: 3,
+        title: "சூரா அல்-ஃபாத்திஹா ஓதுதல்",
+        arabic: "قراءة الفاتحة",
+        icon: "fa-book-quran",
+        shortDesc: "ஒவ்வொரு ரக்அத்திலும் குர்ஆனின் தோற்றுவாய் அத்தியாயத்தை ஓதுதல்.",
+        details: "ஒவ்வொரு ரக்அத்திலும் சூரா அல்-ஃபாத்திஹா ஓதப்பட வேண்டும். நபிகள் நாயகம் ﷺ கூறினார்கள்: 'குர்ஆனின் தோற்றுவாயை (ஃபாத்திஹாவை) ஓதாதவருக்கு தொழுகை இல்லை.' (ஸஹீஹுல் புகாரி: 756).",
+        tips: "ஒவ்வொரு வசனத்தின் பொருளையும் சிந்தித்து நிதானமாக ஓதவும்."
+      },
+      {
+        id: 4,
+        title: "ருகூஃ (குனிவது)",
+        arabic: "الركوع",
+        icon: "fa-child-reaching",
+        shortDesc: "முதுகை சமமாக வைத்து, கைகளை முழங்கால்களில் ஊன்றி குனிவது.",
+        details: "அல்லாஹ் குர்ஆனில் கட்டளையிடுகிறான்: 'நம்பிக்கை கொண்டோரே! நீங்கள் ருகூஃ செய்யுங்கள்; ஸஜ்தாவும் செய்யுங்கள்...' (சூரா அல்-ஹஜ் 22:77). உங்கள் முதுகு தரைக்கு சமமாக இருக்க வேண்டும்.",
+        tips: "விரல்களை விரித்து முழங்கால்களை உறுதியாகப் பற்றிக் கொள்ளுங்கள்."
+      },
+      {
+        id: 5,
+        title: "ருகூஃவிலிருந்து நிமிர்தல்",
+        arabic: "الرفع من الركوع",
+        icon: "fa-arrow-up-long",
+        shortDesc: "குனிந்த நிலையிலிருந்து மீண்டும் நேராக நிமிர்ந்து நிற்பது.",
+        details: "ருகூஃவிலிருந்து ஸஜ்தாவிற்குச் செல்வதற்கு முன் முழுமையாக நிமிர்ந்து நிற்பது. நபிகள் நாயகம் ﷺ தங்களின் முதுகுத்தண்டு நேராகும் வரை தலையை உயர்த்துவார்கள்.",
+        tips: "நிமிரும்போது 'ஸமிஅல்லாஹு லிமன் ஹமிதா' ( புகழ்வோரின் புகழை அல்லாஹ் கேட்கிறான்) என்று சொல்லவும்."
+      },
+      {
+        id: 6,
+        title: "இஃதிதால் (நேராக நிற்றல்)",
+        arabic: "الاعتدال قائماً",
+        icon: "fa-child",
+        shortDesc: "ருகூஃவிற்குப் பிறகு அமைதியாகவும் நேராகவும் நிமிர்ந்து நிற்றல்.",
+        details: "ருகூஃவிலிருந்து எழுந்த பிறகு ஸஜ்தாவிற்குச் செல்வதற்கு முன் அமைதியாக நிமிர்ந்து நிற்பது. சரியாக தொழாத ஒருவருக்கு நபிகள் நாயகம் ﷺ கூறினார்கள்: 'பிறகு நீர் நேராக நிமிரும் வரை எழுந்திருப்பீராக.' (ஸஹீஹுல் புகாரி: 757).",
+        tips: "எலும்புகள் அனைத்தும் அதன் இடத்தில் அமரும் வரை அமைதியாக நின்று 'ரப்பனா வலக்கல் ஹம்த்' என்று சொல்லவும்."
+      },
+      {
+        id: 7,
+        title: "ஸஜ்தா (சிரவணக்கம்)",
+        arabic: "السجود",
+        icon: "fa-person-dots-from-line",
+        shortDesc: "உடலின் 7 உறுப்புகள் தரையில் படுமாறு வணங்குவது.",
+        details: "நபிகள் நாயகம் ﷺ கூறினார்கள்: 'ஏழு உறுப்புகள் மீது ஸஜ்தா செய்யுமாறு நான் கட்டளையிடப்பட்டுள்ளேன்: நெற்றி (அவர் தனது மூக்கையும் சுட்டிக்காட்டினார்), இரண்டு கைகள், இரண்டு முழங்கால்கள் மற்றும் இரண்டு பாதங்களின் விரல் நுனிகள்.' (ஸஹீஹுல் புகாரி: 812).",
+        tips: "முழங்கைகளை தரையில் படாமல் உயர்த்தியும், விலாப்புறங்களில் ஒட்டாமலும் வைக்கவும்."
+      },
+      {
+        id: 8,
+        title: "ஸஜ்தாவிலிருந்து எழுதல்",
+        arabic: "الرفع من السجود",
+        icon: "fa-arrow-up",
+        shortDesc: "ஸஜ்தாவிலிருந்து தலை மற்றும் உடலை மேலே உயர்த்துவது.",
+        details: "முதல் ஸஜ்தாவிலிருந்து தலையை உயர்த்தி அமர்ந்த நிலைக்கு வருவது. இது இரண்டு ஸஜ்தாக்களுக்கும் இடையிலான அத்தியாவசிய தொடர்பாகும்.",
+        tips: "மேலே எழும்போது 'அல்லாஹு அக்பர்' என்று சொல்லவும்."
+      },
+      {
+        id: 9,
+        title: "இரண்டு ஸஜ்தாக்களுக்கு இடையில் அமர்தல்",
+        arabic: "الجلسة بين السجدتين",
+        icon: "fa-chair",
+        shortDesc: "இரண்டு ஸஜ்தாக்களுக்கு இடையில் நிதானமாக அமர்வது.",
+        details: "முதல் மற்றும் இரண்டாவது ஸஜ்தாவிற்கு இடையில் இடது பாதத்தை விரித்து அதன் மேல் அமர்ந்து, வலது பாதத்தை நட்டமாக வைப்பது (இஃப்திராஷ்). நபி ﷺ ஒவ்வொரு எலும்பும் தன் இடத்தில் அமரும் வரை அமைதியாக அமர்வார்கள்.",
+        tips: "இந்த அமர்வில் 'ரப்பிக்பிர் லீ' (என் இறைவா, என்னை மன்னித்தருள்) என்று ஓதவும்."
+      },
+      {
+        id: 10,
+        title: "அத்-துமஃனீனா (நிதானம்)",
+        arabic: "الطمأنينة",
+        icon: "fa-heart",
+        shortDesc: "தொழுகையின் ஒவ்வொரு நிலையிலும் அவசரப்படாமல் அமைதி பேணுதல்.",
+        details: "ஒவ்வொரு உடல் நிலையிலும் அவசரப்படாமல் அமைதியாகவும் நிலையாகவும் இருப்பது. அவசரமாக தொழுதவரிடம் நபிகள் நாயகம் ﷺ கூறினார்கள்: 'திரும்பிச் சென்று தொழுவீராக; ஏனெனில் நீர் தொழவில்லை.' (ஸஹீஹுல் புகாரி: 757).",
+        tips: "ஒருபோதும் அவசரப்பட வேண்டாம்; ஒவ்வொரு எலும்பும் நிலைபெறும் வரை நிதானிக்கவும்."
+      },
+      {
+        id: 11,
+        title: "கடைசி அத்தஹிய்யாத்",
+        arabic: "التشهد الأخير",
+        icon: "fa-hands-praying",
+        shortDesc: "இறுதி அமர்வில் அத்தஹிய்யாத் மற்றும் ஸலவாத் ஓதுதல்.",
+        details: "தொழுகையின் இறுதி அமர்வில் நபிகள் நாயகம் ﷺ கற்றுத் தந்த 'அத்தஹிய்யாத்து லில்லாஹி...' என்ற தஷஹ்ஹுத் வசனங்களை ஓதுவது.",
+        tips: "இறைவனின் ஒருமையை (தவ்ஹீத்) குறிக்கும் வகையில் வலது கை ஆட்காட்டி விரலை கிப்லாவை நோக்கி உயர்த்தவும்."
+      },
+      {
+        id: 12,
+        title: "கடைசி அத்தஹிய்யாத்திற்காக அமர்தல்",
+        arabic: "الجلوس للتشهد الأخير",
+        icon: "fa-user-clock",
+        shortDesc: "கடைசி அத்தஹிய்யாத் மற்றும் ஸலாம் கொடுப்பதற்காக அமரும் நிலை.",
+        details: "இறுதி தஷஹ்ஹுத் மற்றும் ஸலாம் கூறி தொழுகையை முடிக்கும் வரை அமர்ந்த நிலையிலேயே இருப்பது.",
+        tips: "3 அல்லது 4 ரக்அத் தொழுகைகளில் தவர்ருக் முறையில் (இடது பாதத்தை வலது காலின் கீழ் செலுத்தி, பிட்டம் தரையில் படுமாறு) அமரவும்."
+      },
+      {
+        id: 13,
+        title: "தஸ்லீம் (ஸலாம் கூறுதல்)",
+        arabic: "التسليم",
+        icon: "fa-bell",
+        shortDesc: "'அஸ்ஸலாமு அலைக்கும் வ ரஹ்மத்துல்லாஹ்' என்று கூறி தொழுகையை முடித்தல்.",
+        details: "தலையை வலது மற்றும் இடது புறம் திருப்பி 'அஸ்ஸலாமு அலைக்கும் வ ரஹ்மத்துல்லாஹ்' எனக் கூறுவது. நபிகள் நாயகம் ﷺ கூறினார்கள்: '...அதன் முடிவு (தொழுகையிலிருந்து வெளிப்படுவது) தஸ்லீம் ஆகும்.' (ஸுனன் அபீ தாவூத்: 61).",
+        tips: "உங்களுக்கு பின்னால் இருப்பவர் உங்கள் கன்னத்தைப் பார்க்கும் அளவுக்கு தலையைத் திருப்பவும்."
+      },
+      {
+        id: 14,
+        title: "தர்தீப் (வரிசை ஒழுங்கு)",
+        arabic: "الترتيب",
+        icon: "fa-list-ol",
+        shortDesc: "அனைத்து தூண்களையும் மாற்றிவிடாமல் முறையான வரிசையில் செய்தல்.",
+        details: "ஒவ்வொரு தூணையும் சுன்னாவில் உள்ளவாறு சரியான வரிசையில் நிறைவேற்றுவது. நபிகள் நாயகம் ﷺ கட்டளையிட்டார்கள்: 'நான் எவ்வாறு தொழுவதை நீங்கள் கண்டீர்களோ அவ்வாறே தொழுங்கள்.' (ஸஹீஹுல் புகாரி: 631).",
+        tips: "தொழுகையின் படிகளை ஒன்றன்பின் ஒன்றாக முறைப்படி பின்பற்றுங்கள்."
+      }
+    ];
+
+    // Expanded 20-Question Quiz Dataset in Tamil
+    const quizQuestions = [
+      {
+        q: "நபிகள் நாயகம் ﷺ கூறினார்கள்: 'நான் எவ்வாறு தொழுவதை நீங்கள் கண்டீர்களோ அவ்வாறே தொழுங்கள்' (ஸஹீஹுல் புகாரி: 631). தொழுகையின் செயல்களை சரியான வரிசையில் செய்ய வேண்டும் என்பதை குறிக்கும் அர்கான் எது?",
+        options: ["அத்-துமஃனீனா (நிதானம்)", "தர்தீப் (வரிசை ஒழுங்கு)", "கடைசி அத்தஹிய்யாத்", "கியாம் (நிற்பது)"],
+        answer: 1,
+        explain: "தர்தீப் (தூண் #14) என்றால் நபி ﷺ கற்றுத் தந்த முறையான வரிசையைப் பின்பற்றுவதாகும். வரிசையை மாற்றுவது தொழுகையை பாழாக்கிவிடும்."
+      },
+      {
+        q: "ஸஹீஹுல் புகாரியில் (1117), நபிகள் நாயகம் ﷺ இம்ரான் இப்னு ஹுஸைனிடம்: 'நின்று தொழுவீராக; இயலாவிட்டால் உட்கார்ந்து தொழுவீராக...' எனக் கூறினார்கள். இது எந்த தூணை (அர்கான் #1) குறிக்கிறது?",
+        options: ["கியாம் (இயன்றவர் நின்று தொழுதல்)", "தஷஹ்ஹுத்திற்கு அமர்தல்", "இஃதிதால்", "ஸஜ்தா"],
+        answer: 0,
+        explain: "கியாம் என்பது உடல் தகுதி உள்ளவர்கள் கடமையான தொழுகைகளில் நின்று தொழுவது கட்டாயமான தூணாகும்."
+      },
+      {
+        q: "நபிகள் நாயகம் ﷺ கூறினார்கள்: 'தொழுகையின் திறவுகோல் தூய்மையாகும்; அதன் ஆரம்பம் தக்பீர் ஆகும்; அதன் முடிவு தஸ்லீம் ஆகும்' (அபீ தாவூத்: 61). தொழுகையின் ஆரம்ப தக்பீர் எவ்வாறு அழைக்கப்படுகிறது?",
+        options: ["தக்பீரத்துர் ருகூஃ", "தக்பீரத்துல் இஹ்ராம்", "தக்பீரத்துஸ் ஸஜ்தா", "தஸ்லீம்"],
+        answer: 1,
+        explain: "தக்பீரத்துல் இஹ்ராம் (தூண் #2) என்பது தொழுகையைத் தொடங்கும் 'அல்லாஹு அக்பர்' ஆகும். இது உலக காரியங்களைத் தடுத்து தொழுகைக்குள் நுழைவிக்கிறது."
+      },
+      {
+        q: "நபிகள் நாயகம் ﷺ கூறினார்கள்: 'தோற்றுவாய் அத்தியாயத்தை (ஃபாத்திஹாவை) ஓதாதவருக்கு தொழுகை இல்லை' (ஸஹீஹுல் புகாரி: 756). அந்த அத்தியாயம் எது?",
+        options: ["சூரா அல்-இஃக்லாஸ்", "சூரா அல்-ஃபாத்திஹா", "சூரா அந்-நாஸ்", "சூரா அல்-ஃபளக்"],
+        answer: 1,
+        explain: "சூரா அல்-ஃபாத்திஹா (தூண் #3) தொழுகையின் ஒவ்வொரு ரக்அத்திலும் ஓதப்பட வேண்டிய கட்டாயத் தூணாகும்."
+      },
+      {
+        q: "அல்லாஹ் குர்ஆனில் கூறுகிறான்: 'நம்பிக்கை கொண்டோரே! நீங்கள் ருகூஃ செய்யுங்கள்; ஸஜ்தாவும் செய்யுங்கள்...' (சூரா அல்-ஹஜ் 22:77). இதில் ருகூஃ என்பது எதனைக் குறிக்கிறது?",
+        options: ["ஸஜ்தா செய்வது", "குனிவது (ருகூஃ)", "இஃதிதால்", "நிற்பது"],
+        answer: 1,
+        explain: "ருகூஃ (தூண் #4) என்பது கைகளை முழங்கால்களில் ஊன்றி, முதுகைச் சமமாக வைத்து குனிவதாகும்."
+      },
+      {
+        q: "ருகூஃவிலிருந்து நிமிரும்போது (தூண் #5) என்ன கூறுவது சுன்னத்தாகும்?",
+        options: ["ஸுப்ஹான ரப்பியல் அஃலா", "ஸமிஅல்லாஹு லிமன் ஹமிதா", "அஸ்தஃபிருல்லாஹ்", "அல்லாஹு அக்பர்"],
+        answer: 1,
+        explain: "ருகூஃவிலிருந்து நிமிரும்போது 'ஸமிஅல்லாஹு லிமன் ஹமிதா' (புகழ்வோரின் புகழை அல்லாஹ் கேட்கிறான்) என்று கூற வேண்டும்."
+      },
+      {
+        q: "சரியாக தொழாத ஒருவருக்கு நபிகள் நாயகம் ﷺ: 'பிறகு நீர் நேராக நிமிரும் வரை எழுந்திருப்பீராக' எனக் கூறினார்கள். இது எந்தத் தூணை (அர்கான் #6) குறிக்கிறது?",
+        options: ["இஃதிதால் (ருகூஃவிற்கு பின் நேராக நிற்றல்)", "கடைசி அத்தஹிய்யாத்", "கியாம்", "இரண்டு ஸஜ்தாக்களுக்கு இடையில் அமர்தல்"],
+        answer: 0,
+        explain: "இஃதிதால் என்பது ருகூஃவிற்குப் பிறகு அமைதியாகவும் நேராகவும் நிமிர்ந்து நிற்கும் நிலையாகும்."
+      },
+      {
+        q: "நபிகள் நாயகம் ﷺ கூறினார்கள்: 'ஏழு உறுப்புகள் மீது ஸஜ்தா செய்யுமாறு நான் கட்டளையிடப்பட்டுள்ளேன்...' (ஸஹீஹுல் புகாரி: 812). இது எந்தத் தூண் (#7)?",
+        options: ["ருகூஃ", "ஸஜ்தா", "ஜல்ஸா", "கியாம்"],
+        answer: 1,
+        explain: "ஸஜ்தா என்பது நெற்றி/மூக்கு, இரண்டு உள்ளங்கைகள், இரண்டு முழங்கால்கள், இரண்டு பாத விரல்கள் ஆகிய 7 உறுப்புகள் தரையில் படுமாறு வணங்குவதாகும்."
+      },
+      {
+        q: "ஹதீஸின் படி ஸஜ்தாவின் போது தரையில் பட வேண்டிய 7 உறுப்புகள் எவை?",
+        options: [
+          "நெற்றி/மூக்கு, 2 உள்ளங்கைகள், 2 முழங்கால்கள், 2 பாத விரல்கள்",
+          "நெற்றி, 2 முழங்கைகள், 2 முழங்கால்கள், 2 பாதங்கள்",
+          "மூக்கு, 2 உள்ளங்கைகள், 2 தொடைகள், 2 பாதங்கள்",
+          "நெற்றி, 2 கைகள், 2 தோள்கள், 2 பாதங்கள்"
+        ],
+        answer: 0,
+        explain: "நெற்றியும் மூக்கும் சேர்ந்து 1 பகுதியாகக் கணக்கிடப்படும், அத்துடன் 2 கைகள், 2 முழங்கால்கள், 2 பாத விரல் நுனிகள் (மொத்தம் 7)."
+      },
+      {
+        q: "முதல் ஸஜ்தாவிலிருந்து தலையையும் உடலையும் உயர்த்துவது எந்தத் தூண் (#8)?",
+        options: ["ஸஜ்தாவிலிருந்து எழுதல்", "ருகூஃவிலிருந்து எழுதல்", "தஸ்லீம்", "தக்பீரத்துல் இஹ்ராம்"],
+        answer: 0,
+        explain: "ஸஜ்தாவிலிருந்து எழுதல் என்பது இரண்டு ஸஜ்தாக்களுக்கு இடையில் உடலை மேலே உயர்த்தும் முக்கிய செயலாகும்."
+      },
+      {
+        q: "இரண்டு ஸஜ்தாக்களுக்கு இடையில் அமரும்போது (தூண் #9) ஓத வேண்டிய சுன்னத்தான துஆ எது?",
+        options: ["ரப்பிக்பிர் லீ (என் இறைவா, என்னை மன்னித்தருள்)", "ஸுப்ஹானல்லாஹ்", "அல்ஹம்துலில்லாஹ்", "லா இலாஹ இல்லல்லாஹ்"],
+        answer: 0,
+        explain: "இரண்டு ஸஜ்தாக்களுக்கு இடையில் அமரும்போது 'ரப்பிக்பிர் லீ, ரப்பிக்பிர் லீ' என்று ஓதுவது சுன்னத்தாகும்."
+      },
+      {
+        q: "அவசரமாக தொழுத நபரிடம் நபிகள் நாயகம் ﷺ: 'திரும்பிச் சென்று தொழுவீராக; ஏனெனில் நீர் தொழவில்லை' என்றார்கள். அவரிடம் விடுபட்ட முக்கிய தூண் (#10) எது?",
+        options: ["அத்-துமஃனீனா (நிதானம் மற்றும் அமைதி)", "நீண்ட சூராக்களை ஓதுவது", "கைகளை உயர்த்துவது", "தலைப்பாகை அணிவது"],
+        answer: 0,
+        explain: "அத்-துமஃனீனா என்பது தொழுகையின் ஒவ்வொரு நிலையிலும் எலும்புகள் நிலைபெறும் வரை நிதானமாக இருப்பதாகும்."
+      },
+      {
+        q: "தொழுகையின் இறுதி அமர்வில் ஓதப்படும் தூண் #11 எது?",
+        options: ["சூரா யாஸீன்", "கடைசி அத்தஹிய்யாத் (அத்தஹிய்யாத்து லில்லாஹி...)", "ஆயத்துல் குர்ஸிய்யி", "குனூத் துஆ"],
+        answer: 1,
+        explain: "இறுதி அமர்வில் அத்தஹிய்யாத் மற்றும் ஸலவாத் ஓதுவது தொழுகையின் 11வது தூணாகும்."
+      },
+      {
+        q: "இறுதி தஷஹ்ஹுத் மற்றும் ஸலாம் கூறுவதற்காக அமரும் உடல் நிலை எந்த தூண் (#12)?",
+        options: ["கடைசி அத்தஹிய்யாத்திற்காக அமர்தல்", "கியாமில் நிற்றல்", "ஸஜ்தாவில் இருப்பது", "ருகூஃவில் இருப்பது"],
+        answer: 0,
+        explain: "கடைசி அத்தஹிய்யாத் மற்றும் தஸ்லீம் முடிக்கும் வரை அமர்ந்திருக்கும் நிலையே தூண் #12 ஆகும்."
+      },
+      {
+        q: "நபிகள் நாயகம் ﷺ கூறினார்கள்: '...அதன் முடிவு தஸ்லீம் ஆகும்' (அபீ தாவூத்: 61). தொழுகையை முடிக்கும் தஸ்லீம் (தூண் #13) எது?",
+        options: [
+          "அஸ்ஸலாமு அலைக்கும் வ ரஹ்மத்துல்லாஹ்",
+          "ஸுப்ஹானல்லாஹி வபிஹம்திஹி",
+          "அஸ்தஃபிருல்லாஹல் அழீம்",
+          "அல்ஹம்துலில்லாஹி ரப்பில் ஆலமீன்"
+        ],
+        answer: 0,
+        explain: "தலையை திருப்பி 'அஸ்ஸலாமு அலைக்கும் வ ரஹ்மத்துல்லாஹ்' எனக் கூறி தொழுகையை முடிப்பதே தஸ்லீம் ஆகும்."
+      },
+      {
+        q: "ஒருவர் தொழுகையின் ஒரு தூணை (அர்கான்) மறதியாக விட்டுவிட்டால், அதை வெறும் ஸஜ்தா ஸஹ்வு (மறதியின் ஸஜ்தா) மட்டும் செய்து சரி செய்ய முடியுமா?",
+        options: [
+          "முடியாது, அந்தத் தூணை கட்டாயம் செய்ய வேண்டும்; இல்லையெனில் தொழுகை செல்லாது.",
+          "ஆம், ஸஜ்தா ஸஹ்வு மட்டுமே போதுமானது.",
+          "ஆம், மன்னிப்பு கேட்டால் போதும்.",
+          "இல்லை, ஆனால் தர்மம் செய்தால் சரியாகிவிடும்."
+        ],
+        answer: 0,
+        explain: "அர்கான் (தூண்) என்பது கட்டாயமானது. அது விடுபட்டால் அந்த ரக்அத்தையோ அல்லது தூணையோ மீண்டும் செய்யாமல் தொழுகை செல்லுபடியாகாது."
+      },
+      {
+        q: "அல்லாஹ் குர்ஆனில் கூறுகிறான்: 'தொழுகையை நிலைநிறுத்துங்கள், ஜகாத்தைக் கொடுங்கள், ருகூஃ செய்வோரோடு சேர்ந்து ருகூஃ செய்யுங்கள்' (சூரா அல்-பகரா 2:43). இது எதனை வலியுறுத்துகிறது?",
+        options: [
+          "தொழுகையும் அதன் ருகூஃ போன்ற செயல்களும் இறைவனின் கட்டாயக் கடமையாகும்.",
+          "தொழுகை விருப்பத்திற்குரியது.",
+          "ஜகாத் தொழுகைக்கு மாற்றாகும்.",
+          "ருகூஃ முந்தைய சமுதாயத்திற்கு மட்டுமே."
+        ],
+        answer: 0,
+        explain: "ருகூஃ போன்ற முக்கிய தூண்களுடன் தொழுகையை நிலைநிறுத்துவது குர்ஆனின் நேரடி கட்டளையாகும்."
+      },
+      {
+        q: "சூரா அல்-முஜ்ஜம்மிலில் (73:20) அல்லாஹ் கூறுகிறான்: '...எனவே குர்ஆனிலிருந்து உங்களுக்கு சுலபமானதை ஓதுங்கள்.' இது எந்தத் தூணோடு தொடர்புடையது?",
+        options: ["சூரா அல்-ஃபாத்திஹா ஓதுவது", "அத்-துமஃனீனா", "தஸ்லீம்", "இஃதிதால்"],
+        answer: 0,
+        explain: "தொழுகையில் சூரா ஃபாத்திஹா மற்றும் குர்ஆன் வசனங்களை ஓதுவது இறைவனின் கட்டளையை நிறைவேற்றுவதாகும்."
+      },
+      {
+        q: "தொழுகையின் ஒவ்வொரு நிலையிலும் (ருகூஃ, ஸஜ்தா, அமர்வு, நிற்றல்) அத்-துமஃனீனா (நிதானம்) ஏன் தூணாகக் கருதப்படுகிறது?",
+        options: [
+          "ஏனெனில் நிதானம் இல்லாத தொழுகை நபி வழிக்கு எதிரானது மற்றும் செல்லுபடியாகாதது.",
+          "தொழுகையை முடிந்தவரை நீட்டிப்பதற்காக.",
+          "இது முதியவர்களுக்கு மட்டுமே அவசியம்.",
+          "இது ஒரு சாதாரண சுன்னத் மட்டுமே."
+        ],
+        answer: 0,
+        explain: "உறுப்புகள் தத்தம் இடத்தில் அமரும் வரை நிதானிக்காவிட்டால் தொழுகை ஏற்றுக்கொள்ளப்படாது என்று நபிமொழி கூறுகிறது."
+      },
+      {
+        q: "புதிய முஸ்லிம்கள் தொழுகையை சரியாக நிறைவேற்ற எத்தனை அர்கான்களை (தூண்களை) கற்க வேண்டும்?",
+        options: ["10 தூண்கள்", "12 தூண்கள்", "14 தூண்கள்", "17 தூண்கள்"],
+        answer: 2,
+        explain: "தொழுகை செல்லுபடியாவதற்கு இஸ்லாமிய மார்க்க அறிஞர்களால் ஏகோபித்து ஏற்றுக்கொள்ளப்பட்ட 14 முக்கிய தூண்கள் (அர்கான்கள்) உள்ளன."
+      }
+    ];
+
+    // Render Grid Cards using Loop
+    function renderGrid() {
+      const gridContainer = document.getElementById('arkan-grid');
+      let html = '';
+
+      for (let i = 0; i < arkansData.length; i++) {
+        const item = arkansData[i];
+        html += `
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card card-arkan" onclick="openModal(${item.id})">
+              <div class="arkan-badge">${item.id}</div>
+              <div class="card-body">
+                <div>
+                  <div class="arkan-icon"><i class="fa-solid ${item.icon}"></i></div>
+                  <h5 class="fw-bold fs-6 mb-1">${item.title}</h5>
+                  <div class="arabic-text mb-2">${item.arabic}</div>
+                  <p class="text-muted small">${item.shortDesc}</p>
+                </div>
+                <button class="btn btn-arkan mt-2"><i class="fa-solid fa-circle-info me-1"></i> மேலும் அறிய</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      gridContainer.innerHTML = html;
+    }
+
+    // Render Quiz using Loop
+    function renderQuiz() {
+      const quizContainer = document.getElementById('quiz-questions-container');
+      let html = '';
+
+      for (let i = 0; i < quizQuestions.length; i++) {
+        const qItem = quizQuestions[i];
+        html += `
+          <div class="quiz-card">
+            <h6 class="fw-bold mb-3"><span class="badge bg-success me-2">கேள்வி ${i + 1}</span> ${qItem.q}</h6>
+            <div class="row g-2">
+        `;
+
+        for (let j = 0; j < qItem.options.length; j++) {
+          html += `
+            <div class="col-12 col-md-6">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question_${i}" id="q_${i}_opt_${j}" value="${j}">
+                <label class="form-check-label w-100" for="q_${i}_opt_${j}">
+                  ${qItem.options[j]}
+                </label>
+              </div>
+            </div>
+          `;
+        }
+
+        html += `
+            </div>
+          </div>
+        `;
+      }
+      quizContainer.innerHTML = html;
+    }
+
+    // Open Detail Modal
+    function openModal(id) {
+      const item = arkansData.find(a => a.id === id);
+      if (!item) return;
+
+      document.getElementById('arkanModalLabel').innerText = `தூண் ${item.id}: ${item.title}`;
+      document.getElementById('modal-body-content').innerHTML = `
+        <div class="text-center mb-3">
+          <i class="fa-solid ${item.icon} text-success display-4 mb-2"></i>
+          <div class="arabic-text fs-3">${item.arabic}</div>
+        </div>
+        <h6 class="fw-bold text-success"><i class="fa-solid fa-book-open me-2"></i>விளக்கம் மற்றும் ஆதாரம்</h6>
+        <p>${item.details}</p>
+        <hr>
+        <h6 class="fw-bold text-success"><i class="fa-solid fa-lightbulb me-2"></i>ஆரம்பத்தில் கற்பவர்களுக்கான குறிப்பு</h6>
+        <p class="text-muted bg-light p-3 rounded border-start border-4 border-success">${item.tips}</p>
+      `;
+
+      const myModal = new bootstrap.Modal(document.getElementById('arkanModal'));
+      myModal.show();
+    }
+
+    // Calculate & Display Quiz Results
+    function submitQuiz() {
+      let score = 0;
+      let total = quizQuestions.length;
+      let resultsHtml = `<div class="card p-3 border-0 bg-light">
+        <h4 class="fw-bold text-center mb-3">சோதனை முடிவுகள் மற்றும் முக்கியக் குறிப்புகள்</h4>`;
+
+      for (let i = 0; i < total; i++) {
+        const selectedOpt = document.querySelector(`input[name="question_${i}"]:checked`);
+        const qItem = quizQuestions[i];
+
+        if (selectedOpt && parseInt(selectedOpt.value) === qItem.answer) {
+          score++;
+          resultsHtml += `
+            <div class="alert alert-success py-2 mb-2">
+              <i class="fa-solid fa-circle-check me-2"></i><strong>கேள்வி ${i + 1}: சரி!</strong> ${qItem.explain}
+            </div>
+          `;
+        } else {
+          const userAnsText = selectedOpt ? qItem.options[parseInt(selectedOpt.value)] : "பதில் தேர்ந்தெடுக்கப்படவில்லை";
+          resultsHtml += `
+            <div class="alert alert-danger py-2 mb-2">
+              <i class="fa-solid fa-circle-xmark me-2"></i><strong>கேள்வி ${i + 1}: தவறு.</strong><br>
+              <small>உங்கள் பதில்: ${userAnsText}</small><br>
+              <small><strong>சரியான பதில்:</strong> ${qItem.options[qItem.answer]}</small><br>
+              <small class="text-dark">${qItem.explain}</small>
+            </div>
+          `;
+        }
+      }
+
+      const percentage = Math.round((score / total) * 100);
+      resultsHtml = `
+        <div class="alert ${percentage >= 75 ? 'alert-success' : 'alert-warning'} text-center fs-5 mb-4 fw-bold">
+          நீங்கள் 20க்கு ${score} மதிப்பெண்கள் பெற்றுள்ளீர்கள் (${percentage}%)
+        </div>
+      ` + resultsHtml + `</div>`;
+
+      const resultsContainer = document.getElementById('quiz-results');
+      resultsContainer.innerHTML = resultsHtml;
+      resultsContainer.classList.remove('d-none');
+
+      // Scroll smoothly to results
+      resultsContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Initialize Page
+    document.addEventListener("DOMContentLoaded", function() {
+      renderGrid();
+      renderQuiz();
+    });
+  </script>
+</body>
+</html>
