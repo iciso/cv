@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arabic Pronouns · Detached & Attached Quiz</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-2: #ebe4d6;
+    --card: #ffffff;
+    --ink: #1a2332;
+    --ink-soft: #4a5568;
+    --muted: #8a8577;
+    --line: #e3dccc;
+    --primary: #0d5c4a;
+    --primary-dark: #084034;
+    --primary-soft: #e6f2ee;
+    --correct: #1e9d6b;
+    --correct-soft: #e3f6ed;
+    --wrong: #d94a3d;
+    --wrong-soft: #fdecea;
+    --gold: #c79b3b;
+    --gold-soft: #fdf6e3;
+    --blue: #1e5b9c;
+    --blue-soft: #e6f0fa;
+    --purple: #6a3e8c;
+    --purple-soft: #f2ecf9;
+    --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
+    --shadow-lg: 0 24px 60px -16px rgba(26,35,50,.25);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+    --ar-option: 1.55rem;
+    --ar-explain: 1.35rem;
+    --ar-inline: 1.15rem;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 12% 5%, #fff9ee 0%, transparent 42%),
+      radial-gradient(circle at 88% 95%, #eef5f0 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(245,242,235,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: .85rem 1.25rem .7rem;
+  }
+  .top-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: .55rem; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-family: 'Noto Naskh Arabic', serif;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.15rem;
+  }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: .76rem; color: var(--muted); margin-left: .25rem; }
+  .stats { display: flex; gap: .5rem; font-size: .82rem; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; }
+  .stats .pill { background: var(--card); border: 1px solid var(--line); padding: .22rem .75rem; border-radius: var(--radius-pill); font-variant-numeric: tabular-nums; }
+  .stats .pill .val { color: var(--primary); }
+  .progress-track { height: 6px; background: var(--bg-2); border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary) 0%, #1e9d6b 100%);
+    border-radius: var(--radius-pill);
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* ── Layout ── */
+  .wrap { max-width: 900px; margin: 0 auto; padding: 1.6rem 1.25rem 6rem; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a7060 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.6rem 1.7rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; right: -50px; top: -50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero h1 { font-family: 'Amiri', serif; font-size: 1.8rem; font-weight: 700; margin: 0 0 .4rem; }
+  .hero h1 .ar { font-size: 1.5rem; }
+  .hero p { margin: 0; font-size: .95rem; opacity: .96; max-width: 62ch; }
+
+  /* ── Grammar reference ── */
+  details.grammar-ref {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.3rem;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  details.grammar-ref summary {
+    cursor: pointer; list-style: none;
+    padding: .9rem 1.1rem;
+    font-weight: 600; font-size: .95rem;
+    color: var(--primary);
+    display: flex; align-items: center; gap: .55rem;
+    user-select: none; transition: background .15s;
+  }
+  details.grammar-ref summary::-webkit-details-marker { display: none; }
+  details.grammar-ref summary:hover { background: var(--primary-soft); }
+  details.grammar-ref summary::after {
+    content: "▾"; margin-left: auto;
+    transition: transform .25s; color: var(--muted);
+  }
+  details.grammar-ref[open] summary::after { transform: rotate(180deg); }
+  .ref-body { padding: .3rem 1.1rem 1.1rem; border-top: 1px solid var(--line); font-size: .9rem; color: var(--ink-soft); }
+  .ref-body p { margin: .5rem 0; }
+  .ref-body .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    color: var(--primary-dark);
+    direction: rtl; display: inline-block;
+    margin: 0 .15rem; font-weight: 600;
+  }
+  .ref-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: .8rem 0 .4rem;
+    font-size: .82rem;
+    background: #faf8f3;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .ref-body th, .ref-body td {
+    padding: .5rem .6rem;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .ref-body th {
+    background: var(--primary); color: #fff;
+    font-weight: 700; font-size: .72rem;
+    letter-spacing: .4px; text-transform: uppercase;
+  }
+  .ref-body td:first-child { font-weight: 600; color: var(--ink); font-size: .78rem; }
+  .ref-body table .ar {
+    font-size: var(--ar-inline);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  /* ── Filter bar ── */
+  .filter-bar {
+    display: flex; flex-wrap: wrap; gap: .35rem;
+    margin: 0 0 1.1rem;
+    padding: .35rem;
+    background: var(--bg-2);
+    border-radius: var(--radius-pill);
+  }
+  .filter-btn {
+    appearance: none; border: none; cursor: pointer;
+    font-family: inherit; font-weight: 600; font-size: .82rem;
+    padding: .42rem 1rem;
+    border-radius: var(--radius-pill);
+    background: transparent; color: var(--ink-soft);
+    transition: background .18s, color .18s;
+    display: inline-flex; align-items: center; gap: .35rem;
+  }
+  .filter-btn:hover { background: rgba(255,255,255,.6); }
+  .filter-btn.active { background: var(--card); color: var(--primary); box-shadow: var(--shadow-sm); }
+  .filter-btn .count { font-weight: 500; font-size: .72rem; color: var(--muted); }
+  .filter-btn.active .count { color: var(--primary); }
+
+  /* ── Question cards ── */
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.2rem 1.05rem;
+    margin-bottom: .95rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color .2s;
+    animation: cardIn .35s ease both;
+    scroll-margin-top: 100px;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .question-card[hidden] { display: none; }
+  .question-card.answered.is-correct { border-color: rgba(30,157,107,.5); }
+  .question-card.answered.is-wrong { border-color: rgba(217,74,61,.45); }
+
+  .q-head { display: flex; align-items: center; gap: .55rem; margin-bottom: .5rem; flex-wrap: wrap; }
+  .q-num {
+    flex-shrink: 0;
+    background: var(--primary-soft); color: var(--primary);
+    font-weight: 700; font-size: .78rem;
+    padding: .2rem .6rem; border-radius: var(--radius-pill);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-prompt { font-size: 1.05rem; font-weight: 600; color: var(--ink); flex: 1 1 auto; }
+
+  .q-tag {
+    font-size: .68rem; font-weight: 700;
+    letter-spacing: .4px; text-transform: uppercase;
+    padding: .15rem .6rem; border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+  .q-tag.detached { background: var(--blue-soft); color: var(--blue); }
+  .q-tag.attached { background: var(--purple-soft); color: var(--purple); }
+
+  .q-ref {
+    font-size: .72rem; font-weight: 600;
+    color: var(--gold);
+    background: var(--gold-soft);
+    padding: .15rem .6rem; border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+
+  /* ── Options ── */
+  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+  @media (max-width: 620px) { .options { grid-template-columns: 1fr; } }
+
+  .option-btn {
+    appearance: none; cursor: pointer;
+    background: #fdfbf7;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .85rem .6rem .7rem;
+    font-family: inherit;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: .35rem;
+    min-height: 96px;
+    text-align: center;
+    transition: border-color .15s, background .15s, transform .08s, box-shadow .15s;
+    position: relative;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+  .option-btn:disabled { cursor: default; }
+
+  .option-btn .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-option);
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1.35;
+    direction: rtl;
+  }
+  .option-btn .tr {
+    font-size: .74rem; color: var(--muted);
+    font-style: italic; letter-spacing: .2px;
+  }
+
+  .option-btn.correct {
+    background: var(--correct-soft);
+    border-color: var(--correct);
+  }
+  .option-btn.correct .ar { color: #0f6a48; }
+  .option-btn.correct::after {
+    content: "✓ correct";
+    position: absolute; top: 6px; right: 9px;
+    font-size: .62rem; font-weight: 700;
+    letter-spacing: .5px; color: var(--correct);
+    text-transform: uppercase;
+  }
+  .option-btn.wrong {
+    background: var(--wrong-soft);
+    border-color: var(--wrong);
+    opacity: .88;
+  }
+  .option-btn.wrong .ar { color: #a83329; }
+  .option-btn.wrong::after {
+    content: "✗ your pick";
+    position: absolute; top: 6px; right: 9px;
+    font-size: .62rem; font-weight: 700;
+    letter-spacing: .5px; color: var(--wrong);
+    text-transform: uppercase;
+  }
+
+  /* ── Explanation ── */
+  .explanation {
+    margin-top: .9rem;
+    border-radius: var(--radius-md);
+    padding: .95rem 1rem;
+    background: #faf8f3;
+    border-left: 4px solid var(--muted);
+    font-size: .9rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    animation: expIn .3s ease both;
+  }
+  @keyframes expIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .explanation.hidden { display: none; }
+  .explanation.is-correct { border-left-color: var(--correct); background: #f4fbf8; }
+  .explanation.is-wrong { border-left-color: var(--wrong); background: #fdf6f5; }
+
+  .exp-title {
+    font-weight: 700; font-size: .8rem;
+    letter-spacing: .4px; text-transform: uppercase;
+    margin-bottom: .4rem;
+    display: flex; align-items: center; gap: .4rem; flex-wrap: wrap;
+  }
+  .explanation.is-correct .exp-title { color: var(--correct); }
+  .explanation.is-wrong .exp-title { color: var(--wrong); }
+
+  .explanation .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-explain);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    display: inline-block;
+    margin: 0 .15rem;
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+  .explanation .tr { font-style: italic; color: var(--muted); font-size: .85rem; }
+  .explanation strong { color: var(--ink); }
+
+  .explanation .quran-line {
+    display: block;
+    background: var(--gold-soft);
+    border-radius: var(--radius-sm);
+    padding: .5rem .8rem;
+    margin-top: .55rem;
+    font-size: .85rem;
+    color: #6a4f1a;
+  }
+  .explanation .quran-line .ar {
+    font-size: var(--ar-explain);
+    color: #4a3510;
+  }
+
+  /* ── Bottom action ── */
+  .bottom-actions { display: flex; justify-content: center; margin-top: 1.75rem; }
+  .btn {
+    appearance: none; border: none;
+    font-family: inherit; font-weight: 600;
+    font-size: 1rem; padding: .85rem 2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: transform .1s, background .15s, box-shadow .15s;
+    letter-spacing: .2px;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    box-shadow: 0 6px 18px -4px rgba(13,92,74,.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -6px rgba(13,92,74,.5);
+  }
+  .btn-primary:disabled {
+    background: #cfc8b8; color: #8a8577;
+    cursor: not-allowed; box-shadow: none;
+  }
+  .btn-secondary {
+    background: var(--card); color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-secondary:hover { background: var(--primary-soft); }
+
+  /* ── Results overlay ── */
+  .results-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,35,50,.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 100;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 1.25rem;
+    overflow-y: auto;
+    animation: fadeIn .25s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .results-overlay.hidden { display: none; }
+
+  .results-card {
+    background: var(--card);
+    max-width: 700px; width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.6rem 1.5rem;
+    box-shadow: var(--shadow-lg);
+    margin: auto;
+    animation: popIn .35s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .results-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem; margin-bottom: 1rem;
+  }
+  .results-header h2 {
+    margin: 0; font-family: 'Amiri', serif;
+    font-size: 1.5rem; color: var(--primary);
+  }
+  .close-btn {
+    appearance: none; border: none;
+    background: var(--bg-2);
+    width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem;
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s; flex-shrink: 0;
+  }
+  .close-btn:hover { background: #ddd5c5; }
+
+  .score-hero {
+    text-align: center;
+    padding: 1.1rem 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, #f4fbf8 100%);
+    margin-bottom: 1.1rem;
+  }
+  .score-big {
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--primary); line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-big .out { color: var(--muted); font-weight: 500; font-size: 1.5rem; }
+  .score-pct { font-size: 1.05rem; font-weight: 600; color: var(--ink-soft); margin-top: .2rem; }
+  .score-msg {
+    margin-top: .55rem; font-size: .9rem;
+    color: var(--ink-soft); max-width: 48ch;
+    margin-left: auto; margin-right: auto;
+  }
+  .score-msg .ar { font-family: 'Noto Naskh Arabic', serif; font-size: var(--ar-inline); color: var(--primary); }
+
+  .breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .5rem; margin-bottom: 1.2rem;
+  }
+  @media (max-width: 480px) { .breakdown { grid-template-columns: 1fr; } }
+  .breakdown .item {
+    background: var(--bg-2); border-radius: var(--radius-md);
+    padding: .65rem .8rem; text-align: center;
+  }
+  .breakdown .item .name {
+    font-size: .7rem; text-transform: uppercase;
+    letter-spacing: .5px; font-weight: 700;
+  }
+  .breakdown .item .score {
+    font-size: 1.3rem; font-weight: 700;
+    margin-top: .15rem; font-variant-numeric: tabular-nums;
+  }
+  .breakdown .item.all .name { color: var(--primary); }
+  .breakdown .item.all .score { color: var(--primary); }
+  .breakdown .item.detached .name { color: var(--blue); }
+  .breakdown .item.detached .score { color: var(--blue); }
+  .breakdown .item.attached .name { color: var(--purple); }
+  .breakdown .item.attached .score { color: var(--purple); }
+
+  .review-list {
+    display: flex; flex-direction: column; gap: .55rem;
+    max-height: 44vh; overflow-y: auto;
+    padding-right: 4px; margin-bottom: 1.15rem;
+  }
+  .review-item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .7rem .85rem; font-size: .86rem;
+  }
+  .review-item.ok { border-left: 4px solid var(--correct); }
+  .review-item.no { border-left: 4px solid var(--wrong); }
+  .review-q {
+    font-weight: 600; color: var(--ink);
+    margin-bottom: .25rem;
+    display: flex; gap: .45rem; align-items: baseline; flex-wrap: wrap;
+  }
+  .review-line {
+    color: var(--ink-soft); display: flex; gap: .45rem;
+    align-items: baseline; flex-wrap: wrap; margin-top: .2rem;
+  }
+  .review-line .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-explain);
+    direction: rtl; color: var(--primary-dark);
+    font-weight: 700;
+  }
+  .review-line .tr { font-style: italic; color: var(--muted); font-size: .78rem; }
+  .review-line .tag {
+    font-size: .66rem; text-transform: uppercase;
+    letter-spacing: .4px; font-weight: 700;
+    padding: .05rem .5rem; border-radius: var(--radius-pill);
+  }
+  .review-line .tag.ok { background: var(--correct-soft); color: var(--correct); }
+  .review-line .tag.no { background: var(--wrong-soft); color: var(--wrong); }
+
+  .results-actions { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+
+  .footer {
+    text-align: center; font-size: .78rem; color: var(--muted);
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="mark">ض</span>
+        <span>Arabic Pronouns <small>· الضمائر</small></span>
+      </div>
+      <div class="stats">
+        <span class="pill">Score <span class="val" id="scoreDisplay">0 / 0</span></span>
+        <span class="pill"><span id="progressText">0%</span></span>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <h1>Arabic Pronouns — <span class="ar" style="font-family:'Noto Naskh Arabic',serif;direction:rtl;">الضَّمَائِر</span></h1>
+    <p>Master all 12 Arabic pronouns — both the <strong>detached</strong> (standalone) and the <strong>attached</strong> (suffix) forms — across 1st, 2nd, and 3rd person, singular, dual, and plural, masculine and feminine. All examples drawn from the Noble Qur'an.</p>
+  </section>
+
+  <details class="grammar-ref">
+    <summary>📖 Grammar Reference — the full pronoun table</summary>
+    <div class="ref-body">
+      <p>Arabic has <strong>twelve</strong> pronouns, each with two forms:</p>
+      <p>• <strong>Detached (منفصل)</strong> — a standalone word that can begin a sentence: <span class="ar">أَنَا</span> <em>(I)</em>, <span class="ar">هُوَ</span> <em>(he)</em>.<br>
+         • <strong>Attached (متصل)</strong> — a suffix that never stands alone, always joined to a noun, verb or particle: <span class="ar">ـِي</span> <em>(my)</em>, <span class="ar">ـهُ</span> <em>(his)</em>.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Person</th>
+            <th>Detached</th>
+            <th>Attached</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1st sg.</td><td><span class="ar">أَنَا</span></td><td><span class="ar">ـِي / ـنِي</span></td><td>I · my/me</td></tr>
+          <tr><td>1st pl.</td><td><span class="ar">نَحْنُ</span></td><td><span class="ar">ـنَا</span></td><td>we · our/us</td></tr>
+          <tr><td>2nd m. sg.</td><td><span class="ar">أَنْتَ</span></td><td><span class="ar">ـكَ</span></td><td>you · your</td></tr>
+          <tr><td>2nd f. sg.</td><td><span class="ar">أَنْتِ</span></td><td><span class="ar">ـكِ</span></td><td>you · your</td></tr>
+          <tr><td>2nd dual</td><td><span class="ar">أَنْتُمَا</span></td><td><span class="ar">ـكُمَا</span></td><td>you two · your</td></tr>
+          <tr><td>2nd m. pl.</td><td><span class="ar">أَنْتُمْ</span></td><td><span class="ar">ـكُمْ</span></td><td>you all · your</td></tr>
+          <tr><td>2nd f. pl.</td><td><span class="ar">أَنْتُنَّ</span></td><td><span class="ar">ـكُنَّ</span></td><td>you all · your</td></tr>
+          <tr><td>3rd m. sg.</td><td><span class="ar">هُوَ</span></td><td><span class="ar">ـهُ</span></td><td>he · his</td></tr>
+          <tr><td>3rd f. sg.</td><td><span class="ar">هِيَ</span></td><td><span class="ar">ـهَا</span></td><td>she · her</td></tr>
+          <tr><td>3rd dual</td><td><span class="ar">هُمَا</span></td><td><span class="ar">ـهُمَا</span></td><td>they two · their</td></tr>
+          <tr><td>3rd m. pl.</td><td><span class="ar">هُمْ</span></td><td><span class="ar">ـهُمْ</span></td><td>they · their</td></tr>
+          <tr><td>3rd f. pl.</td><td><span class="ar">هُنَّ</span></td><td><span class="ar">ـهُنَّ</span></td><td>they · their</td></tr>
+        </tbody>
+      </table>
+
+      <p style="margin-top:.8rem;">💡 <strong>Note:</strong> The dual form (for exactly <em>two</em>) is a distinctive feature of Arabic — most languages lack it. Arabic uses it for 2nd and 3rd person only (there is no "we two").</p>
+    </div>
+  </details>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All <span class="count">36</span></button>
+    <button class="filter-btn" data-filter="detached">Detached <span class="count">18</span></button>
+    <button class="filter-btn" data-filter="attached">Attached <span class="count">18</span></button>
+    <button class="filter-btn" data-filter="1st">1st Person <span class="count">6</span></button>
+    <button class="filter-btn" data-filter="2nd">2nd Person <span class="count">14</span></button>
+    <button class="filter-btn" data-filter="3rd">3rd Person <span class="count">16</span></button>
+  </div>
+
+  <div id="questionList"></div>
+
+  <div class="bottom-actions">
+    <button class="btn btn-primary" id="showResults" disabled>Answer all questions to see results</button>
+  </div>
+
+  <p class="footer">All Qur'anic verses cited by chapter:verse · A learning tool for new Muslims and English-speaking Arabic learners.</p>
+</main>
+
+<div class="results-overlay hidden" id="resultsOverlay" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+  <div class="results-card">
+    <div class="results-header">
+      <h2 id="resultsTitle">Your Results</h2>
+      <button class="close-btn" id="closeResults" aria-label="Close results">✕</button>
+    </div>
+
+    <div class="score-hero">
+      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">36</span></span></div>
+      <div class="score-pct" id="finalPct">0%</div>
+      <p class="score-msg" id="finalMsg"></p>
+    </div>
+
+    <div class="breakdown">
+      <div class="item all"><div class="name">Overall</div><div class="score" id="breakAll">0/36</div></div>
+      <div class="item detached"><div class="name">Detached</div><div class="score" id="breakDet">0/18</div></div>
+      <div class="item attached"><div class="name">Attached</div><div class="score" id="breakAtt">0/18</div></div>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+
+    <div class="results-actions">
+      <button class="btn btn-secondary" id="tryAgain">↺ Try Again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   36 QUESTIONS: 18 detached + 18 attached
+   Each: category, person, prompt, options, explanation, ref
+   ═══════════════════════════════════════════════════════════════ */
+const QUESTIONS = [
+
+/* ═══════════════════ DETACHED (18) ═══════════════════ */
+
+/* 1st person (2) */
+{
+  category: 'detached', person: '1st',
+  prompt: "Which detached pronoun means \"I\" (1st person singular)?",
+  options: [
+    { ar: "أَنَا",   tr: "anā",    correct: true  },
+    { ar: "نَحْنُ",  tr: "naḥnu",  correct: false },
+    { ar: "أَنْتَ",  tr: "anta",   correct: false }
+  ],
+  explanation: `<span class="ar">أَنَا</span> <span class="tr">(anā)</span> means <strong>"I"</strong> — the 1st person singular detached pronoun. In the Qur'an, the Prophet is told: <span class="ar">قُلْ إِنَّمَا أَنَا بَشَرٌ مِّثْلُكُمْ</span> — "Say: I am only a man like you."`,
+  ref: "Qur'an 18:110"
+},
+{
+  category: 'detached', person: '1st',
+  prompt: "Which detached pronoun means \"we\" (1st person plural)?",
+  options: [
+    { ar: "أَنَا",   tr: "anā",    correct: false },
+    { ar: "نَحْنُ",  tr: "naḥnu",  correct: true  },
+    { ar: "أَنْتُمْ", tr: "antum",  correct: false }
+  ],
+  explanation: `<span class="ar">نَحْنُ</span> <span class="tr">(naḥnu)</span> means <strong>"we"</strong> — the 1st person plural. In the Qur'an, Allah says: <span class="ar">إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ</span> — "Indeed, it is We who sent down the Reminder, and indeed, We will be its guardian."`,
+  ref: "Qur'an 15:9"
+},
+
+/* 2nd person (5) */
+{
+  category: 'detached', person: '2nd',
+  prompt: "Which detached pronoun means \"you\" (one male)?",
+  options: [
+    { ar: "أَنْتَ",  tr: "anta",   correct: true  },
+    { ar: "أَنْتِ",  tr: "anti",   correct: false },
+    { ar: "أَنْتُمْ", tr: "antum",  correct: false }
+  ],
+  explanation: `<span class="ar">أَنْتَ</span> <span class="tr">(anta)</span> means <strong>"you"</strong> when addressing <em>one male</em>. In the Qur'an, Iblīs addressed Allah with: <span class="ar">إِنَّكَ أَنتَ الْعَلِيمُ الْحَكِيمُ</span> — "Indeed, You are the All-Knowing, the All-Wise."`,
+  ref: "Qur'an 2:32"
+},
+{
+  category: 'detached', person: '2nd',
+  prompt: "Which detached pronoun means \"you\" (one female)?",
+  options: [
+    { ar: "أَنْتَ",   tr: "anta",   correct: false },
+    { ar: "أَنْتِ",   tr: "anti",   correct: true  },
+    { ar: "أَنْتُنَّ", tr: "antunna", correct: false }
+  ],
+  explanation: `<span class="ar">أَنْتِ</span> <span class="tr">(anti)</span> means <strong>"you"</strong> when addressing <em>one female</em>. Note the final <span class="ar">ـِ</span> (kasrah), which is the mark of the feminine. Example: <span class="ar">أَنْتِ مُسْلِمَةٌ</span> — "You are a Muslim woman."`,
+  ref: "Teaching example"
+},
+{
+  category: 'detached', person: '2nd',
+  prompt: "Which detached pronoun addresses exactly \"you two\"?",
+  options: [
+    { ar: "أَنْتُمَا", tr: "antumā", correct: true  },
+    { ar: "أَنْتُمْ",  tr: "antum",  correct: false },
+    { ar: "أَنْتُنَّ", tr: "antunna", correct: false }
+  ],
+  explanation: `<span class="ar">أَنْتُمَا</span> <span class="tr">(antumā)</span> is the <strong>2nd person dual</strong> — "you two". Arabic uses it whether addressing <em>two males, two females, or a mixed pair</em> — the dual neutralises gender. Example: <span class="ar">أَنْتُمَا أَخَوَانِ</span> — "You two are brothers."`,
+  ref: "Teaching example"
+},
+{
+  category: 'detached', person: '2nd',
+  prompt: "Which detached pronoun means \"you all\" (masculine plural)?",
+  options: [
+    { ar: "أَنْتُمْ",  tr: "antum",  correct: true  },
+    { ar: "أَنْتُمَا", tr: "antumā", correct: false },
+    { ar: "أَنْتُنَّ", tr: "antunna", correct: false }
+  ],
+  explanation: `<span class="ar">أَنْتُمْ</span> <span class="tr">(antum)</span> is the <strong>2nd person masculine plural</strong> — "you all". In the Qur'an: <span class="ar">فَلَا تَجْعَلُوا لِلَّهِ أَندَادًا وَأَنتُمْ تَعْلَمُونَ</span> — "So do not set up rivals to Allah while you all know [the truth]."`,
+  ref: "Qur'an 2:22"
+},
+{
+  category: 'detached', person: '2nd',
+  prompt: "Which detached pronoun means \"you all\" (feminine plural)?",
+  options: [
+    { ar: "أَنْتُمْ",  tr: "antum",  correct: false },
+    { ar: "أَنْتُمَا", tr: "antumā", correct: false },
+    { ar: "أَنْتُنَّ", tr: "antunna", correct: true  }
+  ],
+  explanation: `<span class="ar">أَنْتُنَّ</span> <span class="tr">(antunna)</span> is the <strong>2nd person feminine plural</strong> — "you all" (to a group of three or more females). Note the doubled <span class="ar">ن</span> with shaddah and the fatḥah — that's the mark of feminine plural.`,
+  ref: "Teaching example"
+},
+
+/* 3rd person (5) */
+{
+  category: 'detached', person: '3rd',
+  prompt: "Which detached pronoun means \"he\"?",
+  options: [
+    { ar: "هُوَ",  tr: "huwa",  correct: true  },
+    { ar: "هِيَ",  tr: "hiya",  correct: false },
+    { ar: "هُمْ",  tr: "hum",   correct: false }
+  ],
+  explanation: `<span class="ar">هُوَ</span> <span class="tr">(huwa)</span> means <strong>"he"</strong> — the 3rd person masculine singular. The opening of Sūrat al-Ikhlāṣ: <span class="ar">قُلْ هُوَ اللَّهُ أَحَدٌ</span> — "Say: He is Allah, the One."`,
+  ref: "Qur'an 112:1"
+},
+{
+  category: 'detached', person: '3rd',
+  prompt: "Which detached pronoun means \"she\"?",
+  options: [
+    { ar: "هِيَ",  tr: "hiya",  correct: true  },
+    { ar: "هُوَ",  tr: "huwa",  correct: false },
+    { ar: "هُمَا", tr: "humā",  correct: false }
+  ],
+  explanation: `<span class="ar">هِيَ</span> <span class="tr">(hiya)</span> means <strong>"she"</strong> — the 3rd person feminine singular. When Mūsā (عليه السلام) was asked about his staff, he said: <span class="ar">قَالَ هِيَ عَصَايَ</span> — "He said: This is my staff."`,
+  ref: "Qur'an 20:18"
+},
+{
+  category: 'detached', person: '3rd',
+  prompt: "Which detached pronoun means \"they two\"?",
+  options: [
+    { ar: "هُمْ",  tr: "hum",   correct: false },
+    { ar: "هُمَا", tr: "humā",  correct: true  },
+    { ar: "هُنَّ", tr: "hunna", correct: false }
+  ],
+  explanation: `<span class="ar">هُمَا</span> <span class="tr">(humā)</span> is the <strong>3rd person dual</strong> — "they two". Like the 2nd person dual, it applies to two males, two females, or a mixed pair. Example: <span class="ar">هُمَا طَالِبَانِ</span> — "They two are students."`,
+  ref: "Teaching example"
+},
+{
+  category: 'detached', person: '3rd',
+  prompt: "Which detached pronoun means \"they\" (masculine plural)?",
+  options: [
+    { ar: "هُمْ",  tr: "hum",   correct: true  },
+    { ar: "هُمَا", tr: "humā",  correct: false },
+    { ar: "هُنَّ", tr: "hunna", correct: false }
+  ],
+  explanation: `<span class="ar">هُمْ</span> <span class="tr">(hum)</span> is the <strong>3rd person masculine plural</strong> — "they". The Qur'an describes the wrongdoers: <span class="ar">قَالُوا وَهُمْ فِيهَا يَخْتَصِمُونَ</span> — "They will say while they are quarrelling therein."`,
+  ref: "Qur'an 26:96"
+},
+{
+  category: 'detached', person: '3rd',
+  prompt: "Which detached pronoun means \"they\" (feminine plural)?",
+  options: [
+    { ar: "هُمْ",  tr: "hum",   correct: false },
+    { ar: "هُمَا", tr: "humā",  correct: false },
+    { ar: "هُنَّ", tr: "hunna", correct: true  }
+  ],
+  explanation: `<span class="ar">هُنَّ</span> <span class="tr">(hunna)</span> is the <strong>3rd person feminine plural</strong> — "they" (a group of three or more females). In the Qur'an, Allah says of the wives of the Prophet: <span class="ar">هُنَّ لِبَاسٌ لَّكُمْ وَأَنتُمْ لِبَاسٌ لَّهُنَّ</span> — "They are a garment for you, and you are a garment for them."`,
+  ref: "Qur'an 2:187"
+},
+
+/* Contextual / application questions (6) */
+{
+  category: 'detached', person: '1st',
+  prompt: "In Qur'an 15:9 (<span dir='rtl' style='font-family:Noto Naskh Arabic'>إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ</span>), which detached pronoun emphasises Allah?",
+  options: [
+    { ar: "نَحْنُ", tr: "naḥnu", correct: true  },
+    { ar: "أَنَا",  tr: "anā",   correct: false },
+    { ar: "هُوَ",  tr: "huwa",  correct: false }
+  ],
+  explanation: `The word <span class="ar">نَحْنُ</span> <span class="tr">(naḥnu)</span> — "We" — is a 1st person plural pronoun used here for Allah as the <em>royal "We"</em> (plural of majesty). Arabic uses this for divine speech. In the same verse, <span class="ar">إِنَّا</span> also contains the attached 1st person plural pronoun, so the verse repeats the pronoun for emphasis.`,
+  ref: "Qur'an 15:9"
+},
+{
+  category: 'detached', person: '2nd',
+  prompt: "In Qur'an 2:32 (<span dir='rtl' style='font-family:Noto Naskh Arabic'>إِنَّكَ أَنتَ الْعَلِيمُ الْحَكِيمُ</span>), which detached pronoun means \"You\"?",
+  options: [
+    { ar: "أَنتَ",  tr: "anta",  correct: true  },
+    { ar: "أَنتِ",  tr: "anti",  correct: false },
+    { ar: "أَنتُمْ", tr: "antum", correct: false }
+  ],
+  explanation: `<span class="ar">أَنتَ</span> <span class="tr">(anta)</span> is the 2nd person masculine singular detached pronoun — "You" (one male). Here it follows the attached pronoun <span class="ar">ـكَ</span> in <span class="ar">إِنَّكَ</span>; the verse repeats the detached form <span class="ar">أَنتَ</span> for emphasis.`,
+  ref: "Qur'an 2:32"
+},
+{
+  category: 'detached', person: '3rd',
+  prompt: "In Qur'an 112:1 (<span dir='rtl' style='font-family:Noto Naskh Arabic'>قُلْ هُوَ اللَّهُ أَحَدٌ</span>), which detached pronoun refers to Allah?",
+  options: [
+    { ar: "هُوَ",  tr: "huwa",  correct: true  },
+    { ar: "هِيَ",  tr: "hiya",  correct: false },
+    { ar: "هُمْ",  tr: "hum",   correct: false }
+  ],
+  explanation: `<span class="ar">هُوَ</span> <span class="tr">(huwa)</span> is the 3rd person masculine singular pronoun — "He". This sūrah, known as <em>Sūrat al-Ikhlāṣ</em> ("Sincerity"), declares pure Tawḥīd — that Allah is One. The pronoun precedes the name <span class="ar">اللَّهُ</span> to emphasise that He alone is the One.`,
+  ref: "Qur'an 112:1"
+},
+{
+  category: 'detached', person: '3rd',
+  prompt: "In Qur'an 2:187 (<span dir='rtl' style='font-family:Noto Naskh Arabic'>هُنَّ لِبَاسٌ لَّكُمْ</span>), the pronoun <span dir='rtl' style='font-family:Noto Naskh Arabic'>هُنَّ</span> refers to whom?",
+  options: [
+    { ar: "هُنَّ", tr: "hunna", correct: true  },
+    { ar: "هُمْ",  tr: "hum",   correct: false },
+    { ar: "هُمَا", tr: "humā",  correct: false }
+  ],
+  explanation: `<span class="ar">هُنَّ</span> <span class="tr">(hunna)</span> — 3rd person feminine plural — refers to the <strong>wives</strong> (a group of women). The verse describes the marital relationship: "They are a garment for you, and you are a garment for them." Note how Arabic uses a distinct pronoun for feminine plural — English has only "they".`,
+  ref: "Qur'an 2:187"
+},
+{
+  category: 'detached', person: '2nd',
+  prompt: "When you address exactly TWO people in Arabic, which detached pronoun do you use?",
+  options: [
+    { ar: "أَنْتُمَا", tr: "antumā", correct: true  },
+    { ar: "أَنْتُمْ",  tr: "antum",  correct: false },
+    { ar: "أَنْتُنَّ", tr: "antunna", correct: false }
+  ],
+  explanation: `<span class="ar">أَنْتُمَا</span> <span class="tr">(antumā)</span> is the dual form — "you two". Arabic has a dedicated pronoun for <em>exactly two</em> people, distinct from both the singular (<span class="ar">أَنْتَ</span> / <span class="ar">أَنْتِ</span>) and the plural (<span class="ar">أَنْتُمْ</span> / <span class="ar">أَنْتُنَّ</span>). The dual was the very first pair of pronouns you learned in the previous quiz.`,
+  ref: "Grammatical note"
+},
+{
+  category: 'detached', person: '3rd',
+  prompt: "Which detached pronoun refers to THREE OR MORE females?",
+  options: [
+    { ar: "هُنَّ", tr: "hunna", correct: true  },
+    { ar: "هُمْ",  tr: "hum",   correct: false },
+    { ar: "هُمَا", tr: "humā",  correct: false }
+  ],
+  explanation: `<span class="ar">هُنَّ</span> <span class="tr">(hunna)</span> is the only pronoun for groups of three or more females. The masculine counterpart is <span class="ar">هُمْ</span> <span class="tr">(hum)</span>. Note that <span class="ar">هُمْ</span> is also used by default for mixed-gender groups — Arabic grammar treats the masculine as the "default" plural when genders are mixed.`,
+  ref: "Grammatical note"
+},
+
+/* ═══════════════════ ATTACHED (18) ═══════════════════ */
+
+/* 1st person (2) */
+{
+  category: 'attached', person: '1st',
+  prompt: "How do you say \"my Lord\" in Arabic? (رَبّ = Lord)",
+  options: [
+    { ar: "رَبِّي",  tr: "rabbī",   correct: true  },
+    { ar: "رَبُّكَ", tr: "rabbuka", correct: false },
+    { ar: "رَبُّهُ", tr: "rabbuhu", correct: false }
+  ],
+  explanation: `The attached pronoun <span class="ar">ـِي</span> <span class="tr">(-ī)</span> is the <strong>1st person singular possessive</strong>. Add it to <span class="ar">رَبّ</span> to get <span class="ar">رَبِّي</span> <span class="tr">(rabbī)</span> — "my Lord". In the Qur'an, Mūsā said: <span class="ar">قَالَ هِيَ عَصَايَ</span> — "He said: This is my staff", where <span class="ar">عَصَايَ</span> <span class="tr">(ʿaṣāya)</span> means "my staff".`,
+  ref: "Qur'an 20:18"
+},
+{
+  category: 'attached', person: '1st',
+  prompt: "How do you say \"our Lord\" in Arabic? (رَبّ = Lord)",
+  options: [
+    { ar: "رَبَّنَا",  tr: "rabbanā", correct: true  },
+    { ar: "رَبُّكُمْ", tr: "rabbukum", correct: false },
+    { ar: "رَبُّهُمْ", tr: "rabbuhum", correct: false }
+  ],
+  explanation: `The attached pronoun <span class="ar">ـنَا</span> <span class="tr">(-nā)</span> is the <strong>1st person plural</strong>, meaning "our" or "us". In the Qur'an, Ibrāhīm and Ismāʿīl pray: <span class="ar">رَبَّنَا تَقَبَّلْ مِنَّا</span> — "Our Lord, accept from us." It also appears as the object in <span class="ar">اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ</span> — "Guide us to the straight path."`,
+  ref: "Qur'an 2:127"
+},
+
+/* 2nd person (5) */
+{
+  category: 'attached', person: '2nd',
+  prompt: "How do you say \"your Lord\" (to one male)? (رَبّ = Lord)",
+  options: [
+    { ar: "رَبُّكَ",  tr: "rabbuka", correct: true  },
+    { ar: "رَبِّي",   tr: "rabbī",   correct: false },
+    { ar: "رَبُّهُ",  tr: "rabbuhu", correct: false }
+  ],
+  explanation: `The attached pronoun <span class="ar">ـكَ</span> <span class="tr">(-ka)</span> is <strong>2nd person masculine singular</strong> — "your". In the Qur'an, Allah consoles the Prophet: <span class="ar">مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ</span> — "Your Lord has neither forsaken you nor detested you." Both <span class="ar">وَدَّعَكَ</span> ("forsaken you") and <span class="ar">رَبُّكَ</span> ("your Lord") carry the ـكَ suffix.`,
+  ref: "Qur'an 93:3"
+},
+{
+  category: 'attached', person: '2nd',
+  prompt: "How do you say \"your Lord\" (to one female)? (رَبّ = Lord)",
+  options: [
+    { ar: "رَبُّكِ", tr: "rabbuki", correct: true  },
+    { ar: "رَبُّكَ", tr: "rabbuka", correct: false },
+    { ar: "رَبُّهُ", tr: "rabbuhu", correct: false }
+  ],
+  explanation: `The attached pronoun <span class="ar">ـكِ</span> <span class="tr">(-ki)</span> is <strong>2nd person feminine singular</strong> — "your" (to one female). The kasrah on the <span class="ar">ك</span> marks the feminine. In the Qur'an, Maryam is told: <span class="ar">يَا مَرْيَمُ اقْنُتِي لِرَبِّكِ</span> — "O Maryam, be devout to your Lord."`,
+  ref: "Qur'an 3:43"
+},
+{
+  category: 'attached', person: '2nd',
+  prompt: "How do you say \"your Lord\" (to two people)? (رَبّ = Lord)",
+  options: [
+    { ar: "رَبُّكُمَا", tr: "rabbukumā", correct: true  },
+    { ar: "رَبُّكُمْ",  tr: "rabbukum",  correct: false },
+    { ar: "رَبُّكُنَّ", tr: "rabbukunna", correct: false }
+  ],
+  explanation: `The attached pronoun <span class="ar">ـكُمَا</span> <span class="tr">(-kumā)</span> is the <strong>2nd person dual</strong> — "your" (to two people). In the Qur'an, Firʿawn questions Mūsā and Hārūn: <span class="ar">قَالَ فَمَن رَّبُّكُمَا يَا مُوسَىٰ</span> — "He said: And who is the Lord of you two, O Mūsā?"`,
+  ref: "Qur'an 20:49"
+},
+{
+  category: 'attached', person: '2nd',
+  prompt: "How do you say \"your Lord\" (to a group of males)? (رَبّ = Lord)",
+  options: [
+    { ar: "رَبُّكُمْ",  tr: "rabbukum", correct: true  },
+    { ar: "رَبُّكُمَا", tr: "rabbukumā", correct: false },
+    { ar: "رَبُّكُنَّ", tr: "rabbukunna", correct: false }
+  ],
+  explanation: `The attached pronoun <span class="ar">ـكُمْ</span> <span class="tr">(-kum)</span> is <strong>2nd person masculine plural</strong> — "your" (to a group of males). In the Qur'an: <span class="ar">اعْبُدُوا رَبَّكُمُ الَّذِي خَلَقَكُمْ</span> — "Worship your Lord, who created you." Both <span class="ar">رَبَّكُمْ</span> ("your Lord") and <span class="ar">خَلَقَكُمْ</span> ("created you") carry the ـكُمْ suffix.`,
+  ref: "Qur'an 2:21"
+},
+{
+  category: 'attached', person: '2nd',
+  prompt: "How do you say \"your Lord\" (to a group of females)? (رَبّ = Lord)",
+  options: [
+    { ar: "رَبُّكُنَّ", tr: "rabbukunna", correct: true  },
+    { ar: "رَبُّكُمْ",  tr: "rabbukum",   correct: false },
+    { ar: "رَبُّكُمَا", tr: "rabbukumā",  correct: false }
+  ],
+  explanation: `The attached pronoun <span class="ar">ـكُنَّ</span> <span class="tr">(-kunna)</span> is <strong>2nd person feminine plural</strong> — "your" (to a group of three or more females). It carries the doubled <span class="ar">ن</span> with shaddah, marking the feminine plural. In the Qur'an, Allah addresses the wives of the Prophet: <span class="ar">عَسَىٰ رَبُّهُ إِن طَلَّقَكُنَّ أَن يُبْدِلَهُ</span> — "Perhaps his Lord, if he divorces you all, would substitute for him…"`,
+  ref: "Qur'an 66:5"
+},
+
+/* 3rd person (5) */
+{
+  category: 'attached', person: '3rd',
+  prompt: "In <span dir='rtl' style='font-family:Noto Naskh Arabic'>رَسُولَهُ</span> (rasūlahu), what does the attached pronoun <span dir='rtl' style='font-family:Noto Naskh Arabic'>ـهُ</span> mean?",
+  options: [
+    { ar: "ـهُ", tr: "-hu · his",  correct: true  },
+    { ar: "ـهَا", tr: "-hā · her", correct: false },
+    { ar: "ـهُمْ", tr: "-hum · their", correct: false }
+  ],
+  explanation: `<span class="ar">ـهُ</span> <span class="tr">(-hu)</span> is the <strong>3rd person masculine singular attached pronoun</strong> — "his". <span class="ar">رَسُولَهُ</span> <span class="tr">(rasūlahu)</span> means "His Messenger". The Qur'an says: <span class="ar">هُوَ الَّذِي أَرْسَلَ رَسُولَهُ بِالْهُدَىٰ</span> — "He it is who sent His Messenger with guidance."`,
+  ref: "Qur'an 61:9"
+},
+{
+  category: 'attached', person: '3rd',
+  prompt: "In <span dir='rtl' style='font-family:Noto Naskh Arabic'>ذُرِّيَّتَهَا</span> (dhurriyyatahā), what does the attached pronoun <span dir='rtl' style='font-family:Noto Naskh Arabic'>ـهَا</span> mean?",
+  options: [
+    { ar: "ـهَا", tr: "-hā · her", correct: true  },
+    { ar: "ـهُ",  tr: "-hu · his",  correct: false },
+    { ar: "ـهُمْ", tr: "-hum · their", correct: false }
+  ],
+  explanation: `<span class="ar">ـهَا</span> <span class="tr">(-hā)</span> is the <strong>3rd person feminine singular attached pronoun</strong> — "her". <span class="ar">ذُرِّيَّتَهَا</span> <span class="tr">(dhurriyyatahā)</span> means "her offspring". In the Qur'an, the wife of ʿImrān prays: <span class="ar">وَإِنِّي أُعِيذُهَا بِكَ وَذُرِّيَّتَهَا مِنَ الشَّيْطَانِ الرَّجِيمِ</span> — "I seek refuge for her and her offspring from Shayṭān, the accursed."`,
+  ref: "Qur'an 3:36"
+},
+{
+  category: 'attached', person: '3rd',
+  prompt: "In <span dir='rtl' style='font-family:Noto Naskh Arabic'>بِسِحْرِهِمَا</span> (bi-siḥrihimā), what does the attached pronoun <span dir='rtl' style='font-family:Noto Naskh Arabic'>ـهِمَا</span> mean?",
+  options: [
+    { ar: "ـهُمَا", tr: "-humā · their (two)", correct: true  },
+    { ar: "ـهُمْ",  tr: "-hum · their (pl.)",  correct: false },
+    { ar: "ـهُنَّ", tr: "-hunna · their (f.pl.)", correct: false }
+  ],
+  explanation: `<span class="ar">ـهُمَا</span> <span class="tr">(-humā)</span> is the <strong>3rd person dual attached pronoun</strong> — "their" (for exactly two). <span class="ar">بِسِحْرِهِمَا</span> <span class="tr">(bi-siḥrihimā)</span> means "by their magic" (dual — two magicians). In the Qur'an, the sorcerers say of Mūsā and Hārūn: <span class="ar">يُرِيدَانِ أَن يُخْرِجَاكُم مِّنْ أَرْضِكُم بِسِحْرِهِمَا</span> — "They want to drive you out of your land by their magic."`,
+  ref: "Qur'an 20:63"
+},
+{
+  category: 'attached', person: '3rd',
+  prompt: "In <span dir='rtl' style='font-family:Noto Naskh Arabic'>رَبِّهِمْ</span> (rabbihim), what does the attached pronoun <span dir='rtl' style='font-family:Noto Naskh Arabic'>ـهِمْ</span> mean?",
+  options: [
+    { ar: "ـهُمْ", tr: "-hum · their", correct: true  },
+    { ar: "ـهُمَا", tr: "-humā · their (two)", correct: false },
+    { ar: "ـهُنَّ", tr: "-hunna · their (f.pl.)", correct: false }
+  ],
+  explanation: `<span class="ar">ـهُمْ</span> <span class="tr">(-hum)</span> is the <strong>3rd person masculine plural attached pronoun</strong> — "their". <span class="ar">رَبِّهِمْ</span> <span class="tr">(rabbihim)</span> means "their Lord". The Qur'an says of the martyrs: <span class="ar">بَلْ أَحْيَاءٌ عِندَ رَبِّهِمْ يُرْزَقُونَ</span> — "Rather, they are alive with their Lord, being provided for."`,
+  ref: "Qur'an 3:169"
+},
+{
+  category: 'attached', person: '3rd',
+  prompt: "In <span dir='rtl' style='font-family:Noto Naskh Arabic'>لَهُنَّ</span> (lahunna), what does the attached pronoun <span dir='rtl' style='font-family:Noto Naskh Arabic'>ـهُنَّ</span> mean?",
+  options: [
+    { ar: "ـهُنَّ", tr: "-hunna · their (f.pl.)", correct: true  },
+    { ar: "ـهُمْ",  tr: "-hum · their (m.pl.)",  correct: false },
+    { ar: "ـهُمَا", tr: "-humā · their (dual)",  correct: false }
+  ],
+  explanation: `<span class="ar">ـهُنَّ</span> <span class="tr">(-hunna)</span> is the <strong>3rd person feminine plural attached pronoun</strong> — "their" (for three or more females). In the Qur'an, Allah says of husband and wife: <span class="ar">هُنَّ لِبَاسٌ لَّكُمْ وَأَنتُمْ لِبَاسٌ لَّهُنَّ</span> — "They are a garment for you, and you are a garment for them."`,
+  ref: "Qur'an 2:187"
+},
+
+/* Contextual / application (6) */
+{
+  category: 'attached', person: '1st',
+  prompt: "In Qur'an 20:14 (<span dir='rtl' style='font-family:Noto Naskh Arabic'>فَاعْبُدْنِي</span>), what does the attached pronoun <span dir='rtl' style='font-family:Noto Naskh Arabic'>ـنِي</span> mean?",
+  options: [
+    { ar: "ـنِي", tr: "-nī · me",  correct: true  },
+    { ar: "ـنَا", tr: "-nā · us",  correct: false },
+    { ar: "ـكَ",  tr: "-ka · you", correct: false }
+  ],
+  explanation: `<span class="ar">ـنِي</span> <span class="tr">(-nī)</span> is the <strong>1st person singular object pronoun</strong> — "me". The verse <span class="ar">إِنَّنِي أَنَا اللَّهُ لَا إِلَٰهَ إِلَّا أَنَا فَاعْبُدْنِي</span> means "Indeed, I am Allah; there is no god but Me, so worship Me." Here <span class="ar">فَاعْبُدْنِي</span> = "so worship Me".`,
+  ref: "Qur'an 20:14"
+},
+{
+  category: 'attached', person: '1st',
+  prompt: "In Qur'an 1:6 (<span dir='rtl' style='font-family:Noto Naskh Arabic'>اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ</span>), what does the attached pronoun <span dir='rtl' style='font-family:Noto Naskh Arabic'>ـنَا</span> mean?",
+  options: [
+    { ar: "ـنَا", tr: "-nā · us / our", correct: true  },
+    { ar: "ـنِي", tr: "-nī · me",      correct: false },
+    { ar: "ـكُمْ", tr: "-kum · you all", correct: false }
+  ],
+  explanation: `<span class="ar">ـنَا</span> <span class="tr">(-nā)</span> is the <strong>1st person plural attached pronoun</strong>, meaning "us" (as object) or "our" (as possessive). In <span class="ar">اهْدِنَا</span> it means "guide us". This verse is recited in every rakʿah of prayer — the very heart of Sūrat al-Fātiḥah.`,
+  ref: "Qur'an 1:6"
+},
+{
+  category: 'attached', person: '2nd',
+  prompt: "Which attached pronoun means \"your\" (to a group of males)?",
+  options: [
+    { ar: "ـكُمْ",  tr: "-kum",   correct: true  },
+    { ar: "ـكُمَا", tr: "-kumā",  correct: false },
+    { ar: "ـكُنَّ", tr: "-kunna", correct: false }
+  ],
+  explanation: `<span class="ar">ـكُمْ</span> <span class="tr">(-kum)</span> is the <strong>2nd person masculine plural</strong> attached pronoun — "your" or "you all" (as object). Its dual counterpart is <span class="ar">ـكُمَا</span> <span class="tr">(-kumā)</span>; its feminine counterpart is <span class="ar">ـكُنَّ</span> <span class="tr">(-kunna)</span>.`,
+  ref: "Grammatical note"
+},
+{
+  category: 'attached', person: '3rd',
+  prompt: "Which attached pronoun means \"their\" (for a group of females)?",
+  options: [
+    { ar: "ـهُنَّ", tr: "-hunna", correct: true  },
+    { ar: "ـهُمْ",  tr: "-hum",   correct: false },
+    { ar: "ـهَا",   tr: "-hā",    correct: false }
+  ],
+  explanation: `<span class="ar">ـهُنَّ</span> <span class="tr">(-hunna)</span> is the <strong>3rd person feminine plural</strong> attached pronoun — "their" (for three or more females). The doubled <span class="ar">ن</span> with shaddah marks the feminine plural. Its masculine counterpart is <span class="ar">ـهُمْ</span> <span class="tr">(-hum)</span>. The Quranic Ayat <span class="ar">كَأَنَّهُنَّ الْيَاقُوتُ وَالْمَرْجَانُ</span> meaning "as if they were pearls and rubies", where the verse describes the  appearance of the Hooris the pure companions in Paradise.`,
+  ref: "Qur'an 55:58"
+},
+{
+  category: 'attached', person: '1st',
+  prompt: "Which attached pronoun means \"our\" or \"us\"?",
+  options: [
+    { ar: "ـنَا", tr: "-nā", correct: true  },
+    { ar: "ـنِي", tr: "-nī", correct: false },
+    { ar: "ـهُ",  tr: "-hu", correct: false }
+  ],
+  explanation: `<span class="ar">ـنَا</span> <span class="tr">(-nā)</span> is the 1st person plural attached pronoun. Its 1st person singular counterpart is <span class="ar">ـنِي</span> <span class="tr">(-nī)</span> (as object) or <span class="ar">ـِي</span> <span class="tr">(-ī)</span> (as possessive).`,
+  ref: "Grammatical note"
+},
+{
+  category: 'attached', person: '3rd',
+  prompt: "Which attached pronoun means \"her\"?",
+  options: [
+    { ar: "ـهَا", tr: "-hā",  correct: true  },
+    { ar: "ـهُ",  tr: "-hu",  correct: false },
+    { ar: "ـهُمْ", tr: "-hum", correct: false }
+  ],
+  explanation: `<span class="ar">ـهَا</span> <span class="tr">(-hā)</span> is the <strong>3rd person feminine singular</strong> attached pronoun — "her". The alif at the end is the marker of the feminine. Its masculine counterpart is <span class="ar">ـهُ</span> <span class="tr">(-hu)</span> — "his".`,
+  ref: "Grammatical note"
+}
+
+];
+
+/* ═══════════════════ STATE ═══════════════════ */
+const TOTAL = QUESTIONS.length;
+let answered = 0;
+let correct = 0;
+const userAnswers = new Array(TOTAL).fill(null);
+const stats = {
+  detached: { correct: 0, answered: 0, total: 0 },
+  attached: { correct: 0, answered: 0, total: 0 }
+};
+QUESTIONS.forEach(q => { stats[q.category].total++; });
+
+/* ═══════════════════ UTILITIES ═══════════════════ */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const CAT_LABEL = { detached: 'Detached', attached: 'Attached' };
+
+/* ═══════════════════ RENDER ═══════════════════ */
+function renderQuestions() {
+  const list = document.getElementById('questionList');
+  list.innerHTML = '';
+
+  // Shuffle question order but keep index mapping
+  const order = shuffle([...Array(TOTAL).keys()]);
+
+  for (let displayIdx = 0; displayIdx < order.length; displayIdx++) {
+    const qIndex = order[displayIdx];
+    const q = QUESTIONS[qIndex];
+    const opts = shuffle(q.options);
+
+    const card = document.createElement('article');
+    card.className = 'question-card';
+    card.dataset.index = qIndex;
+    card.dataset.category = q.category;
+    card.dataset.person = q.person;
+
+    card.innerHTML = `
+      <div class="q-head">
+        <span class="q-num">Q${displayIdx + 1}</span>
+        <span class="q-prompt">${q.prompt}</span>
+        <span class="q-tag ${q.category}">${CAT_LABEL[q.category]}</span>
+        ${q.ref ? `<span class="q-ref">📖 ${q.ref}</span>` : ''}
+      </div>
+      <div class="options"></div>
+      <div class="explanation hidden"></div>
+    `;
+
+    const optWrap = card.querySelector('.options');
+    for (const opt of opts) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'option-btn';
+      btn.dataset.correct = opt.correct ? 'true' : 'false';
+      btn.dataset.ar = opt.ar;
+      btn.dataset.tr = opt.tr;
+      btn.innerHTML = `
+        <span class="ar" dir="rtl">${opt.ar}</span>
+        <span class="tr">${opt.tr}</span>
+      `;
+      btn.addEventListener('click', () => handleAnswer(qIndex, btn, card, q));
+      optWrap.appendChild(btn);
+    }
+
+    list.appendChild(card);
+  }
+}
+
+/* ═══════════════════ ANSWER HANDLING ═══════════════════ */
+function handleAnswer(qIndex, btn, card, q) {
+  if (card.dataset.answered === 'true') return;
+  card.dataset.answered = 'true';
+
+  const isCorrect = btn.dataset.correct === 'true';
+  const chosenAr = btn.dataset.ar;
+  const chosenTr = btn.dataset.tr;
+
+  userAnswers[qIndex] = { correct: isCorrect, chosenAr, chosenTr };
+
+  card.querySelectorAll('.option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.correct === 'true') b.classList.add('correct');
+    if (b === btn && !isCorrect) b.classList.add('wrong');
+  });
+
+  card.classList.add('answered');
+  card.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+
+  const exp = card.querySelector('.explanation');
+  exp.classList.remove('hidden');
+  exp.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+
+  exp.innerHTML = `
+    <div class="exp-title">
+      ${isCorrect ? '✓ Correct' : '✗ Not quite'}
+      <span class="q-tag ${q.category}" style="font-size:.6rem;">${CAT_LABEL[q.category]}</span>
+    </div>
+    <div>${q.explanation}</div>
+  `;
+
+  answered++;
+  if (isCorrect) correct++;
+  stats[q.category].answered++;
+  if (isCorrect) stats[q.category].correct++;
+
+  updateStats();
+
+  setTimeout(() => {
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 120);
+}
+
+/* ═══════════════════ STATS ═══════════════════ */
+function updateStats() {
+  document.getElementById('scoreDisplay').textContent = `${correct} / ${answered}`;
+  const pct = Math.round((answered / TOTAL) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '%';
+
+  const btn = document.getElementById('showResults');
+  if (answered === TOTAL) {
+    btn.disabled = false;
+    btn.textContent = '🎉 Show My Results';
+  } else {
+    btn.textContent = `Answer ${TOTAL - answered} more to see results`;
+  }
+}
+
+/* ═══════════════════ FILTER ═══════════════════ */
+document.getElementById('filterBar').addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const filter = btn.dataset.filter;
+  document.querySelectorAll('.question-card').forEach(card => {
+    let show = false;
+    if (filter === 'all') show = true;
+    else if (filter === 'detached' || filter === 'attached') show = card.dataset.category === filter;
+    else if (filter === '1st' || filter === '2nd' || filter === '3rd') show = card.dataset.person === filter;
+    card.hidden = !show;
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ═══════════════════ RESULTS ═══════════════════ */
+function showResults() {
+  const pct = Math.round((correct / TOTAL) * 100);
+  document.getElementById('finalScore').textContent = correct;
+  document.getElementById('finalTotal').textContent = TOTAL;
+  document.getElementById('finalPct').textContent = pct + '%';
+
+  let msg;
+  if (pct === 100) {
+    msg = 'ما شاء الله! A perfect score — you have mastered all Arabic pronouns, both detached and attached.';
+  } else if (pct >= 80) {
+    msg = 'Excellent! You have a strong command of the Arabic pronoun system. Review the missed ones below.';
+  } else if (pct >= 60) {
+    msg = 'Good effort. Pay attention especially to the dual and feminine plural forms — they are the trickiest.';
+  } else {
+    msg = 'Keep practising! Read the grammar table at the top and try again — the pronoun system will become second nature.';
+  }
+  document.getElementById('finalMsg').textContent = msg;
+
+  document.getElementById('breakAll').textContent = `${correct}/${TOTAL}`;
+  document.getElementById('breakDet').textContent = `${stats.detached.correct}/${stats.detached.total}`;
+  document.getElementById('breakAtt').textContent = `${stats.attached.correct}/${stats.attached.total}`;
+
+  const review = document.getElementById('reviewList');
+  review.innerHTML = '';
+
+  QUESTIONS.forEach((q, i) => {
+    const ua = userAnswers[i];
+    if (!ua) return;
+    const correctOpt = q.options.find(o => o.correct);
+    const item = document.createElement('div');
+    item.className = 'review-item ' + (ua.correct ? 'ok' : 'no');
+
+    let html = `<div class="review-q">
+      Q${i + 1}. ${q.prompt}
+      <span class="q-tag ${q.category}" style="font-size:.6rem;">${CAT_LABEL[q.category]}</span>
+    </div>`;
+
+    if (ua.correct) {
+      html += `<div class="review-line">
+        <span class="tag ok">Your answer</span>
+        <span class="ar" dir="rtl">${ua.chosenAr}</span>
+        <span class="tr">${ua.chosenTr}</span>
+      </div>`;
+    } else {
+      html += `<div class="review-line">
+        <span class="tag no">You chose</span>
+        <span class="ar" dir="rtl">${ua.chosenAr}</span>
+        <span class="tr">${ua.chosenTr}</span>
+      </div>
+      <div class="review-line">
+        <span class="tag ok">Correct</span>
+        <span class="ar" dir="rtl">${correctOpt.ar}</span>
+        <span class="tr">${correctOpt.tr}</span>
+      </div>`;
+    }
+
+    item.innerHTML = html;
+    review.appendChild(item);
+  });
+
+  document.getElementById('resultsOverlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeResults() {
+  document.getElementById('resultsOverlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ═══════════════════ RESET ═══════════════════ */
+function resetQuiz() {
+  answered = 0;
+  correct = 0;
+  userAnswers.fill(null);
+  stats.detached.correct = 0;
+  stats.detached.answered = 0;
+  stats.attached.correct = 0;
+  stats.attached.answered = 0;
+
+  document.body.style.overflow = '';
+  document.getElementById('resultsOverlay').classList.add('hidden');
+  renderQuestions();
+  updateStats();
+
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+  document.querySelectorAll('.question-card').forEach(c => { c.hidden = false; });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════ EVENT WIRING ═══════════════════ */
+document.getElementById('showResults').addEventListener('click', showResults);
+document.getElementById('closeResults').addEventListener('click', closeResults);
+document.getElementById('tryAgain').addEventListener('click', resetQuiz);
+
+document.getElementById('resultsOverlay').addEventListener('click', (e) => {
+  if (e.target.id === 'resultsOverlay') closeResults();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeResults();
+});
+
+/* ═══════════════════ BOOT ═══════════════════ */
+renderQuestions();
+updateStats();
+</script>
+</body>
+</html>
