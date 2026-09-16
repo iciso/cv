@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Idafah · Stage 1 — Spot the Mistake</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-2: #ebe4d6;
+    --card: #ffffff;
+    --ink: #1a2332;
+    --ink-soft: #4a5568;
+    --muted: #8a8577;
+    --line: #e3dccc;
+    --primary: #0d5c4a;
+    --primary-dark: #084034;
+    --primary-soft: #e6f2ee;
+    --correct: #1e9d6b;
+    --correct-soft: #e3f6ed;
+    --wrong: #d94a3d;
+    --wrong-soft: #fdecea;
+    --gold: #c79b3b;
+    --gold-soft: #fdf6e3;
+    --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
+    --shadow-lg: 0 24px 60px -16px rgba(26,35,50,.25);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+    --ar-option: 1.6rem;
+    --ar-explain: 1.55rem;
+    --ar-inline: 1.2rem;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 12% 5%, #fff9ee 0%, transparent 42%),
+      radial-gradient(circle at 88% 95%, #eef5f0 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(245,242,235,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: .85rem 1.25rem .7rem;
+  }
+  .top-inner { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: .55rem; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-family: 'Noto Naskh Arabic', serif;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.15rem;
+  }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: .76rem; color: var(--muted); margin-left: .25rem; }
+  .stats { display: flex; gap: .5rem; font-size: .82rem; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; }
+  .stats .pill { background: var(--card); border: 1px solid var(--line); padding: .22rem .75rem; border-radius: var(--radius-pill); font-variant-numeric: tabular-nums; }
+  .stats .pill .val { color: var(--primary); }
+  .progress-track { height: 6px; background: var(--bg-2); border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary) 0%, #1e9d6b 100%);
+    border-radius: var(--radius-pill);
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* ── Layout ── */
+  .wrap { max-width: 860px; margin: 0 auto; padding: 1.6rem 1.25rem 6rem; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a7060 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.6rem 1.7rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; right: -50px; top: -50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero .stage-badge {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: var(--radius-pill);
+    padding: .2rem .85rem;
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+    margin-bottom: .7rem;
+  }
+  .hero h1 { font-family: 'Amiri', serif; font-size: 1.8rem; font-weight: 700; margin: 0 0 .4rem; line-height: 1.25; }
+  .hero h1 .ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; font-size: 1.5rem; }
+  .hero p { margin: 0; font-size: .95rem; opacity: .96; max-width: 62ch; }
+
+  /* ── Grammar reference ── */
+  details.grammar-ref {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.3rem;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  details.grammar-ref summary {
+    cursor: pointer; list-style: none;
+    padding: .95rem 1.15rem;
+    font-weight: 700; font-size: .95rem;
+    color: var(--primary);
+    display: flex; align-items: center; gap: .55rem;
+    user-select: none; transition: background .15s;
+  }
+  details.grammar-ref summary::-webkit-details-marker { display: none; }
+  details.grammar-ref summary:hover { background: var(--primary-soft); }
+  details.grammar-ref summary::after {
+    content: "▾"; margin-left: auto;
+    transition: transform .25s; color: var(--muted);
+    font-size: 1rem;
+  }
+  details.grammar-ref[open] summary::after { transform: rotate(180deg); }
+  .ref-body { padding: .5rem 1.15rem 1.2rem; border-top: 1px solid var(--line); font-size: .92rem; color: var(--ink-soft); }
+  .ref-body p { margin: .55rem 0; }
+
+  .rule-box {
+    background: var(--gold-soft);
+    border-left: 5px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    margin: .8rem 0;
+    color: #6a4f1a;
+    font-size: .9rem;
+    line-height: 1.7;
+  }
+  .rule-box strong { color: #4a3510; }
+
+  .rule-list { margin: .5rem 0 .8rem; padding-left: 1.2rem; }
+  .rule-list li { margin: .4rem 0; line-height: 1.6; }
+  .rule-list .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    direction: rtl;
+    color: var(--primary-dark);
+    font-weight: 700;
+    display: inline-block;
+    margin: 0 .2rem;
+    vertical-align: middle;
+  }
+
+  .example-pair {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .35rem 1rem;
+    align-items: baseline;
+    background: #faf8f3;
+    border-radius: var(--radius-sm);
+    padding: .7rem 1rem;
+    margin: .6rem 0;
+    font-size: .88rem;
+  }
+  .example-pair .label { color: var(--muted); font-weight: 600; }
+  .example-pair .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    direction: rtl;
+    color: var(--primary-dark);
+    font-weight: 700;
+  }
+
+  /* ── Question card ── */
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem 1.25rem 1.1rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color .2s;
+    animation: cardIn .35s ease both;
+    scroll-margin-top: 100px;
+    position: relative;
+    z-index: 1;
+  }
+  .question-card.menu-open { z-index: 20; }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .question-card.answered.is-correct { border-color: rgba(30,157,107,.5); }
+  .question-card.answered.is-wrong { border-color: rgba(217,74,61,.45); }
+
+  .q-head {
+    display: flex; align-items: center; gap: .55rem;
+    margin-bottom: .4rem; flex-wrap: wrap;
+  }
+  .q-num {
+    flex-shrink: 0;
+    background: var(--primary-soft); color: var(--primary);
+    font-weight: 700; font-size: .78rem;
+    padding: .22rem .65rem; border-radius: var(--radius-pill);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-prompt {
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--ink);
+    flex: 1 1 auto;
+  }
+  .q-prompt .quote { color: var(--primary); }
+
+  .q-hint {
+    font-size: .84rem;
+    color: var(--muted);
+    font-style: italic;
+    margin: 0 0 .9rem 0;
+  }
+
+  /* ── Custom dropdown ── */
+  .dropdown { position: relative; }
+
+  .dropdown-trigger {
+    appearance: none;
+    width: 100%;
+    background: #fdfbf7;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .85rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8rem;
+    text-align: left;
+    transition: border-color .15s, background .15s, box-shadow .15s;
+    min-height: 62px;
+  }
+  .dropdown-trigger:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+  }
+  .dropdown-trigger:disabled {
+    cursor: default;
+    opacity: .95;
+  }
+  .dropdown-value {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+    min-width: 0;
+  }
+  .dropdown-value .placeholder {
+    font-style: italic;
+    color: var(--muted);
+    font-size: .95rem;
+  }
+  .dropdown-value .chosen-ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-option);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1.4;
+    text-align: right;
+    align-self: flex-end;
+  }
+  .dropdown-value .chosen-tr {
+    font-size: .78rem;
+    color: var(--muted);
+    font-style: italic;
+    text-align: right;
+    align-self: flex-end;
+  }
+  .dropdown-chevron {
+    flex-shrink: 0;
+    color: var(--primary);
+    font-size: 1rem;
+    transition: transform .2s;
+  }
+  .dropdown[data-state="open"] .dropdown-chevron { transform: rotate(180deg); }
+  .dropdown[data-state="open"] .dropdown-trigger {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    box-shadow: 0 0 0 3px rgba(13,92,74,.12);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0; right: 0;
+    background: white;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: 0 16px 40px -8px rgba(26,35,50,.25);
+    padding: .4rem;
+    display: none;
+    flex-direction: column;
+    gap: .25rem;
+    z-index: 100;
+    max-height: 380px;
+    overflow-y: auto;
+    animation: menuIn .18s ease both;
+  }
+  @keyframes menuIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .dropdown[data-state="open"] .dropdown-menu { display: flex; }
+
+  .dropdown-option {
+    appearance: none;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: .7rem .85rem;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    text-align: right;
+    transition: background .12s, border-color .12s;
+    width: 100%;
+  }
+  .dropdown-option:hover,
+  .dropdown-option:focus-visible {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    outline: none;
+  }
+  .dropdown-option .opt-ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-option);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1.45;
+  }
+  .dropdown-option .opt-tr {
+    font-size: .78rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── Explanation ── */
+  .explanation {
+    margin-top: 1rem;
+    border-radius: var(--radius-md);
+    padding: 1rem 1.1rem;
+    background: #faf8f3;
+    border-left: 4px solid var(--muted);
+    font-size: .92rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    animation: expIn .3s ease both;
+  }
+  @keyframes expIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .explanation.hidden { display: none; }
+  .explanation.is-correct { border-left-color: var(--correct); background: #f4fbf8; }
+  .explanation.is-wrong { border-left-color: var(--wrong); background: #fdf6f5; }
+
+  .exp-title {
+    font-weight: 700; font-size: .82rem;
+    letter-spacing: .4px; text-transform: uppercase;
+    margin-bottom: .55rem;
+    display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+  }
+  .explanation.is-correct .exp-title { color: var(--correct); }
+  .explanation.is-wrong .exp-title { color: var(--wrong); }
+
+  .exp-wrong-pick {
+    background: var(--wrong-soft);
+    border-radius: var(--radius-sm);
+    padding: .5rem .8rem;
+    margin-bottom: .55rem;
+    font-size: .88rem;
+  }
+  .exp-wrong-pick .label {
+    font-weight: 700; color: var(--wrong);
+    font-size: .72rem; letter-spacing: .4px;
+    text-transform: uppercase;
+    display: block; margin-bottom: .15rem;
+  }
+  .exp-wrong-pick .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    direction: rtl;
+    color: #a83329;
+    font-weight: 700;
+    display: inline-block;
+    margin-right: .3rem;
+  }
+  .exp-wrong-pick .tr { font-style: italic; color: var(--muted); font-size: .82rem; }
+  .exp-wrong-pick .why {
+    margin-top: .35rem;
+    color: var(--ink-soft);
+    font-size: .86rem;
+    line-height: 1.6;
+  }
+
+  .exp-correct-answer {
+    background: var(--correct-soft);
+    border-radius: var(--radius-sm);
+    padding: .7rem 1rem;
+    margin-bottom: .6rem;
+  }
+  .exp-correct-answer .label {
+    font-weight: 700; color: #0f6a48;
+    font-size: .72rem; letter-spacing: .4px;
+    text-transform: uppercase;
+    display: block; margin-bottom: .25rem;
+  }
+  .exp-correct-answer .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-explain);
+    direction: rtl;
+    color: #0f6a48;
+    font-weight: 700;
+    display: block;
+    text-align: right;
+    line-height: 1.6;
+    margin-bottom: .15rem;
+  }
+  .exp-correct-answer .tr {
+    font-style: italic; color: var(--muted);
+    font-size: .82rem;
+    text-align: right;
+  }
+
+  .exp-rule {
+    font-size: .9rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    padding-left: .55rem;
+    border-left: 3px solid var(--line);
+    margin-top: .55rem;
+  }
+  .exp-rule strong { color: var(--ink); }
+  .exp-rule .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    direction: rtl;
+    color: var(--primary-dark);
+    font-weight: 700;
+    display: inline-block;
+    margin: 0 .2rem;
+    vertical-align: middle;
+  }
+
+  /* ── Bottom action ── */
+  .bottom-actions { display: flex; justify-content: center; margin-top: 1.75rem; }
+  .btn {
+    appearance: none; border: none;
+    font-family: inherit; font-weight: 600;
+    font-size: 1rem; padding: .85rem 2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: transform .1s, background .15s, box-shadow .15s;
+    letter-spacing: .2px;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    box-shadow: 0 6px 18px -4px rgba(13,92,74,.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -6px rgba(13,92,74,.5);
+  }
+  .btn-primary:disabled {
+    background: #cfc8b8; color: #8a8577;
+    cursor: not-allowed; box-shadow: none;
+  }
+  .btn-secondary {
+    background: var(--card); color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-secondary:hover { background: var(--primary-soft); }
+
+  /* ── Results overlay ── */
+  .results-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,35,50,.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 200;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 1.25rem;
+    overflow-y: auto;
+    animation: fadeIn .25s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .results-overlay.hidden { display: none; }
+
+  .results-card {
+    background: var(--card);
+    max-width: 700px; width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.6rem 1.5rem;
+    box-shadow: var(--shadow-lg);
+    margin: auto;
+    animation: popIn .35s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .results-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem; margin-bottom: 1rem;
+  }
+  .results-header h2 {
+    margin: 0; font-family: 'Amiri', serif;
+    font-size: 1.5rem; color: var(--primary);
+  }
+  .close-btn {
+    appearance: none; border: none;
+    background: var(--bg-2);
+    width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem;
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s; flex-shrink: 0;
+  }
+  .close-btn:hover { background: #ddd5c5; }
+
+  .score-hero {
+    text-align: center;
+    padding: 1.1rem 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, #f4fbf8 100%);
+    margin-bottom: 1.1rem;
+  }
+  .score-big {
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--primary); line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-big .out { color: var(--muted); font-weight: 500; font-size: 1.5rem; }
+  .score-pct { font-size: 1.05rem; font-weight: 600; color: var(--ink-soft); margin-top: .2rem; }
+  .score-msg {
+    margin-top: .55rem; font-size: .92rem;
+    color: var(--ink-soft); max-width: 48ch;
+    margin-left: auto; margin-right: auto;
+  }
+
+  .review-list {
+    display: flex; flex-direction: column; gap: .55rem;
+    max-height: 48vh; overflow-y: auto;
+    padding-right: 4px; margin-bottom: 1.15rem;
+  }
+  .review-item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .75rem .9rem; font-size: .87rem;
+  }
+  .review-item.ok { border-left: 4px solid var(--correct); }
+  .review-item.no { border-left: 4px solid var(--wrong); }
+  .review-q {
+    font-weight: 600; color: var(--ink);
+    margin-bottom: .3rem;
+  }
+  .review-line {
+    color: var(--ink-soft); display: flex; gap: .45rem;
+    align-items: baseline; flex-wrap: wrap; margin-top: .2rem;
+  }
+  .review-line .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    direction: rtl; color: var(--primary-dark);
+    font-weight: 700;
+  }
+  .review-line .tr { font-style: italic; color: var(--muted); font-size: .78rem; }
+  .review-line .tag {
+    font-size: .66rem; text-transform: uppercase;
+    letter-spacing: .4px; font-weight: 700;
+    padding: .05rem .5rem; border-radius: var(--radius-pill);
+  }
+  .review-line .tag.ok { background: var(--correct-soft); color: var(--correct); }
+  .review-line .tag.no { background: var(--wrong-soft); color: var(--wrong); }
+
+  .results-actions { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+
+  .footer {
+    text-align: center; font-size: .78rem; color: var(--muted);
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 560px) {
+    .hero h1 { font-size: 1.4rem; }
+    .hero h1 .ar { font-size: 1.2rem; }
+    .q-prompt { font-size: 1rem; }
+    .dropdown-trigger { padding: .75rem .85rem; }
+    .dropdown-value .chosen-ar { font-size: 1.4rem; }
+    .dropdown-option .opt-ar { font-size: 1.4rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="mark">ض</span>
+        <span>Idafah <small>· Stage 1: Spot the Mistake</small></span>
+      </div>
+      <div class="stats">
+        <span class="pill">Score <span class="val" id="scoreDisplay">0 / 0</span></span>
+        <span class="pill"><span id="progressText">0%</span></span>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="stage-badge">📘 Stage 1 of 3 · Dropdown Challenge</div>
+    <h1>Spot the Mistake — <span class="ar">الإِضَافَة</span></h1>
+    <p>In the Arabic possessive construct (<span style="font-family:'Noto Naskh Arabic',serif;direction:rtl;">الإِضَافَة</span>), the first word can <strong>never</strong> carry "Al-" and can <strong>never</strong> carry tanwīn. Read each English phrase, then choose the correctly written Arabic from the dropdown.</p>
+  </section>
+
+  <details class="grammar-ref" open>
+    <summary>📖 The One Rule You Must Remember</summary>
+    <div class="ref-body">
+      <div class="rule-box">
+        <strong>In Idafah (the possessive construct):</strong>
+        <ul class="rule-list">
+          <li>The <strong>first word</strong> (<span class="ar">مُضَاف</span> · mudhāf) <strong>never</strong> takes <span class="ar">ال</span> — even if the English phrase begins with "the".</li>
+          <li>The <strong>first word</strong> <strong>never</strong> takes <strong>tanwīn</strong> (the doubled vowel <span class="ar">ـٌ ـً ـٍ</span>). It takes a <strong>single</strong> short vowel — usually a ḍammah <span class="ar">ـُ</span>.</li>
+          <li>The <strong>second word</strong> (<span class="ar">مُضَاف إِلَيْه</span> · mudhāf ilayh) is <strong>always genitive</strong> (<span class="ar">مَجْرُور</span>) — its last letter carries a <strong>kasrah</strong> <span class="ar">ـِ</span>.</li>
+        </ul>
+      </div>
+
+      <p style="margin-top:1rem;"><strong>Two wrong forms</strong> — and one right form:</p>
+
+      <div class="example-pair">
+        <span class="label">❌ Wrong 1</span>
+        <span class="ar">الْكِتَابُ اللهِ</span>
+      </div>
+      <div class="example-pair">
+        <span class="label">❌ Wrong 2</span>
+        <span class="ar">كِتَابٌ اللهِ</span>
+      </div>
+      <div class="example-pair" style="background:var(--correct-soft);">
+        <span class="label" style="color:#0f6a48;">✓ Correct</span>
+        <span class="ar" style="color:#0f6a48;">كِتَابُ اللهِ</span>
+      </div>
+
+      <p style="margin-top:.9rem;font-size:.88rem;">Why does the first word take no "Al-"? Because it becomes <em>automatically definite</em> just by being the mudhāf of a definite mudhāf ilayh. Adding "Al-" is not only unnecessary — it is grammatically wrong. That's why "the Book of Allah" in Arabic is <span style="font-family:'Noto Naskh Arabic',serif;direction:rtl;">كِتَابُ اللهِ</span>, never <span style="font-family:'Noto Naskh Arabic',serif;direction:rtl;">الْكِتَابُ اللهِ</span>.</p>
+    </div>
+  </details>
+
+  <div id="questionList"></div>
+
+  <div class="bottom-actions">
+    <button class="btn btn-primary" id="showResults" disabled>Answer all questions to see results</button>
+  </div>
+
+  <p class="footer">Stage 1 of a 3-stage Idafah course · An educational resource for new Muslims and English-speaking Arabic learners.</p>
+</main>
+
+<div class="results-overlay hidden" id="resultsOverlay" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+  <div class="results-card">
+    <div class="results-header">
+      <h2 id="resultsTitle">Stage 1 Results</h2>
+      <button class="close-btn" id="closeResults" aria-label="Close results">✕</button>
+    </div>
+
+    <div class="score-hero">
+      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">12</span></span></div>
+      <div class="score-pct" id="finalPct">0%</div>
+      <p class="score-msg" id="finalMsg"></p>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+
+    <div class="results-actions">
+      <button class="btn btn-secondary" id="tryAgain">↺ Try Again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   DATA — 12 Idafah phrases, each with the correct answer plus two
+   deliberately wrong variants (one with "Al-" on the first word,
+   one with tanwīn on the first word).
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Generic explanation strings reused across all questions */
+const WHY = {
+  alError: `This option puts <strong>"Al-"</strong> on the <strong>first word</strong> (the mudhāf). In Idafah, the mudhāf <strong>never</strong> takes "Al-", even if the English phrase begins with "the". It becomes definite automatically because of the mudhāf ilayh that follows — the "Al-" would be redundant and grammatically wrong.`,
+
+  tanweenError: `This option puts <strong>tanwīn</strong> (the doubled vowel <span class="ar">ـٌ</span>) on the <strong>first word</strong>. Tanwīn marks <em>indefiniteness</em>, but the mudhāf is <em>definite</em>. So the first word gets a <strong>single</strong> ḍammah — <span class="ar">ـُ</span> — not tanwīn.`,
+
+  correct: `The <strong>first word</strong> takes a single ḍammah <span class="ar">ـُ</span> with <strong>no "Al-"</strong> and <strong>no tanwīn</strong>. The <strong>second word</strong> (the mudhāf ilayh) is <strong>genitive</strong> — marked by the kasrah <span class="ar">ـِ</span>. Together they form a valid Idafah.`
+};
+
+/* Helper: build a question object from the six pieces of information */
+function Q(english, hint, correctAr, correctTr, alAr, alTr, tanAr, tanTr) {
+  return {
+    english,
+    hint,
+    correctAr,
+    correctTr,
+    options: [
+      { ar: alAr,   tr: alTr,   correct: false, whyKey: 'alError' },
+      { ar: tanAr,  tr: tanTr,  correct: false, whyKey: 'tanweenError' },
+      { ar: correctAr, tr: correctTr, correct: true, whyKey: 'correct' }
+    ]
+  };
+}
+
+const QUESTIONS = [
+  Q(
+    "The Book of Allah",
+    "The sacred scripture revealed to Prophet Muhammad ﷺ.",
+    "كِتَابُ اللهِ", "Kitābu Allāhi",
+    "الْكِتَابُ اللهِ", "Al-Kitābu Allāhi",
+    "كِتَابٌ اللهِ", "Kitābun Allāhi"
+  ),
+  Q(
+    "The House of Allah",
+    "Another name for the Kaʿbah in Makkah.",
+    "بَيْتُ اللهِ", "Baytu Allāhi",
+    "الْبَيْتُ اللهِ", "Al-Baytu Allāhi",
+    "بَيْتٌ اللهِ", "Baytun Allāhi"
+  ),
+  Q(
+    "The Messenger of Allah",
+    "The title of Prophet Muhammad ﷺ.",
+    "رَسُولُ اللهِ", "Rasūlu Allāhi",
+    "الرَّسُولُ اللهِ", "Ar-Rasūlu Allāhi",
+    "رَسُولٌ اللهِ", "Rasūlun Allāhi"
+  ),
+  Q(
+    "The Religion of Allah",
+    "Islam — the way of life prescribed by the Creator.",
+    "دِينُ اللهِ", "Dīnu Allāhi",
+    "الدِّينُ اللهِ", "Ad-Dīnu Allāhi",
+    "دِينٌ اللهِ", "Dīnun Allāhi"
+  ),
+  Q(
+    "The Day of Judgement",
+    "The day when all creation will be resurrected and judged.",
+    "يَوْمُ الْقِيَامَةِ", "Yawmu al-Qiyāmah",
+    "الْيَوْمُ الْقِيَامَةِ", "Al-Yawmu al-Qiyāmah",
+    "يَوْمٌ الْقِيَامَةِ", "Yawmun al-Qiyāmah"
+  ),
+  Q(
+    "The People of the House",
+    "The family of the Prophet ﷺ — Ahl al-Bayt.",
+    "أَهْلُ الْبَيْتِ", "Ahlu al-Bayt",
+    "الْأَهْلُ الْبَيْتِ", "Al-Ahlu al-Bayt",
+    "أَهْلٌ الْبَيْتِ", "Ahlun al-Bayt"
+  ),
+  Q(
+    "The Mercy of Allah",
+    "His compassion that encompasses all things.",
+    "رَحْمَةُ اللهِ", "Raḥmatu Allāhi",
+    "الرَّحْمَةُ اللهِ", "Ar-Raḥmatu Allāhi",
+    "رَحْمَةٌ اللهِ", "Raḥmatun Allāhi"
+  ),
+  Q(
+    "The Lord of the Worlds",
+    "Rabb al-ʿĀlamīn — a name and attribute of Allah.",
+    "رَبُّ الْعَالَمِينَ", "Rabbu al-ʿĀlamīn",
+    "الرَّبُّ الْعَالَمِينَ", "Ar-Rabbu al-ʿĀlamīn",
+    "رَبٌّ الْعَالَمِينَ", "Rabbun al-ʿĀlamīn"
+  ),
+  Q(
+    "The Light of the Heavens",
+    "A phrase from the famous Āyat al-Nūr (Qur'an 24:35).",
+    "نُورُ السَّمَاوَاتِ", "Nūru as-Samāwāt",
+    "النُّورُ السَّمَاوَاتِ", "An-Nūru as-Samāwāt",
+    "نُورٌ السَّمَاوَاتِ", "Nūrun as-Samāwāt"
+  ),
+  Q(
+    "The Angel of Death",
+    "The angel charged with taking souls — Malak al-Mawt.",
+    "مَلَكُ الْمَوْتِ", "Malaku al-Mawt",
+    "الْمَلَكُ الْمَوْتِ", "Al-Malaku al-Mawt",
+    "مَلَكٌ الْمَوْتِ", "Malakun al-Mawt"
+  ),
+  Q(
+    "The Path of the Believers",
+    "The way of those who have faith — as in Sūrat al-Fātiḥah.",
+    "صِرَاطُ الْمُؤْمِنِينَ", "Ṣirāṭu al-Mu'minīn",
+    "الصِّرَاطُ الْمُؤْمِنِينَ", "Aṣ-Ṣirāṭu al-Mu'minīn",
+    "صِرَاطٌ الْمُؤْمِنِينَ", "Ṣirāṭun al-Mu'minīn"
+  ),
+  Q(
+    "The Word of Allah",
+    "The kalimah — His speech, His command.",
+    "كَلِمَةُ اللهِ", "Kalimatu Allāhi",
+    "الْكَلِمَةُ اللهِ", "Al-Kalimatu Allāhi",
+    "كَلِمَةٌ اللهِ", "Kalimatum Allāhi"
+  )
+];
+
+/* ═══════════════════ STATE ═══════════════════ */
+const TOTAL = QUESTIONS.length;
+let answered = 0;
+let correct = 0;
+const userAnswers = new Array(TOTAL).fill(null);
+
+/* ═══════════════════ UTILITIES ═══════════════════ */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ═══════════════════ RENDER ═══════════════════ */
+function renderQuestions() {
+  const list = document.getElementById('questionList');
+  list.innerHTML = '';
+
+  // Shuffle the order of questions and the order of options within each question
+  const questionOrder = shuffle([...Array(TOTAL).keys()]);
+
+  questionOrder.forEach((qIndex, displayIdx) => {
+    const q = QUESTIONS[qIndex];
+    const shuffledOptions = shuffle(q.options);
+
+    const card = document.createElement('article');
+    card.className = 'question-card';
+    card.dataset.index = qIndex;
+
+    card.innerHTML = `
+      <div class="q-head">
+        <span class="q-num">Q${displayIdx + 1}</span>
+        <span class="q-prompt"><span class="quote">"${q.english}"</span></span>
+      </div>
+      <p class="q-hint">${q.hint}</p>
+
+      <div class="dropdown" data-state="closed">
+        <button type="button" class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+          <span class="dropdown-value">
+            <span class="placeholder">Choose the correct Arabic phrase…</span>
+          </span>
+          <span class="dropdown-chevron">▾</span>
+        </button>
+        <div class="dropdown-menu" role="listbox">
+          ${shuffledOptions.map((opt, i) => `
+            <button type="button" class="dropdown-option" role="option" data-opt-index="${i}">
+              <span class="opt-ar" dir="rtl">${opt.ar}</span>
+              <span class="opt-tr">${opt.tr}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="explanation hidden"></div>
+    `;
+
+    // Wire up dropdown
+    wireDropdown(card, qIndex, q, shuffledOptions);
+
+    list.appendChild(card);
+  });
+}
+
+/* ═══════════════════ DROPDOWN LOGIC ═══════════════════ */
+function wireDropdown(card, qIndex, q, shuffledOptions) {
+  const dropdown = card.querySelector('.dropdown');
+  const trigger = card.querySelector('.dropdown-trigger');
+  const valueEl = card.querySelector('.dropdown-value');
+  const options = card.querySelectorAll('.dropdown-option');
+  const explanation = card.querySelector('.explanation');
+
+  // Toggle open/close on trigger click
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (card.dataset.answered === 'true') return;
+    const isOpen = dropdown.dataset.state === 'open';
+    closeAllDropdowns();
+    if (!isOpen) {
+      dropdown.dataset.state = 'open';
+      trigger.setAttribute('aria-expanded', 'true');
+      card.classList.add('menu-open');
+    }
+  });
+
+  // Handle option selection
+  options.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (card.dataset.answered === 'true') return;
+      const idx = parseInt(btn.dataset.optIndex, 10);
+      const chosen = shuffledOptions[idx];
+
+      // Update the trigger to show the chosen value
+      valueEl.innerHTML = `
+        <span class="chosen-ar" dir="rtl">${chosen.ar}</span>
+        <span class="chosen-tr">${chosen.tr}</span>
+      `;
+
+      // Close the dropdown
+      dropdown.dataset.state = 'closed';
+      trigger.setAttribute('aria-expanded', 'false');
+      card.classList.remove('menu-open');
+
+      // Finalise the answer
+      finaliseAnswer(card, qIndex, q, chosen, explanation);
+
+      // Disable the trigger
+      trigger.disabled = true;
+    });
+  });
+}
+
+function closeAllDropdowns() {
+  document.querySelectorAll('.dropdown[data-state="open"]').forEach(d => {
+    d.dataset.state = 'closed';
+    const t = d.querySelector('.dropdown-trigger');
+    if (t) t.setAttribute('aria-expanded', 'false');
+  });
+  document.querySelectorAll('.question-card.menu-open').forEach(c => c.classList.remove('menu-open'));
+}
+
+// Close any open dropdown when clicking outside
+document.addEventListener('click', closeAllDropdowns);
+// Close with Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeAllDropdowns();
+    closeResults();
+  }
+});
+
+/* ═══════════════════ ANSWER HANDLING ═══════════════════ */
+function finaliseAnswer(card, qIndex, q, chosen, explanation) {
+  if (card.dataset.answered === 'true') return;
+  card.dataset.answered = 'true';
+
+  const isCorrect = chosen.correct;
+
+  userAnswers[qIndex] = {
+    correct: isCorrect,
+    chosenAr: chosen.ar,
+    chosenTr: chosen.tr
+  };
+
+  card.classList.add('answered');
+  card.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+
+  explanation.classList.remove('hidden');
+  explanation.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+
+  let html = `
+    <div class="exp-title">
+      ${isCorrect ? '✓ Correct' : '✗ Not quite'}
+    </div>
+  `;
+
+  // If wrong, show what they picked and why it was wrong
+  if (!isCorrect) {
+    html += `
+      <div class="exp-wrong-pick">
+        <span class="label">You chose</span>
+        <span class="ar" dir="rtl">${chosen.ar}</span>
+        <span class="tr">${chosen.tr}</span>
+        <div class="why">${WHY[chosen.whyKey]}</div>
+      </div>
+    `;
+  }
+
+  // Always show the correct answer + the rule
+  html += `
+    <div class="exp-correct-answer">
+      <span class="label">${isCorrect ? 'Correct answer' : 'The correct answer is'}</span>
+      <span class="ar" dir="rtl">${q.correctAr}</span>
+      <span class="tr">${q.correctTr} — "${q.english}"</span>
+    </div>
+    <div class="exp-rule">
+      <strong>The rule:</strong> ${WHY.correct}
+    </div>
+  `;
+
+  explanation.innerHTML = html;
+
+  // Update counters
+  answered++;
+  if (isCorrect) correct++;
+  updateStats();
+
+  setTimeout(() => {
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 120);
+}
+
+/* ═══════════════════ STATS ═══════════════════ */
+function updateStats() {
+  document.getElementById('scoreDisplay').textContent = `${correct} / ${answered}`;
+  const pct = Math.round((answered / TOTAL) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '%';
+
+  const btn = document.getElementById('showResults');
+  if (answered === TOTAL) {
+    btn.disabled = false;
+    btn.textContent = '🎉 Show My Results';
+  } else {
+    btn.textContent = `Answer ${TOTAL - answered} more to see results`;
+  }
+}
+
+/* ═══════════════════ RESULTS ═══════════════════ */
+function showResults() {
+  const pct = Math.round((correct / TOTAL) * 100);
+  document.getElementById('finalScore').textContent = correct;
+  document.getElementById('finalTotal').textContent = TOTAL;
+  document.getElementById('finalPct').textContent = pct + '%';
+
+  let msg;
+  if (pct === 100) {
+    msg = 'ما شاء الله! A perfect score — you have mastered the rule that the first word never takes "Al-" or tanwīn. Ready for Stage 2!';
+  } else if (pct >= 80) {
+    msg = 'Excellent! You have a strong grasp of the Idafah rule. Review the missed ones below — then you will be ready for Stage 2.';
+  } else if (pct >= 60) {
+    msg = 'Good effort. Look again at the two wrong forms in the review below — the "Al-" mistake and the tanwīn mistake — and try once more.';
+  } else {
+    msg = 'Keep practising! Re-read the rule box at the top of the page and try again. This is the single most important rule of Idafah.';
+  }
+  document.getElementById('finalMsg').textContent = msg;
+
+  const review = document.getElementById('reviewList');
+  review.innerHTML = '';
+
+  QUESTIONS.forEach((q, i) => {
+    const ua = userAnswers[i];
+    if (!ua) return;
+
+    const item = document.createElement('div');
+    item.className = 'review-item ' + (ua.correct ? 'ok' : 'no');
+
+    let html = `<div class="review-q">Q${i + 1}. "${q.english}"</div>`;
+
+    if (ua.correct) {
+      html += `
+        <div class="review-line">
+          <span class="tag ok">Your answer</span>
+          <span class="ar" dir="rtl">${ua.chosenAr}</span>
+          <span class="tr">${ua.chosenTr}</span>
+        </div>
+      `;
+    } else {
+      html += `
+        <div class="review-line">
+          <span class="tag no">You chose</span>
+          <span class="ar" dir="rtl">${ua.chosenAr}</span>
+          <span class="tr">${ua.chosenTr}</span>
+        </div>
+        <div class="review-line">
+          <span class="tag ok">Correct</span>
+          <span class="ar" dir="rtl">${q.correctAr}</span>
+          <span class="tr">${q.correctTr}</span>
+        </div>
+      `;
+    }
+
+    item.innerHTML = html;
+    review.appendChild(item);
+  });
+
+  document.getElementById('resultsOverlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeResults() {
+  document.getElementById('resultsOverlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ═══════════════════ RESET ═══════════════════ */
+function resetQuiz() {
+  answered = 0;
+  correct = 0;
+  userAnswers.fill(null);
+  document.body.style.overflow = '';
+  document.getElementById('resultsOverlay').classList.add('hidden');
+  renderQuestions();
+  updateStats();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════ EVENT WIRING ═══════════════════ */
+document.getElementById('showResults').addEventListener('click', showResults);
+document.getElementById('closeResults').addEventListener('click', closeResults);
+document.getElementById('tryAgain').addEventListener('click', resetQuiz);
+
+document.getElementById('resultsOverlay').addEventListener('click', (e) => {
+  if (e.target.id === 'resultsOverlay') closeResults();
+});
+
+/* ═══════════════════ BOOT ═══════════════════ */
+renderQuestions();
+updateStats();
+</script>
+</body>
+</html>

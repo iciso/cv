@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Idafah · Stage 2 — Reverse Order Puzzle</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-2: #ebe4d6;
+    --card: #ffffff;
+    --ink: #1a2332;
+    --ink-soft: #4a5568;
+    --muted: #8a8577;
+    --line: #e3dccc;
+    --primary: #0d5c4a;
+    --primary-dark: #084034;
+    --primary-soft: #e6f2ee;
+    --correct: #1e9d6b;
+    --correct-soft: #e3f6ed;
+    --wrong: #d94a3d;
+    --wrong-soft: #fdecea;
+    --gold: #c79b3b;
+    --gold-soft: #fdf6e3;
+    --blue: #1e5b9c;
+    --blue-soft: #e6f0fa;
+    --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
+    --shadow-lg: 0 24px 60px -16px rgba(26,35,50,.25);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+    --ar-option: 1.7rem;
+    --ar-explain: 1.5rem;
+    --ar-inline: 1.2rem;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 12% 5%, #fff9ee 0%, transparent 42%),
+      radial-gradient(circle at 88% 95%, #eef5f0 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(245,242,235,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: .85rem 1.25rem .7rem;
+  }
+  .top-inner { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: .55rem; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-family: 'Noto Naskh Arabic', serif;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.15rem;
+  }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: .76rem; color: var(--muted); margin-left: .25rem; }
+  .stats { display: flex; gap: .5rem; font-size: .82rem; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; }
+  .stats .pill { background: var(--card); border: 1px solid var(--line); padding: .22rem .75rem; border-radius: var(--radius-pill); font-variant-numeric: tabular-nums; }
+  .stats .pill .val { color: var(--primary); }
+  .progress-track { height: 6px; background: var(--bg-2); border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary) 0%, #1e9d6b 100%);
+    border-radius: var(--radius-pill);
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* ── Layout ── */
+  .wrap { max-width: 860px; margin: 0 auto; padding: 1.6rem 1.25rem 6rem; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a7060 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.6rem 1.7rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; right: -50px; top: -50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero .stage-badge {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: var(--radius-pill);
+    padding: .2rem .85rem;
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+    margin-bottom: .7rem;
+  }
+  .hero h1 { font-family: 'Amiri', serif; font-size: 1.8rem; font-weight: 700; margin: 0 0 .4rem; line-height: 1.25; }
+  .hero h1 .ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; font-size: 1.5rem; }
+  .hero p { margin: 0; font-size: .95rem; opacity: .96; max-width: 62ch; }
+
+  /* ── Grammar reference ── */
+  details.grammar-ref {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.3rem;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  details.grammar-ref summary {
+    cursor: pointer; list-style: none;
+    padding: .95rem 1.15rem;
+    font-weight: 700; font-size: .95rem;
+    color: var(--primary);
+    display: flex; align-items: center; gap: .55rem;
+    user-select: none; transition: background .15s;
+  }
+  details.grammar-ref summary::-webkit-details-marker { display: none; }
+  details.grammar-ref summary:hover { background: var(--primary-soft); }
+  details.grammar-ref summary::after {
+    content: "▾"; margin-left: auto;
+    transition: transform .25s; color: var(--muted);
+  }
+  details.grammar-ref[open] summary::after { transform: rotate(180deg); }
+  .ref-body { padding: .5rem 1.15rem 1.2rem; border-top: 1px solid var(--line); font-size: .92rem; color: var(--ink-soft); }
+  .ref-body p { margin: .55rem 0; }
+  .ref-body .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    color: var(--primary-dark);
+    direction: rtl; display: inline-block;
+    margin: 0 .2rem; font-weight: 700;
+    vertical-align: middle;
+  }
+
+  .rule-box {
+    background: var(--gold-soft);
+    border-left: 5px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    margin: .8rem 0;
+    color: #6a4f1a;
+    font-size: .9rem;
+    line-height: 1.75;
+  }
+  .rule-box strong { color: #4a3510; }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .35rem 1rem;
+    align-items: baseline;
+    background: #faf8f3;
+    border-radius: var(--radius-sm);
+    padding: .75rem 1rem;
+    margin: .6rem 0;
+    font-size: .9rem;
+  }
+  .compare-grid .label { color: var(--muted); font-weight: 600; font-size: .82rem; }
+  .compare-grid .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    direction: rtl;
+    color: var(--primary-dark);
+    font-weight: 700;
+    text-align: right;
+  }
+
+  /* ── Question card ── */
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem 1.25rem 1.1rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color .2s;
+    animation: cardIn .35s ease both;
+    scroll-margin-top: 100px;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .question-card.answered.is-correct { border-color: rgba(30,157,107,.5); }
+  .question-card.answered.is-wrong { border-color: rgba(217,74,61,.45); }
+
+  .q-head {
+    display: flex; align-items: center; gap: .55rem;
+    margin-bottom: .35rem; flex-wrap: wrap;
+  }
+  .q-num {
+    flex-shrink: 0;
+    background: var(--primary-soft); color: var(--primary);
+    font-weight: 700; font-size: .78rem;
+    padding: .22rem .65rem; border-radius: var(--radius-pill);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-prompt {
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--ink); flex: 1 1 auto;
+  }
+  .q-prompt .quote { color: var(--primary); }
+  .q-hint {
+    font-size: .84rem; color: var(--muted);
+    font-style: italic; margin: 0 0 1rem 0;
+  }
+
+  /* ── Answer area ── */
+  .answer-area {
+    background: linear-gradient(180deg, #f8fbfa 0%, #f1f7f4 100%);
+    border: 1px dashed #c4d8d0;
+    border-radius: var(--radius-md);
+    padding: 1rem .9rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .direction-hint {
+    display: flex; align-items: center; justify-content: center;
+    gap: .5rem;
+    font-size: .78rem; font-weight: 600;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: .75rem;
+  }
+  .direction-hint .arrow {
+    font-size: 1rem;
+    animation: arrowPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes arrowPulse {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-4px); }
+  }
+
+  .slots {
+    display: flex;
+    flex-direction: row-reverse; /* first child appears on the right (RTL order) */
+    justify-content: center;
+    gap: .55rem;
+    flex-wrap: nowrap;
+  }
+  .slot {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 92px;
+    background: white;
+    border: 2px dashed var(--line);
+    border-radius: var(--radius-md);
+    padding: .65rem .55rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .2rem;
+    cursor: pointer;
+    transition: border-color .18s, background .18s, transform .12s, box-shadow .18s;
+    position: relative;
+    text-align: center;
+  }
+  .slot:hover:not(.filled):not(.locked) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-1px);
+  }
+  .slot.empty-pulse {
+    border-color: var(--gold);
+    animation: slotPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes slotPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(199,155,59,.4); }
+    50%      { box-shadow: 0 0 0 6px rgba(199,155,59,0); }
+  }
+  .slot.filled { border-style: solid; border-color: var(--line); cursor: pointer; }
+  .slot.filled.correct { border-color: var(--correct); background: var(--correct-soft); }
+  .slot.filled.wrong { border-color: var(--wrong); background: var(--wrong-soft); }
+  .slot.locked { cursor: default; }
+
+  .slot-label {
+    font-size: .68rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-top: .4rem;
+  }
+  .slot.filled .slot-label { color: var(--ink-soft); }
+
+  .slot-placeholder {
+    font-size: .78rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .slot .tile-ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-option);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1.35;
+  }
+  .slot .tile-tr {
+    font-size: .74rem;
+    color: var(--muted);
+    font-style: italic;
+    letter-spacing: .2px;
+  }
+
+  .slot.hovering {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: scale(1.03);
+  }
+  .slot.drop-target {
+    border-color: var(--primary);
+  }
+
+  /* ── Bank ── */
+  .bank {
+    margin-bottom: .8rem;
+  }
+  .bank-label {
+    font-size: .76rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    text-align: center;
+    margin-bottom: .55rem;
+  }
+  .bank-tiles {
+    display: flex;
+    justify-content: center;
+    gap: .55rem;
+    flex-wrap: wrap;
+    min-height: 82px;
+    align-items: center;
+  }
+  .bank-empty {
+    font-size: .85rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .tile {
+    appearance: none;
+    background: white;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .75rem 1.1rem;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .15rem;
+    min-width: 120px;
+    transition: border-color .15s, background .15s, transform .08s, box-shadow .15s;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .tile:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .tile:active:not(:disabled) { transform: translateY(0); }
+  .tile.selected {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    box-shadow: 0 0 0 3px rgba(13,92,74,.18);
+    transform: translateY(-2px);
+  }
+  .tile.dragging { opacity: .4; }
+  .tile:disabled { cursor: default; }
+
+  .tile .tile-ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-option);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1.35;
+  }
+  .tile .tile-tr {
+    font-size: .74rem;
+    color: var(--muted);
+    font-style: italic;
+    letter-spacing: .2px;
+  }
+
+  /* Drag ghost */
+  .drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    transform: translate(-50%, -50%) scale(1.05) rotate(-2deg);
+    box-shadow: 0 20px 40px -8px rgba(26,35,50,.35);
+    border-color: var(--primary);
+    opacity: .95;
+  }
+
+  /* ── Explanation ── */
+  .explanation {
+    margin-top: 1rem;
+    border-radius: var(--radius-md);
+    padding: 1rem 1.1rem;
+    background: #faf8f3;
+    border-left: 4px solid var(--muted);
+    font-size: .92rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    animation: expIn .3s ease both;
+  }
+  @keyframes expIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .explanation.hidden { display: none; }
+  .explanation.is-correct { border-left-color: var(--correct); background: #f4fbf8; }
+  .explanation.is-wrong { border-left-color: var(--wrong); background: #fdf6f5; }
+
+  .exp-title {
+    font-weight: 700; font-size: .82rem;
+    letter-spacing: .4px; text-transform: uppercase;
+    margin-bottom: .6rem;
+    display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+  }
+  .explanation.is-correct .exp-title { color: var(--correct); }
+  .explanation.is-wrong .exp-title { color: var(--wrong); }
+
+  .exp-phrase {
+    background: white;
+    border-radius: var(--radius-sm);
+    padding: .85rem 1rem;
+    margin: .55rem 0;
+    border: 1px solid var(--line);
+  }
+  .exp-phrase .label {
+    font-size: .7rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    display: block;
+    margin-bottom: .35rem;
+  }
+  .exp-phrase .phrase-ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-explain);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    text-align: right;
+    line-height: 1.6;
+    display: block;
+    margin-bottom: .2rem;
+  }
+  .exp-phrase.is-correct-phrase .phrase-ar { color: #0f6a48; }
+  .exp-phrase.is-wrong-phrase { background: var(--wrong-soft); border-color: rgba(217,74,61,.3); }
+  .exp-phrase.is-wrong-phrase .phrase-ar { color: #a83329; }
+  .exp-phrase .phrase-tr {
+    font-style: italic;
+    color: var(--muted);
+    font-size: .82rem;
+    text-align: right;
+    display: block;
+  }
+
+  .exp-rule {
+    font-size: .9rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    padding-left: .55rem;
+    border-left: 3px solid var(--line);
+    margin-top: .55rem;
+  }
+  .exp-rule strong { color: var(--ink); }
+  .exp-rule .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    direction: rtl;
+    color: var(--primary-dark);
+    font-weight: 700;
+    display: inline-block;
+    margin: 0 .2rem;
+    vertical-align: middle;
+  }
+
+  /* ── Bottom action ── */
+  .bottom-actions { display: flex; justify-content: center; margin-top: 1.75rem; }
+  .btn {
+    appearance: none; border: none;
+    font-family: inherit; font-weight: 600;
+    font-size: 1rem; padding: .85rem 2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: transform .1s, background .15s, box-shadow .15s;
+    letter-spacing: .2px;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    box-shadow: 0 6px 18px -4px rgba(13,92,74,.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -6px rgba(13,92,74,.5);
+  }
+  .btn-primary:disabled {
+    background: #cfc8b8; color: #8a8577;
+    cursor: not-allowed; box-shadow: none;
+  }
+  .btn-secondary {
+    background: var(--card); color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-secondary:hover { background: var(--primary-soft); }
+
+  /* ── Results overlay ── */
+  .results-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,35,50,.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 200;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 1.25rem;
+    overflow-y: auto;
+    animation: fadeIn .25s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .results-overlay.hidden { display: none; }
+
+  .results-card {
+    background: var(--card);
+    max-width: 700px; width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.6rem 1.5rem;
+    box-shadow: var(--shadow-lg);
+    margin: auto;
+    animation: popIn .35s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .results-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem; margin-bottom: 1rem;
+  }
+  .results-header h2 {
+    margin: 0; font-family: 'Amiri', serif;
+    font-size: 1.5rem; color: var(--primary);
+  }
+  .close-btn {
+    appearance: none; border: none;
+    background: var(--bg-2);
+    width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem;
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s; flex-shrink: 0;
+  }
+  .close-btn:hover { background: #ddd5c5; }
+
+  .score-hero {
+    text-align: center;
+    padding: 1.1rem 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, #f4fbf8 100%);
+    margin-bottom: 1.1rem;
+  }
+  .score-big {
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--primary); line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-big .out { color: var(--muted); font-weight: 500; font-size: 1.5rem; }
+  .score-pct { font-size: 1.05rem; font-weight: 600; color: var(--ink-soft); margin-top: .2rem; }
+  .score-msg {
+    margin-top: .55rem; font-size: .92rem;
+    color: var(--ink-soft); max-width: 48ch;
+    margin-left: auto; margin-right: auto;
+  }
+
+  .review-list {
+    display: flex; flex-direction: column; gap: .55rem;
+    max-height: 48vh; overflow-y: auto;
+    padding-right: 4px; margin-bottom: 1.15rem;
+  }
+  .review-item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .75rem .9rem; font-size: .87rem;
+  }
+  .review-item.ok { border-left: 4px solid var(--correct); }
+  .review-item.no { border-left: 4px solid var(--wrong); }
+  .review-q {
+    font-weight: 600; color: var(--ink);
+    margin-bottom: .3rem;
+  }
+  .review-line {
+    color: var(--ink-soft); display: flex; gap: .45rem;
+    align-items: baseline; flex-wrap: wrap; margin-top: .2rem;
+  }
+  .review-line .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    direction: rtl; color: var(--primary-dark);
+    font-weight: 700;
+  }
+  .review-line .tr { font-style: italic; color: var(--muted); font-size: .78rem; }
+  .review-line .tag {
+    font-size: .66rem; text-transform: uppercase;
+    letter-spacing: .4px; font-weight: 700;
+    padding: .05rem .5rem; border-radius: var(--radius-pill);
+  }
+  .review-line .tag.ok { background: var(--correct-soft); color: var(--correct); }
+  .review-line .tag.no { background: var(--wrong-soft); color: var(--wrong); }
+
+  .results-actions { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+
+  .footer {
+    text-align: center; font-size: .78rem; color: var(--muted);
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 520px) {
+    .hero h1 { font-size: 1.4rem; }
+    .slots { gap: .4rem; }
+    .slot { min-height: 84px; padding: .5rem .4rem; }
+    .slot .tile-ar { font-size: 1.45rem; }
+    .tile { min-width: 100px; padding: .65rem .9rem; }
+    .tile .tile-ar { font-size: 1.45rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="mark">ض</span>
+        <span>Idafah <small>· Stage 2: Reverse Order</small></span>
+      </div>
+      <div class="stats">
+        <span class="pill">Score <span class="val" id="scoreDisplay">0 / 0</span></span>
+        <span class="pill"><span id="progressText">0%</span></span>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="stage-badge">📗 Stage 2 of 3 · Reverse Order Puzzle</div>
+    <h1>Reverse Order — <span class="ar">الإِضَافَة</span></h1>
+    <p>English puts the <strong>owner first</strong> ("the Messenger's house"). Arabic flips it: the <strong>possession comes first</strong>, then the owner ("house of the Messenger"). Tap a word, then tap a slot to place it.</p>
+  </section>
+
+  <details class="grammar-ref" open>
+    <summary>📖 The Word Order Rule</summary>
+    <div class="ref-body">
+      <div class="rule-box">
+        <strong>Arabic reads right to left.</strong> In the Idafah, the <strong>first word on the right</strong> is the possession (the thing being possessed). The <strong>second word on the left</strong> is the owner.
+      </div>
+
+      <div class="compare-grid">
+        <span class="label">English</span>
+        <span style="font-weight:600;color:var(--ink);">Owner's possession → "The Messenger's House"</span>
+      </div>
+      <div class="compare-grid">
+        <span class="label">Arabic</span>
+        <span class="ar">بَيْتُ الرَّسُولِ</span>
+      </div>
+
+      <p style="margin-top:.9rem;"><strong>Read the Arabic right to left:</strong></p>
+      <p>
+        <span class="ar">بَيْتُ</span> = "house" — the possession, and <strong>the first word</strong>.<br>
+        <span class="ar">الرَّسُولِ</span> = "of the Messenger" — the owner, and <strong>the second word</strong>.
+      </p>
+
+      <p style="margin-top:.9rem;font-size:.88rem;">
+        So the Arabic phrase literally reads: <em>"House of the Messenger"</em>. Your task in every puzzle below is to <strong>place the possession first (on the right)</strong> and the <strong>owner second (on the left)</strong>.
+      </p>
+    </div>
+  </details>
+
+  <div id="questionList"></div>
+
+  <div class="bottom-actions">
+    <button class="btn btn-primary" id="showResults" disabled>Answer all questions to see results</button>
+  </div>
+
+  <p class="footer">Stage 2 of a 3-stage Idafah course · An educational resource for new Muslims and English-speaking Arabic learners.</p>
+</main>
+
+<div class="results-overlay hidden" id="resultsOverlay" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+  <div class="results-card">
+    <div class="results-header">
+      <h2 id="resultsTitle">Stage 2 Results</h2>
+      <button class="close-btn" id="closeResults" aria-label="Close results">✕</button>
+    </div>
+
+    <div class="score-hero">
+      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">12</span></span></div>
+      <div class="score-pct" id="finalPct">0%</div>
+      <p class="score-msg" id="finalMsg"></p>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+
+    <div class="results-actions">
+      <button class="btn btn-secondary" id="tryAgain">↺ Try Again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   DATA — 12 Idafah phrases with the two tiles to be placed
+   Each question contains:
+     - english : the English phrase shown to the user
+     - hint    : short context line
+     - mudhaf  : the possession — must go in slot 0 (right)
+     - owner   : the possessor — must go in slot 1 (left)
+     - full    : the joined correct phrase
+   ═══════════════════════════════════════════════════════════════ */
+const QUESTIONS = [
+  {
+    english: "The Messenger's House",
+    hint: "Bayt ar-Rasūl — a blessed house, historically the Prophet's ﷺ home.",
+    mudhaf: { ar: "بَيْتُ", tr: "baytu" },
+    owner:  { ar: "الرَّسُولِ", tr: "ar-rasūli" },
+    full:   { ar: "بَيْتُ الرَّسُولِ", tr: "Baytu ar-Rasūl", en: "The House of the Messenger" }
+  },
+  {
+    english: "The Prophet's Mosque",
+    hint: "Masjid an-Nabī — the mosque in Madīnah.",
+    mudhaf: { ar: "مَسْجِدُ", tr: "masjidu" },
+    owner:  { ar: "النَّبِيِّ", tr: "an-nabiyyi" },
+    full:   { ar: "مَسْجِدُ النَّبِيِّ", tr: "Masjidu an-Nabī", en: "The Mosque of the Prophet" }
+  },
+  {
+    english: "The Book of Allah",
+    hint: "Kitāb Allāh — the Noble Qur'an.",
+    mudhaf: { ar: "كِتَابُ", tr: "kitābu" },
+    owner:  { ar: "اللهِ", tr: "Allāhi" },
+    full:   { ar: "كِتَابُ اللهِ", tr: "Kitābu Allāh", en: "The Book of Allah" }
+  },
+  {
+    english: "The Day of Judgement",
+    hint: "Yawm al-Qiyāmah — the Day of Resurrection.",
+    mudhaf: { ar: "يَوْمُ", tr: "yawmu" },
+    owner:  { ar: "الْقِيَامَةِ", tr: "al-qiyāmah" },
+    full:   { ar: "يَوْمُ الْقِيَامَةِ", tr: "Yawmu al-Qiyāmah", en: "The Day of Judgement" }
+  },
+  {
+    english: "The People of the Book",
+    hint: "Ahl al-Kitāb — the followers of earlier scriptures.",
+    mudhaf: { ar: "أَهْلُ", tr: "ahlu" },
+    owner:  { ar: "الْكِتَابِ", tr: "al-kitābi" },
+    full:   { ar: "أَهْلُ الْكِتَابِ", tr: "Ahlu al-Kitāb", en: "The People of the Book" }
+  },
+  {
+    english: "The Lord of the Worlds",
+    hint: "Rabb al-ʿĀlamīn — a name of Allah.",
+    mudhaf: { ar: "رَبُّ", tr: "rabbu" },
+    owner:  { ar: "الْعَالَمِينَ", tr: "al-ʿālamīn" },
+    full:   { ar: "رَبُّ الْعَالَمِينَ", tr: "Rabbu al-ʿĀlamīn", en: "The Lord of the Worlds" }
+  },
+  {
+    english: "The Mercy of Allah",
+    hint: "Raḥmat Allāh — His compassion.",
+    mudhaf: { ar: "رَحْمَةُ", tr: "raḥmatu" },
+    owner:  { ar: "اللهِ", tr: "Allāhi" },
+    full:   { ar: "رَحْمَةُ اللهِ", tr: "Raḥmatu Allāh", en: "The Mercy of Allah" }
+  },
+  {
+    english: "The Light of the Heavens",
+    hint: "Nūr as-Samāwāt — from Sūrat an-Nūr.",
+    mudhaf: { ar: "نُورُ", tr: "nūru" },
+    owner:  { ar: "السَّمَاوَاتِ", tr: "as-samāwāt" },
+    full:   { ar: "نُورُ السَّمَاوَاتِ", tr: "Nūru as-Samāwāt", en: "The Light of the Heavens" }
+  },
+  {
+    english: "The Angel of Death",
+    hint: "Malak al-Mawt — the angel who takes souls.",
+    mudhaf: { ar: "مَلَكُ", tr: "malaku" },
+    owner:  { ar: "الْمَوْتِ", tr: "al-mawt" },
+    full:   { ar: "مَلَكُ الْمَوْتِ", tr: "Malaku al-Mawt", en: "The Angel of Death" }
+  },
+  {
+    english: "The Path of the Believers",
+    hint: "Ṣirāṭ al-Mu'minīn — the way of the faithful.",
+    mudhaf: { ar: "صِرَاطُ", tr: "ṣirāṭu" },
+    owner:  { ar: "الْمُؤْمِنِينَ", tr: "al-mu'minīn" },
+    full:   { ar: "صِرَاطُ الْمُؤْمِنِينَ", tr: "Ṣirāṭu al-Mu'minīn", en: "The Path of the Believers" }
+  },
+  {
+    english: "The Word of Allah",
+    hint: "Kalimat Allāh — His command and speech.",
+    mudhaf: { ar: "كَلِمَةُ", tr: "kalimatu" },
+    owner:  { ar: "اللهِ", tr: "Allāhi" },
+    full:   { ar: "كَلِمَةُ اللهِ", tr: "Kalimatu Allāh", en: "The Word of Allah" }
+  },
+  {
+    english: "The People of the House",
+    hint: "Ahl al-Bayt — the family of the Prophet ﷺ.",
+    mudhaf: { ar: "أَهْلُ", tr: "ahlu" },
+    owner:  { ar: "الْبَيْتِ", tr: "al-bayt" },
+    full:   { ar: "أَهْلُ الْبَيْتِ", tr: "Ahlu al-Bayt", en: "The People of the House" }
+  }
+];
+
+/* ═══════════════════ STATE ═══════════════════ */
+const allQuestions = QUESTIONS.map((q, i) => {
+  const words = {
+    mudhaf: { id: 'mudhaf', ar: q.mudhaf.ar, tr: q.mudhaf.tr },
+    owner:  { id: 'owner',  ar: q.owner.ar,  tr: q.owner.tr }
+  };
+  // Shuffle the two tiles for the bank
+  const bankOrder = Math.random() < 0.5 ? ['mudhaf', 'owner'] : ['owner', 'mudhaf'];
+
+  return {
+  idx: i,
+  english: q.english,
+  hint: q.hint,
+  words,
+  full: q.full,          // ← ADDED: preserve the full phrase
+  bankOrder,
+  placements: { 0: null, 1: null },
+  status: null,
+  firstTryCorrect: null,
+  selectedTileId: null
+};
+});
+
+let answeredCount = 0;
+let correctCount = 0;
+
+const questionListEl = document.getElementById('questionList');
+const scoreDisplayEl = document.getElementById('scoreDisplay');
+const progressFillEl = document.getElementById('progressFill');
+const progressTextEl = document.getElementById('progressText');
+const showResultsBtn = document.getElementById('showResults');
+const resultsOverlay = document.getElementById('resultsOverlay');
+
+/* ═══════════════════ RENDER ═══════════════════ */
+function renderAllQuestions() {
+  questionListEl.innerHTML = '';
+  allQuestions.forEach((q, displayIdx) => {
+    const card = document.createElement('article');
+    card.className = 'question-card';
+    card.dataset.qidx = q.idx;
+
+    card.innerHTML = `
+      <div class="q-head">
+        <span class="q-num">Q${displayIdx + 1}</span>
+        <span class="q-prompt">"<span class="quote">${q.english}</span>"</span>
+      </div>
+      <p class="q-hint">${q.hint}</p>
+
+      <div class="answer-area">
+        <div class="direction-hint">
+          <span class="arrow">⇦</span>
+          <span>Arabic reads right to left</span>
+        </div>
+        <div class="slots" data-qidx="${q.idx}"></div>
+      </div>
+
+      <div class="bank">
+        <div class="bank-label">Word tiles — tap to select</div>
+        <div class="bank-tiles" data-qidx="${q.idx}"></div>
+      </div>
+
+      <div class="explanation hidden"></div>
+    `;
+
+    questionListEl.appendChild(card);
+    renderSlots(q);
+    renderBank(q);
+  });
+}
+
+/* ── Slots ── */
+function renderSlots(q) {
+  const card = questionListEl.querySelector(`.question-card[data-qidx="${q.idx}"]`);
+  if (!card) return;
+  const slotsEl = card.querySelector('.slots');
+  slotsEl.innerHTML = '';
+
+  // Slot 0 is the FIRST word in Arabic — visually on the RIGHT due to row-reverse
+  [0, 1].forEach(slotIdx => {
+    const slot = document.createElement('div');
+    slot.className = 'slot';
+    slot.dataset.slot = slotIdx;
+    slot.dataset.qidx = q.idx;
+
+    const tileId = q.placements[slotIdx];
+    const slotPositionLabel = slotIdx === 0 ? '1st word' : '2nd word';
+
+    if (tileId) {
+      const w = q.words[tileId];
+      slot.classList.add('filled');
+      slot.innerHTML = `
+        <span class="tile-ar" dir="rtl">${w.ar}</span>
+        <span class="tile-tr">${w.tr}</span>
+        <span class="slot-label">${slotPositionLabel}</span>
+      `;
+      if (q.status === 'correct') slot.classList.add('correct');
+      if (q.status === 'wrong')   slot.classList.add('wrong');
+      if (q.status) slot.classList.add('locked');
+    } else {
+      slot.innerHTML = `
+        <span class="slot-placeholder">empty</span>
+        <span class="slot-label">${slotPositionLabel}</span>
+      `;
+      // Pulse the first empty slot (guides user in RTL order)
+      const firstEmpty = q.placements[0] === null ? 0 : 1;
+      if (!q.status && slotIdx === firstEmpty) {
+        slot.classList.add('empty-pulse');
+      }
+    }
+
+    // Tap handler on the slot
+    slot.addEventListener('click', () => onSlotClick(q, slotIdx));
+
+    slotsEl.appendChild(slot);
+  });
+}
+
+/* ── Bank ── */
+function renderBank(q) {
+  const card = questionListEl.querySelector(`.question-card[data-qidx="${q.idx}"]`);
+  if (!card) return;
+  const bankEl = card.querySelector('.bank-tiles');
+  bankEl.innerHTML = '';
+
+  // Show tiles in bankOrder, but only those NOT currently placed in a slot
+  const placedTiles = [q.placements[0], q.placements[1]].filter(Boolean);
+  const bankTiles = q.bankOrder.filter(tid => !placedTiles.includes(tid));
+
+  if (bankTiles.length === 0) {
+  const msg = document.createElement('span');
+  msg.className = 'bank-empty';
+  if (q.status === 'correct') {
+    msg.textContent = '✓ Both tiles placed correctly';
+  } else if (q.status === 'wrong') {
+    msg.textContent = '✗ Both tiles placed — see the correct order below';
+  } else {
+    msg.textContent = 'All tiles placed — checking…';
+  }
+  bankEl.appendChild(msg);
+  return;
+}
+
+  bankTiles.forEach(tileId => {
+    const w = q.words[tileId];
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tile';
+    btn.dataset.tileId = tileId;
+    btn.dataset.source = 'bank';
+    if (q.selectedTileId === tileId) btn.classList.add('selected');
+    if (q.status) btn.disabled = true;
+    btn.innerHTML = `
+      <span class="tile-ar" dir="rtl">${w.ar}</span>
+      <span class="tile-tr">${w.tr}</span>
+    `;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (q.status) return;
+      onBankTileClick(q, tileId);
+    });
+    // Attach pointer events for drag
+    attachDragHandlers(btn, tileId, q, 'bank');
+
+    bankEl.appendChild(btn);
+  });
+}
+
+/* ═══════════════════ TAP-TO-PLACE LOGIC ═══════════════════ */
+function onBankTileClick(q, tileId) {
+  if (q.status) return;
+  // Toggle selection
+  if (q.selectedTileId === tileId) {
+    q.selectedTileId = null;
+  } else {
+    q.selectedTileId = tileId;
+  }
+  renderBank(q);
+  renderSlots(q);
+  pulseSlotsForSelection(q);
+}
+
+function onSlotClick(q, slotIdx) {
+  if (q.status) return;
+
+  const slotTileId = q.placements[slotIdx];
+
+  // Case 1: slot is filled → return its tile to the bank
+  if (slotTileId) {
+    q.placements[slotIdx] = null;
+    q.selectedTileId = null;
+    renderSlots(q);
+    renderBank(q);
+    return;
+  }
+
+  // Case 2: slot is empty + a tile is selected → place it here
+  if (q.selectedTileId) {
+    const tileId = q.selectedTileId;
+
+    // If this tile is already in another slot, remove it from there
+    [0, 1].forEach(i => {
+      if (q.placements[i] === tileId) q.placements[i] = null;
+    });
+
+    q.placements[slotIdx] = tileId;
+    q.selectedTileId = null;
+
+    renderSlots(q);
+    renderBank(q);
+
+    // Auto-check when both slots are filled
+    maybeCheck(q);
+  }
+}
+
+function pulseSlotsForSelection(q) {
+  const card = questionListEl.querySelector(`.question-card[data-qidx="${q.idx}"]`);
+  if (!card) return;
+  card.querySelectorAll('.slot').forEach(s => s.classList.remove('empty-pulse'));
+  if (q.selectedTileId && !q.status) {
+    // Highlight the first empty slot
+    const firstEmpty = q.placements[0] === null ? 0 : (q.placements[1] === null ? 1 : -1);
+    if (firstEmpty >= 0) {
+      const slot = card.querySelector(`.slot[data-slot="${firstEmpty}"]`);
+      if (slot) slot.classList.add('empty-pulse');
+    }
+  }
+}
+
+/* ═══════════════════ DRAG (DESKTOP ENHANCEMENT) ═══════════════════ */
+let dragState = null;
+
+function attachDragHandlers(el, tileId, q, source) {
+  el.addEventListener('pointerdown', (e) => {
+    if (q.status) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    dragState = {
+      el, tileId, q, source,
+      startX: e.clientX,
+      startY: e.clientY,
+      moved: false,
+      ghost: null,
+      pointerId: e.pointerId
+    };
+  });
+}
+
+document.addEventListener('pointermove', (e) => {
+  if (!dragState) return;
+  const dist = Math.hypot(e.clientX - dragState.startX, e.clientY - dragState.startY);
+  if (!dragState.moved && dist > 8) {
+    dragState.moved = true;
+    dragState.el.classList.add('dragging');
+    // Create ghost
+    const ghost = dragState.el.cloneNode(true);
+    ghost.classList.add('drag-ghost');
+    ghost.style.left = e.clientX + 'px';
+    ghost.style.top = e.clientY + 'px';
+    document.body.appendChild(ghost);
+    dragState.ghost = ghost;
+    // Highlight slots
+    document.querySelectorAll('.slot').forEach(s => s.classList.add('drop-target'));
+  }
+  if (dragState.moved) {
+    dragState.ghost.style.left = e.clientX + 'px';
+    dragState.ghost.style.top = e.clientY + 'px';
+    // Highlight slot under pointer
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    const slot = el && el.closest && el.closest('.slot');
+    document.querySelectorAll('.slot').forEach(s => s.classList.remove('hovering'));
+    if (slot && parseInt(slot.dataset.qidx, 10) === dragState.q.idx) {
+      slot.classList.add('hovering');
+    }
+  }
+});
+
+document.addEventListener('pointerup', (e) => {
+  if (!dragState) return;
+  const { q, tileId, moved, ghost, el } = dragState;
+
+  if (moved) {
+    // Handle drop
+    const dropEl = document.elementFromPoint(e.clientX, e.clientY);
+    const slot = dropEl && dropEl.closest && dropEl.closest('.slot');
+    if (slot && parseInt(slot.dataset.qidx, 10) === q.idx) {
+      const slotIdx = parseInt(slot.dataset.slot, 10);
+      // Place tile in this slot
+      [0, 1].forEach(i => { if (q.placements[i] === tileId) q.placements[i] = null; });
+      q.placements[slotIdx] = tileId;
+      q.selectedTileId = null;
+      renderSlots(q);
+      renderBank(q);
+      maybeCheck(q);
+    }
+    // Cleanup
+    if (ghost) ghost.remove();
+    el.classList.remove('dragging');
+    document.querySelectorAll('.slot').forEach(s => s.classList.remove('drop-target', 'hovering'));
+  }
+  dragState = null;
+});
+
+document.addEventListener('pointercancel', () => {
+  if (!dragState) return;
+  if (dragState.ghost) dragState.ghost.remove();
+  dragState.el.classList.remove('dragging');
+  document.querySelectorAll('.slot').forEach(s => s.classList.remove('drop-target', 'hovering'));
+  dragState = null;
+});
+
+/* ═══════════════════ CHECK ═══════════════════ */
+let checkTimers = {};
+
+function maybeCheck(q) {
+  // Only check when both slots are filled and question isn't already locked
+  if (q.status) return;
+  if (q.placements[0] === null || q.placements[1] === null) return;
+
+  // Clear any pending timer for this question
+  if (checkTimers[q.idx]) clearTimeout(checkTimers[q.idx]);
+
+  // Delay slightly so user sees their arrangement
+  checkTimers[q.idx] = setTimeout(() => {
+    if (q.status) return;
+    // Verify state still valid
+    if (q.placements[0] === null || q.placements[1] === null) return;
+    performCheck(q);
+  }, 550);
+}
+
+function performCheck(q) {
+  const correct = (q.placements[0] === 'mudhaf' && q.placements[1] === 'owner');
+  q.status = correct ? 'correct' : 'wrong';
+  q.firstTryCorrect = correct;
+
+  answeredCount++;
+  if (correct) correctCount++;
+
+  // Re-render slots & bank for locked state
+  renderSlots(q);
+  renderBank(q);
+  renderExplanation(q);
+
+  updateStats();
+
+  // Update card class
+  const card = questionListEl.querySelector(`.question-card[data-qidx="${q.idx}"]`);
+  if (card) {
+    card.classList.add('answered');
+    card.classList.add(correct ? 'is-correct' : 'is-wrong');
+    setTimeout(() => {
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 120);
+  }
+}
+
+function renderExplanation(q) {
+  const card = questionListEl.querySelector(`.question-card[data-qidx="${q.idx}"]`);
+  if (!card) return;
+  const exp = card.querySelector('.explanation');
+  if (!exp) return;
+
+  exp.classList.remove('hidden');
+  exp.classList.add(q.status === 'correct' ? 'is-correct' : 'is-wrong');
+
+  const isCorrect = q.status === 'correct';
+
+  let html = `
+    <div class="exp-title">${isCorrect ? '✓ Correct — Masha\'Allah!' : '✗ Not quite'}</div>
+  `;
+
+  // Show the wrong arrangement (if wrong)
+  if (!isCorrect) {
+    const wrongPhrase = [
+      q.placements[0] ? q.words[q.placements[0]].ar : '',
+      q.placements[1] ? q.words[q.placements[1]].ar : ''
+    ].join(' ');
+    const wrongTr = [
+      q.placements[0] ? q.words[q.placements[0]].tr : '',
+      q.placements[1] ? q.words[q.placements[1]].tr : ''
+    ].join(' ');
+    html += `
+      <div class="exp-phrase is-wrong-phrase">
+        <span class="label">You placed</span>
+        <span class="phrase-ar" dir="rtl">${wrongPhrase}</span>
+        <span class="phrase-tr">${wrongTr}</span>
+      </div>
+    `;
+  }
+
+  // Show the correct arrangement
+  html += `
+    <div class="exp-phrase is-correct-phrase">
+      <span class="label">${isCorrect ? 'Your answer' : 'The correct order is'}</span>
+      <span class="phrase-ar" dir="rtl">${q.full.ar}</span>
+      <span class="phrase-tr">${q.full.tr} — "${q.full.en}"</span>
+    </div>
+    <div class="exp-rule">
+      <strong>The rule:</strong> In Arabic, the <em>possession</em> comes first — reading right to left — and the <em>owner</em> comes second. In English we say <em>"${q.english}"</em>, but Arabic literally says <em>"${q.full.en.replace('The ', 'the ')}"</em>.
+    </div>
+  `;
+
+  exp.innerHTML = html;
+}
+
+/* ═══════════════════ STATS ═══════════════════ */
+function updateStats() {
+  scoreDisplayEl.textContent = `${correctCount} / ${answeredCount}`;
+  const pct = Math.round((answeredCount / allQuestions.length) * 100);
+  progressFillEl.style.width = pct + '%';
+  progressTextEl.textContent = pct + '%';
+
+  if (answeredCount === allQuestions.length) {
+    showResultsBtn.disabled = false;
+    showResultsBtn.textContent = '🎉 Show My Results';
+  } else {
+    showResultsBtn.textContent = `Answer ${allQuestions.length - answeredCount} more to see results`;
+  }
+}
+
+/* ═══════════════════ RESULTS ═══════════════════ */
+function showResults() {
+  const total = allQuestions.length;
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('finalScore').textContent = correctCount;
+  document.getElementById('finalTotal').textContent = total;
+  document.getElementById('finalPct').textContent = pct + '%';
+
+  let msg;
+  if (pct === 100) {
+    msg = 'ما شاء الله! A perfect score — you have mastered the RTL word order of the Idafah. Ready for Stage 3!';
+  } else if (pct >= 80) {
+    msg = 'Excellent! You have a strong grasp of the reverse word order. Review the missed ones below.';
+  } else if (pct >= 60) {
+    msg = 'Good effort. Keep reminding yourself: possession first (right), owner second (left). Try again.';
+  } else {
+    msg = 'Keep practising! Re-read the rule box at the top of the page and try again — the word order will click with repetition.';
+  }
+  document.getElementById('finalMsg').textContent = msg;
+
+  const review = document.getElementById('reviewList');
+  review.innerHTML = '';
+
+  allQuestions.forEach((q, i) => {
+    if (!q.status) return;
+    const item = document.createElement('div');
+    item.className = 'review-item ' + (q.status === 'correct' ? 'ok' : 'no');
+
+    const userPhrase = [
+      q.placements[0] ? q.words[q.placements[0]].ar : '',
+      q.placements[1] ? q.words[q.placements[1]].ar : ''
+    ].join(' ');
+    const userTr = [
+      q.placements[0] ? q.words[q.placements[0]].tr : '',
+      q.placements[1] ? q.words[q.placements[1]].tr : ''
+    ].join(' ');
+
+    let html = `<div class="review-q">Q${i + 1}. "${q.english}"</div>`;
+
+    if (q.status === 'correct') {
+      html += `
+        <div class="review-line">
+          <span class="tag ok">Your answer</span>
+          <span class="ar" dir="rtl">${q.full.ar}</span>
+          <span class="tr">${q.full.tr}</span>
+        </div>
+      `;
+    } else {
+      html += `
+        <div class="review-line">
+          <span class="tag no">You placed</span>
+          <span class="ar" dir="rtl">${userPhrase}</span>
+          <span class="tr">${userTr}</span>
+        </div>
+        <div class="review-line">
+          <span class="tag ok">Correct</span>
+          <span class="ar" dir="rtl">${q.full.ar}</span>
+          <span class="tr">${q.full.tr}</span>
+        </div>
+      `;
+    }
+    item.innerHTML = html;
+    review.appendChild(item);
+  });
+
+  resultsOverlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeResults() {
+  resultsOverlay.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ═══════════════════ RESET ═══════════════════ */
+function resetAll() {
+  // Re-initialise state
+  allQuestions.forEach((q, i) => {
+    const orig = QUESTIONS[i];
+    q.placements = { 0: null, 1: null };
+    q.status = null;
+    q.firstTryCorrect = null;
+    q.selectedTileId = null;
+    q.bankOrder = Math.random() < 0.5 ? ['mudhaf', 'owner'] : ['owner', 'mudhaf'];
+  });
+  answeredCount = 0;
+  correctCount = 0;
+  document.body.style.overflow = '';
+  resultsOverlay.classList.add('hidden');
+  renderAllQuestions();
+  updateStats();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════ EVENT WIRING ═══════════════════ */
+showResultsBtn.addEventListener('click', showResults);
+document.getElementById('closeResults').addEventListener('click', closeResults);
+document.getElementById('tryAgain').addEventListener('click', resetAll);
+
+resultsOverlay.addEventListener('click', (e) => {
+  if (e.target.id === 'resultsOverlay') closeResults();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeResults();
+});
+
+// Click outside a card deselects any selected tile
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.tile') || e.target.closest('.slot')) return;
+  let changed = false;
+  allQuestions.forEach(q => {
+    if (q.selectedTileId) {
+      q.selectedTileId = null;
+      changed = true;
+    }
+  });
+  if (changed) {
+    allQuestions.forEach(q => { renderBank(q); pulseSlotsForSelection(q); });
+  }
+});
+
+/* ═══════════════════ BOOT ═══════════════════ */
+renderAllQuestions();
+updateStats();
+</script>
+</body>
+</html>
