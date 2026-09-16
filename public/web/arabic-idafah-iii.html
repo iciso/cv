@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Idafah · Stage 3 — Case-Ending Fill-in-the-Blank</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-2: #ebe4d6;
+    --card: #ffffff;
+    --ink: #1a2332;
+    --ink-soft: #4a5568;
+    --muted: #8a8577;
+    --line: #e3dccc;
+    --primary: #0d5c4a;
+    --primary-dark: #084034;
+    --primary-soft: #e6f2ee;
+    --correct: #1e9d6b;
+    --correct-soft: #e3f6ed;
+    --wrong: #d94a3d;
+    --wrong-soft: #fdecea;
+    --gold: #c79b3b;
+    --gold-soft: #fdf6e3;
+    --blue: #1e5b9c;
+    --blue-soft: #e6f0fa;
+    --purple: #6a3e8c;
+    --purple-soft: #f2ecf9;
+    --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
+    --shadow-lg: 0 24px 60px -16px rgba(26,35,50,.25);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+    --ar-display: 2.2rem;
+    --ar-option: 1.9rem;
+    --ar-explain: 1.6rem;
+    --ar-inline: 1.2rem;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 12% 5%, #fff9ee 0%, transparent 42%),
+      radial-gradient(circle at 88% 95%, #eef5f0 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(245,242,235,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: .85rem 1.25rem .7rem;
+  }
+  .top-inner { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: .55rem; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-family: 'Noto Naskh Arabic', serif;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.15rem;
+  }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: .76rem; color: var(--muted); margin-left: .25rem; }
+  .stats { display: flex; gap: .5rem; font-size: .82rem; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; }
+  .stats .pill { background: var(--card); border: 1px solid var(--line); padding: .22rem .75rem; border-radius: var(--radius-pill); font-variant-numeric: tabular-nums; }
+  .stats .pill .val { color: var(--primary); }
+  .progress-track { height: 6px; background: var(--bg-2); border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary) 0%, #1e9d6b 100%);
+    border-radius: var(--radius-pill);
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* ── Layout ── */
+  .wrap { max-width: 860px; margin: 0 auto; padding: 1.6rem 1.25rem 6rem; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a7060 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.6rem 1.7rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; right: -50px; top: -50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero .stage-badge {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: var(--radius-pill);
+    padding: .2rem .85rem;
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+    margin-bottom: .7rem;
+  }
+  .hero h1 { font-family: 'Amiri', serif; font-size: 1.8rem; font-weight: 700; margin: 0 0 .4rem; line-height: 1.25; }
+  .hero h1 .ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; font-size: 1.5rem; }
+  .hero p { margin: 0; font-size: .95rem; opacity: .96; max-width: 62ch; }
+
+  /* ── Grammar reference ── */
+  details.grammar-ref {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.3rem;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  details.grammar-ref summary {
+    cursor: pointer; list-style: none;
+    padding: .95rem 1.15rem;
+    font-weight: 700; font-size: .95rem;
+    color: var(--primary);
+    display: flex; align-items: center; gap: .55rem;
+    user-select: none; transition: background .15s;
+  }
+  details.grammar-ref summary::-webkit-details-marker { display: none; }
+  details.grammar-ref summary:hover { background: var(--primary-soft); }
+  details.grammar-ref summary::after {
+    content: "▾"; margin-left: auto;
+    transition: transform .25s; color: var(--muted);
+  }
+  details.grammar-ref[open] summary::after { transform: rotate(180deg); }
+  .ref-body { padding: .5rem 1.15rem 1.2rem; border-top: 1px solid var(--line); font-size: .92rem; color: var(--ink-soft); }
+  .ref-body p { margin: .55rem 0; }
+  .ref-body .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    color: var(--primary-dark);
+    direction: rtl; display: inline-block;
+    margin: 0 .2rem; font-weight: 700;
+    vertical-align: middle;
+  }
+
+  .rule-box {
+    background: var(--gold-soft);
+    border-left: 5px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    margin: .8rem 0;
+    color: #6a4f1a;
+    font-size: .9rem;
+    line-height: 1.75;
+  }
+  .rule-box strong { color: #4a3510; }
+
+  .vowel-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+  }
+  .vowel-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+    background: white;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .6rem 1.2rem;
+    min-width: 90px;
+  }
+  .vowel-chip .sym {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-option);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1;
+  }
+  .vowel-chip .name {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: .3px;
+  }
+  .vowel-chip .sound {
+    font-size: .72rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .vowel-chip.kasrah { border-color: var(--correct); background: var(--correct-soft); }
+  .vowel-chip.kasrah .name { color: #0f6a48; }
+
+  /* ── Filter bar ── */
+  .filter-bar {
+    display: flex; flex-wrap: wrap; gap: .35rem;
+    margin: 0 0 1.1rem;
+    padding: .35rem;
+    background: var(--bg-2);
+    border-radius: var(--radius-pill);
+  }
+  .filter-btn {
+    appearance: none; border: none; cursor: pointer;
+    font-family: inherit; font-weight: 600; font-size: .82rem;
+    padding: .42rem 1rem;
+    border-radius: var(--radius-pill);
+    background: transparent; color: var(--ink-soft);
+    transition: background .18s, color .18s;
+    display: inline-flex; align-items: center; gap: .35rem;
+  }
+  .filter-btn:hover { background: rgba(255,255,255,.6); }
+  .filter-btn.active { background: var(--card); color: var(--primary); box-shadow: var(--shadow-sm); }
+  .filter-btn .count { font-weight: 500; font-size: .72rem; color: var(--muted); }
+  .filter-btn.active .count { color: var(--primary); }
+
+  /* ── Question card ── */
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.3rem 1.15rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color .2s;
+    animation: cardIn .35s ease both;
+    scroll-margin-top: 100px;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .question-card[hidden] { display: none; }
+  .question-card.answered.is-correct { border-color: rgba(30,157,107,.5); }
+  .question-card.answered.is-wrong { border-color: rgba(217,74,61,.45); }
+
+  .q-head {
+    display: flex; align-items: center; gap: .55rem;
+    margin-bottom: .35rem; flex-wrap: wrap;
+  }
+  .q-num {
+    flex-shrink: 0;
+    background: var(--primary-soft); color: var(--primary);
+    font-weight: 700; font-size: .78rem;
+    padding: .22rem .65rem; border-radius: var(--radius-pill);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-prompt {
+    font-size: 1.08rem; font-weight: 700;
+    color: var(--ink); flex: 1 1 auto;
+  }
+  .q-prompt .quote { color: var(--primary); }
+  .q-ref {
+    font-size: .72rem; font-weight: 600;
+    color: var(--gold);
+    background: var(--gold-soft);
+    padding: .15rem .6rem; border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+  .q-hint {
+    font-size: .85rem; color: var(--muted);
+    font-style: italic; margin: 0 0 1rem 0;
+  }
+
+  /* ── Arabic display ── */
+  .display-area {
+    background: linear-gradient(180deg, #f8fbfa 0%, #f1f7f4 100%);
+    border: 1px solid #d5e5de;
+    border-radius: var(--radius-md);
+    padding: 1.4rem 1rem 1.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    position: relative;
+  }
+  .arabic-phrase {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-display);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1.9;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .15rem;
+  }
+  .vowel-slot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2.5px dashed var(--gold);
+    background: var(--gold-soft);
+    color: var(--gold);
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-right: .15rem;
+    transition: background .25s, border-color .25s, color .25s;
+    position: relative;
+  }
+  .vowel-slot.filled { border-style: solid; }
+  .vowel-slot.correct {
+    background: var(--correct-soft);
+    border-color: var(--correct);
+    color: #0f6a48;
+  }
+  .vowel-slot.wrong {
+    background: var(--wrong-soft);
+    border-color: var(--wrong);
+    color: #a83329;
+  }
+
+  .translit-line {
+    margin-top: .9rem;
+    font-size: .9rem;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+
+  .listen-btn {
+    appearance: none;
+    margin-top: .9rem;
+    background: white;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-pill);
+    padding: .45rem 1.2rem;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: .85rem;
+    color: var(--primary);
+    cursor: pointer;
+    transition: background .15s, border-color .15s, transform .1s;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+  }
+  .listen-btn:hover {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    transform: translateY(-1px);
+  }
+  .listen-btn:active { transform: translateY(0); }
+  .listen-btn:disabled { opacity: .5; cursor: not-allowed; }
+  .listen-msg {
+    font-size: .75rem;
+    color: var(--muted);
+    margin-top: .35rem;
+    min-height: 1rem;
+  }
+
+  /* ── Vowel options ── */
+  .vowel-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .6rem;
+    margin-bottom: .6rem;
+  }
+  @media (max-width: 520px) { .vowel-options { gap: .4rem; } }
+
+  .vowel-opt {
+    appearance: none;
+    background: #fdfbf7;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .85rem .5rem .75rem;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+    transition: border-color .15s, background .15s, transform .08s, box-shadow .15s;
+    position: relative;
+    min-height: 96px;
+    justify-content: center;
+  }
+  .vowel-opt:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+  .vowel-opt:disabled { cursor: default; }
+
+  .vowel-opt .vowel-symbol {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-option);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1;
+    padding: .15rem 0;
+  }
+  .vowel-opt .vowel-name {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: .3px;
+  }
+  .vowel-opt .vowel-sound {
+    font-size: .72rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .vowel-opt.correct {
+    background: var(--correct-soft);
+    border-color: var(--correct);
+  }
+  .vowel-opt.correct .vowel-symbol { color: #0f6a48; }
+  .vowel-opt.correct::after {
+    content: "✓ correct";
+    position: absolute; top: 6px; right: 9px;
+    font-size: .62rem; font-weight: 700;
+    letter-spacing: .5px; color: var(--correct);
+    text-transform: uppercase;
+  }
+  .vowel-opt.wrong {
+    background: var(--wrong-soft);
+    border-color: var(--wrong);
+    opacity: .9;
+  }
+  .vowel-opt.wrong .vowel-symbol { color: #a83329; }
+  .vowel-opt.wrong::after {
+    content: "✗ your pick";
+    position: absolute; top: 6px; right: 9px;
+    font-size: .62rem; font-weight: 700;
+    letter-spacing: .5px; color: var(--wrong);
+    text-transform: uppercase;
+  }
+
+  /* ── Explanation ── */
+  .explanation {
+    margin-top: 1rem;
+    border-radius: var(--radius-md);
+    padding: 1rem 1.1rem;
+    background: #faf8f3;
+    border-left: 4px solid var(--muted);
+    font-size: .92rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    animation: expIn .3s ease both;
+  }
+  @keyframes expIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .explanation.hidden { display: none; }
+  .explanation.is-correct { border-left-color: var(--correct); background: #f4fbf8; }
+  .explanation.is-wrong { border-left-color: var(--wrong); background: #fdf6f5; }
+
+  .exp-title {
+    font-weight: 700; font-size: .82rem;
+    letter-spacing: .4px; text-transform: uppercase;
+    margin-bottom: .6rem;
+    display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+  }
+  .explanation.is-correct .exp-title { color: var(--correct); }
+  .explanation.is-wrong .exp-title { color: var(--wrong); }
+
+  .exp-phrase {
+    background: white;
+    border-radius: var(--radius-sm);
+    padding: .85rem 1rem;
+    margin: .55rem 0;
+    border: 1px solid var(--line);
+    text-align: center;
+  }
+  .exp-phrase .label {
+    font-size: .7rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    display: block;
+    margin-bottom: .4rem;
+  }
+  .exp-phrase .phrase-ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-explain);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1.6;
+    display: block;
+    margin-bottom: .25rem;
+  }
+  .exp-phrase.is-correct-phrase .phrase-ar { color: #0f6a48; }
+  .exp-phrase.is-wrong-phrase { background: var(--wrong-soft); border-color: rgba(217,74,61,.3); }
+  .exp-phrase.is-wrong-phrase .phrase-ar { color: #a83329; }
+  .exp-phrase .phrase-tr {
+    font-style: italic;
+    color: var(--muted);
+    font-size: .85rem;
+    display: block;
+  }
+
+  .exp-rule {
+    font-size: .9rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    padding-left: .55rem;
+    border-left: 3px solid var(--line);
+    margin-top: .7rem;
+  }
+  .exp-rule strong { color: var(--ink); }
+  .exp-rule .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    direction: rtl;
+    color: var(--primary-dark);
+    font-weight: 700;
+    display: inline-block;
+    margin: 0 .2rem;
+    vertical-align: middle;
+  }
+
+  .exp-ref {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--gold);
+    background: var(--gold-soft);
+    padding: .2rem .7rem;
+    border-radius: var(--radius-pill);
+    margin-top: .6rem;
+  }
+
+  /* ── Bottom action ── */
+  .bottom-actions { display: flex; justify-content: center; margin-top: 1.75rem; }
+  .btn {
+    appearance: none; border: none;
+    font-family: inherit; font-weight: 600;
+    font-size: 1rem; padding: .85rem 2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: transform .1s, background .15s, box-shadow .15s;
+    letter-spacing: .2px;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    box-shadow: 0 6px 18px -4px rgba(13,92,74,.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -6px rgba(13,92,74,.5);
+  }
+  .btn-primary:disabled {
+    background: #cfc8b8; color: #8a8577;
+    cursor: not-allowed; box-shadow: none;
+  }
+  .btn-secondary {
+    background: var(--card); color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-secondary:hover { background: var(--primary-soft); }
+
+  /* ── Results overlay ── */
+  .results-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,35,50,.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 200;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 1.25rem;
+    overflow-y: auto;
+    animation: fadeIn .25s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .results-overlay.hidden { display: none; }
+
+  .results-card {
+    background: var(--card);
+    max-width: 700px; width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.6rem 1.5rem;
+    box-shadow: var(--shadow-lg);
+    margin: auto;
+    animation: popIn .35s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .results-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem; margin-bottom: 1rem;
+  }
+  .results-header h2 {
+    margin: 0; font-family: 'Amiri', serif;
+    font-size: 1.5rem; color: var(--primary);
+  }
+  .close-btn {
+    appearance: none; border: none;
+    background: var(--bg-2);
+    width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem;
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s; flex-shrink: 0;
+  }
+  .close-btn:hover { background: #ddd5c5; }
+
+  .score-hero {
+    text-align: center;
+    padding: 1.1rem 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, #f4fbf8 100%);
+    margin-bottom: 1.1rem;
+  }
+  .score-big {
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--primary); line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-big .out { color: var(--muted); font-weight: 500; font-size: 1.5rem; }
+  .score-pct { font-size: 1.05rem; font-weight: 600; color: var(--ink-soft); margin-top: .2rem; }
+  .score-msg {
+    margin-top: .55rem; font-size: .92rem;
+    color: var(--ink-soft); max-width: 48ch;
+    margin-left: auto; margin-right: auto;
+  }
+
+  .review-list {
+    display: flex; flex-direction: column; gap: .55rem;
+    max-height: 48vh; overflow-y: auto;
+    padding-right: 4px; margin-bottom: 1.15rem;
+  }
+  .review-item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .75rem .9rem; font-size: .87rem;
+  }
+  .review-item.ok { border-left: 4px solid var(--correct); }
+  .review-item.no { border-left: 4px solid var(--wrong); }
+  .review-q {
+    font-weight: 600; color: var(--ink);
+    margin-bottom: .3rem;
+  }
+  .review-line {
+    color: var(--ink-soft); display: flex; gap: .45rem;
+    align-items: baseline; flex-wrap: wrap; margin-top: .2rem;
+  }
+  .review-line .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    direction: rtl; color: var(--primary-dark);
+    font-weight: 700;
+  }
+  .review-line .tr { font-style: italic; color: var(--muted); font-size: .78rem; }
+  .review-line .tag {
+    font-size: .66rem; text-transform: uppercase;
+    letter-spacing: .4px; font-weight: 700;
+    padding: .05rem .5rem; border-radius: var(--radius-pill);
+  }
+  .review-line .tag.ok { background: var(--correct-soft); color: var(--correct); }
+  .review-line .tag.no { background: var(--wrong-soft); color: var(--wrong); }
+
+  .results-actions { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+
+  .footer {
+    text-align: center; font-size: .78rem; color: var(--muted);
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 520px) {
+    .hero h1 { font-size: 1.4rem; }
+    .arabic-phrase { font-size: 1.8rem; }
+    .vowel-slot { width: 36px; height: 36px; font-size: 1rem; }
+    .vowel-opt .vowel-symbol { font-size: 1.6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="mark">ض</span>
+        <span>Idafah <small>· Stage 3: Case Endings</small></span>
+      </div>
+      <div class="stats">
+        <span class="pill">Score <span class="val" id="scoreDisplay">0 / 0</span></span>
+        <span class="pill"><span id="progressText">0%</span></span>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="stage-badge">📙 Stage 3 of 3 · Case-Ending Drill</div>
+    <h1>Fill in the Ending — <span class="ar">الإِضَافَة</span></h1>
+    <p>The second word in an Idafah — the <em>mudhāf ilayh</em> — is <strong>always genitive</strong>. That means it always ends in a <strong>kasrah</strong> ـِ. Complete each phrase below by choosing the right vowel.</p>
+  </section>
+
+  <details class="grammar-ref" open>
+    <summary>📖 The Golden Rule of Case Endings</summary>
+    <div class="ref-body">
+      <div class="rule-box">
+        <strong>In every Idafah:</strong> the second word — the mudhāf ilayh — is <strong>always in the genitive case (majrūr)</strong>. This is a fixed grammatical rule, not a coincidence. It never changes, no matter where the phrase sits in a sentence.
+      </div>
+
+      <p>That means the last letter of the second word always carries a <strong>kasrah</strong>.</p>
+
+      <div class="vowel-row">
+        <div class="vowel-chip">
+          <span class="sym">ـَ</span>
+          <span class="name">Fathah</span>
+          <span class="sound">"a"</span>
+        </div>
+        <div class="vowel-chip">
+          <span class="sym">ـُ</span>
+          <span class="name">Dammah</span>
+          <span class="sound">"u"</span>
+        </div>
+        <div class="vowel-chip kasrah">
+          <span class="sym">ـِ</span>
+          <span class="name">Kasrah</span>
+          <span class="sound">"i"</span>
+        </div>
+      </div>
+
+      <p style="text-align:center;font-weight:700;color:var(--primary);margin-top:.8rem;">→ The correct answer for every question in this Stage is the <strong>Kasrah</strong> ـِ.</p>
+
+      <p>Examples:</p>
+      <p>
+        <span class="ar">كِتَابُ اللَّهِ</span> — "the Book of Allah" — the second word <span class="ar">اللَّهِ</span> ends in kasrah<br>
+        <span class="ar">رَسُولُ اللَّهِ</span> — "the Messenger of Allah" — ends in kasrah<br>
+        <span class="ar">رَبُّ الْعَالَمِينَ</span> — "the Lord of the Worlds" — the plural ending is <span class="ar">ـِينَ</span>, whose final vowel is a kasrah
+      </p>
+
+      <p style="margin-top:.9rem;font-size:.88rem;">💡 <strong>Why it matters when you recite:</strong> when you hear <em>"Allāhi"</em>, <em>"al-ʿĀlamīna"</em>, or <em>"al-Qiyāmati"</em>, the "i" sound at the end is precisely this genitive kasrah. Now you know <em>why</em> the voice rises at the end of a possessive phrase in Qur'anic recitation.</p>
+    </div>
+  </details>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All <span class="count">12</span></button>
+    <button class="filter-btn" data-filter="singular">Singular ending <span class="count">9</span></button>
+    <button class="filter-btn" data-filter="plural">Plural ending <span class="count">3</span></button>
+  </div>
+
+  <div id="questionList"></div>
+
+  <div class="bottom-actions">
+    <button class="btn btn-primary" id="showResults" disabled>Answer all questions to see results</button>
+  </div>
+
+  <p class="footer">Stage 3 of a 3-stage Idafah course · An educational resource for new Muslims and English-speaking Arabic learners.</p>
+</main>
+
+<div class="results-overlay hidden" id="resultsOverlay" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+  <div class="results-card">
+    <div class="results-header">
+      <h2 id="resultsTitle">Stage 3 Results</h2>
+      <button class="close-btn" id="closeResults" aria-label="Close results">✕</button>
+    </div>
+
+    <div class="score-hero">
+      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">12</span></span></div>
+      <div class="score-pct" id="finalPct">0%</div>
+      <p class="score-msg" id="finalMsg"></p>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+
+    <div class="results-actions">
+      <button class="btn btn-secondary" id="tryAgain">↺ Try Again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   DATA — 12 Idafah phrases where the second word's ending is blanked
+   The correct answer is always Kasrah (ـِ).
+   ═══════════════════════════════════════════════════════════════ */
+const QUESTIONS = [
+  {
+    category: 'singular',
+    english: "The Book of Allah",
+    hint: "The Noble Qur'an — the final revelation.",
+    display: "كِتَابُ اللَّه",
+    full: "كِتَابُ اللَّهِ",
+    transliteration: "Kitābu Allāhi",
+    reference: "Qur'an 2:2"
+  },
+  {
+    category: 'singular',
+    english: "The Messenger of Allah",
+    hint: "The title of Prophet Muhammad ﷺ.",
+    display: "رَسُولُ اللَّه",
+    full: "رَسُولُ اللَّهِ",
+    transliteration: "Rasūlu Allāhi",
+    reference: "Qur'an 48:29"
+  },
+  {
+    category: 'singular',
+    english: "The House of Allah",
+    hint: "A name of the Ka'bah in Makkah.",
+    display: "بَيْتُ اللَّه",
+    full: "بَيْتُ اللَّهِ",
+    transliteration: "Baytu Allāhi",
+    reference: "Qur'an 5:97"
+  },
+  {
+    category: 'singular',
+    english: "The Religion of Allah",
+    hint: "Islam — the way of life prescribed by God.",
+    display: "دِينُ اللَّه",
+    full: "دِينُ اللَّهِ",
+    transliteration: "Dīnu Allāhi",
+    reference: "Qur'an 110:2 (as دِينِ اللَّهِ)"
+  },
+  {
+    category: 'singular',
+    english: "The Mercy of Allah",
+    hint: "His compassion that encompasses all things.",
+    display: "رَحْمَةُ اللَّه",
+    full: "رَحْمَةُ اللَّهِ",
+    transliteration: "Raḥmatu Allāhi",
+    reference: "Qur'an 7:156"
+  },
+  {
+    category: 'singular',
+    english: "The Word of Allah",
+    hint: "His command and speech.",
+    display: "كَلِمَةُ اللَّه",
+    full: "كَلِمَةُ اللَّهِ",
+    transliteration: "Kalimatu Allāhi",
+    reference: "Qur'an 9:40"
+  },
+  {
+    category: 'singular',
+    english: "The People of the Book",
+    hint: "The followers of earlier scriptures.",
+    display: "أَهْلُ الْكِتَاب",
+    full: "أَهْلُ الْكِتَابِ",
+    transliteration: "Ahlu al-Kitābi",
+    reference: "Qur'an 2:105"
+  },
+  {
+    category: 'singular',
+    english: "The Day of Judgement",
+    hint: "The Day of Resurrection.",
+    display: "يَوْمُ الْقِيَامَة",
+    full: "يَوْمُ الْقِيَامَةِ",
+    transliteration: "Yawmu al-Qiyāmati",
+    reference: "Qur'an 2:85"
+  },
+  {
+    category: 'singular',
+    english: "The Angel of Death",
+    hint: "The angel charged with taking souls.",
+    display: "مَلَكُ الْمَوْت",
+    full: "مَلَكُ الْمَوْتِ",
+    transliteration: "Malaku al-Mawti",
+    reference: "Qur'an 32:11"
+  },
+  {
+    category: 'plural',
+    english: "The Light of the Heavens",
+    hint: "From Āyat al-Nūr — the famous verse of light.",
+    display: "نُورُ السَّمَاوَات",
+    full: "نُورُ السَّمَاوَاتِ",
+    transliteration: "Nūru al-Samāwāti",
+    reference: "Qur'an 24:35",
+    note: "السَّمَاوَات is a sound feminine plural — the genitive marker is the kasrah on the final <span class=\"ar\">ت</span>."
+  },
+  {
+    category: 'plural',
+    english: "The Lord of the Worlds",
+    hint: "A name and attribute of Allah — the opening of al-Fātiḥah.",
+    display: "رَبُّ الْعَالَمِين",
+    full: "رَبُّ الْعَالَمِينَ",
+    transliteration: "Rabbu al-ʿĀlamīna",
+    reference: "Qur'an 1:2",
+    note: "الْعَالَمِينَ is a sound masculine plural. Its genitive ending is <span class=\"ar\">ـِينَ</span> — the visible vowel is still a kasrah."
+  },
+  {
+    category: 'plural',
+    english: "The Path of the Believers",
+    hint: "The way of the faithful.",
+    display: "صِرَاطُ الْمُؤْمِنِين",
+    full: "صِرَاطُ الْمُؤْمِنِينَ",
+    transliteration: "Ṣirāṭu al-Mu'minīna",
+    reference: "Qur'an 1:7 (similar pattern)",
+    note: "الْمُؤْمِنِينَ is a sound masculine plural — again ending in <span class=\"ar\">ـِينَ</span>."
+  }
+];
+
+/* ─── VOWEL OPTIONS ─── */
+const VOWEL_OPTIONS = [
+  { id: 'fathah',  symbol: 'ـَ', name: 'Fathah',  sound: '“a”' },
+  { id: 'dammah',  symbol: 'ـُ', name: 'Dammah',  sound: '“u”' },
+  { id: 'kasrah',  symbol: 'ـِ', name: 'Kasrah',  sound: '“i”' }
+];
+const CORRECT_VOWEL = 'kasrah';
+
+/* ═══════════════════ STATE ═══════════════════ */
+const TOTAL = QUESTIONS.length;
+let answered = 0;
+let correct = 0;
+const userAnswers = new Array(TOTAL).fill(null);
+
+/* ═══════════════════ UTILITIES ═══════════════════ */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* Speak the Arabic phrase using Web Speech API (best-effort) */
+function speakArabic(text, onMsg) {
+  if (!('speechSynthesis' in window)) {
+    if (onMsg) onMsg('Speech not supported on this device.');
+    return false;
+  }
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ar-SA';
+    u.rate = 0.7;
+    u.pitch = 1;
+    const voices = window.speechSynthesis.getVoices();
+    const arVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
+    if (arVoice) u.voice = arVoice;
+    window.speechSynthesis.speak(u);
+    if (onMsg) onMsg(arVoice ? 'Playing recitation…' : 'Playing (system default voice)…');
+    return true;
+  } catch (e) {
+    if (onMsg) onMsg('Speech playback failed.');
+    return false;
+  }
+}
+
+/* ═══════════════════ RENDER ═══════════════════ */
+function renderQuestions() {
+  const list = document.getElementById('questionList');
+  list.innerHTML = '';
+
+  // Shuffle the question order
+  const order = shuffle([...Array(TOTAL).keys()]);
+
+  order.forEach((qIndex, displayIdx) => {
+    const q = QUESTIONS[qIndex];
+    const shuffledVowels = shuffle(VOWEL_OPTIONS);
+
+    const card = document.createElement('article');
+    card.className = 'question-card';
+    card.dataset.index = qIndex;
+    card.dataset.category = q.category;
+
+    card.innerHTML = `
+      <div class="q-head">
+        <span class="q-num">Q${displayIdx + 1}</span>
+        <span class="q-prompt"><span class="quote">"${q.english}"</span></span>
+        <span class="q-ref">📖 ${q.reference}</span>
+      </div>
+      <p class="q-hint">${q.hint}</p>
+
+      <div class="display-area">
+        <div class="arabic-phrase">
+          <span>${q.display}</span>
+          <span class="vowel-slot" data-state="empty" aria-label="missing vowel">◌</span>
+        </div>
+        <div class="translit-line">${q.transliteration.replace(/.$/, '…')}</div>
+        <button type="button" class="listen-btn" data-listen>
+          🔊 Listen to the phrase
+        </button>
+        <div class="listen-msg" data-listen-msg></div>
+      </div>
+
+      <div class="vowel-options">
+        ${shuffledVowels.map(v => `
+          <button type="button" class="vowel-opt" data-vowel="${v.id}">
+            <span class="vowel-symbol" dir="rtl">${v.symbol}</span>
+            <span class="vowel-name">${v.name}</span>
+            <span class="vowel-sound">${v.sound}</span>
+          </button>
+        `).join('')}
+      </div>
+
+      <div class="explanation hidden"></div>
+    `;
+
+    list.appendChild(card);
+    wireQuestion(card, qIndex, q);
+  });
+}
+
+/* ═══════════════════ QUESTION WIRING ═══════════════════ */
+function wireQuestion(card, qIndex, q) {
+  const listenBtn = card.querySelector('[data-listen]');
+  const listenMsg = card.querySelector('[data-listen-msg]');
+  const slot = card.querySelector('.vowel-slot');
+  const options = card.querySelectorAll('.vowel-opt');
+
+  // Listen button
+  listenBtn.addEventListener('click', () => {
+    listenMsg.textContent = '';
+    const ok = speakArabic(q.full, (msg) => { listenMsg.textContent = msg; });
+    if (!ok) {
+      listenMsg.textContent = 'Audio not available — read the transliteration aloud.';
+    }
+  });
+
+  // Vowel option clicks
+  options.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (card.dataset.answered === 'true') return;
+      const chosen = btn.dataset.vowel;
+      finaliseAnswer(card, qIndex, q, chosen, slot, options);
+    });
+  });
+}
+
+/* ═══════════════════ ANSWER HANDLING ═══════════════════ */
+function finaliseAnswer(card, qIndex, q, chosenId, slot, options) {
+  card.dataset.answered = 'true';
+  const isCorrect = (chosenId === CORRECT_VOWEL);
+  const chosenVowel = VOWEL_OPTIONS.find(v => v.id === chosenId);
+  const correctVowel = VOWEL_OPTIONS.find(v => v.id === CORRECT_VOWEL);
+
+  userAnswers[qIndex] = {
+    correct: isCorrect,
+    chosenId,
+    chosenSymbol: chosenVowel.symbol,
+    chosenName: chosenVowel.name
+  };
+
+  // Update the slot
+  slot.textContent = chosenVowel.symbol;
+  slot.classList.add('filled');
+  slot.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  // Update buttons
+  options.forEach(btn => {
+    btn.disabled = true;
+    const v = btn.dataset.vowel;
+    if (v === CORRECT_VOWEL) btn.classList.add('correct');
+    if (v === chosenId && !isCorrect) btn.classList.add('wrong');
+  });
+
+  // Card state
+  card.classList.add('answered');
+  card.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+
+  // Build explanation
+  const exp = card.querySelector('.explanation');
+  exp.classList.remove('hidden');
+  exp.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+
+  let html = `
+    <div class="exp-title">
+      ${isCorrect ? '✓ Correct — Masha\'Allah!' : '✗ Not quite'}
+    </div>
+  `;
+
+  if (!isCorrect) {
+    html += `
+      <div class="exp-phrase is-wrong-phrase">
+        <span class="label">You chose</span>
+        <span class="phrase-ar" dir="rtl">${q.display.replace(/ $/, '')}${chosenVowel.symbol}</span>
+        <span class="phrase-tr">${chosenVowel.name} (${chosenVowel.sound})</span>
+      </div>
+    `;
+  }
+
+  html += `
+    <div class="exp-phrase is-correct-phrase">
+      <span class="label">${isCorrect ? 'Your answer' : 'The correct ending is'}</span>
+      <span class="phrase-ar" dir="rtl">${q.full}</span>
+      <span class="phrase-tr">${q.transliteration} — "${q.english}"</span>
+    </div>
+    <div class="exp-rule">
+      <strong>The rule:</strong> The mudhāf ilayh (the second word) is <em>always genitive</em> in Arabic — its last letter always takes a <strong>kasrah</strong> ـِ. This is why every phrase above ends with an "i" sound. It is a fixed rule you can rely on.
+      ${q.note ? `<br><br><strong>Note:</strong> ${q.note}` : ''}
+    </div>
+    <span class="exp-ref">📖 ${q.reference}</span>
+  `;
+
+  exp.innerHTML = html;
+
+  answered++;
+  if (isCorrect) correct++;
+  updateStats();
+
+  setTimeout(() => {
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 120);
+}
+
+/* ═══════════════════ STATS ═══════════════════ */
+function updateStats() {
+  document.getElementById('scoreDisplay').textContent = `${correct} / ${answered}`;
+  const pct = Math.round((answered / TOTAL) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '%';
+
+  const btn = document.getElementById('showResults');
+  if (answered === TOTAL) {
+    btn.disabled = false;
+    btn.textContent = '🎉 Show My Results';
+  } else {
+    btn.textContent = `Answer ${TOTAL - answered} more to see results`;
+  }
+}
+
+/* ═══════════════════ FILTER ═══════════════════ */
+document.getElementById('filterBar').addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const filter = btn.dataset.filter;
+  document.querySelectorAll('.question-card').forEach(card => {
+    if (filter === 'all' || card.dataset.category === filter) {
+      card.hidden = false;
+    } else {
+      card.hidden = true;
+    }
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ═══════════════════ RESULTS ═══════════════════ */
+function showResults() {
+  const pct = Math.round((correct / TOTAL) * 100);
+  document.getElementById('finalScore').textContent = correct;
+  document.getElementById('finalTotal').textContent = TOTAL;
+  document.getElementById('finalPct').textContent = pct + '%';
+
+  let msg;
+  if (pct === 100) {
+    msg = 'ما شاء الله! A perfect score — you have completed the full Idafah course. You now know the word order, the "no-Al-" rule, and the kasrah ending. May Allah bless your Arabic learning journey.';
+  } else if (pct >= 80) {
+    msg = 'Excellent! You have a strong grasp of the genitive case in Idafah. Review the missed ones below — then you have completed the course.';
+  } else if (pct >= 60) {
+    msg = 'Good effort. Remember the golden rule: the second word always ends in kasrah. Read the missed items again and try once more.';
+  } else {
+    msg = 'Keep practising! Re-read the golden rule at the top of the page. With 12 repetitions, the kasrah rule will become second nature.';
+  }
+  document.getElementById('finalMsg').textContent = msg;
+
+  const review = document.getElementById('reviewList');
+  review.innerHTML = '';
+
+  QUESTIONS.forEach((q, i) => {
+    const ua = userAnswers[i];
+    if (!ua) return;
+    const item = document.createElement('div');
+    item.className = 'review-item ' + (ua.correct ? 'ok' : 'no');
+
+    let html = `<div class="review-q">Q${i + 1}. "${q.english}"</div>`;
+
+    if (ua.correct) {
+      html += `
+        <div class="review-line">
+          <span class="tag ok">Your answer</span>
+          <span class="ar" dir="rtl">${q.full}</span>
+          <span class="tr">${q.transliteration}</span>
+        </div>
+      `;
+    } else {
+      html += `
+        <div class="review-line">
+          <span class="tag no">You chose</span>
+          <span class="ar" dir="rtl">${q.display.replace(/ $/, '')}${ua.chosenSymbol}</span>
+          <span class="tr">${ua.chosenName}</span>
+        </div>
+        <div class="review-line">
+          <span class="tag ok">Correct</span>
+          <span class="ar" dir="rtl">${q.full}</span>
+          <span class="tr">${q.transliteration}</span>
+        </div>
+      `;
+    }
+
+    item.innerHTML = html;
+    review.appendChild(item);
+  });
+
+  document.getElementById('resultsOverlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeResults() {
+  document.getElementById('resultsOverlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ═══════════════════ RESET ═══════════════════ */
+function resetQuiz() {
+  answered = 0;
+  correct = 0;
+  userAnswers.fill(null);
+  document.body.style.overflow = '';
+  document.getElementById('resultsOverlay').classList.add('hidden');
+  renderQuestions();
+  updateStats();
+
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+  document.querySelectorAll('.question-card').forEach(c => { c.hidden = false; });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════ EVENT WIRING ═══════════════════ */
+document.getElementById('showResults').addEventListener('click', showResults);
+document.getElementById('closeResults').addEventListener('click', closeResults);
+document.getElementById('tryAgain').addEventListener('click', resetQuiz);
+
+document.getElementById('resultsOverlay').addEventListener('click', (e) => {
+  if (e.target.id === 'resultsOverlay') closeResults();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeResults();
+});
+
+/* Warm up the speech synthesis voice list (some browsers load lazily) */
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => {
+    // Just triggering the callback so voices are cached
+    window.speechSynthesis.getVoices();
+  };
+}
+
+/* ═══════════════════ BOOT ═══════════════════ */
+renderQuestions();
+updateStats();
+</script>
+</body>
+</html>
