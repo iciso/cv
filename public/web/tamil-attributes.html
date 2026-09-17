@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>அல்லாஹ்வின் 99 பெயர்கள் · பொருள் பொருத்துதல்</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-2: #ebe4d6;
+    --card: #ffffff;
+    --ink: #1a2332;
+    --ink-soft: #4a5568;
+    --muted: #8a8577;
+    --line: #e3dccc;
+    --primary: #0d5c4a;
+    --primary-dark: #084034;
+    --primary-soft: #e6f2ee;
+    --correct: #1e9d6b;
+    --correct-soft: #e3f6ed;
+    --wrong: #d94a3d;
+    --wrong-soft: #fdecea;
+    --gold: #c79b3b;
+    --gold-soft: #fdf6e3;
+    --fire: #e85d3d;
+    --fire-soft: #fdeee8;
+    --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
+    --shadow-lg: 0 24px 60px -16px rgba(26,35,50,.25);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+    --ar-deck: 3.6rem;
+    --ar-small: 1.4rem;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 12% 5%, #fff9ee 0%, transparent 42%),
+      radial-gradient(circle at 88% 95%, #eef5f0 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(245,242,235,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: .85rem 1.25rem .7rem;
+  }
+  .top-inner { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: .55rem; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-family: 'Noto Naskh Arabic', serif;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.15rem;
+  }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: .76rem; color: var(--muted); margin-left: .25rem; }
+  .stats { display: flex; gap: .5rem; font-size: .82rem; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; align-items: center; }
+  .stats .pill { background: var(--card); border: 1px solid var(--line); padding: .22rem .75rem; border-radius: var(--radius-pill); font-variant-numeric: tabular-nums; }
+  .stats .pill .val { color: var(--primary); font-weight: 700; }
+  .stats .streak-pill {
+    background: var(--card); border: 1px solid var(--line);
+    padding: .22rem .75rem; border-radius: var(--radius-pill);
+    transition: background .3s, border-color .3s, color .3s;
+  }
+  .stats .streak-pill.active {
+    background: var(--fire-soft);
+    border-color: rgba(232,93,61,.35);
+    color: var(--fire);
+    animation: firePulse 1.2s ease-in-out infinite;
+  }
+  @keyframes firePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .progress-track { height: 6px; background: var(--bg-2); border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary) 0%, #1e9d6b 100%);
+    border-radius: var(--radius-pill);
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* ── Layout ── */
+  .wrap { max-width: 960px; margin: 0 auto; padding: 1.6rem 1.25rem 5rem; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a7060 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; right: -50px; top: -50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero .set-badge {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: var(--radius-pill);
+    padding: .2rem .85rem;
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+    margin-bottom: .7rem;
+  }
+  .hero h1 { font-family: 'Amiri', serif; font-size: 1.7rem; font-weight: 700; margin: 0 0 .35rem; line-height: 1.25; }
+  .hero h1 .ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; font-size: 1.4rem; }
+  .hero p { margin: 0; font-size: .93rem; opacity: .96; max-width: 64ch; }
+
+  /* ── Deck ── */
+  .deck-section {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem 1.2rem 1.4rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+  }
+  .deck-instructions {
+    font-size: .85rem;
+    color: var(--muted);
+    margin-bottom: .85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .deck-instructions .hint-pc {
+    display: inline-flex; align-items: center; gap: .3rem;
+    background: var(--bg-2);
+    padding: .15rem .65rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    color: var(--ink-soft);
+    font-size: .76rem;
+  }
+  .deck {
+    display: flex;
+    justify-content: center;
+    min-height: 200px;
+    align-items: center;
+    padding: .5rem;
+  }
+  .deck-stack {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    height: 190px;
+  }
+  .deck-card-shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-md);
+    background: var(--bg-2);
+    transform: translateY(8px) scale(.96);
+    z-index: 0;
+  }
+  .deck-card-shadow.second {
+    transform: translateY(16px) scale(.92);
+    opacity: .55;
+  }
+  .deck-tile {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-md);
+    background: linear-gradient(160deg, #ffffff 0%, #faf7ef 100%);
+    border: 2px solid var(--line);
+    box-shadow: 0 6px 18px -4px rgba(26,35,50,.14);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    padding: 1rem;
+    cursor: grab;
+    z-index: 2;
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+    text-align: center;
+  }
+  .deck-tile:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px -6px rgba(26,35,50,.2);
+    border-color: var(--primary);
+  }
+  .deck-tile:active:not(:disabled) { cursor: grabbing; transform: translateY(0); }
+  .deck-tile.selected {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    box-shadow: 0 0 0 4px rgba(13,92,74,.15), 0 12px 26px -6px rgba(26,35,50,.2);
+    transform: translateY(-2px) scale(1.02);
+  }
+  .deck-tile .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-deck);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1.15;
+    letter-spacing: 1px;
+  }
+  .deck-tile .tr {
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: .3px;
+  }
+  .deck-tile .counter {
+    font-size: .72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-weight: 700;
+    margin-top: .15rem;
+  }
+
+  .deck-tile.animating-correct {
+    animation: correctShrink .75s cubic-bezier(.4,0,.2,1) forwards;
+    pointer-events: none;
+  }
+  @keyframes correctShrink {
+    0% { transform: translateY(0) scale(1); opacity: 1; border-color: var(--line); }
+    20% { transform: translateY(-6px) scale(1.06); border-color: var(--correct); box-shadow: 0 0 0 14px rgba(30,157,107,.18); }
+    100% { transform: translateY(-20px) scale(.4); opacity: 0; border-color: var(--correct); }
+  }
+  .deck-tile.animating-wrong {
+    animation: wrongShake .6s ease;
+    pointer-events: none;
+  }
+  @keyframes wrongShake {
+    0%, 100% { transform: translateX(0) rotate(0); border-color: var(--line); }
+    15% { transform: translateX(-12px) rotate(-1.5deg); border-color: var(--wrong); background: var(--wrong-soft); }
+    35% { transform: translateX(12px) rotate(1.5deg); border-color: var(--wrong); background: var(--wrong-soft); }
+    55% { transform: translateX(-8px) rotate(-.8deg); border-color: var(--wrong); background: var(--wrong-soft); }
+    75% { transform: translateX(8px) rotate(.8deg); border-color: var(--wrong); background: var(--wrong-soft); }
+  }
+  .deck-tile.animating-wrong .ar,
+  .deck-tile.animating-wrong .tr { color: var(--wrong); }
+
+  .deck-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    color: var(--muted);
+    font-size: .95rem;
+    padding: 1rem;
+  }
+  .deck-empty .emoji { font-size: 2rem; }
+
+  /* ── Meaning options ── */
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .7rem;
+    margin-bottom: 1.2rem;
+  }
+  @media (max-width: 620px) { .options-grid { grid-template-columns: 1fr; } }
+
+  .meaning-box {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 1.05rem 1rem;
+    cursor: pointer;
+    transition: border-color .15s, background .15s, transform .12s, box-shadow .15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .2rem;
+    min-height: 88px;
+    text-align: center;
+    font-family: inherit;
+    position: relative;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .meaning-box:hover:not(:disabled):not(.no-hover) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .meaning-box.drag-over {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    border-style: solid;
+    transform: scale(1.03);
+    box-shadow: 0 0 0 4px rgba(13,92,74,.12);
+  }
+  .meaning-box.target-pulse {
+    border-color: var(--gold);
+    animation: pulseBox 1.4s ease-in-out infinite;
+  }
+  @keyframes pulseBox {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(199,155,59,.35); }
+    50%      { box-shadow: 0 0 0 8px rgba(199,155,59,0); }
+  }
+  .meaning-box .meaning-en {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .meaning-box .meaning-label {
+    font-size: .68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    font-weight: 700;
+  }
+
+  .meaning-box.correct {
+    border-color: var(--correct);
+    background: var(--correct-soft);
+    animation: correctPulse 0.5s ease;
+  }
+  @keyframes correctPulse {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+  .meaning-box.correct .meaning-en { color: #0f6a48; }
+  .meaning-box.correct::after {
+    content: "✓ சரி";
+    position: absolute; top: 8px; right: 12px;
+    font-size: .65rem; font-weight: 700;
+    letter-spacing: .5px; color: var(--correct);
+    text-transform: uppercase;
+  }
+  .meaning-box.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-soft);
+    animation: wrongFlash .5s ease;
+  }
+  @keyframes wrongFlash {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-3px); }
+  }
+  .meaning-box.wrong .meaning-en { color: #a83329; }
+  .meaning-box.wrong::after {
+    content: "✗ உங்கள் தேர்வு";
+    position: absolute; top: 8px; right: 12px;
+    font-size: .65rem; font-weight: 700;
+    letter-spacing: .5px; color: var(--wrong);
+    text-transform: uppercase;
+  }
+  .meaning-box.reveal-correct {
+    border-color: var(--correct);
+    background: var(--correct-soft);
+  }
+  .meaning-box.reveal-correct .meaning-en { color: #0f6a48; }
+  .meaning-box.reveal-correct::after {
+    content: "✓ சரியான விடை";
+    position: absolute; top: 8px; right: 12px;
+    font-size: .65rem; font-weight: 700;
+    letter-spacing: .5px; color: var(--correct);
+    text-transform: uppercase;
+  }
+
+  /* ── Feedback ── */
+  .feedback {
+    border-radius: var(--radius-md);
+    padding: 1rem 1.15rem;
+    margin-bottom: 1rem;
+    display: none;
+    animation: fbIn .3s ease both;
+    border-left: 5px solid var(--wrong);
+    background: var(--wrong-soft);
+    font-size: .92rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  @keyframes fbIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .feedback.show { display: block; }
+  .feedback .fb-title {
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    color: var(--wrong);
+    margin-bottom: .55rem;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+  }
+  .feedback .fb-line { margin: .25rem 0; }
+  .feedback .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-small);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    display: inline-block;
+    margin: 0 .15rem;
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+  .feedback .fb-rule {
+    margin-top: .6rem;
+    padding: .65rem .85rem;
+    background: white;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--gold);
+    font-size: .86rem;
+    color: var(--ink-soft);
+  }
+  .feedback .fb-rule strong { color: var(--ink); }
+
+  /* ── Learned summary ── */
+  .learned-summary {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .85rem 1.1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8rem;
+    flex-wrap: wrap;
+    font-size: .9rem;
+  }
+  .learned-summary .learned-count {
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .learned-summary .learned-count .big {
+    font-size: 1.15rem;
+  }
+  .learned-summary details {
+    width: 100%;
+  }
+  .learned-summary summary {
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: .85rem;
+    user-select: none;
+    padding: .2rem 0;
+  }
+  .learned-summary summary::-webkit-details-marker { display: none; }
+  .learned-summary summary::before {
+    content: "▸ ";
+    display: inline-block;
+    transition: transform .2s;
+    color: var(--muted);
+  }
+  .learned-summary details[open] summary::before {
+    content: "▾ ";
+  }
+  .learned-grid {
+    margin-top: .7rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: .35rem;
+  }
+  .learned-chip {
+    background: #faf8f3;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: .3rem .55rem;
+    display: flex;
+    align-items: baseline;
+    gap: .35rem;
+    font-size: .78rem;
+    animation: itemIn .3s ease both;
+  }
+  @keyframes itemIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .learned-chip .lc-ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+  }
+  .learned-chip .lc-tr {
+    font-size: .72rem;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  /* ── Bottom actions ── */
+  .bottom-actions {
+    display: flex; justify-content: center; gap: .6rem;
+    margin-top: 1.5rem; flex-wrap: wrap;
+  }
+  .btn {
+    appearance: none; border: none;
+    font-family: inherit; font-weight: 600;
+    font-size: 1rem; padding: .85rem 2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: transform .1s, background .15s, box-shadow .15s;
+    letter-spacing: .2px;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    box-shadow: 0 6px 18px -4px rgba(13,92,74,.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -6px rgba(13,92,74,.5);
+  }
+  .btn-primary:disabled { background: #cfc8b8; color: #8a8577; cursor: not-allowed; box-shadow: none; }
+  .btn-secondary {
+    background: var(--card); color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-secondary:hover { background: var(--primary-soft); }
+
+  /* ── ʿAqīdah note ── */
+  .aqeedah-note {
+    background: var(--gold-soft);
+    border-left: 5px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.2rem;
+    margin-top: 2rem;
+    font-size: .85rem;
+    line-height: 1.75;
+    color: #6a4f1a;
+  }
+  .aqeedah-note strong { color: #4a3510; }
+  .aqeedah-note .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-small);
+    direction: rtl;
+    font-weight: 700;
+    display: inline-block;
+    margin: 0 .2rem;
+    vertical-align: middle;
+  }
+
+  /* ── Results overlay ── */
+  .results-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,35,50,.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 200;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 1.25rem;
+    overflow-y: auto;
+    animation: fadeIn .25s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .results-overlay.hidden { display: none; }
+
+  .results-card {
+    background: var(--card);
+    max-width: 720px; width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.6rem 1.5rem;
+    box-shadow: var(--shadow-lg);
+    margin: auto;
+    animation: popIn .35s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .results-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem; margin-bottom: 1rem;
+  }
+  .results-header h2 { margin: 0; font-family: 'Amiri', serif; font-size: 1.5rem; color: var(--primary); }
+  .close-btn {
+    appearance: none; border: none;
+    background: var(--bg-2);
+    width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem;
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s; flex-shrink: 0;
+  }
+  .close-btn:hover { background: #ddd5c5; }
+
+  .score-hero {
+    text-align: center;
+    padding: 1.1rem 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, #f4fbf8 100%);
+    margin-bottom: 1.1rem;
+  }
+  .score-big {
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--primary); line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-big .out { color: var(--muted); font-weight: 500; font-size: 1.5rem; }
+  .score-pct { font-size: 1.05rem; font-weight: 600; color: var(--ink-soft); margin-top: .2rem; }
+  .score-msg {
+    margin-top: .55rem; font-size: .92rem;
+    color: var(--ink-soft); max-width: 50ch;
+    margin-left: auto; margin-right: auto;
+  }
+  .score-streak {
+    display: inline-flex; align-items: center; gap: .35rem;
+    margin-top: .7rem;
+    background: var(--fire-soft); color: var(--fire);
+    padding: .25rem .85rem;
+    border-radius: var(--radius-pill);
+    font-size: .82rem; font-weight: 700;
+  }
+
+  .results-actions {
+    display: flex; gap: .6rem; justify-content: center;
+    flex-wrap: wrap; margin-top: 1.2rem;
+  }
+
+  .footer {
+    text-align: center; font-size: .78rem; color: var(--muted);
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 520px) {
+    .hero h1 { font-size: 1.4rem; }
+    .deck-stack { height: 160px; }
+    .deck-tile .ar { font-size: 2.8rem; }
+    .deck-tile .tr { font-size: .95rem; }
+    .meaning-box { min-height: 72px; padding: .8rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="mark">الله</span>
+        <span>அல்லாஹ்வின் 99 பெயர்கள் <small>· பொருள் பொருத்துதல்</small></span>
+      </div>
+      <div class="stats">
+        <span class="pill">தொகுதி <span class="val" id="setDisplay">1</span> / 3</span>
+        <span class="pill">புள்ளி <span class="val" id="scoreDisplay">0 / 0</span></span>
+        <span class="streak-pill" id="streakPill">🔥 <span id="streakDisplay">0</span></span>
+        <span class="pill"><span id="progressText">0%</span></span>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="set-badge" id="setBadge">📚 தொகுதி 1 / 3 · பெயர்கள் 1–33</div>
+    <h1>பெயரைப் பொருத்துங்கள் — <span class="ar">أَسْمَاءُ اللَّه</span></h1>
+    <p>அடுக்கில் ஒரு அரபி பெயர் தோன்றும். அதை இழுத்துச் சென்று (அல்லது அதைத் தொட்டு, பின்னர் ஒரு பெட்டியைத் தொட்டு) அதற்கு மிகவும் பொருத்தமான தமிழ் பொருளுடன் பொருத்துங்கள். முதல் முயற்சியிலேயே சரியாகப் பொருத்தும் பெயர்கள் உங்கள் புள்ளிகளில் கணக்கிடப்படும்.</p>
+  </section>
+
+  <!-- Deck -->
+  <section class="deck-section">
+    <div class="deck-instructions">
+      <span class="hint-pc">🖱️ பெயரை ஒரு பொருளுக்கு இழுத்துச் செல்லவும்</span>
+      <span class="hint-pc">👆 அல்லது பெயரைத் தொட்டு, பின்னர் ஒரு பெட்டியைத் தொடவும்</span>
+    </div>
+    <div class="deck" id="deck">
+      <div class="deck-stack">
+        <div class="deck-card-shadow second"></div>
+        <div class="deck-card-shadow"></div>
+        <div id="deckTileHost"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meaning options -->
+  <section class="options-grid" id="optionsGrid"></section>
+
+  <!-- Feedback -->
+  <section class="feedback" id="feedback" role="alert"></section>
+
+  <!-- Learned summary -->
+  <section class="learned-summary" id="learnedSummary">
+    <span class="learned-count">
+      ✅ இந்தத் தொகுதியில் கற்ற பெயர்கள்: <span class="big" id="learnedCount">0</span> / <span id="learnedTotal">33</span>
+    </span>
+    <details id="learnedDetails" style="display:none;">
+      <summary>நீங்கள் கற்ற பெயர்களைக் காணுங்கள்</summary>
+      <div class="learned-grid" id="learnedGrid"></div>
+    </details>
+  </section>
+
+  <!-- Bottom actions -->
+  <div class="bottom-actions">
+    <button class="btn btn-secondary" id="resetBtn">⟳ முதலிலிருந்து தொடங்கு</button>
+    <button class="btn btn-primary" id="nextSetBtn" style="display:none;">அடுத்த தொகுதிக்குச் செல்க →</button>
+  </div>
+
+  <div class="aqeedah-note">
+    <strong>📖 ஒரு முக்கிய குறிப்பு.</strong> அல்லாஹ்வின் திருப்பெயர்களை <span class="ar">أَسْمَاءُ اللَّه الْحُسْنَى</span> தகுதியான ஆசிரியரிடம் கற்றுக்கொள்ளுங்கள். அல்லாஹ்வின் ஒவ்வொரு பெயரும் <em>பூரணமானது</em> என்பதை அறிந்துகொள்ளுங்கள். மேலும், நம்பிக்கைக்குரிய மொழிபெயர்ப்புகளுக்கு இடையே ஒரு பெயரின் தமிழ் மொழிபெயர்ப்பு சற்று மாறுபடலாம் என்பதை நினைவில் கொள்ளுங்கள். உதாரணத்திற்கு, الرَّحْمَٰنُ (அர்-ரஹ்மான்) என்பதை சிலர் "அளவற்ற அருளாளன்" என்றும், சிலர் "மிகவும் இரக்கமுடையவன்" என்றும் மொழிபெயர்ப்பார்கள். தமிழ் வார்த்தைகளில் உள்ள இத்தகைய வேறுபாடுகள் அரபி பெயரிலோ அல்லது அல்லாஹ்வின் பண்புகளிலோ எந்த வேறுபாட்டையும் குறிக்காது.
+  </div>
+
+  <p class="footer">புதிய முஸ்லிம்களுக்கும் தமிழ் வழியில் அரபி கற்பவர்களுக்கும் பயன்படும் ஒரு கல்வி வழிகாட்டி.</p>
+</main>
+
+<!-- Results overlay -->
+<div class="results-overlay hidden" id="resultsOverlay" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+  <div class="results-card">
+    <div class="results-header">
+      <h2 id="resultsTitle">தொகுதி நிறைவடைந்தது! 🎉</h2>
+      <button class="close-btn" id="closeResults" aria-label="Close results">✕</button>
+    </div>
+
+    <div class="score-hero">
+      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">33</span></span></div>
+      <div class="score-pct" id="finalPct">0%</div>
+      <p class="score-msg" id="finalMsg"></p>
+      <div class="score-streak" id="scoreStreak" style="display:none;">
+        🔥 மிக நீண்ட தொடர் வெற்றி: <span id="finalStreak">0</span>
+      </div>
+    </div>
+
+    <div class="results-actions">
+      <button class="btn btn-primary" id="continueFromResults" style="display:none;">அடுத்த தொகுதிக்குச் செல்க →</button>
+      <button class="btn btn-secondary" id="replaySet">↺ இத்தொகுதியை மீண்டும் விளையாடு</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   THE 99 NAMES — presented as a teaching selection across 3 sets
+   Each entry: Arabic script, transliteration, concise English meaning.
+   Meanings are kept simple and non-technical for new learners.
+   ═══════════════════════════════════════════════════════════════ */
+const NAMES = [
+  /* ─────── SET 1 (1–33) ─────── */
+  { ar: 'الرَّحْمَٰن',        tr: 'Ar-Raḥmān',         en: 'அளவற்ற அருளாளன்' },
+  { ar: 'الرَّحِيم',          tr: 'Ar-Raḥīm',          en: 'நிகரற்ற அன்புடையோன்' },
+  { ar: 'الْمَلِك',           tr: 'Al-Malik',          en: 'பேரரசன்' },
+  { ar: 'الْقُدُّوس',         tr: 'Al-Quddūs',         en: 'பரிசுத்தமானவன்' },
+  { ar: 'السَّلَام',          tr: 'As-Salām',          en: 'சாந்தியளிப்பவன்' },
+  { ar: 'الْمُؤْمِن',         tr: 'Al-Muʾmin',         en: 'அபயமளிப்பவன்' },
+  { ar: 'الْمُهَيْمِن',       tr: 'Al-Muhaymin',       en: 'பாதுகாவலன்' },
+  { ar: 'الْعَزِيز',          tr: 'Al-ʿAzīz',          en: 'மிகைத்தவன்' },
+  { ar: 'الْجَبَّار',         tr: 'Al-Jabbār',         en: 'அடக்கி ஆள்பவன்' },
+  { ar: 'الْمُتَكَبِّر',      tr: 'Al-Mutakabbir',     en: 'பெருமைக்குரியவன்' },
+  { ar: 'الْخَالِق',          tr: 'Al-Khāliq',         en: 'படைப்பாளன்' },
+  { ar: 'الْبَارِئ',          tr: 'Al-Bāriʾ',          en: 'உருவாக்குபவன்' },
+  { ar: 'الْمُصَوِّر',        tr: 'Al-Muṣawwir',       en: 'உருவமைப்பவன்' },
+  { ar: 'الْغَفَّار',         tr: 'Al-Ghaffār',        en: 'மிக்க மன்னிப்பவன்' },
+  { ar: 'الْقَهَّار',         tr: 'Al-Qahhār',         en: 'கண்டிப்பாய் அடக்குபவன்' },
+  { ar: 'الْوَهَّاب',         tr: 'Al-Wahhāb',         en: 'வாரி வழங்குபவன்' },
+  { ar: 'الرَّزَّاق',         tr: 'Ar-Razzāq',         en: 'வாழ்வாதாரம் அளிப்பவன்' },
+  { ar: 'الْفَتَّاح',         tr: 'Al-Fattāḥ',         en: 'வெற்றி வாசலைத் திறப்பவன்' },
+  { ar: 'الْعَلِيم',          tr: 'Al-ʿAlīm',          en: 'அனைத்தும் அறிந்தவன்' },
+  { ar: 'الْقَابِض',          tr: 'Al-Qābiḍ',          en: 'கைப்பற்றுபவன்' },
+  { ar: 'الْبَاسِط',          tr: 'Al-Bāsiṭ',          en: 'வாழ்வாதாரத்தைப் பெருக்குபவன்' },
+  { ar: 'الْخَافِض',          tr: 'Al-Khāfiḍ',         en: 'தாழ்த்துபவன்' },
+  { ar: 'الرَّافِع',          tr: 'Ar-Rāfiʿ',          en: 'உயர்த்துபவன்' },
+  { ar: 'الْمُعِزّ',          tr: 'Al-Muʿizz',         en: 'கண்ணியப்படுத்துபவன்' },
+  { ar: 'الْمُذِلّ',          tr: 'Al-Mudhill',        en: 'இழிவுபடுத்துபவன்' },
+  { ar: 'السَّمِيع',          tr: 'As-Samīʿ',          en: 'செவியேற்பவன்' },
+  { ar: 'الْبَصِير',          tr: 'Al-Baṣīr',          en: 'உற்று நோக்குபவன்' },
+  { ar: 'الْحَكَم',           tr: 'Al-Ḥakam',          en: 'தீர்ப்பளிப்பவன்' },
+  { ar: 'الْعَدْل',           tr: 'Al-ʿAdl',           en: 'நீதியாளன்' },
+  { ar: 'اللَّطِيف',          tr: 'Al-Laṭīf',          en: 'மென்மையானவன்' },
+  { ar: 'الْخَبِير',          tr: 'Al-Khabīr',         en: 'நன்கு உணர்ந்தவன்' },
+  { ar: 'الْحَلِيم',          tr: 'Al-Ḥalīm',          en: 'பொறுமையாளன்' },
+  { ar: 'الْعَظِيم',          tr: 'Al-ʿAẓīm',          en: 'மகத்துவமிக்கவன்' },
+
+  /* ─────── SET 2 (34–66) ─────── */
+  { ar: 'الْغَفُور',          tr: 'Al-Ghafūr',         en: 'அதிகம் மன்னிப்பவன்' },
+  { ar: 'الشَّكُور',          tr: 'Ash-Shakūr',        en: 'நன்றியை ஏற்றுக்கொள்பவன்' },
+  { ar: 'الْعَلِيّ',          tr: 'Al-ʿAlī',           en: 'மிக உயர்ந்தவன்' },
+  { ar: 'الْكَبِير',          tr: 'Al-Kabīr',          en: 'மிகப் பெரியவன்' },
+  { ar: 'الْحَفِيظ',          tr: 'Al-Ḥafīẓ',          en: 'காப்பவன்' },
+  { ar: 'الْمُقِيت',          tr: 'Al-Muqīt',          en: 'உணவளிப்பவன்' },
+  { ar: 'الْحَسِيب',          tr: 'Al-Ḥasīb',          en: 'கணக்கெடுப்பவன்' },
+  { ar: 'الْجَلِيل',          tr: 'Al-Jalīl',          en: 'கண்ணியமிக்கவன்' },
+  { ar: 'الْكَرِيم',          tr: 'Al-Karīm',          en: 'மிக்க கொடையாளி' },
+  { ar: 'الرَّقِيب',          tr: 'Ar-Raqīb',          en: 'கண்காணிப்பவன்' },
+  { ar: 'الْمُجِيب',          tr: 'Al-Mujīb',          en: 'பிரார்த்தனையை ஏற்பவன்' },
+  { ar: 'الْوَاسِع',          tr: 'Al-Wāsiʿ',          en: 'பரந்த அருளாளன்' },
+  { ar: 'الْحَكِيم',          tr: 'Al-Ḥakīm',          en: 'ஞானமிக்கவன்' },
+  { ar: 'الْوَدُود',          tr: 'Al-Wadūd',          en: 'மிக்க அன்புடையவன்' },
+  { ar: 'الْمَجِيد',          tr: 'Al-Majīd',          en: 'மகிமைமிக்கவன்' },
+  { ar: 'الْبَاعِث',          tr: 'Al-Bāʿith',         en: 'உயிர்ப்பிப்பவன்' },
+  { ar: 'الشَّهِيد',          tr: 'Ash-Shahīd',        en: 'சாட்சியாளன்' },
+  { ar: 'الْحَقّ',            tr: 'Al-Ḥaqq',           en: 'உண்மையானவன்' },
+  { ar: 'الْوَكِيل',          tr: 'Al-Wakīl',          en: 'பொறுப்பேற்பவன்' },
+  { ar: 'الْقَوِيّ',          tr: 'Al-Qawiyy',         en: 'வல்லமையுள்ளவன்' },
+  { ar: 'الْمَتِين',          tr: 'Al-Matīn',          en: 'உறுதியானவன்' },
+  { ar: 'الْوَلِيّ',          tr: 'Al-Waliyy',         en: 'பாதுகாக்கும் தோழன்' },
+  { ar: 'الْحَمِيد',          tr: 'Al-Ḥamīd',          en: 'புகழுக்குரியவன்' },
+  { ar: 'الْمُحْصِي',         tr: 'Al-Muḥṣī',          en: 'கணிப்பவன்' },
+  { ar: 'الْمُبْدِئ',         tr: 'Al-Mubdiʾ',         en: 'முதலில் படைப்பவன்' },
+  { ar: 'الْمُعِيد',          tr: 'Al-Muʿīd',          en: 'மீண்டும் படைப்பவன்' },
+  { ar: 'الْمُحْيِي',         tr: 'Al-Muḥyī',          en: 'உயிர் கொடுப்பவன்' },
+  { ar: 'الْمُمِيت',          tr: 'Al-Mumīt',          en: 'மரணிக்கச் செய்பவன்' },
+  { ar: 'الْحَيّ',            tr: 'Al-Ḥayy',           en: 'என்றும் வாழ்பவன்' },
+  { ar: 'الْقَيُّوم',         tr: 'Al-Qayyūm',         en: 'நிலைநிறுத்துபவன்' },
+  { ar: 'الْوَاجِد',          tr: 'Al-Wājid',          en: 'தேடியதை அடைபவன்' },
+  { ar: 'الْمَاجِد',          tr: 'Al-Mājid',          en: 'புகழ்மிக்கவன்' },
+  { ar: 'الْوَاحِد',          tr: 'Al-Wāḥid',          en: 'ஒருவன்' },
+
+  /* ─────── SET 3 (67–99) ─────── */
+  { ar: 'الْأَحَد',           tr: 'Al-Aḥad',           en: 'ஏகன்' },
+  { ar: 'الصَّمَد',           tr: 'Aṣ-Ṣamad',          en: 'தேவையற்றவன்' },
+  { ar: 'الْقَادِر',          tr: 'Al-Qādir',          en: 'ஆற்றலுள்ளவன்' },
+  { ar: 'الْمُقْتَدِر',       tr: 'Al-Muqtadir',       en: 'முழு ஆற்றலுடையவன்' },
+  { ar: 'الْمُقَدِّم',        tr: 'Al-Muqaddim',       en: 'முற்படுத்துபவன்' },
+  { ar: 'الْمُؤَخِّر',        tr: 'Al-Muʾakhkhir',     en: 'பிற்படுத்துபவன்' },
+  { ar: 'الْأَوَّل',          tr: 'Al-Awwal',          en: 'முதலானவன்' },
+  { ar: 'الْآخِر',            tr: 'Al-Ākhir',          en: 'முடிவானவன்' },
+  { ar: 'الظَّاهِر',          tr: 'Aẓ-Ẓāhir',          en: 'வெளிப்படையானவன்' },
+  { ar: 'الْبَاطِن',          tr: 'Al-Bāṭin',          en: 'அந்தரங்கமானவன்' },
+  { ar: 'الْوَالِي',          tr: 'Al-Wālī',           en: 'நிர்வகிப்பவன்' },
+  { ar: 'الْمُتَعَالِي',      tr: 'Al-Mutaʿālī',       en: 'மிக உயர்ந்தவன்' },
+  { ar: 'الْبَرّ',            tr: 'Al-Barr',           en: 'நன்மை செய்பவன்' },
+  { ar: 'التَّوَّاب',         tr: 'At-Tawwāb',         en: 'தவ்பாவை ஏற்பவன்' },
+  { ar: 'الْمُنْتَقِم',       tr: 'Al-Muntaqim',       en: 'பழிவாங்குபவன்' },
+  { ar: 'الْعَفُوّ',          tr: 'Al-ʿAfuww',         en: 'மன்னிப்பவன்' },
+  { ar: 'الرَّءُوف',          tr: 'Ar-Raʾūf',          en: 'இரக்கமுள்ளவன்' },
+  { ar: 'مَالِكُ الْمُلْك',   tr: 'Mālik al-Mulk',     en: 'ஆட்சியின் அதிபதி' },
+  { ar: 'ذُو الْجَلَالِ وَالْإِكْرَام', tr: 'Dhul-Jalāli wal-Ikrām', en: 'கண்ணியமும் கொடையும் மிக்கவன்' },
+  { ar: 'الْمُقْسِط',         tr: 'Al-Muqsiṭ',         en: 'நீதியுடையவன்' },
+  { ar: 'الْجَامِع',          tr: 'Al-Jāmiʿ',          en: 'ஒன்று சேர்ப்பவன்' },
+  { ar: 'الْغَنِيّ',          tr: 'Al-Ghaniyy',        en: 'தேவையற்ற செல்வந்தன்' },
+  { ar: 'الْمُغْنِي',         tr: 'Al-Mughnī',         en: 'செல்வமளிப்பவன்' },
+  { ar: 'الْمَانِع',          tr: 'Al-Māniʿ',          en: 'தடுப்பவன்' },
+  { ar: 'النُّور',            tr: 'An-Nūr',            en: 'பேரொளியானவன்' },
+  { ar: 'الْهَادِي',          tr: 'Al-Hādī',           en: 'நேர்வழி காட்டுபவன்' },
+  { ar: 'الْبَدِيع',          tr: 'Al-Badīʿ',          en: 'அற்புதமாகப் படைப்பவன்' },
+  { ar: 'الْبَاقِي',          tr: 'Al-Bāqī',           en: 'என்றும் நிலைத்திருப்பவன்' },
+  { ar: 'الْوَارِث',          tr: 'Al-Wārith',         en: 'உரிமையாளன்' },
+  { ar: 'الرَّشِيد',          tr: 'Ar-Rashīd',         en: 'நல்வழிப்படுத்துபவன்' },
+  { ar: 'الصَّبُور',          tr: 'Aṣ-Ṣabūr',          en: 'மிகவும் பொறுமையாளன்' },
+  { ar: 'الْحَنَّان',         tr: 'Al-Ḥannān',         en: 'அளவுகடந்த பாசமுடையவன்' },
+  { ar: 'الْمَنَّان',         tr: 'Al-Mannān',         en: 'பெருங் கொடையாளன்' }
+];
+
+const SET_SIZE = 33;
+const SETS = [
+  NAMES.slice(0, 33),
+  NAMES.slice(33, 66),
+  NAMES.slice(66, 99)
+];
+const TOTAL_SETS = SETS.length;
+
+/* ─── Shuffle helper ─── */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ═══════════════════ STATE ═══════════════════ */
+const state = {
+  setIdx: 0,
+  deck: [],           // array of {attr, attempts, firstTry}
+  currentIdx: null,   // index within deck of the current name
+  options: [],        // 4 English meanings for current question
+  correctMeaning: '',
+  score: 0,
+  streak: 0,
+  longestStreak: 0,
+  learnedCount: 0,
+  learned: [],        // list of learned attrs
+  totalScore: 0,
+  totalFirstTries: 0,
+  locked: false,
+  selected: false
+};
+
+/* ─── DOM refs ─── */
+const deckTileHost = document.getElementById('deckTileHost');
+const optionsGrid = document.getElementById('optionsGrid');
+const feedbackEl = document.getElementById('feedback');
+const scoreDisplay = document.getElementById('scoreDisplay');
+const streakDisplay = document.getElementById('streakDisplay');
+const streakPill = document.getElementById('streakPill');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const setDisplay = document.getElementById('setDisplay');
+const setBadge = document.getElementById('setBadge');
+const learnedCount = document.getElementById('learnedCount');
+const learnedTotal = document.getElementById('learnedTotal');
+const learnedDetails = document.getElementById('learnedDetails');
+const learnedGrid = document.getElementById('learnedGrid');
+const resetBtn = document.getElementById('resetBtn');
+const nextSetBtn = document.getElementById('nextSetBtn');
+const resultsOverlay = document.getElementById('resultsOverlay');
+
+/* ═══════════════════ INIT A SET ═══════════════════ */
+function initSet(setIndex) {
+  state.setIdx = setIndex;
+  const setNames = SETS[setIndex];
+
+  // Build deck: shuffle order, each entry tracks attempts
+  state.deck = shuffle(setNames.map(n => ({ ...n, attempts: 0, firstTry: null })));
+  state.currentIdx = 0;
+  state.score = 0;
+  state.streak = 0;
+  state.longestStreak = 0;
+  state.learnedCount = 0;
+  state.learned = [];
+  state.locked = false;
+  state.selected = false;
+
+  setDisplay.textContent = String(setIndex + 1);
+  setBadge.textContent = `📚 தொகுதி ${setIndex + 1} / ${TOTAL_SETS} · பெயர்கள் ${setIndex * SET_SIZE + 1}–${setIndex * SET_SIZE + setNames.length}`;
+
+  learnedTotal.textContent = String(setNames.length);
+  learnedCount.textContent = '0';
+  learnedGrid.innerHTML = '';
+  learnedDetails.style.display = 'none';
+  learnedDetails.open = false;
+
+  nextSetBtn.style.display = 'none';
+  resultsOverlay.classList.add('hidden');
+  document.body.style.overflow = '';
+
+  hideFeedback();
+  prepareQuestion();
+  updateStats();
+}
+
+/* ═══════════════════ PREPARE A QUESTION ═══════════════════ */
+function prepareQuestion() {
+  if (state.currentIdx >= state.deck.length) {
+    finishSet();
+    return;
+  }
+
+  const currentName = state.deck[state.currentIdx];
+  state.correctMeaning = currentName.en;
+
+  // Build 4 options: 1 correct + 3 distractors from same set
+  const sameSet = SETS[state.setIdx];
+  const others = sameSet.filter(n => n.ar !== currentName.ar);
+  const shuffledOthers = shuffle(others);
+  const distractors = shuffledOthers.slice(0, 3).map(n => n.en);
+  state.options = shuffle([currentName.en, ...distractors]);
+
+  renderDeck();
+  renderOptions();
+  updateStats();
+}
+
+/* ═══════════════════ RENDER DECK ═══════════════════ */
+function renderDeck() {
+  deckTileHost.innerHTML = '';
+  const currentName = state.deck[state.currentIdx];
+  if (!currentName) return;
+
+  const tile = document.createElement('button');
+  tile.type = 'button';
+  tile.className = 'deck-tile';
+  tile.id = 'currentTile';
+  tile.draggable = true;
+  tile.setAttribute('aria-label', `அரபி பெயர்: ${currentName.ar}. தமிழ் பொருளுடன் பொருத்த இழுக்கவும் அல்லது தொடவும்.`);
+  tile.innerHTML = `
+    <span class="ar" dir="rtl">${currentName.ar}</span>
+    <span class="tr">${currentName.tr}</span>
+    <span class="counter">${state.currentIdx + 1} / ${state.deck.length}</span>
+  `;
+  if (state.selected) tile.classList.add('selected');
+
+  // Drag events
+  tile.addEventListener('dragstart', (e) => {
+    if (state.locked) { e.preventDefault(); return; }
+    e.dataTransfer.setData('text/plain', currentName.ar);
+    e.dataTransfer.effectAllowed = 'move';
+    state.selected = true;
+    tile.classList.add('selected');
+    highlightOptions(true);
+  });
+  tile.addEventListener('dragend', () => {
+    highlightOptions(false);
+  });
+
+  // Tap-to-select
+  tile.addEventListener('click', () => {
+    if (state.locked) return;
+    state.selected = !state.selected;
+    tile.classList.toggle('selected', state.selected);
+    highlightOptions(state.selected);
+  });
+
+  deckTileHost.appendChild(tile);
+}
+
+/* ═══════════════════ RENDER OPTIONS ═══════════════════ */
+function renderOptions() {
+  optionsGrid.innerHTML = '';
+  state.options.forEach(meaning => {
+    const box = document.createElement('div');
+    box.className = 'meaning-box';
+    box.dataset.meaning = meaning;
+    box.setAttribute('role', 'button');
+    box.setAttribute('tabindex', '0');
+    box.setAttribute('aria-label', `தமிழ் பொருள் தேர்வு: ${meaning}`);
+    box.innerHTML = `
+      <span class="meaning-label">தமிழ் பொருள்</span>
+      <span class="meaning-en">${meaning}</span>
+    `;
+
+    // Drag events
+    box.addEventListener('dragover', (e) => {
+      if (state.locked) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      box.classList.add('drag-over');
+    });
+    box.addEventListener('dragleave', () => {
+      box.classList.remove('drag-over');
+    });
+    box.addEventListener('drop', (e) => {
+      e.preventDefault();
+      box.classList.remove('drag-over');
+      if (state.locked) return;
+      submitAnswer(meaning, box);
+    });
+
+    // Tap-to-place
+    box.addEventListener('click', () => {
+      if (state.locked) return;
+      if (state.selected) submitAnswer(meaning, box);
+    });
+
+    // Keyboard
+    box.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && !state.locked) {
+        e.preventDefault();
+        if (state.selected) submitAnswer(meaning, box);
+      }
+    });
+
+    optionsGrid.appendChild(box);
+  });
+}
+
+/* ═══════════════════ HIGHLIGHT OPTIONS ═══════════════════ */
+function highlightOptions(active) {
+  document.querySelectorAll('.meaning-box').forEach(b => {
+    if (active && !b.classList.contains('correct') && !b.classList.contains('wrong') && !b.classList.contains('reveal-correct')) {
+      b.classList.add('target-pulse');
+    } else {
+      b.classList.remove('target-pulse');
+    }
+  });
+}
+
+/* ═══════════════════ SUBMIT ANSWER ═══════════════════ */
+function submitAnswer(chosenMeaning, chosenBox) {
+  if (state.locked) return;
+  const currentName = state.deck[state.currentIdx];
+  if (!currentName) return;
+
+  const correct = (chosenMeaning === currentName.en);
+  currentName.attempts++;
+  const isFirstAttempt = currentName.attempts === 1;
+
+  // Disable hover effects
+  document.querySelectorAll('.meaning-box').forEach(b => b.classList.add('no-hover'));
+
+  if (correct) {
+    currentName.firstTry = isFirstAttempt;
+    state.learnedCount++;
+    state.learned.push(currentName);
+
+    if (isFirstAttempt) {
+      state.score++;
+      state.streak++;
+      if (state.streak > state.longestStreak) state.longestStreak = state.streak;
+    } else {
+      state.streak = 0;
+    }
+
+    state.locked = true;
+    state.selected = false;
+    highlightOptions(false);
+
+    chosenBox.classList.add('correct');
+    const tile = document.getElementById('currentTile');
+    if (tile) tile.classList.add('animating-correct');
+
+    // Add to learned grid
+    addLearnedChip(currentName);
+
+    updateStats();
+
+    setTimeout(() => {
+      // Move to next question
+      state.currentIdx++;
+      state.locked = false;
+      hideFeedback();
+      if (state.currentIdx >= state.deck.length) {
+        finishSet();
+      } else {
+        prepareQuestion();
+      }
+    }, 750);
+
+  } else {
+    state.streak = 0;
+    state.locked = true;
+    state.selected = false;
+    highlightOptions(false);
+
+    chosenBox.classList.add('wrong');
+
+    // Reveal correct answer
+    document.querySelectorAll('.meaning-box').forEach(b => {
+      if (b.dataset.meaning === currentName.en) {
+        b.classList.add('reveal-correct');
+      }
+    });
+
+    const tile = document.getElementById('currentTile');
+    if (tile) tile.classList.add('animating-wrong');
+
+    updateStats();
+
+    setTimeout(() => {
+      if (tile) tile.classList.remove('animating-wrong');
+      chosenBox.classList.remove('wrong');
+      document.querySelectorAll('.meaning-box').forEach(b => {
+        b.classList.remove('reveal-correct', 'no-hover');
+      });
+      state.locked = false;
+      showWrongFeedback(currentName);
+      updateStats();
+    }, 1400);
+  }
+}
+
+/* ═══════════════════ ADD LEARNED CHIP ═══════════════════ */
+function addLearnedChip(name) {
+  learnedDetails.style.display = 'block';
+  const chip = document.createElement('div');
+  chip.className = 'learned-chip';
+  chip.innerHTML = `
+    <span class="lc-ar" dir="rtl">${name.ar}</span>
+    <span class="lc-tr">${name.tr}</span>
+  `;
+  learnedGrid.appendChild(chip);
+  learnedCount.textContent = String(state.learnedCount);
+}
+
+/* ═══════════════════ FEEDBACK ═══════════════════ */
+function showWrongFeedback(name) {
+  const attempts = name.attempts;
+  feedbackEl.classList.add('show');
+  feedbackEl.innerHTML = `
+    <div class="fb-title">❌ தவறான விடை — முயற்சி ${attempts}</div>
+    <div class="fb-line">
+      <span class="ar" dir="rtl">${name.ar}</span>
+      <em>(${name.tr})</em> என்பதன் பொருள் <strong>${name.en}</strong> என்பதாகும்.
+    </div>
+    <div class="fb-line" style="margin-top:.55rem;">
+      💡 இந்த பெயர் அடுக்கில் உள்ளது — மீண்டும் முயலுங்கள்.
+    </div>
+    <div class="fb-rule">
+      <strong>குறிப்பு:</strong> இப்பெயரையும் இதன் பொருளையும் சில முறை சத்தமாகக் கூறிப் பழகுங்கள்: <em>${name.tr} — ${name.en}</em>. மீண்டும் மீண்டும் கூறுவதே அல்லாஹ்வின் பெயர்களை உள்ளத்தில் பதிய வைக்கும்.
+    </div>
+  `;
+}
+
+function hideFeedback() {
+  feedbackEl.classList.remove('show');
+  feedbackEl.innerHTML = '';
+}
+
+/* ═══════════════════ STATS ═══════════════════ */
+function updateStats() {
+  const total = state.deck.length;
+  scoreDisplay.textContent = `${state.score} / ${total}`;
+  streakDisplay.textContent = state.streak;
+  streakPill.classList.toggle('active', state.streak >= 2);
+
+  const pct = total ? Math.round((state.learnedCount / total) * 100) : 0;
+  progressFill.style.width = pct + '%';
+  progressText.textContent = pct + '%';
+}
+
+/* ═══════════════════ FINISH SET ═══════════════════ */
+function finishSet() {
+  // Show results overlay
+  const total = state.deck.length;
+  const pct = Math.round((state.score / total) * 100);
+
+  document.getElementById('finalScore').textContent = state.score;
+  document.getElementById('finalTotal').textContent = total;
+  document.getElementById('finalPct').textContent = pct + '%';
+
+  let msg;
+  if (pct === 100) {
+    msg = `மாஷா அல்லாஹ்! தொகுதி ${state.setIdx + 1}-ல் முழுமையான மதிப்பெண் — அனைத்து ${total} பெயர்களையும் முதல் முயற்சியிலேயே சரியாகப் பொருத்திவிட்டீர்கள்.`;
+  } else if (pct >= 80) {
+    msg = `தொகுதி ${state.setIdx + 1}-ல் சிறப்பான முயற்சி! இப்பெயர்களை நீங்கள் நன்றாகப் புரிந்து கொண்டுள்ளீர்கள். தவறவிட்டவற்றை மீள்பார்வை செய்யுங்கள்.`;
+  } else if (pct >= 60) {
+    msg = `தொகுதி ${state.setIdx + 1}-ல் நல்ல முயற்சி. தவறவிட்ட பெயர்களை மீண்டும் பயிற்சி செய்யுங்கள் — இத்தொகுதியை மீண்டும் விளையாடலாம் அல்லது அடுத்து தொடரலாம்.`;
+  } else {
+    msg = `தொடர்ந்து முயலுங்கள். தொகுதி ${state.setIdx + 1} முடிவடைந்தது — நீங்கள் இத்தொகுதியை மீண்டும் விளையாடலாம் அல்லது பின்னர் பயிற்சி செய்யலாம்.`;
+  }
+  document.getElementById('finalMsg').textContent = msg;
+
+  if (state.longestStreak >= 3) {
+    document.getElementById('scoreStreak').style.display = 'inline-flex';
+    document.getElementById('finalStreak').textContent = state.longestStreak;
+  } else {
+    document.getElementById('scoreStreak').style.display = 'none';
+  }
+
+  // Show "continue" button only if there's a next set
+  const continueBtn = document.getElementById('continueFromResults');
+  if (state.setIdx < TOTAL_SETS - 1) {
+    continueBtn.style.display = 'inline-block';
+    continueBtn.textContent = `தொகுதி ${state.setIdx + 2}-க்குச் செல்க →`;
+  } else {
+    continueBtn.style.display = 'none';
+  }
+
+  // Also show the bottom "next set" button
+  if (state.setIdx < TOTAL_SETS - 1) {
+    nextSetBtn.style.display = 'inline-block';
+    nextSetBtn.textContent = `தொகுதி ${state.setIdx + 2}-க்குச் செல்க →`;
+  } else {
+    nextSetBtn.style.display = 'none';
+  }
+
+  // Track cumulative totals
+  state.totalScore += state.score;
+  state.totalFirstTries += total;
+
+  resultsOverlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+/* ═══════════════════ EVENT WIRING ═══════════════════ */
+nextSetBtn.addEventListener('click', () => {
+  if (state.setIdx < TOTAL_SETS - 1) {
+    initSet(state.setIdx + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+document.getElementById('continueFromResults').addEventListener('click', () => {
+  if (state.setIdx < TOTAL_SETS - 1) {
+    initSet(state.setIdx + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+document.getElementById('replaySet').addEventListener('click', () => {
+  initSet(state.setIdx);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('closeResults').addEventListener('click', () => {
+  resultsOverlay.classList.add('hidden');
+  document.body.style.overflow = '';
+});
+
+resultsOverlay.addEventListener('click', (e) => {
+  if (e.target.id === 'resultsOverlay') {
+    resultsOverlay.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+});
+
+resetBtn.addEventListener('click', () => {
+  initSet(0);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    resultsOverlay.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+});
+
+// Click outside tile/options deselects
+document.addEventListener('click', (e) => {
+  if (state.locked) return;
+  if (e.target.closest('.deck-tile') || e.target.closest('.meaning-box')) return;
+  state.selected = false;
+  highlightOptions(false);
+  const tile = document.getElementById('currentTile');
+  if (tile) tile.classList.remove('selected');
+});
+
+/* ═══════════════════ BOOT ═══════════════════ */
+initSet(0);
+</script>
+</body>
+</html>
