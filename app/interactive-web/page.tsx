@@ -99,7 +99,8 @@ export default function InteractiveWebPage() {
 
 const interactiveWebPages = [
   { title: "COVID Memory Game", category: "Game Engine", description: "Micro-cognitive memory puzzle web app for virus structural identification.", url: "/web/12-covid-memory.html" },
-  { title: "Alert Quiz", category: "Assessment", description: "Interactive testing framework for situational safety and alert protocols.", url: "/web/alert-quiz.html" },
+  { title: "Attributes Match", category: "Attributes of God", description: "Drag and Drop Match game to learn the 99 beautiful names of Allah in English.", url: "/web/attributes-match.html" },
+  { title: "Attributes in Tamil", category: "Attributes of God", description: "Drag and Drop Match game to learn the 99 beautiful names of Allah in Tamil.", url: "/web/tamil-attributes.html" },
   { title: "Alibaba Game", category: "Interactive App", description: "Engaging web-based interactive entertainment module.", url: "/web/alibaba-game.html" },
   { title: "Animals Quiz", category: "Educational Quiz", description: "Educational taxonomy and natural science quiz module.", url: "/web/animals-quiz.html" },
   { title: "Arabic Cases", category: "Arabic Grammar", description: "Teaches Cases of Arabic Nouns with a quiz module.", url: "/web/arabic-cases.html" },
@@ -161,5 +162,6 @@ const interactiveWebPages = [
   { title: "Top 10 Quranic Surahs", category: "Surah Recitation", description: "Listen to Top 10 of Sheikh Mahmoud Khalil Al-Husary (رحمه الله).", url: "/web/top-ten-quran.html" },
   { title: "Travel Quiz", category: "Interactive Module", description: "Geography and international travel safety quiz application.", url: "/web/travel-quiz.html" },
   { title: "Vegetables Quiz", category: "Educational Quiz", description: "Nutritional science and dietary identification quiz module.", url: "/web/vegetables-quiz.html" },
-  { title: "WHO COVID Quiz", category: "Public Health", description: "Global health guideline validation and trivia module.", url: "/web/who-covid-quiz.html" }
+  { title: "WHO COVID Quiz", category: "Public Health", description: "Global health guideline validation and trivia module.", url: "/web/who-covid-quiz.html" },
+  { title: "Zapping Alert Quiz", category: "Assessment", description: "Interactive testing framework on IT programing languages.", url: "/web/alert-quiz.html" },
 ]
