@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>குர்ஆனின் சான்றுகள் · எமோஜி வினாடி வினா</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-2: #ebe4d6;
+    --card: #ffffff;
+    --ink: #1a2332;
+    --ink-soft: #4a5568;
+    --muted: #8a8577;
+    --line: #e3dccc;
+    --primary: #0d5c4a;
+    --primary-dark: #084034;
+    --primary-soft: #e6f2ee;
+    --correct: #1e9d6b;
+    --correct-soft: #e3f6ed;
+    --wrong: #d94a3d;
+    --wrong-soft: #fdecea;
+    --gold: #c79b3b;
+    --gold-soft: #fdf6e3;
+    --fire: #e85d3d;
+    --fire-soft: #fdeee8;
+    --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
+    --shadow-lg: 0 24px 60px -16px rgba(26,35,50,.25);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 12% 5%, #fff9ee 0%, transparent 42%),
+      radial-gradient(circle at 88% 95%, #eef5f0 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Top bar */
+  .top-bar {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(245,242,235,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: .85rem 1.25rem .7rem;
+  }
+  .top-inner { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: .55rem; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); font-size: 1.05rem; }
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-size: 1rem; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: .74rem; color: var(--muted); margin-left: .25rem; }
+  .stats { display: flex; gap: .45rem; font-size: .8rem; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; align-items: center; }
+  .stats .pill { background: var(--card); border: 1px solid var(--line); padding: .22rem .7rem; border-radius: var(--radius-pill); font-variant-numeric: tabular-nums; }
+  .stats .pill .val { color: var(--primary); font-weight: 700; }
+  .stats .streak-pill {
+    background: var(--card); border: 1px solid var(--line);
+    padding: .22rem .7rem; border-radius: var(--radius-pill);
+    transition: background .3s, border-color .3s, color .3s;
+  }
+  .stats .streak-pill.active {
+    background: var(--fire-soft);
+    border-color: rgba(232,93,61,.35);
+    color: var(--fire);
+    animation: firePulse 1.2s ease-in-out infinite;
+  }
+  @keyframes firePulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  .progress-track { height: 6px; background: var(--bg-2); border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary) 0%, #1e9d6b 100%);
+    border-radius: var(--radius-pill);
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 1.4rem 1.1rem 6rem; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a7060 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.7rem;
+    margin-bottom: 1.1rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; right: -60px; top: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(255,255,255,.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero h1 { font-family: 'Amiri', serif; font-size: 1.7rem; font-weight: 700; margin: 0 0 .35rem; }
+  .hero h1 .ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; font-size: 1.4rem; }
+  .hero p { margin: 0; font-size: .92rem; opacity: .96; max-width: 64ch; }
+
+  /* Set selector */
+  .set-selector {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: .55rem;
+    margin-bottom: 1.1rem;
+  }
+  @media (max-width: 620px) {
+    .set-selector { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+  }
+  .set-btn {
+    appearance: none;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .75rem .55rem;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .25rem;
+    transition: all .18s;
+    text-align: center;
+    position: relative;
+  }
+  .set-btn:hover:not(.active) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .set-btn.active {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 8px 20px -6px rgba(13,92,74,.4);
+  }
+  .set-btn .set-icon { font-size: 1.6rem; line-height: 1; }
+  .set-btn .set-name {
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .2px;
+    line-height: 1.15;
+  }
+  .set-btn .set-arabic {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: .92rem;
+    direction: rtl;
+    opacity: .75;
+    line-height: 1;
+  }
+  .set-btn.active .set-arabic { opacity: .9; }
+  .set-btn .set-progress {
+    font-size: .68rem;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: .2px;
+    margin-top: .1rem;
+  }
+  .set-btn.active .set-progress { color: rgba(255,255,255,.9); }
+  .set-btn.completed::after {
+    content: "✓";
+    position: absolute;
+    top: 4px; right: 6px;
+    color: var(--correct);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .set-btn.active.completed::after { color: #fff; }
+
+  /* Quiz grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: .55rem;
+    margin-bottom: 1.2rem;
+  }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .grid { grid-template-columns: repeat(3, 1fr); gap: .45rem; }
+  }
+
+  .quiz-card {
+    appearance: none;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .65rem .4rem .55rem;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .2rem;
+    transition: all .15s;
+    text-align: center;
+    position: relative;
+    min-height: 118px;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .quiz-card:hover:not(:disabled) {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .quiz-card.active {
+    border-color: var(--gold);
+    background: var(--gold-soft);
+    box-shadow: 0 0 0 4px rgba(199,155,59,.18);
+    transform: translateY(-2px);
+  }
+  .quiz-card.correct {
+    background: var(--correct-soft);
+    border-color: var(--correct);
+  }
+  .quiz-card.correct::after {
+    content: "✓";
+    position: absolute;
+    top: 4px; right: 6px;
+    color: var(--correct);
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .quiz-card.wrong {
+    background: var(--wrong-soft);
+    border-color: rgba(217,74,61,.4);
+  }
+  .quiz-card.wrong::after {
+    content: "✗";
+    position: absolute;
+    top: 4px; right: 6px;
+    color: var(--wrong);
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .quiz-card .card-num {
+    font-size: .68rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: .3px;
+  }
+  .quiz-card .card-emoji {
+    font-size: 1.55rem;
+    line-height: 1.15;
+    letter-spacing: .05em;
+    word-break: break-word;
+  }
+  .quiz-card .card-cat {
+    font-size: .6rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-top: .1rem;
+  }
+  @media (max-width: 500px) {
+    .quiz-card { min-height: 100px; padding: .5rem .3rem; }
+    .quiz-card .card-emoji { font-size: 1.3rem; }
+    .quiz-card .card-cat { font-size: .55rem; }
+  }
+
+  /* Active question panel */
+  .active-panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.3rem 1.3rem 1.4rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+    display: none;
+    animation: panelIn .35s ease both;
+  }
+  @keyframes panelIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .active-panel.show { display: block; }
+
+  .ap-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8rem;
+    flex-wrap: wrap;
+    margin-bottom: .9rem;
+    padding-bottom: .65rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .ap-head-left { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+  .ap-num {
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: .8rem;
+    padding: .22rem .65rem;
+    border-radius: var(--radius-pill);
+  }
+  .ap-cat {
+    background: var(--gold-soft);
+    color: var(--gold);
+    font-weight: 700;
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: .22rem .7rem;
+    border-radius: var(--radius-pill);
+  }
+  .ap-nav {
+    display: flex;
+    gap: .4rem;
+  }
+  .ap-nav button {
+    appearance: none;
+    background: var(--bg-2);
+    border: none;
+    padding: .35rem .8rem;
+    border-radius: var(--radius-pill);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: .78rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .ap-nav button:hover:not(:disabled) {
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+  .ap-nav button:disabled { opacity: .4; cursor: not-allowed; }
+
+  .ap-emoji-box {
+    background: linear-gradient(180deg, #f8fbfa 0%, #f1f7f4 100%);
+    border: 1px dashed #c4d8d0;
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .ap-emoji-display {
+    font-size: 3.2rem;
+    line-height: 1.2;
+    letter-spacing: .08em;
+    margin-bottom: .3rem;
+    word-break: break-word;
+  }
+  @media (max-width: 520px) {
+    .ap-emoji-display { font-size: 2.4rem; }
+  }
+  .ap-hint {
+    font-size: .88rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .ap-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: .5rem;
+    margin-bottom: .7rem;
+  }
+  @media (max-width: 520px) {
+    .ap-form { grid-template-columns: 1fr; }
+  }
+  .ap-input {
+    appearance: none;
+    background: #faf8f3;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .8rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    transition: border-color .15s;
+    width: 100%;
+  }
+  .ap-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(13,92,74,.1);
+  }
+  .ap-input:disabled {
+    background: var(--bg-2);
+    cursor: not-allowed;
+  }
+  .ap-submit {
+    appearance: none;
+    background: var(--primary);
+    border: none;
+    color: #fff;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: .95rem;
+    padding: .8rem 1.6rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all .15s;
+    letter-spacing: .2px;
+  }
+  .ap-submit:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px -4px rgba(13,92,74,.4);
+  }
+  .ap-submit:disabled { background: #cfc8b8; cursor: not-allowed; }
+
+  .ap-actions {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .ap-actions button {
+    appearance: none;
+    background: transparent;
+    border: 1.5px solid var(--line);
+    color: var(--ink-soft);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: .8rem;
+    padding: .45rem 1rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .ap-actions button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-soft);
+  }
+
+  /* Feedback */
+  .feedback {
+    margin-top: 1rem;
+    border-radius: var(--radius-md);
+    padding: 1rem 1.15rem;
+    display: none;
+    animation: fbIn .35s ease both;
+    border-left: 5px solid var(--muted);
+    background: #faf8f3;
+    font-size: .92rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  @keyframes fbIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { border-left-color: var(--correct); background: var(--correct-soft); }
+  .feedback.wrong { border-left-color: var(--wrong); background: var(--wrong-soft); }
+  .feedback .fb-title {
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+  }
+  .feedback.correct .fb-title { color: var(--correct); }
+  .feedback.wrong .fb-title { color: var(--wrong); }
+  .feedback .fb-answer {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.05rem;
+  }
+  .feedback .fb-line { margin: .3rem 0; }
+  .feedback .fb-note {
+    margin-top: .55rem;
+    padding: .6rem .85rem;
+    background: white;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--gold);
+    font-size: .86rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+  .feedback .fb-note strong { color: var(--ink); }
+
+  /* Bottom actions */
+  .bottom-actions {
+    display: flex; justify-content: center; gap: .6rem;
+    margin-top: 1.4rem; flex-wrap: wrap;
+  }
+  .btn {
+    appearance: none; border: none;
+    font-family: inherit; font-weight: 600;
+    font-size: .95rem; padding: .8rem 1.8rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all .15s;
+    letter-spacing: .2px;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    box-shadow: 0 6px 18px -4px rgba(13,92,74,.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -6px rgba(13,92,74,.5);
+  }
+  .btn-primary:disabled { background: #cfc8b8; color: #8a8577; cursor: not-allowed; box-shadow: none; }
+  .btn-secondary {
+    background: var(--card); color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-secondary:hover { background: var(--primary-soft); }
+
+  /* ʿAqīdah note */
+  .aqeedah-note {
+    background: var(--gold-soft);
+    border-left: 5px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.2rem;
+    margin-top: 1.8rem;
+    font-size: .85rem;
+    line-height: 1.75;
+    color: #6a4f1a;
+  }
+  .aqeedah-note strong { color: #4a3510; }
+  .aqeedah-note .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: 1.1rem;
+    direction: rtl;
+    font-weight: 700;
+    display: inline-block;
+    margin: 0 .2rem;
+    vertical-align: middle;
+  }
+
+  /* Results overlay */
+  .results-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,35,50,.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 200;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 1.25rem;
+    overflow-y: auto;
+    animation: fadeIn .25s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .results-overlay.hidden { display: none; }
+
+  .results-card {
+    background: var(--card);
+    max-width: 720px; width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.6rem 1.5rem;
+    box-shadow: var(--shadow-lg);
+    margin: auto;
+    animation: popIn .35s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .results-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem; margin-bottom: 1rem;
+  }
+  .results-header h2 {
+    margin: 0; font-family: 'Amiri', serif;
+    font-size: 1.5rem; color: var(--primary);
+  }
+  .close-btn {
+    appearance: none; border: none;
+    background: var(--bg-2);
+    width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem;
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s; flex-shrink: 0;
+  }
+  .close-btn:hover { background: #ddd5c5; }
+
+  .score-hero {
+    text-align: center;
+    padding: 1.1rem 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, #f4fbf8 100%);
+    margin-bottom: 1.1rem;
+  }
+  .score-big {
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--primary); line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-big .out { color: var(--muted); font-weight: 500; font-size: 1.5rem; }
+  .score-pct { font-size: 1.05rem; font-weight: 600; color: var(--ink-soft); margin-top: .2rem; }
+  .score-msg {
+    margin-top: .55rem; font-size: .92rem;
+    color: var(--ink-soft); max-width: 52ch;
+    margin-left: auto; margin-right: auto;
+  }
+  .score-streak {
+    display: inline-flex; align-items: center; gap: .35rem;
+    margin-top: .7rem;
+    background: var(--fire-soft); color: var(--fire);
+    padding: .25rem .85rem;
+    border-radius: var(--radius-pill);
+    font-size: .82rem; font-weight: 700;
+  }
+
+  .review-list {
+    display: flex; flex-direction: column; gap: .5rem;
+    max-height: 46vh; overflow-y: auto;
+    padding-right: 4px; margin-bottom: 1.15rem;
+  }
+  .review-item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .65rem .85rem;
+    font-size: .86rem;
+  }
+  .review-item.ok { border-left: 4px solid var(--correct); }
+  .review-item.no { border-left: 4px solid var(--wrong); }
+  .review-item .rv-emoji { font-size: 1.15rem; line-height: 1.2; }
+  .review-item .rv-answer { font-weight: 700; color: var(--primary); }
+  .review-item .rv-note {
+    margin-top: .3rem;
+    font-size: .8rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  .results-actions {
+    display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap;
+  }
+
+  .footer {
+    text-align: center; font-size: .76rem; color: var(--muted);
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="mark">ق</span>
+        <span>குர்ஆனின் சான்றுகள் <small>· எமோஜி வினாடி வினா</small></span>
+      </div>
+      <div class="stats">
+        <span class="pill">மதிப்பெண் <span class="val" id="scoreDisplay">0 / 0</span></span>
+        <span class="streak-pill" id="streakPill">🔥 <span id="streakDisplay">0</span></span>
+        <span class="pill"><span id="progressText">0%</span></span>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <h1>குர்ஆனின் சான்றுகள் — <span class="ar">آيَات القُرْآن</span></h1>
+    <p>ஐந்து தொகுப்புகள், ஒவ்வொன்றும் புனித குர்ஆனின் வெவ்வேறு பரிமாணங்களை ஆராய்கின்றன — அதில் கனம்பண்ணப்பட்ட நபிமார்கள், குறிப்பிடப்பட்டுள்ள விலங்குகள், உணவுகள், சட்டமாக்கப்பட்ட வணக்கங்கள் மற்றும் வரலாற்றில் பதிவான இடங்கள் மற்றும் நிகழ்வுகள். எமோஜிகளைப் படித்து, அவை எதனைக் குறிக்கின்றன என்பதைக் கண்டறியவும்.</p>
+  </section>
+
+  <!-- Set selector -->
+  <div class="set-selector" id="setSelector"></div>
+
+  <!-- Quiz grid -->
+  <div class="grid" id="quizGrid"></div>
+
+  <!-- Active question panel -->
+  <section class="active-panel" id="activePanel">
+    <div class="ap-head">
+      <div class="ap-head-left">
+        <span class="ap-num" id="apNum">#001</span>
+        <span class="ap-cat" id="apCat">பிரிவு</span>
+      </div>
+      <div class="ap-nav">
+        <button id="prevBtn" type="button">← முந்தையது</button>
+        <button id="nextBtn" type="button">அடுத்தது →</button>
+      </div>
+    </div>
+
+    <div class="ap-emoji-box">
+      <div class="ap-emoji-display" id="apEmoji"></div>
+      <div class="ap-hint" id="apHint"></div>
+    </div>
+
+    <form class="ap-form" id="answerForm" autocomplete="off">
+      <input type="text" class="ap-input" id="answerInput" placeholder="உங்கள் பதிலைத் தட்டச்சு செய்யவும்..." />
+      <button type="submit" class="ap-submit" id="submitBtn">சமர்ப்பிக்கவும்</button>
+    </form>
+
+    <div class="ap-actions">
+      <button type="button" id="revealBtn">💡 பதிலைக்காட்டு</button>
+      <button type="button" id="clearBtn">அழி</button>
+    </div>
+
+    <div class="feedback" id="feedback" role="alert"></div>
+  </section>
+
+  <div class="bottom-actions">
+    <button class="btn btn-secondary" id="resetBtn">⟳ இத்தொகுப்பை மீண்டும் தொடங்கு</button>
+  </div>
+
+  <div class="aqeedah-note">
+    <strong>📖 இந்த பயிற்சி பற்றிய ஒரு குறிப்பு.</strong> ஒவ்வொரு கேள்வியும் புனித குர்ஆனில் உள்ள குறியீடுகளிலிருந்தே எடுக்கப்பட்டுள்ளது. பதில்கள் வரலாற்று நபர்கள், உயிரினங்கள், உணவுகள், நடைமுறைகள் மற்றும் இடங்கள் ஆகும் — இவை இறையருளிப்பில் <em>குறிப்பிடப்பட்டவை</em> மட்டுமே. ஆழமான ஆய்வுக்குத் தகுதியான ஆசிரியரை அணுகவும். அல்லாஹ் நமது அறிவை அதிகப்படுத்துவானாக.
+  </div>
+
+  <p class="footer">புதிய முஸ்லிம்களுக்கும் குர்ஆனைக் கற்கும் தமிழ் வாசகர்களுக்குமான ஒரு கல்வித் தளம்.</p>
+</main>
+
+<!-- Results overlay -->
+<div class="results-overlay hidden" id="resultsOverlay" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+  <div class="results-card">
+    <div class="results-header">
+      <h2 id="resultsTitle">தொகுதி நிறைவடைந்தது! 🎉</h2>
+      <button class="close-btn" id="closeResults" aria-label="Close results">✕</button>
+    </div>
+
+    <div class="score-hero">
+      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">25</span></span></div>
+      <div class="score-pct" id="finalPct">0%</div>
+      <p class="score-msg" id="finalMsg"></p>
+      <div class="score-streak" id="scoreStreak" style="display:none;">
+        🔥 அதிகபட்ச தொடர் வெற்றி: <span id="finalStreak">0</span>
+      </div>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+
+    <div class="results-actions">
+      <button class="btn btn-primary" id="replaySet">↺ மீண்டும் விளையாடு</button>
+      <button class="btn btn-secondary" id="nextSetFromResults" style="display:none;">அடுத்த தொகுதிக்குச் செல் →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   SIGNS OF THE QUR'AN — 5 sets × 25 questions
+   Each question: emoji string, accepted answers (multiple spellings),
+   display name, hint, and a teaching note.
+   ═══════════════════════════════════════════════════════════════ */
+const SETS = [
+  {
+    id: 1,
+    title: "நபிமார்கள்",
+    arabic: "الأَنبِيَاء",
+    icon: "🕊️",
+    description: "குர்ஆனில் சிறப்பிக்கப்பட்டுள்ள இறைத்தூதர்கள் மற்றும் நல்லடியார்கள்",
+    questions: [
+      { emoji: "🚢 🌊 🐘 🐦", a: ["nuh","noah","nuuh","நூஹ்","நூஹ் நபி","நூஹ் அலைஹிஸ்ஸலாம்"], display: "நூஹ் (அலை)", hint: "கப்பலைக் கட்டி 950 ஆண்டுகள் தம் மக்களுக்கு அழைப்பு விடுத்தவர்.", note: "சூரா நூஹ் இவரது பெயரால் அழைக்கப்படுகிறது; இவரது வரலாறு சூரா ஹூத், அல்-முஃமினூன் மற்றும் பிற சூராக்களில் இடம்பெற்றுள்ளது." },
+      { emoji: "🔥 🐏 ⭐", a: ["ibrahim","abraham","ibraaheem","இப்ராஹீம்","இப்ராஹீம் நபி","இப்ராஹீம் அலைஹிஸ்ஸலாம்"], display: "இப்ராஹீம் (அலை)", hint: "நெருப்பில் வீசப்பட்டு அல்லாஹ்பால் காப்பாற்றப்பட்டவர்; அல்லாஹ்வின் உற்ற தோழர்.", note: "'நபிமார்களின் தந்தை' — இவரது வரலாறு குர்ஆனின் 25 சூராக்களில் கூறப்பட்டுள்ளது." },
+      { emoji: "🐍 🌊 🏔️", a: ["musa","moses","moosa","மூஸா","மூஸா நபி","மூஸா அலைஹிஸ்ஸலாம்"], display: "மூஸா (அலை)", hint: "கைத்தடி பாம்பாக மாறியது, கடல் பிளந்தது, மலையில் அல்லாஹவிடம் உரையாடினார்.", note: "குர்ஆனில் மிகவும் அதிகமாக (130 க்கும் மேற்பட்ட முறை) குறிப்பிடப்பட்ட நபி." },
+      { emoji: "👕 🌙 👑", a: ["yusuf","joseph","yoosuf","யூஸுஃப்","யூசுப்","யூசுஃப் நபி","யூஸுஃப் அலைஹிஸ்ஸலாம்"], display: "யூஸுஃப் (அலை)", hint: "கனவுகள், ஒரு சட்டை, மற்றும் எகிப்தின் அரியணை.", note: "சூரா யூஸுஃப் (12) இவரது முழு வரலாற்றையும் ஒரே தொடர் கதையாகக் கூறுகிறது." },
+      { emoji: "🐋 🌊 🙏", a: ["yunus","jonah","yoonus","யூனுஸ்","யூனுஸ் நபி","யூனுஸ் அலைஹிஸ்ஸலாம்"], display: "யூனுஸ் (அலை)", hint: "பெரிய மீனால் விழுங்கப்பட்டு, பின்னர் பாவமன்னிப்பு கோரியவர்.", note: "சூரா யூனுஸ் இவரது பெயரால் அழைக்கப்படுகிறது. அல்லாஹ் இவரை 'தன்னூன்' (மீனின் தோழர்) என்று அழைக்கிறான்." },
+      { emoji: "👑 🐜 🐦", a: ["sulayman","solomon","sulaiman","சுலைமான்","சுலைமான் நபி","சுலைமான் அலைஹிஸ்ஸலாம்"], display: "சுலைமான் (அலை)", hint: "எறும்புகளின் மொழியைப் புரிந்து கொண்டு பறவைகளிடம் பேசிய அரசர்.", note: "சூரா அந்-நம்ல் (எறும்பு) ஹுத்ஹுத் பறவை மற்றும் எறும்பு ராணியுடன் அவர் நடத்திய உரையாடலை விவரிக்கிறது." },
+      { emoji: "🌟 👶 🕊️", a: ["isa","jesus","eesa","ஈஸா","ஈஸா நபி","ஈஸா அலைஹிஸ்ஸலாம்"], display: "ஈஸா (அலை)", hint: "அற்புதமான முறையில் பிறந்தவர்; தொட்டிலில் பேசினார்; பார்வையற்றவர்களைக் குணப்படுத்தினார்.", note: "இவரது பெயர் குர்ஆனில் 25 முறை இடம்பெற்றுள்ளது. சூரா மரியம் இவரது மற்றும் இவரது தாயாரின் வரலாற்றைக் கூறுகிறது." },
+      { emoji: "🐪 ⛰️ 🏜️", a: ["salih","saleh","ஸாலிஹ்","ஸாலிஹ் நபி","ஸாலிஹ் அலைஹிஸ்ஸலாம்"], display: "ஸாலிஹ் (அலை)", hint: "ஸமூத் மக்களுக்கு அனுப்பப்பட்டவர், பாறையிலிருந்து வெளிவந்த பெண் ஒட்டகம் இவரது அத்தாட்சியாகும்.", note: "சூரா அல்-அஃராஃப் மற்றும் ஹூதில் உள்ள இவரது வரலாறு இறை அத்தாட்சிகளை நிராகரிப்பதற்கு எதிராக எச்சரிக்கிறது." },
+      { emoji: "🌪️ 🏜️ 💨", a: ["hud","hood","ஹூத்","ஹூத் நபி","ஹூத் அலைஹிஸ்ஸலாம்"], display: "ஹூத் (அலை)", hint: "ஆத் மக்களுக்கு அனுப்பப்பட்டவர், கடும் காற்றினால் அம் மக்கள் அழிக்கப்பட்டனர்.", note: "சூரா ஹூத் (11) இவரது பெயரால் அழைக்கப்படுகிறது; இவரது வரலாறு பெருமைக்கு எதிராக எச்சரிக்கிறது." },
+      { emoji: "🤒 🙏 ⏳", a: ["ayyub","job","ayoub","அய்யூப்","அய்யூப் நபி","அய்யூப் அலைஹிஸ்ஸலாம்"], display: "அய்யூப் (அலை)", hint: "நோயால் பாதிக்கப்பட்ட போதிலும், அல்லாஹ்வின் மீது நம்பிக்கையை இழக்காதவர்.", note: "குர்ஆன் இவரை 'சிறந்த அடியார்' என்று புகழ்கிறது — பொறுமையின் முன்மாதிரி." },
+      { emoji: "👑 🎶 ⚔️", a: ["dawud","david","dawood","தாவூத்","தாவூத் நபி","தாவூத் அலைஹிஸ்ஸலாம்"], display: "தாவூத் (அலை)", hint: "ஜாலூத்தை வீழ்த்திய அரசர் மற்றும் இறைத்தூதர்.", note: "அல்லாஹ் அவருக்கு ஜபூர் வேதத்தைக் கொடுத்தான், இரும்பை மென்மையாக்கும் கலையைக் கற்றுக் கொடுத்தான்." },
+      { emoji: "⚖️ 📏 💰", a: ["shuayb","shuaib","jethro","ஷுஐப்","ஷுஐப் நபி","ஷுஐப் அலைஹிஸ்ஸலாம்"], display: "ஷுஐப் (அலை)", hint: "வியாபாரத்தில் அளவையிலும் நிறுவையிலும் நேர்மையாக இருக்குமாறு மக்களுக்கு எச்சரித்தவர்.", note: "மத்யன் மக்களுக்கு அனுப்பப்பட்டவர்; இவரது செய்தி பொருளாதார நீதியையும் நேர்மையையும் வலியுறுத்தியது." },
+      { emoji: "🐏 💧 🕋", a: ["ismail","ishmael","ismaeel","இஸ்மாயீல்","இஸ்மாயீல் நபி","இஸ்மாயீல் அலைஹிஸ்ஸலாம்"], display: "இஸ்மாயீல் (அலை)", hint: "ஆட்டுக்கடாவால் பகரமாக்கப்பட்டவர்; தந்தையுடன் சேர்ந்து கஃபாவைக் கட்டியவர்.", note: "அல்லாஹ் இவரை 'வாக்குறுதியில் உண்மையாளர்' என்று அழைக்கிறான்." },
+      { emoji: "🏙️ 🌋 ⚠️", a: ["lut","lot","loot","லூத்","லூத் நபி","லூத் அலைஹிஸ்ஸலாம்"], display: "லூத் (அலை)", hint: "தலைகீழாகப் புரட்டப்பட்ட நகர மக்களுக்கு எச்சரிக்கை செய்தவர்.", note: "இவரது மக்கள் வரம்பு மீறியதால் அழிக்கப்பட்டனர் — இந்த வரலாறு குர்ஆனில் பலமுறை கூறப்படுகிறது." },
+      { emoji: "👁️ 😢 👨‍👦", a: ["yaqub","jacob","yaqoob","யஃகூப்","யஃகூப் நபி","யஃகூப் அலைஹிஸ்ஸலாம்"], display: "யஃகூப் (அலை)", hint: "தம் மகன் யூஸுஃபுக்காக அழுது பார்வை இழந்தவர்.", note: "இஸ்ராயீல் என்றும் அழைக்கப்படுகிறார் — இஸ்ரவேலர்களின் பன்னிரண்டு கோத்திரங்களின் தந்தை." },
+      { emoji: "👶 🌟 ✨", a: ["ishaq","isaac","ishaaq","இஸ்ஹாக்","இஸ்ஹாக் நபி","இஸ்ஹாக் அலைஹிஸ்ஸலாம்"], display: "இஸ்ஹாக் (அலை)", hint: "சாராவுக்கு முதிர்ந்த வயதில் வாக்குறுதியளிக்கப்பட்ட மகன்.", note: "அல்லாஹ் இவரது தந்தை இப்ராஹீமுக்கு நற்செய்தி வழங்கினான் — நல்லடியார்களில் ஒரு நபியாக திகழ்ந்தார்." },
+      { emoji: "🤲 👶 👴", a: ["zakariyya","zakaria","zechariah","ஜக்கரிய்யா","ஜக்கரிய்யா நபி","ஜக்கரிய்யா அலைஹிஸ்ஸலாம்"], display: "ஜக்கரிய்யா (அலை)", hint: "மகனுக்காகச் செய்த துஆ ஏற்கப்பட்ட முதியவர்.", note: "அவரது முதிர்ந்த வயதிலும் மனைவி மலடராக இருந்தபோதிலும் அவருக்கு யஹ்யா என்ற மகன் அளிக்கப்பட்டார்." },
+      { emoji: "📖 🕊️ 🌿", a: ["yahya","john","yahyaa","யஹ்யா","யஹ்யா நபி","யஹ்யா அலைஹிஸ்ஸலாம்"], display: "யஹ்யா (அலை)", hint: "சிறுவயதிலேயே ஞானம் அளிக்கப்பட்டவர்; அல்லாஹ்வின் வார்த்தையை உறுதிப்படுத்தியவர்.", note: "இவரது பெயர் இதற்கு முன் எவருக்கும் சூட்டப்படவில்லை என்று அல்லாஹ் கூறுகிறான் (சூரா மரியம்)." },
+      { emoji: "🗣️ 📜 👨", a: ["harun","aaron","haroon","ஹாரூன்","ஹாரூன் நபி","ஹாரூன் அலைஹிஸ்ஸலாம்"], display: "ஹாரூன் (அலை)", hint: "மூஸாவின் சகோதரர், ஃபிர்அவ்னிடம் அவருடன் அனுப்பப்பட்டவர்.", note: "மூஸாவுக்கு ஆதரவாகவும் அவரது சார்பில் பேசவும் நபியாக்கப்பட்டார்." },
+      { emoji: "✨ 👑 🌿", a: ["alyasa","elisha","alyasaa","அல்-யஸஃ","அல்யஸஃ நபி","அல்யஸஃ அலைஹிஸ்ஸலாம்"], display: "அல்-யஸஃ (அலை)", hint: "தேர்ந்தெடுக்கப்பட்டவர்களில் ஒருவராகக் குர்ஆனில் புகழப்பட்டவர்.", note: "குர்ஆனில் இரண்டு முறை குறிப்பிடப்பட்டுள்ளார்." },
+      { emoji: "🌧️ 🔥 ⚠️", a: ["ilyas","elias","ilyaas","இல்யாஸ்","இல்யாஸ் நபி","இல்யாஸ் அலைஹிஸ்ஸலாம்"], display: "இல்யாஸ் (அலை)", hint: "பஃல் என்ற சிலையைக் கும்பிடுவதை விட்டு விலகுமாறு மக்களை அழைத்தவர்.", note: "சூரா அஸ்-ஸாஃஃபாத் சிலை வழிபாட்டிற்கு எதிரான இவரது போராட்டத்தைக் கூறுகிறது." },
+      { emoji: "📜 🤝 🛡️", a: ["dhulkifl","ezekiel","dhul kifl","துல்கிஃப்ல்","துல்கிஃப்ல் நபி","துல்கிஃப்ல் அலைஹிஸ்ஸலாம்"], display: "துல்கிஃப்ல் (அலை)", hint: "பொறுமையும் உண்மையுமுள்ளவராகக் குறிப்பிடப்பட்டவர்.", note: "குர்ஆன் இவரைப் பொறுமையாளர்கள் மற்றும் நல்லடியார்களின் வரிசையில் இரண்டு முறை குறிப்பிடுகிறது." },
+      { emoji: "🚢 🧱 🐟", a: ["khidr","al khidr","khidhr","கிழ்ரு","அல் கிழ்ரு","கிழ்ரு அலைஹிஸ்ஸலாம்"], display: "அல்-கிழ்ரு (அலை)", hint: "மூஸா நபியுடைய வழிப்பயணத்தின் தோழர், அவருக்குப் பொறுமையைக் கற்றுக் கொடுத்தவர்.", note: "சூரா அல்-கஹ்ஃப் (18:60-82) ഇവരുടെ பயணத்தைப் பற்றிக் கூறுகிறது." },
+      { emoji: "🌱 👨 🍎", a: ["adam","aadam","adham","ஆதம்","ஆதம் நபி","ஆதம் அலைஹிஸ்ஸலாம்"], display: "ஆதம் (அலை)", hint: "களிமண்ணால் படைக்கப்பட்டு சுவனத்தில் வைக்கப்பட்ட முதல் மனிதர்.", note: "அல்லாஹ் அவருக்கு எல்லாப் பொருட்களின் பெயர்களையும் கற்றுக் கொடுத்து, மலக்குகளை அவருக்குச் சஜ்தா செய்ய வைத்தான்." },
+      { emoji: "🕋 📖 🌙", a: ["muhammad","mohammed","mohammad","rasulullah","the prophet","முஹம்மது","முஹம்மது நபி","முகமது","நபிகள் நாயகம்"], display: "முஹம்மது ﷺ", hint: "அகிலத்திற்கு அருட்கொடையாக அனுப்பப்பட்ட இறுதி இறைத்தூதர்.", note: "சூரா அல்-அஹ்ஸாப் (33:40) இவரை 'நபிமார்களின் முத்திரை' என்று பிரகடனப்படுத்துகிறது." }
+    ]
+  },
+
+  {
+    id: 2,
+    title: "விலங்குகள்",
+    arabic: "حَيَوَانَات",
+    icon: "🐘",
+    description: "குர்ஆனில் பெயரிடப்பட்ட அல்லது குறிப்பிடப்பட்ட உயிரினங்கள்",
+    questions: [
+      { emoji: "🐄 📖", a: ["cow","baqarah","al baqarah","பசு","பசுமாடு","அல் பகரா"], display: "பசு (அல்-பகரா)", hint: "குர்ஆனின் மிக நீண்ட அத்தியாயம் இந்த உயிரினத்தின் பெயரால் அழைக்கப்படுகிறது.", note: "அத்தியாயம் 2 — 286 வசனங்கள் — பனீ இஸ்ராயீல் மக்களின் பசுவின் கதையைக் கூறும் அத்தியாயம்." },
+      { emoji: "🐝 🍯 📖", a: ["bee","bees","nahl","al nahl","தேனீ","அந் நஹ்ல்"], display: "தேனீ (அந்-நஹ்ல்)", hint: "இதன் பெயரில் ஒரு சூரா உள்ளது, இதன் தேன் நிவாரணம் எனப்படுகிறது.", note: "சூரா 16 'அந்-நஹ்ல்' என்று அழைக்கப்படுகிறது. தேனீயின் தேன் 'மனிதர்களுக்கு நிவாரணம்' என்று அல்லாஹ் கூறுகிறான்." },
+      { emoji: "🐜 📖 👑", a: ["ant","ants","naml","al naml","எறும்பு","அந் நம்ல்"], display: "எறும்பு (அந்-நம்ல்)", hint: "சுலைமான் நபிக்குத் தன் கூட்டத்தைப் ஒளியுமாறு எச்சரித்த எறும்பு.", note: "சூரா 27 இதன் பெயரால் அழைக்கப்படுகிறது. குர்ஆனில் ஒரு சிறிய உயிரினத்திற்கு அளிக்கப்பட்ட பெருமை." },
+      { emoji: "🕸️ 📖 🏠", a: ["spider","spiders","ankabut","al ankabut","சிலந்தி","அல் அன்கபூத்"], display: "சிலந்தி (அல்-அன்கபூத்)", hint: "இதன் வீடு வீடுகளிலெல்லாம் மிகவும் பலவீனமானது.", note: "சூரா 29 இதன் பெயரால் அழைக்கப்படுகிறது. போலி தெய்வங்களைச் சிலந்தி வலைக்கு அல்லாஹ் ஒப்பிடுகிறான்." },
+      { emoji: "🐘 📖 🕋", a: ["elephant","elephants","fil","al fil","யானை","அல் ஃபீல்"], display: "யானை (அல்-ஃபீல்)", hint: "கஃபாவை அழிக்க யானைப் படையுடன் வந்து தோற்றுப்போன படை.", note: "சூரா 105 அப்ரஹாவின் யானைப் படையைப் பற்றிக் கூறுகிறது; அல்லாஹ் பறவைக் கூட்டங்களை அனுப்பி அவர்களை அழித்தான்." },
+      { emoji: "🐎 📖 💨", a: ["horse","horses","adiyat","al adiyat","குதிரை","அல் ஆதியாத்"], display: "குதிரை (அல்-ஆதியாத்)", hint: "வேகமாக ஓடும் போர்க் குதிரைகளின் பெயரால் ஒரு சூரா உள்ளது.", note: "சூரா 100 — அல்-ஆதியாத் — போர்க்களத்தில் பாயும் குதிரைகளின் மீது சத்தியமிட்டுத் தொடங்குகிறது." },
+      { emoji: "🐪 🕋 🌙", a: ["camel","camels","jamal","ibil","ஒட்டகம்"], display: "ஒட்டகம்", hint: "'பாலைவனக் கப்பல்' என்று அழைக்கப்படும் அரேபிய வாழ்வின் முக்கிய அம்சம்.", note: "ஒட்டகம் அல்லாஹ்வின் படைப்பின் சான்றாகவும், ஹஜ்ஜின் வாகனமாகவும் குர்ஆனில் குறிப்பிடப்படுகிறது." },
+      { emoji: "🐟 🌊 📖", a: ["fish","fish","hut","al hut","மீன்"], display: "மீன்", hint: "மூஸா நபியின் பயணத்தில் உயிர் பெற்று நீரில் நீந்திச் சென்ற மீன்.", note: "சூரா அல்-கஹ்ஃபில், மூஸா நபியின் மீன் கடலில் தப்பிச் செல்கிறது — அதுவே கிழ்ரு நபியைச் சந்திப்பதற்கான அடையாளமாக இருந்தது." },
+      { emoji: "🐋 🌊 🙏", a: ["whale","whales","hut","al hut","திமிங்கலம்","பெரிய மீன்"], display: "திமிங்கலம் / பெரிய மீன்", hint: "இருளில் துயருற்ற இறைத்தூதரை விழுங்கிய பெரிய மீன்.", note: "யூனுஸ் நபி பெரிய மீனால் விழுங்கப்பட்டார்; 'மீனின் தோழர்' என்று அல்லாஹ் இவரைக் குறிப்பிடுகிறான்." },
+      { emoji: "🐺 👕 👨", a: ["wolf","wolves","dhi'b","ஓநாய்"], display: "ஓநாய்", hint: "யஃகூப் நபி பயந்த மிருகம்; யூஸுஃபின் சகோதரர்கள் பழி போட்ட மிருகம்.", note: "யூஸுஃபை ஓநாய் தின்றுவிட்டதாகச் சகோதரர்கள் பொய் கூறினர். சூரா யூஸுஃபில் இது விவரிக்கப்பட்டுள்ளது." },
+      { emoji: "🐦‍⬛ 🌍 👦", a: ["crow","crows","ghurab","காகம்"], display: "காகம்", hint: "காபீலுக்குத் தன் சகோதரனின் உடலை எவ்வாறு அடக்கம் செய்வது என்று கற்றுக் கொடுத்தது.", note: "பூமியின் முதல் கொலையாளி காபீலுக்கு, ஹாபீலை அடக்கம் செய்ய அல்லாஹ் ஒரு காகத்தை அனுப்பினான்." },
+      { emoji: "🐦 👑 💌", a: ["hoopoe","hudhud","hud hud","ஹுத்ஹுத்","ஹுத்ஹுத் பறவை"], display: "ஹுத்ஹுத் பறவை", hint: "சுலைமான் நபியிடமிருந்து ஷபா நாட்டு ராணிக்குக் கடிதம் கொண்டு சென்ற பறவை.", note: "சூரா அந்-நம்லில் சுலைமான் நபியின் தூதராகச் செயல்பட்ட பறவையாக விவரிக்கப்பட்டுள்ளது." },
+      { emoji: "🐕 🕳️ 🌌", a: ["dog","dogs","kalb","நாய்"], display: "நாய்", hint: "குகையில் 300 ஆண்டுகள் உறங்கிய இளைஞர்களைப் பாதுகாத்த நாய்.", note: "அஸ்ஹாபுல் கஹ்ஃப் இளைஞர்களின் நாய் குகை வாசலில் படுத்திருந்தது — சூரா அல்-கஹ்ஃபில் குறிப்பிடப்பட்டுள்ளது." },
+      { emoji: "🐍 🔥 🏔️", a: ["snake","serpent","hayya","thu'ban","பாம்பு"], display: "பாம்பு", hint: "ஃபிர்அவ்னின் முன்னிலையில் மூஸா நபியின் கைத்தடி மாறிய வடிவம்.", note: "மூஸா நபியின் கைத்தடி பெரிய பாம்பாக மாறியது — ஃபிர்அவ்னுக்கான அத்தாட்சி." },
+      { emoji: "🫏 🍇 🌾", a: ["donkey","donkeys","himar","கழுதை"], display: "கழுதை", hint: "உஸைர் நபியின் கழுதை 100 ஆண்டுகளுக்குப் பிறகு மீண்டும் உயிர்ப்பிக்கப்பட்டது.", note: "சூரா அல்-பகராவில் (2:259), அல்லாஹ் இறந்தோரை எவ்வாறு உயிர்ப்பிக்கிறான் என்பதற்கு உஸைர் நபியின் கழுதை சான்றாகக் காட்டப்பட்டது." },
+      { emoji: "🐑 🔥 🐏", a: ["sheep","ram","kabsh","ஆடு","ஆட்டுக்கடா"], display: "ஆட்டுக்கடா / ஆடு", hint: "இப்ராஹீம் நபியின் மகனுக்குப் பகரமாக அனுப்பப்பட்ட பலிப் பிராணி.", note: "இஸ்மாயீல் நபிக்கு பகரமாக அல்லாஹ் ஒரு பெரிய ஆட்டுக்கடாவை அனுப்பDocினான் — இதுவே குர்பானியாகக் கொண்டாடப்படுகிறது." },
+      { emoji: "🐐 🏔️ 🐑", a: ["goat","goats","mi'zā","வெள்ளாடு"], display: "வெள்ளாடு", hint: "நபிமார்களும் மேய்ப்பர்களும் வளர்த்த கால்நடை.", note: "மனிதர்களுக்குப் பயனுள்ள கால்நடைகளாக வெள்ளாடுகளும் ஆடுகளும் குர்ஆனில் குறிப்பிடப்பட்டுள்ளன." },
+      { emoji: "🦗 🍃 ⚠️", a: ["locusts","locust","jarad","வெட்டுக்கிளி"], display: "வெட்டுக்கிளி", hint: "ஃபிர்அவ்னின் எகிப்து மீது அனுப்பப்பட்ட சோதனைகளில் ஒன்று.", note: "ஃபிர்அவ்னுக்கு அனுப்பப்பட்ட தண்டனை அத்தாட்சிகளில் வெட்டுக்கிளிகளும் ஒன்று (சூரா அல்-அஃராஃப்)." },
+      { emoji: "🐸 🌊 ⚠️", a: ["frogs","frog","dafadi","தவளை"], display: "தவளை", hint: "எகிப்து நாட்டை மூடிய மற்றொரு சோதனை.", note: "சூரா அல்-அஃராஃபில் ஃபிர்அவ்னின் மக்களுக்கு எச்சரிக்கையாக அனுப்பப்பட்ட தவளைகள்." },
+      { emoji: "🐦 🍞 🏜️", a: ["quail","salwa","quails","காடை","காடைப் பறவை"], display: "காடைப் பறவை (ஸல்வா)", hint: "பனீ இஸ்ராயீல் மக்களுக்கு வானத்திலிருந்து மன்னாவோடு சேர்த்து அனுப்பப்பட்ட உணவு.", note: "பாலைவனத்தில் பனீ இஸ்ராயீல் மக்களுக்கு உணவாகக் காடைப் பறவைகளை அல்லாஹ் அனுப்பினான்." },
+      { emoji: "🐖 🚫 📖", a: ["pig","pigs","khinzir","பன்றி"], display: "பன்றி", hint: "குர்ஆனில் தெளிவாகத் தடைசெய்யப்பட்ட உணவு.", note: "பன்றியின் இறைச்சி உண்ணக்கூடாதென குர்ஆனின் நான்கு இடங்களில் தெளிவாகத் தடுக்கப்பட்டுள்ளது." },
+      { emoji: "🦁 💪 ⚔️", a: ["lion","lions","asad","சிங்கம்"], display: "சிங்கம்", hint: "வீரத்தின் அடையாளமாகக் குர்ஆனில் குறிப்பிடப்பட்டுள்ளது.", note: "சூரா அல்-முத்தஃஸிரில் (74:51) சிங்கத்தைக் கண்டு வெண்டோடும் கழுதைகள் உவமையாகக் கூறப்பட்டுள்ளன." },
+      { emoji: "🦟 📖 🌿", a: ["mosquito","mosquitoes","ba'ud","கொசு"], display: "கொசு", hint: "ஒரு சிறிய உயிரினத்தை உவமையாகக் கூற அல்லாஹ் வெட்கப்படுவதில்லை.", note: "சூரா அல்-பகராவில் (2:26) கொசுவை ஓர் உவமையாக அல்லாஹ் குறிப்பிடுகிறான்." },
+      { emoji: "🐴 🌾 🏃", a: ["mule","mules","baghl","கோவேறு கழுதை"], display: "கோவேறு கழுதை", hint: "சவாரி செய்யும் விலங்காகக் குர்ஆனில் பட்டியலிடப்பட்டுள்ளது.", note: "சூரா அந்-நஹ்ல் (16:8) குதிரைகள், கோவேறு கழுதைகள் மற்றும் கழுதைகளைச் சவாரி வாகனங்களாகக் குறிப்பிடுகிறது." },
+      { emoji: "🐒 🍌 🏝️", a: ["monkey","monkeys","qirada","குரங்கு"], display: "குரங்கு", hint: "சனிக்கிழமை வரம்பு மீறியவர்களுக்கு அளிக்கப்பட்ட தண்டனை.", note: "சனிக்கிழமை வழிபாட்டு விதியை மீறியவர்கள் இழிந்த குரங்குகளாக மாற்றப்பட்டதாகச் சூரா அல்-பகரா கூறுகிறது." }
+    ]
+  },
+
+  {
+    id: 3,
+    title: "உணவுகள்",
+    arabic: "أَطعِمَة",
+    icon: "🫒",
+    description: "குர்ஆனில் பெயரிடப்பட்ட உணவுகள் மற்றும் கனிகள்",
+    questions: [
+      { emoji: "🌴 🏜️ 🍯", a: ["dates","date","tamr","nakhl","பேரீச்சம்பழம்","பேரீச்சை"], display: "பேரீச்சம்பழம் (தம்ர்)", hint: "பேரீச்சை மரத்தின் கனி — ஓர் அத்தாட்சியும் உணவும்.", note: "20 க்கும் மேற்பட்ட வசனங்களில் பேரீச்சை குறிப்பிடப்பட்டுள்ளது. ஈஸா நபியின் பிறப்பின் போது மரியம் அலைஹிஸ்ஸலாம் அவர்களுக்குப் புதிய பேரீச்சம்பழங்கள் உணவாக அளிக்கப்பட்டன." },
+      { emoji: "🍈 📖 🍽️", a: ["figs","fig","teen","tin","அத்திப்பழம்","அத்தி"], display: "அத்திப்பழம் (தீன்)", hint: "ஒலிவப் பழத்துடன் சேர்த்து இதன் பெயரில் ஒரு சூராவே உள்ளது.", note: "சூரா அத்-தீன் (95) அத்தி மற்றும் ஒலிவப் பழத்தின் மீது சத்தியமிட்டுத் தொடங்குகிறது." },
+      { emoji: "🫒 🌳 ✨", a: ["olive","olives","zaytun","ஒலிவம்","ஒலிவப் பழம்","ஒலிவா"], display: "ஒலிவம் (ஜைத்தூன்)", hint: "இதன் எண்ணெய் இறை ஒளியின் உவமைக்கு ஒளிர்கிறது.", note: "ஆயத்துன் னூர் (24:35) அல்லாஹ்வின் ஒளியை ஆசீர்வதிக்கப்பட்ட ஒலிவ மரத்தின் எண்ணெய்க்கு உவமிக்கிறது." },
+      { emoji: "🍇 🍷 🌿", a: ["grapes","grape","inab","திராட்சை"], display: "திராட்சை (இனப்)", hint: "நல்லடியார்களின் கூலிகளில் ஒன்றாகக் குறிப்பிடப்பட்டுள்ளது.", note: "இவ்வுலக அருளாகவும் சுவனத்தின் கனியாகவும் திராட்சை பலமுறை குறிப்பிடப்பட்டுள்ளது." },
+      { emoji: "🍎 🌰 📖", a: ["pomegranate","pomegranates","rumman","மாதுளை"], display: "மாதுளை (ரும்மான்)", hint: "அல்லாஹ்வின் அருட்கொடைகளில் ஒன்றாகக் குறிப்பிடப்பட்ட கனி.", note: "சூரா அல்-அன்ஆம் மற்றும் அல்-ரஹ்மானில் சுவனத்தின் கனியாகக் குறிப்பிடப்பட்டுள்ளது." },
+      { emoji: "🍯 🐝 💛", a: ["honey","asl","தேன்"], display: "தேன் (அஸல்)", hint: "தேனீ உற்பத்தி செய்வது — குர்ஆன் இதை நிவாரணம் என்கிறது.", note: "சூரா அந்-நஹ்ல் (16:69): 'அதன் வயிற்றிலிருந்து பல்வேறு நிறங்களையுடைய பானம் வெளிப்படுகிறது; அதில் மனிதர்களுக்கு நிவாரணம் உள்ளது.'" },
+      { emoji: "🥛 🐄 🍶", a: ["milk","laban","halib","பால்"], display: "பால் (லபன்)", hint: "தூய்மையானதாகவும் அருந்துவதற்கு இன்பமானதாகவும் விவரிக்கப்பட்டுள்ளது.", note: "சூரா அந்-நஹ்ல் (16:66) பாலை அருந்துபவர்களுக்கு இன்பமளிக்கும் தூய பானமாக விவரிக்கிறது." },
+      { emoji: "💧 🌊 🏞️", a: ["water","ma'","maa","நீர்","தண்ணீர்"], display: "நீர் (மாஃ)", hint: "அனைத்து உயிரினங்களின் வாழ்வாதாரம்.", note: "சூரா அல்-அன்பியா (21:30): 'உயிருள்ள ஒவ்வொன்றையும் நீரிலிருந்து அமைத்தோம்.'" },
+      { emoji: "🍌 🌴 📖", a: ["banana","bananas","talh","வாழைப்பழம்","வாழை"], display: "வாழைப்பழம் (தல்ஹ்)", hint: "சுவனத்தின் நிழல்களில் ஒன்றாகக் குறிப்பிடப்பட்டுள்ளது.", note: "சூரா அல்-வாக்கிஆ (56:29) 'அடுக்கடுக்கான வாழைப் பழங்களை' சுவனத்தின் அருளாகக் குறிப்பிடுகிறது." },
+      { emoji: "🍞 ✨ 🏜️", a: ["manna","mann","manna and quail","மன்னா","மன்"], display: "மன்னா (அருளுணவு)", hint: "பனீ இஸ்ராயீலர்களுக்கு வானத்திலிருந்து அருளப்பட்ட உணவு.", note: "பாலைவனப் பயணத்தின் போது பனீ இஸ்ராயீல்களுக்கு அல்லாஹ் மன்னாவையும் ஸல்வாவையும் உணவாக அளித்தான்." },
+      { emoji: "🏞️ 💧 🌊", a: ["rivers","river","anhar","ஆறுகள்"], display: "ஆறுகள் (அன்ஹார்)", hint: "சுவனச் சோலைகளின் கீழ் ஓடிக் கொண்டிருக்கும் ஆறுகள்.", note: "குர்ஆன் சுவனத்தை 'அதன் கீழ் ஆறுகள் ஓடிக் கொண்டிருக்கும் சோலைகள்' என 30 க்கும் மேற்பட்ட முறை விவரிக்கிறது." },
+      { emoji: "💦 ⛰️ 🌿", a: ["springs","spring","uyun","நீரூற்றுகள்"], display: "நீரூற்றுகள் (உயூன்)", hint: "பூமியிலிருந்து பொங்கி எழும் அல்லாஹ்வின் அருள்.", note: "சுவனத்தின் அருட்கொடைகளாகவும் அல்லாஹ்வின் ரஹ்மத்தாகவும் நீரூற்றுகள் குறிப்பிடப்படுகின்றன." },
+      { emoji: "🌾 🍞 📖", a: ["grain","wheat","zar","habb","தானியம்","கோதுமை"], display: "தானியம் (ஹப்ப்)", hint: "வாழ்வின் முக்கிய உணவு, சூரா ரஹ்மானில் குறிப்பிடப்பட்டுள்ளது.", note: "சூரா அல்-ரஹ்மான் (55:12) பதருள்ள தானியங்களையும் மணமுள்ள மலர்களையும் அல்லாஹ்வின் அருளாகக் குறிப்பிடுகிறது." },
+      { emoji: "🧅 🍲 ⚠️", a: ["onion","onions","basal","வெங்காயம்"], display: "வெங்காயம் (பஸல்)", hint: "பாலைவனத்தில் பனீ இஸ்ராயீலர்கள் கேட்ட காய்கறிகளில் ஒன்று.", note: "சூரா அல்-பகரா (2:61) அவர்கள் வெங்காயம், பூண்டு, பருப்பு போன்றவற்றை ஆசையாகக் கேட்டதைப் பதிவு செய்கிறது." },
+      { emoji: "🧄 🍲 ⚠️", a: ["garlic","fūm","fuum","பூண்டு"], display: "பூண்டு (ஃபூம்)", hint: "பனீ இஸ்ராயீலர்கள் கேட்ட உணவுகளில் ஒன்று.", note: "சூரா அல்-பகராவில் (2:61) மன்னாவிற்குப் பதிலாக அவர்கள் கேட்ட உணவுகளில் ஒன்று." },
+      { emoji: "🫘 🍲 🌾", a: ["lentils","lentil","adas","பருப்பு"], display: "பருப்பு (அதஸ்)", hint: "பனீ இஸ்ராயீலர்கள் கேட்ட பருப்பு வகை.", note: "எளிய பருப்பு வகை பனீ இஸ்ராயீல் கதையின் ஒரு பகுதியாகக் குர்ஆனில் வருகிறது." },
+      { emoji: "🥒 🥗 🌱", a: ["cucumber","cucumbers","qiththa","வெள்ளரிக்காய்"], display: "வெள்ளரிக்காய் (கித்தாய்)", hint: "பனீ இஸ்ராயீலர்கள் கேட்ட காய்கறிகளில் ஒன்று.", note: "சூரா அல்-பகராவில் குறிப்பிடப்பட்டுள்ள மற்றொரு காய் வகை." },
+      { emoji: "🍒 🌳 🌿", a: ["lote tree","sidr","lote","இலந்தை மரம்","இலந்தை"], display: "இலந்தை மரம் (சித்ர்)", hint: "விண்ணுலக எல்லையில் உள்ள மரம்.", note: "சித்ரத்துல் முன்தஹா (எல்லை ஓரத்திலுள்ள இலந்தை மரம்) சூரா அந்-நஜ்ம் மற்றும் அல்-வாக்கிஆவில் விவரிக்கப்பட்டுள்ளது." },
+      { emoji: "🍇 🍇 📖", a: ["fruits","fruit","fawakih","கனிகள்","பழங்கள்"], display: "கனிகள் (ஃபவாக்கிஹ்)", hint: "சுவனத்து அருட்கொடைகளைக் குறிக்கும் பொதுவான சொல்.", note: "சூரா அல்-ரஹ்மான் பல்வேறு சுவனக் கனிகளைப் பற்றிக் குறிப்பிடுகிறது." },
+      { emoji: "🍖 🐄 🍽️", a: ["meat","lahm","laham","இறைச்சி"], display: "இறைச்சி (லஹ்ம்)", hint: "அனுமதிக்கப்பட்ட முறையில் அறுக்கப்பட்ட தூய உணவு.", note: "சுவனத்தில் வழங்கப்படும் பறவையிறைச்சி பற்றிச் சூரா அல்-வாக்கிஆ (56:21) குறிப்பிடுகிறது." },
+      { emoji: "🐟 🍽️ 🌊", a: ["fish","seafood","samak","மீன் உணவு","கடல் உணவு"], display: "கடல் உணவு / மீன்", hint: "கடலிலிருந்து பிடிக்கப்படும் அனுமதிக்கப்பட்ட உணவு.", note: "கடல் வேட்டையை அனுமதிக்கப்பட்ட உணவாகக் குர்ஆன் அறிவிக்கிறது." },
+      { emoji: "🍶 🍷 🚫", a: ["wine","khamr","intoxicants","மது","மதுபானம்"], display: "மது / போதைப்பொருள் (கம்ர்)", hint: "ஷைத்தானின் செயலாகக் கூறித் தடுக்கப்பட்ட ஒன்று.", note: "சூரா அல்-மாயிதா (5:90) மதுவை அருவருக்கத்தக்க ஷைத்தானின் வேலை என்று தடுத்துள்ளது." },
+      { emoji: "🫗 🍯 📖", a: ["drink","sharab","drinks","பானம்"], display: "பானம் (ஷராப்)", hint: "தூய்மையான மற்றும் தூய்மையற்ற பானங்களைக் குறிக்கும் பொதுச் சொல்.", note: "சுவனத்தின் பானங்கள் தலைசுற்றலையோ போதையையோ தராது எனச் சூரா அஸ்-ஸாஃஃபாத் கூறுகிறது." },
+      { emoji: "🌿 🌾 🌱", a: ["herbs","herb","rayhan","நறுமணப் புல்","ரய்ஹான்"], display: "நறுமணப் புல் (ரய்ஹான்)", hint: "சூரா அல்-ரஹ்மானின் தொடக்கத்தில் குறிப்பிடப்பட்டுள்ள நறுமணத் தாவரம்.", note: "சூரா அல்-ரஹ்மான் (55:12) பூமியின் அருட்கொடைகளில் ஒன்றாக நறுமணப் புல்லைக் குறிப்பிடுகிறது." },
+      { emoji: "🍽️ 🚫 ⚠️", a: ["forbidden food","haram food","muharramat","ஹராமான உணவு","தடுக்கப்பட்ட உணவு"], display: "தடுக்கப்பட்ட உணவுகள்", hint: "தானாகச் செத்தது, இரத்தம், பன்றி இறைச்சி மற்றும் அல்லாஹ் அல்லாதவற்றின் பெயர் கூறப்பட்டது.", note: "சூரா அல்-பகரா (2:173) மற்றும் அல்-மாயிதா (5:3) தடுக்கப்பட்ட உணவுகளைப் பட்டியலிடுகின்றன." }
+    ]
+  },
+
+  {
+    id: 4,
+    title: "வணக்கங்கள்",
+    arabic: "عِبَادَات",
+    icon: "🕌",
+    description: "இஸ்லாமிய வணக்க வழிபாடுகள் மற்றும் கடமைகள்",
+    questions: [
+      { emoji: "☝️ 🗣️ ✨", a: ["shahadah","shahada","testimony","kalima","ஷஹாதா","கலிமா","ஈமான்"], display: "ஷஹாதா (ஈமானின் வாக்குமூலம்)", hint: "முதல் தூண் — அல்லாஹ்வைத் தவிர வேறு இறைவனில்லை என்ற சாட்சியம்.", note: "'லாயிலாஹ இல்லல்லாஹ் முஹம்மதுர் ரசூலுல்லாஹ்' — இஸ்லாத்தின் நுழைவாயில்." },
+      { emoji: "🕌 🕋 🕐", a: ["salah","salat","prayer","namaz","தொழுகை","ஸலாத்","நமாஸ்"], display: "ஸலாத் (தொழுகை)", hint: "ஐவேளைத் தொழுகை — இஸ்லாத்தின் இரண்டாம் தூண்.", note: "மார்க்கத்தின் தூண் என்று அழைக்கப்படும் தொழுகை, குறிப்பிட்ட நேரங்களில் நிறைவேற்றப்பட வேண்டும்." },
+      { emoji: "💰 🧕 🤲", a: ["zakat","zakaat","charity","almsgiving","ஜகாத்","ஸகாத்"], display: "ஜகாத் (கடமையான தானம்)", hint: "மூன்றாம் தூண் — செல்வத்திலிருந்து குறிப்பிட்ட பங்கைக் கொடுப்பது.", note: "சூரா அத்-தவ்பாவில் (9:60) குறிப்பிடப்பட்டுள்ள 8 வகையினருக்கு ஆண்டிற்கு 2.5% கட்டாயம் வழங்கப்பட வேண்டும்." },
+      { emoji: "🌙 🍽️ 🚫", a: ["sawm","fasting","ramadan","siyam","நோன்பு","ரமலான் நோன்பு"], display: "ஸவ்ம் (நோன்பு)", hint: "நான்காம் தூண் — ரமலான் மாதத்தில் வைகறை முதல் সূரிய மறைவு வரை நோன்பிருப்பது.", note: "சூரா அல்-பகரா (2:183): 'நம்பிக்கையாளர்களே! உங்களுக்கு முன் இருந்தவர்கள் மீது கடமையாக்கப்பட்டது போல் உங்கள் மீதும் நோன்பு கடமையாக்கப்பட்டுள்ளது.'" },
+      { emoji: "🕋 🐪 ✈️", a: ["hajj","pilgrimage","haj","ஹஜ்","ஹஜ் பயணம்"], display: "ஹஜ் (புனித பயணம்)", hint: "ஐந்தாம் தூண் — ஆயுளில் ஒருமுறை மக்காவுக்குப் புனிதப் பயணம் மேற்கொள்வது.", note: "வசதியுள்ளவர்கள் மீது மக்கா சென்று ஹஜ் செய்வது கடமையாகும்." },
+      { emoji: "💧 🤲 🧼", a: ["wudu","ablution","wudhu","உளூ","வுழூ"], display: "உளூ (தூய்மைப்படுத்தல்)", hint: "தொழுகைக்கும் தவாஃபிற்கும் முன் செய்யப்படும் உடல் தூய்மை.", note: "சூரா அல்-மாயிதா (5:6) தொழுகைக்கு முன் முகம், கைகள், தலை, கால்களைக் கழுவுவதை ஏவுகிறது." },
+      { emoji: "📢 🕌 🕐", a: ["adhan","azan","call to prayer","பாங்கு","அஸான்"], display: "அஃதான் (பாங்கு / தொழுகை அழைப்பு)", hint: "பள்ளிவாசல்களிலிருந்து தொழுகைக்காக வழங்கப்படும் அழைப்பு.", note: "முதல் பாங்கு முஅத்தின் பிளால் இப்னு ரபாஹ் (ரலி) அவர்களால் வழங்கப்பட்டது." },
+      { emoji: "🕌 📅 👥", a: ["jumuah","jummah","friday prayer","ஜும்ஆ","ஜும்ஆ தொழுகை"], display: "ஜும்ஆ (வெள்ளிக்கிழமைத் தொழுகை)", hint: "வெள்ளிக்கிழமை ளுஹருக்குப் பதிலாகக் உரையுடன் கூடித் தொழும் தொழுகை.", note: "சூரா அல்-ஜும்ஆ (62:9) வெள்ளிக்கிழமை அழைப்பு விடுக்கப்பட்டால் அல்லாஹ்வின் நினைப்பின் பால் விரைந்து செல்ல ஏவுகிறது." },
+      { emoji: "🌙 🕌 🚶", a: ["tarawih","taraweeh","night prayer","தராவீஹ்","தராவீஹ் தொழுகை"], display: "தராவீஹ் (ரமலான் இரவுத் தொழுகை)", hint: "ரமலான் இரவுகளில் இஷாவிற்குப் பின் கூட்டாகத் தொழப்படும் தொழுகை.", note: "ரமலானில் வலியுறுத்தப்பட்ட சுன்னா — குர்ஆனை அதிகமாக ஓதி அல்லாஹ்வை நெருங்கும் வழி." },
+      { emoji: "🕌 🌙 🕯️", a: ["itikaf","seclusion","aitikaf","இஃதிகாஃப்"], display: "இஃதிகாஃப் (பள்ளிவாசலில் தங்குதல்)", hint: "ரமலானின் கடைசி பத்து நாட்களில் பள்ளிவாசலில் தங்கி இறைவழிபாடு செய்தல்.", note: "நபிகள் நாயகம் ﷺ அவர்கள் லைலத்துல் கதரைத் தேடி ஒவ்வொரு ரமலானிலும் இஃதிகாஃப் இருப்பார்கள்." },
+      { emoji: "🤲 💛 ✨", a: ["sadaqah","sadaqa","voluntary charity","ஸதகா","தர்மம்"], display: "ஸதகா (உபரியான தர்மம்)", hint: "பணம், உணவு அல்லது ஒரு புன்னகை என எதுவாகவும் இருக்கலாம்.", note: "நபிகள் நாயகம் ﷺ கூறினார்கள்: 'ஒவ்வொரு நல்ல செயலும் தர்மமாகும்.'" },
+      { emoji: "✈️ 🕋 🚶", a: ["umrah","umra","lesser pilgrimage","உம்ரா"], display: "உம்ரா (சிறிய புனிதப் பயணம்)", hint: "ஆண்டின் எந்த நேரத்திலும் மக்காவிற்குச் சென்று நிறைவேற்றும் பயணம்.", note: "ஹஜ்ஜின் சில வணக்கங்களை உள்ளடக்கியது, ஆனால் குறுகிய காலத்தில் செய்து முடிக்கலாம்." },
+      { emoji: "🧭 🕋 🕌", a: ["qibla","qibla direction","கிப்லா"], display: "கிப்லா (தொழும் திசை)", hint: "உலகெங்கிலும் உள்ள முஸ்லிம்கள் தொழுவதற்கு நோக்கும் கஃபாவின் திசை.", note: "சூரா அல்-பகரா (2:144) கஃபாவை நோக்கித் திரும்புமாறு கட்டளையிடுகிறது." },
+      { emoji: "📖 🗣️ 🕌", a: ["tilawah","recitation","tajweed","திலாவத்","குர்ஆன் ஓதுதல்"], display: "திலாவத் (குர்ஆன் ஓதுதல்)", hint: "குர்ஆனை அழகாகவும் சரியான தஜ்வீதுடனும் ஓதும் கலை.", note: "குர்ஆனை தெளிவான முறையிலும் நிதானமாகவும் ஓதுமாறு அல்லாஹ் ஏவுகிறான்." },
+      { emoji: "📿 ✨ 🤲", a: ["dhikr","zikr","remembrance","திக்ரு","திக்ர்"], display: "திக்ர் (அல்லாஹ்வை நினைவுகூர்தல்)", hint: "'அல்லாஹ்வை நினைவுகூர்வதனால் தான் உள்ளங்கள் அமைதியடைகின்றன.'", note: "சூரா அல்-ரஅத் (13:28): 'நிச்சயமாக அல்லாஹ்வின் நினைவால் தான் உள்ளங்கள் அமைதி பெறுகின்றன.'" },
+      { emoji: "🤲 ☁️ 🌙", a: ["dua","du'a","supplication","துஆ","பிரார்த்தனை"], display: "துஆ (பிரார்த்தனை)", hint: "அல்லாஹ்விடம் நேரில் கேட்கும் தனிப்பட்ட பிரார்த்தனை.", note: "நபிகள் நாயகம் ﷺ துஆவை 'வணக்கத்தின் சாராம்சம்' என்று குறிப்பிட்டார்கள்." },
+      { emoji: "🙏 🤲 💧", a: ["istighfar","forgiveness","seeking forgiveness","இஸ்திக்பார்","பாவமன்னிப்பு"], display: "இஸ்திக்பார் (பாவமன்னிப்புத் தேடுதல்)", hint: "'அஸ்தஃபிருல்லாஹ்' — அல்லாஹ்விடம் பாவமன்னிப்புத் தேடுதல்.", note: "நபிகள் நாயகம் ﷺ பாவமற்றவராக இருந்தும் தினமும் 70 க்கும் மேற்பட்ட முறை பாவமன்னிப்புத் தேடினார்கள்." },
+      { emoji: "🌱 🔄 ✨", a: ["tawbah","repentance","தவ்பா"], display: "தவ்பா (மனந்திரும்புதல்)", hint: "செய்த பாவத்திற்காக வருந்தி அல்லாஹ்விடம் திரும்புதல்.", note: "சூரா அத்-தஹ்ரீம் (66:8): 'நம்பிக்கையாளர்களே! உண்மையான மனதுடன் அல்லாஹ்விடம் தவ்பா செய்யுங்கள்.'" },
+      { emoji: "👶 🐑 🍽️", a: ["aqiqah","aqeeqah","birth sacrifice","அகீகா"], display: "அகீகா (குழந்தை பிறப்புப் பலி)", hint: "குழந்தை பிறந்த ஏழாம் நாளில் அறுக்கப்படும் ஆடு.", note: "குழந்தை பிறப்பிற்காக ஆடு அறுத்து ஏழைகளுக்கு உணவளிக்கும் சுன்னத்தான வழிமுறை." },
+      { emoji: "💍 🕌 👩‍❤️‍👨", a: ["nikah","marriage","wedding","நிகாஹ்","திருமணம்"], display: "நிகாஹ் (திருமணம்)", hint: "சமுதாயத்தின் முன்னிலையில் செய்யப்படும் புனிதமான ஒப்பந்தம்.", note: "குர்ஆன் திருமணத்தை 'உறுதியான உடன்படிக்கை' என்று அழைக்கிறது (சூரா அந்-நிஸா)." },
+      { emoji: "⚰️ 🤲 🕌", a: ["janazah","funeral","janaza","ஜனாஸா","ஜனாஸா தொழுகை"], display: "ஜனாஸா (இறுதித் தொழுகை)", hint: "இறந்தவருக்காக நிறைவேற்றப்படும் கூட்டுப் பிரார்த்தனை.", note: "இறந்த முஸ்லிமிற்காகச் சமூகம் நிறைவேற்ற வேண்டிய கடமை (ஃபர்ளு கிஃபாயா)." },
+      { emoji: "🌙 💫 ✨", a: ["laylatul qadr","night of power","laylat al qadr","லைலத்துல் கத்ர்"], display: "லைலத்துல் கத்ர் (கத்ரு இரவு)", hint: "ஆயிரம் மாதங்களை விடச் சிறந்த இரவு.", note: "சூரா அல்-கத்ர் (97) இந்த ஒரே இரவில் செய்யும் வணக்கம் 83 ஆண்டுகள் செய்யும் வணக்கத்திற்குச் சமம் என்கிறது." },
+      { emoji: "🐑 🗡️ 🕋", a: ["udhiyah","qurbani","sacrifice","குர்பானி"], display: "குர்பானி (ஈத் பலி)", hint: "ஈதுல் அல்-ஹா பண்டிகையின் போது ஆடு அல்லது மாடு பலியிடுதல்.", note: "இப்ராஹீம் நபியின் தியாகத்தை நினைவுகூரும் சுன்னத்தான வணக்கம்." },
+      { emoji: "📖 🧠 ✨", a: ["hifz","hifdh","memorization","ஹிஃப்ளு","குர்ஆன் மனனம்"], display: "ஹிஃப்ளு (குர்ஆனை மனனம் செய்தல்)", hint: "புனித குர்ஆனை நெஞ்சில் மனனமாகப் பாதுகாக்கும் கலை.", note: "குர்ஆனை மனனம் செய்த ஹாஃபிழ் மறுமையில் சிறப்பு அந்தஸ்தைப் பெறுவார்." },
+      { emoji: "🤲 🙇‍♂️ 🕌", a: ["sujud","sujood","prostration","சஜ்தா"], display: "சஜ்தா (சிரவணக்கம்)", hint: "நெற்றியைத் தரையில் வைத்து இறைவனுக்குச் செய்யும் வணக்கம்.", note: "அடியான் அல்லாஹ்வுக்கு மிக நெருக்கமாக இருக்கும் நிலை சஜ்தா ஆகும்." }
+    ]
+  },
+
+  {
+    id: 5,
+    title: "இடங்கள் & நிகழ்வுகள்",
+    arabic: "الأَمَاكِن وَالأَحدَاث",
+    icon: "🗺️",
+    description: "குர்ஆனில் பதிவாகியுள்ள புனிதத் தலங்கள், நகரங்கள் மற்றும் வரலாற்றுப் போர்கள்",
+    questions: [
+      { emoji: "🕋 🏜️ 📖", a: ["makkah","mecca","bakka","மக்கா","பக்கா"], display: "மக்கா (பக்கா)", hint: "கஃபா அமைந்துள்ள புனித நகரம், நபி ﷺ பிறந்த இடம்.", note: "சூரா ஆலி இம்ரானில் 'பக்கா' என்றும், சூரா அல்-அன்ஆம் மற்றும் அஷ்-ஷூராவில் 'உம்முல் குரா' (நகரங்களின் தாய்) என்றும் அழைக்கப்படுகிறது." },
+      { emoji: "🌴 🕌 📜", a: ["madinah","medina","yathrib","மதீனா","யத்ரிப்"], display: "மதீனா (யத்ரிப்)", hint: "ஹிஜ்ரத்திற்குப் பின் அமைந்த அமைதியின் நகரம்.", note: "சூரா அல்-அஹ்ஸாப்பில் 'யத்ரிப்' என்றும் அழைக்கப்படுகிறது." },
+      { emoji: "🕌 🇵🇸 🌌", a: ["jerusalem","al aqsa","aqsa","குத்ஸ்","அல் அக்சா","அல் அக்ஸா"], display: "பைத்துல் முகத்தஸ் / அல்-அக்ஸா", hint: "முதல் கிப்லா; மிஃராஜ் பயணத்தின் போது நபி ﷺ தொழுத இடம்.", note: "சூரா அல்-இஸ்ரா (17:1) அல்-அக்ஸா பள்ளிவாசலைச் சுற்றியுள்ள பகுதிகளை 'ஆசீர்வதிக்கப்பட்டவை' என்று கூறுகிறது." },
+      { emoji: "⛰️ 📜 🕊️", a: ["mount sinai","tur","tur sinai","தூர் சினாய்","தூர் மலை"], display: "தூர் சினாய் மலை", hint: "மூஸா நபி இறைவனுடன் பேசிய புனித மலை.", note: "சூரா அத்-தீன் 'தூர் சினாய்' மீது சத்தியம் செய்கிறது." },
+      { emoji: "🕳️ 💤 🐕", a: ["cave of the sleepers","kahf","cave","குகை","கஹ்ஃப் குகை"], display: "கஹ்ஃப் குகை (அஸ்ஹாபுல் கஹ்ஃப்)", hint: "300 ஆண்டுகள் இளைஞர்கள் உறங்கிய குகை.", note: "சூரா 18 — அல்-கஹ்ஃப் — அநியாயக்கார அரசனிடமிருந்து தப்பிக்கக் குகையில் அடைக்கலம் புகுந்த இளைஞர்களின் கதையைக் கூறுகிறது." },
+      { emoji: "🚢 ⛰️ 🌊", a: ["mount judi","judi","ஜூதி மலை","ஜூதி"], display: "ஜூதி மலை", hint: "பெருவெள்ளத்திற்குப் பின் நூஹ் நபியின் கப்பல் தங்கிய மலை.", note: "சூரா ஹூத் (11:44) பெருவெள்ளம் வற்றிய பின் கப்பல் ஜூதி மலையின் மீது நிலைபெற்றதாகக் கூறுகிறது." },
+      { emoji: "🏜️ 🏛️ 💨", a: ["iram","iram of the pillars","இரம்"], display: "இரம் (தூண்கள் நிறைந்த நகரம்)", hint: "ஆத் மக்கள் வாழ்ந்த தூண்கள் நிறைந்த மாபெரும் நகரம்.", note: "சூரா அல்-ஃபஜ்ர் (89:7) 'தூண்கள் நிறைந்த இரம் நகரம்' போல் வேறு எங்கும் படைக்கப்படவில்லை என்கிறது." },
+      { emoji: "🏜️ 🏛️ ⛰️", a: ["hijr","al hijr","மதாயின் ஸாலிஹ்","ஹிஜ்ர்"], display: "அல்-ஹிஜ்ர் (மதாயின் ஸாலிஹ்)", hint: "மலையைக் குடைந்து வீடுகளைக் கட்டிய ஸமூத் மக்கள் வாழ்ந்த இடம்.", note: "சூரா 15 'அல்-ஹிஜ்ர்' என்று அழைக்கப்படுகிறது — அவர்கள் பாறைகளைக் குடைந்து வீடுகளை அமைத்தனர்." },
+      { emoji: "🌊 🏝️ 👑", a: ["egypt","misr","எகிப்து","மிஸ்ர்"], display: "எகிப்து (மிஸ்ர்)", hint: "ஃபிர்அவ்ன் ஆட்சி செய்த இடம், மூஸா மற்றும் யூஸுஃப் நபியின் வரலாறு நடந்த இடம்.", note: "குர்ஆனில் 'மிஸ்ர்' என்று நேரடியாகப் பலமுறை குறிப்பிடப்பட்டுள்ள நாடு." },
+      { emoji: "🌊 🏰 👑", a: ["babylon","babil","பாபிலோன்"], display: "பாபிலோன் (பபில்)", hint: "ஹாரூத், مارூத் என்ற இரு மலக்குகள் மக்களுக்குச் சூனியத்தைக் கற்றுக் கொடுத்த இடம்.", note: "சூரா அல்-பகரா (2:102) பாபிலோனில் நடந்த இந்தச் சோதனையைக் குறிப்பிடுகிறது." },
+      { emoji: "👑 🏰 ☀️", a: ["saba","sheba","ஷபா","சபா"], display: "ஷபா (சபா நகரம்)", hint: "மாபெரும் அணைக்கட்டையும் ராணியையும் கொண்டிருந்த யமன் நகரம்.", note: "சூரா 34 இதன் பெயரால் அழைக்கப்படுகிறது; அணைக்கட்டு உடைந்ததால் பெருவெள்ளத்தால் அழிக்கப்பட்டது." },
+      { emoji: "🌊 🛟 🏝️", a: ["red sea","the sea","al bahr","செங்கடல்","கடல்"], display: "செங்கடல்", hint: "மூஸா நபிக்காகப் பிளந்து, ஃபிர்அவ்னை மூழ்கடித்த கடல்.", note: "சூரா அல்-பகரா மற்றும் தாஹாவில் மூஸா நபியின் அற்புதமாக கடல் பிளந்தது பதிவு செய்யப்பட்டுள்ளது." },
+      { emoji: "⚔️ 🌙 🌴", a: ["badr","battle of badr","பத்ரு","பத்ருப் போர்"], display: "பத்ரு (பத்ரு களம்)", hint: "முஸ்லிம்கள் வெற்றி பெற்ற முதல் மாபெரும் போர்.", note: "சூரா ஆலி இம்ரான் (3:123) முஸ்லிம்கள் சிறு தொகையினராக இருந்த போது அல்லாஹ் பத்ரில் உதவி செய்ததாகக் கூறுகிறது." },
+      { emoji: "🏹 ⛰️ ⚔️", a: ["uhud","battle of uhud","உஹுத்","உஹுத் போர்"], display: "உஹுத் (உஹுத் மலை)", hint: "வில்லாளிகள் கட்டளையை மீறியதால் சோதனை ஏற்பட்ட களம்.", note: "சூரா ஆலி இம்ரான் உஹுத் போரின் பாடங்களை விரிவாக விவரிக்கிறது." },
+      { emoji: "🛡️ 🕳️ ⚔️", a: ["khandaq","trench","battle of the trench","அகழ்ப் போர்","கந்தக்"], display: "அகழ்ப் போர் (கந்தக் / அஹ்ஸாப்)", hint: "மதீனாவைச் சுற்றி அகழ் தோண்டி தற்காத்துக் கொண்ட போர்.", note: "சூரா 33 — அல்-அஹ்ஸாப் — மதீனாவைச் சூழ்ந்த எதிரிப் படைகளை விவரிக்கிறது." },
+      { emoji: "🕊️ 🌳 🤝", a: ["hudaybiyyah","hudaybiya","ஹுதைபிய்யா"], display: "ஹுதைபிய்யா (உடன்படிக்கை இடம்)", hint: "மக்காவின் எல்லையில் எழுதப்பட்ட வரலாற்றுச் சிறப்புமிக்க அமைதி உடன்படிக்கை.", note: "சூரா அல்-ஃபத்ஹ் (48:1) இந்த உடன்படிக்கையை 'தெளிவான வெற்றி' என்று பிரகடனப்படுத்துகிறது." },
+      { emoji: "🏰 ⚔️ 🌴", a: ["khaybar","khaibar","கைபர்"], display: "கைபர்", hint: "மதீனாவிற்கு வடக்கே அமைந்திருந்த பலமான கோட்டைகள் நிறைந்த பகுதி.", note: "ஹிஜ்ரி 7 இல் முஸ்லிம்களால் வெற்றி கொள்ளப்பட்ட கோட்டை." },
+      { emoji: "⚔️ 👥 🏜️", a: ["hunayn","hunain","ஹுனைன்"], display: "ஹுனைன் (ஹுனைன் போர்)", hint: "எண்ணிக்கைப் பெருமையால் முஸ்லிம்கள் தடுமாறிப் பின் அல்லாஹ் வெற்றி தந்த இடம்.", note: "சூரா அத்-தவ்பா (9:25) 'உங்கள் அதிக எண்ணிக்கை உங்களுக்குப் பயனளிக்கவில்லை' என்று நினைவூட்டுகிறது." },
+      { emoji: "🏛️ 👑 🏜️", a: ["madyan","midian","மத்யன்"], display: "மத்யன்", hint: "ஷுஐப் நபியின் ஊர்; மூஸா நபி அடைக்கலம் புகுந்த இடம்.", note: "மூஸா நபி எகிப்திலிருந்து தப்பித்து வந்து 8 முதல் 10 ஆண்டுகள் தங்கியிருந்த இடம்." },
+      { emoji: "🌌 🐴 🕌", a: ["isra and miraj","miraj","isra","இஸ்ரா மிஃராஜ்","விண்ணேற்றம்"], display: "இஸ்ரா மற்றும் மிஃராஜ்", hint: "மக்காவிலிருந்து ஜெருசலேமிற்கும், அங்கிருந்து விண்ணுலகிற்கும் சென்ற இரவுப் பயணம்.", note: "சூரா அல்-இஸ்ரா (17) மற்றும் அந்-நஜ்ம் (53) இந்த அற்புதப் பயணத்தை விவரிக்கின்றன." },
+      { emoji: "🧱 🌊 🛡️", a: ["wall of dhul qarnayn","wall","அணை","துல்கர்னைனின் சுவர்"], display: "துல்கர்னைனின் சுவர்", hint: "யாஜூஜ் மாஜூஜ் கூட்டத்தாரைத் தடுக்க இரும்பாலும் செம்பாலும் கட்டப்பட்ட சுவர்.", note: "சூரா அல்-கஹ்ஃப் (18:94-98) துல்கர்னைன் கட்டிய அணையைக் குறிப்பிடுகிறது." },
+      { emoji: "🔥 🕳️ 👥", a: ["ukhduud","trench of fire","அகழ்வாசிகள்","அல்-உக்தூத்"], display: "அல்-உக்தூத் (நெருப்புக் குழி)", hint: "ஈமான் கொண்டவர்களை நெருப்புக் குழியில் வீசி அழித்த கொடுமை நடந்த இடம்.", note: "சூரா அல்-புரூஜ் (85:4-8) இந்த ஈமானியத் தியாகத்தைப் பதிவு செய்துள்ளது." },
+      { emoji: "🐘 🕋 🪨", a: ["year of the elephant","am al fil","யானை ஆண்டு"], display: "யானை ஆண்டு ('ஆமுல் ஃபீல்')", hint: "அப்ரஹா கஃபாவை அழிக்க வந்த ஆண்டும், நபி ﷺ பிறந்த ஆண்டும் ஆகும்.", note: "சூரா அல்-ஃபீல் கஃபாவைப் பாதுகாக்க அல்லாஹ் அனுப்பிய அப hisaபில் பறவைகளை விவரிக்கிறது." },
+      { emoji: "📜 🖊️ 🕊️", a: ["revelation","wahi","வாஹி","வஹீ"], display: "வஹீ (இறைச்செய்தி அருளப்படுதல்)", hint: "ஹிரா குகையில் ஜிப்ரீல் (அலை) மூலம் குர்ஆன் அருளப்படத் தொடங்கிய நிகழ்வு.", note: "சூரா அல்-அலக் (96:1-5) 'இக்ரஃ' (ஓதுவீராக) என்ற வசனத்துடன் அருளப்பட்டது." },
+      { emoji: "🕋 🤝 🕊️", a: ["conquest of makkah","fath makkah","மக்கா வெற்றி"], display: "மக்கா வெற்றி (ஃபத்ஹு மக்கா)", hint: "இரத்தம் சிந்தாமல் மக்கா நகரம் அமைதியாக வெற்றி கொள்ளப்பட்ட வரலாற்று நிகழ்வு.", note: "சூரா அந்-நஸ்ர் (110) 'அல்லாஹ்வின் உதவியும் வெற்றியும் வரும் போது' மனிதர்கள் கூட்டம் கூட்டமாக மார்க்கத்தில் இணைந்ததைக் கூறுகிறது." }
+    ]
+  }
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   STATE MANAGEMENT
+   ═══════════════════════════════════════════════════════════════ */
+let currentSetIndex = 0;
+let currentQIndex = 0;
+// State format per set: Array of { answered: bool, correct: bool, userAns: string }
+let userProgress = SETS.map(s => s.questions.map(() => ({ answered: false, correct: false, userAns: "" })));
+let streak = 0;
+let maxStreak = 0;
+
+/* DOM ELEMS */
+const setSelectorEl = document.getElementById("setSelector");
+const quizGridEl = document.getElementById("quizGrid");
+const activePanelEl = document.getElementById("activePanel");
+const apNumEl = document.getElementById("apNum");
+const apCatEl = document.getElementById("apCat");
+const apEmojiEl = document.getElementById("apEmoji");
+const apHintEl = document.getElementById("apHint");
+const answerFormEl = document.getElementById("answerForm");
+const answerInputEl = document.getElementById("answerInput");
+const submitBtnEl = document.getElementById("submitBtn");
+const revealBtnEl = document.getElementById("revealBtn");
+const clearBtnEl = document.getElementById("clearBtn");
+const prevBtnEl = document.getElementById("prevBtn");
+const nextBtnEl = document.getElementById("nextBtn");
+const feedbackEl = document.getElementById("feedback");
+const scoreDisplayEl = document.getElementById("scoreDisplay");
+const streakDisplayEl = document.getElementById("streakDisplay");
+const streakPillEl = document.getElementById("streakPill");
+const progressTextEl = document.getElementById("progressText");
+const progressFillEl = document.getElementById("progressFill");
+const resetBtnEl = document.getElementById("resetBtn");
+
+/* Overlay elems */
+const resultsOverlayEl = document.getElementById("resultsOverlay");
+const closeResultsBtn = document.getElementById("closeResults");
+const finalScoreEl = document.getElementById("finalScore");
+const finalTotalEl = document.getElementById("finalTotal");
+const finalPctEl = document.getElementById("finalPct");
+const finalMsgEl = document.getElementById("finalMsg");
+const finalStreakEl = document.getElementById("finalStreak");
+const scoreStreakEl = document.getElementById("scoreStreak");
+const reviewListEl = document.getElementById("reviewList");
+const replaySetBtn = document.getElementById("replaySet");
+const nextSetFromResultsBtn = document.getElementById("nextSetFromResults");
+
+/* ═══════════════════════════════════════════════════════════════
+   INIT & RENDER
+   ═══════════════════════════════════════════════════════════════ */
+function init() {
+  renderSetButtons();
+  selectSet(0);
+  updateTopStats();
+}
+
+function renderSetButtons() {
+  setSelectorEl.innerHTML = "";
+  SETS.forEach((set, idx) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `set-btn ${idx === currentSetIndex ? "active" : ""}`;
+    
+    // Check completion
+    const setProg = userProgress[idx];
+    const answeredCount = setProg.filter(p => p.answered).length;
+    const isComplete = answeredCount === set.questions.length;
+    if (isComplete) btn.classList.add("completed");
+
+    btn.innerHTML = `
+      <span class="set-icon">${set.icon}</span>
+      <span class="set-name">தொகுதி ${set.id}:${set.title}</span>
+      <span class="set-arabic">${set.arabic}</span>
+      <span class="set-progress">${answeredCount}/${set.questions.length}</span>
+    `;
+    btn.addEventListener("click", () => selectSet(idx));
+    setSelectorEl.appendChild(btn);
+  });
+}
+
+function selectSet(idx) {
+  currentSetIndex = idx;
+  currentQIndex = 0;
+  renderSetButtons();
+  renderGrid();
+  loadQuestion(0);
+}
+
+function renderGrid() {
+  quizGridEl.innerHTML = "";
+  const set = SETS[currentSetIndex];
+  const prog = userProgress[currentSetIndex];
+
+  set.questions.forEach((q, idx) => {
+    const p = prog[idx];
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "quiz-card";
+    if (idx === currentQIndex) card.classList.add("active");
+    if (p.answered) {
+      if (p.correct) card.classList.add("correct");
+      else card.classList.add("wrong");
+    }
+
+    const qNum = String(idx + 1).padStart(2, "0");
+    card.innerHTML = `
+      <span class="card-num">#${qNum}</span>
+      <span class="card-emoji">${q.emoji}</span>
+      <span class="card-cat">${set.title}</span>
+    `;
+    card.addEventListener("click", () => {
+      currentQIndex = idx;
+      renderGrid();
+      loadQuestion(idx);
+    });
+    quizGridEl.appendChild(card);
+  });
+}
+
+function loadQuestion(idx) {
+  currentQIndex = idx;
+  const set = SETS[currentSetIndex];
+  const q = set.questions[idx];
+  const p = userProgress[currentSetIndex][idx];
+
+  activePanelEl.classList.add("show");
+  
+  apNumEl.textContent = `கேள்வி #${String(idx + 1).padStart(2, "0")} / ${set.questions.length}`;
+  apCatEl.textContent = `${set.title} (${set.arabic})`;
+  apEmojiEl.textContent = q.emoji;
+  apHintEl.textContent = `குறிப்பு: ${q.hint}`;
+
+  prevBtnEl.disabled = (idx === 0);
+  nextBtnEl.disabled = (idx === set.questions.length - 1);
+
+  answerInputEl.value = p.userAns || "";
+  
+  if (p.answered) {
+    answerInputEl.disabled = true;
+    submitBtnEl.disabled = true;
+    revealBtnEl.disabled = true;
+    showFeedback(p.correct, q, p.userAns);
+  } else {
+    answerInputEl.disabled = false;
+    submitBtnEl.disabled = false;
+    revealBtnEl.disabled = false;
+    hideFeedback();
+    answerInputEl.focus();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANSWER CHECKING & FEEDBACK
+   ═══════════════════════════════════════════════════════════════ */
+function normalizeStr(str) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?'"']/g, "")
+    .replace(/\s+/g, " ");
+}
+
+function checkAnswer(userStr, acceptedArr) {
+  const normUser = normalizeStr(userStr);
+  if (!normUser) return false;
+  
+  return acceptedArr.some(acc => {
+    const normAcc = normalizeStr(acc);
+    if (normUser === normAcc) return true;
+    // Allow small string inclusion if length > 3
+    if (normUser.length > 3 && normAcc.length > 3) {
+      if (normUser.includes(normAcc) || normAcc.includes(normUser)) return true;
+    }
+    return false;
+  });
+}
+
+function handleSubmit(e) {
+  if (e) e.preventDefault();
+  const set = SETS[currentSetIndex];
+  const q = set.questions[currentQIndex];
+  const p = userProgress[currentSetIndex][currentQIndex];
+
+  if (p.answered) return;
+
+  const val = answerInputEl.value;
+  if (!val.trim()) return;
+
+  const isCorrect = checkAnswer(val, q.a);
+
+  p.answered = true;
+  p.correct = isCorrect;
+  p.userAns = val;
+
+  if (isCorrect) {
+    streak++;
+    if (streak > maxStreak) maxStreak = streak;
+  } else {
+    streak = 0;
+  }
+
+  updateTopStats();
+  renderSetButtons();
+  renderGrid();
+  loadQuestion(currentQIndex);
+
+  // Auto advance after short delay if correct
+  if (isCorrect && currentQIndex < set.questions.length - 1) {
+    setTimeout(() => {
+      if (currentQIndex < set.questions.length - 1) {
+        currentQIndex++;
+        renderGrid();
+        loadQuestion(currentQIndex);
+      }
+    }, 1800);
+  }
+
+  checkSetCompletion();
+}
+
+function handleReveal() {
+  const set = SETS[currentSetIndex];
+  const q = set.questions[currentQIndex];
+  const p = userProgress[currentSetIndex][currentQIndex];
+
+  if (p.answered) return;
+
+  p.answered = true;
+  p.correct = false;
+  p.userAns = "பதில் காட்டப்பட்டது";
+
+  streak = 0;
+
+  updateTopStats();
+  renderSetButtons();
+  renderGrid();
+  loadQuestion(currentQIndex);
+
+  checkSetCompletion();
+}
+
+function showFeedback(isCorrect, q, userAns) {
+  feedbackEl.className = `feedback show ${isCorrect ? "correct" : "wrong"}`;
+  
+  const titleText = isCorrect ? "✓ சரியானது! மாஷா அல்லாஹ்" : "✗ தவறானது அல்லது விடை காட்டப்பட்டது";
+  
+  feedbackEl.innerHTML = `
+    <div class="fb-title">${titleText}</div>
+    <div class="fb-line">சரியான விடை: <span class="fb-answer">${q.display}</span></div>
+    ${userAns ? `<div class="fb-line" style="font-size:.85rem; color:var(--muted);">நீங்கள் அளித்த பதில்: "${userAns}"</div>` : ""}
+    <div class="fb-note">
+      <strong>📖 அறிந்துகொள்வோம்:</strong> ${q.note}
+    </div>
+  `;
+}
+
+function hideFeedback() {
+  feedbackEl.className = "feedback";
+  feedbackEl.innerHTML = "";
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STATS & PROGRESS
+   ═══════════════════════════════════════════════════════════════ */
+function updateTopStats() {
+  const allQuestions = SETS.reduce((acc, s) => acc + s.questions.length, 0);
+  let totalAnswered = 0;
+  let totalCorrect = 0;
+
+  userProgress.forEach(setProg => {
+    setProg.forEach(p => {
+      if (p.answered) {
+        totalAnswered++;
+        if (p.correct) totalCorrect++;
+      }
+    });
+  });
+
+  scoreDisplayEl.textContent = `${totalCorrect} / ${totalAnswered}`;
+  streakDisplayEl.textContent = streak;
+
+  if (streak >= 3) {
+    streakPillEl.classList.add("active");
+  } else {
+    streakPillEl.classList.remove("active");
+  }
+
+  const pct = Math.round((totalAnswered / allQuestions) * 100);
+  progressTextEl.textContent = `${pct}% நிறைவுற்றது`;
+  progressFillEl.style.width = `${pct}%`;
+}
+
+function checkSetCompletion() {
+  const setProg = userProgress[currentSetIndex];
+  const isAllAnswered = setProg.every(p => p.answered);
+  if (isAllAnswered) {
+    setTimeout(() => {
+      showResultsOverlay();
+    }, 1000);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESULTS OVERLAY
+   ═══════════════════════════════════════════════════════════════ */
+function showResultsOverlay() {
+  const set = SETS[currentSetIndex];
+  const setProg = userProgress[currentSetIndex];
+  
+  let correctCount = 0;
+  setProg.forEach(p => { if (p.correct) correctCount++; });
+
+  const total = set.questions.length;
+  const pct = Math.round((correctCount / total) * 100);
+
+  finalScoreEl.textContent = correctCount;
+  finalTotalEl.textContent = total;
+  finalPctEl.textContent = `${pct}% சரியான பதில்கள்`;
+
+  if (maxStreak >= 2) {
+    scoreStreakEl.style.display = "inline-flex";
+    finalStreakEl.textContent = maxStreak;
+  } else {
+    scoreStreakEl.style.display = "none";
+  }
+
+  let msg = "";
+  if (pct === 100) msg = "மாஷா அல்லாஹ்! அற்புதமான வெற்றி! இத்தொகுப்பில் உள்ள அனைத்து வினாக்களுக்கும் சரியாகப் பதிலளித்துள்ளீர்கள்.";
+  else if (pct >= 80) msg = "மிகச் சிறந்த முயற்சி! குர்ஆனின் சான்றுகளைப் பற்றிய நல்லறிவு உங்களிடம் உள்ளது.";
+  else if (pct >= 50) msg = "நல்ல முயற்சி! குர்ஆனின் வரலாறுகளையும் சான்றுகளையும் மேலும் கற்க மீண்டும் முயற்சி செய்யுங்கள்.";
+  else msg = "தொடர்ந்து கற்று வாருங்கள். குர்ஆனின் ஒவ்வொரு செய்தியும் அறிவையும் நேர்வழியையும் அதிகரிக்கும் சான்றாகும்.";
+  
+  finalMsgEl.textContent = msg;
+
+  // Build review list
+  reviewListEl.innerHTML = "";
+  set.questions.forEach((q, idx) => {
+    const p = setProg[idx];
+    const item = document.createElement("div");
+    item.className = `review-item ${p.correct ? "ok" : "no"}`;
+    item.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span class="rv-emoji">${q.emoji}</span>
+        <span class="rv-answer">${q.display} ${p.correct ? "✓" : "✗"}</span>
+      </div>
+      <div class="rv-note">${q.note}</div>
+    `;
+    reviewListEl.appendChild(item);
+  });
+
+  if (currentSetIndex < SETS.length - 1) {
+    nextSetFromResultsBtn.style.display = "inline-block";
+  } else {
+    nextSetFromResultsBtn.style.display = "none";
+  }
+
+  resultsOverlayEl.classList.remove("hidden");
+}
+
+function hideResultsOverlay() {
+  resultsOverlayEl.classList.add("hidden");
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EVENT LISTENERS
+   ═══════════════════════════════════════════════════════════════ */
+answerFormEl.addEventListener("submit", handleSubmit);
+revealBtnEl.addEventListener("click", handleReveal);
+
+clearBtnEl.addEventListener("click", () => {
+  answerInputEl.value = "";
+  answerInputEl.focus();
+});
+
+prevBtnEl.addEventListener("click", () => {
+  if (currentQIndex > 0) {
+    currentQIndex--;
+    renderGrid();
+    loadQuestion(currentQIndex);
+  }
+});
+
+nextBtnEl.addEventListener("click", () => {
+  const set = SETS[currentSetIndex];
+  if (currentQIndex < set.questions.length - 1) {
+    currentQIndex++;
+    renderGrid();
+    loadQuestion(currentQIndex);
+  }
+});
+
+resetBtnEl.addEventListener("click", () => {
+  if (confirm("இத்தொகுப்பின் அனைத்துப் பதில்களையும் அழித்துவிட்டு மீண்டும் தொடங்க விரும்புகிறீர்களா?")) {
+    userProgress[currentSetIndex] = SETS[currentSetIndex].questions.map(() => ({ answered: false, correct: false, userAns: "" }));
+    streak = 0;
+    updateTopStats();
+    renderSetButtons();
+    renderGrid();
+    loadQuestion(0);
+  }
+});
+
+closeResultsBtn.addEventListener("click", hideResultsOverlay);
+
+replaySetBtn.addEventListener("click", () => {
+  userProgress[currentSetIndex] = SETS[currentSetIndex].questions.map(() => ({ answered: false, correct: false, userAns: "" }));
+  streak = 0;
+  hideResultsOverlay();
+  updateTopStats();
+  renderSetButtons();
+  renderGrid();
+  loadQuestion(0);
+});
+
+nextSetFromResultsBtn.addEventListener("click", () => {
+  hideResultsOverlay();
+  if (currentSetIndex < SETS.length - 1) {
+    selectSet(currentSetIndex + 1);
+  }
+});
+
+/* Keyboard shortcuts */
+document.addEventListener("keydown", (e) => {
+  if (resultsOverlayEl.classList.contains("hidden")) {
+    if (e.key === "ArrowLeft" && document.activeElement !== answerInputEl) {
+      prevBtnEl.click();
+    } else if (e.key === "ArrowRight" && document.activeElement !== answerInputEl) {
+      nextBtnEl.click();
+    }
+  } else {
+    if (e.key === "Escape") hideResultsOverlay();
+  }
+});
+
+/* START */
+init();
+</script>
+
+</body>
+</html>
