@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arabic Word Sort · Singular · Dual · Plural</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-2: #ebe4d6;
+    --card: #ffffff;
+    --ink: #1a2332;
+    --ink-soft: #4a5568;
+    --muted: #8a8577;
+    --line: #e3dccc;
+    --primary: #0d5c4a;
+    --primary-dark: #084034;
+    --primary-soft: #e6f2ee;
+    --correct: #1e9d6b;
+    --correct-soft: #e3f6ed;
+    --wrong: #d94a3d;
+    --wrong-soft: #fdecea;
+    --gold: #c79b3b;
+    --gold-soft: #fdf6e3;
+    --fire: #e85d3d;
+    --fire-soft: #fdeee8;
+    --singular: #1e5b9c;
+    --singular-soft: #e6f0fa;
+    --dual: #6a3e8c;
+    --dual-soft: #f2ecf9;
+    --plural: #b66a17;
+    --plural-soft: #fdf3e3;
+    --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
+    --shadow-md: 0 4px 16px rgba(26,35,50,.08);
+    --shadow-lg: 0 24px 60px -16px rgba(26,35,50,.25);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+    --ar-deck: 3rem;
+    --ar-inline: 1.25rem;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 12% 5%, #fff9ee 0%, transparent 42%),
+      radial-gradient(circle at 88% 95%, #eef5f0 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(245,242,235,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: .85rem 1.25rem .7rem;
+  }
+  .top-inner { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: .55rem; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-family: 'Noto Naskh Arabic', serif;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.15rem;
+  }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: .76rem; color: var(--muted); margin-left: .25rem; }
+  .stats { display: flex; gap: .5rem; font-size: .82rem; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; align-items: center; }
+  .stats .pill { background: var(--card); border: 1px solid var(--line); padding: .22rem .75rem; border-radius: var(--radius-pill); font-variant-numeric: tabular-nums; }
+  .stats .pill .val { color: var(--primary); font-weight: 700; }
+  .stats .streak-pill {
+    background: var(--card); border: 1px solid var(--line);
+    padding: .22rem .75rem; border-radius: var(--radius-pill);
+    transition: background .3s, border-color .3s, color .3s;
+  }
+  .stats .streak-pill.active {
+    background: var(--fire-soft);
+    border-color: rgba(232,93,61,.35);
+    color: var(--fire);
+    animation: firePulse 1.2s ease-in-out infinite;
+  }
+  @keyframes firePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .progress-track { height: 6px; background: var(--bg-2); border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary) 0%, #1e9d6b 100%);
+    border-radius: var(--radius-pill);
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* ── Layout ── */
+  .wrap { max-width: 960px; margin: 0 auto; padding: 1.6rem 1.25rem 5rem; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a7060 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; right: -50px; top: -50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero h1 { font-family: 'Amiri', serif; font-size: 1.7rem; font-weight: 700; margin: 0 0 .35rem; line-height: 1.25; }
+  .hero h1 .ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; font-size: 1.4rem; }
+  .hero p { margin: 0; font-size: .93rem; opacity: .96; max-width: 62ch; }
+
+  /* ── Deck ── */
+  .deck-section {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem 1.2rem 1.4rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+  }
+  .deck-instructions {
+    font-size: .85rem;
+    color: var(--muted);
+    margin-bottom: .85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .deck-instructions .hint-pc {
+    display: inline-flex; align-items: center; gap: .3rem;
+    background: var(--bg-2);
+    padding: .15rem .65rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    color: var(--ink-soft);
+    font-size: .76rem;
+  }
+
+  .deck {
+    display: flex;
+    justify-content: center;
+    min-height: 190px;
+    align-items: center;
+    padding: .5rem;
+    position: relative;
+  }
+  .deck-stack {
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    height: 180px;
+  }
+  .deck-card-shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-md);
+    background: var(--bg-2);
+    transform: translateY(8px) scale(.96);
+    z-index: 0;
+  }
+  .deck-card-shadow.second {
+    transform: translateY(16px) scale(.92);
+    opacity: .55;
+  }
+
+  .deck-tile {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-md);
+    background: linear-gradient(160deg, #ffffff 0%, #faf7ef 100%);
+    border: 2px solid var(--line);
+    box-shadow: 0 6px 18px -4px rgba(26,35,50,.14);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    padding: 1rem;
+    cursor: grab;
+    z-index: 2;
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+    text-align: center;
+  }
+  .deck-tile:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px -6px rgba(26,35,50,.2);
+    border-color: var(--primary);
+  }
+  .deck-tile:active:not(:disabled) { cursor: grabbing; transform: translateY(0); }
+  .deck-tile.selected {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    box-shadow: 0 0 0 4px rgba(13,92,74,.15), 0 12px 26px -6px rgba(26,35,50,.2);
+    transform: translateY(-2px) scale(1.02);
+  }
+  .deck-tile:disabled { cursor: default; }
+
+  .deck-tile .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-deck);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1.2;
+  }
+  .deck-tile .tr {
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: .3px;
+  }
+  .deck-tile .en {
+    font-size: .85rem;
+    color: var(--muted);
+    margin-top: .1rem;
+  }
+
+  .deck-tile.animating-correct {
+    animation: correctShrink .75s cubic-bezier(.4,0,.2,1) forwards;
+    pointer-events: none;
+  }
+  @keyframes correctShrink {
+    0% { transform: translateY(0) scale(1); opacity: 1; border-color: var(--line); box-shadow: 0 6px 18px -4px rgba(26,35,50,.14); }
+    20% { transform: translateY(-6px) scale(1.06); border-color: var(--correct); box-shadow: 0 0 0 14px rgba(30,157,107,.18); }
+    100% { transform: translateY(-20px) scale(.4); opacity: 0; border-color: var(--correct); }
+  }
+  .deck-tile.animating-wrong {
+    animation: wrongShake .6s ease;
+    pointer-events: none;
+  }
+  @keyframes wrongShake {
+    0%, 100% { transform: translateX(0) rotate(0); border-color: var(--line); }
+    15% { transform: translateX(-12px) rotate(-1.5deg); border-color: var(--wrong); background: var(--wrong-soft); }
+    35% { transform: translateX(12px) rotate(1.5deg); border-color: var(--wrong); background: var(--wrong-soft); }
+    55% { transform: translateX(-8px) rotate(-.8deg); border-color: var(--wrong); background: var(--wrong-soft); }
+    75% { transform: translateX(8px) rotate(.8deg); border-color: var(--wrong); background: var(--wrong-soft); }
+  }
+  .deck-tile.animating-wrong .ar,
+  .deck-tile.animating-wrong .tr,
+  .deck-tile.animating-wrong .en { color: var(--wrong); }
+
+  .deck-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    color: var(--muted);
+    font-size: .95rem;
+    padding: 1rem;
+  }
+  .deck-empty .emoji { font-size: 2rem; }
+
+  /* ── Categories ── */
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .8rem;
+    margin-bottom: 1.2rem;
+  }
+  @media (max-width: 720px) {
+    .categories { grid-template-columns: 1fr; gap: .6rem; }
+  }
+
+  .category {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: .85rem .85rem .95rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+  }
+  .category[data-cat="singular"] { border-top: 4px solid var(--singular); }
+  .category[data-cat="dual"]     { border-top: 4px solid var(--dual); }
+  .category[data-cat="plural"]   { border-top: 4px solid var(--plural); }
+
+  .cat-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .4rem;
+    flex-wrap: wrap;
+  }
+  .cat-name {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: .2px;
+  }
+  .category[data-cat="singular"] .cat-name { color: var(--singular); }
+  .category[data-cat="dual"]     .cat-name { color: var(--dual); }
+  .category[data-cat="plural"]   .cat-name { color: var(--plural); }
+
+  .cat-arabic {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-inline);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    opacity: .75;
+  }
+
+  .cat-dropzone {
+    border: 2px dashed var(--line);
+    border-radius: var(--radius-md);
+    padding: .55rem;
+    min-height: 68px;
+    background: #faf8f3;
+    transition: border-color .18s, background .18s, transform .12s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    position: relative;
+  }
+  .cat-dropzone:hover:not(.filled-lots) {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+  }
+  .cat-dropzone.drag-over {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    border-style: solid;
+    transform: scale(1.02);
+  }
+  .cat-dropzone.target-pulse {
+    border-color: var(--gold);
+    animation: catPulse 1.4s ease-in-out infinite;
+  }
+  @keyframes catPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(199,155,59,.35); }
+    50%      { box-shadow: 0 0 0 8px rgba(199,155,59,0); }
+  }
+
+  .cat-placeholder {
+    text-align: center;
+    font-size: .78rem;
+    color: var(--muted);
+    font-style: italic;
+    padding: .5rem 0;
+    pointer-events: none;
+  }
+  .cat-dropzone.has-items .cat-placeholder { display: none; }
+
+  .cat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .22rem;
+  }
+  .cat-item {
+    display: flex;
+    align-items: baseline;
+    gap: .4rem;
+    padding: .3rem .55rem;
+    background: white;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--line);
+    font-size: .82rem;
+    animation: itemIn .35s ease both;
+  }
+  @keyframes itemIn {
+    from { opacity: 0; transform: translateY(-6px) scale(.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .cat-item .it-ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
+  .cat-item .it-tr {
+    font-size: .72rem;
+    font-style: italic;
+    color: var(--muted);
+    flex: 1 1 auto;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .category[data-cat="singular"] .cat-item { border-color: rgba(30,91,156,.25); }
+  .category[data-cat="dual"]     .cat-item { border-color: rgba(106,62,140,.25); }
+  .category[data-cat="plural"]   .cat-item { border-color: rgba(182,106,23,.25); }
+
+  .cat-count {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    font-size: .7rem;
+    font-weight: 700;
+    color: var(--muted);
+    background: var(--bg-2);
+    padding: .1rem .55rem;
+    border-radius: var(--radius-pill);
+  }
+
+  /* ── Feedback ── */
+  .feedback {
+    border-radius: var(--radius-md);
+    padding: 1rem 1.15rem;
+    margin-bottom: 1rem;
+    display: none;
+    animation: fbIn .3s ease both;
+    border-left: 5px solid var(--wrong);
+    background: var(--wrong-soft);
+    font-size: .92rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  @keyframes fbIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .feedback.show { display: block; }
+  .feedback .fb-title {
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    color: var(--wrong);
+    margin-bottom: .55rem;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+  }
+  .feedback .fb-line {
+    margin: .25rem 0;
+  }
+  .feedback .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+    display: inline-block;
+    margin: 0 .15rem;
+    vertical-align: middle;
+    line-height: 1.4;
+  }
+  .feedback .cat-chip {
+    display: inline-block;
+    padding: .1rem .6rem;
+    border-radius: var(--radius-pill);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+  }
+  .feedback .cat-chip.singular { background: var(--singular-soft); color: var(--singular); }
+  .feedback .cat-chip.dual     { background: var(--dual-soft);     color: var(--dual); }
+  .feedback .cat-chip.plural   { background: var(--plural-soft);   color: var(--plural); }
+  .feedback .fb-rule {
+    margin-top: .6rem;
+    padding: .65rem .85rem;
+    background: white;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--gold);
+    font-size: .86rem;
+    color: var(--ink-soft);
+  }
+  .feedback .fb-rule strong { color: var(--ink); }
+
+  /* ── Bottom actions ── */
+  .bottom-actions { display: flex; justify-content: center; gap: .6rem; margin-top: 1.75rem; flex-wrap: wrap; }
+  .btn {
+    appearance: none; border: none;
+    font-family: inherit; font-weight: 600;
+    font-size: 1rem; padding: .85rem 2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: transform .1s, background .15s, box-shadow .15s;
+    letter-spacing: .2px;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    box-shadow: 0 6px 18px -4px rgba(13,92,74,.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -6px rgba(13,92,74,.5);
+  }
+  .btn-primary:disabled { background: #cfc8b8; color: #8a8577; cursor: not-allowed; box-shadow: none; }
+  .btn-secondary {
+    background: var(--card); color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-secondary:hover { background: var(--primary-soft); }
+
+  /* ── Results overlay ── */
+  .results-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,35,50,.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 200;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 1.25rem;
+    overflow-y: auto;
+    animation: fadeIn .25s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .results-overlay.hidden { display: none; }
+
+  .results-card {
+    background: var(--card);
+    max-width: 720px; width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.6rem 1.5rem;
+    box-shadow: var(--shadow-lg);
+    margin: auto;
+    animation: popIn .35s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .results-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem; margin-bottom: 1rem;
+  }
+  .results-header h2 { margin: 0; font-family: 'Amiri', serif; font-size: 1.5rem; color: var(--primary); }
+  .close-btn {
+    appearance: none; border: none;
+    background: var(--bg-2);
+    width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem;
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s; flex-shrink: 0;
+  }
+  .close-btn:hover { background: #ddd5c5; }
+
+  .score-hero {
+    text-align: center;
+    padding: 1.1rem 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, #f4fbf8 100%);
+    margin-bottom: 1.1rem;
+  }
+  .score-big {
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--primary); line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-big .out { color: var(--muted); font-weight: 500; font-size: 1.5rem; }
+  .score-pct { font-size: 1.05rem; font-weight: 600; color: var(--ink-soft); margin-top: .2rem; }
+  .score-msg {
+    margin-top: .55rem; font-size: .92rem;
+    color: var(--ink-soft); max-width: 50ch;
+    margin-left: auto; margin-right: auto;
+  }
+  .score-streak {
+    display: inline-flex; align-items: center; gap: .35rem;
+    margin-top: .7rem;
+    background: var(--fire-soft); color: var(--fire);
+    padding: .25rem .85rem;
+    border-radius: var(--radius-pill);
+    font-size: .82rem; font-weight: 700;
+  }
+
+  .review-section {
+    margin-bottom: 1rem;
+  }
+  .review-section h3 {
+    margin: 0 0 .55rem;
+    font-size: .95rem;
+    color: var(--ink);
+    font-weight: 700;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .review-cat {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .55rem;
+  }
+  @media (max-width: 620px) { .review-cat { grid-template-columns: 1fr; } }
+  .review-col {
+    background: #faf8f3;
+    border-radius: var(--radius-sm);
+    padding: .65rem .75rem;
+    border-top: 3px solid var(--line);
+  }
+  .review-col.singular { border-top-color: var(--singular); }
+  .review-col.dual     { border-top-color: var(--dual); }
+  .review-col.plural   { border-top-color: var(--plural); }
+  .review-col h4 {
+    margin: 0 0 .45rem;
+    font-size: .82rem;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    font-weight: 700;
+  }
+  .review-col.singular h4 { color: var(--singular); }
+  .review-col.dual h4     { color: var(--dual); }
+  .review-col.plural h4   { color: var(--plural); }
+  .review-col ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: .15rem;
+  }
+  .review-col li {
+    font-size: .8rem;
+    display: flex; align-items: baseline; gap: .35rem;
+    padding: .15rem 0;
+  }
+  .review-col li .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+  }
+  .review-col li .tr {
+    font-size: .72rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .results-actions { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+
+  .footer {
+    text-align: center; font-size: .78rem; color: var(--muted);
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 520px) {
+    .hero h1 { font-size: 1.4rem; }
+    .deck-stack { height: 155px; }
+    .deck-tile .ar { font-size: 2.4rem; }
+    .deck-tile .tr { font-size: .92rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="mark">ض</span>
+        <span>Arabic Word Sort <small>· Singular · Dual · Plural</small></span>
+      </div>
+      <div class="stats">
+        <span class="pill">Score <span class="val" id="scoreDisplay">0 / 45</span></span>
+        <span class="streak-pill" id="streakPill">🔥 <span id="streakDisplay">0</span></span>
+        <span class="pill"><span id="progressText">0%</span></span>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <h1>Sort the Arabic words — <span class="ar">المُفْرَد · المُثَنَّى · الجَمْع</span></h1>
+    <p>Each word appears one at a time. Drag it into the correct box — <strong>Singular</strong> (one), <strong>Dual</strong> (exactly two), or <strong>Plural</strong> (three or more). Sorted words collect as text under their box. Score counts only first-try corrects.</p>
+  </section>
+
+  <!-- Deck -->
+  <section class="deck-section">
+    <div class="deck-instructions">
+      <span class="hint-pc">🖱️ Drag the word to a box</span>
+      <span class="hint-pc">👆 Or tap word, then tap box</span>
+    </div>
+    <div class="deck" id="deck">
+      <div class="deck-stack">
+        <div class="deck-card-shadow second"></div>
+        <div class="deck-card-shadow"></div>
+        <div id="deckTileHost"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories">
+    <div class="category" data-cat="singular">
+      <div class="cat-header">
+        <span class="cat-name">Singular</span>
+        <span class="cat-arabic" dir="rtl">مُفْرَد</span>
+      </div>
+      <div class="cat-dropzone" data-cat="singular" role="button" tabindex="0" aria-label="Drop the word here if it is singular">
+        <div class="cat-placeholder">Drop here if it names one thing</div>
+        <ul class="cat-list" data-cat="singular"></ul>
+      </div>
+      <div class="cat-count">📚 <span data-count="singular">0</span> sorted</div>
+    </div>
+
+    <div class="category" data-cat="dual">
+      <div class="cat-header">
+        <span class="cat-name">Dual</span>
+        <span class="cat-arabic" dir="rtl">مُثَنَّى</span>
+      </div>
+      <div class="cat-dropzone" data-cat="dual" role="button" tabindex="0" aria-label="Drop the word here if it names exactly two things">
+        <div class="cat-placeholder">Drop here if it names exactly two</div>
+        <ul class="cat-list" data-cat="dual"></ul>
+      </div>
+      <div class="cat-count">📚 <span data-count="dual">0</span> sorted</div>
+    </div>
+
+    <div class="category" data-cat="plural">
+      <div class="cat-header">
+        <span class="cat-name">Plural</span>
+        <span class="cat-arabic" dir="rtl">جَمْع</span>
+      </div>
+      <div class="cat-dropzone" data-cat="plural" role="button" tabindex="0" aria-label="Drop the word here if it names three or more things">
+        <div class="cat-placeholder">Drop here if it names three or more</div>
+        <ul class="cat-list" data-cat="plural"></ul>
+      </div>
+      <div class="cat-count">📚 <span data-count="plural">0</span> sorted</div>
+    </div>
+  </section>
+
+  <!-- Feedback -->
+  <section class="feedback" id="feedback" role="alert"></section>
+
+  <!-- Bottom actions -->
+  <div class="bottom-actions">
+    <button class="btn btn-secondary" id="resetBtn">⟳ Start Over</button>
+  </div>
+
+  <p class="footer">An educational resource for new Muslims and English-speaking Arabic learners · 45 words across 3 categories.</p>
+</main>
+
+<!-- ═══════════════ RESULTS OVERLAY ═══════════════ -->
+<div class="results-overlay hidden" id="resultsOverlay" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+  <div class="results-card">
+    <div class="results-header">
+      <h2 id="resultsTitle">Your Results 🎉</h2>
+      <button class="close-btn" id="closeResults" aria-label="Close results">✕</button>
+    </div>
+
+    <div class="score-hero">
+      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">45</span></span></div>
+      <div class="score-pct" id="finalPct">0%</div>
+      <p class="score-msg" id="finalMsg"></p>
+      <div class="score-streak" id="scoreStreak" style="display:none;">
+        🔥 Longest streak: <span id="finalStreak">0</span>
+      </div>
+    </div>
+
+    <div class="review-section">
+      <h3>📖 All 45 words — grouped by category</h3>
+      <div class="review-cat">
+        <div class="review-col singular">
+          <h4>Singular (مُفْرَد)</h4>
+          <ul id="reviewSingular"></ul>
+        </div>
+        <div class="review-col dual">
+          <h4>Dual (مُثَنَّى)</h4>
+          <ul id="reviewDual"></ul>
+        </div>
+        <div class="review-col plural">
+          <h4>Plural (جَمْع)</h4>
+          <ul id="reviewPlural"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-actions">
+      <button class="btn btn-primary" id="playAgainBtn">↺ Play Again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   WORD BANK — 45 words: 15 singular, 15 dual, 15 plural
+   Every root appears in all three forms across the bank,
+   so the learner builds the pattern: kitāb → kitābān → kutub.
+   ═══════════════════════════════════════════════════════════════ */
+const WORDS = [
+  /* ── SINGULAR (15) ── */
+  { ar: 'كِتَاب',   tr: 'kitāb',   en: 'book',        cat: 'singular' },
+  { ar: 'رَسُول',   tr: 'rasūl',   en: 'messenger',   cat: 'singular' },
+  { ar: 'نَبِيّ',   tr: 'nabī',    en: 'prophet',     cat: 'singular' },
+  { ar: 'مُسْلِم',  tr: 'muslim',  en: 'Muslim (m.)', cat: 'singular' },
+  { ar: 'قَلْب',    tr: 'qalb',    en: 'heart',       cat: 'singular' },
+  { ar: 'بَيْت',    tr: 'bayt',    en: 'house',       cat: 'singular' },
+  { ar: 'يَوْم',    tr: 'yawm',    en: 'day',         cat: 'singular' },
+  { ar: 'نُور',     tr: 'nūr',     en: 'light',       cat: 'singular' },
+  { ar: 'رَجُل',    tr: 'rajul',   en: 'man',         cat: 'singular' },
+  { ar: 'وَلَد',    tr: 'walad',   en: 'boy / son',   cat: 'singular' },
+  { ar: 'بِنْت',    tr: 'bint',    en: 'daughter',    cat: 'singular' },
+  { ar: 'طَالِب',   tr: 'ṭālib',   en: 'student (m.)',cat: 'singular' },
+  { ar: 'قَلَم',    tr: 'qalam',   en: 'pen',         cat: 'singular' },
+  { ar: 'عَيْن',    tr: 'ʿayn',    en: 'eye',         cat: 'singular' },
+  { ar: 'يَد',      tr: 'yad',     en: 'hand',        cat: 'singular' },
+
+  /* ── DUAL (15) ── */
+  { ar: 'كِتَابَان', tr: 'kitābān', en: 'two books',       cat: 'dual' },
+  { ar: 'رَسُولَان', tr: 'rasūlān', en: 'two messengers',  cat: 'dual' },
+  { ar: 'نَبِيَّان', tr: 'nabiyyān',en: 'two prophets',    cat: 'dual' },
+  { ar: 'مُسْلِمَان',tr: 'muslimān',en: 'two Muslims',     cat: 'dual' },
+  { ar: 'قَلْبَان',  tr: 'qalbān',  en: 'two hearts',      cat: 'dual' },
+  { ar: 'بَيْتَان',  tr: 'baytān',  en: 'two houses',      cat: 'dual' },
+  { ar: 'يَوْمَان',  tr: 'yawmān',  en: 'two days',        cat: 'dual' },
+  { ar: 'نُورَان',   tr: 'nūrān',   en: 'two lights',      cat: 'dual' },
+  { ar: 'رَجُلَان',  tr: 'rajulān', en: 'two men',         cat: 'dual' },
+  { ar: 'وَلَدَان',  tr: 'waladān', en: 'two boys',        cat: 'dual' },
+  { ar: 'بِنْتَان',  tr: 'bintān',  en: 'two daughters',   cat: 'dual' },
+  { ar: 'طَالِبَان', tr: 'ṭālibān', en: 'two students',    cat: 'dual' },
+  { ar: 'قَلَمَان',  tr: 'qalamān', en: 'two pens',        cat: 'dual' },
+  { ar: 'عَيْنَان',  tr: 'ʿaynān',  en: 'two eyes',        cat: 'dual' },
+  { ar: 'يَدَان',    tr: 'yadān',   en: 'two hands',       cat: 'dual' },
+
+  /* ── PLURAL (15) ── */
+  { ar: 'كُتُب',     tr: 'kutub',   en: 'books',          cat: 'plural' },
+  { ar: 'رُسُل',     tr: 'rusul',   en: 'messengers',     cat: 'plural' },
+  { ar: 'أَنْبِيَاء',tr: 'anbiyāʾ', en: 'prophets',       cat: 'plural' },
+  { ar: 'مُسْلِمُون',tr: 'muslimūn',en: 'Muslims',        cat: 'plural' },
+  { ar: 'قُلُوب',    tr: 'qulūb',   en: 'hearts',         cat: 'plural' },
+  { ar: 'بُيُوت',    tr: 'buyūt',   en: 'houses',         cat: 'plural' },
+  { ar: 'أَيَّام',   tr: 'ayyām',   en: 'days',           cat: 'plural' },
+  { ar: 'أَنْوَار',  tr: 'anwār',   en: 'lights',         cat: 'plural' },
+  { ar: 'رِجَال',    tr: 'rijāl',   en: 'men',            cat: 'plural' },
+  { ar: 'أَوْلَاد',  tr: 'awlād',   en: 'boys / children',cat: 'plural' },
+  { ar: 'بَنَات',    tr: 'banāt',   en: 'daughters',      cat: 'plural' },
+  { ar: 'طُلَّاب',   tr: 'ṭullāb',  en: 'students',       cat: 'plural' },
+  { ar: 'أَقْلَام',  tr: 'aqlām',   en: 'pens',           cat: 'plural' },
+  { ar: 'عُيُون',    tr: 'ʿuyūn',   en: 'eyes',           cat: 'plural' },
+  { ar: 'أَيْدِي',   tr: 'aydī',    en: 'hands',          cat: 'plural' }
+];
+
+/* Shuffle helper */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ═══════════════════ CATEGORY INFO ═══════════════════ */
+const CATEGORY_INFO = {
+  singular: {
+    label: 'Singular',
+    arabic: 'مُفْرَد',
+    rule: 'Names <strong>exactly one</strong> thing. It is the base dictionary form — no dual or plural marker attached.'
+  },
+  dual: {
+    label: 'Dual',
+    arabic: 'مُثَنَّى',
+    rule: 'Names <strong>exactly two</strong> things — a feature most languages lack! Masculine nouns add <strong>ـَان</strong> (−ān); feminine nouns add <strong>ـتَان</strong> (−tān).'
+  },
+  plural: {
+    label: 'Plural',
+    arabic: 'جَمْع',
+    rule: 'Names <strong>three or more</strong> things. Can be a <em>sound plural</em> (regular suffix like <strong>ـُونَ</strong> or <strong>ـَات</strong>) or a <em>broken plural</em> (the word\'s internal vowel pattern changes, e.g. <strong>كِتَاب → كُتُب</strong>).'
+  }
+};
+
+/* ═══════════════════ STATE ═══════════════════ */
+const TOTAL = WORDS.length;
+const state = {
+  score: 0,             // first-try correct count
+  sorted: 0,            // total correctly sorted (regardless of attempts)
+  streak: 0,
+  longestStreak: 0,
+  attempts: {},         // index → number of attempts
+  firstTryFlag: {},     // index → true/false (correct on 1st attempt?)
+  deck: [],             // shuffled array of word indices remaining
+  currentIdx: null,     // index of the word currently in the deck
+  sortedItems: { singular: [], dual: [], plural: [] },
+  locked: false,        // prevent input during animations
+  selected: false       // tile selected (for tap-to-place)
+};
+
+/* ═══════════════════ DOM REFS ═══════════════════ */
+const deckTileHost = document.getElementById('deckTileHost');
+const feedbackEl = document.getElementById('feedback');
+const scoreDisplay = document.getElementById('scoreDisplay');
+const streakDisplay = document.getElementById('streakDisplay');
+const streakPill = document.getElementById('streakPill');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const resultsOverlay = document.getElementById('resultsOverlay');
+
+/* ═══════════════════ INIT ═══════════════════ */
+function initGame() {
+  state.score = 0;
+  state.sorted = 0;
+  state.streak = 0;
+  state.longestStreak = 0;
+  state.attempts = {};
+  state.firstTryFlag = {};
+  state.sortedItems = { singular: [], dual: [], plural: [] };
+  state.selected = false;
+  state.locked = false;
+
+  const indices = [...Array(TOTAL).keys()];
+  state.deck = shuffle(indices);
+  state.currentIdx = state.deck[0];
+
+  // Clear feedback & overlay
+  feedbackEl.classList.remove('show');
+  feedbackEl.innerHTML = '';
+  resultsOverlay.classList.add('hidden');
+  document.body.style.overflow = '';
+
+  // Clear category lists
+  ['singular', 'dual', 'plural'].forEach(cat => {
+    document.querySelector(`.cat-list[data-cat="${cat}"]`).innerHTML = '';
+    document.querySelector(`.cat-dropzone[data-cat="${cat}"]`).classList.remove('has-items');
+    document.querySelector(`[data-count="${cat}"]`).textContent = '0';
+  });
+
+  renderDeck();
+  updateStats();
+}
+
+/* ═══════════════════ RENDER DECK ═══════════════════ */
+function renderDeck() {
+  deckTileHost.innerHTML = '';
+
+  if (state.currentIdx === null || state.deck.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'deck-empty';
+    empty.innerHTML = `<span class="emoji">🎉</span><span>All words sorted!</span>`;
+    deckTileHost.appendChild(empty);
+    return;
+  }
+
+  const w = WORDS[state.currentIdx];
+
+  const tile = document.createElement('button');
+  tile.type = 'button';
+  tile.className = 'deck-tile';
+  tile.id = 'currentTile';
+  tile.draggable = true;
+  tile.dataset.idx = state.currentIdx;
+  tile.setAttribute('aria-label', `Arabic word: ${w.ar}. Tap to select, then tap a category box.`);
+  tile.innerHTML = `
+    <span class="ar" dir="rtl">${w.ar}</span>
+    <span class="tr">${w.tr}</span>
+    <span class="en">${w.en}</span>
+  `;
+
+  if (state.selected) tile.classList.add('selected');
+
+  // Drag events
+  tile.addEventListener('dragstart', (e) => {
+    if (state.locked) { e.preventDefault(); return; }
+    e.dataTransfer.setData('text/plain', String(state.currentIdx));
+    e.dataTransfer.effectAllowed = 'move';
+    tile.classList.add('selected');
+    state.selected = true;
+    highlightCategoryTargets(true);
+  });
+  tile.addEventListener('dragend', () => {
+    highlightCategoryTargets(false);
+  });
+
+  // Tap-to-select
+  tile.addEventListener('click', () => {
+    if (state.locked) return;
+    state.selected = !state.selected;
+    tile.classList.toggle('selected', state.selected);
+    highlightCategoryTargets(state.selected);
+    if (state.selected) {
+      // gently scroll categories into view
+      // (no hard scroll — just visual cue)
+    }
+  });
+
+  deckTileHost.appendChild(tile);
+}
+
+/* ═══════════════════ HIGHLIGHT CATEGORIES ═══════════════════ */
+function highlightCategoryTargets(active) {
+  document.querySelectorAll('.cat-dropzone').forEach(z => {
+    if (active) z.classList.add('target-pulse');
+    else z.classList.remove('target-pulse');
+  });
+}
+
+/* ═══════════════════ CATEGORY DROPZONES ═══════════════════ */
+document.querySelectorAll('.cat-dropzone').forEach(zone => {
+  const cat = zone.dataset.cat;
+
+  // drag over / drop
+  zone.addEventListener('dragover', (e) => {
+    if (state.locked) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    zone.classList.add('drag-over');
+  });
+  zone.addEventListener('dragleave', () => {
+    zone.classList.remove('drag-over');
+  });
+  zone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    if (state.locked) return;
+    submitAnswer(cat);
+  });
+
+  // tap-to-place
+  zone.addEventListener('click', () => {
+    if (state.locked) return;
+    if (state.selected) {
+      submitAnswer(cat);
+    }
+  });
+
+  // keyboard activation
+  zone.addEventListener('keydown', (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && !state.locked) {
+      e.preventDefault();
+      if (state.selected) submitAnswer(cat);
+    }
+  });
+});
+
+/* ═══════════════════ SUBMIT ANSWER ═══════════════════ */
+function submitAnswer(chosenCat) {
+  if (state.locked) return;
+  const idx = state.currentIdx;
+  if (idx === null) return;
+  const w = WORDS[idx];
+  const correct = (w.cat === chosenCat);
+
+  state.attempts[idx] = (state.attempts[idx] || 0) + 1;
+  const isFirstAttempt = (state.attempts[idx] === 1);
+
+  if (correct) {
+    if (isFirstAttempt) {
+      state.score++;
+      state.streak++;
+      if (state.streak > state.longestStreak) state.longestStreak = state.streak;
+      state.firstTryFlag[idx] = true;
+    } else {
+      state.streak = 0;
+      state.firstTryFlag[idx] = false;
+    }
+    state.sorted++;
+    state.sortedItems[chosenCat].push(w);
+
+    state.locked = true;
+    state.selected = false;
+    highlightCategoryTargets(false);
+
+    // Mark the zone as "hit"
+    const zone = document.querySelector(`.cat-dropzone[data-cat="${chosenCat}"]`);
+    zone.classList.add('drag-over');
+
+    // Animate deck tile out
+    const tile = document.getElementById('currentTile');
+    if (tile) tile.classList.add('animating-correct');
+
+    // After animation, add the item to the list and load next
+    setTimeout(() => {
+      addSortedItem(chosenCat, w);
+      // Remove current word from the deck
+      state.deck.shift();
+      state.currentIdx = state.deck[0] ?? null;
+      state.locked = false;
+      zone.classList.remove('drag-over');
+      renderDeck();
+      updateStats();
+      hideFeedback();
+
+      if (state.deck.length === 0) {
+        setTimeout(showResults, 400);
+      }
+    }, 720);
+
+  } else {
+    // Wrong
+    state.streak = 0;
+    state.locked = true;
+    state.selected = false;
+    highlightCategoryTargets(false);
+
+    const tile = document.getElementById('currentTile');
+    if (tile) tile.classList.add('animating-wrong');
+
+    // Also flash the wrong category zone
+    const zone = document.querySelector(`.cat-dropzone[data-cat="${chosenCat}"]`);
+    zone.style.borderColor = 'var(--wrong)';
+    zone.style.background = 'var(--wrong-soft)';
+
+    setTimeout(() => {
+      if (tile) tile.classList.remove('animating-wrong');
+      zone.style.borderColor = '';
+      zone.style.background = '';
+      state.locked = false;
+      showWrongFeedback(w, chosenCat);
+      updateStats();
+    }, 620);
+  }
+}
+
+/* ═══════════════════ ADD SORTED ITEM ═══════════════════ */
+function addSortedItem(cat, word) {
+  const list = document.querySelector(`.cat-list[data-cat="${cat}"]`);
+  const li = document.createElement('li');
+  li.className = 'cat-item';
+  li.innerHTML = `
+    <span class="it-ar" dir="rtl">${word.ar}</span>
+    <span class="it-tr">${word.tr}</span>
+  `;
+  list.appendChild(li);
+
+  const zone = document.querySelector(`.cat-dropzone[data-cat="${cat}"]`);
+  zone.classList.add('has-items');
+
+  const countEl = document.querySelector(`[data-count="${cat}"]`);
+  countEl.textContent = String(state.sortedItems[cat].length);
+}
+
+/* ═══════════════════ FEEDBACK ═══════════════════ */
+function showWrongFeedback(word, chosenCat) {
+  const correct = word.cat;
+  const chosen = CATEGORY_INFO[chosenCat];
+  const corr = CATEGORY_INFO[correct];
+  const attempts = state.attempts[state.currentIdx] || 1;
+
+  feedbackEl.classList.add('show');
+  feedbackEl.innerHTML = `
+    <div class="fb-title">❌ Not quite — attempt ${attempts}</div>
+    <div class="fb-line">
+      You placed <span class="ar" dir="rtl">${word.ar}</span> <em>(${word.tr} — "${word.en}")</em> in the
+      <span class="cat-chip ${chosenCat}">${chosen.label}</span> box.
+    </div>
+    <div class="fb-line">
+      But it is actually
+      <span class="cat-chip ${correct}">${corr.label} ${corr.arabic}</span>.
+    </div>
+    <div class="fb-rule">
+      <strong>📖 Why:</strong> ${corr.rule}
+    </div>
+    <div class="fb-line" style="margin-top:.55rem;font-weight:600;color:var(--primary);">
+      💡 Try again — the word is still waiting in the deck.
+    </div>
+  `;
+}
+
+function hideFeedback() {
+  feedbackEl.classList.remove('show');
+  feedbackEl.innerHTML = '';
+}
+
+/* ═══════════════════ STATS ═══════════════════ */
+function updateStats() {
+  scoreDisplay.textContent = `${state.score} / ${TOTAL}`;
+  streakDisplay.textContent = state.streak;
+  streakPill.classList.toggle('active', state.streak >= 2);
+
+  const pct = Math.round((state.sorted / TOTAL) * 100);
+  progressFill.style.width = pct + '%';
+  progressText.textContent = pct + '%';
+}
+
+/* ═══════════════════ RESULTS ═══════════════════ */
+function showResults() {
+  const pct = Math.round((state.score / TOTAL) * 100);
+  document.getElementById('finalScore').textContent = state.score;
+  document.getElementById('finalTotal').textContent = TOTAL;
+  document.getElementById('finalPct').textContent = pct + '%';
+
+  let msg;
+  if (pct === 100) {
+    msg = 'ما شاء الله! A perfect score — you have mastered the Arabic singular, dual, and plural forms across 45 words.';
+  } else if (pct >= 80) {
+    msg = 'Excellent work! You have a strong grasp of the three-number system. Review the words you missed below.';
+  } else if (pct >= 60) {
+    msg = 'Good effort! The dual (ـَان) and broken plurals are the trickiest — glance at the review below and try again.';
+  } else {
+    msg = 'Keep practising! Re-read the deck hints — the endings are your clue. Try the sort again — repetition builds mastery.';
+  }
+  document.getElementById('finalMsg').textContent = msg;
+
+  if (state.longestStreak >= 3) {
+    document.getElementById('scoreStreak').style.display = 'inline-flex';
+    document.getElementById('finalStreak').textContent = state.longestStreak;
+  } else {
+    document.getElementById('scoreStreak').style.display = 'none';
+  }
+
+  // Populate review lists (in original order by category)
+  ['singular', 'dual', 'plural'].forEach(cat => {
+    const ul = document.getElementById(
+      cat === 'singular' ? 'reviewSingular' :
+      cat === 'dual'     ? 'reviewDual'     :
+                           'reviewPlural'
+    );
+    ul.innerHTML = '';
+    WORDS.filter(w => w.cat === cat).forEach(w => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="ar" dir="rtl">${w.ar}</span><span class="tr">${w.tr}</span>`;
+      ul.appendChild(li);
+    });
+  });
+
+  resultsOverlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeResults() {
+  resultsOverlay.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ═══════════════════ EVENT WIRING ═══════════════════ */
+document.getElementById('resetBtn').addEventListener('click', initGame);
+document.getElementById('playAgainBtn').addEventListener('click', initGame);
+document.getElementById('closeResults').addEventListener('click', closeResults);
+
+resultsOverlay.addEventListener('click', (e) => {
+  if (e.target.id === 'resultsOverlay') closeResults();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeResults();
+});
+
+/* Clicking outside a tile or category deselects */
+document.addEventListener('click', (e) => {
+  if (state.locked) return;
+  if (e.target.closest('.deck-tile') || e.target.closest('.cat-dropzone')) return;
+  state.selected = false;
+  highlightCategoryTargets(false);
+  const tile = document.getElementById('currentTile');
+  if (tile) tile.classList.remove('selected');
+});
+
+/* ═══════════════════ BOOT ═══════════════════ */
+initGame();
+</script>
+</body>
+</html>
