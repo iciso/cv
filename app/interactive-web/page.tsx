@@ -148,6 +148,7 @@ const interactiveWebPages = [
   { title: "Match Islamic Terms", category: "Matching Quiz", description: "A Beginner's minimalist matching quiz of Islamic terms.", url: "/web/match-islamic-terms.html" },
   { title: "Medical Quotes", category: "Medical Insights & Aphorisms", description: "Renders collection of Medical Quotes.", url: "/web/medical-quotes.html" }, 
   { title: "Missions of Prophets", category: "Interactive Quiz", description: "Play this bilingual quiz on the missions of 25 prophets.", url: "/web/prophets-mission-quiz.html" },
+  { title: "For All Moms", category: "Animative Blog", description: "A compendium of duas to all Moms, who have passed away.", url: "/web/ummi.html" },
   { title: "NCD Estimator", category: "Clinical Calculator", description: "Non-communicable disease risk quantification utility.", url: "/web/ncd-estimator.html" },
   { title: "Number Trick", category: "Interactive Game", description: "Algorithmic logic puzzle and mathematical engagement tool.", url: "/web/number-trick.html" },
   { title: "One-Two-Many", category: "Arabic Singular-Dual-Plural", description: "Interactive quiz on Singular, Dual, and Plural forms in Arabic", url: "/web/sing-dual-arabic.html" },
