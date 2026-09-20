@@ -104,6 +104,7 @@ const interactiveWebPages = [
   { title: "Animals Quiz", category: "Educational Quiz", description: "Educational taxonomy and natural science quiz module.", url: "/web/animals-quiz.html" },
   { title: "Arabic Cases", category: "Arabic Grammar", description: "Teaches Cases of Arabic Nouns with a quiz module.", url: "/web/arabic-cases.html" },
   { title: "Arabic Quiz", category: "Language Tool", description: "Interactive linguistic quiz engine for Arabic language learners.", url: "/web/arabic-quiz.html" },
+  { title: "Arabic Wordfind", category: "Language Tool", description: "Find Quranic Arabic words in a grid by tapping or dragging.", url: "/web/arabic-wordfind.html" },
   { title: "Arabic Animals Quiz", category: "Language Tool", description: "Arabic animal and bird names in a fun, interactive drag-and-match quiz.", url: "/web/arabic-animals-birds.html" },
   { title: "Arkans of Salah", category: "Salah Learner & Quiz", description: "Interactive page on 14 Arkans of Salah and its quiz.", url: "/web/arkans-salah.html" },
   { title: "ASCII Logo Generator", category: "Developer Tool", description: "Text-based visual design utility and branding component.", url: "/web/ascii-logo.html" },
