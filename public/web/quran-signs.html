@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Signs of the Qur'an · Emoji Quiz</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-2: #ebe4d6;
+    --card: #ffffff;
+    --ink: #1a2332;
+    --ink-soft: #4a5568;
+    --muted: #8a8577;
+    --line: #e3dccc;
+    --primary: #0d5c4a;
+    --primary-dark: #084034;
+    --primary-soft: #e6f2ee;
+    --correct: #1e9d6b;
+    --correct-soft: #e3f6ed;
+    --wrong: #d94a3d;
+    --wrong-soft: #fdecea;
+    --gold: #c79b3b;
+    --gold-soft: #fdf6e3;
+    --fire: #e85d3d;
+    --fire-soft: #fdeee8;
+    --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
+    --shadow-lg: 0 24px 60px -16px rgba(26,35,50,.25);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 12% 5%, #fff9ee 0%, transparent 42%),
+      radial-gradient(circle at 88% 95%, #eef5f0 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Top bar */
+  .top-bar {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(245,242,235,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: .85rem 1.25rem .7rem;
+  }
+  .top-inner { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: .55rem; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); font-size: 1.05rem; }
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-size: 1rem; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .brand small { font-family: 'Inter', sans-serif; font-weight: 500; font-size: .74rem; color: var(--muted); margin-left: .25rem; }
+  .stats { display: flex; gap: .45rem; font-size: .8rem; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; align-items: center; }
+  .stats .pill { background: var(--card); border: 1px solid var(--line); padding: .22rem .7rem; border-radius: var(--radius-pill); font-variant-numeric: tabular-nums; }
+  .stats .pill .val { color: var(--primary); font-weight: 700; }
+  .stats .streak-pill {
+    background: var(--card); border: 1px solid var(--line);
+    padding: .22rem .7rem; border-radius: var(--radius-pill);
+    transition: background .3s, border-color .3s, color .3s;
+  }
+  .stats .streak-pill.active {
+    background: var(--fire-soft);
+    border-color: rgba(232,93,61,.35);
+    color: var(--fire);
+    animation: firePulse 1.2s ease-in-out infinite;
+  }
+  @keyframes firePulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  .progress-track { height: 6px; background: var(--bg-2); border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary) 0%, #1e9d6b 100%);
+    border-radius: var(--radius-pill);
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 1.4rem 1.1rem 6rem; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a7060 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.7rem;
+    margin-bottom: 1.1rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; right: -60px; top: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(255,255,255,.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero h1 { font-family: 'Amiri', serif; font-size: 1.7rem; font-weight: 700; margin: 0 0 .35rem; }
+  .hero h1 .ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; font-size: 1.4rem; }
+  .hero p { margin: 0; font-size: .92rem; opacity: .96; max-width: 64ch; }
+
+  /* Set selector */
+  .set-selector {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: .55rem;
+    margin-bottom: 1.1rem;
+  }
+  @media (max-width: 620px) {
+    .set-selector { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+  }
+  .set-btn {
+    appearance: none;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .75rem .55rem;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .25rem;
+    transition: all .18s;
+    text-align: center;
+    position: relative;
+  }
+  .set-btn:hover:not(.active) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .set-btn.active {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 8px 20px -6px rgba(13,92,74,.4);
+  }
+  .set-btn .set-icon { font-size: 1.6rem; line-height: 1; }
+  .set-btn .set-name {
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .2px;
+    line-height: 1.15;
+  }
+  .set-btn .set-arabic {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: .92rem;
+    direction: rtl;
+    opacity: .75;
+    line-height: 1;
+  }
+  .set-btn.active .set-arabic { opacity: .9; }
+  .set-btn .set-progress {
+    font-size: .68rem;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: .2px;
+    margin-top: .1rem;
+  }
+  .set-btn.active .set-progress { color: rgba(255,255,255,.9); }
+  .set-btn.completed::after {
+    content: "✓";
+    position: absolute;
+    top: 4px; right: 6px;
+    color: var(--correct);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .set-btn.active.completed::after { color: #fff; }
+
+  /* Quiz grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: .55rem;
+    margin-bottom: 1.2rem;
+  }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .grid { grid-template-columns: repeat(3, 1fr); gap: .45rem; }
+  }
+
+  .quiz-card {
+    appearance: none;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .65rem .4rem .55rem;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .2rem;
+    transition: all .15s;
+    text-align: center;
+    position: relative;
+    min-height: 118px;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .quiz-card:hover:not(:disabled) {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .quiz-card.active {
+    border-color: var(--gold);
+    background: var(--gold-soft);
+    box-shadow: 0 0 0 4px rgba(199,155,59,.18);
+    transform: translateY(-2px);
+  }
+  .quiz-card.correct {
+    background: var(--correct-soft);
+    border-color: var(--correct);
+  }
+  .quiz-card.correct::after {
+    content: "✓";
+    position: absolute;
+    top: 4px; right: 6px;
+    color: var(--correct);
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .quiz-card.wrong {
+    background: var(--wrong-soft);
+    border-color: rgba(217,74,61,.4);
+  }
+  .quiz-card.wrong::after {
+    content: "✗";
+    position: absolute;
+    top: 4px; right: 6px;
+    color: var(--wrong);
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .quiz-card .card-num {
+    font-size: .68rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: .3px;
+  }
+  .quiz-card .card-emoji {
+    font-size: 1.55rem;
+    line-height: 1.15;
+    letter-spacing: .05em;
+    word-break: break-word;
+  }
+  .quiz-card .card-cat {
+    font-size: .6rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-top: .1rem;
+  }
+  @media (max-width: 500px) {
+    .quiz-card { min-height: 100px; padding: .5rem .3rem; }
+    .quiz-card .card-emoji { font-size: 1.3rem; }
+    .quiz-card .card-cat { font-size: .55rem; }
+  }
+
+  /* Active question panel */
+  .active-panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.3rem 1.3rem 1.4rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+    display: none;
+    animation: panelIn .35s ease both;
+  }
+  @keyframes panelIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .active-panel.show { display: block; }
+
+  .ap-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8rem;
+    flex-wrap: wrap;
+    margin-bottom: .9rem;
+    padding-bottom: .65rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .ap-head-left { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+  .ap-num {
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: .8rem;
+    padding: .22rem .65rem;
+    border-radius: var(--radius-pill);
+  }
+  .ap-cat {
+    background: var(--gold-soft);
+    color: var(--gold);
+    font-weight: 700;
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: .22rem .7rem;
+    border-radius: var(--radius-pill);
+  }
+  .ap-nav {
+    display: flex;
+    gap: .4rem;
+  }
+  .ap-nav button {
+    appearance: none;
+    background: var(--bg-2);
+    border: none;
+    padding: .35rem .8rem;
+    border-radius: var(--radius-pill);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: .78rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .ap-nav button:hover:not(:disabled) {
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+  .ap-nav button:disabled { opacity: .4; cursor: not-allowed; }
+
+  .ap-emoji-box {
+    background: linear-gradient(180deg, #f8fbfa 0%, #f1f7f4 100%);
+    border: 1px dashed #c4d8d0;
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .ap-emoji-display {
+    font-size: 3.2rem;
+    line-height: 1.2;
+    letter-spacing: .08em;
+    margin-bottom: .3rem;
+    word-break: break-word;
+  }
+  @media (max-width: 520px) {
+    .ap-emoji-display { font-size: 2.4rem; }
+  }
+  .ap-hint {
+    font-size: .88rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .ap-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: .5rem;
+    margin-bottom: .7rem;
+  }
+  @media (max-width: 520px) {
+    .ap-form { grid-template-columns: 1fr; }
+  }
+  .ap-input {
+    appearance: none;
+    background: #faf8f3;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .8rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    transition: border-color .15s;
+    width: 100%;
+  }
+  .ap-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(13,92,74,.1);
+  }
+  .ap-input:disabled {
+    background: var(--bg-2);
+    cursor: not-allowed;
+  }
+  .ap-submit {
+    appearance: none;
+    background: var(--primary);
+    border: none;
+    color: #fff;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: .95rem;
+    padding: .8rem 1.6rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all .15s;
+    letter-spacing: .2px;
+  }
+  .ap-submit:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px -4px rgba(13,92,74,.4);
+  }
+  .ap-submit:disabled { background: #cfc8b8; cursor: not-allowed; }
+
+  .ap-actions {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .ap-actions button {
+    appearance: none;
+    background: transparent;
+    border: 1.5px solid var(--line);
+    color: var(--ink-soft);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: .8rem;
+    padding: .45rem 1rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .ap-actions button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-soft);
+  }
+
+  /* Feedback */
+  .feedback {
+    margin-top: 1rem;
+    border-radius: var(--radius-md);
+    padding: 1rem 1.15rem;
+    display: none;
+    animation: fbIn .35s ease both;
+    border-left: 5px solid var(--muted);
+    background: #faf8f3;
+    font-size: .92rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  @keyframes fbIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { border-left-color: var(--correct); background: var(--correct-soft); }
+  .feedback.wrong { border-left-color: var(--wrong); background: var(--wrong-soft); }
+  .feedback .fb-title {
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+  }
+  .feedback.correct .fb-title { color: var(--correct); }
+  .feedback.wrong .fb-title { color: var(--wrong); }
+  .feedback .fb-answer {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.05rem;
+  }
+  .feedback .fb-line { margin: .3rem 0; }
+  .feedback .fb-note {
+    margin-top: .55rem;
+    padding: .6rem .85rem;
+    background: white;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--gold);
+    font-size: .86rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+  .feedback .fb-note strong { color: var(--ink); }
+
+  /* Bottom actions */
+  .bottom-actions {
+    display: flex; justify-content: center; gap: .6rem;
+    margin-top: 1.4rem; flex-wrap: wrap;
+  }
+  .btn {
+    appearance: none; border: none;
+    font-family: inherit; font-weight: 600;
+    font-size: .95rem; padding: .8rem 1.8rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all .15s;
+    letter-spacing: .2px;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    box-shadow: 0 6px 18px -4px rgba(13,92,74,.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -6px rgba(13,92,74,.5);
+  }
+  .btn-primary:disabled { background: #cfc8b8; color: #8a8577; cursor: not-allowed; box-shadow: none; }
+  .btn-secondary {
+    background: var(--card); color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-secondary:hover { background: var(--primary-soft); }
+
+  /* ʿAqīdah note */
+  .aqeedah-note {
+    background: var(--gold-soft);
+    border-left: 5px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.2rem;
+    margin-top: 1.8rem;
+    font-size: .85rem;
+    line-height: 1.75;
+    color: #6a4f1a;
+  }
+  .aqeedah-note strong { color: #4a3510; }
+  .aqeedah-note .ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: 1.1rem;
+    direction: rtl;
+    font-weight: 700;
+    display: inline-block;
+    margin: 0 .2rem;
+    vertical-align: middle;
+  }
+
+  /* Results overlay */
+  .results-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,35,50,.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 200;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 1.25rem;
+    overflow-y: auto;
+    animation: fadeIn .25s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .results-overlay.hidden { display: none; }
+
+  .results-card {
+    background: var(--card);
+    max-width: 720px; width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.6rem 1.5rem;
+    box-shadow: var(--shadow-lg);
+    margin: auto;
+    animation: popIn .35s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .results-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem; margin-bottom: 1rem;
+  }
+  .results-header h2 {
+    margin: 0; font-family: 'Amiri', serif;
+    font-size: 1.5rem; color: var(--primary);
+  }
+  .close-btn {
+    appearance: none; border: none;
+    background: var(--bg-2);
+    width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem;
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s; flex-shrink: 0;
+  }
+  .close-btn:hover { background: #ddd5c5; }
+
+  .score-hero {
+    text-align: center;
+    padding: 1.1rem 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, #f4fbf8 100%);
+    margin-bottom: 1.1rem;
+  }
+  .score-big {
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--primary); line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-big .out { color: var(--muted); font-weight: 500; font-size: 1.5rem; }
+  .score-pct { font-size: 1.05rem; font-weight: 600; color: var(--ink-soft); margin-top: .2rem; }
+  .score-msg {
+    margin-top: .55rem; font-size: .92rem;
+    color: var(--ink-soft); max-width: 52ch;
+    margin-left: auto; margin-right: auto;
+  }
+  .score-streak {
+    display: inline-flex; align-items: center; gap: .35rem;
+    margin-top: .7rem;
+    background: var(--fire-soft); color: var(--fire);
+    padding: .25rem .85rem;
+    border-radius: var(--radius-pill);
+    font-size: .82rem; font-weight: 700;
+  }
+
+  .review-list {
+    display: flex; flex-direction: column; gap: .5rem;
+    max-height: 46vh; overflow-y: auto;
+    padding-right: 4px; margin-bottom: 1.15rem;
+  }
+  .review-item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: .65rem .85rem;
+    font-size: .86rem;
+  }
+  .review-item.ok { border-left: 4px solid var(--correct); }
+  .review-item.no { border-left: 4px solid var(--wrong); }
+  .review-item .rv-emoji { font-size: 1.15rem; line-height: 1.2; }
+  .review-item .rv-answer { font-weight: 700; color: var(--primary); }
+  .review-item .rv-note {
+    margin-top: .3rem;
+    font-size: .8rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  .results-actions {
+    display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap;
+  }
+
+  .footer {
+    text-align: center; font-size: .76rem; color: var(--muted);
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="mark">ق</span>
+        <span>Signs of the Qur'an <small>· Emoji Quiz</small></span>
+      </div>
+      <div class="stats">
+        <span class="pill">Score <span class="val" id="scoreDisplay">0 / 0</span></span>
+        <span class="streak-pill" id="streakPill">🔥 <span id="streakDisplay">0</span></span>
+        <span class="pill"><span id="progressText">0%</span></span>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <h1>Signs of the Qur'an — <span class="ar">آيَات القُرْآن</span></h1>
+    <p>Five sets, each exploring a different dimension of the Noble Qur'an — the prophets it honours, the animals it names, the foods it mentions, the practices it prescribes, and the places and events it records. Read the emojis and identify what they describe.</p>
+  </section>
+
+  <!-- Set selector -->
+  <div class="set-selector" id="setSelector"></div>
+
+  <!-- Quiz grid -->
+  <div class="grid" id="quizGrid"></div>
+
+  <!-- Active question panel -->
+  <section class="active-panel" id="activePanel">
+    <div class="ap-head">
+      <div class="ap-head-left">
+        <span class="ap-num" id="apNum">#001</span>
+        <span class="ap-cat" id="apCat">CATEGORY</span>
+      </div>
+      <div class="ap-nav">
+        <button id="prevBtn" type="button">← Prev</button>
+        <button id="nextBtn" type="button">Next →</button>
+      </div>
+    </div>
+
+    <div class="ap-emoji-box">
+      <div class="ap-emoji-display" id="apEmoji"></div>
+      <div class="ap-hint" id="apHint"></div>
+    </div>
+
+    <form class="ap-form" id="answerForm" autocomplete="off">
+      <input type="text" class="ap-input" id="answerInput" placeholder="Type your answer…" />
+      <button type="submit" class="ap-submit" id="submitBtn">Submit</button>
+    </form>
+
+    <div class="ap-actions">
+      <button type="button" id="revealBtn">💡 Reveal answer</button>
+      <button type="button" id="clearBtn">Clear</button>
+    </div>
+
+    <div class="feedback" id="feedback" role="alert"></div>
+  </section>
+
+  <div class="bottom-actions">
+    <button class="btn btn-secondary" id="resetBtn">⟳ Reset this set</button>
+  </div>
+
+  <div class="aqeedah-note">
+    <strong>📖 A note on this exercise.</strong> Every question draws on imagery from the Noble Qur'an itself. The answers are historical figures, creatures, foods, practices, and places <em>mentioned</em> in the Revelation — not categorisations of sacred concepts. For deeper study, please consult a qualified teacher. May Allah increase us in knowledge.
+  </div>
+
+  <p class="footer">An educational resource for new Muslims and English-speaking learners of the Qur'an.</p>
+</main>
+
+<!-- Results overlay -->
+<div class="results-overlay hidden" id="resultsOverlay" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+  <div class="results-card">
+    <div class="results-header">
+      <h2 id="resultsTitle">Set Complete! 🎉</h2>
+      <button class="close-btn" id="closeResults" aria-label="Close results">✕</button>
+    </div>
+
+    <div class="score-hero">
+      <div class="score-big"><span id="finalScore">0</span><span class="out"> / <span id="finalTotal">25</span></span></div>
+      <div class="score-pct" id="finalPct">0%</div>
+      <p class="score-msg" id="finalMsg"></p>
+      <div class="score-streak" id="scoreStreak" style="display:none;">
+        🔥 Longest streak: <span id="finalStreak">0</span>
+      </div>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+
+    <div class="results-actions">
+      <button class="btn btn-primary" id="replaySet">↺ Replay this set</button>
+      <button class="btn btn-secondary" id="nextSetFromResults" style="display:none;">Continue to Next Set →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   SIGNS OF THE QUR'AN — 5 sets × 25 questions
+   Each question: emoji string, accepted answers (multiple spellings),
+   display name, hint, and a teaching note.
+   ═══════════════════════════════════════════════════════════════ */
+const SETS = [
+  {
+    id: 1,
+    title: "Prophets",
+    arabic: "الأَنبِيَاء",
+    icon: "🕊️",
+    description: "Prophets and righteous figures honoured in the Qur'an",
+    questions: [
+      { emoji: "🚢 🌊 🐘 🐦", a: ["nuh","noah","nuuh"], display: "Nūḥ (Noah)", hint: "He built the ark and called his people for 950 years.", note: "Surah Nūḥ is named after him; his story appears in Surahs Hūd, al-Mu'minūn, and others." },
+      { emoji: "🔥 🐏 ⭐", a: ["ibrahim","abraham","ibraaheem"], display: "Ibrāhīm (Abraham)", hint: "Thrown into fire, saved by Allah; the friend of Allah.", note: "The 'Father of Prophets' — his story is told across 25 sūrahs of the Qur'an." },
+      { emoji: "🐍 🌊 🏔️", a: ["musa","moses","moosa"], display: "Mūsā (Moses)", hint: "Staff turned to a serpent, sea parted, spoke to Allah on the mountain.", note: "The most frequently mentioned prophet in the Qur'an — over 130 times." },
+      { emoji: "👕 🌙 👑", a: ["yusuf","joseph","yoosuf"], display: "Yūsuf (Joseph)", hint: "Dreams, a shirt, and a throne in Egypt.", note: "Surah Yūsuf (12) tells his complete story in one continuous narrative — unique in the Qur'an." },
+      { emoji: "🐋 🌊 🙏", a: ["yunus","jonah","yoonus"], display: "Yūnus (Jonah)", hint: "Swallowed by a great fish, then repented.", note: "Surah Yūnus is named after him. Allah calls him 'Dhā al-Nūn' — 'the companion of the fish'." },
+      { emoji: "👑 🐜 🐦", a: ["sulayman","solomon","sulaiman"], display: "Sulaymān (Solomon)", hint: "King who spoke with ants and understood the birds.", note: "Surah al-Naml (the Ant) recounts his conversation with the hoopoe and the ant queen." },
+      { emoji: "🌟 👶 🕊️", a: ["isa","jesus","eesa"], display: "ʿĪsā (Jesus)", hint: "Born miraculously; spoke from the cradle; healed the blind.", note: "His name appears 25 times in the Qur'an. Surah Maryam tells his story and his mother's." },
+      { emoji: "🐪 ⛰️ 🏜️", a: ["salih","saleh"], display: "Ṣāliḥ", hint: "Sent to Thamūd, whose sign was a she-camel from the rock.", note: "His story in Surahs al-Aʿrāf and Hūd warns against rejecting divine signs." },
+      { emoji: "🌪️ 🏜️ 💨", a: ["hud","hood"], display: "Hūd", hint: "Sent to the people of ʿĀd, destroyed by a fierce wind.", note: "Surah Hūd (11) is named after him; his story warns of arrogance." },
+      { emoji: "🤒 🙏 ⏳", a: ["ayyub","job","ayoub"], display: "Ayyūb (Job)", hint: "Struck by illness, yet never ceased to trust Allah.", note: "The Qur'an praises him as 'an excellent servant' — the paradigm of patience (ṣabr)." },
+      { emoji: "👑 🎶 ⚔️", a: ["dawud","david","dawood"], display: "Dāwūd (David)", hint: "King, psalmist, and warrior who defeated Jālūt.", note: "Allah gave him the Zabūr (Psalms) and taught him to shape iron." },
+      { emoji: "⚖️ 📏 💰", a: ["shuayb","shuaib","jethro"], display: "Shuʿayb", hint: "Warned his people to give full measure in trade.", note: "Sent to Madyan; his message demanded economic justice and honesty." },
+      { emoji: "🐏 💧 🕋", a: ["ismail","ishmael","ismaeel"], display: "Ismāʿīl (Ishmael)", hint: "Ransomed by a ram; helped raise the Kaʿbah with his father.", note: "Allah calls him 'truthful in promise' — a prophet who kept his word." },
+      { emoji: "🏙️ 🌋 ⚠️", a: ["lut","lot","loot"], display: "Lūṭ (Lot)", hint: "Warned the cities that were overturned.", note: "His people were destroyed for their transgression — the story appears repeatedly in the Qur'an." },
+      { emoji: "👁️ 😢 👨‍👦", a: ["yaqub","jacob","yaqoob"], display: "Yaʿqūb (Jacob)", hint: "Wept for his son Yūsuf until he lost his sight.", note: "Also called Isrāʾīl — the father of the twelve tribes of Israel." },
+      { emoji: "👶 🌟 ✨", a: ["ishaq","isaac","ishaaq"], display: "Isḥāq (Isaac)", hint: "The promised son born to Sarah in her old age.", note: "Allah gave him glad tidings to his father Ibrāhīm — a prophet among the righteous." },
+      { emoji: "🤲 👶 👴", a: ["zakariyya","zakaria","zechariah"], display: "Zakariyyā", hint: "Aged man whose prayer for a son was answered.", note: "He was given Yaḥyā despite his advanced age and his wife's barrenness." },
+      { emoji: "📖 🕊️ 🌿", a: ["yahya","john","yahyaa"], display: "Yaḥyā (John)", hint: "Given wisdom as a child; confirmed the word of Allah.", note: "Allah says his name had never before been given to anyone (Surah Maryam, 19:7)." },
+      { emoji: "🗣️ 📜 👨", a: ["harun","aaron","haroon"], display: "Hārūn (Aaron)", hint: "Mūsā's eloquent brother, sent with him to Firʿawn.", note: "He was made a prophet to support Mūsā and speak on his behalf." },
+      { emoji: "✨ 👑 🌿", a: ["alyasa","elisha","alyasaa"], display: "Al-Yasaʿ (Elisha)", hint: "Praised in the Qur'an among the chosen.", note: "Mentioned twice in the Qur'an — as one of those favoured above the worlds." },
+      { emoji: "🌧️ 🔥 ⚠️", a: ["ilyas","elias","ilyaas"], display: "Ilyās (Elias)", hint: "Called his people away from the idol Baʿl.", note: "Surah al-Ṣāffāt (37:123-132) recounts his struggle against idolatry." },
+      { emoji: "📜 🤝 🛡️", a: ["dhulkifl","ezekiel","dhul kifl"], display: "Dhū al-Kifl", hint: "Named 'the one of the pledge' — patient and truthful.", note: "The Qur'an mentions him twice among the steadfast and the righteous." },
+      { emoji: "🚢 🧱 🐟", a: ["khidr","al khidr","khidhr"], display: "Al-Khiḍr", hint: "Mūsā's mysterious travelling companion who taught him patience.", note: "Surah al-Kahf (18:60-82) tells their journey — the boat, the boy, and the wall." },
+      { emoji: "🌱 👨 🍎", a: ["adam","aadam","adham"], display: "Ādam", hint: "The first human, created from clay and placed in the Garden.", note: "Allah taught him the names of all things and made the angels prostrate to him." },
+      { emoji: "🕋 📖 🌙", a: ["muhammad","mohammed","mohammad","rasulullah","the prophet"], display: "Muḥammad ﷺ", hint: "The final Messenger, sent as a mercy to the worlds.", note: "Surah al-Aḥzāb (33:40) declares him 'the Seal of the Prophets'." }
+    ]
+  },
+
+  {
+    id: 2,
+    title: "Animals",
+    arabic: "حَيَوَانَات",
+    icon: "🐘",
+    description: "Creatures named or featured in the Qur'an",
+    questions: [
+      { emoji: "🐄 📖", a: ["cow","baqarah","al baqarah"], display: "The Cow (Al-Baqarah)", hint: "The longest surah of the Qur'an is named after this creature.", note: "Surah 2 — 286 verses — the longest chapter of the Qur'an, named after the story of the cow of Banū Isrāʾīl." },
+      { emoji: "🐝 🍯 📖", a: ["bee","bees","nahl","al nahl"], display: "The Bee (Al-Naḥl)", hint: "A surah is named after her, and her honey is called a healing.", note: "Surah 16 is called 'An-Naḥl'. Allah says the bee's honey is 'a healing for people' (16:69)." },
+      { emoji: "🐜 📖 👑", a: ["ant","ants","naml","al naml"], display: "The Ant (Al-Naml)", hint: "Sulaymān heard her warn her colony to hide.", note: "Surah 27 is named after her. She speaks in the Qur'an — a remarkable honour given to a tiny creature." },
+      { emoji: "🕸️ 📖 🏠", a: ["spider","spiders","ankabut","al ankabut"], display: "The Spider (Al-ʿAnkabūt)", hint: "Her home is the most fragile of homes.", note: "Surah 29 is named after her. Allah compares false gods to a spider's web — the frailest of shelters." },
+      { emoji: "🐘 📖 🕋", a: ["elephant","elephants","fil","al fil"], display: "The Elephant (Al-Fīl)", hint: "An army came with one to destroy the Kaʿbah — and failed.", note: "Surah 105 tells of Abrahah's army sent to destroy the Kaʿbah; Allah sent flocks of birds against them." },
+      { emoji: "🐎 📖 💨", a: ["horse","horses","adiyat","al adiyat"], display: "The Horse (Al-ʿĀdiyāt)", hint: "A surah is named after the charging war-horses.", note: "Surah 100 — Al-ʿĀdiyāt — opens with an oath by the horses that charge into battle." },
+      { emoji: "🐪 🕋 🌙", a: ["camel","camels","jamal","ibil"], display: "The Camel", hint: "Called 'the ships of the desert'; integral to Arabian life.", note: "The camel appears in many verses — as a sign of Allah's creation, as property, and as a beast of burden for Ḥajj." },
+      { emoji: "🐟 🌊 📖", a: ["fish","fish","hut","al hut"], display: "The Fish", hint: "Mūsā's companion fish came back to life and swam away.", note: "In Surah al-Kahf, Mūsā's fish escapes into the sea — the sign that he had found al-Khiḍr." },
+      { emoji: "🐋 🌊 🙏", a: ["whale","whales","hut","al hut"], display: "The Whale", hint: "It swallowed a prophet who cried out in the darkness.", note: "Yūnus was swallowed by a great fish; Allah says 'the companion of the fish' — a sign for all nations." },
+      { emoji: "🐺 👕 👨", a: ["wolf","wolves","dhi'b"], display: "The Wolf", hint: "Yaʿqūb feared it; Yūsuf's brothers blamed it.", note: "The brothers claimed a wolf devoured Yūsuf. The Qur'an exposes this false tale in Surah Yūsuf." },
+      { emoji: "🐦‍⬛ 🌍 👦", a: ["crow","crows","ghurab"], display: "The Crow", hint: "Taught Qābīl how to bury his brother.", note: "Allah sent a crow to teach Qābīl — the first murderer on earth — how to bury his brother Hābīl." },
+      { emoji: "🐦 👑 💌", a: ["hoopoe","hudhud","hud hud"], display: "The Hoopoe (Hudhud)", hint: "Carried a letter from Sulaymān to the Queen of Sheba.", note: "The hoopoe appears in Surah al-Naml — a bird with a mission, delivering Sulaymān's letter to Bilqīs." },
+      { emoji: "🐕 🕳️ 🌌", a: ["dog","dogs","kalb"], display: "The Dog", hint: "Guarded the youths who slept in the cave for 300 years.", note: "The dog of Aṣḥāb al-Kahf lies at the entrance of the cave — mentioned twice in Surah al-Kahf." },
+      { emoji: "🐍 🔥 🏔️", a: ["snake","serpent","hayya","thu'ban"], display: "The Serpent", hint: "Mūsā's staff transformed into one before Firʿawn.", note: "Mūsā's staff became a 'manifest serpent' — a sign to Firʿawn and his magicians (Surah al-Aʿrāf)." },
+      { emoji: "🫏 🍇 🌾", a: ["donkey","donkeys","himar"], display: "The Donkey", hint: "ʿUzayr's donkey was revived after 100 years.", note: "In Surah al-Baqarah (2:259), Allah shows ʿUzayr how He revives the dead by reviving his donkey before his eyes." },
+      { emoji: "🐑 🔥 🐏", a: ["sheep","ram","kabsh"], display: "The Sheep / Ram", hint: "Sent as a ransom for Ibrāhīm's son.", note: "Allah ransomed Ismāʿīl with 'a great sacrifice' — a ram — celebrated in the annual Qurbānī." },
+      { emoji: "🐐 🏔️ 🐑", a: ["goat","goats","mi'zā"], display: "The Goat", hint: "Kept by prophets and shepherds as livestock.", note: "Both goats and sheep appear in the Qur'an as part of the lawful livestock Allah provided for mankind." },
+      { emoji: "🦗 🍃 ⚠️", a: ["locusts","locust","jarad"], display: "The Locusts", hint: "One of the plagues sent upon Firʿawn's Egypt.", note: "The Qur'an lists locusts among the signs sent to Firʿawn (Surah al-Aʿrāf, 7:133)." },
+      { emoji: "🐸 🌊 ⚠️", a: ["frogs","frog","dafadi"], display: "The Frogs", hint: "Another plague that covered the land of Egypt.", note: "Also mentioned in Surah al-Aʿrāf as a warning to Firʿawn — one of nine signs given to Mūsā." },
+      { emoji: "🐦 🍞 🏜️", a: ["quail","salwa","quails"], display: "The Quail (Salwā)", hint: "Sent from the sky alongside manna to Banū Isrāʾīl.", note: "Allah sent 'manna and quail' to feed Banū Isrāʾīl in the wilderness (Surah al-Baqarah, 2:57)." },
+      { emoji: "🐖 🚫 📖", a: ["pig","pigs","khinzir"], display: "The Pig", hint: "Explicitly forbidden as food in the Qur'an.", note: "The Qur'an prohibits the flesh of swine in four places — its prohibition is explicit and unambiguous." },
+      { emoji: "🦁 💪 ⚔️", a: ["lion","lions","asad"], display: "The Lion", hint: "A symbol of courage mentioned in the Qur'an.", note: "The plural 'usud' appears in Surah al-Muddaththir (74:51) — describing those fleeing from a lion." },
+      { emoji: "🦟 📖 🌿", a: ["mosquito","mosquitoes","ba'ud"], display: "The Mosquito", hint: "Allah is not ashamed to use a tiny creature as a parable.", note: "Surah al-Baqarah (2:26) cites the mosquito as a parable — Allah is not ashamed to strike a similitude even with a gnat." },
+      { emoji: "🐴 🌾 🏃", a: ["mule","mules","baghl"], display: "The Mule", hint: "Listed in the Qur'an as one of the riding animals.", note: "Surah al-Naḥl (16:8) mentions horses, mules, and donkeys as mounts and ornaments." },
+      { emoji: "🐒 🍌 🏝️", a: ["monkey","monkeys","qirada"], display: "The Monkey", hint: "A punishment was described for those who broke the Sabbath.", note: "Surah al-Baqarah (2:65) and al-Aʿrāf (7:166) tell of those transformed into 'despised apes' — a warning against transgression." }
+    ]
+  },
+
+  {
+    id: 3,
+    title: "Foods",
+    arabic: "أَطعِمَة",
+    icon: "🫒",
+    description: "Foods and fruits named in the Qur'an",
+    questions: [
+      { emoji: "🌴 🏜️ 🍯", a: ["dates","date","tamr","nakhl"], display: "Dates (Tamr)", hint: "The fruit of the palm tree — a sign and a sustenance.", note: "Dates are named in over 20 verses. Maryam was given fresh ripe dates at the time of ʿĪsā's birth (19:25)." },
+      { emoji: "🍈 📖 🍽️", a: ["figs","fig","teen","tin"], display: "Figs (Tīn)", hint: "A whole surah is named after it, alongside the olive.", note: "Surah al-Tīn (95) opens with an oath by the fig and the olive — two blessed fruits." },
+      { emoji: "🫒 🌳 ✨", a: ["olive","olives","zaytun"], display: "Olives (Zaytūn)", hint: "Its oil lights the parable of the divine Light.", note: "The famous Āyat al-Nūr (24:35) describes Allah's Light as kindled from 'a blessed olive tree'." },
+      { emoji: "🍇 🍷 🌿", a: ["grapes","grape","inab"], display: "Grapes (ʿInab)", hint: "Named among the rewards of the righteous.", note: "The Qur'an mentions grapes many times — both as a worldly blessing and among the fruits of Paradise." },
+      { emoji: "🍎 🌰 📖", a: ["pomegranate","pomegranates","rumman"], display: "Pomegranate (Rummān)", hint: "Named among Allah's provisions — a fruit with a hidden beauty.", note: "Mentioned in Surahs al-Anʿām, al-Raḥmān, and al-Raʿd — 'in them are fruits, and palm trees with sheaths, and grain with husks, and fragrant herbs'." },
+      { emoji: "🍯 🐝 💛", a: ["honey","asl"], display: "Honey (ʿAsal)", hint: "The bee produces it — the Qur'an calls it a healing.", note: "Surah al-Naḥl (16:69): 'From its belly comes a drink of varying colours, wherein is healing for people.'" },
+      { emoji: "🥛 🐄 🍶", a: ["milk","laban","halib"], display: "Milk (Laban)", hint: "Described as pure and pleasant to drink.", note: "Surah al-Naḥl (16:66) describes milk as 'pure and pleasant to those who drink it'." },
+      { emoji: "💧 🌊 🏞️", a: ["water","ma'","maa"], display: "Water (Māʾ)", hint: "The source of all life — the Qur'an reminds us repeatedly.", note: "Surah al-Anbiyāʾ (21:30): 'We made from water every living thing.'" },
+      { emoji: "🍌 🌴 📖", a: ["banana","bananas","talh","bananas"], display: "Bananas (Ṭalḥ)", hint: "Named among the shades of Paradise.", note: "Surah al-Wāqiʿah (56:29) mentions 'ṭalḥ manḍūd' — layered bananas — as one of the delights of Paradise." },
+      { emoji: "🍞 ✨ 🏜️", a: ["manna","mann","manna and quail"], display: "Manna (Mann)", hint: "Sent from the sky — a gift to Banū Isrāʾīl.", note: "Allah rained down manna and quail upon Banū Isrāʾīl during their journey in the wilderness." },
+      { emoji: "🏞️ 💧 🌊", a: ["rivers","river","anhar"], display: "Rivers (Anhār)", hint: "Flowing beneath the gardens of Paradise.", note: "The Qur'an describes Paradise as 'gardens beneath which rivers flow' — mentioned over 30 times." },
+      { emoji: "💦 ⛰️ 🌿", a: ["springs","spring","uyun"], display: "Springs (ʿUyūn)", hint: "Gushing forth from the earth as a blessing.", note: "The Qur'an speaks of 'ʿuyūn' — springs — as signs of Allah's mercy and provisions of Paradise." },
+      { emoji: "🌾 🍞 📖", a: ["grain","wheat","zar","habb"], display: "Grain (Ḥabb)", hint: "The staple of life, named in surah al-Raḥmān.", note: "Surah al-Raḥmān (55:12) mentions 'grain with husks and fragrant herbs' as blessings of Allah." },
+      { emoji: "🧅 🍲 ⚠️", a: ["onion","onions","basal"], display: "Onion (Baṣal)", hint: "One of the vegetables Banū Isrāʾīl demanded in the desert.", note: "Surah al-Baqarah (2:61) records their complaint and request for 'herbs, cucumbers, garlic, lentils, and onions'." },
+      { emoji: "🧄 🍲 ⚠️", a: ["garlic","fūm","fuum"], display: "Garlic (Fūm)", hint: "Named among the vegetables Banū Isrāʾīl requested.", note: "Also in Surah al-Baqarah (2:61) — the same verse that records their complaints about manna and quail." },
+      { emoji: "🫘 🍲 🌾", a: ["lentils","lentil","adas"], display: "Lentils (ʿAdas)", hint: "Another vegetable Banū Isrāʾīl asked for.", note: "The humble lentil appears in the Qur'an as part of the story of Banū Isrāʾīl's complaints." },
+      { emoji: "🥒 🥗 🌱", a: ["cucumber","cucumbers","qiththa"], display: "Cucumber (Qiththāʾ)", hint: "One of the vegetables Banū Isrāʾīl requested.", note: "The same verse in Surah al-Baqarah — Allah reminds them that they had been given better." },
+      { emoji: "🍒 🌳 🌿", a: ["lote tree","sidr","lote"], display: "The Lote Tree (Sidr)", hint: "Its fruit is described at the furthest boundary.", note: "The 'Sidrat al-Muntahā' — the Lote Tree of the Boundary — appears in Surah al-Najm (53:14) and al-Wāqiʿah." },
+      { emoji: "🍇 🍇 📖", a: ["fruits","fruit","fawakih"], display: "Fruits (Fawākih)", hint: "The general term used for the produce of Paradise.", note: "Surah al-Raḥmān (55) repeatedly asks: 'Which of the favours of your Lord will you deny?' — listing fruits among them." },
+      { emoji: "🍖 🐄 🍽️", a: ["meat","lahm","laham"], display: "Meat (Laḥm)", hint: "Described as tender and lawful when properly slaughtered.", note: "The Qur'an mentions 'tender meat' as one of the pleasures of Paradise (Surah al-Wāqiʿah, 56:21)." },
+      { emoji: "🐟 🍽️ 🌊", a: ["fish","seafood","samak"], display: "Fish (Samak)", hint: "Lawful catch from the sea.", note: "The Qur'an permits the catch of the sea as lawful food — and the fish of Mūsā is a well-known story." },
+      { emoji: "🍶 🍷 🚫", a: ["wine","khamr","intoxicants"], display: "Wine / Intoxicants (Khamr)", hint: "Prohibited — described as the work of Satan.", note: "Surah al-Māʾidah (5:90) prohibits khamr and calls it 'the handiwork of Satan'." },
+      { emoji: "🫗 🍯 📖", a: ["drink","sharab","drinks"], display: "Drink (Sharāb)", hint: "A general term for beverages — pure and impure distinguished.", note: "The Qur'an describes drinks of Paradise as pure and never intoxicating (Surah al-Ṣāffāt, 37:47)." },
+      { emoji: "🌿 🌾 🌱", a: ["herbs","herb","rayhan"], display: "Fragrant Herbs (Rayḥān)", hint: "Named in the opening of Surah al-Raḥmān.", note: "Surah al-Raḥmān (55:12) says the earth brings forth 'grain with husks and fragrant herbs'." },
+      { emoji: "🍽️ 🚫 ⚠️", a: ["forbidden food","haram food","muharramat"], display: "Forbidden Foods", hint: "Carrion, blood, swine, and what was dedicated to others.", note: "Surah al-Baqarah (2:173) and al-Māʾidah (5:3) list the foods Allah has forbidden for the believers." }
+    ]
+  },
+
+  {
+    id: 4,
+    title: "Practices",
+    arabic: "عِبَادَات",
+    icon: "🕌",
+    description: "Acts of worship and Islamic practices",
+    questions: [
+      { emoji: "☝️ 🗣️ ✨", a: ["shahadah","shahada","testimony","kalima"], display: "Shahādah (Testimony of Faith)", hint: "The first pillar — the declaration that there is no god but Allah.", note: "'Lā ilāha illā Allāh, Muḥammad rasūl Allāh' — the gateway into Islam." },
+      { emoji: "🕌 🕋 🕐", a: ["salah","salat","prayer","namaz"], display: "Ṣalāh (Prayer)", hint: "The five daily prayers — the second pillar of Islam.", note: "The Qur'an calls it 'the pillar of the religion'. It is performed five times daily at prescribed times." },
+      { emoji: "💰 🧕 🤲", a: ["zakat","zakaat","charity","almsgiving"], display: "Zakāt (Obligatory Charity)", hint: "The third pillar — giving a fixed portion of wealth.", note: "2.5% of surplus wealth given annually to eight categories of recipients named in Surah al-Tawbah (9:60)." },
+      { emoji: "🌙 🍽️ 🚫", a: ["sawm","fasting","ramadan","siyam"], display: "Ṣawm (Fasting)", hint: "The fourth pillar — abstaining from dawn to sunset in Ramadan.", note: "Surah al-Baqarah (2:183): 'O you who believe, fasting is prescribed for you as it was prescribed for those before you.'" },
+      { emoji: "🕋 🐪 ✈️", a: ["hajj","pilgrimage","haj"], display: "Ḥajj (Pilgrimage)", hint: "The fifth pillar — travelling to Makkah at least once in a lifetime.", note: "Prescribed in Surah al-Baqarah (2:196) and Āl ʿImrān (3:97) — obligatory on those who are able." },
+      { emoji: "💧 🤲 🧼", a: ["wudu","ablution","wudhu"], display: "Wuḍūʾ (Ablution)", hint: "Ritual washing before prayer, recitation, and ṭawāf.", note: "Surah al-Māʾidah (5:6) prescribes the washing of face, hands, head, and feet before prayer." },
+      { emoji: "📢 🕌 🕐", a: ["adhan","azan","call to prayer"], display: "Adhān (Call to Prayer)", hint: "The call that echoes five times a day from every mosque.", note: "The first adhān was given by Bilāl ibn Rabāḥ, the Prophet's ﷺ muezzin." },
+      { emoji: "🕌 📅 👥", a: ["jumuah","jummah","friday prayer"], display: "Jumuʿah (Friday Prayer)", hint: "A congregational prayer with a sermon, replacing Ẓuhr on Fridays.", note: "Surah al-Jumuʿah (62:9) commands believers to hasten to the remembrance of Allah when the call is given." },
+      { emoji: "🌙 🕌 🚶", a: ["tarawih","taraweeh","night prayer"], display: "Tarāwīḥ (Ramadan Night Prayer)", hint: "Performed in congregation after ʿIshāʾ during Ramadan.", note: "A sunnah emphasised in Ramadan — long recitations of the Qur'an that connect the worshipper to Revelation." },
+      { emoji: "🕌 🌙 🕯️", a: ["itikaf","seclusion","aitikaf"], display: "Iʿtikāf (Spiritual Retreat)", hint: "Seclusion in the mosque during the last ten nights of Ramadan.", note: "The Prophet ﷺ would perform iʿtikāf every Ramadan, seeking Laylat al-Qadr." },
+      { emoji: "🤲 💛 ✨", a: ["sadaqah","sadaqa","voluntary charity"], display: "Ṣadaqah (Voluntary Charity)", hint: "Any act of giving — money, food, or even a smile.", note: "The Prophet ﷺ said: 'Every act of kindness is charity.' Ṣadaqah is unlimited and always rewarded." },
+      { emoji: "✈️ 🕋 🚶", a: ["umrah","umra","lesser pilgrimage"], display: "ʿUmrah (Lesser Pilgrimage)", hint: "A visit to Makkah that can be done any time of year.", note: "ʿUmrah shares many rites with Ḥajj but is shorter and can be performed throughout the year." },
+      { emoji: "🧭 🕋 🕌", a: ["qibla","qibla direction"], display: "Qibla (Direction of Prayer)", hint: "The direction of the Kaʿbah, faced in prayer worldwide.", note: "Surah al-Baqarah (2:144) records the command to turn toward the Sacred Mosque." },
+      { emoji: "📖 🗣️ 🕌", a: ["tilawah","recitation","tajweed"], display: "Tilāwah (Qur'anic Recitation)", hint: "The art of reciting the Qur'an beautifully and correctly.", note: "The Qur'an repeatedly commands 'rattil al-Qur'ān tartīlā' — 'recite the Qur'an with measured recitation'." },
+      { emoji: "📿 ✨ 🤲", a: ["dhikr","zikr","remembrance"], display: "Dhikr (Remembrance of Allah)", hint: "'Indeed, in the remembrance of Allah do hearts find rest.'", note: "Surah al-Raʿd (13:28): 'Verily in the remembrance of Allah do hearts find rest.'" },
+      { emoji: "🤲 ☁️ 🌙", a: ["dua","du'a","supplication"], display: "Duʿāʾ (Supplication)", hint: "The heart's private conversation with Allah.", note: "The Prophet ﷺ called duʿāʾ 'the essence of worship' — direct, personal, and always heard." },
+      { emoji: "🙏 🤲 💧", a: ["istighfar","forgiveness","seeking forgiveness"], display: "Istighfār (Seeking Forgiveness)", hint: "'Astaghfirullāh' — seeking Allah's pardon for one's sins.", note: "The Prophet ﷺ sought forgiveness more than 70 times a day despite being sinless — a model of humility." },
+      { emoji: "🌱 🔄 ✨", a: ["tawbah","repentance"], display: "Tawbah (Repentance)", hint: "A sincere turning back to Allah from sin.", note: "Surah al-Taḥrīm (66:8): 'O you who believe, turn to Allah with sincere repentance.'" },
+      { emoji: "👶 🐑 🍽️", a: ["aqiqah","aqeeqah","birth sacrifice"], display: "ʿAqīqah (Birth Sacrifice)", hint: "A sheep offered on the seventh day after a baby is born.", note: "A sunnah practice — offering one sheep for a girl and two for a boy, with the child's head shaved." },
+      { emoji: "💍 🕌 👩‍❤️‍👨", a: ["nikah","marriage","wedding"], display: "Nikāḥ (Marriage)", hint: "A sacred covenant witnessed by the community.", note: "The Qur'an calls marriage 'mīthāqan ghalīẓā' — 'a solemn covenant' (Surah al-Nisāʾ, 4:21)." },
+      { emoji: "⚰️ 🤲 🕌", a: ["janazah","funeral","janaza"], display: "Janāzah (Funeral Prayer)", hint: "A communal prayer offered for the deceased.", note: "A collective obligation on the Muslim community — standing in prayer for the departed." },
+      { emoji: "🌙 🕯️ 🤲", a: ["qiyam al layl","night prayer","tahajjud"], display: "Qiyām al-Layl (Night Prayer)", hint: "Standing in prayer in the depths of the night.", note: "Surah al-Muzzammil (73:1-4) commands the Prophet ﷺ to 'stand the night in prayer, except a little'." },
+      { emoji: "💧 🏛️ 📿", a: ["sadaqah jariyah","ongoing charity"], display: "Ṣadaqah Jāriyah (Ongoing Charity)", hint: "A charity whose reward continues even after one's death.", note: "The Prophet ﷺ named three things that continue after death: ongoing charity, beneficial knowledge, and righteous offspring." },
+      { emoji: "👨‍👩‍👧 ☪️ 🌙", a: ["khutbah","sermon","khutba"], display: "Khuṭbah (Sermon)", hint: "The Friday address delivered before prayer.", note: "Delivered standing from the minbar — addressing the community on faith, morality, and current affairs." },
+      { emoji: "🌾 💰 🤲", a: ["fitrah","zakat al fitr","fitra"], display: "Zakāt al-Fiṭr", hint: "Charity given before ʿĪd al-Fiṭr — a purification for the fasting person.", note: "Roughly a ṣāʿ (about 3 kg) of staple food given on behalf of every member of the household." }
+    ]
+  },
+
+  {
+    id: 5,
+    title: "Places & Events",
+    arabic: "أَمَاكِن وَأَحْدَاث",
+    icon: "🕋",
+    description: "Sacred places and historical events of the Qur'an",
+    questions: [
+      { emoji: "🕋 🌙 🧭", a: ["kaaba","ka'bah","kabah","the kaaba"], display: "The Kaʿbah", hint: "The House of Allah in Makkah — the direction of prayer.", note: "Surah Āl ʿImrān (3:96): 'The first House established for mankind is the one at Bakkah, blessed.'" },
+      { emoji: "🕌 🕋 👥", a: ["masjid al haram","the sacred mosque","haram"], display: "Masjid al-Ḥarām", hint: "The Sacred Mosque that surrounds the Kaʿbah.", note: "The largest mosque in the world, and the destination of Ḥajj and ʿUmrah pilgrims." },
+      { emoji: "🕌 🌴 🤲", a: ["masjid al nabawi","the prophet's mosque","madina mosque"], display: "Masjid al-Nabawī", hint: "The Prophet's ﷺ mosque in Madīnah — second holiest site.", note: "Built by the Prophet ﷺ himself; the second holiest mosque in Islam, after Masjid al-Ḥarām." },
+      { emoji: "🕌 🇵🇸 ✨", a: ["masjid al aqsa","the farthest mosque","al aqsa"], display: "Masjid al-Aqṣā", hint: "The 'Farthest Mosque' — the destination of the Night Journey.", note: "Mentioned in Surah al-Isrāʾ (17:1) as the destination of the Prophet's ﷺ night journey from Makkah." },
+      { emoji: "🕳️ 📖 🌟", a: ["cave of hira","hira","cave hira"], display: "Cave of Ḥirāʾ", hint: "Where the first revelation descended.", note: "On Jabal al-Nūr near Makkah, where the angel Jibrīl first appeared to the Prophet ﷺ." },
+      { emoji: "🕳️ 🌵 🚶", a: ["cave of thawr","thawr","cave thawr"], display: "Cave of Thawr", hint: "The Prophet ﷺ and Abū Bakr hid here during the Hijrah.", note: "Surah al-Tawbah (9:40) refers to it: 'When he said to his companion, do not grieve; indeed Allah is with us.'" },
+      { emoji: "⛰️ 🔥 📖", a: ["tur sina","mount sinai","sinai"], display: "Ṭūr Sīnā", hint: "Where Mūsā spoke with Allah.", note: "The mountain where Mūsā received the Torah. A sūrah — al-Ṭūr — is named after it." },
+      { emoji: "🕋 🌙 🌍", a: ["makkah","mecca"], display: "Makkah", hint: "The birthplace of the Prophet ﷺ and the holiest city.", note: "Called 'Bakkah' in the Qur'an. Surah al-Fatḥ (48) recounts the conquest of Makkah." },
+      { emoji: "🌴 🕌 🌙", a: ["madinah","medina","yathrib"], display: "Madīnah", hint: "The city of the Prophet ﷺ after the Hijrah.", note: "Formerly Yathrib; renamed 'Madīnat al-Nabī' — the city of the Prophet ﷺ." },
+      { emoji: "🏔️ 👥 🤲", a: ["arafat","arafah","mount arafat"], display: "ʿArafāt", hint: "The plain where pilgrims stand on the 9th of Dhul-Ḥijjah.", note: "The Prophet ﷺ said: 'Ḥajj is ʿArafah.' Standing there is the essential rite of the pilgrimage." },
+      { emoji: "⛺ 🕋 🐑", a: ["mina","mina valley"], display: "Minā", hint: "The tent city where pilgrims stone the Jamarāt.", note: "Located between Makkah and ʿArafāt — site of the stoning ritual and the sacrifice." },
+      { emoji: "🌌 🌙 ⛺", a: ["muzdalifah","muzdalifa"], display: "Muzdalifah", hint: "Where pilgrims spend the night after ʿArafāt, collecting pebbles.", note: "Surah al-Baqarah (2:198) mentions it: 'When you return from ʿArafāt, remember Allah at al-Mashʿar al-Ḥarām.'" },
+      { emoji: "💧 🕋 🚰", a: ["zamzam","zam zam","zamzam water"], display: "Zamzam", hint: "The blessed spring that gushed for Ismāʿīl.", note: "A spring that has flowed continuously since the time of Ibrāhīm — pilgrims drink from it to this day." },
+      { emoji: "🏃 ⛰️ 🕋", a: ["safa and marwah","safa marwah","safa"], display: "Ṣafā and Marwah", hint: "Two hills between which pilgrims walk seven times.", note: "The rite of saʿī commemorates Hājar's search for water for her son Ismāʿīl." },
+      { emoji: "⚔️ 🏜️ ⭐", a: ["badr","battle of badr"], display: "Badr", hint: "The first major battle — the day of distinction.", note: "Surah Āl ʿImrān (3:123) calls it 'Yawm al-Furqān' — the day of distinction between truth and falsehood." },
+      { emoji: "⛰️ ⚔️ ⚠️", a: ["uhud","battle of uhud"], display: "Uḥud", hint: "The battle where the archers' error cost the Muslims dearly.", note: "Surah Āl ʿImrān (3:121-179) reflects on the lessons of Uḥud — testing, forgiveness, and steadfastness." },
+      { emoji: "🛡️ 🏜️ 🕳️", a: ["khandaq","trench","battle of the trench"], display: "Khandaq (Trench)", hint: "The battle where a trench saved Madīnah.", note: "Also called the Battle of the Confederates (al-Aḥzāb). Surah al-Aḥzāb recounts the siege." },
+      { emoji: "🏹 ⛰️ 🤲", a: ["hunayn","battle of hunayn"], display: "Ḥunayn", hint: "A battle where the Muslims initially faltered, then prevailed.", note: "Surah al-Tawbah (9:25-27) records the lesson of Ḥunayn — reliance on numbers is not enough." },
+      { emoji: "🐪 🏜️ ⚔️", a: ["tabuk","battle of tabuk"], display: "Tabūk", hint: "The expedition to the far north — the last campaign of the Prophet ﷺ.", note: "A test of sacrifice in extreme heat — Surah al-Tawbah reflects on those who stayed behind." },
+      { emoji: "🕊️ 📜 🤝", a: ["hudaybiyyah","treaty of hudaybiyyah"], display: "Ḥudaybiyyah", hint: "The treaty that looked like a defeat but opened the way to victory.", note: "Surah al-Fatḥ (48:1) calls it 'a manifest victory' — the peaceful treaty that led to the conquest of Makkah." },
+      { emoji: "🐪 🌊 🌿", a: ["egypt","misr"], display: "Egypt (Miṣr)", hint: "Where Yūsuf rose from prison to power.", note: "Named five times in the Qur'an — the land of Firʿawn, Yūsuf, and Mūsā." },
+      { emoji: "💧 🏜️ 📖", a: ["madyan","midian"], display: "Madyan", hint: "Where Mūsā fled and met his future wife.", note: "Surah al-Qaṣaṣ (28:22-28) tells of Mūsā's years in Madyan, tending sheep for Shuʿayb." },
+      { emoji: "🗼 🔥 📖", a: ["babylon","babil"], display: "Babylon (Bābil)", hint: "Mentioned in connection with the angels Hārūt and Mārūt.", note: "Surah al-Baqarah (2:102) mentions Bābil — a place of trial, not of magic as commonly supposed." },
+      { emoji: "🕌 🌟 ✨", a: ["jerusalem","bayt al maqdis","al quds"], display: "Jerusalem (Bayt al-Maqdis)", hint: "The first qibla and destination of the Isrāʾ.", note: "The city of Masjid al-Aqṣā — the original direction of prayer before the change to Makkah." },
+      { emoji: "🌊 🐍 🏔️", a: ["parting of the sea","red sea","splitting of the sea"], display: "The Parting of the Sea", hint: "Mūsā struck the sea with his staff and it split.", note: "Surah al-Shuʿarāʾ (26:63): 'Then We revealed to Mūsā, “Strike the sea with your staff.” And it split apart.'" }
+    ]
+  }
+];
+
+/* ═══════════════════ STATE ═══════════════════ */
+const state = {
+  setIdx: 0,
+  activeIdx: 0,
+  answers: [],           // per current set: { status: null | 'correct' | 'wrong', attempts: n }
+  score: 0,
+  streak: 0,
+  longestStreak: 0,
+  setCompleted: new Array(SETS.length).fill(false),
+  locked: false
+};
+
+/* ═══════════════════ DOM ═══════════════════ */
+const setSelector = document.getElementById('setSelector');
+const quizGrid = document.getElementById('quizGrid');
+const activePanel = document.getElementById('activePanel');
+const apNum = document.getElementById('apNum');
+const apCat = document.getElementById('apCat');
+const apEmoji = document.getElementById('apEmoji');
+const apHint = document.getElementById('apHint');
+const answerForm = document.getElementById('answerForm');
+const answerInput = document.getElementById('answerInput');
+const submitBtn = document.getElementById('submitBtn');
+const feedbackEl = document.getElementById('feedback');
+const scoreDisplay = document.getElementById('scoreDisplay');
+const streakDisplay = document.getElementById('streakDisplay');
+const streakPill = document.getElementById('streakPill');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const revealBtn = document.getElementById('revealBtn');
+const clearBtn = document.getElementById('clearBtn');
+const resetBtn = document.getElementById('resetBtn');
+const resultsOverlay = document.getElementById('resultsOverlay');
+
+/* ═══════════════════ UTILITIES ═══════════════════ */
+function normalize(str) {
+  return String(str)
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9 ]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function matchAnswer(input, accepted) {
+  const n = normalize(input);
+  if (!n) return false;
+  return accepted.some(a => normalize(a) === n);
+}
+
+/* ═══════════════════ RENDER SET SELECTOR ═══════════════════ */
+function renderSetSelector() {
+  setSelector.innerHTML = '';
+  SETS.forEach((set, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'set-btn';
+    if (i === state.setIdx) btn.classList.add('active');
+    if (state.setCompleted[i]) btn.classList.add('completed');
+    btn.innerHTML = `
+      <span class="set-icon">${set.icon}</span>
+      <span class="set-name">${set.title}</span>
+      <span class="set-arabic">${set.arabic}</span>
+      <span class="set-progress">Set ${i + 1} · 25</span>
+    `;
+    btn.addEventListener('click', () => {
+      if (i === state.setIdx) return;
+      state.setIdx = i;
+      initSet();
+    });
+    setSelector.appendChild(btn);
+  });
+}
+
+/* ═══════════════════ RENDER QUIZ GRID ═══════════════════ */
+function renderGrid() {
+  quizGrid.innerHTML = '';
+  const set = SETS[state.setIdx];
+  set.questions.forEach((q, i) => {
+    const ans = state.answers[i] || { status: null, attempts: 0 };
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'quiz-card';
+    btn.dataset.idx = i;
+    if (i === state.activeIdx) btn.classList.add('active');
+    if (ans.status === 'correct') btn.classList.add('correct');
+    if (ans.status === 'wrong') btn.classList.add('wrong');
+    btn.innerHTML = `
+      <span class="card-num">#${String(i + 1).padStart(3, '0')}</span>
+      <span class="card-emoji">${q.emoji}</span>
+      <span class="card-cat">${set.title.slice(0, -1).toUpperCase()}</span>
+    `;
+    btn.addEventListener('click', () => {
+      if (i === state.activeIdx) return;
+      state.activeIdx = i;
+      renderGrid();
+      renderActivePanel();
+    });
+    quizGrid.appendChild(btn);
+  });
+}
+
+/* ═══════════════════ RENDER ACTIVE PANEL ═══════════════════ */
+function renderActivePanel() {
+  const set = SETS[state.setIdx];
+  const q = set.questions[state.activeIdx];
+  const ans = state.answers[state.activeIdx] || { status: null, attempts: 0 };
+
+  activePanel.classList.add('show');
+  apNum.textContent = `#${String(state.activeIdx + 1).padStart(3, '0')}`;
+  apCat.textContent = set.title.toUpperCase();
+  apEmoji.textContent = q.emoji;
+  apHint.textContent = q.hint;
+
+  // Navigation
+  prevBtn.disabled = state.activeIdx === 0;
+  nextBtn.disabled = state.activeIdx === set.questions.length - 1;
+
+  // Reset feedback
+  feedbackEl.classList.remove('show', 'correct', 'wrong');
+  feedbackEl.innerHTML = '';
+
+  // Restore answered state
+  if (ans.status === 'correct') {
+    answerInput.value = q.display;
+    answerInput.disabled = true;
+    submitBtn.disabled = true;
+    revealBtn.disabled = true;
+    showFeedback(true, q, ans, false);
+  } else if (ans.status === 'wrong') {
+    answerInput.value = '';
+    answerInput.disabled = false;
+    submitBtn.disabled = false;
+    revealBtn.disabled = false;
+    showFeedback(false, q, ans, true);
+  } else {
+    answerInput.value = '';
+    answerInput.disabled = false;
+    submitBtn.disabled = false;
+    revealBtn.disabled = false;
+  }
+  answerInput.focus();
+}
+
+/* ═══════════════════ SUBMIT ═══════════════════ */
+answerForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  submitAnswer();
+});
+
+function submitAnswer() {
+  if (state.locked) return;
+  const set = SETS[state.setIdx];
+  const q = set.questions[state.activeIdx];
+  const ans = state.answers[state.activeIdx] || { status: null, attempts: 0 };
+  if (ans.status === 'correct') return;
+
+  const input = answerInput.value;
+  if (!input.trim()) return;
+
+  ans.attempts = (ans.attempts || 0) + 1;
+  const isCorrect = matchAnswer(input, q.a);
+
+  if (isCorrect) {
+    ans.status = 'correct';
+    state.answers[state.activeIdx] = ans;
+    if (ans.attempts === 1) {
+      state.score++;
+      state.streak++;
+      if (state.streak > state.longestStreak) state.longestStreak = state.streak;
+    } else {
+      state.streak = 0;
+    }
+    state.locked = true;
+    answerInput.disabled = true;
+    submitBtn.disabled = true;
+    revealBtn.disabled = true;
+    renderGrid();
+    showFeedback(true, q, ans, false);
+    updateStats();
+    state.locked = false;
+
+    // Check set completion
+    checkSetCompletion();
+  } else {
+    ans.status = 'wrong';
+    state.answers[state.activeIdx] = ans;
+    state.streak = 0;
+    updateStats();
+    renderGrid();
+    showFeedback(false, q, ans, false);
+    // Clear input for retry
+    answerInput.value = '';
+    answerInput.focus();
+  }
+}
+
+function showFeedback(isCorrect, q, ans, showReveal) {
+  feedbackEl.classList.add('show');
+  feedbackEl.classList.remove('correct', 'wrong');
+  feedbackEl.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  if (isCorrect) {
+    const first = ans.attempts === 1;
+    feedbackEl.innerHTML = `
+      <div class="fb-title">${first ? '✓ Correct — Masha\'Allah!' : '✓ Correct!'}${first ? ` <span style="color:var(--fire);">🔥 ${state.streak} in a row</span>` : ''}</div>
+      <div class="fb-line"><span class="fb-answer">${q.display}</span></div>
+      <div class="fb-note"><strong>📖 Did you know:</strong> ${q.note}</div>
+    `;
+  } else {
+    feedbackEl.innerHTML = `
+      <div class="fb-title">✗ Not quite — attempt ${ans.attempts}</div>
+      <div class="fb-line">The answer is <span class="fb-answer">${q.display}</span>.</div>
+      <div class="fb-note"><strong>📖 Note:</strong> ${q.note}</div>
+      <div class="fb-line" style="margin-top:.5rem;font-weight:600;color:var(--primary);">💡 Try again in the input field.</div>
+    `;
+  }
+}
+
+/* ═══════════════════ NAVIGATION ═══════════════════ */
+prevBtn.addEventListener('click', () => {
+  if (state.activeIdx > 0) {
+    state.activeIdx--;
+    renderGrid();
+    renderActivePanel();
+  }
+});
+
+nextBtn.addEventListener('click', () => {
+  const set = SETS[state.setIdx];
+  if (state.activeIdx < set.questions.length - 1) {
+    state.activeIdx++;
+    renderGrid();
+    renderActivePanel();
+  }
+});
+
+revealBtn.addEventListener('click', () => {
+  const set = SETS[state.setIdx];
+  const q = set.questions[state.activeIdx];
+  const ans = state.answers[state.activeIdx] || { status: null, attempts: 0 };
+  if (ans.status === 'correct') return;
+
+  ans.attempts = (ans.attempts || 0) + 1;
+  ans.status = 'wrong';
+  state.answers[state.activeIdx] = ans;
+  state.streak = 0;
+
+  answerInput.value = q.display;
+  answerInput.disabled = true;
+  submitBtn.disabled = true;
+  revealBtn.disabled = true;
+  renderGrid();
+  showFeedback(false, q, ans, true);
+  updateStats();
+  checkSetCompletion();
+});
+
+clearBtn.addEventListener('click', () => {
+  answerInput.value = '';
+  answerInput.focus();
+});
+
+/* ═══════════════════ STATS ═══════════════════ */
+function updateStats() {
+  const set = SETS[state.setIdx];
+  const total = set.questions.length;
+  const answered = state.answers.filter(a => a && a.status === 'correct').length;
+  scoreDisplay.textContent = `${state.score} / ${total}`;
+  streakDisplay.textContent = state.streak;
+  streakPill.classList.toggle('active', state.streak >= 2);
+  const pct = Math.round((answered / total) * 100);
+  progressFill.style.width = pct + '%';
+  progressText.textContent = pct + '%';
+}
+
+/* ═══════════════════ SET COMPLETION ═══════════════════ */
+function checkSetCompletion() {
+  const set = SETS[state.setIdx];
+  const total = set.questions.length;
+  const correct = state.answers.filter(a => a && a.status === 'correct').length;
+  if (correct === total) {
+    state.setCompleted[state.setIdx] = true;
+    renderSetSelector();
+    // Small delay then show results
+    setTimeout(showResults, 500);
+  }
+}
+
+/* ═══════════════════ INIT A SET ═══════════════════ */
+function initSet() {
+  state.activeIdx = 0;
+  state.score = 0;
+  state.streak = 0;
+  state.longestStreak = 0;
+  state.locked = false;
+  state.answers = SETS[state.setIdx].questions.map(() => ({ status: null, attempts: 0 }));
+  renderSetSelector();
+  renderGrid();
+  renderActivePanel();
+  updateStats();
+  resultsOverlay.classList.add('hidden');
+  document.body.style.overflow = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════ RESULTS OVERLAY ═══════════════════ */
+function showResults() {
+  const set = SETS[state.setIdx];
+  const total = set.questions.length;
+  const pct = Math.round((state.score / total) * 100);
+
+  document.getElementById('finalScore').textContent = state.score;
+  document.getElementById('finalTotal').textContent = total;
+  document.getElementById('finalPct').textContent = pct + '%';
+
+  let msg;
+  if (pct === 100) {
+    msg = `ما شاء الله! A perfect score on the ${set.title} set — you knew every answer on the first try.`;
+  } else if (pct >= 80) {
+    msg = `Excellent work on the ${set.title} set! You have a strong grasp of these Qur'anic signs.`;
+  } else if (pct >= 60) {
+    msg = `Good effort on the ${set.title} set. Review the ones you missed below — the notes will help them stick.`;
+  } else {
+    msg = `Keep going — you completed the ${set.title} set. Try it again and the signs will grow familiar.`;
+  }
+  document.getElementById('finalMsg').textContent = msg;
+
+  const streakEl = document.getElementById('scoreStreak');
+  if (state.longestStreak >= 3) {
+    streakEl.style.display = 'inline-flex';
+    document.getElementById('finalStreak').textContent = state.longestStreak;
+  } else {
+    streakEl.style.display = 'none';
+  }
+
+  // Review list
+  const review = document.getElementById('reviewList');
+  review.innerHTML = '';
+  set.questions.forEach((q, i) => {
+    const ans = state.answers[i] || { status: null, attempts: 0 };
+    const ok = ans.status === 'correct';
+    const item = document.createElement('div');
+    item.className = 'review-item ' + (ok ? 'ok' : 'no');
+    item.innerHTML = `
+      <div><span class="rv-emoji">${q.emoji}</span> <span class="rv-answer">${q.display}</span></div>
+      <div class="rv-note">${q.note}</div>
+    `;
+    review.appendChild(item);
+  });
+
+  // Show next set button if there's a next set
+  const nextBtnResults = document.getElementById('nextSetFromResults');
+  if (state.setIdx < SETS.length - 1) {
+    nextBtnResults.style.display = 'inline-block';
+    nextBtnResults.textContent = `Continue to Set ${state.setIdx + 2} →`;
+  } else {
+    nextBtnResults.style.display = 'none';
+  }
+
+  resultsOverlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+/* ═══════════════════ EVENT WIRING ═══════════════════ */
+document.getElementById('closeResults').addEventListener('click', () => {
+  resultsOverlay.classList.add('hidden');
+  document.body.style.overflow = '';
+});
+resultsOverlay.addEventListener('click', (e) => {
+  if (e.target.id === 'resultsOverlay') {
+    resultsOverlay.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+});
+document.getElementById('replaySet').addEventListener('click', () => {
+  initSet();
+});
+document.getElementById('nextSetFromResults').addEventListener('click', () => {
+  if (state.setIdx < SETS.length - 1) {
+    state.setIdx++;
+    initSet();
+  }
+});
+resetBtn.addEventListener('click', () => {
+  initSet();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    resultsOverlay.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+});
+
+/* ═══════════════════ BOOT ═══════════════════ */
+initSet();
+</script>
+</body>
+</html>
