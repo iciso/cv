@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Top 10 Quranic Surahs & Ayats — Sheikh Al-Husary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #0d5c56;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      background: linear-gradient(165deg, #f0fdfa 0%, #ccfbf1 50%, #a7f3d0 100%);
+      min-height: 100vh;
+      color: #134e4a;
+      padding: 1.5rem 1rem 3rem;
+    }
+    .container { max-width: 920px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 2rem; }
+    h1 {
+      font-size: 1.9rem;
+      color: var(--primary);
+      margin-bottom: 0.3rem;
+      line-height: 1.3;
+    }
+    .subtitle { font-size: 1.05rem; color: #0f766e; }
+    .player-card {
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 20px 50px -12px rgba(15, 118, 110, 0.18);
+      overflow: hidden;
+      border: 1px solid #99f6e4;
+    }
+    .display {
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 100%);
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .arabic {
+      font-family: 'Amiri', serif;
+      font-size: 2.5rem;
+      color: #0c4a43;
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+      direction: rtl;
+    }
+    .english {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .benefit {
+      font-size: 0.98rem;
+      color: #3f6b66;
+      max-width: 540px;
+      line-height: 1.55;
+      margin-bottom: 1.8rem;
+    }
+    .listen-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      padding: 0.9rem 2.1rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.25);
+      transition: all 0.25s ease;
+    }
+    .listen-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+    }
+    .qari {
+      margin-top: 0.9rem;
+      font-size: 0.9rem;
+      color: #0f766e;
+      font-weight: 600;
+    }
+    .markers {
+      display: flex;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 1.4rem 1rem;
+      background: #e0f2f1;
+      flex-wrap: wrap;
+    }
+    .marker {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid #99f6e4;
+      background: white;
+      color: #0f766e;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .marker:hover { border-color: var(--primary); background: #ccfbf1; }
+    .marker.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      transform: scale(1.12);
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+    }
+    .footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.9rem;
+      color: #3f6b66;
+      line-height: 1.6;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .arabic { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🌙 Top 10 Quranic Surahs & Ayats</h1>
+      <p class="subtitle">Sheikh Mahmoud Khalil Al-Husary (رحمه الله)</p>
+    </header>
+
+    <div class="player-card">
+      <div class="display" id="display"></div>
+      <div class="markers" id="markers"></div>
+    </div>
+
+    <div class="footer">
+      All recitations by<br>
+      <strong>Sheikh Mahmoud Khalil Al-Husary</strong><br>
+      May Allah make the Quran the spring of our hearts
+    </div>
+  </div>
+
+<script>
+  // Working links using mp3quran.net player pages for Husary
+  const items = [
+    {
+      arabic: "سُورَةُ الْفَاتِحَة",
+      english: "Surah Al-Fatiha",
+      benefit: "The Opening — the greatest Surah. Recited in every rak‘ah. Contains pure Tawhid and the greatest dua.",
+      link: "https://www.mp3quran.net/eng/husr/1"
+    },
+    {
+      arabic: "آيَةُ الْكُرْسِيّ",
+      english: "Ayat-ul-Kursi (2:255)",
+      benefit: "The greatest verse in the Quran. Strong protection from Shaytan — especially after Salah and before sleep.",
+      link: "https://www.mp3quran.net/eng/husr/2"   // Full Al-Baqarah – seek to verse 255
+    },
+    {
+      arabic: "سُورَةُ الْإِخْلَاص",
+      english: "Surah Al-Ikhlas",
+      benefit: "Equivalent to one-third of the Quran. Pure Tawhid. One of the Four Quls.",
+      link: "https://www.mp3quran.net/eng/husr/112"
+    },
+    {
+      arabic: "سُورَةُ الْفَلَق",
+      english: "Surah Al-Falaq",
+      benefit: "Protection from the evil of creation, darkness, magic and envy.",
+      link: "https://www.mp3quran.net/eng/husr/113"
+    },
+    {
+      arabic: "سُورَةُ النَّاس",
+      english: "Surah An-Nas",
+      benefit: "Protection from the whispers of Shaytan and the evil of jinn and mankind.",
+      link: "https://www.mp3quran.net/eng/husr/114"
+    },
+    {
+      arabic: "سُورَةُ يس",
+      english: "Surah Yasin",
+      benefit: "Heart of the Quran. Widely recited for the dying, for ease, and for blessings.",
+      link: "https://www.mp3quran.net/eng/husr/36"
+    },
+    {
+      arabic: "سُورَةُ الْمُلْك",
+      english: "Surah Al-Mulk",
+      benefit: "Protects from the punishment of the grave. Highly recommended every night.",
+      link: "https://www.mp3quran.net/eng/husr/67"
+    },
+    {
+      arabic: "سُورَةُ الرَّحْمَٰن",
+      english: "Surah Ar-Rahman",
+      benefit: "The Most Merciful. Beautiful description of Allah’s blessings and Paradise.",
+      link: "https://www.mp3quran.net/eng/husr/55"
+    },
+    {
+      arabic: "سُورَةُ الْوَاقِعَة",
+      english: "Surah Al-Waqi‘ah",
+      benefit: "Protection from poverty. Many recite it every night.",
+      link: "https://www.mp3quran.net/eng/husr/56"
+    },
+    {
+      arabic: "سُورَةُ الْكَهْف",
+      english: "Surah Al-Kahf",
+      benefit: "Protection from the Fitnah of Dajjal. Especially recommended on Fridays.",
+      link: "https://www.mp3quran.net/eng/husr/18"
+    }
+  ];
+
+  let current = 0;
+  const display = document.getElementById('display');
+  const markers = document.getElementById('markers');
+
+  function render() {
+    const item = items[current];
+
+    display.innerHTML = `
+      <div class="arabic">${item.arabic}</div>
+      <div class="english">${item.english}</div>
+      <div class="benefit">${item.benefit}</div>
+      <a class="listen-btn" href="${item.link}" target="_blank" rel="noopener">
+        ▶ Listen with Al-Husary
+      </a>
+      <div class="qari">Sheikh Mahmoud Khalil Al-Husary • mp3quran.net</div>
+    `;
+
+    markers.innerHTML = '';
+    items.forEach((_, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'marker' + (i === current ? ' active' : '');
+      btn.textContent = i + 1;
+      btn.onclick = () => { current = i; render(); };
+      markers.appendChild(btn);
+    });
+  }
+
+  render();
+</script>
+</body>
+</html>
