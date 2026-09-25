@@ -160,6 +160,7 @@ const interactiveWebPages = [
   { title: "Qawaid COVID", category: "Public Health", description: "Rule-based public health guidance engine during pandemic parameters.", url: "/web/qawaid-covid.html" },
   { title: "Takaful Quiz", category: "Islamic Finance", description: "Testing engine covering Islamic cooperative financial systems.", url: "/web/takaful-quiz.html" },
   { title: "Top 10 Quranic Surahs", category: "Surah Recitation", description: "Listen to Top 10 of Sheikh Mahmoud Khalil Al-Husary (رحمه الله).", url: "/web/top-ten-quran.html" },
+  { title: "TMC Abdomen-Surgery", category: "Clinical Signs Quiz", description: "Revision of Abdomen, Appendix, Hernia & Intestinal signs.", url: "/web/abdomen-quiz.html" }, 
   { title: "Travel Quiz", category: "Interactive Module", description: "Geography and international travel safety quiz application.", url: "/web/travel-quiz.html" },
   { title: "Vegetables Quiz", category: "Educational Quiz", description: "Nutritional science and dietary identification quiz module.", url: "/web/vegetables-quiz.html" },
   { title: "WHO COVID Quiz", category: "Public Health", description: "Global health guideline validation and trivia module.", url: "/web/who-covid-quiz.html" },
