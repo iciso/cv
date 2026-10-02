@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanjavur Medical College (TMC) Case Conference Medical Specialties Quiz</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #0f766e;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --correct: #10b981;
+            --correct-bg: #ecfdf5;
+            --incorrect: #ef4444;
+            --incorrect-bg: #fef2f2;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 1rem;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .stats-dashboard {
+            background: var(--card);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .stat-card {
+            padding: 0.5rem;
+            border-right: 1px solid var(--border);
+        }
+
+        .stat-card:last-child {
+            border-right: none;
+        }
+
+        .stat-val {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scroll-behavior: smooth;
+        }
+
+        .tab-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section-view {
+            display: none;
+        }
+
+        .section-view.active {
+            display: block;
+        }
+
+        .question-card {
+            background: var(--card);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .q-header {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .q-num {
+            background: var(--bg);
+            color: var(--text-muted);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-btn {
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.15s ease;
+        }
+
+        .option-btn:hover:not([disabled]) {
+            background: #e2e8f0;
+        }
+
+        .option-btn.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct) !important;
+            color: #065f46;
+            font-weight: bold;
+        }
+
+        .option-btn.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect) !important;
+            color: #991b1b;
+        }
+
+        .explanation {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            display: none;
+            background: #f0f9ff;
+            border-left: 4px solid var(--primary-light);
+            color: #1e40af;
+        }
+
+        .explanation.visible {
+            display: block;
+        }
+
+        .ctrl-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .ctrl-btn.reset {
+            background: #64748b;
+        }
+
+        .ctrl-btn:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding: 1.5rem 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #25D366;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .wa-btn:hover {
+            background-color: #128C7E;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Thanjavur Medical College (TMC) Case Conference Group Quiz</h1>
+        <div class="subtitle">🩺 CLINICAL SIGNS IN MEDICAL SPECIALTIES</div>
+    </header>
+
+    <div class="stats-dashboard">
+        <div class="stat-card">
+            <div class="stat-val" id="stat-attempts">0</div>
+            <div class="stat-lbl">Questions Attempted</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" id="stat-score">0 / 0</div>
+            <div class="stat-lbl">Score</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" id="stat-pct">0%</div>
+            <div class="stat-lbl">Accuracy</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" id="stat-history">0</div>
+            <div class="stat-lbl">Sessions Completed</div>
+        </div>
+    </div>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchSection('s1')">1. General Medicine</button>
+        <button class="tab-btn" onclick="switchSection('s2')">2. Pediatrics</button>
+        <button class="tab-btn" onclick="switchSection('s3')">3. Psychiatry</button>
+        <button class="tab-btn" onclick="switchSection('s4')">4. Dermatology</button>
+        <button class="tab-btn" onclick="switchSection('s5')">5. Pulmonology</button>
+        <button class="tab-btn" onclick="switchSection('s6')">6. Cardiology</button>
+        <button class="tab-btn" onclick="switchSection('s7')">7. Neurology</button>
+        <button class="tab-btn" onclick="switchSection('s8')">8. Nephrology</button>
+        <button class="tab-btn" onclick="switchSection('s9')">9. Gastroenterology</button>
+        <button class="tab-btn" onclick="switchSection('s10')">10. Endocrinology</button>
+    </div>
+
+    <main id="quiz-container">
+        <div id="s1" class="section-view active"></div>
+        <div id="s2" class="section-view"></div>
+        <div id="s3" class="section-view"></div>
+        <div id="s4" class="section-view"></div>
+        <div id="s5" class="section-view"></div>
+        <div id="s6" class="section-view"></div>
+        <div id="s7" class="section-view"></div>
+        <div id="s8" class="section-view"></div>
+        <div id="s9" class="section-view"></div>
+        <div id="s10" class="section-view"></div>
+    </main>
+
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <button class="ctrl-btn reset" onclick="resetCurrentSection()">Reset Section</button>
+        <button class="ctrl-btn reset" style="background:#dc2626;" onclick="clearAllStats()">Clear Scores</button>
+    </div>
+
+    <footer>
+        <p>Thanjavur Medical College (TMC) Case Conference Group • Medical Specialties Clinical Signs Revision</p>
+        <div>
+            <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="wa-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.762.459 3.48 1.332 5.001L2 22l5.12-1.334c1.464.799 3.117 1.22 4.887 1.222h.004c5.505 0 9.988-4.478 9.989-9.985 0-2.667-1.037-5.176-2.922-7.062A9.925 9.925 0 0 0 12.012 2z"/>
+                </svg>
+                Join TMC Case Conference WhatsApp Group
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const quizData = {
+            "s1": [
+                {
+                    "q": "JVP rising with inspiration instead of falling is known as which sign?",
+                    "options": ["Kussmaul sign", "Beck sign", "Corrigan sign", "Quincke sign"],
+                    "answer": 0,
+                    "explanation": "Kussmaul sign is a paradoxical rise in jugular venous pressure during inspiration, classically associated with impaired right ventricular filling such as constrictive pericarditis or right-sided heart failure."
+                },
+                {
+                    "q": "A prominent carotid arterial pulsation with a collapsing, water-hammer character is called:",
+                    "options": ["Corrigan pulse", "Pulsus paradoxus", "Pulsus alternans", "Bisferiens pulse"],
+                    "answer": 0,
+                    "explanation": "Corrigan pulse is a bounding, rapidly collapsing arterial pulse classically associated with significant aortic regurgitation."
+                },
+                {
+                    "q": "A marked inspiratory fall in systolic blood pressure, classically greater than 10 mmHg, is called:",
+                    "options": ["Pulsus paradoxus", "Pulsus alternans", "Pulsus bisferiens", "Water-hammer pulse"],
+                    "answer": 0,
+                    "explanation": "Pulsus paradoxus is an exaggerated inspiratory fall in systolic blood pressure, classically associated with cardiac tamponade and also seen in severe obstructive airway disease."
+                },
+                {
+                    "q": "A difference between brachial blood pressures of the two arms is particularly important when considering:",
+                    "options": ["Aortic dissection or large-vessel disease", "Mitral stenosis", "Iron-deficiency anemia", "Hyperthyroidism"],
+                    "answer": 0,
+                    "explanation": "A significant inter-arm blood-pressure difference can occur with aortic dissection or obstruction of a major branch vessel and warrants appropriate clinical assessment."
+                },
+                {
+                    "q": "Clubbing of the fingers is characterized by loss of the normal angle between the nail plate and proximal nail fold; the bedside sign commonly used to demonstrate it is:",
+                    "options": ["Schamroth window test", "Allen test", "Tinel test", "Romberg test"],
+                    "answer": 0,
+                    "explanation": "In clubbing, the normal diamond-shaped window disappears when corresponding terminal phalanges are opposed, producing a positive Schamroth window test."
+                },
+                {
+                    "q": "Asterixis is best described as:",
+                    "options": ["Brief lapses of sustained posture causing flapping movements", "Fine rhythmic tremor at rest", "Sustained muscle contraction", "Rapid alternating eye movements"],
+                    "answer": 0,
+                    "explanation": "Asterixis is a negative myoclonus caused by brief interruptions of sustained muscle contraction; it is classically associated with metabolic encephalopathy such as hepatic or hypercapnic encephalopathy."
+                },
+                {
+                    "q": "Asterixis in a patient with chronic liver disease is most strongly suggestive of:",
+                    "options": ["Hepatic encephalopathy", "Parkinson disease", "Myasthenia gravis", "Essential tremor"],
+                    "answer": 0,
+                    "explanation": "Asterixis is a characteristic clinical feature of hepatic encephalopathy, although it is not specific to liver disease."
+                },
+                {
+                    "q": "A fine tremor, warm skin, and brisk reflexes in a patient with weight loss most strongly suggest:",
+                    "options": ["Thyrotoxicosis", "Hypothyroidism", "Cushing syndrome", "Addison disease"],
+                    "answer": 0,
+                    "explanation": "A fine tremor with heat intolerance, weight loss and brisk reflexes is a common clinical pattern in thyrotoxicosis."
+                },
+                {
+                    "q": "Bilateral pitting ankle edema with elevated JVP and basal lung crackles most strongly indicates:",
+                    "options": ["Congestive heart failure", "Isolated iron deficiency", "Acute appendicitis", "Peripheral neuropathy"],
+                    "answer": 0,
+                    "explanation": "The combination of elevated venous pressure, dependent edema and pulmonary crackles supports a syndrome of congestive heart failure."
+                },
+                {
+                    "q": "Central cyanosis is best assessed clinically by examining the:",
+                    "options": ["Tongue and oral mucosa", "Toenails only", "Knees", "Palms only"],
+                    "answer": 0,
+                    "explanation": "Central cyanosis is most reliably assessed at mucosal surfaces such as the tongue and oral mucosa, where bluish discoloration reflects increased deoxygenated hemoglobin."
+                }
+            ],
+            "s2": [
+                {
+                    "q": "A palpable, continuous femoral pulse that is weaker than the radial pulse in an infant suggests:",
+                    "options": ["Coarctation of the aorta", "Patent ductus arteriosus", "Atrial septal defect", "Tetralogy of Fallot"],
+                    "answer": 0,
+                    "explanation": "Coarctation of the aorta causes reduced blood flow to the lower limbs, producing weak or delayed femoral pulses compared with upper-limb pulses."
+                },
+                {
+                    "q": "A continuous 'machinery' murmur in an infant is classically associated with:",
+                    "options": ["Patent ductus arteriosus", "Ventricular septal defect", "Pulmonary stenosis", "Aortic stenosis"],
+                    "answer": 0,
+                    "explanation": "A patent ductus arteriosus classically produces a continuous machinery-like murmur because flow persists throughout systole and diastole."
+                },
+                {
+                    "q": "A barrel-shaped chest, hyperinflation and subcostal recession in a child with wheeze are clinical features of:",
+                    "options": ["Severe obstructive airway disease", "Pleural effusion", "Lobar collapse", "Pericarditis"],
+                    "answer": 0,
+                    "explanation": "Hyperinflation, increased work of breathing and wheeze are typical clinical findings in significant obstructive airway disease such as acute severe asthma."
+                },
+                {
+                    "q": "A child with meningitis who develops neck stiffness has a clinical sign indicating:",
+                    "options": ["Meningeal irritation", "Peripheral neuropathy", "Nephrotic syndrome", "Congenital cataract"],
+                    "answer": 0,
+                    "explanation": "Neck stiffness reflects irritation of the meninges and is an important clinical sign in suspected meningitis."
+                },
+                {
+                    "q": "Kernig sign is positive when extension of the knee with the hip flexed causes pain or resistance, suggesting:",
+                    "options": ["Meningeal irritation", "Cerebellar ataxia", "Upper motor neuron weakness", "Peripheral vascular disease"],
+                    "answer": 0,
+                    "explanation": "Kernig sign is a classical meningeal irritation sign elicited with the hip flexed and the knee extended."
+                },
+                {
+                    "q": "A bulging anterior fontanelle in a young infant may indicate:",
+                    "options": ["Raised intracranial pressure", "Dehydration alone", "Iron deficiency", "Physiological jaundice"],
+                    "answer": 0,
+                    "explanation": "A tense or bulging anterior fontanelle can indicate raised intracranial pressure, particularly when accompanied by other neurological features."
+                },
+                {
+                    "q": "A sunken anterior fontanelle in an infant is most commonly a clinical sign of:",
+                    "options": ["Dehydration", "Raised intracranial pressure", "Congenital heart block", "Hypothyroidism"],
+                    "answer": 0,
+                    "explanation": "A sunken fontanelle is a clinical sign that can occur with significant fluid loss and dehydration in infants."
+                },
+                {
+                    "q": "The presence of a palpable liver edge more than expected for age, with edema and ascites, may indicate:",
+                    "options": ["Hepatomegaly from systemic disease", "Isolated otitis media", "Simple myopia", "Clubfoot"],
+                    "answer": 0,
+                    "explanation": "Hepatomegaly in a child may reflect systemic disease, including congestive cardiac failure, liver disease or storage disorders; associated edema and ascites increase concern for systemic pathology."
+                },
+                {
+                    "q": "A child with severe vitamin D deficiency may develop widening of the wrists and a rachitic rosary. These findings indicate:",
+                    "options": ["Rickets", "Scurvy", "Beriberi", "Pellagra"],
+                    "answer": 0,
+                    "explanation": "Widened wrists and a rachitic rosary are classic skeletal signs of rickets due to defective mineralization of growing bone."
+                },
+                {
+                    "q": "A child who has a palpable purpuric rash predominantly over the legs and buttocks, with abdominal pain and arthralgia, classically has:",
+                    "options": ["IgA vasculitis", "Kawasaki disease", "Hemophilia", "Acute leukemia"],
+                    "answer": 0,
+                    "explanation": "IgA vasculitis classically causes palpable purpura on the lower limbs and buttocks and may be accompanied by abdominal pain, arthralgia and renal involvement."
+                }
+            ],
+            "s3": [
+                {
+                    "q": "A fixed false belief held despite clear evidence to the contrary is termed:",
+                    "options": ["Delusion", "Illusion", "Hallucination", "Obsession"],
+                    "answer": 0,
+                    "explanation": "A delusion is a firmly held false belief that is not consistent with the person's cultural context and is maintained despite contrary evidence."
+                },
+                {
+                    "q": "A perception occurring without an external sensory stimulus is called:",
+                    "options": ["Hallucination", "Illusion", "Delusion", "Compulsion"],
+                    "answer": 0,
+                    "explanation": "A hallucination is a sensory perception experienced in the absence of an appropriate external stimulus."
+                },
+                {
+                    "q": "A misinterpretation of a real external sensory stimulus is called:",
+                    "options": ["Illusion", "Hallucination", "Delusion", "Confabulation"],
+                    "answer": 0,
+                    "explanation": "An illusion is a distorted or incorrect perception of an actual external stimulus."
+                },
+                {
+                    "q": "A patient repeatedly checks a door lock despite recognizing the behavior as excessive. The repetitive behavior is a:",
+                    "options": ["Compulsion", "Delusion", "Flight of ideas", "Neologism"],
+                    "answer": 0,
+                    "explanation": "A compulsion is a repetitive behavior or mental act performed in response to an obsession or according to rigid rules, often recognized by the patient as excessive."
+                },
+                {
+                    "q": "Rapidly shifting thoughts with understandable but unusually frequent topic changes are called:",
+                    "options": ["Flight of ideas", "Thought blocking", "Neologism", "Echolalia"],
+                    "answer": 0,
+                    "explanation": "Flight of ideas is a rapid succession of thoughts in which the links between ideas may be understandable but the topics shift quickly, classically in mania."
+                },
+                {
+                    "q": "Sudden interruption of a patient's train of thought, followed by inability to recall the thought, is:",
+                    "options": ["Thought blocking", "Circumstantiality", "Clanging", "Perseveration"],
+                    "answer": 0,
+                    "explanation": "Thought blocking is a sudden cessation of the flow of thought, with the patient often reporting that the thought has disappeared."
+                },
+                {
+                    "q": "Repeating another person's spoken words is termed:",
+                    "options": ["Echolalia", "Echopraxia", "Palilalia", "Neologism"],
+                    "answer": 0,
+                    "explanation": "Echolalia is repetition of another person's spoken words or phrases and can occur in several neuropsychiatric conditions."
+                },
+                {
+                    "q": "Repeating one's own words or phrases involuntarily is called:",
+                    "options": ["Palilalia", "Echolalia", "Clanging", "Mutism"],
+                    "answer": 0,
+                    "explanation": "Palilalia is involuntary repetition of one's own words or phrases, sometimes with increasing rapidity or decreasing volume."
+                },
+                {
+                    "q": "A patient imitates another person's movements without an obvious purpose. This is called:",
+                    "options": ["Echopraxia", "Echolalia", "Waxy flexibility", "Negativism"],
+                    "answer": 0,
+                    "explanation": "Echopraxia is involuntary imitation of another person's movements and is classically described among catatonic phenomena."
+                },
+                {
+                    "q": "Waxy flexibility refers to:",
+                    "options": ["Maintenance of a posture into which the patient's limb is placed", "Repetition of another person's speech", "A false fixed belief", "Loss of recent memory"],
+                    "answer": 0,
+                    "explanation": "Waxy flexibility is a catatonic sign in which a patient's limb can be positioned by the examiner and remains in the imposed posture."
+                }
+            ],
+            "s4": [
+                {
+                    "q": "A positive Nikolsky sign refers to:",
+                    "options": ["Epidermal separation with gentle lateral pressure", "Pain on deep muscle palpation", "Blanching after pressure", "Dermal thickening after scratching"],
+                    "answer": 0,
+                    "explanation": "Nikolsky sign is positive when gentle lateral pressure causes superficial epidermal separation, reflecting loss of epidermal cohesion or adhesion in disorders such as pemphigus."
+                },
+                {
+                    "q": "The Koebner phenomenon describes:",
+                    "options": ["Appearance of lesions at sites of trauma in certain dermatoses", "Blanching of an erythematous lesion", "Dermal edema after cold exposure", "Nail-bed clubbing"],
+                    "answer": 0,
+                    "explanation": "The Koebner phenomenon is the development of characteristic lesions at sites of cutaneous trauma, classically seen in psoriasis and some other inflammatory dermatoses."
+                },
+                {
+                    "q": "Auspitz sign is classically associated with:",
+                    "options": ["Psoriasis", "Scabies", "Urticaria", "Tinea corporis"],
+                    "answer": 0,
+                    "explanation": "Auspitz sign refers to pinpoint bleeding after removal of psoriatic scale, reflecting exposed dilated capillaries in the papillary dermis."
+                },
+                {
+                    "q": "Dermographism is demonstrated when stroking the skin produces:",
+                    "options": ["A linear wheal", "A fixed vesicle", "A purpuric nodule", "A deep ulcer"],
+                    "answer": 0,
+                    "explanation": "Dermographism is an exaggerated wheal-and-flare response after stroking the skin and is a form of physical urticaria."
+                },
+                {
+                    "q": "A target or iris lesion is a characteristic clinical feature of:",
+                    "options": ["Erythema multiforme", "Vitiligo", "Alopecia areata", "Rosacea"],
+                    "answer": 0,
+                    "explanation": "Erythema multiforme characteristically produces targetoid lesions with concentric zones of color."
+                },
+                {
+                    "q": "The Darier sign is positive when rubbing a skin lesion produces:",
+                    "options": ["A localized urticarial wheal", "A black eschar", "A tense bulla", "A depigmented macule"],
+                    "answer": 0,
+                    "explanation": "Darier sign is a localized wheal and flare response after rubbing a mastocytosis lesion, caused by mast-cell mediator release."
+                },
+                {
+                    "q": "A sharply demarcated depigmented macule that becomes more conspicuous under examination light is typical of:",
+                    "options": ["Vitiligo", "Psoriasis", "Seborrheic dermatitis", "Urticaria"],
+                    "answer": 0,
+                    "explanation": "Vitiligo produces well-demarcated depigmented macules and patches due to loss of melanocytes."
+                },
+                {
+                    "q": "A positive hair-pull test with numerous telogen hairs is most consistent with:",
+                    "options": ["Telogen effluvium", "Tinea capitis", "Alopecia areata", "Trichotillomania"],
+                    "answer": 0,
+                    "explanation": "A positive hair-pull test with increased shedding can occur in telogen effluvium, in which an increased proportion of hairs prematurely enter the telogen phase."
+                },
+                {
+                    "q": "Examination of a lesion with diascopy showing disappearance of erythema suggests that the redness is due to:",
+                    "options": ["Vasodilation rather than extravasated blood", "Melanin deposition", "Keratin accumulation", "Subcutaneous fat"],
+                    "answer": 0,
+                    "explanation": "Diascopy compresses superficial vessels; erythema caused by intravascular blood blanches, whereas purpura from extravasated blood does not."
+                },
+                {
+                    "q": "A ring-shaped scaly plaque with central clearing is classically suggestive of:",
+                    "options": ["Tinea corporis", "Herpes zoster", "Pemphigus vulgaris", "Lichen planus"],
+                    "answer": 0,
+                    "explanation": "Tinea corporis commonly presents as an annular scaly plaque with an advancing active border and central clearing."
+                }
+            ],
+            "s5": [
+                {
+                    "q": "Clubbing of the fingers in a patient with chronic productive cough should raise consideration of:",
+                    "options": ["Bronchiectasis or other chronic suppurative lung disease", "Simple allergic rhinitis", "Acute sinusitis", "Uncomplicated viral pharyngitis"],
+                    "answer": 0,
+                    "explanation": "Digital clubbing can occur in chronic suppurative pulmonary disease such as bronchiectasis and should prompt assessment for significant underlying lung pathology."
+                },
+                {
+                    "q": "A bronchial breathing sound heard over a peripheral area of lung consolidation is best described as:",
+                    "options": ["Tubular or bronchial breath sounds over consolidated lung", "Absent breath sounds from pneumothorax", "Stridor from upper-airway obstruction", "Pleural rub from pericarditis"],
+                    "answer": 0,
+                    "explanation": "Consolidated lung can transmit bronchial-type breath sounds to the chest wall, producing bronchial breathing over the affected area."
+                },
+                {
+                    "q": "A stony dull percussion note with reduced breath sounds at a lung base is classically associated with:",
+                    "options": ["Pleural effusion", "Pneumothorax", "Lobar emphysema", "Pulmonary fibrosis"],
+                    "answer": 0,
+                    "explanation": "Pleural fluid produces a stony dull percussion note and usually reduces breath sounds over the effusion."
+                },
+                {
+                    "q": "Hyperresonance to percussion with absent breath sounds on one side of the chest suggests:",
+                    "options": ["Pneumothorax", "Pleural effusion", "Lobar consolidation", "Pulmonary edema"],
+                    "answer": 0,
+                    "explanation": "Air in the pleural space can produce hyperresonance and markedly reduced or absent breath sounds on the affected side."
+                },
+                {
+                    "q": "A pleural friction rub is produced by:",
+                    "options": ["Inflamed pleural surfaces rubbing against each other", "Air moving through the larynx", "Fluid in the pericardial cavity", "Bronchial smooth-muscle spasm"],
+                    "answer": 0,
+                    "explanation": "A pleural friction rub is a superficial grating sound caused by inflamed pleural layers rubbing together during respiration."
+                },
+                {
+                    "q": "Cavernous or amphoric breath sounds over an upper-lobe cavity may be heard in:",
+                    "options": ["Cavitary pulmonary disease such as tuberculosis", "Uncomplicated asthma", "Simple pleural effusion", "Acute epiglottitis"],
+                    "answer": 0,
+                    "explanation": "Cavities communicating with a bronchus can produce abnormal resonant or amphoric breath sounds; pulmonary tuberculosis is a classic cause."
+                },
+                {
+                    "q": "Tracheal deviation away from the affected side with severe respiratory distress may indicate:",
+                    "options": ["Tension pneumothorax", "Simple bronchitis", "Small pleural effusion", "Mild asthma"],
+                    "answer": 0,
+                    "explanation": "A large pressure-generating pneumothorax can shift the mediastinum and trachea away from the affected side and cause severe cardiorespiratory compromise."
+                },
+                {
+                    "q": "A patient with chronic cough, weight loss and an apical lung cavity has a clinical pattern strongly suggestive of:",
+                    "options": ["Pulmonary tuberculosis", "Acute bronchiolitis", "Simple viral pneumonia", "Pleural mesothelioma alone"],
+                    "answer": 0,
+                    "explanation": "Chronic cough, constitutional symptoms and an upper-lobe cavitary lesion form a classic clinical pattern for pulmonary tuberculosis, although diagnosis requires appropriate microbiological and imaging assessment."
+                },
+                {
+                    "q": "A markedly reduced expansion of one hemithorax with dullness and reduced breath sounds suggests:",
+                    "options": ["A large pleural effusion", "Hyperinflated emphysema", "Acute laryngitis", "Isolated pulmonary hypertension"],
+                    "answer": 0,
+                    "explanation": "A large pleural effusion restricts expansion and produces dull percussion with reduced breath sounds over the fluid."
+                },
+                {
+                    "q": "Inspiratory stridor in a patient with respiratory distress indicates obstruction primarily at the:",
+                    "options": ["Upper airway", "Small peripheral bronchi only", "Alveolar capillaries", "Pleural cavity"],
+                    "answer": 0,
+                    "explanation": "Stridor is a harsh, predominantly inspiratory sound generated by turbulent airflow through a narrowed upper airway."
+                }
+            ],
+            "s6": [
+                {
+                    "q": "A low-volume, slow-rising carotid pulse is classically associated with:",
+                    "options": ["Severe aortic stenosis", "Aortic regurgitation", "Mitral regurgitation", "Patent ductus arteriosus"],
+                    "answer": 0,
+                    "explanation": "A slow-rising, low-amplitude carotid pulse, pulsus parvus et tardus, is a classic peripheral sign of significant aortic stenosis."
+                },
+                {
+                    "q": "An irregularly irregular pulse is characteristic of:",
+                    "options": ["Atrial fibrillation", "Atrial flutter with fixed block", "Sinus bradycardia", "Complete heart block with a fixed ventricular rate"],
+                    "answer": 0,
+                    "explanation": "Atrial fibrillation produces an irregularly irregular ventricular rhythm because atrial activity and AV conduction are disorganized."
+                },
+                {
+                    "q": "A pulse deficit is classically assessed by comparing:",
+                    "options": ["The apical heart rate with the peripheral pulse rate", "Right and left radial temperatures", "Femoral and popliteal blood pressures", "Respiratory and pulse pressures"],
+                    "answer": 0,
+                    "explanation": "A pulse deficit occurs when not every cardiac contraction produces a palpable peripheral pulse; comparing apical and peripheral rates can demonstrate it."
+                },
+                {
+                    "q": "A displaced, diffuse apex beat is most suggestive of:",
+                    "options": ["Left ventricular enlargement", "Right atrial enlargement", "Pericardial effusion", "Isolated pulmonary embolism"],
+                    "answer": 0,
+                    "explanation": "A laterally and inferiorly displaced, diffuse apex beat commonly reflects left ventricular enlargement."
+                },
+                {
+                    "q": "A parasternal heave is a bedside sign of:",
+                    "options": ["Right ventricular enlargement", "Isolated left atrial enlargement", "Mitral stenosis alone", "Aortic regurgitation alone"],
+                    "answer": 0,
+                    "explanation": "A sustained parasternal heave reflects increased right ventricular impulse and is commonly associated with right ventricular hypertrophy or enlargement."
+                },
+                {
+                    "q": "An opening snap followed by a low-pitched mid-diastolic murmur at the apex is characteristic of:",
+                    "options": ["Mitral stenosis", "Aortic stenosis", "Tricuspid regurgitation", "Aortic regurgitation"],
+                    "answer": 0,
+                    "explanation": "Mitral stenosis classically produces an opening snap followed by a low-pitched diastolic rumble best heard at the apex."
+                },
+                {
+                    "q": "A pansystolic murmur radiating to the axilla is classically associated with:",
+                    "options": ["Mitral regurgitation", "Aortic stenosis", "Mitral stenosis", "Pulmonary stenosis"],
+                    "answer": 0,
+                    "explanation": "Mitral regurgitation produces a holosystolic or pansystolic murmur that is typically loudest at the apex and may radiate toward the axilla."
+                },
+                {
+                    "q": "A pansystolic murmur that becomes louder with inspiration is characteristic of:",
+                    "options": ["Tricuspid regurgitation", "Mitral regurgitation", "Aortic stenosis", "Mitral stenosis"],
+                    "answer": 0,
+                    "explanation": "Right-sided murmurs such as tricuspid regurgitation typically become louder with inspiration because increased venous return increases right-sided flow."
+                },
+                {
+                    "q": "An early diastolic, high-pitched decrescendo murmur along the left sternal border is typical of:",
+                    "options": ["Aortic regurgitation", "Mitral regurgitation", "Aortic stenosis", "Tricuspid stenosis"],
+                    "answer": 0,
+                    "explanation": "Aortic regurgitation classically causes an early diastolic decrescendo murmur, often best heard along the left sternal border with the patient leaning forward."
+                },
+                {
+                    "q": "A third heart sound in an adult with dyspnea and volume overload is most strongly associated with:",
+                    "options": ["Heart failure with ventricular volume overload", "Isolated pericardial constriction", "Aortic dissection", "Stable angina without structural disease"],
+                    "answer": 0,
+                    "explanation": "An S3 can reflect rapid ventricular filling in a volume-overloaded ventricle and, in adults, is commonly associated with heart failure."
+                }
+            ],
+            "s7": [
+                {
+                    "q": "A positive Babinski sign in an adult is characterized by:",
+                    "options": ["Extension of the great toe with fanning of the other toes after plantar stimulation", "Flexion of the wrist after tapping the radius", "Pupillary constriction to light", "Loss of the knee jerk only"],
+                    "answer": 0,
+                    "explanation": "The extensor plantar response, with great-toe extension and toe fanning, is a classic sign of corticospinal tract dysfunction in adults."
+                },
+                {
+                    "q": "A pronator drift is most suggestive of:",
+                    "options": ["Subtle upper motor neuron weakness", "Isolated lower motor neuron disease", "Cerebellar tremor only", "Peripheral venous insufficiency"],
+                    "answer": 0,
+                    "explanation": "With arms outstretched, pronation and downward drift can reveal mild corticospinal weakness that may not be obvious on routine strength testing."
+                },
+                {
+                    "q": "Intention tremor that becomes more pronounced as the finger approaches the target suggests dysfunction of the:",
+                    "options": ["Cerebellum", "Basal ganglia only", "Occipital cortex", "Spinal anterior horn alone"],
+                    "answer": 0,
+                    "explanation": "An intention tremor that worsens near a target is characteristic of cerebellar dysfunction."
+                },
+                {
+                    "q": "Dysdiadochokinesia refers to impaired ability to perform:",
+                    "options": ["Rapid alternating movements", "Sustained eye closure", "Pain sensation", "Passive joint movement"],
+                    "answer": 0,
+                    "explanation": "Dysdiadochokinesia is difficulty performing rapid alternating movements and is a classic sign of cerebellar dysfunction."
+                },
+                {
+                    "q": "A positive Romberg test primarily indicates impaired:",
+                    "options": ["Proprioceptive or vestibular contribution to postural stability", "Pure motor strength", "Language comprehension", "Visual acuity alone"],
+                    "answer": 0,
+                    "explanation": "A Romberg test assesses the ability to maintain stance when visual input is removed; loss of proprioceptive or vestibular input can make the patient unstable."
+                },
+                {
+                    "q": "Loss of vibration and joint-position sense with a positive Romberg sign suggests dysfunction of the:",
+                    "options": ["Posterior columns or large-fiber sensory pathways", "Spinothalamic tract alone", "Corticobulbar tract", "Basal ganglia"],
+                    "answer": 0,
+                    "explanation": "Vibration and joint-position sense travel predominantly in large-fiber pathways and the dorsal columns, and impairment can produce a positive Romberg sign."
+                },
+                {
+                    "q": "A relative afferent pupillary defect is detected clinically by the:",
+                    "options": ["Swinging flashlight test", "Weber test", "Rinne test", "Finger-nose test"],
+                    "answer": 0,
+                    "explanation": "A relative afferent pupillary defect is detected by comparing direct and consensual pupillary responses during the swinging flashlight test."
+                },
+                {
+                    "q": "A fixed dilated pupil with ptosis and a 'down and out' eye position suggests involvement of:",
+                    "options": ["The oculomotor nerve", "The optic nerve", "The abducens nerve only", "The facial nerve"],
+                    "answer": 0,
+                    "explanation": "Third-nerve palsy can produce ptosis, a dilated pupil and a down-and-out eye because most extraocular muscles and the pupil constrictor are affected."
+                },
+                {
+                    "q": "A lower motor neuron facial palsy involving the forehead and lower face indicates a lesion of the:",
+                    "options": ["Facial nerve", "Trigeminal nerve", "Oculomotor nerve", "Hypoglossal nerve"],
+                    "answer": 0,
+                    "explanation": "A peripheral facial nerve lesion affects both upper and lower facial muscles on the affected side."
+                },
+                {
+                    "q": "A positive finger-nose-finger test with past-pointing is a sign of:",
+                    "options": ["Cerebellar dysfunction", "Isolated peripheral neuropathy", "Meningeal irritation", "Pure sensory aphasia"],
+                    "answer": 0,
+                    "explanation": "Past-pointing and impaired target-directed coordination on finger-nose testing are classic signs of cerebellar dysfunction."
+                }
+            ],
+            "s8": [
+                {
+                    "q": "Periorbital edema that is especially prominent in the morning is a classic clinical feature of:",
+                    "options": ["Nephrotic syndrome", "Uncomplicated cystitis", "Renal colic", "Isolated hypercalcemia"],
+                    "answer": 0,
+                    "explanation": "Periorbital edema is a common early manifestation of nephrotic syndrome because of significant protein loss and reduced plasma oncotic pressure."
+                },
+                {
+                    "q": "Generalized pitting edema with heavy proteinuria and hypoalbuminemia is characteristic of:",
+                    "options": ["Nephrotic syndrome", "Nephritic syndrome", "Renal tubular acidosis", "Simple dehydration"],
+                    "answer": 0,
+                    "explanation": "Nephrotic syndrome is characterized by marked proteinuria, hypoalbuminemia and edema, often accompanied by hyperlipidemia."
+                },
+                {
+                    "q": "Cola- or tea-colored urine with hypertension and edema following a glomerular inflammatory process suggests:",
+                    "options": ["Nephritic syndrome", "Nephrotic syndrome", "Diabetes insipidus", "Uncomplicated nephrolithiasis"],
+                    "answer": 0,
+                    "explanation": "Nephritic syndrome commonly presents with hematuria, hypertension and reduced renal function; urine may appear smoky, tea-colored or cola-colored."
+                },
+                {
+                    "q": "Periorbital and dependent edema accompanied by reduced urine output and hypertension is a classic pattern of:",
+                    "options": ["Acute nephritic presentation", "Isolated nephrotic syndrome without inflammation", "Simple urinary frequency", "Diabetes insipidus"],
+                    "answer": 0,
+                    "explanation": "An acute nephritic presentation commonly includes hematuria, oliguria, edema and hypertension due to glomerular inflammation."
+                },
+                {
+                    "q": "A palpable ballotable kidney on bimanual examination indicates:",
+                    "options": ["Renal enlargement", "Splenic enlargement", "Ascites", "Bladder outlet obstruction alone"],
+                    "answer": 0,
+                    "explanation": "Bimanual ballotment can allow a kidney to be felt between the examiner's hands; enlargement may occur in conditions such as hydronephrosis or polycystic kidney disease."
+                },
+                {
+                    "q": "A flank mass that is ballotable and moves with respiration is more consistent with enlargement of the:",
+                    "options": ["Kidney", "Thyroid", "Pancreas", "Urinary bladder"],
+                    "answer": 0,
+                    "explanation": "The kidneys are retroperitoneal and can sometimes be palpated bimanually; an enlarged kidney may be ballotable and can move with respiration."
+                },
+                {
+                    "q": "Costovertebral angle tenderness is classically associated with:",
+                    "options": ["Acute pyelonephritis", "Stable nephrotic syndrome", "Chronic constipation", "Iron deficiency"],
+                    "answer": 0,
+                    "explanation": "Tenderness over the costovertebral angle is a classic physical finding in acute pyelonephritis, especially when accompanied by fever and urinary symptoms."
+                },
+                {
+                    "q": "A renal bruit in a patient with difficult-to-control hypertension raises suspicion for:",
+                    "options": ["Renal artery stenosis", "Minimal-change disease", "Acute cystitis", "Nephrotic edema alone"],
+                    "answer": 0,
+                    "explanation": "An abdominal or flank bruit in the appropriate clinical setting can suggest renovascular disease such as renal artery stenosis."
+                },
+                {
+                    "q": "Uremic patients may develop a pericardial friction rub due to:",
+                    "options": ["Uremic pericarditis", "Acute cystitis", "Nephrotic syndrome alone", "Renal colic"],
+                    "answer": 0,
+                    "explanation": "Severe uremia can cause pericardial inflammation, producing a pericardial friction rub and sometimes chest pain."
+                },
+                {
+                    "q": "Asterixis in advanced kidney failure can be a manifestation of:",
+                    "options": ["Uremic encephalopathy", "Isolated nephrolithiasis", "Simple cystitis", "Renal artery stenosis"],
+                    "answer": 0,
+                    "explanation": "Asterixis may occur in metabolic encephalopathies, including uremic encephalopathy in advanced kidney failure."
+                }
+            ],
+            "s9": [
+                {
+                    "q": "A palpable, enlarged, non-tender gallbladder in a patient with obstructive jaundice is known as:",
+                    "options": ["Courvoisier sign", "Murphy sign", "Rovsing sign", "Kehr sign"],
+                    "answer": 0,
+                    "explanation": "Courvoisier sign describes a palpable, usually non-tender enlarged gallbladder in the setting of obstructive jaundice and can suggest malignant distal biliary obstruction."
+                },
+                {
+                    "q": "Inspiratory arrest caused by palpation of the right upper quadrant is the:",
+                    "options": ["Murphy sign", "Courvoisier sign", "Grey Turner sign", "Cullen sign"],
+                    "answer": 0,
+                    "explanation": "A positive Murphy sign occurs when deep right-upper-quadrant palpation during inspiration causes pain and abrupt inspiratory arrest, classically in acute cholecystitis."
+                },
+                {
+                    "q": "Periumbilical ecchymosis associated with intra-abdominal or retroperitoneal bleeding is called:",
+                    "options": ["Cullen sign", "Grey Turner sign", "Kehr sign", "Blumberg sign"],
+                    "answer": 0,
+                    "explanation": "Cullen sign is periumbilical bruising associated with intra-abdominal bleeding, classically described in severe hemorrhagic pancreatitis and ruptured ectopic pregnancy."
+                },
+                {
+                    "q": "Flank ecchymosis associated with retroperitoneal hemorrhage is known as:",
+                    "options": ["Grey Turner sign", "Cullen sign", "Murphy sign", "Courvoisier sign"],
+                    "answer": 0,
+                    "explanation": "Grey Turner sign refers to flank ecchymosis caused by tracking of retroperitoneal blood into the subcutaneous tissues."
+                },
+                {
+                    "q": "Asterixis in a patient with advanced chronic liver disease suggests:",
+                    "options": ["Hepatic encephalopathy", "Acute appendicitis", "Achalasia", "Uncomplicated hemorrhoids"],
+                    "answer": 0,
+                    "explanation": "Asterixis is a common clinical sign of hepatic encephalopathy, reflecting impaired ability to sustain posture in the setting of metabolic brain dysfunction."
+                },
+                {
+                    "q": "A firm, irregular liver edge with nodularity in a patient with chronic liver disease may indicate:",
+                    "options": ["Cirrhosis", "Acute gastritis", "Simple constipation", "Uncomplicated reflux"],
+                    "answer": 0,
+                    "explanation": "A firm, irregular or nodular liver can occur in established cirrhosis because of fibrosis and regenerative nodules."
+                },
+                {
+                    "q": "Palpable splenomegaly in chronic liver disease commonly reflects:",
+                    "options": ["Portal hypertension", "Acute pancreatitis", "Peptic ulcer disease", "Achalasia"],
+                    "answer": 0,
+                    "explanation": "Splenomegaly is common in portal hypertension because increased portal venous pressure causes congestion of the splenic circulation."
+                },
+                {
+                    "q": "Caput medusae refers to:",
+                    "options": ["Dilated tortuous veins radiating around the umbilicus", "A dilated common bile duct", "A palpable gallbladder", "Periumbilical ecchymosis"],
+                    "answer": 0,
+                    "explanation": "Caput medusae consists of prominent periumbilical abdominal wall veins caused by portosystemic collateral formation, usually in portal hypertension."
+                },
+                {
+                    "q": "Shifting dullness on abdominal percussion is a clinical sign of:",
+                    "options": ["Ascites", "Splenomegaly", "Small-bowel obstruction", "Gastric outlet obstruction"],
+                    "answer": 0,
+                    "explanation": "Shifting dullness occurs because free intraperitoneal fluid changes position with gravity and is a bedside sign of ascites."
+                },
+                {
+                    "q": "A succussion splash heard several hours after eating suggests:",
+                    "options": ["Delayed gastric emptying or gastric outlet obstruction", "Acute hepatitis", "Portal hypertension alone", "Acute cholecystitis"],
+                    "answer": 0,
+                    "explanation": "A persistent succussion splash after a period of fasting suggests retained gastric contents and may occur with gastric outlet obstruction or delayed gastric emptying."
+                }
+            ],
+            "s10": [
+                {
+                    "q": "A wide-eyed stare with upper eyelid retraction is a clinical feature of:",
+                    "options": ["Thyrotoxicosis", "Hypothyroidism", "Hyperparathyroidism", "Addison disease"],
+                    "answer": 0,
+                    "explanation": "Upper eyelid retraction and lid lag can produce a staring appearance in thyrotoxicosis."
+                },
+                {
+                    "q": "Pretibial myxedema is most strongly associated with:",
+                    "options": ["Graves disease", "Type 1 diabetes mellitus", "Primary hyperparathyroidism", "Pheochromocytoma"],
+                    "answer": 0,
+                    "explanation": "Pretibial myxedema is an extrathyroidal manifestation associated with Graves disease and reflects dermal glycosaminoglycan deposition."
+                },
+                {
+                    "q": "A diffusely enlarged thyroid with an audible bruit in a patient with thyrotoxic features suggests:",
+                    "options": ["Graves disease", "Hashimoto thyroiditis", "Subacute thyroiditis", "Simple colloid cyst"],
+                    "answer": 0,
+                    "explanation": "A diffuse vascular goiter with a thyroid bruit is a classic physical finding in Graves disease because of increased thyroid vascularity."
+                },
+                {
+                    "q": "Hyperpigmentation of skin creases and oral mucosa in a patient with hypotension suggests:",
+                    "options": ["Primary adrenal insufficiency", "Cushing syndrome", "Hyperthyroidism", "Primary hyperparathyroidism"],
+                    "answer": 0,
+                    "explanation": "Primary adrenal insufficiency can cause increased ACTH and melanocortin activity, producing characteristic hyperpigmentation, particularly in skin creases and mucosa."
+                },
+                {
+                    "q": "Central obesity, facial rounding, proximal muscle weakness and purple striae suggest:",
+                    "options": ["Cushing syndrome", "Addison disease", "Diabetes insipidus", "Hypoparathyroidism"],
+                    "answer": 0,
+                    "explanation": "The combination of central obesity, facial rounding, proximal weakness and wide violaceous striae is characteristic of hypercortisolism."
+                },
+                {
+                    "q": "Acanthosis nigricans is clinically characterized by:",
+                    "options": ["Velvety hyperpigmented thickening of flexural skin", "Painful depigmented plaques", "Generalized urticaria", "Blue discoloration of the nails"],
+                    "answer": 0,
+                    "explanation": "Acanthosis nigricans produces velvety hyperpigmented and thickened skin, often in the neck and axillae, and is commonly associated with insulin resistance."
+                },
+                {
+                    "q": "A diabetic patient with a painless plantar ulcer and loss of protective sensation most likely has:",
+                    "options": ["Neuropathic foot disease", "Acute gout", "Erythema nodosum", "Cellulitis without neuropathy"],
+                    "answer": 0,
+                    "explanation": "Loss of protective sensation predisposes people with diabetes to repetitive unnoticed trauma and neuropathic plantar ulceration."
+                },
+                {
+                    "q": "Chvostek sign and Trousseau sign are bedside signs associated with:",
+                    "options": ["Hypocalcemia", "Hypernatremia", "Hyperkalemia", "Hyperuricemia"],
+                    "answer": 0,
+                    "explanation": "Chvostek and Trousseau signs indicate neuromuscular irritability and may occur with hypocalcemia."
+                },
+                {
+                    "q": "A patient with hypercalcemia, renal stones and bone pain has a clinical pattern suggestive of:",
+                    "options": ["Primary hyperparathyroidism", "Hypoparathyroidism", "Diabetes insipidus", "Primary adrenal insufficiency"],
+                    "answer": 0,
+                    "explanation": "Hypercalcemia with renal stones and skeletal symptoms is a classic clinical pattern associated with excess parathyroid hormone, especially primary hyperparathyroidism."
+                },
+                {
+                    "q": "A postural fall in blood pressure with a compensatory rise in heart rate can be demonstrated by:",
+                    "options": ["Orthostatic vital-sign measurement", "Allen test", "Romberg test", "Nikolsky test"],
+                    "answer": 0,
+                    "explanation": "Orthostatic vital signs compare blood pressure and pulse between appropriate supine and standing measurements to assess for postural hemodynamic changes."
+                }
+            ]
+        };
+
+        let userState = {
+            s1: {}, s2: {}, s3: {}, s4: {}, s5: {}, s6: {}, s7: {}, s8: {}, s9: {}, s10: {},
+            history: 0
+        };
+
+        const secKeys = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10'];
+
+        function loadState() {
+            const saved = localStorage.getItem('tmc_medical_quiz_state');
+            if (saved) {
+                try {
+                    userState = JSON.parse(saved);
+                    secKeys.forEach(k => {
+                        if (!userState[k]) userState[k] = {};
+                    });
+                } catch(e) {
+                    console.error("Could not parse saved state");
+                }
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('tmc_medical_quiz_state', JSON.stringify(userState));
+            updateStatsDashboard();
+        }
+
+        function renderQuiz() {
+            secKeys.forEach(sec => {
+                const container = document.getElementById(sec);
+                container.innerHTML = '';
+                
+                quizData[sec].forEach((item, idx) => {
+                    const qCard = document.createElement('div');
+                    qCard.className = 'question-card';
+
+                    const answered = userState[sec][idx] !== undefined;
+                    const selectedIdx = userState[sec][idx];
+
+                    let optionsHTML = '';
+                    item.options.forEach((opt, oIdx) => {
+                        let btnClass = 'option-btn';
+                        if (answered) {
+                            if (oIdx === item.answer) btnClass += ' correct';
+                            else if (oIdx === selectedIdx) btnClass += ' incorrect';
+                        }
+                        
+                        optionsHTML += `
+                            <button class="${btnClass}" 
+                                ${answered ? 'disabled' : ''} 
+                                onclick="selectOption('${sec}', ${idx}, ${oIdx})">
+                                ${opt}
+                            </button>
+                        `;
+                    });
+
+                    const expVisible = answered ? 'visible' : '';
+
+                    qCard.innerHTML = `
+                        <div class="q-header">
+                            <span class="q-num">Q${idx + 1}</span>
+                            <span>${item.q}</span>
+                        </div>
+                        <div class="options-grid">
+                            ${optionsHTML}
+                        </div>
+                        <div class="explanation ${expVisible}">
+                            <strong>Explanation:</strong> ${item.explanation}
+                        </div>
+                    `;
+
+                    container.appendChild(qCard);
+                });
+            });
+
+            updateStatsDashboard();
+        }
+
+        function selectOption(sec, qIdx, optIdx) {
+            userState[sec][qIdx] = optIdx;
+            
+            let allFinished = true;
+            secKeys.forEach(k => {
+                if (Object.keys(userState[k]).length !== quizData[k].length) {
+                    allFinished = false;
+                }
+            });
+
+            if (allFinished) {
+                userState.history = (userState.history || 0) + 1;
+            }
+
+            saveState();
+            renderQuiz();
+        }
+
+        function switchSection(secId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-view').forEach(view => view.classList.remove('active'));
+
+            const secIndex = secKeys.indexOf(secId);
+            if (secIndex !== -1) {
+                document.querySelectorAll('.tab-btn')[secIndex].classList.add('active');
+            }
+
+            document.getElementById(secId).classList.add('active');
+        }
+
+        function updateStatsDashboard() {
+            let totalAttempted = 0;
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+
+            secKeys.forEach(sec => {
+                totalQuestions += quizData[sec].length;
+                Object.keys(userState[sec] || {}).forEach(qIdx => {
+                    totalAttempted++;
+                    if (userState[sec][qIdx] === quizData[sec][qIdx].answer) {
+                        totalCorrect++;
+                    }
+                });
+            });
+
+            document.getElementById('stat-attempts').innerText = `${totalAttempted} / ${totalQuestions}`;
+            document.getElementById('stat-score').innerText = `${totalCorrect} / ${totalAttempted}`;
+            
+            const pct = totalAttempted > 0 ? Math.round((totalCorrect / totalAttempted) * 100) : 0;
+            document.getElementById('stat-pct').innerText = `${pct}%`;
+            document.getElementById('stat-history').innerText = userState.history || 0;
+        }
+
+        function resetCurrentSection() {
+            const activeSec = document.querySelector('.section-view.active').id;
+            userState[activeSec] = {};
+            saveState();
+            renderQuiz();
+        }
+
+        function clearAllStats() {
+            if (confirm("Are you sure you want to clear all your saved quiz scores and statistics?")) {
+                localStorage.removeItem('tmc_medical_quiz_state');
+                userState = { s1: {}, s2: {}, s3: {}, s4: {}, s5: {}, s6: {}, s7: {}, s8: {}, s9: {}, s10: {}, history: 0 };
+                renderQuiz();
+            }
+        }
+
+        loadState();
+        renderQuiz();
+    </script>
+</body>
+</html>
