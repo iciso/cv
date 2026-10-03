@@ -957,24 +957,47 @@
             ]
         };
 
+        const secKeys = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10'];
+
         let userState = {
             s1: {}, s2: {}, s3: {}, s4: {}, s5: {}, s6: {}, s7: {}, s8: {}, s9: {}, s10: {},
+            shuffled: {},
             history: 0
         };
 
-        const secKeys = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10'];
+        // Fisher-Yates Shuffle Algorithm
+        function shuffleOptions(options, originalCorrectIdx) {
+            let indexedOptions = options.map((opt, idx) => ({ text: opt, isCorrect: idx === originalCorrectIdx }));
+            for (let i = indexedOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [indexedOptions[i], indexedOptions[j]] = [indexedOptions[j], indexedOptions[i]];
+            }
+            const shuffledTexts = indexedOptions.map(o => o.text);
+            const newCorrectIdx = indexedOptions.findIndex(o => o.isCorrect);
+            return { options: shuffledTexts, answer: newCorrectIdx };
+        }
+
+        function initShuffledDataForSection(sec, forceNew = false) {
+            if (!userState.shuffled[sec] || forceNew) {
+                userState.shuffled[sec] = quizData[sec].map(q => shuffleOptions(q.options, q.answer));
+            }
+        }
 
         function loadState() {
             const saved = localStorage.getItem('tmc_medical_quiz_state');
             if (saved) {
                 try {
                     userState = JSON.parse(saved);
+                    if (!userState.shuffled) userState.shuffled = {};
                     secKeys.forEach(k => {
                         if (!userState[k]) userState[k] = {};
+                        initShuffledDataForSection(k, false);
                     });
                 } catch(e) {
                     console.error("Could not parse saved state");
                 }
+            } else {
+                secKeys.forEach(k => initShuffledDataForSection(k, true));
             }
         }
 
@@ -992,14 +1015,18 @@
                     const qCard = document.createElement('div');
                     qCard.className = 'question-card';
 
+                    const currentShuffled = userState.shuffled[sec][idx];
+                    const currentOptions = currentShuffled.options;
+                    const currentAnswerIdx = currentShuffled.answer;
+
                     const answered = userState[sec][idx] !== undefined;
                     const selectedIdx = userState[sec][idx];
 
                     let optionsHTML = '';
-                    item.options.forEach((opt, oIdx) => {
+                    currentOptions.forEach((opt, oIdx) => {
                         let btnClass = 'option-btn';
                         if (answered) {
-                            if (oIdx === item.answer) btnClass += ' correct';
+                            if (oIdx === currentAnswerIdx) btnClass += ' correct';
                             else if (oIdx === selectedIdx) btnClass += ' incorrect';
                         }
                         
@@ -1073,7 +1100,8 @@
                 totalQuestions += quizData[sec].length;
                 Object.keys(userState[sec] || {}).forEach(qIdx => {
                     totalAttempted++;
-                    if (userState[sec][qIdx] === quizData[sec][qIdx].answer) {
+                    const activeAnswer = userState.shuffled[sec][qIdx].answer;
+                    if (userState[sec][qIdx] === activeAnswer) {
                         totalCorrect++;
                     }
                 });
@@ -1090,6 +1118,7 @@
         function resetCurrentSection() {
             const activeSec = document.querySelector('.section-view.active').id;
             userState[activeSec] = {};
+            initShuffledDataForSection(activeSec, true); // Reshuffle on section reset
             saveState();
             renderQuiz();
         }
@@ -1097,7 +1126,8 @@
         function clearAllStats() {
             if (confirm("Are you sure you want to clear all your saved quiz scores and statistics?")) {
                 localStorage.removeItem('tmc_medical_quiz_state');
-                userState = { s1: {}, s2: {}, s3: {}, s4: {}, s5: {}, s6: {}, s7: {}, s8: {}, s9: {}, s10: {}, history: 0 };
+                userState = { s1: {}, s2: {}, s3: {}, s4: {}, s5: {}, s6: {}, s7: {}, s8: {}, s9: {}, s10: {}, shuffled: {}, history: 0 };
+                secKeys.forEach(k => initShuffledDataForSection(k, true));
                 renderQuiz();
             }
         }
