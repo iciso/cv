@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+
+  <meta charset="UTF-8">
+ 
+  <title>Which SALT Personality Pattern Are You? - QUIZ</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+  
+<style>
+.show {
+  display: block !important;
+}
+
+.quiz-wrap {
+  background: #e0e3e2;
+}
+.quiz-wrap .fit-quiz {
+  padding: 40px 0;
+}
+.quiz-wrap .fit-quiz .question {
+  list-style-type: none;
+}
+.quiz-wrap .fit-quiz .question:not(:last-of-type) {
+  margin-bottom: 50px;
+}
+.quiz-wrap .fit-quiz .question h3 {
+  color: #ce4c00;
+  font-size: 24px;
+  font-weight: 100;
+}
+@media screen and (min-width: 1000px) {
+  .quiz-wrap .fit-quiz .question h3 {
+    font-size: 32px;
+    margin-bottom: 23px;
+  }
+}
+.quiz-wrap .fit-quiz .question p {
+  font-weight: bold;
+  font-size: 18px;
+}
+@media screen and (min-width: 1000px) {
+  .quiz-wrap .fit-quiz .question p {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}
+.quiz-wrap .fit-quiz .question.inactive {
+  opacity: 0.4;
+}
+.quiz-wrap .fit-quiz .question.inactive button {
+  pointer-events: none;
+}
+.quiz-wrap .fit-quiz .question .question-wrap {
+  padding: 0 20px;
+}
+@media screen and (min-width: 1220px) {
+  .quiz-wrap .fit-quiz .question .question-wrap {
+    padding-left: calc(50% - 600px);
+    padding-right: calc(50% - 600px);
+  }
+}
+.quiz-wrap .fit-quiz .answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-auto-rows: 1fr;
+  grid-gap: 10px;
+}
+@media screen and (min-width: 800px) {
+  .quiz-wrap .fit-quiz .answers {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+.quiz-wrap .fit-quiz .answers button {
+  background: #fff;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #44464a;
+  padding: 19% 10px;
+  margin: 0;
+  min-height: 112px;
+  border: 1px solid #d2d2d2;
+  border-radius: 6px;
+}
+@media screen and (min-width: 1000px) {
+  .quiz-wrap .fit-quiz .answers button {
+    min-height: 220px;
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+.quiz-wrap .fit-quiz .answers button.chosen {
+  background: linear-gradient(to bottom, #ec1c29 1%, #af1e23 100%);
+  color: #fff;
+}
+.quiz-wrap .fit-quiz .fun-fact {
+  background: linear-gradient(to right, #007e9d, #0087a8, #0090b2, #0099bd, #00a2c8);
+  padding: 50px 30px;
+  margin-top: 50px;
+}
+@media screen and (min-width: 800px) {
+  .quiz-wrap .fit-quiz .fun-fact {
+    padding: 60px 30px;
+  }
+}
+.quiz-wrap .fit-quiz .fun-fact > div {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.quiz-wrap .fit-quiz .fun-fact h3 {
+  font-size: 24px;
+  font-weight: 100;
+  color: #fff;
+  text-align: center;
+}
+.quiz-wrap .fit-quiz .fun-fact p {
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 100;
+}
+.quiz-wrap .js-quiz-submit {
+  width: 100%;
+  margin-top: 40px;
+}
+@media screen and (min-width: 800px) {
+  .quiz-wrap .js-quiz-submit {
+    margin-top: 60px;
+  }
+}
+
+.results .results-category {
+  display: none;
+  -webkit-animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.results .results-heading > div {
+  max-width: 930px;
+  margin: 0 auto;
+}
+.results .results-heading > div::after, .results .results-heading > div::before {
+  content: " ";
+  display: table;
+  clear: both;
+  height: 0;
+}
+.results .results-heading h3 {
+  color: red;
+  font-weight: 100;
+  font-size: 24px;
+  text-align: center;
+}
+.results .results-heading span {
+  color: #fff;
+  font-size: 16px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  display: block;
+  text-align: center;
+  margin-bottom: 17px;
+}
+.results .results-heading .results-heading-text {
+  background: #fff;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+}
+@media screen and (min-width: 800px) {
+  .results .results-heading .results-heading-text {
+    padding: 12px 60px;
+  }
+}
+.results .results-heading .results-heading-text h4 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: #ce1041;
+  font-weight: 400;
+  font-size: 24px;
+  margin: 0 0 15px;
+}
+.results .results-heading .results-heading-text .category-icon {
+  width: 56px;
+  height: 68px;
+  display: block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.results .results-heading .results-heading-img {
+  background-position: center;
+  background-size: cover;
+  padding-top: 67%;
+}
+@media screen and (min-width: 800px) {
+  .results .results-heading .results-heading-img {
+    padding-top: 450px;
+    float: right;
+    width: 50%;
+  }
+}
+.results .results-heading .results-heading-img.realistic-result-img {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/realistic-img.jpg") no-repeat;
+  background-size: cover;
+}
+.results .results-heading .results-heading-img.investigative-result-img {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/investigative-img.jpg") no-repeat;
+  background-size: cover;
+}
+.results .results-heading .results-heading-img.artistic-result-img {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/artistic-img.jpg") no-repeat;
+  background-size: cover;
+}
+.results .results-heading .results-heading-img.conventional-result-img {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/conventional-img.jpg") no-repeat;
+  background-size: cover;
+}
+.results .results-heading .results-heading-img.enterprising-result-img {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/enterprising-img.jpg") no-repeat;
+  background-size: cover;
+}
+.results .results-heading .results-heading-img.social-result-img {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/social-img.jpg") no-repeat;
+  background-size: cover;
+  background-position: right;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations {
+    padding-top: 50px;
+  }
+}
+@media screen and (min-width: 1220px) {
+  .results .results-recommendations {
+    padding-left: calc(50% - 600px);
+    padding-right: calc(50% - 600px);
+  }
+}
+.results .results-recommendations h5 {
+  padding: 0 20px;
+}
+@media screen and (min-width: 1000px) {
+  .results .results-recommendations h5 {
+    text-align: center;
+  }
+}
+.results .results-recommendations ul {
+  padding: 0 10px;
+}
+.results .results-recommendations ul::after, .results .results-recommendations ul::before {
+  content: " ";
+  display: table;
+  clear: both;
+  height: 0;
+}
+@media screen and (min-width: 1000px) {
+  .results .results-recommendations ul {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.results .results-recommendations li {
+  list-style-type: none;
+}
+@media screen and (min-width: 1000px) {
+  .results .results-recommendations li {
+    width: 49%;
+  }
+}
+.results .results-recommendations li:not(:last-of-type) {
+  margin-bottom: 20px;
+}
+.results .results-recommendations li .recommended-role-text {
+  padding: 20px 12px;
+  background: #f0f2f2;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations li .recommended-role-text {
+    float: right;
+    width: 75%;
+    height: 210px;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .results .results-recommendations li .recommended-role-text {
+    width: 65%;
+  }
+}
+.results .results-recommendations li .recommended-role-text h3 {
+  font-size: 24px;
+  font-weight: 100;
+}
+.results .results-recommendations li .recommended-role-text p {
+  color: #44464a;
+}
+@media screen and (min-width: 1000px) {
+  .results .results-recommendations li .recommended-role-text p {
+    font-size: 14px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .results .results-recommendations li .recommended-role-text p {
+    font-size: 16px;
+  }
+}
+.results .results-recommendations li .recommended-role-text p:after {
+  content: ">";
+  color: #bb0826;
+  margin-left: 8px;
+}
+.results .results-recommendations li .recommended-role-img {
+  padding-top: 47%;
+  background-position: center;
+  background-size: cover;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations li .recommended-role-img {
+    float: left;
+    width: 25%;
+    padding-top: 210px;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .results .results-recommendations li .recommended-role-img {
+    width: 35%;
+  }
+}
+.results .results-recommendations li .recommended-role-img.analytics {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/role-analytics-s.jpg") no-repeat;
+  background-size: cover;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations li .recommended-role-img.analytics {
+    background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/role-analytics-l.jpg") no-repeat;
+    background-size: cover;
+  }
+}
+.results .results-recommendations li .recommended-role-img.information-technology {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/role-it-s.jpg") no-repeat;
+  background-size: cover;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations li .recommended-role-img.information-technology {
+    background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/role-it-l.jpg") no-repeat;
+    background-size: cover;
+  }
+}
+.results .results-recommendations li .recommended-role-img.marketing {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-marketing-s.jpg") no-repeat;
+  background-size: cover;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations li .recommended-role-img.marketing {
+    background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-marketing-l.jpg") no-repeat;
+    background-size: cover;
+  }
+}
+.results .results-recommendations li .recommended-role-img.customer-service {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-customer-service-s.jpg") no-repeat;
+  background-size: cover;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations li .recommended-role-img.customer-service {
+    background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-customer-service-l.jpg") no-repeat;
+    background-size: cover;
+  }
+}
+.results .results-recommendations li .recommended-role-img.accounting {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-accounting-s.jpg") no-repeat;
+  background-size: cover;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations li .recommended-role-img.accounting {
+    background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-accounting-l.jpg") no-repeat;
+    background-size: cover;
+  }
+}
+.results .results-recommendations li .recommended-role-img.project-management {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-project-management-s.jpg") no-repeat;
+  background-size: cover;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations li .recommended-role-img.project-management {
+    background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-project-management-l.jpg") no-repeat;
+    background-size: cover;
+  }
+}
+.results .results-recommendations li .recommended-role-img.risk-compliance {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-risk-compliance-s.jpg") no-repeat;
+  background-size: cover;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations li .recommended-role-img.risk-compliance {
+    background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-risk-compliance-l.jpg") no-repeat;
+    background-size: cover;
+  }
+}
+.results .results-recommendations li .recommended-role-img.hr {
+  background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-hr-s.jpg") no-repeat;
+  background-size: cover;
+}
+@media screen and (min-width: 800px) {
+  .results .results-recommendations li .recommended-role-img.hr {
+    background: url("https://tbcdn.talentbrew.com/company/1251/v2_0/img/result-hr-l.jpg") no-repeat;
+    background-size: cover;
+  }
+}
+.results .results-links {
+  padding: 30px 20px;
+}
+@media screen and (min-width: 1000px) {
+  .results .results-links p {
+    text-align: center;
+  }
+}
+.results .results-links .internship-link {
+  display: block;
+  color: #0085ad;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+@media screen and (min-width: 1000px) {
+  .results .results-links .internship-link {
+    text-align: center;
+  }
+}
+.results .results-links .internship-link:after {
+  content: ">";
+  margin-left: 8px;
+}
+@media screen and (min-width: 700px) {
+  .results .results-links .results-group-links {
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+.results .results-links .results-group-links .button-like {
+  cursor: pointer;
+  margin-bottom: 10px;
+  width: 100%;
+}
+@media screen and (min-width: 700px) {
+  .results .results-links .results-group-links .button-like {
+    max-width: 270px;
+  }
+}
+
+/* SALT quiz additions */
+.quiz-wrap { background:#f3f4f1; }
+.quiz-wrap .fit-quiz { max-width:1100px; margin:0 auto; }
+.quiz-wrap .fit-quiz .question h3 { color:#176b4d; font-weight:600; }
+.quiz-wrap .fit-quiz .answers button { min-height:150px; padding:24px 18px; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease; }
+.quiz-wrap .fit-quiz .answers button:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.10); }
+.quiz-wrap .fit-quiz .answers button.chosen { background:linear-gradient(to bottom,#176b4d,#0f563d); color:#fff; }
+.quiz-wrap .js-quiz-submit { background:#176b4d; color:#fff; border:0; padding:18px 28px; font-size:18px; border-radius:6px; cursor:pointer; }
+.results { display:none; background:#fff; padding:55px 20px 70px; }
+.results.show { display:block; }
+.results-inner { max-width:1050px; margin:0 auto; }
+.results-heading { text-align:center; margin-bottom:28px; }
+.results-heading span { color:#176b4d; text-transform:uppercase; letter-spacing:1px; font-weight:700; }
+.results-heading h2 { color:#153b2f; font-size:36px; margin:10px 0; }
+.result-code { font-weight:700; font-size:20px; letter-spacing:3px; color:#176b4d; }
+.results-heading p { font-size:18px; line-height:1.6; }
+.crystal-card,.feedback-card { background:#f5f7f4; border-radius:12px; padding:26px; margin-top:24px; }
+.crystal-card h3,.feedback-card h3 { color:#153b2f; margin-top:0; font-size:24px; }
+.crystal-intro,.method-note,.matrix-note { color:#555; line-height:1.55; }
+#crystal { max-width:720px; margin:0 auto; }
+#crystal svg { width:100%; height:auto; display:block; }
+.score-table { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:12px; }
+.score-item { background:#fff; border:1px solid #d9dfda; border-radius:8px; padding:12px; text-align:center; }
+.score-item strong { display:block; color:#153b2f; }
+.score-item span { font-size:22px; color:#176b4d; font-weight:700; }
+.matrix-note { margin-top:25px; text-align:center; font-weight:600; }
+@media (max-width:700px) {
+  .score-table { grid-template-columns:repeat(2,1fr); }
+  .results-heading h2 { font-size:28px; }
+  .quiz-wrap .fit-quiz .answers { grid-template-columns:1fr; }
+}
+
+</style>
+
+
+
+</head>
+
+<body translate="no" >
+  <!--Fit Quiz-->
+
+
+<div class="quiz-wrap">
+    <ul class="fit-quiz">
+        <li class="quiz-intro" style="list-style:none;padding:0 20px 30px;max-width:1100px;margin:0 auto;">
+          <h1 style="color:#153b2f;">Which SALT personality pattern is most like you?</h1>
+          <p style="font-size:18px;line-height:1.55;">Choose the response that is most like what you <em>actually do</em>, especially when you are busy or under pressure. The quiz looks separately at Support, Appreciate, Learn and Transfer, then places the four results in the SALT–OCMK matrix.</p>
+        </li>
+        <li class="question" id="question-1">
+            <div class="question-wrap">
+                <h3>Question #1</h3>
+                <p>A new colleague is struggling with a task. What do you naturally do first?</p>
+                <div class="answers">
+                    <button data-dimension="s" data-score="5">Step in, understand what they need, and help them regain confidence.</button>
+                    <button data-dimension="s" data-score="4">Ask what kind of help would be useful, then support them.</button>
+                    <button data-dimension="s" data-score="2">Give them a quick suggestion and return to your own work.</button>
+                    <button data-dimension="s" data-score="1">Assume they should work it out themselves unless asked directly.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-2">
+            <div class="question-wrap">
+                <h3>Question #2</h3>
+                <p>A team project has suffered a setback. Your instinct is to:</p>
+                <div class="answers">
+                    <button data-dimension="s" data-score="5">Point out who was responsible so the issue is not repeated.</button>
+                    <button data-dimension="s" data-score="4">Keep your distance because the setback is not yours to fix.</button>
+                    <button data-dimension="s" data-score="2">Help the team identify its strengths and agree on a practical next step.</button>
+                    <button data-dimension="s" data-score="1">Encourage the team and offer help where you can.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-3">
+            <div class="question-wrap">
+                <h3>Question #3</h3>
+                <p>Someone asks you for help when you are already busy. You are most likely to:</p>
+                <div class="answers">
+                    <button data-dimension="s" data-score="5">Ask what they need and see what support you can realistically give.</button>
+                    <button data-dimension="s" data-score="4">Tell them the key information and leave them to continue.</button>
+                    <button data-dimension="s" data-score="2">Avoid getting involved unless the problem becomes urgent.</button>
+                    <button data-dimension="s" data-score="1">Make some time, or help them find another person or resource.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-4">
+            <div class="question-wrap">
+                <h3>Question #4</h3>
+                <p>Two colleagues are in tension. You tend to:</p>
+                <div class="answers">
+                    <button data-dimension="s" data-score="5">Stay out of it completely, even if the tension affects the team.</button>
+                    <button data-dimension="s" data-score="4">Create space for both to be heard and help them move toward a constructive next step.</button>
+                    <button data-dimension="s" data-score="2">Encourage them to talk directly and offer support if needed.</button>
+                    <button data-dimension="s" data-score="1">Take the side you believe has the stronger argument.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-5">
+            <div class="question-wrap">
+                <h3>Question #5</h3>
+                <p>A community initiative you care about is struggling to gain momentum. You would rather:</p>
+                <div class="answers">
+                    <button data-dimension="s" data-score="5">Encourage the group and offer practical assistance.</button>
+                    <button data-dimension="s" data-score="4">Explain what the group is doing wrong and what should change.</button>
+                    <button data-dimension="s" data-score="2">Wait for someone else to take responsibility.</button>
+                    <button data-dimension="s" data-score="1">Strengthen people&#x27;s confidence and help them build on what they already have.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-6">
+            <div class="question-wrap">
+                <h3>Question #6</h3>
+                <p>Someone has made a significant mistake. Your first response is to:</p>
+                <div class="answers">
+                    <button data-dimension="s" data-score="5">Emphasise the consequences so they understand the seriousness.</button>
+                    <button data-dimension="s" data-score="4">Distance yourself so you are not drawn into the problem.</button>
+                    <button data-dimension="s" data-score="2">Help them recover, reflect, and find a way forward.</button>
+                    <button data-dimension="s" data-score="1">Reassure them and offer practical help.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-7">
+            <div class="question-wrap">
+                <h3>Question #7</h3>
+                <p>A teammate completes something difficult. You are most likely to:</p>
+                <div class="answers">
+                    <button data-dimension="a" data-score="5">Treat it as simply part of their job.</button>
+                    <button data-dimension="a" data-score="4">Name the specific strengths and choices that made their success possible.</button>
+                    <button data-dimension="a" data-score="2">Congratulate them sincerely and acknowledge the effort.</button>
+                    <button data-dimension="a" data-score="1">Compare the result with what could still have been better.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-8">
+            <div class="question-wrap">
+                <h3>Question #8</h3>
+                <p>When someone disagrees with your idea, you naturally:</p>
+                <div class="answers">
+                    <button data-dimension="a" data-score="5">Look for what is valuable in their perspective before responding.</button>
+                    <button data-dimension="a" data-score="4">Acknowledge their point, even if you still disagree.</button>
+                    <button data-dimension="a" data-score="2">Focus quickly on the weaknesses in their argument.</button>
+                    <button data-dimension="a" data-score="1">Dismiss the view if you think it is clearly mistaken.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-9">
+            <div class="question-wrap">
+                <h3>Question #9</h3>
+                <p>When giving feedback, you tend to:</p>
+                <div class="answers">
+                    <button data-dimension="a" data-score="5">Go straight to the problems that need fixing.</button>
+                    <button data-dimension="a" data-score="4">Avoid praise because the person should know what they did well.</button>
+                    <button data-dimension="a" data-score="2">Begin by recognising genuine strengths before discussing improvements.</button>
+                    <button data-dimension="a" data-score="1">Acknowledge what went well, then discuss what could improve.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-10">
+            <div class="question-wrap">
+                <h3>Question #10</h3>
+                <p>A colleague brings a very different perspective to a discussion. You:</p>
+                <div class="answers">
+                    <button data-dimension="a" data-score="5">Thank them for adding a different perspective.</button>
+                    <button data-dimension="a" data-score="4">Explain why their view is less practical.</button>
+                    <button data-dimension="a" data-score="2">Ignore the perspective unless it agrees with the group.</button>
+                    <button data-dimension="a" data-score="1">Become curious about what experience or insight led them there.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-11">
+            <div class="question-wrap">
+                <h3>Question #11</h3>
+                <p>A team has made progress, but several gaps remain. You would:</p>
+                <div class="answers">
+                    <button data-dimension="a" data-score="5">Make the progress visible and celebrate the strengths that created it.</button>
+                    <button data-dimension="a" data-score="4">Recognise the progress before turning to the remaining gaps.</button>
+                    <button data-dimension="a" data-score="2">Focus mainly on what is still missing.</button>
+                    <button data-dimension="a" data-score="1">See little reason to celebrate unfinished work.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-12">
+            <div class="question-wrap">
+                <h3>Question #12</h3>
+                <p>Someone shares a personal experience that taught them something. You are most likely to:</p>
+                <div class="answers">
+                    <button data-dimension="a" data-score="5">Move the conversation on unless it directly affects the task.</button>
+                    <button data-dimension="a" data-score="4">Notice and reflect back the strengths or insight in their experience.</button>
+                    <button data-dimension="a" data-score="2">Listen respectfully and acknowledge what they learned.</button>
+                    <button data-dimension="a" data-score="1">Analyse the weaknesses or contradictions in their story.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-13">
+            <div class="question-wrap">
+                <h3>Question #13</h3>
+                <p>You are exposed to a practice you do not understand. Your first instinct is to:</p>
+                <div class="answers">
+                    <button data-dimension="l" data-score="5">Ask a few questions and try to understand how it works.</button>
+                    <button data-dimension="l" data-score="4">Judge it against what you already know.</button>
+                    <button data-dimension="l" data-score="2">Decide whether it is useful before spending much time on it.</button>
+                    <button data-dimension="l" data-score="1">Listen carefully, ask questions, and see what the experience can teach you.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-14">
+            <div class="question-wrap">
+                <h3>Question #14</h3>
+                <p>A project does not produce the expected result. You tend to:</p>
+                <div class="answers">
+                    <button data-dimension="l" data-score="5">Move on without spending much time reflecting.</button>
+                    <button data-dimension="l" data-score="4">Ask what the experience teaches and use it to shape the next attempt.</button>
+                    <button data-dimension="l" data-score="2">Reflect on what happened and make a few adjustments.</button>
+                    <button data-dimension="l" data-score="1">Look for the mistake and the person responsible.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-15">
+            <div class="question-wrap">
+                <h3>Question #15</h3>
+                <p>Someone who has more experience than you offers advice. You:</p>
+                <div class="answers">
+                    <button data-dimension="l" data-score="5">Explore their experience, test what fits your context, and learn from it.</button>
+                    <button data-dimension="l" data-score="4">Listen and take away the parts that seem useful.</button>
+                    <button data-dimension="l" data-score="2">Compare their advice with your own approach and defend your preference.</button>
+                    <button data-dimension="l" data-score="1">Assume their experience is not relevant unless it matches your view.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-16">
+            <div class="question-wrap">
+                <h3>Question #16</h3>
+                <p>After an event or meeting, you are most likely to:</p>
+                <div class="answers">
+                    <button data-dimension="l" data-score="5">Focus on whether other people performed well.</button>
+                    <button data-dimension="l" data-score="4">Move straight on to the next task without reflection.</button>
+                    <button data-dimension="l" data-score="2">Reflect on what happened, what worked, and what you would do differently.</button>
+                    <button data-dimension="l" data-score="1">Think briefly about the main lessons and next steps.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-17">
+            <div class="question-wrap">
+                <h3>Question #17</h3>
+                <p>A new idea challenges something you have believed for years. You:</p>
+                <div class="answers">
+                    <button data-dimension="l" data-score="5">Reject it unless it already fits what you believe.</button>
+                    <button data-dimension="l" data-score="4">Stay open, seek evidence and experience, and allow yourself to revise your view.</button>
+                    <button data-dimension="l" data-score="2">Consider it seriously even if you remain unconvinced.</button>
+                    <button data-dimension="l" data-score="1">Look mainly for reasons it will not work.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-18">
+            <div class="question-wrap">
+                <h3>Question #18</h3>
+                <p>A partner organisation has solved a problem differently from you. You would:</p>
+                <div class="answers">
+                    <button data-dimension="l" data-score="5">Take away a useful idea and consider trying it.</button>
+                    <button data-dimension="l" data-score="4">Point out why their context is different from yours.</button>
+                    <button data-dimension="l" data-score="2">See little value in looking beyond your own approach.</button>
+                    <button data-dimension="l" data-score="1">Study their experience and ask what you can adapt or transfer to your own context.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-19">
+            <div class="question-wrap">
+                <h3>Question #19</h3>
+                <p>You discover a practice that works well in your team. You naturally:</p>
+                <div class="answers">
+                    <button data-dimension="t" data-score="5">Keep it within your team unless someone asks.</button>
+                    <button data-dimension="t" data-score="4">Keep it to yourself because sharing takes extra effort.</button>
+                    <button data-dimension="t" data-score="2">Share the learning so others can adapt and build on it.</button>
+                    <button data-dimension="t" data-score="1">Tell colleagues about it when it is relevant.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-20">
+            <div class="question-wrap">
+                <h3>Question #20</h3>
+                <p>After learning something useful from another group, you are most likely to:</p>
+                <div class="answers">
+                    <button data-dimension="t" data-score="5">Pass the learning on and help others adapt it to their situation.</button>
+                    <button data-dimension="t" data-score="4">Share the key idea with people who could benefit.</button>
+                    <button data-dimension="t" data-score="2">Use it yourself but not actively pass it on.</button>
+                    <button data-dimension="t" data-score="1">Keep it within your own work unless formally required to share.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-21">
+            <div class="question-wrap">
+                <h3>Question #21</h3>
+                <p>A colleague develops a successful approach. You would:</p>
+                <div class="answers">
+                    <button data-dimension="t" data-score="5">Tell others about it and encourage them to try it.</button>
+                    <button data-dimension="t" data-score="4">Use the approach yourself but leave others to discover it.</button>
+                    <button data-dimension="t" data-score="2">Prefer not to spread it because it may be misunderstood.</button>
+                    <button data-dimension="t" data-score="1">Help make the learning accessible so others can use or adapt it.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-22">
+            <div class="question-wrap">
+                <h3>Question #22</h3>
+                <p>When you learn from a mistake, you tend to:</p>
+                <div class="answers">
+                    <button data-dimension="t" data-score="5">Keep the experience private.</button>
+                    <button data-dimension="t" data-score="4">Turn the lesson into something that can help other people avoid or handle the same problem.</button>
+                    <button data-dimension="t" data-score="2">Mention the lesson when a similar situation comes up.</button>
+                    <button data-dimension="t" data-score="1">Remember it for your own future use.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-23">
+            <div class="question-wrap">
+                <h3>Question #23</h3>
+                <p>A team is beginning a new project. You think useful learning should:</p>
+                <div class="answers">
+                    <button data-dimension="t" data-score="5">Travel across the team so that experience strengthens everyone&#x27;s next action.</button>
+                    <button data-dimension="t" data-score="4">Be shared with the people directly involved.</button>
+                    <button data-dimension="t" data-score="2">Stay mainly with the people who generated it.</button>
+                    <button data-dimension="t" data-score="1">Be shared only if someone specifically asks for it.</button>
+                </div>
+            </div>
+        </li>
+        <li class="question inactive" id="question-24">
+            <div class="question-wrap">
+                <h3>Question #24</h3>
+                <p>You attend a useful learning visit or workshop. Afterwards you:</p>
+                <div class="answers">
+                    <button data-dimension="t" data-score="5">Keep notes for your own reference.</button>
+                    <button data-dimension="t" data-score="4">Usually leave the learning with the event rather than carrying it forward.</button>
+                    <button data-dimension="t" data-score="2">Translate the learning into practical ideas and share them with others.</button>
+                    <button data-dimension="t" data-score="1">Share the main takeaways with colleagues.</button>
+                </div>
+            </div>
+        </li>
+        <li class="inactive question" id="submit-question">
+          <button class="js-quiz-submit button-link"><span>Show my SALT profile</span></button>
+        </li>
+    </ul>
+</div>
+
+
+
+<div class="results" id="results" aria-live="polite">
+  <div class="results-inner">
+    <div class="results-heading">
+      <span>Your SALT reflection</span>
+      <h2 id="result-title">Your SALT type will appear here</h2>
+      <p id="result-code" class="result-code"></p>
+      <p id="result-summary"></p>
+    </div>
+
+    <div class="crystal-card">
+      <h3>Crystal of Life</h3>
+      <p class="crystal-intro">Each axis is your estimated level of SALT practice: 1 = more of the opposite tendency, 5 = strong SALT practice.</p>
+      <div id="crystal"></div>
+      <div id="score-table" class="score-table"></div>
+    </div>
+
+    <div class="feedback-card">
+      <h3>Your constructive next step</h3>
+      <p id="result-growth"></p>
+    </div>
+
+    <p class="matrix-note" id="matrix-note"></p>
+    <p class="method-note">This is a reflective self-assessment, not a diagnosis. The four dimensions are scored independently and then combined into the 16-cell SALT–OCMK matrix from the supplied SALT Types in Faith presentation.</p>
+  </div>
+</div>
+
+
+<script id="rendered-js">
+document.addEventListener("DOMContentLoaded", function () {
+  const dims = {
+    s: {name: "Support", code: ["S","O"]},
+    a: {name: "Appreciate", code: ["A","C"]},
+    l: {name: "Learn", code: ["L","M"]},
+    t: {name: "Transfer", code: ["T","K"]}
+  };
+
+  const typeInfo = {"SALT": ["Crystal of SALT", "You show a strong, balanced practice across Support, Appreciate, Learn and Transfer.", "Keep strengthening the four together; your next step is to make the balanced pattern habitual even under pressure."], "SCLT": ["Loud Mouthed SALT", "You show strong Support, Learning and Transfer, with a tendency to move into Criticize rather than Appreciate.", "Use your critical insight as a resource, but pair it with appreciation: name what is working before challenging what could improve."], "OALT": ["Appreciative Transferor", "You show strong Appreciate, Learn and Transfer, while Support is the dimension most likely to slip into Oppose.", "Keep the appreciation and learning, and look for ways to support people even when you disagree with their direction."], "OCLT": ["The Transferring Opponent", "You readily Learn and Transfer, but your pattern leans toward Oppose and Criticize.", "Your learning and sharing are valuable strengths. Practise starting from support and appreciation so your challenge becomes easier for others to receive."], "SALK": ["SALT Miser", "You show Support, Appreciate and Learn, but tend to Keep what you learn rather than Transfer it.", "Make your learning visible: share a useful story, practice or lesson with one other person soon after you learn it."], "SCLK": ["Half SALT-Half Not", "You show Support and Learn, while Criticize and Keep are stronger tendencies.", "Keep the curiosity and support. Add appreciation when giving challenge, and turn private learning into something others can use."], "OALK": ["Appreciative Learner", "You appreciate and learn, but Support and Transfer are weaker parts of the pattern.", "Let your curiosity lead to action: support the people involved and pass useful learning forward."], "OCLK": ["Learned Opponent", "You have a strong Learn tendency, but Oppose, Criticize and Keep are also prominent.", "Your willingness to learn is a major asset. Use it to understand others before judging, then transfer what you learn constructively."], "SAMT": ["Dogmatic Teacher", "You tend to Support and Appreciate, but are less inclined to Learn and Transfer.", "Keep your generosity, and practise learning from shared experience before giving guidance; then pass that learning on."], "SCMT": ["Misguided Supporter", "You want to Support, but Criticize and Misunderstand can interfere with what you pass on.", "Pause before concluding. Learn from the experience of others, check your understanding, and then share what you have learned."], "OAMT": ["Appreciative Opponent", "You appreciate and Transfer, but Oppose and Misunderstand are stronger tendencies.", "Keep the appreciation and willingness to share. Strengthen learning by listening to lived experience before forming conclusions."], "OCMT": ["Opposing Transferor", "You Transfer readily, but Oppose, Criticize and Misunderstand can shape what gets transferred.", "Your willingness to share is useful. First learn from shared experience and test your assumptions so what you transfer becomes more helpful."], "SAMK": ["Theorist", "You tend to Support and Appreciate, but Learn and Transfer are weaker in this pattern.", "Turn support into learning: ask what experience can teach you, and then transfer that learning into action."], "SCMK": ["Foul Mouthed Supporter", "You show Support, but Criticize, Misunderstand and Keep are stronger tendencies.", "Your supportive intent matters. Pair it with learning from shared experiences, reduce the impulse to criticise, and share constructive learning."], "OAMK": ["Plastic-Smile", "You can Appreciate, but Oppose, Misunderstand and Keep are stronger tendencies.", "Move appreciation from courtesy to curiosity: genuinely learn from others' experience, support them, and share what you learn."], "MOCK": ["Ideal Antagonist", "Your current pattern leans toward Oppose, Criticize, Misunderstand and Keep.", "Treat this as a growth opportunity, not a label. Start with one small shift: Learn from shared experiences before judging, then practise Support, Appreciate and Transfer."]};
+
+  document.querySelectorAll(".answers button").forEach(function (button) {
+    button.addEventListener("click", function () {
+      const parent = this.closest(".answers");
+      parent.querySelectorAll("button").forEach(function (btn) {
+        btn.classList.remove("chosen");
+        btn.removeAttribute("aria-describedby");
+      });
+      this.classList.add("chosen");
+      this.setAttribute("aria-describedby", "current-selection");
+
+      const questionLi = this.closest(".question");
+      const nextLi = questionLi.nextElementSibling;
+
+      if (nextLi && nextLi.classList.contains("question")) {
+        nextLi.classList.remove("inactive");
+        nextLi.setAttribute("aria-hidden", "false");
+        nextLi.querySelectorAll("button").forEach(function (btn) {
+          btn.removeAttribute("disabled");
+        });
+
+        const nextY = nextLi.getBoundingClientRect().top + window.pageYOffset - 20;
+        window.scrollTo({ top: nextY, behavior: "smooth" });
+      }
+
+      if (questionLi.id === "submit-question") {
+        return;
+      }
+    });
+  });
+
+  function crystalSvg(scores) {
+    const W=700, H=500, cx=350, cy=260, R=170;
+    const labels = [
+      {name:"Support", x:cx, y:45, anchor:"middle"},
+      {name:"Appreciate", x:W-35, y:cy+7, anchor:"end"},
+      {name:"Learn", x:cx, y:H-30, anchor:"middle"},
+      {name:"Transfer", x:35, y:cy+7, anchor:"start"}
+    ];
+    const pts = [
+      [cx,cy-R],[cx+R,cy],[cx,cy+R],[cx-R,cy]
+    ];
+    const rings = [1,2,3,4,5].map(v => {
+      const r=R*v/5;
+      return `<polygon points="${cx},${cy-r} ${cx+r},${cy} ${cx},${cy+r} ${cx-r},${cy}" fill="none" stroke="#cbd4cf" stroke-width="${v===5?2:1}"/>`;
+    }).join("");
+    const p = [
+      [cx, cy-R*scores.s/5],
+      [cx+R*scores.a/5, cy],
+      [cx, cy+R*scores.l/5],
+      [cx-R*scores.t/5, cy]
+    ];
+    const poly = p.map(x=>x.join(",")).join(" ");
+    const axes = pts.map(x=>`<line x1="${cx}" y1="${cy}" x2="${x[0]}" y2="${x[1]}" stroke="#d7ded9" stroke-width="1"/>`).join("");
+    const labelSvg = labels.map(x=>`<text x="${x.x}" y="${x.y}" text-anchor="${x.anchor}" fill="#176b4d" font-size="20" font-weight="700">${x.name}</text>`).join("");
+    const valueSvg = [
+      `<text x="${cx+10}" y="${cy-R+6}" fill="#777" font-size="13">5</text>`,
+      `<text x="${cx+10}" y="${cy+R+5}" fill="#777" font-size="13">1</text>`
+    ].join("");
+    return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Crystal of Life showing Support ${scores.s}, Appreciate ${scores.a}, Learn ${scores.l}, Transfer ${scores.t}">
+      <rect x="0" y="0" width="${W}" height="${H}" rx="12" fill="#ffffff"/>
+      ${rings}${axes}
+      <polygon points="${poly}" fill="#91cf4f" fill-opacity=".72" stroke="#4f8f36" stroke-width="3"/>
+      ${labelSvg}${valueSvg}
+    </svg>`;
+  }
+
+  function showResult() {
+    const totals = {s:0,a:0,l:0,t:0};
+    const counts = {s:0,a:0,l:0,t:0};
+
+    document.querySelectorAll(".quiz-wrap button.chosen").forEach(function (btn) {
+      const d = btn.dataset.dimension;
+      totals[d] += Number(btn.dataset.score);
+      counts[d] += 1;
+    });
+
+    const scores = {};
+    Object.keys(dims).forEach(d => {
+      scores[d] = Math.round((totals[d] / counts[d]) * 10) / 10;
+    });
+
+    const poles = {
+      s: scores.s >= 3 ? "S" : "O",
+      a: scores.a >= 3 ? "A" : "C",
+      l: scores.l >= 3 ? "L" : "M",
+      t: scores.t >= 3 ? "T" : "K"
+    };
+    const code = poles.s + poles.a + poles.l + poles.t;
+
+    const colMap = {"SA":"A","SC":"B","OA":"C","OC":"D"};
+    const rowMap = {"LT":"1","LK":"2","MT":"3","MK":"4"};
+    const cell = colMap[poles.s+poles.a] + rowMap[poles.l+poles.t];
+    const info = typeInfo[code];
+
+    document.getElementById("result-title").textContent = info[0];
+    document.getElementById("result-code").textContent = code + " · Matrix cell " + cell;
+    document.getElementById("result-summary").textContent = info[1];
+    document.getElementById("result-growth").textContent = info[2];
+    document.getElementById("crystal").innerHTML = crystalSvg(scores);
+
+    const table = Object.keys(dims).map(d =>
+      `<div class="score-item"><strong>${dims[d].name}</strong><span>${scores[d].toFixed(1)}/5</span></div>`
+    ).join("");
+    document.getElementById("score-table").innerHTML = table;
+
+    document.getElementById("matrix-note").textContent = 
+      "Your matrix position is " + cell + ". The four letters describe your current pattern: " +
+      poles.s + poles.a + poles.l + poles.t + ". " +
+      "A SALT letter indicates the SALT side of that dimension; the paired O/C/M/K letter indicates its opposite pole.";
+
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.classList.add("show");
+
+    const submitBtn = document.querySelector(".js-quiz-submit");
+    if (submitBtn) {
+      submitBtn.style.display = "none";
+      submitBtn.setAttribute("disabled", "disabled");
+    }
+
+    const resultsY = resultsDiv.getBoundingClientRect().top + window.pageYOffset - 20;
+    window.scrollTo({ top: resultsY, behavior: "smooth" });
+  }
+
+  const submitButton = document.querySelector(".js-quiz-submit");
+  if (submitButton) {
+    submitButton.addEventListener("click", function () {
+      if (document.querySelectorAll(".quiz-wrap button.chosen").length !== 24) {
+        alert("Please answer all 24 questions before viewing your profile.");
+        return;
+      }
+      showResult();
+    });
+  }
+});
+</script>
+</body>
+
+</html>
