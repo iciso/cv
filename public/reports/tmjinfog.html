@@ -4904,6 +4904,45 @@ a img {
 </script>
 
 
+
+<style id="tmj-interaction-fix">
+/* TMJ interaction fix: keeps the original SVG untouched and removes
+   the dependency on the old CodePen/jQuery runtime. */
+#HowWeWorkInfographic g[id] {
+  cursor: pointer;
+}
+#HowWeWorkInfographic g[id].Active .BGCircle {
+  fill: #00b179;
+}
+#HowWeWorkInfographic g[id].Active .BGCircleInner {
+  stroke: #00b179;
+}
+#HowWeWorkInfoGraphicText {
+  position: relative;
+}
+#HowWeWorkInfoGraphicText > div:not(.IntroText) {
+  display: none;
+  width: 100%;
+}
+#HowWeWorkInfoGraphicText > div.ActiveText {
+  display: block;
+}
+#HowWeWorkInfoGraphicText > div a.Minor {
+  height: auto;
+  line-height: 1.75;
+  border-bottom: none !important;
+  text-decoration: underline;
+}
+#HowWeWorkInfoGraphicText > div:focus {
+  outline: none;
+}
+@media only screen and (min-width: 1024px) {
+  #HowWeWorkInfoGraphicText > div.ActiveText {
+    display: block;
+  }
+}
+</style>
+
 </head>
 
 <body translate="no" >
@@ -5354,7 +5393,7 @@ a img {
 			</div>
 			<div id="IndependenceText" tabindex="0"><h4>Medical Competence</h4>
 				<p>Continously striving to distill the knowledge from medical experiences and the evidence from health data will equip the TMC Community to improve their competence in medical knowledge, skills, attitude, behavior and practice.</p>
-				<a href="#Indepedence" class="Minor" aria-label="Click to return back to the infographic">Return to the infographic</a>
+				<a href="#Independence" class="Minor" aria-label="Click to return back to the infographic">Return to the infographic</a>
 			</div>
 			<div id="FreedomText" tabindex="0"><h4>Viable & Sustainable</h4>
 				<p>The active participation of every faculty and student currently in TMC ensures the sustainability of TMJ. The issue of reluctance to publish in a non-indexed journal would apply in the initial days. Alternatively, the Journal gets indexed only if we have quality publications. Also, quality manuscripts will come in only if the journal is indexed.</p>
@@ -5370,56 +5409,129 @@ a img {
 			</div>
 			<div id="IndividualsText" tabindex="0"><h4>Authors & Peer Reviewers</h4>
 				<p>Developing a competent reviewer database could be challenging. This includes finding the correct peer-reviewers for each section. Accordingly, we plan to approach academics who are working closely in the field of the article, and work with them to improve our competence.</p>
-				<a href="#Confidence" class="Minor" aria-label="Click to return back to the infographic">Return to the infographic</a>
+				<a href="#Individuals" class="Minor" aria-label="Click to return back to the infographic">Return to the infographic</a>
 			</div>
 		</div>
 	</div>
 </div>
-    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
+    <script id="tmj-interaction-fix-js">
+(function () {
+  "use strict";
 
-  <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-127/jquery-2.1.4.min.js'></script>
-      <script id="rendered-js" >
-$("#HowWeWorkInfographic g").click(function (e) {
-  $("#HowWeWorkInfographic g").attr("class", "");
-  $(this).attr("class", "Active");
-  $("#HowWeWorkInfoGraphicText").addClass("Active");
-  ToggleText($(this).attr("id"));
-});
+  function initTMJInfographic() {
+    var svg = document.getElementById("HowWeWorkInfographic");
+    var panel = document.getElementById("HowWeWorkInfoGraphicText");
 
-$("#HowWeWorkInfographic g").keypress(function (e) {
-  var code = e.keyCode || e.which;
-  if (code == 32 || code == 13) {
-    $("#HowWeWorkInfographic g").attr("class", "");
-    $(this).attr("class", "Active");
-    $("#HowWeWorkInfoGraphicText").addClass("Active");
-    ToggleText($(this).attr("id"));
+    if (!svg || !panel) return;
+
+    // Only the actual infographic nodes are interactive.
+    // This deliberately does NOT alter the SVG markup.
+    var nodes = Array.prototype.slice.call(svg.querySelectorAll("g[id]"));
+    var textBlocks = Array.prototype.slice.call(
+      panel.querySelectorAll(":scope > div[id]")
+    );
+    var intro = panel.querySelector(":scope > div.IntroText");
+
+    function clearSelection() {
+      nodes.forEach(function (node) {
+        node.classList.remove("Active");
+        node.removeAttribute("aria-current");
+      });
+      textBlocks.forEach(function (block) {
+        block.classList.remove("ActiveText");
+        block.style.top = "";
+      });
+    }
+
+    function showNode(node) {
+      var id = node.id;
+      var block = document.getElementById(id + "Text");
+
+      if (!block) {
+        console.warn("TMJ infographic: no text block found for", id);
+        return;
+      }
+
+      clearSelection();
+      node.classList.add("Active");
+      node.setAttribute("aria-current", "true");
+
+      if (intro) intro.classList.remove("ActiveText");
+      block.classList.add("ActiveText");
+
+      // Keep the information panel aligned reasonably with the selected
+      // SVG node on larger screens, while avoiding negative/overflowing
+      // positions on smaller screens.
+      if (window.innerWidth >= 1024) {
+        var svgRect = svg.getBoundingClientRect();
+        var nodeRect = node.getBoundingClientRect();
+        var panelRect = panel.getBoundingClientRect();
+        var desiredTop = nodeRect.top - svgRect.top - 40;
+        var maxTop = Math.max(0, panel.clientHeight - block.offsetHeight - 40);
+
+        if (panel.clientHeight > 0) {
+          desiredTop = Math.max(0, Math.min(desiredTop, maxTop));
+          block.style.top = desiredTop + "px";
+        }
+      }
+
+      // On mobile the panel overlays the SVG; move focus to the displayed
+      // information so keyboard users can immediately read it.
+      if (window.innerWidth < 1024) {
+        panel.classList.add("Active");
+        window.setTimeout(function () {
+          block.focus({ preventScroll: true });
+        }, 0);
+      }
+    }
+
+    nodes.forEach(function (node) {
+      node.setAttribute("role", "button");
+      node.setAttribute("tabindex", "0");
+
+      node.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        showNode(node);
+      });
+
+      node.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          showNode(node);
+        }
+      });
+    });
+
+    // "Return to the infographic" links.
+    panel.querySelectorAll("a.Minor").forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        panel.classList.remove("Active");
+        clearSelection();
+        if (intro) intro.classList.add("ActiveText");
+      });
+    });
+
+    // Keep the panel correctly positioned after a resize.
+    window.addEventListener("resize", function () {
+      var active = svg.querySelector("g[id].Active");
+      if (active) showNode(active);
+    });
+
+    // Preserve the original initial presentation.
+    clearSelection();
+    if (intro) intro.classList.add("ActiveText");
   }
-});
 
-$("#HowWeWorkInfoGraphicText a.Minor").click(function (e) {
-  $("#HowWeWorkInfoGraphicText").removeClass("Active");
-  if ($(window).width() < 1024) {
-    $("#HowWeWorkInfographic g").attr("class", "");
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initTMJInfographic);
+  } else {
+    initTMJInfographic();
   }
+})();
+</script>
 
-});
-
-function ToggleText(TextElement) {
-  $("#HowWeWorkInfoGraphicText div").fadeOut(250);
-  var FromTop = $("#" + TextElement).position().top - 40;
-  if (FromTop + $("#" + TextElement + "Text").outerHeight() > $("#HowWeWorkInfoGraphicText").outerHeight()) {
-    var FromTop = $("#HowWeWorkInfoGraphicText").outerHeight() - $("#" + TextElement + "Text").outerHeight() - 40;
-  }
-  $("#" + TextElement + "Text").css("top", FromTop);
-  setTimeout(function () {
-    $("#" + TextElement + "Text").fadeIn();
-    $("#" + TextElement + "Text").focus();
-  }, 250);
-
-
-}
-// URL   https://kyft.club/wp-content/uploads/2022/09/Infographic.html
-    </script>
 
   
 
