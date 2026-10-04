@@ -126,6 +126,7 @@ const interactiveWebPages = [
   { title: "Graph Using PlotLy", category: "Interactive Demo", description: "Three different graph types used in one grid.", url: "/web/graph-plotly.html" },
   { title: "Guess Symbol", category: "Interactive Game", description: "Pattern and icon recognition cognitive exercise engine.", url: "/web/guess-symbol.html" },
   { title: "40 Hadith of Nawawi", category: "Islamic Studies", description: "Test your knowledge of the forty Hadiths of Imam Nawawi.", url: "/web/hadith-40.html" },
+  { title: "Fidyah & Kaffarah", category: "Islamic Calculator", description: "A practical social assistance calculator running algorithmic loops.", url: "/web/fidyah.html" },
   { title: "Home Office Quiz", category: "Productivity", description: "Workspace safety and protocol evaluation checklist tool.", url: "/web/home-office-quiz.html" },
   { title: "Hink-Pink-Arabic", category: "Language-Vocabulary", description: "Arabic phrases of two rhyming words, shown as a fun-riddle.", url: "/web/hink-pink-arabic.html" },
   { title: "Islam Match", category: "Islamic Studies", description: "Interactive card-matching educational engine for core Islamic principles.", url: "/web/islam-match.html" },
