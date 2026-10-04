@@ -641,6 +641,11 @@ const ihciMonitoringReports = [
 const interactiveWebProducts = [
   {
     file: "clcp-generate-river.html",
+    title: "SALT Personality Pattern",
+    description: "Find out which SALT personality pattern is most like you."
+  },
+  {
+    file: "salt-buzz-quiz.html",
     title: "River of Life Diagram Generator",
     description: "Score where your community stands today and where you dream of being, with this River of Life chart generator."
   },
