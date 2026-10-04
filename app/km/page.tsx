@@ -640,6 +640,11 @@ const ihciMonitoringReports = [
 
 const interactiveWebProducts = [
   {
+    file: "clcp-generate-river.html",
+    title: "River of Life Diagram Generator",
+    description: "Score where your community stands today and where you dream of being, with this River of Life chart generator."
+  },
+  {
     file: "chart.html",
     title: "IHCI Interactive Chart: A Tale of 4 Districts",
     description: "A data visualization charting interface mapping, isolating, and evaluating comparative hypertension control metrics across four operational index districts."
@@ -668,11 +673,6 @@ const interactiveWebProducts = [
     file: "cotestbmj.html",
     title: "BMJ Clinical Quality Validation Framework",
     description: "A web assessment test environment built around the British Medical Journal intervention and clinical guidelines metrics."
-  },
-  {
-    file: "fidyah.html",
-    title: "Fidyah & Kaffarah Welfare Calculator Node",
-    description: "A practical social assistance calculator running algorithmic loops to verify community support distribution amounts and financial contributions."
   },
   {
     file: "ihciquizcertificate.html",
