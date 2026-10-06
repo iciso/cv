@@ -177,6 +177,12 @@ const stories = [
       "Exploring universal human values that transcend religious boundaries and resonate across different spiritual traditions.",
     url: "https://aidscompetence.ning.com/profiles/blogs/8-maxims-on-being-humane-resonate-in-3-scriptures",
   },
+   {
+    title: "The SALT Personality Quiz: A Mirror, Not a Judgement",
+    description:
+      "Discover a deeper, judgment-free understanding of your unique strengths by exploring The SALT Personality Quiz blog post.",
+    url: "https://aidscompetence.ning.com/profiles/blogs/the-salt-personality-quiz-a-mirror-not-a-judgement",
+  },
   {
     title: "The Role of KM",
     description:
