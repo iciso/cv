@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0a0f" />
   <meta name="description" content="HLA Allele & Disease Association Matching Game – TMC Case Conference Group" />
-  <title>🧬HLA Matching | TMC Case Conference 🩺</title>
+  <title>HLA Matching | TMC Case Conference</title>
   <style>
     :root {
       --bg: #0a0a0f;
@@ -653,6 +653,24 @@
       { allele: "HLA-B15", disease: "Stevens-Johnson syndrome (allopurinol)" },
     ];
 
+    // Build lookup: allele → Set of diseases, disease → Set of alleles
+    // So any HLA-B27 tile matches any of its associated disease tiles
+    const alleleToDiseases = {};
+    const diseaseToAlleles = {};
+    ALL_PAIRS.forEach(({ allele, disease }) => {
+      if (!alleleToDiseases[allele]) alleleToDiseases[allele] = new Set();
+      alleleToDiseases[allele].add(disease);
+      if (!diseaseToAlleles[disease]) diseaseToAlleles[disease] = new Set();
+      diseaseToAlleles[disease].add(allele);
+    });
+
+    function isValidMatch(textA, typeA, textB, typeB) {
+      if (typeA === typeB) return false; // must be allele + disease
+      const alleleText = typeA === "allele" ? textA : textB;
+      const diseaseText = typeA === "disease" ? textA : textB;
+      return alleleToDiseases[alleleText] && alleleToDiseases[alleleText].has(diseaseText);
+    }
+
     const PAIRS_PER_ROUND = 5;
     let rounds = [];
     let currentRoundIndex = 0;
@@ -785,10 +803,15 @@
       isLocked = true;
       const first = selectedTile;
       const second = { el, data: tileData };
-      const samePair = first.data.pairId === second.data.pairId;
-      const differentType = first.data.type !== second.data.type;
 
-      if (samePair && differentType) {
+      // Content-based match: any allele tile matches any disease it is associated with
+      // (e.g. any HLA-B27 + Ankylosing spondylitis / Uveitis / Psoriatic arthritis = correct)
+      const valid = isValidMatch(
+        first.data.text, first.data.type,
+        second.data.text, second.data.type
+      );
+
+      if (valid) {
         first.el.classList.remove("selected");
         first.el.classList.add("matched");
         second.el.classList.add("matched");
