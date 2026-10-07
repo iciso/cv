@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="description" content="HLA Allele & Disease Association Matching Game – TMC Case Conference Group" />
+  <title>HLA Matching | TMC Case Conference</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --card: #1a1a24;
+      --card-hover: #252532;
+      --selected: #2d4a6f;
+      --matched: #1a3a2a;
+      --wrong: #4a1a1a;
+      --text: #e8e8f0;
+      --muted: #8a8a9a;
+      --accent: #f97316;
+      --accent-dim: #c2410c;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --primary: #1e3a8a;
+      --secondary: #0f766e;
+      --radius: 14px;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      max-width: 520px;
+      margin: 0 auto;
+      position: relative;
+      min-height: 100dvh;
+    }
+
+    /* ── Brand header (TMC style, dark palette) ── */
+    .brand-header {
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 100%);
+      color: #fff;
+      padding: 1.1rem 1.25rem 1rem;
+      text-align: center;
+      border-radius: 0 0 14px 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .brand-header h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 0.3rem;
+    }
+
+    .brand-header .subtitle {
+      font-size: 0.85rem;
+      opacity: 0.92;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Game top bar ── */
+    .game-bar {
+      flex-shrink: 0;
+      padding: 10px 14px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: linear-gradient(180deg, #12121a 0%, var(--bg) 100%);
+      border-bottom: 1px solid #1f1f2a;
+      z-index: 10;
+    }
+
+    .score-pill {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 64px;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(249, 115, 22, 0.35);
+    }
+
+    .score-pill svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .title-block {
+      text-align: center;
+      flex: 1;
+    }
+
+    .title-block .title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .title-block .round-info {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .quit-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 22px;
+      cursor: pointer;
+      padding: 4px 8px;
+      line-height: 1;
+      width: 40px;
+    }
+
+    /* ── Stats bar ── */
+    .stats {
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 8px 12px;
+      background: #0f0f16;
+      border-bottom: 1px solid #1f1f2a;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 6px 4px;
+      background: var(--card);
+      border-radius: 10px;
+    }
+
+    .stat-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+
+    .stat-value.good { color: var(--success); }
+    .stat-value.warn { color: var(--accent); }
+    .stat-value.bad { color: var(--danger); }
+
+    /* ── Main play area ── */
+    main {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .instruction {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .tiles {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .tile {
+      background: var(--card);
+      border: 1.5px solid #2a2a3a;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: 500;
+      text-align: center;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s, opacity 0.2s;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.35;
+      word-break: break-word;
+      width: 100%;
+    }
+
+    .tile:active:not(.matched):not(.disabled) {
+      transform: scale(0.97);
+    }
+
+    .tile.selected {
+      background: var(--selected);
+      border-color: #4a7ab0;
+      box-shadow: 0 0 0 2px rgba(74, 122, 176, 0.35);
+    }
+
+    .tile.matched {
+      background: var(--matched);
+      border-color: #2d6a45;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .tile.wrong {
+      background: var(--wrong);
+      border-color: #8b3030;
+      animation: shake 0.35s ease;
+    }
+
+    .tile.disabled {
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    .tile.allele {
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .tile.disease {
+      font-size: 14px;
+      color: #d0d0e0;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    /* Progress dots */
+    .progress {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2a2a3a;
+      transition: background 0.2s;
+    }
+
+    .dot.done { background: var(--success); }
+    .dot.current {
+      background: var(--accent);
+      box-shadow: 0 0 6px rgba(249, 115, 22, 0.6);
+    }
+
+    /* ── Control buttons ── */
+    .controls {
+      flex-shrink: 0;
+      text-align: center;
+      padding: 10px 14px 6px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .ctrl-btn {
+      background: #0f766e;
+      color: #fff;
+      border: none;
+      padding: 0.55rem 1.15rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .ctrl-btn:active { transform: scale(0.97); opacity: 0.9; }
+    .ctrl-btn.reset { background: #64748b; }
+    .ctrl-btn.danger { background: #dc2626; }
+
+    /* ── Footer ── */
+    footer {
+      flex-shrink: 0;
+      text-align: center;
+      padding: 1.1rem 1rem calc(1.25rem + var(--safe-bottom));
+      border-top: 1px solid #1f1f2a;
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: #0c0c12;
+    }
+
+    footer p {
+      margin-bottom: 0.65rem;
+      line-height: 1.4;
+    }
+
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background-color: #25D366;
+      color: #fff;
+      padding: 0.55rem 1.15rem;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: background-color 0.2s, transform 0.1s;
+      box-shadow: 0 2px 8px rgba(37, 211, 102, 0.25);
+    }
+
+    .wa-btn:hover {
+      background-color: #128C7E;
+      transform: translateY(-1px);
+    }
+
+    .wa-btn:active { transform: scale(0.97); }
+
+    /* ── Overlay screens ── */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 6, 10, 0.94);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px;
+      z-index: 50;
+      text-align: center;
+    }
+
+    .overlay.hidden { display: none; }
+
+    .overlay h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .overlay h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .overlay p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 340px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 13px 30px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4);
+      transition: transform 0.12s, background 0.15s;
+      min-width: 150px;
+    }
+
+    .btn:active { transform: scale(0.96); }
+
+    .btn.secondary {
+      background: transparent;
+      border: 1.5px solid #3a3a4a;
+      color: var(--text);
+      box-shadow: none;
+      margin-top: 10px;
+    }
+
+    .btn.secondary:active { background: #1a1a24; }
+
+    .final-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      max-width: 280px;
+      margin: 12px 0 20px;
+    }
+
+    .final-stat {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 12px 8px;
+    }
+
+    .final-stat .val {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .final-stat .lbl {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: calc(28px + var(--safe-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1f2937;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 100;
+      opacity: 0;
+      transition: transform 0.3s, opacity 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast.good { background: #166534; }
+    .toast.bad { background: #7f1d1d; }
+
+    /* Desktop / larger screens – same UX, slightly more breathing room */
+    @media (min-width: 520px) {
+      body {
+        max-width: 520px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.45);
+      }
+      .brand-header {
+        border-radius: 0;
+      }
+      .tile {
+        font-size: 15.5px;
+        padding: 15px 18px;
+      }
+    }
+
+    @media (max-height: 700px) {
+      .tile { padding: 11px 14px; min-height: 46px; font-size: 14px; }
+      .stats { padding: 6px 10px; }
+      .stat-value { font-size: 14px; }
+      .brand-header { padding: 0.85rem 1rem; }
+      .brand-header h1 { font-size: 1.05rem; }
+    }
+
+    @media (max-height: 600px) {
+      .tile { padding: 9px 12px; min-height: 42px; font-size: 13px; }
+      .instruction { display: none; }
+      .brand-header .subtitle { font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Brand header -->
+  <div class="brand-header">
+    <h1>Thanjavur Medical College (TMC) Case Conference Group</h1>
+    <div class="subtitle">🧬 HLA Allele &amp; Disease Association Matching</div>
+  </div>
+
+  <!-- Start screen -->
+  <div id="start-screen" class="overlay">
+    <h1>HLA Matching</h1>
+    <p>Match each HLA allele with its associated disease(s). Tap a tile, then tap its pair. Sets of 4–5 pairs keep the screen tidy on every device.</p>
+    <div class="final-stats" style="margin-bottom: 8px;">
+      <div class="final-stat">
+        <div class="val" id="total-pairs-count">—</div>
+        <div class="lbl">Total pairs</div>
+      </div>
+      <div class="final-stat">
+        <div class="val" id="total-rounds-count">—</div>
+        <div class="lbl">Rounds</div>
+      </div>
+    </div>
+    <button class="btn" id="btn-start">Start Game</button>
+  </div>
+
+  <!-- End screen -->
+  <div id="end-screen" class="overlay hidden">
+    <h2 id="end-title">Well done!</h2>
+    <p id="end-message">You finished all pairs.</p>
+    <div class="final-stats">
+      <div class="final-stat">
+        <div class="val" id="end-score">0</div>
+        <div class="lbl">Score</div>
+      </div>
+      <div class="final-stat">
+        <div class="val" id="end-accuracy">0%</div>
+        <div class="lbl">Accuracy</div>
+      </div>
+      <div class="final-stat">
+        <div class="val" id="end-correct">0</div>
+        <div class="lbl">Correct</div>
+      </div>
+      <div class="final-stat">
+        <div class="val" id="end-mistakes">0</div>
+        <div class="lbl">Mistakes</div>
+      </div>
+    </div>
+    <button class="btn" id="btn-replay">Play Again</button>
+    <button class="btn secondary" id="btn-home">Back to Start</button>
+  </div>
+
+  <!-- Game top bar -->
+  <div class="game-bar">
+    <button class="quit-btn" id="btn-quit" title="Quit">×</button>
+    <div class="title-block">
+      <div class="title">Tap the pairs</div>
+      <div class="round-info" id="round-info">Round 1 of 1</div>
+    </div>
+    <div class="score-pill">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2H22l-6 4.8 2.3 7.2L12 16.8 5.7 21.2 8 14 2 9.2h7.6z"/></svg>
+      <span id="score">0</span>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value" id="stat-accuracy">100%</div>
+      <div class="stat-label">Accuracy</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="stat-streak">0</div>
+      <div class="stat-label">Streak</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="stat-left">0</div>
+      <div class="stat-label">Left</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="stat-mistakes">0</div>
+      <div class="stat-label">Mistakes</div>
+    </div>
+  </div>
+
+  <!-- Tiles -->
+  <main>
+    <div class="instruction" id="instruction">Tap an allele, then its disease (or vice versa)</div>
+    <div class="tiles" id="tiles"></div>
+    <div class="progress" id="progress"></div>
+  </main>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="ctrl-btn reset" id="btn-reset-section">Reset Section</button>
+    <button class="ctrl-btn danger" id="btn-clear-scores">Clear Scores</button>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Thanjavur Medical College (TMC) Case Conference Group<br>HLA Allele &amp; Disease Association Revision</p>
+    <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="wa-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.762.459 3.48 1.332 5.001L2 22l5.12-1.334c1.464.799 3.117 1.22 4.887 1.222h.004c5.505 0 9.988-4.478 9.989-9.985 0-2.667-1.037-5.176-2.922-7.062A9.925 9.925 0 0 0 12.012 2zm.003 1.8c4.5 0 8.17 3.667 8.17 8.17 0 4.5-3.67 8.17-8.17 8.17-1.47 0-2.85-.39-4.05-1.07l-.29-.17-3.03.79.81-2.95-.19-.3A8.12 8.12 0 0 1 3.84 12c0-4.5 3.67-8.17 8.175-8.2zm4.47 10.76c-.07-.04-1.46-.72-1.68-.8-.23-.08-.4-.12-.56.12-.17.23-.64.8-.79.96-.14.17-.3.19-.55.06-.26-.12-1.08-.4-2.06-1.27-.76-.68-1.27-1.52-1.42-1.78-.15-.26-.02-.4.11-.53.12-.11.26-.3.39-.44.13-.15.17-.25.26-.42.08-.17.04-.32-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.3-.23.23-.88.86-.88 2.1 0 1.24.9 2.43 1.03 2.6.12.17 1.77 2.7 4.29 3.79 1.6.69 2.23.75 3.03.63.49-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.14-1.17-.06-.1-.23-.16-.48-.28z"/>
+      </svg>
+      Join TMC Case Conference WhatsApp Group
+    </a>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ──────────────────────────────────────────────
+    // HLA Allele ↔ Disease Association pairs
+    // ──────────────────────────────────────────────
+    const ALL_PAIRS = [
+      { allele: "HLA-A3", disease: "Hemochromatosis" },
+      { allele: "HLA-B8", disease: "Myasthenia Gravis" },
+      { allele: "HLA-B8", disease: "Graves' disease" },
+      { allele: "HLA-B27", disease: "Ankylosing spondylitis" },
+      { allele: "HLA-B27", disease: "Acute anterior uveitis" },
+      { allele: "HLA-B27", disease: "Reactive arthritis" },
+      { allele: "HLA-B27", disease: "Psoriatic arthritis" },
+      { allele: "HLA-B47", disease: "Congenital adrenal hyperplasia" },
+      { allele: "HLA-B51", disease: "Behçet's disease" },
+      { allele: "HLA-B57", disease: "Abacavir hypersensitivity" },
+      { allele: "HLA-Cw6", disease: "Psoriasis" },
+      { allele: "HLA-DQ1", disease: "Narcolepsy" },
+      { allele: "HLA-DQ2", disease: "Celiac disease" },
+      { allele: "HLA-DQ8", disease: "Celiac disease (also)" },
+      { allele: "HLA-DR2", disease: "SLE (Japanese)" },
+      { allele: "HLA-DR2", disease: "Sjögren's syndrome" },
+      { allele: "HLA-DR2", disease: "Multiple sclerosis" },
+      { allele: "HLA-DR3", disease: "Type 1 diabetes mellitus" },
+      { allele: "HLA-DR3", disease: "Dermatitis herpetiformis" },
+      { allele: "HLA-DR3", disease: "Chronic active hepatitis" },
+      { allele: "HLA-DR3", disease: "SLE (White)" },
+      { allele: "HLA-DR4", disease: "Rheumatoid arthritis" },
+      { allele: "HLA-DR4", disease: "Type 1 diabetes mellitus" },
+      { allele: "HLA-DR5", disease: "Pernicious anemia" },
+      { allele: "HLA-DR5", disease: "Hashimoto's thyroiditis" },
+      { allele: "HLA-DR5 / DR8", disease: "Juvenile arthritis (pauciarticular)" },
+      { allele: "HLA-B16", disease: "Multiple sclerosis" },
+      { allele: "HLA-A29", disease: "Birdshot chorioretinopathy" },
+      { allele: "HLA-DR15", disease: "Goodpasture's syndrome" },
+      { allele: "HLA-B15", disease: "Stevens-Johnson syndrome (allopurinol)" },
+    ];
+
+    const PAIRS_PER_ROUND = 5;
+    let rounds = [];
+    let currentRoundIndex = 0;
+    let score = 0;
+    let correctMatches = 0;
+    let mistakes = 0;
+    let streak = 0;
+    let maxStreak = 0;
+    let selectedTile = null;
+    let matchedCount = 0;
+    let totalPairsInGame = 0;
+    let isLocked = false;
+    let gameActive = false;
+
+    // Persistent high-score / session count
+    const STORAGE_KEY = "tmc_hla_matching_stats";
+    function loadPersistent() {
+      try {
+        const s = localStorage.getItem(STORAGE_KEY);
+        return s ? JSON.parse(s) : { bestScore: 0, sessions: 0 };
+      } catch { return { bestScore: 0, sessions: 0 }; }
+    }
+    function savePersistent(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    const tilesEl = document.getElementById("tiles");
+    const scoreEl = document.getElementById("score");
+    const roundInfoEl = document.getElementById("round-info");
+    const statAccuracy = document.getElementById("stat-accuracy");
+    const statStreak = document.getElementById("stat-streak");
+    const statLeft = document.getElementById("stat-left");
+    const statMistakes = document.getElementById("stat-mistakes");
+    const progressEl = document.getElementById("progress");
+    const toastEl = document.getElementById("toast");
+    const startScreen = document.getElementById("start-screen");
+    const endScreen = document.getElementById("end-screen");
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function showToast(msg, type = "good") {
+      toastEl.textContent = msg;
+      toastEl.className = "toast show " + type;
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => toastEl.classList.remove("show"), 1600);
+    }
+
+    function updateStats() {
+      const totalAttempts = correctMatches + mistakes;
+      const accuracy = totalAttempts === 0 ? 100 : Math.round((correctMatches / totalAttempts) * 100);
+      scoreEl.textContent = score;
+      statAccuracy.textContent = accuracy + "%";
+      statAccuracy.className = "stat-value " + (accuracy >= 80 ? "good" : accuracy >= 50 ? "warn" : "bad");
+      statStreak.textContent = streak;
+      statMistakes.textContent = mistakes;
+      statLeft.textContent = totalPairsInGame - correctMatches;
+    }
+
+    function buildRounds() {
+      const shuffled = shuffle(ALL_PAIRS);
+      rounds = [];
+      for (let i = 0; i < shuffled.length; i += PAIRS_PER_ROUND) {
+        rounds.push(shuffled.slice(i, i + PAIRS_PER_ROUND));
+      }
+      totalPairsInGame = shuffled.length;
+      document.getElementById("total-pairs-count").textContent = totalPairsInGame;
+      document.getElementById("total-rounds-count").textContent = rounds.length;
+    }
+
+    function renderProgress() {
+      progressEl.innerHTML = "";
+      rounds.forEach((_, i) => {
+        const d = document.createElement("div");
+        d.className = "dot" + (i < currentRoundIndex ? " done" : i === currentRoundIndex ? " current" : "");
+        progressEl.appendChild(d);
+      });
+    }
+
+    function renderRound() {
+      const pairs = rounds[currentRoundIndex];
+      matchedCount = 0;
+      selectedTile = null;
+      isLocked = false;
+      tilesEl.innerHTML = "";
+
+      const tiles = [];
+      pairs.forEach((p, idx) => {
+        tiles.push({ text: p.allele, type: "allele", pairId: idx });
+        tiles.push({ text: p.disease, type: "disease", pairId: idx });
+      });
+      const shuffledTiles = shuffle(tiles);
+
+      shuffledTiles.forEach((t) => {
+        const el = document.createElement("button");
+        el.className = "tile " + t.type;
+        el.textContent = t.text;
+        el.dataset.pairId = t.pairId;
+        el.dataset.type = t.type;
+        el.addEventListener("click", () => onTileTap(el, t));
+        tilesEl.appendChild(el);
+      });
+
+      roundInfoEl.textContent = `Round ${currentRoundIndex + 1} of ${rounds.length}`;
+      renderProgress();
+      updateStats();
+    }
+
+    function onTileTap(el, tileData) {
+      if (!gameActive || isLocked || el.classList.contains("matched") || el.classList.contains("disabled")) return;
+
+      if (selectedTile && selectedTile.el === el) {
+        el.classList.remove("selected");
+        selectedTile = null;
+        return;
+      }
+
+      if (!selectedTile) {
+        el.classList.add("selected");
+        selectedTile = { el, data: tileData };
+        return;
+      }
+
+      isLocked = true;
+      const first = selectedTile;
+      const second = { el, data: tileData };
+      const samePair = first.data.pairId === second.data.pairId;
+      const differentType = first.data.type !== second.data.type;
+
+      if (samePair && differentType) {
+        first.el.classList.remove("selected");
+        first.el.classList.add("matched");
+        second.el.classList.add("matched");
+        correctMatches++;
+        streak++;
+        if (streak > maxStreak) maxStreak = streak;
+        const points = 100 + Math.min(streak - 1, 5) * 20;
+        score += points;
+        showToast("+" + points + "  ✓", "good");
+        matchedCount++;
+        selectedTile = null;
+        updateStats();
+
+        if (matchedCount === rounds[currentRoundIndex].length) {
+          setTimeout(() => {
+            if (currentRoundIndex + 1 < rounds.length) {
+              currentRoundIndex++;
+              showToast("Round complete!", "good");
+              setTimeout(() => {
+                renderRound();
+                isLocked = false;
+              }, 700);
+            } else {
+              showEndScreen();
+            }
+          }, 450);
+        } else {
+          isLocked = false;
+        }
+      } else {
+        first.el.classList.remove("selected");
+        first.el.classList.add("wrong");
+        second.el.classList.add("wrong");
+        mistakes++;
+        streak = 0;
+        score = Math.max(0, score - 25);
+        showToast("Not a match", "bad");
+        updateStats();
+        setTimeout(() => {
+          first.el.classList.remove("wrong");
+          second.el.classList.remove("wrong");
+          selectedTile = null;
+          isLocked = false;
+        }, 450);
+      }
+    }
+
+    function showEndScreen() {
+      gameActive = false;
+      const totalAttempts = correctMatches + mistakes;
+      const accuracy = totalAttempts === 0 ? 100 : Math.round((correctMatches / totalAttempts) * 100);
+      document.getElementById("end-score").textContent = score;
+      document.getElementById("end-accuracy").textContent = accuracy + "%";
+      document.getElementById("end-correct").textContent = correctMatches;
+      document.getElementById("end-mistakes").textContent = mistakes;
+
+      // Persist best score & session count
+      const pers = loadPersistent();
+      if (score > pers.bestScore) pers.bestScore = score;
+      pers.sessions = (pers.sessions || 0) + 1;
+      savePersistent(pers);
+
+      let title = "Great job!";
+      let msg = "You completed all HLA–disease pairs.";
+      if (accuracy >= 90 && mistakes <= 2) {
+        title = "Outstanding!";
+        msg = "Near-perfect accuracy. HLA associations mastered.";
+      } else if (accuracy >= 75) {
+        title = "Well done!";
+        msg = "Solid knowledge of classic HLA associations.";
+      } else if (accuracy >= 50) {
+        title = "Good effort!";
+        msg = "Review the pairs and try again to improve.";
+      } else {
+        title = "Keep practicing!";
+        msg = "These associations stick with repetition.";
+      }
+      document.getElementById("end-title").textContent = title;
+      document.getElementById("end-message").textContent = msg;
+      endScreen.classList.remove("hidden");
+    }
+
+    function startGame() {
+      score = 0;
+      correctMatches = 0;
+      mistakes = 0;
+      streak = 0;
+      maxStreak = 0;
+      currentRoundIndex = 0;
+      gameActive = true;
+      buildRounds();
+      startScreen.classList.add("hidden");
+      endScreen.classList.add("hidden");
+      renderRound();
+    }
+
+    function resetSection() {
+      if (!gameActive) {
+        showToast("Start a game first", "bad");
+        return;
+      }
+      // Reset only current round tiles
+      score = Math.max(0, score - matchedCount * 100); // rough undo of current-round points
+      correctMatches -= matchedCount;
+      matchedCount = 0;
+      streak = 0;
+      selectedTile = null;
+      isLocked = false;
+      renderRound();
+      showToast("Section reset", "good");
+    }
+
+    function clearScores() {
+      if (!confirm("Clear all saved scores and session history?")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      score = 0;
+      correctMatches = 0;
+      mistakes = 0;
+      streak = 0;
+      maxStreak = 0;
+      updateStats();
+      showToast("Scores cleared", "good");
+      if (gameActive) {
+        // also restart current game cleanly
+        currentRoundIndex = 0;
+        buildRounds();
+        renderRound();
+      }
+    }
+
+    // Event listeners
+    document.getElementById("btn-start").addEventListener("click", startGame);
+    document.getElementById("btn-replay").addEventListener("click", startGame);
+    document.getElementById("btn-home").addEventListener("click", () => {
+      gameActive = false;
+      endScreen.classList.add("hidden");
+      startScreen.classList.remove("hidden");
+      buildRounds();
+    });
+    document.getElementById("btn-quit").addEventListener("click", () => {
+      if (!gameActive) return;
+      if (confirm("Quit current game?")) {
+        gameActive = false;
+        endScreen.classList.add("hidden");
+        startScreen.classList.remove("hidden");
+        buildRounds();
+      }
+    });
+    document.getElementById("btn-reset-section").addEventListener("click", resetSection);
+    document.getElementById("btn-clear-scores").addEventListener("click", clearScores);
+
+    // Init
+    buildRounds();
+  </script>
+</body>
+</html>
