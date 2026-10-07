@@ -162,7 +162,7 @@ const interactiveWebPages = [
   { title: "Takaful Quiz", category: "Islamic Finance", description: "Testing engine covering Islamic cooperative financial systems.", url: "/web/takaful-quiz.html" },
   { title: "Top 10 Quranic Surahs", category: "Surah Recitation", description: "Listen to Top 10 of Sheikh Mahmoud Khalil Al-Husary (رحمه الله).", url: "/web/top-ten-quran.html" },
   { title: "TMC Abdomen-Surgery", category: "Clinical Signs Quiz", description: "Revision of Abdomen, Appendix, Hernia & Intestinal signs.", url: "/web/abdomen-quiz.html" }, 
-  { title: "TMC HLA-Disease Game", category: "HLA Matching Game", description: "QMatch each HLA allele with its associated disease(s).", url: "/web/tmc-hla-disease.html" }, 
+  { title: "TMC HLA-Disease Game", category: "HLA Matching Game", description: "Match each HLA allele with its associated disease(s).", url: "/web/tmc-hla-disease.html" }, 
   { title: "TMC Medical", category: "Medical Signs Quiz", description: "Quiz of clincial signs of ten medical sub specialities.", url: "/web/tmc-medical.html" }, 
   { title: "TMC Surgery", category: "Surgical Signs Quiz", description: "Quiz of Abdomen, Breast, Thyroid, Neck, and Vascular Surgery.", url: "/web/tmc-surgical.html" }, 
   { title: "Travel Quiz", category: "Interactive Module", description: "Geography and international travel safety quiz application.", url: "/web/travel-quiz.html" },
