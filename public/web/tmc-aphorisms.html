@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanjavur Medical College (TMC) Case Conference — Medical Aphorisms Library</title>
+  <style>
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #3b82f6;
+  --secondary: #0f766e;
+  --navy: #1e3a8a;
+  --teal: #0f766e;
+  --paper: #f8fafc;
+  --ink: #1e293b;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --card: #ffffff;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  padding: 1rem;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  font-weight: 300;
+}
+main { padding: 0 0 1rem; }
+.panel {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+.filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 10px;
+}
+input, select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd8de;
+  border-radius: 10px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+}
+input:focus, select:focus, button:focus-visible {
+  outline: 3px solid #77d6d5;
+  outline-offset: 2px;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 10px 13px;
+  background: var(--navy);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.secondary, .copy {
+  background: #e7eff2;
+  color: var(--navy);
+}
+.results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 18px 0;
+}
+.quote {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow);
+}
+.quote blockquote {
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  margin: 0;
+  color: #203747;
+}
+.author { font-weight: 800; color: var(--navy); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.tag {
+  background: #eaf5f4;
+  color: #17656a;
+  padding: 4px 8px;
+  border-radius: 99px;
+  font-size: 0.78rem;
+}
+.actions { display: flex; justify-content: flex-end; }
+.copy { padding: 7px 10px; font-size: 0.85rem; }
+.empty {
+  grid-column: 1 / -1;
+  background: white;
+  padding: 28px;
+  border: 1px dashed #b7c7cf;
+  border-radius: 14px;
+  text-align: center;
+  color: var(--muted);
+}
+.note {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 20px 0 10px;
+}
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding: 1.5rem 1rem;
+  border-top: 1px solid var(--line);
+}
+.wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #25D366;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.wa-btn:hover {
+  background-color: #128C7E;
+  transform: translateY(-1px);
+}
+@media (max-width: 720px) {
+  .filters, .results { grid-template-columns: 1fr; }
+  header { padding: 1.25rem; }
+}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Thanjavur Medical College (TMC) Case Conference Group</h1>
+    <div class="subtitle">📚 Medical Aphorisms Library — Clinical wisdom for teaching, clinics, and CME</div>
+  </header>
+
+  <main>
+    <section class="panel" aria-label="Search aphorisms">
+      <div class="filters">
+        <input id="search" type="search" placeholder="Search diagnosis, ophthalmology, surgery, empathy…" aria-label="Search by keyword">
+        <select id="author" aria-label="Filter by author"><option value="">All authors</option></select>
+        <select id="theme" aria-label="Filter by theme"><option value="">All themes</option></select>
+      </div>
+      <div class="toolbar">
+        <span id="count" aria-live="polite"></span>
+        <button id="clear" class="secondary" type="button">Clear filters</button>
+      </div>
+    </section>
+
+    <section id="results" class="results" aria-live="polite"></section>
+
+    <p class="note"><strong>Editorial note:</strong> Entries labelled “Clinical teaching aphorism” are original teaching lines for this collection, not historical quotations. Some traditional quotations have disputed or variable attributions; verify wording and source before using them as exact quotations in formal publications or CME materials. This library aims to cover clinical wisdom relevant across the departments and specialties of a medical college and teaching hospital.</p>
+  </main>
+
+  <footer>
+    <p>Thanjavur Medical College (TMC) Case Conference Group • Medical Aphorisms Library</p>
+    <div>
+      <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="wa-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.762.459 3.48 1.332 5.001L2 22l5.12-1.334c1.464.799 3.117 1.22 4.887 1.222h.004c5.505 0 9.988-4.478 9.989-9.985 0-2.667-1.037-5.176-2.922-7.062A9.925 9.925 0 0 0 12.012 2z"/>
+        </svg>
+        Join TMC Case Conference WhatsApp Group
+      </a>
+    </div>
+  </footer>
+
+  <script>
+const medicalQuotes = [{"id": 1, "sentence": "Listen to your patient; he is telling you the diagnosis.", "author": "William Osler (commonly attributed)", "themes": ["history taking", "diagnosis"]}, {"id": 2, "sentence": "The practice of medicine is an art, based on science.", "author": "William Osler (commonly attributed)", "themes": ["medical education", "science"]}, {"id": 3, "sentence": "It is much more important to know what sort of a patient has a disease than what sort of a disease a patient has.", "author": "William Osler (commonly attributed)", "themes": ["whole-person care", "diagnosis"]}, {"id": 4, "sentence": "The secret of the care of the patient is in caring for the patient.", "author": "Francis W. Peabody", "themes": ["compassion", "patient care"]}, {"id": 5, "sentence": "First, do no harm.", "author": "Traditional rendering of the Hippocratic principle", "themes": ["ethics", "patient safety"]}, {"id": 6, "sentence": "The first wealth is health.", "author": "Ralph Waldo Emerson", "themes": ["health", "prevention"]}, {"id": 7, "sentence": "It is health that is real wealth and not pieces of gold and silver.", "author": "Mahatma Gandhi", "themes": ["health", "public health"]}, {"id": 8, "sentence": "The art of medicine consists of amusing the patient while nature cures the disease.", "author": "Voltaire", "themes": ["healing", "medical humanities"]}, {"id": 9, "sentence": "Medicine is an imperfect science, shaped by changing knowledge and fallible individuals.", "author": "Atul Gawande (paraphrased)", "themes": ["uncertainty", "evidence"]}, {"id": 10, "sentence": "The good physician treats the disease; the great physician treats the patient who has the disease.", "author": "Commonly attributed to William Osler; attribution uncertain", "themes": ["whole-person care", "patient-centred care"]}, {"id": 11, "sentence": "Wherever the art of Medicine is loved, there is also a love of Humanity.", "author": "Hippocrates (commonly attributed)", "themes": ["humanity", "compassion"]}, {"id": 12, "sentence": "Cure sometimes, treat often, comfort always.", "author": "Traditional medical aphorism; attribution varies", "themes": ["healing", "palliative care"]}, {"id": 13, "sentence": "The physician should not treat the disease, but the patient who is suffering from it.", "author": "Maimonides (commonly attributed)", "themes": ["whole-person care", "ethics"]}, {"id": 14, "sentence": "The best interest of the patient is the only interest to be considered.", "author": "William J. Mayo (commonly attributed)", "themes": ["patient advocacy", "ethics"]}, {"id": 15, "sentence": "A careful history is often the most valuable diagnostic test.", "author": "Clinical teaching aphorism", "themes": ["history taking", "diagnosis"]}, {"id": 16, "sentence": "An abnormal result is a clue, not a diagnosis.", "author": "Clinical teaching aphorism", "themes": ["laboratory medicine", "diagnosis"]}, {"id": 17, "sentence": "Common things are common; uncommon things should not be forgotten.", "author": "Traditional clinical teaching aphorism", "themes": ["differential diagnosis", "clinical reasoning"]}, {"id": 18, "sentence": "Guidelines guide; they do not replace judgement.", "author": "Clinical teaching aphorism", "themes": ["guidelines", "clinical judgement"]}, {"id": 19, "sentence": "Consent is a conversation, not just a signature.", "author": "Clinical teaching aphorism", "themes": ["informed consent", "ethics"]}, {"id": 20, "sentence": "A good handover makes the next clinician safer.", "author": "Clinical teaching aphorism", "themes": ["handover", "patient safety"]}, {"id": 21, "sentence": "The safest system expects people to be human.", "author": "Clinical teaching aphorism", "themes": ["patient safety", "human factors"]}, {"id": 22, "sentence": "Near misses are lessons offered before harm occurs.", "author": "Clinical teaching aphorism", "themes": ["quality improvement", "patient safety"]}, {"id": 23, "sentence": "Antibiotics treat susceptible bacteria, not every fever.", "author": "Clinical teaching aphorism", "themes": ["antibiotics", "stewardship"]}, {"id": 24, "sentence": "Prevention is often less visible than cure, but no less important.", "author": "Clinical teaching aphorism", "themes": ["prevention", "public health"]}, {"id": 25, "sentence": "A statistically significant result is not automatically clinically important.", "author": "Clinical teaching aphorism", "themes": ["statistics", "research"]}, {"id": 26, "sentence": "Relative risk attracts attention; absolute risk supports decisions.", "author": "Clinical teaching aphorism", "themes": ["statistics", "risk communication"]}, {"id": 27, "sentence": "A study's design shapes the questions it can answer.", "author": "Clinical teaching aphorism", "themes": ["research methods", "evidence-based medicine"]}, {"id": 28, "sentence": "A symptom is the patient's experience; a sign is what the clinician can observe.", "author": "Clinical teaching aphorism", "themes": ["clinical examination", "diagnosis"]}, {"id": 29, "sentence": "Examine the patient before you examine the scan.", "author": "Clinical teaching aphorism", "themes": ["bedside medicine", "imaging"]}, {"id": 30, "sentence": "A trend can be more informative than a single observation.", "author": "Clinical teaching aphorism", "themes": ["monitoring", "vital signs"]}, {"id": 31, "sentence": "Palliation is active care, not the absence of care.", "author": "Clinical teaching aphorism", "themes": ["palliative care", "symptom management"]}, {"id": 32, "sentence": "Hope and honesty can sit in the same consultation.", "author": "Clinical teaching aphorism", "themes": ["communication", "palliative care"]}, {"id": 33, "sentence": "Teach-back tests the explanation, not the patient.", "author": "Clinical teaching aphorism", "themes": ["health literacy", "communication"]}, {"id": 34, "sentence": "A plan the patient cannot understand is not yet a good plan.", "author": "Clinical teaching aphorism", "themes": ["communication", "shared decision-making"]}, {"id": 35, "sentence": "The patient is the expert on their lived experience.", "author": "Clinical teaching aphorism", "themes": ["patient-centred care", "respect"]}, {"id": 36, "sentence": "Anatomy explains where; physiology helps explain how.", "author": "Clinical teaching aphorism", "themes": ["anatomy", "physiology"]}, {"id": 37, "sentence": "Pharmacology is the study of effects—and of trade-offs.", "author": "Clinical teaching aphorism", "themes": ["pharmacology", "risk-benefit"]}, {"id": 38, "sentence": "Every drug has benefits to seek and harms to watch for.", "author": "Clinical teaching aphorism", "themes": ["pharmacology", "adverse effects"]}, {"id": 39, "sentence": "The dose makes the difference between remedy and poison.", "author": "Traditional maxim associated with Paracelsus", "themes": ["pharmacology", "toxicology"]}, {"id": 40, "sentence": "Microbes matter, but host response and context matter too.", "author": "Clinical teaching aphorism", "themes": ["microbiology", "immunology"]}, {"id": 41, "sentence": "Vaccination protects individuals and can help protect communities.", "author": "Clinical teaching aphorism", "themes": ["vaccination", "public health"]}, {"id": 42, "sentence": "The denominator matters as much as the numerator.", "author": "Clinical teaching aphorism", "themes": ["epidemiology", "statistics"]}, {"id": 43, "sentence": "Correlation may suggest a connection; it does not prove causation.", "author": "Common scientific aphorism", "themes": ["epidemiology", "research"]}, {"id": 44, "sentence": "A small p-value does not measure the size or value of an effect.", "author": "Clinical teaching aphorism", "themes": ["statistics", "research"]}, {"id": 45, "sentence": "Ask who was studied before applying a study to whom you treat.", "author": "Clinical teaching aphorism", "themes": ["research", "generalisability"]}, {"id": 46, "sentence": "A systematic review is only as strong as the evidence it brings together.", "author": "Clinical teaching aphorism", "themes": ["systematic review", "evidence-based medicine"]}, {"id": 47, "sentence": "A mistake examined honestly can become a lesson shared widely.", "author": "Clinical teaching aphorism", "themes": ["reflection", "medical education"]}, {"id": 48, "sentence": "Uncertainty acknowledged is safer than certainty performed.", "author": "Clinical teaching aphorism", "themes": ["uncertainty", "patient safety"]}, {"id": 49, "sentence": "Respect across disciplines is a patient-safety intervention.", "author": "Clinical teaching aphorism", "themes": ["teamwork", "patient safety"]}, {"id": 50, "sentence": "A discharge is a transition, not the end of treatment.", "author": "Clinical teaching aphorism", "themes": ["discharge planning", "continuity of care"]}, {"id": 51, "sentence": "A diagnosis should explain the important findings, not just one of them.", "author": "Clinical teaching aphorism", "themes": ["diagnosis", "clinical reasoning"]}, {"id": 52, "sentence": "The differential diagnosis is a working tool, not a memory contest.", "author": "Clinical teaching aphorism", "themes": ["differential diagnosis", "medical education"]}, {"id": 53, "sentence": "A test is useful when its result can change a decision.", "author": "Clinical teaching aphorism", "themes": ["diagnostic testing", "clinical judgement"]}, {"id": 54, "sentence": "A normal test does not always mean a healthy patient.", "author": "Clinical teaching aphorism", "themes": ["diagnostic testing", "uncertainty"]}, {"id": 55, "sentence": "Pre-test probability changes what a test result means.", "author": "Clinical teaching aphorism", "themes": ["diagnostic testing", "statistics"]}, {"id": 56, "sentence": "The bedside is where physiology becomes a person.", "author": "Clinical teaching aphorism", "themes": ["physiology", "bedside medicine"]}, {"id": 57, "sentence": "A physical examination is a conversation conducted with the senses.", "author": "Clinical teaching aphorism", "themes": ["clinical examination", "bedside medicine"]}, {"id": 58, "sentence": "Pathology describes a lesion; clinical medicine asks what it means for this person.", "author": "Clinical teaching aphorism", "themes": ["pathology", "whole-person care"]}, {"id": 59, "sentence": "A mechanism can explain a finding, but the patient must confirm the fit.", "author": "Clinical teaching aphorism", "themes": ["pathophysiology", "clinical reasoning"]}, {"id": 60, "sentence": "Inflammation is a response; the task is to understand what triggered it.", "author": "Clinical teaching aphorism", "themes": ["immunology", "inflammation"]}, {"id": 61, "sentence": "Use antimicrobials thoughtfully today to preserve their usefulness tomorrow.", "author": "Clinical teaching aphorism", "themes": ["antimicrobial stewardship", "public health"]}, {"id": 62, "sentence": "Resistance is an evolutionary response; prescribing is part of the environment.", "author": "Clinical teaching aphorism", "themes": ["antimicrobial resistance", "microbiology"]}, {"id": 63, "sentence": "Screening is useful only when benefits, harms, and follow-up are considered.", "author": "Clinical teaching aphorism", "themes": ["screening", "prevention"]}, {"id": 64, "sentence": "Risk factors change probability; they do not determine an individual's fate.", "author": "Clinical teaching aphorism", "themes": ["epidemiology", "prevention"]}, {"id": 65, "sentence": "Evidence informs the decision; the patient's values help shape it.", "author": "Clinical teaching aphorism", "themes": ["evidence-based medicine", "shared decision-making"]}, {"id": 66, "sentence": "A treatment that works on average may not work for every patient.", "author": "Clinical teaching aphorism", "themes": ["individualised care", "evidence-based medicine"]}, {"id": 67, "sentence": "The goal is not to order every test; it is to answer the clinical question.", "author": "Clinical teaching aphorism", "themes": ["diagnostic testing", "resource stewardship"]}, {"id": 68, "sentence": "More data do not guarantee better decisions; relevant data can.", "author": "Clinical teaching aphorism", "themes": ["clinical judgement", "diagnostic testing"]}, {"id": 69, "sentence": "Do not let the first explanation become the only explanation.", "author": "Clinical teaching aphorism", "themes": ["cognitive bias", "differential diagnosis"]}, {"id": 70, "sentence": "When the facts change, a sound clinician changes the working diagnosis.", "author": "Clinical teaching aphorism", "themes": ["clinical reasoning", "uncertainty"]}, {"id": 71, "sentence": "A second look is not indecision when the stakes are high.", "author": "Clinical teaching aphorism", "themes": ["patient safety", "clinical judgement"]}, {"id": 72, "sentence": "A referral should carry a question, a concern, and the relevant story.", "author": "Clinical teaching aphorism", "themes": ["referral", "communication"]}, {"id": 73, "sentence": "Continuity of care is memory shared across time and teams.", "author": "Clinical teaching aphorism", "themes": ["continuity of care", "teamwork"]}, {"id": 74, "sentence": "Follow-up closes the loop between a plan and its outcome.", "author": "Clinical teaching aphorism", "themes": ["follow-up", "clinical practice"]}, {"id": 75, "sentence": "The best treatment plan is one that can be carried out in real life.", "author": "Clinical teaching aphorism", "themes": ["adherence", "patient-centred care"]}, {"id": 76, "sentence": "Pain is what the patient says it is; take it seriously.", "author": "Clinical teaching aphorism", "themes": ["pain", "communication"]}, {"id": 77, "sentence": "Comfort is a clinical outcome worth measuring.", "author": "Clinical teaching aphorism", "themes": ["palliative care", "quality of life"]}, {"id": 78, "sentence": "A prognosis is a conversation about possibilities, not a prophecy.", "author": "Clinical teaching aphorism", "themes": ["prognosis", "communication"]}, {"id": 79, "sentence": "Listen for what the patient fears, not only what the patient reports.", "author": "Clinical teaching aphorism", "themes": ["empathy", "history taking"]}, {"id": 80, "sentence": "Silence can give a patient room to tell the important part.", "author": "Clinical teaching aphorism", "themes": ["communication", "history taking"]}, {"id": 81, "sentence": "Clear explanations are part of treatment.", "author": "Clinical teaching aphorism", "themes": ["communication", "health literacy"]}, {"id": 82, "sentence": "Trust is earned through competence, honesty, and follow-through.", "author": "Clinical teaching aphorism", "themes": ["trust", "professionalism"]}, {"id": 83, "sentence": "A clinician's first instrument is attention.", "author": "Clinical teaching aphorism", "themes": ["empathy", "clinical examination"]}, {"id": 84, "sentence": "Fatigue narrows attention; teams and checklists can help restore it.", "author": "Clinical teaching aphorism", "themes": ["human factors", "patient safety"]}, {"id": 85, "sentence": "No clinician works alone, even when standing at the bedside alone.", "author": "Clinical teaching aphorism", "themes": ["teamwork", "professionalism"]}, {"id": 86, "sentence": "A good outcome includes the patient's own goals.", "author": "Clinical teaching aphorism", "themes": ["outcomes", "shared decision-making"]}, {"id": 87, "sentence": "The measure of care is not only survival, but also function and quality of life.", "author": "Clinical teaching aphorism", "themes": ["quality of life", "outcomes"]}, {"id": 88, "sentence": "A population average can hide a patient's particular need.", "author": "Clinical teaching aphorism", "themes": ["epidemiology", "individualised care"]}, {"id": 89, "sentence": "Equity means matching care to need, not giving everyone an identical response.", "author": "Clinical teaching aphorism", "themes": ["health equity", "public health"]}, {"id": 90, "sentence": "Compassion is most meaningful when it changes how we act.", "author": "Clinical teaching aphorism", "themes": ["compassion", "professionalism"]}, {"id": 91, "sentence": "Medicine advances when curiosity is disciplined by evidence.", "author": "Clinical teaching aphorism", "themes": ["research", "medical education"]}, {"id": 92, "sentence": "A question well framed is half the work of clinical reasoning.", "author": "Clinical teaching aphorism", "themes": ["clinical reasoning", "medical education"]}, {"id": 93, "sentence": "A pulse is a measurement; the patient is the context.", "author": "Clinical teaching aphorism", "themes": ["vital signs", "clinical judgement"]}, {"id": 94, "sentence": "A falling blood pressure is a story unfolding, not just a number.", "author": "Clinical teaching aphorism", "themes": ["haemodynamics", "vital signs"]}, {"id": 95, "sentence": "An infection prevented is a complication avoided.", "author": "Clinical teaching aphorism", "themes": ["infection prevention", "patient safety"]}, {"id": 96, "sentence": "Hand hygiene is a small act with a large protective effect.", "author": "Clinical teaching aphorism", "themes": ["infection prevention", "patient safety"]}, {"id": 97, "sentence": "A culture of safety starts when people can speak up.", "author": "Clinical teaching aphorism", "themes": ["patient safety", "leadership"]}, {"id": 98, "sentence": "A handover is complete when the receiver understands the risk and the plan.", "author": "Clinical teaching aphorism", "themes": ["handover", "communication"]}, {"id": 99, "sentence": "The work of medicine is shared: evidence, judgement, skill, and humanity.", "author": "Clinical teaching aphorism", "themes": ["medical humanities", "clinical judgement"]}, {"id": 100, "sentence": "Prevention starts before the patient enters the clinic.", "author": "Clinical teaching aphorism", "themes": ["prevention", "public health"]}, {"id": 101, "sentence": "The red eye is a differential, not a single diagnosis.", "author": "Clinical teaching aphorism", "themes": ["ophthalmology", "differential diagnosis"]}, {"id": 102, "sentence": "Vision lost gradually may be noticed late; vision lost suddenly is an emergency until proven otherwise.", "author": "Clinical teaching aphorism", "themes": ["ophthalmology", "emergency"]}, {"id": 103, "sentence": "Fundoscopy is the only examination that lets you see the nervous system through a window.", "author": "Clinical teaching aphorism", "themes": ["ophthalmology", "clinical examination"]}, {"id": 104, "sentence": "A painful red eye with reduced vision needs urgent assessment, not delayed reassurance.", "author": "Clinical teaching aphorism", "themes": ["ophthalmology", "patient safety"]}, {"id": 105, "sentence": "The ear that does not hear may still signal disease elsewhere.", "author": "Clinical teaching aphorism", "themes": ["ENT", "otolaryngology", "diagnosis"]}, {"id": 106, "sentence": "A sore throat that limits swallowing and breathing is not a simple infection.", "author": "Clinical teaching aphorism", "themes": ["ENT", "airway", "emergency"]}, {"id": 107, "sentence": "Vertigo is a symptom; the task is to locate the lesion and the urgency.", "author": "Clinical teaching aphorism", "themes": ["ENT", "neurology", "clinical reasoning"]}, {"id": 108, "sentence": "A fracture is a soft-tissue injury with a broken bone inside.", "author": "Clinical teaching aphorism", "themes": ["orthopedics", "trauma"]}, {"id": 109, "sentence": "Immobilise first, image next, and never forget the neurovascular status.", "author": "Clinical teaching aphorism", "themes": ["orthopedics", "trauma", "patient safety"]}, {"id": 110, "sentence": "Joint pain that wakes the patient at night deserves a broader differential than wear and tear alone.", "author": "Clinical teaching aphorism", "themes": ["orthopedics", "rheumatology", "diagnosis"]}, {"id": 111, "sentence": "Pregnancy is a physiologic state that can unmask pathology; treat the mother to protect the child.", "author": "Clinical teaching aphorism", "themes": ["obstetrics", "gynecology", "maternal care"]}, {"id": 112, "sentence": "In obstetrics, two patients share one circulation; decisions must serve both.", "author": "Clinical teaching aphorism", "themes": ["obstetrics", "ethics", "shared decision-making"]}, {"id": 113, "sentence": "Postpartum haemorrhage is volume loss until the source is controlled.", "author": "Clinical teaching aphorism", "themes": ["obstetrics", "emergency", "haemodynamics"]}, {"id": 114, "sentence": "A surgical plan is incomplete without a plan for the unexpected.", "author": "Clinical teaching aphorism", "themes": ["surgery", "clinical judgement", "patient safety"]}, {"id": 115, "sentence": "The abdomen that is rigid and silent is asking for urgent surgical attention.", "author": "Clinical teaching aphorism", "themes": ["surgery", "acute abdomen", "diagnosis"]}, {"id": 116, "sentence": "Wound healing follows biology more than the calendar.", "author": "Clinical teaching aphorism", "themes": ["surgery", "wound care"]}, {"id": 117, "sentence": "Anaesthesia is controlled physiology; monitoring is continuous judgement.", "author": "Clinical teaching aphorism", "themes": ["anesthesiology", "physiology", "patient safety"]}, {"id": 118, "sentence": "Airway first, always; the rest of the plan follows only after the airway is secure.", "author": "Clinical teaching aphorism", "themes": ["anesthesiology", "airway", "emergency"]}, {"id": 119, "sentence": "An image is a moment in time; the patient is the continuous story.", "author": "Clinical teaching aphorism", "themes": ["radiology", "imaging", "clinical judgement"]}, {"id": 120, "sentence": "A normal radiograph does not exclude disease when clinical suspicion is high.", "author": "Clinical teaching aphorism", "themes": ["radiology", "diagnostic testing", "uncertainty"]}, {"id": 121, "sentence": "Radiation is a tool with a dose; use only what changes the decision.", "author": "Clinical teaching aphorism", "themes": ["radiology", "resource stewardship", "patient safety"]}, {"id": 122, "sentence": "A psychiatric diagnosis is a clinical formulation, not a moral verdict.", "author": "Clinical teaching aphorism", "themes": ["psychiatry", "ethics", "respect"]}, {"id": 123, "sentence": "Risk assessment in mental health is dynamic; it must be repeated as the situation changes.", "author": "Clinical teaching aphorism", "themes": ["psychiatry", "patient safety", "clinical judgement"]}, {"id": 124, "sentence": "The skin is a visible organ; patterns on it often point to systemic disease.", "author": "Clinical teaching aphorism", "themes": ["dermatology", "diagnosis", "clinical examination"]}, {"id": 125, "sentence": "A rash that blisters and peels can be a dermatologic emergency.", "author": "Clinical teaching aphorism", "themes": ["dermatology", "emergency", "patient safety"]}, {"id": 126, "sentence": "Haematuria is a clue that demands a complete evaluation of the urinary tract.", "author": "Clinical teaching aphorism", "themes": ["urology", "diagnosis", "clinical reasoning"]}, {"id": 127, "sentence": "Obstruction of the urinary tract is time-sensitive; delay risks the kidney.", "author": "Clinical teaching aphorism", "themes": ["urology", "nephrology", "emergency"]}, {"id": 128, "sentence": "Cancer care is not only tumour control; it is also function, dignity, and time.", "author": "Clinical teaching aphorism", "themes": ["oncology", "palliative care", "quality of life"]}, {"id": 129, "sentence": "Staging informs prognosis; the patient's goals inform the plan.", "author": "Clinical teaching aphorism", "themes": ["oncology", "shared decision-making", "prognosis"]}, {"id": 130, "sentence": "A child is not a small adult; physiology, psychology, and dose all differ.", "author": "Clinical teaching aphorism", "themes": ["pediatrics", "physiology", "patient-centred care"]}, {"id": 131, "sentence": "Growth and development are vital signs of childhood health.", "author": "Clinical teaching aphorism", "themes": ["pediatrics", "monitoring", "prevention"]}, {"id": 132, "sentence": "In forensic medicine, documentation is evidence; accuracy is a duty.", "author": "Clinical teaching aphorism", "themes": ["forensic medicine", "ethics", "documentation"]}, {"id": 133, "sentence": "Consent and capacity must be assessed, not assumed, when liberty is at stake.", "author": "Clinical teaching aphorism", "themes": ["forensic medicine", "ethics", "informed consent"]}, {"id": 134, "sentence": "Community medicine measures health in populations so that individuals can be protected.", "author": "Clinical teaching aphorism", "themes": ["community medicine", "public health", "prevention"]}, {"id": 135, "sentence": "Surveillance detects patterns early; response prevents them from becoming outbreaks.", "author": "Clinical teaching aphorism", "themes": ["community medicine", "epidemiology", "public health"]}, {"id": 136, "sentence": "A vaccine that stays in the vial protects no one.", "author": "Clinical teaching aphorism", "themes": ["community medicine", "vaccination", "public health"]}, {"id": 137, "sentence": "Pathology connects the lesion to the life story of the patient.", "author": "Clinical teaching aphorism", "themes": ["pathology", "diagnosis", "whole-person care"]}, {"id": 138, "sentence": "Microbiology identifies the organism; clinical context decides the treatment.", "author": "Clinical teaching aphorism", "themes": ["microbiology", "antibiotics", "clinical judgement"]}, {"id": 139, "sentence": "Blood bank safety rests on identity checks that never become routine.", "author": "Clinical teaching aphorism", "themes": ["transfusion medicine", "patient safety", "teamwork"]}, {"id": 140, "sentence": "Pain after surgery is expected; uncontrolled pain is a failure of the plan.", "author": "Clinical teaching aphorism", "themes": ["anesthesiology", "pain", "quality of care"]}];
+const searchEl = document.getElementById('search'),
+      authorEl = document.getElementById('author'),
+      themeEl = document.getElementById('theme'),
+      resultsEl = document.getElementById('results'),
+      countEl = document.getElementById('count');
+const unique = a => [...new Set(a)].sort((x, y) => x.localeCompare(y));
+function fill(select, values) {
+  values.forEach(v => {
+    const o = document.createElement('option');
+    o.value = v;
+    o.textContent = v;
+    select.appendChild(o);
+  });
+}
+fill(authorEl, unique(medicalQuotes.map(q => q.author)));
+fill(themeEl, unique(medicalQuotes.flatMap(q => q.themes)));
+function render() {
+  const term = searchEl.value.trim().toLowerCase(),
+        author = authorEl.value,
+        theme = themeEl.value;
+  const found = medicalQuotes.filter(q => {
+    const hay = [q.sentence, q.author, ...q.themes].join(' ').toLowerCase();
+    return (!term || hay.includes(term)) && (!author || q.author === author) && (!theme || q.themes.includes(theme));
+  });
+  countEl.textContent = `${found.length} of ${medicalQuotes.length} aphorisms`;
+  resultsEl.replaceChildren();
+  if (!found.length) {
+    const e = document.createElement('div');
+    e.className = 'empty';
+    e.textContent = 'No matches. Try a broader keyword or clear a filter.';
+    resultsEl.appendChild(e);
+    return;
+  }
+  found.forEach(q => {
+    const card = document.createElement('article');
+    card.className = 'quote';
+    const quote = document.createElement('blockquote');
+    quote.textContent = '“' + q.sentence + '”';
+    const author = document.createElement('div');
+    author.className = 'author';
+    author.textContent = '— ' + q.author;
+    const tags = document.createElement('div');
+    tags.className = 'tags';
+    q.themes.forEach(t => {
+      const s = document.createElement('span');
+      s.className = 'tag';
+      s.textContent = t;
+      tags.appendChild(s);
+    });
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+    const btn = document.createElement('button');
+    btn.className = 'copy';
+    btn.textContent = 'Copy aphorism';
+    btn.onclick = async () => {
+      const value = '“' + q.sentence + '” — ' + q.author;
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = value;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy aphorism', 1200);
+    };
+    actions.appendChild(btn);
+    card.append(quote, author, tags, actions);
+    resultsEl.appendChild(card);
+  });
+}
+[searchEl, authorEl, themeEl].forEach(el => el.addEventListener(el === searchEl ? 'input' : 'change', render));
+document.getElementById('clear').onclick = () => {
+  searchEl.value = '';
+  authorEl.value = '';
+  themeEl.value = '';
+  render();
+  searchEl.focus();
+};
+render();
+  </script>
+</body>
+</html>
