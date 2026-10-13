@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanjavur Medical College (TMC) Case Conference — English Literature Aphorisms Library</title>
+  <style>
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #3b82f6;
+  --secondary: #0f766e;
+  --navy: #1e3a8a;
+  --teal: #0f766e;
+  --paper: #f8fafc;
+  --ink: #1e293b;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --card: #ffffff;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  padding: 1rem;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  font-weight: 300;
+}
+main { padding: 0 0 1rem; }
+.panel {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+.filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 10px;
+}
+input, select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd8de;
+  border-radius: 10px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+}
+input:focus, select:focus, button:focus-visible {
+  outline: 3px solid #77d6d5;
+  outline-offset: 2px;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 10px 13px;
+  background: var(--navy);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.secondary, .copy {
+  background: #e7eff2;
+  color: var(--navy);
+}
+.results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 18px 0;
+}
+.quote {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow);
+}
+.quote blockquote {
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  margin: 0;
+  color: #203747;
+}
+.author { font-weight: 800; color: var(--navy); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.tag {
+  background: #eaf5f4;
+  color: #17656a;
+  padding: 4px 8px;
+  border-radius: 99px;
+  font-size: 0.78rem;
+}
+.actions { display: flex; justify-content: flex-end; }
+.copy { padding: 7px 10px; font-size: 0.85rem; }
+.empty {
+  grid-column: 1 / -1;
+  background: white;
+  padding: 28px;
+  border: 1px dashed #b7c7cf;
+  border-radius: 14px;
+  text-align: center;
+  color: var(--muted);
+}
+.note {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 20px 0 10px;
+}
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding: 1.5rem 1rem;
+  border-top: 1px solid var(--line);
+}
+.wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #25D366;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.wa-btn:hover {
+  background-color: #128C7E;
+  transform: translateY(-1px);
+}
+@media (max-width: 720px) {
+  .filters, .results { grid-template-columns: 1fr; }
+  header { padding: 1.25rem; }
+}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Thanjavur Medical College (TMC) Case Conference Group</h1>
+    <div class="subtitle">📚 English Literature Aphorisms — Memorable lines for teaching, reading, and reflection</div>
+  </header>
+
+  <main>
+    <section class="panel" aria-label="Search aphorisms">
+      <div class="filters">
+        <input id="search" type="search" placeholder="Search Shakespeare, hope, love, poetry, power…" aria-label="Search by keyword">
+        <select id="author" aria-label="Filter by author"><option value="">All authors</option></select>
+        <select id="theme" aria-label="Filter by theme"><option value="">All themes</option></select>
+      </div>
+      <div class="toolbar">
+        <span id="count" aria-live="polite"></span>
+        <button id="clear" class="secondary" type="button">Clear filters</button>
+      </div>
+    </section>
+
+    <section id="results" class="results" aria-live="polite"></section>
+
+    <p class="note"><strong>Editorial note:</strong> Selections are drawn from English literature and related traditions commonly taught in schools and colleges. Some lines have disputed or popularised attributions; verify wording and source before using them as exact quotations in formal publications or examinations. This library is for shared reading, teaching prompts, and reflection.</p>
+  </main>
+
+  <footer>
+    <p>Thanjavur Medical College (TMC) Case Conference Group • English Literature Aphorisms Library</p>
+    <div>
+      <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="wa-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.762.459 3.48 1.332 5.001L2 22l5.12-1.334c1.464.799 3.117 1.22 4.887 1.222h.004c5.505 0 9.988-4.478 9.989-9.985 0-2.667-1.037-5.176-2.922-7.062A9.925 9.925 0 0 0 12.012 2z"/>
+        </svg>
+        Join TMC Case Conference WhatsApp Group
+      </a>
+    </div>
+  </footer>
+
+  <script>
+const literatureQuotes = [{"id": 1, "sentence": "To be, or not to be, that is the question.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "existence", "drama"]}, {"id": 2, "sentence": "All the world's a stage, and all the men and women merely players.", "author": "William Shakespeare, As You Like It", "themes": ["Shakespeare", "life", "drama"]}, {"id": 3, "sentence": "The fault, dear Brutus, is not in our stars, but in ourselves.", "author": "William Shakespeare, Julius Caesar", "themes": ["Shakespeare", "responsibility", "character"]}, {"id": 4, "sentence": "Brevity is the soul of wit.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "style", "wit"]}, {"id": 5, "sentence": "What's in a name? That which we call a rose by any other name would smell as sweet.", "author": "William Shakespeare, Romeo and Juliet", "themes": ["Shakespeare", "love", "identity"]}, {"id": 6, "sentence": "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.", "author": "Jane Austen, Pride and Prejudice", "themes": ["Austen", "society", "irony"]}, {"id": 7, "sentence": "There is nothing like staying at home for real comfort.", "author": "Jane Austen, Emma", "themes": ["Austen", "home", "comfort"]}, {"id": 8, "sentence": "I am no bird; and no net ensnares me: I am a free human being with an independent will.", "author": "Charlotte Brontë, Jane Eyre", "themes": ["Brontë", "freedom", "identity"]}, {"id": 9, "sentence": "Whatever our souls are made of, his and mine are the same.", "author": "Emily Brontë, Wuthering Heights", "themes": ["Brontë", "love", "soul"]}, {"id": 10, "sentence": "It was the best of times, it was the worst of times.", "author": "Charles Dickens, A Tale of Two Cities", "themes": ["Dickens", "history", "paradox"]}, {"id": 11, "sentence": "Please, sir, I want some more.", "author": "Charles Dickens, Oliver Twist", "themes": ["Dickens", "poverty", "childhood"]}, {"id": 12, "sentence": "No one is useless in this world who lightens the burdens of another.", "author": "Charles Dickens", "themes": ["Dickens", "kindness", "purpose"]}, {"id": 13, "sentence": "We are such stuff as dreams are made on, and our little life is rounded with a sleep.", "author": "William Shakespeare, The Tempest", "themes": ["Shakespeare", "mortality", "dream"]}, {"id": 14, "sentence": "The only way to get rid of a temptation is to yield to it.", "author": "Oscar Wilde, The Picture of Dorian Gray", "themes": ["Wilde", "temptation", "wit"]}, {"id": 15, "sentence": "Be yourself; everyone else is already taken.", "author": "Oscar Wilde (commonly attributed)", "themes": ["Wilde", "identity", "wit"]}, {"id": 16, "sentence": "We are all in the gutter, but some of us are looking at the stars.", "author": "Oscar Wilde, Lady Windermere's Fan", "themes": ["Wilde", "hope", "wit"]}, {"id": 17, "sentence": "I wandered lonely as a cloud.", "author": "William Wordsworth, Daffodils", "themes": ["Romantic", "nature", "poetry"]}, {"id": 18, "sentence": "Beauty is truth, truth beauty,—that is all ye know on earth, and all ye need to know.", "author": "John Keats, Ode on a Grecian Urn", "themes": ["Romantic", "beauty", "truth"]}, {"id": 19, "sentence": "If Winter comes, can Spring be far behind?", "author": "Percy Bysshe Shelley, Ode to the West Wind", "themes": ["Romantic", "hope", "nature"]}, {"id": 20, "sentence": "The child is father of the man.", "author": "William Wordsworth, My Heart Leaps Up", "themes": ["Romantic", "childhood", "identity"]}, {"id": 21, "sentence": "Do I dare disturb the universe?", "author": "T. S. Eliot, The Love Song of J. Alfred Prufrock", "themes": ["Modernism", "doubt", "poetry"]}, {"id": 22, "sentence": "April is the cruellest month.", "author": "T. S. Eliot, The Waste Land", "themes": ["Modernism", "time", "poetry"]}, {"id": 23, "sentence": "Not all those who wander are lost.", "author": "J. R. R. Tolkien, The Lord of the Rings", "themes": ["fantasy", "journey", "hope"]}, {"id": 24, "sentence": "All we have to decide is what to do with the time that is given us.", "author": "J. R. R. Tolkien, The Fellowship of the Ring", "themes": ["fantasy", "choice", "time"]}, {"id": 25, "sentence": "It does not do to dwell on dreams and forget to live.", "author": "J. K. Rowling, Harry Potter and the Philosopher's Stone", "themes": ["contemporary", "dreams", "life"]}, {"id": 26, "sentence": "Happiness can be found even in the darkest of times, if one only remembers to turn on the light.", "author": "J. K. Rowling, Harry Potter and the Prisoner of Azkaban", "themes": ["contemporary", "hope", "courage"]}, {"id": 27, "sentence": "The mind is its own place, and in itself can make a heaven of hell, a hell of heaven.", "author": "John Milton, Paradise Lost", "themes": ["Milton", "mind", "freedom"]}, {"id": 28, "sentence": "They also serve who only stand and wait.", "author": "John Milton, On His Blindness", "themes": ["Milton", "patience", "faith"]}, {"id": 29, "sentence": "A thing of beauty is a joy for ever.", "author": "John Keats, Endymion", "themes": ["Romantic", "beauty", "joy"]}, {"id": 30, "sentence": "Water, water, every where, nor any drop to drink.", "author": "Samuel Taylor Coleridge, The Rime of the Ancient Mariner", "themes": ["Romantic", "paradox", "nature"]}, {"id": 31, "sentence": "The better part of Valour, is Discretion.", "author": "William Shakespeare, Henry IV, Part 1", "themes": ["Shakespeare", "courage", "prudence"]}, {"id": 32, "sentence": "Cowards die many times before their deaths; the valiant never taste of death but once.", "author": "William Shakespeare, Julius Caesar", "themes": ["Shakespeare", "courage", "death"]}, {"id": 33, "sentence": "Love looks not with the eyes, but with the mind.", "author": "William Shakespeare, A Midsummer Night's Dream", "themes": ["Shakespeare", "love", "perception"]}, {"id": 34, "sentence": "The course of true love never did run smooth.", "author": "William Shakespeare, A Midsummer Night's Dream", "themes": ["Shakespeare", "love", "difficulty"]}, {"id": 35, "sentence": "There is no charm equal to tenderness of heart.", "author": "Jane Austen, Emma", "themes": ["Austen", "character", "kindness"]}, {"id": 36, "sentence": "Angry people are not always wise.", "author": "Jane Austen, Pride and Prejudice", "themes": ["Austen", "emotion", "wisdom"]}, {"id": 37, "sentence": "I would always rather be happy than dignified.", "author": "Charlotte Brontë, Jane Eyre", "themes": ["Brontë", "happiness", "pride"]}, {"id": 38, "sentence": "Reader, I married him.", "author": "Charlotte Brontë, Jane Eyre", "themes": ["Brontë", "narrative", "resolution"]}, {"id": 39, "sentence": "Have a heart that never hardens, and a temper that never tires, and a touch that never hurts.", "author": "Charles Dickens", "themes": ["Dickens", "kindness", "character"]}, {"id": 40, "sentence": "No one ever expects the Spanish Inquisition.", "author": "Monty Python (modern comic tradition)", "themes": ["humour", "surprise", "modern"]}, {"id": 41, "sentence": "The past is a foreign country: they do things differently there.", "author": "L. P. Hartley, The Go-Between", "themes": ["memory", "history", "time"]}, {"id": 42, "sentence": "Call me Ishmael.", "author": "Herman Melville, Moby-Dick", "themes": ["American", "narrative", "identity"]}, {"id": 43, "sentence": "So we beat on, boats against the current, borne back ceaselessly into the past.", "author": "F. Scott Fitzgerald, The Great Gatsby", "themes": ["American", "time", "aspiration"]}, {"id": 44, "sentence": "All animals are equal, but some animals are more equal than others.", "author": "George Orwell, Animal Farm", "themes": ["Orwell", "power", "satire"]}, {"id": 45, "sentence": "Who controls the past controls the future. Who controls the present controls the past.", "author": "George Orwell, Nineteen Eighty-Four", "themes": ["Orwell", "power", "truth"]}, {"id": 46, "sentence": "If you want a picture of the future, imagine a boot stamping on a human face—for ever.", "author": "George Orwell, Nineteen Eighty-Four", "themes": ["Orwell", "tyranny", "dystopia"]}, {"id": 47, "sentence": "Big Brother is watching you.", "author": "George Orwell, Nineteen Eighty-Four", "themes": ["Orwell", "surveillance", "power"]}, {"id": 48, "sentence": "It is a far, far better thing that I do, than I have ever done.", "author": "Charles Dickens, A Tale of Two Cities", "themes": ["Dickens", "sacrifice", "redemption"]}, {"id": 49, "sentence": "The pen is mightier than the sword.", "author": "Edward Bulwer-Lytton, Richelieu", "themes": ["power", "words", "influence"]}, {"id": 50, "sentence": "Elementary, my dear Watson.", "author": "Popular adaptation of Sherlock Holmes (Conan Doyle)", "themes": ["detective", "reason", "popular culture"]}, {"id": 51, "sentence": "There is nothing either good or bad, but thinking makes it so.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "perception", "mind"]}, {"id": 52, "sentence": "This above all: to thine own self be true.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "integrity", "advice"]}, {"id": 53, "sentence": "Uneasy lies the head that wears a crown.", "author": "William Shakespeare, Henry IV, Part 2", "themes": ["Shakespeare", "power", "burden"]}, {"id": 54, "sentence": "The quality of mercy is not strained.", "author": "William Shakespeare, The Merchant of Venice", "themes": ["Shakespeare", "mercy", "justice"]}, {"id": 55, "sentence": "How sharper than a serpent's tooth it is to have a thankless child!", "author": "William Shakespeare, King Lear", "themes": ["Shakespeare", "family", "ingratitude"]}, {"id": 56, "sentence": "Out, damned spot!", "author": "William Shakespeare, Macbeth", "themes": ["Shakespeare", "guilt", "tragedy"]}, {"id": 57, "sentence": "Life's but a walking shadow, a poor player that struts and frets his hour upon the stage.", "author": "William Shakespeare, Macbeth", "themes": ["Shakespeare", "mortality", "theatre"]}, {"id": 58, "sentence": "Something is rotten in the state of Denmark.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "corruption", "politics"]}, {"id": 59, "sentence": "The lady doth protest too much, methinks.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "irony", "performance"]}, {"id": 60, "sentence": "A horse! a horse! my kingdom for a horse!", "author": "William Shakespeare, Richard III", "themes": ["Shakespeare", "desperation", "power"]}, {"id": 61, "sentence": "Now is the winter of our discontent.", "author": "William Shakespeare, Richard III", "themes": ["Shakespeare", "discontent", "politics"]}, {"id": 62, "sentence": "Friends, Romans, countrymen, lend me your ears.", "author": "William Shakespeare, Julius Caesar", "themes": ["Shakespeare", "rhetoric", "politics"]}, {"id": 63, "sentence": "Et tu, Brute?", "author": "William Shakespeare, Julius Caesar", "themes": ["Shakespeare", "betrayal", "power"]}, {"id": 64, "sentence": "Some are born great, some achieve greatness, and some have greatness thrust upon them.", "author": "William Shakespeare, Twelfth Night", "themes": ["Shakespeare", "greatness", "fate"]}, {"id": 65, "sentence": "If music be the food of love, play on.", "author": "William Shakespeare, Twelfth Night", "themes": ["Shakespeare", "love", "music"]}, {"id": 66, "sentence": "Lord, what fools these mortals be!", "author": "William Shakespeare, A Midsummer Night's Dream", "themes": ["Shakespeare", "folly", "humour"]}, {"id": 67, "sentence": "The world is too much with us; late and soon, getting and spending, we lay waste our powers.", "author": "William Wordsworth", "themes": ["Romantic", "nature", "modern life"]}, {"id": 68, "sentence": "I am the master of my fate, I am the captain of my soul.", "author": "William Ernest Henley, Invictus", "themes": ["Victorian", "courage", "resilience"]}, {"id": 69, "sentence": "Hope springs eternal in the human breast.", "author": "Alexander Pope, An Essay on Man", "themes": ["Augustan", "hope", "human nature"]}, {"id": 70, "sentence": "To err is human, to forgive divine.", "author": "Alexander Pope, An Essay on Criticism", "themes": ["Augustan", "forgiveness", "human nature"]}, {"id": 71, "sentence": "A little learning is a dangerous thing.", "author": "Alexander Pope, An Essay on Criticism", "themes": ["Augustan", "knowledge", "caution"]}, {"id": 72, "sentence": "Fools rush in where angels fear to tread.", "author": "Alexander Pope, An Essay on Criticism", "themes": ["Augustan", "prudence", "folly"]}, {"id": 73, "sentence": "The proper study of mankind is man.", "author": "Alexander Pope, An Essay on Man", "themes": ["Augustan", "human nature", "philosophy"]}, {"id": 74, "sentence": "Tis better to have loved and lost than never to have loved at all.", "author": "Alfred, Lord Tennyson, In Memoriam", "themes": ["Victorian", "love", "loss"]}, {"id": 75, "sentence": "Theirs not to reason why, theirs but to do and die.", "author": "Alfred, Lord Tennyson, The Charge of the Light Brigade", "themes": ["Victorian", "duty", "war"]}, {"id": 76, "sentence": "Knowledge comes, but wisdom lingers.", "author": "Alfred, Lord Tennyson", "themes": ["Victorian", "wisdom", "learning"]}, {"id": 77, "sentence": "God's in his heaven—all's right with the world!", "author": "Robert Browning, Pippa Passes", "themes": ["Victorian", "optimism", "faith"]}, {"id": 78, "sentence": "Grow old along with me! The best is yet to be.", "author": "Robert Browning, Rabbi Ben Ezra", "themes": ["Victorian", "age", "hope"]}, {"id": 79, "sentence": "How do I love thee? Let me count the ways.", "author": "Elizabeth Barrett Browning, Sonnets from the Portuguese", "themes": ["Victorian", "love", "poetry"]}, {"id": 80, "sentence": "Earth's crammed with heaven, and every common bush afire with God.", "author": "Elizabeth Barrett Browning, Aurora Leigh", "themes": ["Victorian", "faith", "nature"]}, {"id": 81, "sentence": "The old order changeth, yielding place to new.", "author": "Alfred, Lord Tennyson, Idylls of the King", "themes": ["Victorian", "change", "time"]}, {"id": 82, "sentence": "In the beginning was the Word, and the Word was with God.", "author": "King James Bible, John 1:1 (literary tradition)", "themes": ["Bible", "language", "origins"]}, {"id": 83, "sentence": "Vanity of vanities, saith the Preacher, vanity of vanities; all is vanity.", "author": "King James Bible, Ecclesiastes", "themes": ["Bible", "vanity", "wisdom"]}, {"id": 84, "sentence": "To everything there is a season, and a time to every purpose under the heaven.", "author": "King James Bible, Ecclesiastes", "themes": ["Bible", "time", "wisdom"]}, {"id": 85, "sentence": "The love of money is the root of all evil.", "author": "King James Bible, 1 Timothy (popular form)", "themes": ["Bible", "greed", "morality"]}, {"id": 86, "sentence": "Man is born free, and everywhere he is in chains.", "author": "Jean-Jacques Rousseau (often taught in English curricula)", "themes": ["philosophy", "freedom", "society"]}, {"id": 87, "sentence": "The only thing we have to fear is fear itself.", "author": "Franklin D. Roosevelt (widely anthologised in English)", "themes": ["rhetoric", "courage", "history"]}, {"id": 88, "sentence": "I have a dream.", "author": "Martin Luther King Jr. (widely taught in English)", "themes": ["rhetoric", "justice", "hope"]}, {"id": 89, "sentence": "Ask not what your country can do for you—ask what you can do for your country.", "author": "John F. Kennedy (widely anthologised)", "themes": ["rhetoric", "duty", "citizenship"]}, {"id": 90, "sentence": "The unexamined life is not worth living.", "author": "Socrates (via Plato; taught in English humanities)", "themes": ["philosophy", "self-knowledge", "life"]}, {"id": 91, "sentence": "Know thyself.", "author": "Delphic maxim (classical tradition in English education)", "themes": ["philosophy", "self-knowledge", "wisdom"]}, {"id": 92, "sentence": "Nothing will come of nothing.", "author": "William Shakespeare, King Lear", "themes": ["Shakespeare", "consequence", "wisdom"]}, {"id": 93, "sentence": "The time is out of joint.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "disorder", "time"]}, {"id": 94, "sentence": "There are more things in heaven and earth, Horatio, than are dreamt of in your philosophy.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "wonder", "knowledge"]}, {"id": 95, "sentence": "Frailty, thy name is woman!", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "gender", "tragedy"]}, {"id": 96, "sentence": "Get thee to a nunnery.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "rejection", "drama"]}, {"id": 97, "sentence": "A rose by any other name would smell as sweet.", "author": "William Shakespeare, Romeo and Juliet", "themes": ["Shakespeare", "names", "essence"]}, {"id": 98, "sentence": "Parting is such sweet sorrow.", "author": "William Shakespeare, Romeo and Juliet", "themes": ["Shakespeare", "love", "parting"]}, {"id": 99, "sentence": "These violent delights have violent ends.", "author": "William Shakespeare, Romeo and Juliet", "themes": ["Shakespeare", "passion", "consequence"]}, {"id": 100, "sentence": "For never was a story of more woe than this of Juliet and her Romeo.", "author": "William Shakespeare, Romeo and Juliet", "themes": ["Shakespeare", "tragedy", "love"]}, {"id": 101, "sentence": "It is better to be feared than loved, if you cannot be both.", "author": "Niccolò Machiavelli (often in English political literature)", "themes": ["power", "politics", "realism"]}, {"id": 102, "sentence": "The end justifies the means.", "author": "Popular summary of Machiavellian thought", "themes": ["power", "ethics", "politics"]}, {"id": 103, "sentence": "Power tends to corrupt, and absolute power corrupts absolutely.", "author": "Lord Acton", "themes": ["power", "corruption", "history"]}, {"id": 104, "sentence": "The pen is the tongue of the mind.", "author": "Miguel de Cervantes (often cited in English)", "themes": ["writing", "expression", "mind"]}, {"id": 105, "sentence": "When one door closes, another opens.", "author": "Alexander Graham Bell (widely anthologised proverbial form)", "themes": ["hope", "change", "opportunity"]}, {"id": 106, "sentence": "The journey of a thousand miles begins with a single step.", "author": "Lao Tzu (widely taught in English translation)", "themes": ["journey", "beginning", "wisdom"]}, {"id": 107, "sentence": "What does not kill me makes me stronger.", "author": "Friedrich Nietzsche (often in English literature courses)", "themes": ["resilience", "philosophy", "strength"]}, {"id": 108, "sentence": "God is dead.", "author": "Friedrich Nietzsche (cultural reference in English)", "themes": ["philosophy", "modernity", "faith"]}, {"id": 109, "sentence": "Hell is other people.", "author": "Jean-Paul Sartre (taught in English drama/philosophy)", "themes": ["existentialism", "relationships", "drama"]}, {"id": 110, "sentence": "Man is condemned to be free.", "author": "Jean-Paul Sartre", "themes": ["existentialism", "freedom", "responsibility"]}, {"id": 111, "sentence": "One must imagine Sisyphus happy.", "author": "Albert Camus, The Myth of Sisyphus", "themes": ["existentialism", "absurd", "resilience"]}, {"id": 112, "sentence": "In the midst of winter, I found there was, within me, an invincible summer.", "author": "Albert Camus", "themes": ["hope", "resilience", "inner strength"]}, {"id": 113, "sentence": "The only true wisdom is in knowing you know nothing.", "author": "Socrates (via Plato)", "themes": ["philosophy", "humility", "knowledge"]}, {"id": 114, "sentence": "Education is the kindling of a flame, not the filling of a vessel.", "author": "Attributed to Socrates / Plutarch tradition", "themes": ["education", "learning", "inspiration"]}, {"id": 115, "sentence": "Tell me and I forget, teach me and I may remember, involve me and I learn.", "author": "Often attributed to Benjamin Franklin / Chinese proverb tradition", "themes": ["education", "learning", "practice"]}, {"id": 116, "sentence": "An investment in knowledge pays the best interest.", "author": "Benjamin Franklin", "themes": ["education", "knowledge", "value"]}, {"id": 117, "sentence": "Early to bed and early to rise makes a man healthy, wealthy, and wise.", "author": "Benjamin Franklin", "themes": ["habit", "health", "wisdom"]}, {"id": 118, "sentence": "A stitch in time saves nine.", "author": "English proverb (literary tradition)", "themes": ["proverb", "prudence", "prevention"]}, {"id": 119, "sentence": "Actions speak louder than words.", "author": "English proverb", "themes": ["proverb", "character", "integrity"]}, {"id": 120, "sentence": "All that glitters is not gold.", "author": "William Shakespeare, The Merchant of Venice (popular form)", "themes": ["Shakespeare", "appearance", "value"]}, {"id": 121, "sentence": "Better late than never.", "author": "English proverb (Chaucer tradition)", "themes": ["proverb", "time", "perseverance"]}, {"id": 122, "sentence": "Don't count your chickens before they hatch.", "author": "English proverb (Aesop via English tradition)", "themes": ["proverb", "caution", "expectation"]}, {"id": 123, "sentence": "Every cloud has a silver lining.", "author": "English proverb (Milton association)", "themes": ["proverb", "hope", "optimism"]}, {"id": 124, "sentence": "Fortune favours the bold.", "author": "Classical maxim in English tradition", "themes": ["courage", "risk", "success"]}, {"id": 125, "sentence": "Knowledge is power.", "author": "Francis Bacon (popular form)", "themes": ["knowledge", "power", "learning"]}, {"id": 126, "sentence": "Reading maketh a full man; conference a ready man; and writing an exact man.", "author": "Francis Bacon, Of Studies", "themes": ["Bacon", "reading", "education"]}, {"id": 127, "sentence": "Some books are to be tasted, others to be swallowed, and some few to be chewed and digested.", "author": "Francis Bacon, Of Studies", "themes": ["Bacon", "reading", "judgement"]}, {"id": 128, "sentence": "The greatest thing in the world is to know how to belong to oneself.", "author": "Michel de Montaigne (English translation tradition)", "themes": ["self", "identity", "independence"]}, {"id": 129, "sentence": "What is a friend? A single soul dwelling in two bodies.", "author": "Aristotle (via English classical education)", "themes": ["friendship", "soul", "philosophy"]}, {"id": 130, "sentence": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", "author": "Will Durant (summarising Aristotle; widely taught)", "themes": ["habit", "excellence", "character"]}, {"id": 131, "sentence": "The unexamined life is not worth living for a human being.", "author": "Plato, Apology (Socrates)", "themes": ["philosophy", "self-examination", "life"]}, {"id": 132, "sentence": "Poetry is the spontaneous overflow of powerful feelings.", "author": "William Wordsworth, Preface to Lyrical Ballads", "themes": ["Romantic", "poetry", "emotion"]}, {"id": 133, "sentence": "Poetry is the record of the best and happiest moments of the happiest and best minds.", "author": "Percy Bysshe Shelley, A Defence of Poetry", "themes": ["Romantic", "poetry", "mind"]}, {"id": 134, "sentence": "A poet is a nightingale who sits in darkness and sings to cheer its own solitude.", "author": "Percy Bysshe Shelley, A Defence of Poetry", "themes": ["Romantic", "poetry", "solitude"]}, {"id": 135, "sentence": "If poetry comes not as naturally as the leaves to a tree, it had better not come at all.", "author": "John Keats", "themes": ["Romantic", "poetry", "naturalness"]}, {"id": 136, "sentence": "Heard melodies are sweet, but those unheard are sweeter.", "author": "John Keats, Ode on a Grecian Urn", "themes": ["Romantic", "imagination", "beauty"]}, {"id": 137, "sentence": "Season of mists and mellow fruitfulness.", "author": "John Keats, To Autumn", "themes": ["Romantic", "nature", "autumn"]}, {"id": 138, "sentence": "O for a Muse of fire, that would ascend the brightest heaven of invention.", "author": "William Shakespeare, Henry V", "themes": ["Shakespeare", "inspiration", "theatre"]}, {"id": 139, "sentence": "The play's the thing wherein I'll catch the conscience of the king.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "theatre", "truth"]}, {"id": 140, "sentence": "We know what we are, but know not what we may be.", "author": "William Shakespeare, Hamlet", "themes": ["Shakespeare", "potential", "identity"]}];
+const searchEl = document.getElementById('search'),
+      authorEl = document.getElementById('author'),
+      themeEl = document.getElementById('theme'),
+      resultsEl = document.getElementById('results'),
+      countEl = document.getElementById('count');
+const unique = a => [...new Set(a)].sort((x, y) => x.localeCompare(y));
+function fill(select, values) {
+  values.forEach(v => {
+    const o = document.createElement('option');
+    o.value = v;
+    o.textContent = v;
+    select.appendChild(o);
+  });
+}
+fill(authorEl, unique(literatureQuotes.map(q => q.author)));
+fill(themeEl, unique(literatureQuotes.flatMap(q => q.themes)));
+function render() {
+  const term = searchEl.value.trim().toLowerCase(),
+        author = authorEl.value,
+        theme = themeEl.value;
+  const found = literatureQuotes.filter(q => {
+    const hay = [q.sentence, q.author, ...q.themes].join(' ').toLowerCase();
+    return (!term || hay.includes(term)) && (!author || q.author === author) && (!theme || q.themes.includes(theme));
+  });
+  countEl.textContent = `${found.length} of ${literatureQuotes.length} aphorisms`;
+  resultsEl.replaceChildren();
+  if (!found.length) {
+    const e = document.createElement('div');
+    e.className = 'empty';
+    e.textContent = 'No matches. Try a broader keyword or clear a filter.';
+    resultsEl.appendChild(e);
+    return;
+  }
+  found.forEach(q => {
+    const card = document.createElement('article');
+    card.className = 'quote';
+    const quote = document.createElement('blockquote');
+    quote.textContent = '“' + q.sentence + '”';
+    const author = document.createElement('div');
+    author.className = 'author';
+    author.textContent = '— ' + q.author;
+    const tags = document.createElement('div');
+    tags.className = 'tags';
+    q.themes.forEach(t => {
+      const s = document.createElement('span');
+      s.className = 'tag';
+      s.textContent = t;
+      tags.appendChild(s);
+    });
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+    const btn = document.createElement('button');
+    btn.className = 'copy';
+    btn.textContent = 'Copy aphorism';
+    btn.onclick = async () => {
+      const value = '“' + q.sentence + '” — ' + q.author;
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = value;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy aphorism', 1200);
+    };
+    actions.appendChild(btn);
+    card.append(quote, author, tags, actions);
+    resultsEl.appendChild(card);
+  });
+}
+[searchEl, authorEl, themeEl].forEach(el => el.addEventListener(el === searchEl ? 'input' : 'change', render));
+document.getElementById('clear').onclick = () => {
+  searchEl.value = '';
+  authorEl.value = '';
+  themeEl.value = '';
+  render();
+  searchEl.focus();
+};
+render();
+  </script>
+</body>
+</html>
