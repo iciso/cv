@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Medical Test Detective | TMC Case Conference</title>
+<style>
+:root{--navy:#1e3a8a;--blue:#3b82f6;--teal:#0f766e;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--green:#059669;--red:#dc2626;--amber:#d97706;--purple:#7c3aed}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(120deg,#1e3a8a,#0f766e);color:white;padding:26px 16px}
+.wrap{max-width:1180px;margin:auto;padding:0 14px}
+header h1{font-size:clamp(27px,4vw,40px);line-height:1.15;margin:5px 0 10px}
+header p{margin:4px 0;color:#e0f2fe}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+main{padding:20px 0 36px}
+.card{background:white;border:1px solid var(--line);border-radius:15px;padding:17px;margin-bottom:15px;box-shadow:0 3px 14px #0f172a08}
+h2{font-size:21px;color:var(--navy);margin:0 0 12px}
+h3{font-size:16px;margin:0 0 7px}
+p{margin:7px 0}
+.small{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:15px}
+.s8{grid-column:span 8}.s6{grid-column:span 6}.s4{grid-column:span 4}.s12{grid-column:span 12}
+@media(max-width:820px){.s8,.s6,.s4{grid-column:span 12}}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:520px){.controls{grid-template-columns:1fr}}
+.control{padding:12px;border:1px solid var(--line);border-radius:10px}
+.control label{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:13px}
+input[type=range],select{width:100%;margin-top:9px;accent-color:var(--teal)}
+select{padding:9px;border:1px solid #cbd5e1;border-radius:8px;background:white;color:var(--ink)}
+button{border:0;border-radius:9px;padding:10px 14px;font-weight:750;font-size:14px;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.primary{background:var(--navy);color:white}.teal{background:var(--teal);color:white}
+.secondary{background:#e2e8f0;color:var(--ink)}.green{background:#dcfce7;color:#166534}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.metric{padding:12px;border:1px solid var(--line);border-radius:10px;background:#f8fafc}
+.metric b{display:block;font-size:27px;line-height:1.25;color:var(--navy)}
+.metric span{font-size:12px;color:var(--muted)}
+canvas{display:block;width:100%;border:1px solid var(--line);border-radius:10px;background:#fff}
+#people{aspect-ratio:1.5}
+#ppvChart{height:250px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}
+thead th{background:#f1f5f9;color:var(--navy)}
+td button{padding:5px 8px;font-size:12px}
+.tag{display:inline-block;border-radius:20px;padding:3px 9px;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:800}
+.note{background:#f0fdfa;border-left:4px solid var(--teal);padding:12px;border-radius:0 9px 9px 0}
+.warn{background:#fffbeb;border-left-color:var(--amber)}
+.good{color:#047857}.bad{color:#b91c1c}
+.bigidea{font-size:clamp(20px,3vw,28px);font-weight:850;line-height:1.3;color:var(--navy)}
+.bar{height:12px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin:8px 0}
+.bar div{height:100%;transition:width .2s}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin:10px 0}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+details{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:11px 13px}
+summary{cursor:pointer;color:var(--navy);font-weight:800}
+details p,details li{font-size:14px}
+.quizopt{display:block;width:100%;text-align:left;background:#f1f5f9;margin:7px 0}
+.quizopt:hover{background:#dbeafe}
+#caseResult{padding:13px;border-radius:10px;background:#f8fafc;min-height:80px}
+footer{background:#0f172a;color:#e2e8f0;text-align:center;padding:25px 15px}
+footer a{display:inline-block;margin-top:12px;padding:11px 17px;background:#16a34a;color:white;border-radius:9px;text-decoration:none;font-weight:800}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <div class="kicker">TMC Case Conference Group · Interactive Learning</div>
+  <h1>🕵️ The Medical Test Detective</h1>
+  <p><strong>Solve the Mystery, Not the Sum.</strong></p>
+  <p>Discover sensitivity, specificity, prevalence and predictive value by investigating imaginary patients—not memorising equations.</p>
+ </div>
+</header>
+
+<main class="wrap">
+<section class="card">
+ <div class="note">
+  <strong>Your mission:</strong> A test comes back positive. Is the person really diseased? You are the detective. Adjust the clues, inspect 1,000 people, and find out why the same test result can mean different things in different populations.
+ </div>
+ <p class="small">This is a fictional teaching simulation. The example test and its accuracy figures are illustrative, not clinical guidance. Real decisions depend on validated tests, patient context, and professional guidance.</p>
+</section>
+
+<div class="grid">
+ <section class="card s4">
+  <h2>1. Set the clues</h2>
+  <div class="controls">
+   <div class="control">
+    <label for="prev">Prevalence <output id="prevOut">1%</output></label>
+    <input id="prev" type="range" min="1" max="50" value="1">
+    <p class="small">How common is the disease in the population being tested?</p>
+   </div>
+   <div class="control">
+    <label for="sens">Sensitivity <output id="sensOut">95%</output></label>
+    <input id="sens" type="range" min="50" max="100" value="95">
+    <p class="small">Among people who have the disease, how many test positive?</p>
+   </div>
+   <div class="control">
+    <label for="spec">Specificity <output id="specOut">95%</output></label>
+    <input id="spec" type="range" min="50" max="100" value="95">
+    <p class="small">Among people without the disease, how many test negative?</p>
+   </div>
+   <div class="control">
+    <label for="pop">Population size <output id="popOut">1,000</output></label>
+    <select id="pop">
+     <option value="100">100 people</option>
+     <option value="1000" selected>1,000 people</option>
+     <option value="10000">10,000 people</option>
+     <option value="100000">100,000 people</option>
+    </select>
+    <p class="small">A bigger crowd makes rare events easier to see.</p>
+   </div>
+  </div>
+  <div class="actions">
+   <button class="primary" id="runBtn">🔍 Investigate the population</button>
+   <button class="secondary" id="resetBtn">↻ Reset</button>
+  </div>
+  <div class="note warn">
+   <strong>Detective's rule:</strong> Change one clue at a time. Keep the others fixed to see what really caused the difference.
+  </div>
+</section>
+
+<section class="card s8">
+ <h2>2. Meet the people behind the numbers</h2>
+ <p>Each dot represents a person. First, nature determines who has the disease. Then the test examines them. The dot's final colour shows both facts: disease status and test result.</p>
+ <canvas id="people" aria-label="People classified by actual disease status and test result"></canvas>
+ <div class="legend">
+  <span><i class="dot" style="background:#059669"></i>True positive: disease + test positive</span>
+  <span><i class="dot" style="background:#dc2626"></i>False positive: no disease + test positive</span>
+  <span><i class="dot" style="background:#2563eb"></i>False negative: disease + test negative</span>
+  <span><i class="dot" style="background:#cbd5e1"></i>True negative: no disease + test negative</span>
+ </div>
+ <p class="small" id="peopleCaption">Choose your clues, then investigate the population.</p>
+</section>
+
+<section class="card s6">
+ <h2>3. The detective's evidence board</h2>
+ <div class="metrics">
+  <div class="metric"><b id="tp">—</b><span>True positives (TP)</span></div>
+  <div class="metric"><b id="fp">—</b><span>False positives (FP)</span></div>
+  <div class="metric"><b id="fn">—</b><span>False negatives (FN)</span></div>
+  <div class="metric"><b id="tn">—</b><span>True negatives (TN)</span></div>
+ </div>
+ <hr>
+ <table>
+  <thead><tr><th>Test result</th><th>Disease present</th><th>Disease absent</th><th>Total</th></tr></thead>
+  <tbody>
+   <tr><th>Positive</th><td id="mTP">—</td><td id="mFP">—</td><td id="mPos">—</td></tr>
+   <tr><th>Negative</th><td id="mFN">—</td><td id="mTN">—</td><td id="mNeg">—</td></tr>
+   <tr><th>Total</th><td id="mD">—</td><td id="mND">—</td><td id="mN">—</td></tr>
+  </tbody>
+ </table>
+ <p class="small">This is a 2 × 2 table. It is the foundation of diagnostic test interpretation.</p>
+</section>
+
+<section class="card s6">
+ <h2>4. Four clues that solve the case</h2>
+ <div class="metric" style="margin-bottom:9px">
+  <span>Sensitivity · among those who have the disease</span>
+  <b id="sensVal">—</b>
+  <div class="bar"><div id="sensBar" style="background:#059669"></div></div>
+  <p class="small">“If disease is present, how often is the test positive?”</p>
+ </div>
+ <div class="metric" style="margin-bottom:9px">
+  <span>Specificity · among those without the disease</span>
+  <b id="specVal">—</b>
+  <div class="bar"><div id="specBar" style="background:#2563eb"></div></div>
+  <p class="small">“If disease is absent, how often is the test negative?”</p>
+ </div>
+ <div class="metric" style="margin-bottom:9px">
+  <span>Positive predictive value (PPV) · among positive tests</span>
+  <b id="ppvVal">—</b>
+  <div class="bar"><div id="ppvBar" style="background:#d97706"></div></div>
+  <p class="small">“If the test is positive, what is the chance disease is truly present?”</p>
+ </div>
+ <div class="metric">
+  <span>Negative predictive value (NPV) · among negative tests</span>
+  <b id="npvVal">—</b>
+  <div class="bar"><div id="npvBar" style="background:#7c3aed"></div></div>
+  <p class="small">“If the test is negative, what is the chance disease is truly absent?”</p>
+ </div>
+</section>
+
+<section class="card s12">
+ <h2>5. The big reveal: prevalence changes the meaning of a positive result</h2>
+ <p>Keep sensitivity and specificity fixed. Now imagine using the same test in different populations—from a low-prevalence screening population to a higher-prevalence specialist clinic.</p>
+ <canvas id="ppvChart" aria-label="Graph of positive predictive value against disease prevalence"></canvas>
+ <p class="small">The curve shows the mathematical relationship using the selected sensitivity and specificity. The highlighted point marks your current prevalence.</p>
+ <div class="bigidea" id="bigReveal">Run the investigation to reveal the mystery.</div>
+ <p id="revealExplain">The graph will show how the chance of a true disease among positive results changes as prevalence changes.</p>
+</section>
+
+<section class="card s6">
+ <h2>6. Interview a positive result</h2>
+ <p>Imagine one person has tested positive. The detective asks: what is the chance this person truly has the disease?</p>
+ <div class="actions"><button class="teal" id="positiveBtn">Investigate a positive test</button><button class="secondary" id="negativeBtn">Investigate a negative test</button></div>
+ <div id="caseResult" aria-live="polite">Run the population first. Then interview a randomly selected positive or negative test result.</div>
+ <p class="small">The person is sampled from the relevant group (positive or negative results), not from the whole population. That distinction is the key to predictive value.</p>
+</section>
+
+<section class="card s6">
+ <h2>7. Play detective: three quick challenges</h2>
+ <div id="quiz">
+  <p id="qText"><strong>Challenge 1:</strong> Sensitivity is calculated among which group?</p>
+  <button class="quizopt" data-answer="0">Everyone tested</button>
+  <button class="quizopt" data-answer="1">People who truly have the disease</button>
+  <button class="quizopt" data-answer="2">People who test positive</button>
+  <p id="quizFeedback" aria-live="polite" class="small">Choose an answer to reveal the clue.</p>
+  <div class="actions"><button class="secondary" id="nextQuiz">Next challenge →</button></div>
+ </div>
+</section>
+
+<section class="card s12">
+ <h2>8. On-demand revision notes: open a clue</h2>
+ <details><summary>Sensitivity — “catching the disease”</summary>
+  <p><strong>Definition:</strong> the proportion of people who have the disease who test positive.</p>
+  <p><strong>Formula:</strong> TP ÷ (TP + FN).</p>
+  <p><strong>Memory aid:</strong> Start with the people who truly have the disease. How many did the test catch?</p>
+  <p>A highly sensitive test produces fewer false negatives in the tested population. A negative result from a highly sensitive test can help rule out disease in appropriate circumstances, but the clinical context and test limitations still matter.</p>
+ </details>
+ <details><summary>Specificity — “clearing the healthy”</summary>
+  <p><strong>Definition:</strong> the proportion of people without the disease who test negative.</p>
+  <p><strong>Formula:</strong> TN ÷ (TN + FP).</p>
+  <p><strong>Memory aid:</strong> Start with people who do not have the disease. How many did the test correctly clear?</p>
+  <p>A highly specific test produces fewer false positives among people without disease. A positive result from a highly specific test may help rule in disease in appropriate circumstances, but no test should be interpreted in isolation.</p>
+ </details>
+ <details><summary>Prevalence — “how common is it before the test?”</summary>
+  <p><strong>Definition:</strong> the proportion of a population that has the disease at a specified time or over a specified period.</p>
+  <p><strong>Formula for this exercise:</strong> people with disease ÷ all people in the population.</p>
+  <p>Prevalence depends on the population being tested. A screening programme for a generally healthy population may have a much lower prevalence than a specialist clinic examining patients with suggestive symptoms.</p>
+ </details>
+ <details><summary>Positive predictive value — “how much should I believe a positive?”</summary>
+  <p><strong>Definition:</strong> the proportion of positive test results that are true positives.</p>
+  <p><strong>Formula:</strong> TP ÷ (TP + FP).</p>
+  <p>PPV depends on sensitivity, specificity and prevalence. Even a good test can produce more false positives than true positives when the condition is rare enough.</p>
+ </details>
+ <details><summary>Negative predictive value — “how much should I believe a negative?”</summary>
+  <p><strong>Definition:</strong> the proportion of negative test results that are true negatives.</p>
+  <p><strong>Formula:</strong> TN ÷ (TN + FN).</p>
+  <p>NPV also depends on prevalence. In a low-prevalence population, most people may test negative and most negative results may be true negatives. This does not mean the test is perfect.</p>
+ </details>
+ <details><summary>False positive and false negative</summary>
+  <p><strong>False positive:</strong> test positive despite disease being absent. <strong>False negative:</strong> test negative despite disease being present.</p>
+  <p>These errors can cause different harms: unnecessary anxiety, investigations or treatment on one side; delayed diagnosis or missed intervention on the other.</p>
+ </details>
+ <details><summary>Likelihood ratios — an optional advanced clue</summary>
+  <p><strong>Positive likelihood ratio:</strong> sensitivity ÷ (1 − specificity). It describes how much more likely a positive result is in people with disease than in people without disease.</p>
+  <p><strong>Negative likelihood ratio:</strong> (1 − sensitivity) ÷ specificity. It describes the corresponding evidence provided by a negative result.</p>
+  <p>Likelihood ratios can help update pre-test odds to post-test odds. The game focuses first on natural frequencies because they are easier to visualise.</p>
+ </details>
+ <details><summary>Screening versus diagnosis</summary>
+  <p><strong>Screening</strong> looks for possible disease in people who may not have symptoms. <strong>Diagnostic testing</strong> evaluates whether disease is present in a particular clinical context.</p>
+  <p>A screening test's usefulness depends not only on accuracy but also on disease prevalence, follow-up tests, available treatment, harms, costs and whether the screening programme improves outcomes.</p>
+ </details>
+ <details><summary>Why predictive values change across settings</summary>
+  <p>Sensitivity and specificity are often taught as properties of a test, but their estimates can also vary with disease spectrum, setting, threshold and study design. Predictive values are especially dependent on the prevalence in the population tested.</p>
+  <p>Do not transfer a PPV from one setting to another without considering whether the underlying prevalence and test performance are comparable.</p>
+ </details>
+ <details><summary>Bayes' theorem without fear</summary>
+  <p>Bayes' theorem describes how evidence changes our belief about a condition. Natural frequencies provide a friendly route to the same answer:</p>
+  <p><strong>1.</strong> Begin with a known number of people. <strong>2.</strong> Estimate how many have disease. <strong>3.</strong> Apply sensitivity and specificity. <strong>4.</strong> Count true positives among all positive results.</p>
+  <p>That final fraction is PPV. The game performs the arithmetic so participants can concentrate on the reasoning.</p>
+ </details>
+</section>
+
+<section class="card s6">
+ <h2>9. Take the detective method beyond medicine</h2>
+ <div class="grid">
+  <div class="s4"><h3>💻 IT & cybersecurity</h3><p>A fraud detector flags transactions. If actual fraud is rare, even a small false-positive rate can send many legitimate transactions for review.</p></div>
+  <div class="s4"><h3>🤝 Social welfare</h3><p>An eligibility system flags potentially ineligible claims. False positives may wrongly delay support for people who qualify; false negatives may miss improper claims.</p></div>
+  <div class="s4"><h3>📣 Marketing</h3><p>A campaign identifies likely buyers. A positive prediction is not proof of purchase intent. Base rates and the cost of false leads matter.</p></div>
+  <div class="s4"><h3>🌱 Development</h3><p>A programme screens households for vulnerability. A useful system needs to consider missed households, incorrectly flagged households and the consequences of each error.</p></div>
+  <div class="s4"><h3>🏥 Clinical medicine</h3><p>Interpret a laboratory result alongside symptoms, risk factors, examination, test limitations and appropriate confirmatory testing.</p></div>
+  <div class="s4"><h3>📊 Data science</h3><p>Accuracy alone can mislead when classes are imbalanced. Inspect false positives, false negatives, precision, recall and the consequences of errors.</p></div>
+ </div>
+ <div class="note"><strong>Universal lesson:</strong> a detector does not answer “Is this person truly in the target group?” until you consider both the test's performance and how common the target condition is.</div>
+</section>
+
+<section class="card s6">
+ <h2>10. Conference challenge</h2>
+ <ol>
+  <li>Set prevalence to 1%, sensitivity to 95% and specificity to 95%. Investigate 1,000 people.</li>
+  <li>Without changing sensitivity or specificity, increase prevalence to 20%. What happens to PPV?</li>
+  <li>Return to 1% prevalence and improve specificity to 99%. How many false positives remain?</li>
+  <li>Increase the population to 10,000. Why does the percentage stay similar while the number of false positives grows?</li>
+  <li>Explain why a positive screening result is not automatically a diagnosis.</li>
+ </ol>
+ <p class="bigidea">Don't ask only, “How accurate is the test?” Ask, “What does this result mean for this person in this population?”</p>
+</section>
+</main>
+
+<footer>
+ <strong>Thanjavur Medical College (TMC) Case Conference Group</strong>
+ <p>Interactive Learning for Clinical Practice, Research and Community Health</p>
+ <p class="small" style="color:#cbd5e1">The Medical Test Detective · Solve the Mystery, Not the Sum</p>
+ <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70" target="_blank" rel="noopener noreferrer">Join TMC Case Conference WhatsApp Group</a>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const peopleCanvas=$("people"),pctx=peopleCanvas.getContext("2d");
+const chartCanvas=$("ppvChart"),gctx=chartCanvas.getContext("2d");
+let results=null,personDots=[],quizIndex=0;
+const quizzes=[
+ {q:"Sensitivity is calculated among which group?",opts:["Everyone tested","People who truly have the disease","People who test positive"],correct:1,why:"Sensitivity = true positives divided by everyone who truly has the disease (TP + FN)."},
+ {q:"A disease is rare, but the test has a 5% false-positive rate. What is the main concern?",opts:["False positives can outnumber true positives","Specificity must be 100%","Prevalence no longer matters"],correct:0,why:"When very few people have disease, even a small false-positive fraction of the much larger disease-free group can produce many false alarms."},
+ {q:"What happens to PPV when prevalence rises, with sensitivity and specificity fixed?",opts:["It usually rises","It always falls","It cannot change"],correct:0,why:"A higher prevalence means a greater share of the tested population has disease, so a positive result is more likely to be a true positive under these assumptions."}
+];
+function getSettings(){
+ return {N:+$("pop").value,prev:+$("prev").value/100,sens:+$("sens").value/100,spec:+$("spec").value/100};
+}
+function pct(x){return (100*x).toFixed(1)+"%"}
+function fmt(x){return Math.round(x).toLocaleString("en-US")}
+function calculate(s){
+ // Natural-frequency calculation; counts are rounded to whole people.
+ const D=Math.round(s.N*s.prev),ND=s.N-D;
+ const TP=Math.round(D*s.sens),FN=D-TP;
+ const TN=Math.round(ND*s.spec),FP=ND-TN;
+ const pos=TP+FP,neg=FN+TN;
+ return {N:s.N,D,ND,TP,FN,TN,FP,pos,neg,
+  sens:D?TP/D:0,spec:ND?TN/ND:0,
+  ppv:pos?TP/pos:0,npv:neg?TN/neg:0,
+  actualPrev:D/s.N};
+}
+function updateLabels(){
+ $("prevOut").value=$("prev").value+"%";
+ $("sensOut").value=$("sens").value+"%";
+ $("specOut").value=$("spec").value+"%";
+ $("popOut").value=(+$("pop").value).toLocaleString("en-US");
+}
+function sizeCanvas(canvas,ctx,height){
+ const r=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
+ canvas.width=Math.max(300,Math.round(r.width*dpr));
+ canvas.height=Math.round(height*dpr);
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ return {w:r.width,h:height};
+}
+function drawPeople(){
+ const {w,h}=sizeCanvas(peopleCanvas,pctx,Math.max(250,(peopleCanvas.clientWidth||600)/1.5));
+ pctx.clearRect(0,0,w,h);pctx.fillStyle="#fff";pctx.fillRect(0,0,w,h);
+ if(!results){pctx.fillStyle="#64748b";pctx.font="15px system-ui";pctx.fillText("Your population will appear here.",20,35);return}
+ const r=results;
+ // Show up to 1,000 individual dots, even for a larger numeric population.
+ const total=Math.min(1000,r.N);
+ const groups=[
+  {n:r.TP,color:"#059669",label:"True positive"},
+  {n:r.FP,color:"#dc2626",label:"False positive"},
+  {n:r.FN,color:"#2563eb",label:"False negative"},
+  {n:r.TN,color:"#cbd5e1",label:"True negative"}
+ ];
+ let arr=[];
+ groups.forEach(g=>{
+  let n=Math.round(total*g.n/r.N);
+  for(let i=0;i<n;i++)arr.push(g.color);
+ });
+ while(arr.length<total)arr.push("#cbd5e1");
+ // Deterministic shuffle makes the visual illustrative, not an extra stochastic sample.
+ let seed=8247;
+ for(let i=arr.length-1;i>0;i--){
+  seed=(seed*16807)%2147483647;
+  const j=seed%(i+1);[arr[i],arr[j]]=[arr[j],arr[i]];
+ }
+ const cols=Math.max(10,Math.floor(w/13)),rows=Math.ceil(total/cols);
+ const cellW=w/cols,cellH=Math.min(15,(h-34)/rows);
+ const rad=Math.max(2,Math.min(5,cellW*.31,cellH*.31));
+ for(let i=0;i<total;i++){
+  const x=(i%cols)*cellW+cellW/2;
+  const y=25+Math.floor(i/cols)*cellH+cellH/2;
+  pctx.beginPath();pctx.arc(x,y,rad,0,Math.PI*2);
+  pctx.fillStyle=arr[i];pctx.fill();
+ }
+ pctx.fillStyle="#334155";pctx.font="12px system-ui";
+ pctx.fillText("Each dot represents one person in a display sample of "+total+".",10,15);
+ $("peopleCaption").textContent="Display shows up to 1,000 dots. The evidence board uses the selected full population of "+fmt(r.N)+".";
+}
+function drawChart(){
+ const {w,h}=sizeCanvas(chartCanvas,gctx,250);
+ gctx.clearRect(0,0,w,h);gctx.fillStyle="#fff";gctx.fillRect(0,0,w,h);
+ if(!results)return;
+ const r=results,pad={l:45,r:15,t:18,b:36},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
+ gctx.strokeStyle="#e2e8f0";gctx.fillStyle="#64748b";gctx.font="11px system-ui";
+ for(let i=0;i<=4;i++){
+  const y=pad.t+ph*i/4;
+  gctx.beginPath();gctx.moveTo(pad.l,y);gctx.lineTo(w-pad.r,y);gctx.stroke();
+  gctx.fillText((100-i*25)+"%",3,y+4);
+ }
+ // PPV as a function of prevalence p: sens*p / (sens*p + (1-spec)*(1-p)).
+ function ppv(p){
+  const a=r.sens*p,b=(1-r.spec)*(1-p);
+  return a+b>0?a/(a+b):0;
+ }
+ gctx.beginPath();gctx.lineWidth=3;gctx.strokeStyle="#0f766e";
+ for(let i=0;i<=100;i++){
+  const p=i/100*.5,v=ppv(p);
+  const x=pad.l+pw*i/100,y=pad.t+ph*(1-v);
+  if(i===0)gctx.moveTo(x,y);else gctx.lineTo(x,y);
+ }
+ gctx.stroke();
+ const cp=Math.min(.5,r.actualPrev),cx=pad.l+pw*cp/.5,cy=pad.t+ph*(1-ppv(cp));
+ gctx.beginPath();gctx.arc(cx,cy,6,0,Math.PI*2);gctx.fillStyle="#d97706";gctx.fill();
+ gctx.strokeStyle="#fff";gctx.lineWidth=2;gctx.stroke();
+ gctx.fillStyle="#64748b";
+ gctx.fillText("0%",pad.l-5,h-12);gctx.fillText("25%",pad.l+pw*.5-10,h-12);gctx.fillText("50% prevalence",w-103,h-12);
+ gctx.fillStyle="#0f766e";gctx.font="bold 12px system-ui";gctx.fillText("PPV",pad.l+8,pad.t+13);
+}
+function update(){
+ updateLabels();
+ const s=getSettings();results=calculate(s);
+ for(const k of ["TP","FP","FN","TN"])$(k.toLowerCase()).textContent=fmt(results[k]);
+ $("mTP").textContent=fmt(results.TP);$("mFP").textContent=fmt(results.FP);
+ $("mFN").textContent=fmt(results.FN);$("mTN").textContent=fmt(results.TN);
+ $("mPos").textContent=fmt(results.pos);$("mNeg").textContent=fmt(results.neg);
+ $("mD").textContent=fmt(results.D);$("mND").textContent=fmt(results.ND);$("mN").textContent=fmt(results.N);
+ $("sensVal").textContent=pct(results.sens);$("specVal").textContent=pct(results.spec);
+ $("ppvVal").textContent=pct(results.ppv);$("npvVal").textContent=pct(results.npv);
+ $("sensBar").style.width=(100*results.sens)+"%";$("specBar").style.width=(100*results.spec)+"%";
+ $("ppvBar").style.width=(100*results.ppv)+"%";$("npvBar").style.width=(100*results.npv)+"%";
+ $("bigReveal").textContent="Among positive results, "+pct(results.ppv)+" are true positives in this example.";
+ let expl="Out of "+fmt(results.N)+" people, "+fmt(results.D)+" have disease. The test produces "+fmt(results.TP)+" true positives and "+fmt(results.FP)+" false positives.";
+ if(results.FP>results.TP)expl+=" Notice: false positives outnumber true positives, despite sensitivity and specificity each being "+pct(results.sens)+"/"+pct(results.spec)+".";
+ else expl+=" In this particular population, true positives outnumber false positives.";
+ $("revealExplain").textContent=expl;
+ drawPeople();drawChart();
+ $("caseResult").textContent="Choose “Investigate a positive test” or “Investigate a negative test” to examine a person from that result group.";
+}
+function investigate(which){
+ if(!results){$("caseResult").textContent="Run the population first.";return}
+ const r=results,el=$("caseResult");
+ if(which==="positive"){
+  if(!r.pos){el.textContent="There are no positive results in this population. Try changing the clues.";return}
+  const truth=Math.random()<r.TP/r.pos;
+  el.innerHTML="<strong>Case file: POSITIVE test</strong><br>"+(truth?
+   "🟢 <strong class='good'>True positive.</strong> This person really has the disease. In this population, "+pct(r.ppv)+" of positive results are true positives.":
+   "🔴 <strong class='bad'>False positive.</strong> This person does not have the disease despite a positive test. In this population, "+pct(1-r.ppv)+" of positive results are false positives.");
+ }else{
+  if(!r.neg){el.textContent="There are no negative results in this population. Try changing the clues.";return}
+  const truth=Math.random()<r.TN/r.neg;
+  el.innerHTML="<strong>Case file: NEGATIVE test</strong><br>"+(truth?
+   "⚪ <strong class='good'>True negative.</strong> This person does not have the disease. In this population, "+pct(r.npv)+" of negative results are true negatives.":
+   "🔵 <strong class='bad'>False negative.</strong> This person has the disease despite a negative test. In this population, "+pct(1-r.npv)+" of negative results are false negatives.");
+ }
+}
+function showQuiz(){
+ const q=quizzes[quizIndex];
+ $("qText").innerHTML="<strong>Challenge "+(quizIndex+1)+" of "+quizzes.length+":</strong> "+q.q;
+ $("quizFeedback").textContent="Choose an answer to reveal the clue.";
+ document.querySelectorAll(".quizopt").forEach((b,i)=>{b.textContent=q.opts[i];b.disabled=false;b.style.background="#f1f5f9"});
+}
+document.querySelectorAll(".quizopt").forEach((b,i)=>b.addEventListener("click",()=>{
+ const q=quizzes[quizIndex],answer=+b.dataset.answer;
+ $("quizFeedback").textContent=(answer===q.correct?"Correct! ":"Not quite. ")+q.why;
+ document.querySelectorAll(".quizopt").forEach((x,j)=>{
+  x.disabled=true;x.style.background=j===q.correct?"#dcfce7":(j===answer?"#fee2e2":"#f1f5f9");
+ });
+}));
+$("nextQuiz").addEventListener("click",()=>{quizIndex=(quizIndex+1)%quizzes.length;showQuiz()});
+$("runBtn").addEventListener("click",update);
+$("resetBtn").addEventListener("click",()=>{
+ $("prev").value=1;$("sens").value=95;$("spec").value=95;$("pop").value=1000;
+ update();$("caseResult").textContent="Reset to the starting mystery: 1% prevalence, 95% sensitivity, 95% specificity and 1,000 people.";
+});
+["prev","sens","spec","pop"].forEach(id=>$(id).addEventListener("input",update));
+$("positiveBtn").addEventListener("click",()=>investigate("positive"));
+$("negativeBtn").addEventListener("click",()=>investigate("negative"));
+window.addEventListener("resize",()=>{if(results){drawPeople();drawChart()}});
+showQuiz();update();
+})();
+</script>
+</body>
+</html>
