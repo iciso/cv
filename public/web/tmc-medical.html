@@ -1237,6 +1237,26 @@
             });
         }
 
+        // Shuffle options so the correct answer isn't always first
+        function randomizeOptions() {
+            secKeys.forEach(sec => {
+                quizData[sec].forEach(item => {
+                    const correctText = item.options[item.answer];
+                    
+                    // Fisher-Yates shuffle
+                    for (let i = item.options.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [item.options[i], item.options[j]] = [item.options[j], item.options[i]];
+                    }
+                    
+                    // Update answer index to match the new shuffled position
+                    item.answer = item.options.indexOf(correctText);
+                });
+            });
+        }
+
+        // Run randomization before loading state and rendering the quiz
+        randomizeOptions();
         loadState();
         renderQuiz();
     </script>
