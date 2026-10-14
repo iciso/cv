@@ -640,13 +640,28 @@ const ihciMonitoringReports = [
 
 const interactiveWebProducts = [
   {
-    file: "clcp-generate-river.html",
+    file: "clcp-river-of-life.html",
     title: "River of Life Diagram Generator",
     description: "Score where your community stands today and where you dream of being, with this River of Life chart generator."
+  },
+  {
+    file: "clcp-simulator.html",
+    title: "Community Participation Simulator",
+    description: "Practically learn to accompany a community without taking over."
   },
    {
     file: "salt-buzz-quiz.html",
     title: "SALT Personality Pattern",
+    description: "Find out which SALT personality pattern is most like you."
+  },
+  {
+    file: "tmc-disease-game.html",
+    title: "🏥 Disease Spreading Game",
+    description: "see how infections move, how outbreaks grow, and where prevention can break the chain."
+  },
+  {
+    file: "tmc-sampling-size.html",
+    title: "Village Survey Safari",
     description: "Find out which SALT personality pattern is most like you."
   },
   {
