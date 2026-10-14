@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Leaderboard - TMC Medical Specialties Quiz</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #0f766e;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --gold: #d97706;
+            --silver: #64748b;
+            --bronze: #b45309;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .leaderboard-table th {
+            background-color: #f1f5f9;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .leaderboard-table tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: white;
+            background-color: var(--text-muted);
+        }
+
+        .rank-1 { background-color: var(--gold); }
+        .rank-2 { background-color: var(--silver); }
+        .rank-3 { background-color: var(--bronze); }
+
+        .back-btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .back-btn:hover {
+            opacity: 0.9;
+        }
+
+        .loading, .error-msg {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Global Leaderboard</h1>
+        <div class="subtitle">🩺 Thanjavur Medical College (TMC) Case Conference Group</div>
+    </header>
+
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="color: var(--primary);">Top Participating Doctors</h3>
+            <button onclick="fetchLeaderboard()" class="back-btn" style="background: var(--primary-light); padding: 0.4rem 0.8rem; font-size: 0.8rem;">Refresh Scores</button>
+        </div>
+        
+        <div id="leaderboard-content">
+            <div class="loading">Loading leaderboard scores from Google Drive...</div>
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <a href="https://cvemrafi.vercel.app/web/tmc-medical.html" class="back-btn">← Back to Quiz</a>
+    </div>
+
+    <script>
+        // Replace this URL with your Google Sheet's published CSV link 
+        // (In Google Sheets: File > Share > Publish to web > Select CSV format > Copy Link)
+        const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFiJEgaKsoBlfETY_lHn0wh-3jFWcOwaqwirG2BZL-kj3TzWQaOU8HGm_BkKX_7pLOL93b3iaMeL1S/pub?output=csv";
+
+        async function fetchLeaderboard() {
+            const container = document.getElementById('leaderboard-content');
+            
+            if (SHEET_CSV_URL.includes("YOUR_PUBLISHED")) {
+                container.innerHTML = `<div class="error-msg">Please configure your published Google Sheet CSV URL inside the script block of this file.</div>`;
+                return;
+            }
+
+            try {
+                const response = await fetch(SHEET_CSV_URL);
+                const dataText = await response.text();
+                
+                const rows = parseCSV(dataText);
+                if (rows.length === 0) {
+                    container.innerHTML = `<div class="loading">No scores recorded yet. Be the first to submit!</div>`;
+                    return;
+                }
+
+                // Process and sort rows: columns are Timestamp (0), PlayerID (1), Score (2), Accuracy (3), Details (4)
+                // We parse accuracy percentage or score numbers to sort descending
+                let players = rows.map(row => {
+                    const accuracyNum = parseInt((row[3] || "0").replace('%', '')) || 0;
+                    const scoreParts = (row[2] || "0/0").split('/');
+                    const correctCount = parseInt(scoreParts[0]) || 0;
+                    
+                    return {
+                        timestamp: row[0] || "",
+                        playerId: row[1] || "Anonymous",
+                        score: row[2] || "0/0",
+                        accuracy: row[3] || "0%",
+                        details: row[4] || "",
+                        sortScore: correctCount,
+                        sortAccuracy: accuracyNum
+                    };
+                });
+
+                // Sort by Accuracy descending, then Correct Score descending
+                players.sort((a, b) => {
+                    if (b.sortAccuracy !== a.sortAccuracy) {
+                        return b.sortAccuracy - a.sortAccuracy;
+                    }
+                    return b.sortScore - a.sortScore;
+                });
+
+                // Build HTML Table
+                let html = `
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">Rank</th>
+                                <th>Doctor ID / Name</th>
+                                <th>Score</th>
+                                <th>Accuracy</th>
+                                <th>Last Submitted</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                players.forEach((p, index) => {
+                    const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : '';
+                    html += `
+                        <tr>
+                            <td><span class="rank-badge ${rankClass}">${index + 1}</span></td>
+                            <td style="font-weight: 600;">${escapeHTML(p.playerId)}</td>
+                            <td>${escapeHTML(p.score)}</td>
+                            <td style="color: var(--secondary); font-weight: bold;">${escapeHTML(p.accuracy)}</td>
+                            <td style="font-size: 0.8rem; color: var(--text-muted);">${escapeHTML(p.timestamp)}</td>
+                        </tr>
+                    `;
+                });
+
+                html += `</tbody></table>`;
+                container.innerHTML = html;
+
+            } catch (err) {
+                console.error("Error loading leaderboard:", err);
+                container.innerHTML = `<div class="error-msg">Could not load leaderboard data. Please check your sheet publication settings.</div>`;
+            }
+        }
+
+        // Simple CSV parser supporting quoted fields
+        function parseCSV(text) {
+            let lines = text.split("\n");
+            let result = [];
+            for (let i = 1; i < lines.length; i++) { // Skip header row (index 0)
+                if (!lines[i].trim()) continue;
+                let row = [];
+                let entry = "";
+                let insideQuote = false;
+                for (let char of lines[i]) {
+                    if (char === '"') {
+                        insideQuote = !insideQuote;
+                    } else if (char === ',' && !insideQuote) {
+                        row.push(entry.trim());
+                        entry = "";
+                    } else {
+                        entry += char;
+                    }
+                }
+                row.push(entry.trim());
+                result.push(row);
+            }
+            return result;
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        // Load on page open
+        fetchLeaderboard();
+    </script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>⚕️🏥 Disease Spreading Game — The Invisible Chain 🩺 TMC Case Conference 👩‍⚕️👨‍⚕️</title>
+<style>
+:root{--navy:#1e3a8a;--blue:#3b82f6;--teal:#0f766e;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--red:#dc2626;--amber:#d97706;--green:#059669}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:linear-gradient(120deg,#1e3a8a,#0f766e);color:white;padding:25px 16px}
+.wrap{max-width:1200px;margin:auto;padding:0 14px}
+header h1{font-size:clamp(25px,4vw,39px);line-height:1.15;margin:0 0 8px}
+header p{margin:0;color:#e0f2fe}
+.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.13em;font-weight:800;opacity:.9}
+main{padding:20px 0 34px}
+.card{background:white;border:1px solid var(--line);border-radius:15px;padding:17px;margin-bottom:15px;box-shadow:0 3px 14px #0f172a08}
+h2{font-size:21px;margin:0 0 12px;color:var(--navy)}
+h3{font-size:16px;margin:0 0 7px}
+p{margin:7px 0}
+.small{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:15px}
+.span-8{grid-column:span 8}.span-4{grid-column:span 4}.span-6{grid-column:span 6}.span-12{grid-column:span 12}
+@media(max-width:800px){.span-8,.span-4,.span-6{grid-column:span 12}}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:550px){.controls{grid-template-columns:1fr}}
+.control{border:1px solid var(--line);border-radius:10px;padding:11px}
+.control label{display:flex;justify-content:space-between;gap:8px;font-weight:650;font-size:13px}
+input[type=range],select{width:100%;margin-top:8px;accent-color:var(--teal)}
+select{padding:9px;border:1px solid #cbd5e1;border-radius:8px;background:white;color:var(--ink)}
+.checks{display:flex;gap:16px;flex-wrap:wrap;margin:13px 0}
+.checks label{display:flex;gap:7px;align-items:center}
+button{border:0;border-radius:9px;padding:10px 14px;font-weight:750;cursor:pointer;font-size:14px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.primary{background:var(--navy);color:white}.teal{background:var(--teal);color:white}
+.secondary{background:#e2e8f0;color:var(--ink)}.danger{background:#fee2e2;color:#991b1b}
+button:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0}
+#world{display:block;width:100%;aspect-ratio:1.7;background:#f0f9ff;border:1px solid var(--line);border-radius:11px}
+#curve{display:block;width:100%;height:225px}
+.legend{display:flex;flex-wrap:wrap;gap:10px 15px;margin:10px 0;font-size:12px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.metric{background:#f8fafc;border:1px solid var(--line);padding:11px;border-radius:10px}
+.metric b{display:block;font-size:24px;color:var(--navy);line-height:1.2}
+.metric span{font-size:12px;color:var(--muted)}
+.bar{height:9px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin:6px 0 10px}
+.bar div{height:100%;width:0;transition:width .2s}
+details{border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin:8px 0;background:white}
+summary{font-weight:750;cursor:pointer;color:var(--navy)}
+details p,details li{font-size:14px}
+.note{border-left:4px solid var(--teal);background:#f0fdfa;padding:12px;border-radius:0 9px 9px 0}
+.warn{border-left-color:var(--amber);background:#fffbeb}
+#log{max-height:230px;overflow:auto;padding-left:20px}
+#log li{margin-bottom:6px;font-size:13px}
+footer{background:#0f172a;color:#e2e8f0;text-align:center;padding:25px 15px}
+footer a{display:inline-block;margin-top:12px;background:#16a34a;color:white;padding:11px 17px;border-radius:9px;text-decoration:none;font-weight:800}
+.pill{display:inline-block;background:#dbeafe;color:#1e40af;border-radius:20px;padding:3px 9px;font-size:12px;font-weight:750}
+hr{border:0;border-top:1px solid var(--line);margin:15px 0}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <div class="kicker">👩‍⚕️TMC Case Conference Group⚕️Interactive Learning 👨‍⚕️</div>
+  <h1>🏥 Disease Spreading Game 🩺</h1>
+  <p><strong>The Invisible Chain</strong> — see how infections move, how outbreaks grow, and where prevention can break the chain.</p>
+ </div>
+</header>
+
+<main class="wrap">
+ <section class="card">
+  <div class="note"><strong>How to play:</strong> Press Start. Watch the coloured particles. Change one setting at a time, predict what will happen, then test your prediction. Use the glossary whenever an epidemiological term is unfamiliar.</div>
+  <p class="small">An educational, stochastic model—not a forecast, clinical decision tool, or substitute for disease-specific public-health guidance. All baseline numbers are illustrative.</p>
+ </section>
+
+ <div class="grid">
+  <section class="card span-8">
+   <h2>1. Watch the invisible chain</h2>
+   <canvas id="world" aria-label="Animated population showing infection spreading"></canvas>
+   <div class="legend">
+    <span><i class="dot" style="background:#2563eb"></i>Susceptible (S)</span>
+    <span><i class="dot" style="background:#d97706"></i>Exposed (E)</span>
+    <span><i class="dot" style="background:#dc2626"></i>Infectious (I)</span>
+    <span><i class="dot" style="background:#059669"></i>Recovered (R)</span>
+    <span><i class="dot" style="background:#7c3aed"></i>Vaccinated (V)</span>
+   </div>
+   <div class="actions">
+    <button class="primary" id="startBtn">▶ Start</button>
+    <button class="secondary" id="stepBtn">⏭ Step</button>
+    <button class="secondary" id="resetBtn">↻ Reset</button>
+    <button class="secondary" id="seedBtn">＋ Add index case</button>
+   </div>
+   <p class="small" id="status" role="status" aria-live="polite">Ready. Press Start to begin the simulation.</p>
+  </section>
+
+  <section class="card span-4">
+   <h2>2. Outbreak dashboard</h2>
+   <div class="metrics">
+    <div class="metric"><b id="mS">0</b><span>Susceptible</span></div>
+    <div class="metric"><b id="mE">0</b><span>Exposed</span></div>
+    <div class="metric"><b id="mI">0</b><span>Infectious</span></div>
+    <div class="metric"><b id="mR">0</b><span>Recovered</span></div>
+    <div class="metric"><b id="mV">0</b><span>Vaccinated</span></div>
+    <div class="metric"><b id="mTotal">0</b><span>Ever infected</span></div>
+   </div>
+   <hr>
+   <h3>Population status</h3>
+   <div class="small">Infected at least once</div><div class="bar"><div id="attackBar" style="background:#dc2626"></div></div>
+   <div class="small">Currently infectious</div><div class="bar"><div id="activeBar" style="background:#d97706"></div></div>
+   <p><strong>Simulation time:</strong> <span id="time">0</span> steps</p>
+   <p><strong>Observed transmissions:</strong> <span id="transmissions">0</span></p>
+   <p><strong>Mean secondary cases per infectious case:</strong> <span id="meanR">—</span></p>
+   <p class="small">The final mean is descriptive of this simulation run, not a reliable estimate of real-world R₀ or Rₜ.</p>
+  </section>
+
+  <section class="card span-6">
+   <h2>3. Design the experiment</h2>
+   <div class="control">
+    <label for="disease">Disease scenario</label>
+    <select id="disease">
+     <option value="custom">Custom respiratory scenario</option>
+     <option value="measles">Measles — highly transmissible respiratory infection</option>
+     <option value="flu">Influenza — seasonal respiratory infection</option>
+     <option value="covid">COVID-19 — variable respiratory spread</option>
+     <option value="nipah">Nipah — close-contact scenario</option>
+    </select>
+   </div>
+   <div class="controls" style="margin-top:10px">
+    <div class="control"><label for="pop">Population <output id="popOut">160</output></label><input id="pop" type="range" min="40" max="400" step="10" value="160"></div>
+    <div class="control"><label for="contact">Contact distance <output id="contactOut">24</output></label><input id="contact" type="range" min="8" max="65" value="24"></div>
+    <div class="control"><label for="prob">Transmission probability/contact <output id="probOut">22%</output></label><input id="prob" type="range" min="1" max="90" value="22"></div>
+    <div class="control"><label for="latent">Latent period <output id="latentOut">3</output></label><input id="latent" type="range" min="0" max="20" value="3"></div>
+    <div class="control"><label for="duration">Infectious period <output id="durationOut">12</output></label><input id="duration" type="range" min="2" max="40" value="12"></div>
+    <div class="control"><label for="vax">Vaccinated at start <output id="vaxOut">0%</output></label><input id="vax" type="range" min="0" max="95" step="5" value="0"></div>
+   </div>
+   <div class="checks">
+    <label><input type="checkbox" id="isolation"> Isolation reduces contacts</label>
+    <label><input type="checkbox" id="masks"> Masks reduce respiratory transmission</label>
+    <label><input type="checkbox" id="cluster"> Clustered contacts</label>
+   </div>
+   <div class="actions"><button class="teal" id="applyBtn">Apply settings & reset</button></div>
+   <p class="small">Change one variable at a time for a fair comparison. Contact distance is a visual proxy for opportunities to interact, not a measured clinical distance.</p>
+  </section>
+
+  <section class="card span-6">
+   <h2>4. Epidemic curve</h2>
+   <canvas id="curve" aria-label="Epidemic curve showing new exposed cases and infectious cases"></canvas>
+   <div class="legend">
+    <span><i class="dot" style="background:#d97706"></i>New exposures per step</span>
+    <span><i class="dot" style="background:#dc2626"></i>Currently infectious</span>
+   </div>
+   <p class="small">This teaching curve uses simulation steps, not calendar days. Real epidemic curves may use symptom-onset dates, diagnosis dates, or report dates; those are not interchangeable.</p>
+  </section>
+
+  <section class="card span-6">
+   <h2>5. Transmission chain</h2>
+   <p class="small">The most recent simulated transmission events. In real outbreaks, who infected whom is often uncertain.</p>
+   <ol id="log"><li>No transmissions yet.</li></ol>
+   <div class="note"><strong>Look for:</strong> chains that stop, clusters of cases, and whether interventions break onward transmission.</div>
+  </section>
+
+  <section class="card span-6">
+   <h2>6. Debrief: what did this run teach?</h2>
+   <div id="debrief" aria-live="polite">Run the simulation to generate a debrief. Repeat the same settings several times to see how chance affects the outcome.</div>
+   <hr>
+   <h3>Questions for the conference</h3>
+   <ol>
+    <li>Did the outbreak grow, stall or die out?</li>
+    <li>Which change had the largest effect on this run?</li>
+    <li>Would this model represent a respiratory ward, a village, or neither without further changes?</li>
+    <li>What data would be needed to calibrate it to a real outbreak?</li>
+   </ol>
+  </section>
+ </div>
+
+ <section class="card">
+  <h2>7. On-demand epidemiology notes</h2>
+  <p>Open any topic for a concise definition, a clinical example and an interpretation caution.</p>
+
+  <details><summary>Pathogen, exposure, infection and infectiousness</summary>
+   <p><strong>Pathogen:</strong> an agent that causes disease. <strong>Exposure:</strong> contact with a possible source. <strong>Infection:</strong> establishment or multiplication of the agent in a host. <strong>Infectiousness:</strong> ability to transmit infection at a particular time.</p>
+   <p><strong>Clinical example:</strong> exposure to an infected person does not guarantee infection; infection may occur without symptoms.</p>
+   <p><strong>In this game:</strong> a particle may come close to an infectious particle, but transmission is probabilistic.</p>
+  </details>
+
+  <details><summary>Incubation period, latent period and infectious period</summary>
+   <p><strong>Incubation period:</strong> infection to symptom onset. <strong>Latent period:</strong> infection to becoming infectious. <strong>Infectious period:</strong> the time during which transmission can occur.</p>
+   <p>These are distinct. A person can become infectious before symptoms appear. The model's latent and infectious durations are simplified step counts, not disease-specific clinical estimates.</p>
+  </details>
+
+  <details><summary>R₀ and Rₜ — reproduction numbers</summary>
+   <p><strong>R₀</strong> is the average number of secondary infections caused by an infectious person in a fully susceptible population under specified conditions. <strong>Rₜ</strong> is the corresponding average at a particular time, given current immunity, behaviour and interventions.</p>
+   <p>Values above 1 can support epidemic growth; sustained values below 1 generally indicate decline. These are population-level concepts—not the number of contacts of one particular person. Do not equate the game's observed average with a formal estimate of R₀ or Rₜ.</p>
+  </details>
+
+  <details><summary>Transmissibility, virulence, severity and mortality</summary>
+   <p><strong>Transmissibility</strong> concerns spread. <strong>Severity</strong> concerns how ill people become. <strong>Virulence</strong> describes the capacity to cause harm. <strong>Mortality</strong> describes deaths in a population; the <strong>case-fatality ratio</strong> is deaths among identified cases over a specified period.</p>
+   <p>A disease that spreads widely is not automatically the disease with the highest fatality ratio.</p>
+  </details>
+
+  <details><summary>Incidence, prevalence and attack rate</summary>
+   <p><strong>Incidence</strong> concerns new cases over time. <strong>Prevalence</strong> concerns all existing cases at a point or over a period. <strong>Attack rate</strong> is commonly the proportion of an at-risk group that becomes ill during an outbreak; despite its name, it is usually a cumulative incidence proportion.</p>
+  </details>
+
+  <details><summary>Endemic, epidemic, pandemic and outbreak</summary>
+   <p><strong>Endemic:</strong> usual or expected presence in an area or population. <strong>Epidemic:</strong> occurrence above what is expected. <strong>Pandemic:</strong> an epidemic spread across countries or continents, affecting many people. <strong>Outbreak:</strong> a cluster or increase in cases that warrants investigation; it is often used for a more localised event.</p>
+  </details>
+
+  <details><summary>Superspreading and overdispersion</summary>
+   <p>Transmission is often uneven: many infected people may transmit to few or no others, while a small number transmit to many. <strong>Overdispersion</strong> describes this extra variation. Crowding, timing, behaviour, environment and pathogen factors may contribute.</p>
+   <p>This game includes random variation, but it does not implement a validated disease-specific overdispersion model.</p>
+  </details>
+
+  <details><summary>Herd immunity and vaccination</summary>
+   <p>Population immunity can reduce the number of susceptible people and interrupt transmission chains. Vaccines differ in their effects on infection, infectiousness and severe disease. Protection may wane, and effectiveness varies by vaccine, pathogen and population.</p>
+   <p>Here, initially vaccinated particles are protected from infection for simplicity. This is an educational assumption, not a claim that any real vaccine gives complete protection.</p>
+  </details>
+
+  <details><summary>Isolation, quarantine and contact tracing</summary>
+   <p><strong>Isolation</strong> separates people who are infected from others. <strong>Quarantine</strong> restricts movement or contact for people who may have been exposed, according to applicable public-health guidance. <strong>Contact tracing</strong> identifies and follows up people who may have been exposed.</p>
+   <p>The isolation switch in this model reduces movement and contacts for infectious particles. It does not model every practical or ethical consideration of isolation policies.</p>
+  </details>
+
+  <details><summary>Transmission routes: why one model cannot fit all diseases</summary>
+   <ul>
+    <li><strong>Respiratory:</strong> inhalation of infectious aerosols and/or exposure to respiratory particles at close range, depending on the pathogen and setting.</li>
+    <li><strong>Direct or indirect contact:</strong> physical contact or contaminated objects/surfaces where relevant.</li>
+    <li><strong>Faecal–oral / waterborne:</strong> pathogens reach a new host through contaminated food or water.</li>
+    <li><strong>Vector-borne:</strong> a vector such as a mosquito transmits the pathogen.</li>
+    <li><strong>Zoonotic:</strong> transmission from animals to humans; some infections can then spread between people.</li>
+   </ul>
+   <p>The animated engine here models simplified proximity-based respiratory transmission. Dengue needs a mosquito–human cycle; cholera needs a food/water contamination pathway. They should not be simulated with the same engine without those mechanisms.</p>
+  </details>
+
+  <details><summary>Nipah: why high consequence does not mean unrestricted spread</summary>
+   <p>Nipah is a zoonotic infection that can cause severe neurological and respiratory disease. Spillover may involve infected animals or contaminated food, and human-to-human transmission has been documented, including in healthcare settings.</p>
+   <p>For teaching, distinguish spillover, close-contact transmission, severity and the success of contact follow-up. This game's Nipah selection uses a lower illustrative contact-transmission probability; it is not calibrated to a particular outbreak and does not model animal or food exposure.</p>
+   <p>Use current WHO and national public-health guidance for real-world precautions. Do not infer individual risk from this toy simulation.</p>
+  </details>
+
+  <details><summary>Epidemic curve and surveillance data</summary>
+   <p>An epidemic curve displays cases by time, often by symptom onset. The shape can help investigators consider outbreak patterns and timing, but it does not prove a transmission route or identify the source by itself.</p>
+   <p>Observed cases can be fewer than actual infections because of testing access, care-seeking, case definitions and reporting delays. The simulated curve has none of these surveillance complications.</p>
+  </details>
+
+  <details><summary>Model limitations: what is missing?</summary>
+   <p>This teaching model simplifies mixing, immunity, infectiousness, interventions and time. It does not include age-specific susceptibility, realistic households, travel, healthcare pathways, pathogen evolution, reinfection, waning immunity, diagnostic delays or a calibrated statistical model.</p>
+   <p>Its purpose is to build intuition and prompt questions—not to forecast outbreaks, compare real diseases quantitatively, or guide treatment or public-health operations.</p>
+  </details>
+ </section>
+
+ <section class="card">
+  <h2>8. Disease library: choose the right lesson</h2>
+  <div class="grid">
+   <div class="span-6">
+    <h3>Measles</h3><p>Highly transmissible respiratory infection. Discuss immunity gaps, vaccination and how susceptible clusters can sustain spread.</p>
+    <h3>Influenza</h3><p>Discuss seasonal spread, vaccination, changing susceptibility and household or workplace contacts.</p>
+    <h3>COVID-19</h3><p>Discuss pre-symptomatic transmission, ventilation, changing immunity, testing and isolation.</p>
+   </div>
+   <div class="span-6">
+    <h3>Nipah</h3><p>Discuss zoonotic spillover, close-contact transmission, high consequences, healthcare precautions and contact tracing. This simplified preset is not an outbreak forecast.</p>
+    <h3>Dengue</h3><p>Requires a mosquito–human transmission cycle. Human-to-human proximity alone should not transmit dengue in a scientifically faithful model.</p>
+    <h3>Cholera</h3><p>Requires contaminated food/water or an environmental reservoir pathway; clean water and sanitation are central interventions.</p>
+   </div>
+  </div>
+  <div class="note warn"><strong>Scope:</strong> The four selectable scenarios share one simplified respiratory engine. The disease names are teaching prompts, not validated parameterisations. Dengue and cholera are included to highlight why different diseases require different models.</div>
+ </section>
+
+ <section class="card">
+  <h2>9. Suggested conference challenge</h2>
+  <ol>
+   <li>Run a baseline outbreak with no vaccination or interventions.</li>
+   <li>Reset, vaccinate 50% of the population and compare cumulative infections.</li>
+   <li>Reset and enable isolation. What changes in the transmission chain?</li>
+   <li>Repeat identical runs. How much do outcomes vary?</li>
+   <li>Explain why these results cannot directly predict an outbreak in a real hospital or community.</li>
+  </ol>
+  <p><strong>Take-home message:</strong> infectious disease spread is shaped by biology, contacts, immunity, environment and public-health action. Visible chains help us reason—but sound decisions also need reliable data, uncertainty estimates and context.</p>
+ </section>
+</main>
+
+<footer>
+ <strong>Thanjavur Medical College (TMC) Case Conference Group</strong>
+ <p>Interactive Learning for Clinical Practice, Research and Community Health</p>
+ <p class="small" style="color:#cbd5e1">Disease Spreading Game · The Invisible Chain · Educational simulation</p>
+ <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70" target="_blank" rel="noopener noreferrer">Join TMC Case Conference WhatsApp Group</a>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const world=$("world"),ctx=world.getContext("2d");
+const curve=$("curve"),cctx=curve.getContext("2d");
+const COLORS={S:"#2563eb",E:"#d97706",I:"#dc2626",R:"#059669",V:"#7c3aed"};
+let people=[],running=false,timer=null,tick=0,transmissionCount=0,history=[],events=[],nextId=1;
+let settings={pop:160,contact:24,prob:.22,latent:3,duration:12,vax:0,isolation:false,masks:false,cluster:false,disease:"custom"};
+let lastWidth=0,lastHeight=0;
+
+function resizeCanvas(){
+ const rect=world.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
+ if(!rect.width)return;
+ world.width=Math.round(rect.width*dpr);world.height=Math.round(rect.width/1.7*dpr);
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ lastWidth=rect.width;lastHeight=rect.width/1.7;
+ drawWorld();
+ const cr=curve.getBoundingClientRect();
+ curve.width=Math.max(300,Math.round(cr.width*dpr));curve.height=Math.round(225*dpr);
+ cctx.setTransform(dpr,0,0,dpr,0,0);drawCurve();
+}
+function W(){return lastWidth||700}
+function H(){return lastHeight||412}
+function readSettings(){
+ settings.pop=+$("pop").value;settings.contact=+$("contact").value;
+ settings.prob=+$("prob").value/100;settings.latent=+$("latent").value;
+ settings.duration=+$("duration").value;settings.vax=+$("vax").value/100;
+ settings.isolation=$("isolation").checked;settings.masks=$("masks").checked;
+ settings.cluster=$("cluster").checked;settings.disease=$("disease").value;
+}
+function updateLabels(){
+ $("popOut").value=$("pop").value;
+ $("contactOut").value=$("contact").value;
+ $("probOut").value=$("prob").value+"%";
+ $("latentOut").value=$("latent").value;
+ $("durationOut").value=$("duration").value;
+ $("vaxOut").value=$("vax").value+"%";
+}
+function preset(){
+ const v=$("disease").value;
+ const p={
+  custom:[22,24,3,12],
+  measles:[48,32,2,14],
+  flu:[20,24,2,10],
+  covid:[25,27,2,12],
+  nipah:[9,19,5,12]
+ }[v];
+ $("prob").value=p[0];$("contact").value=p[1];$("latent").value=p[2];$("duration").value=p[3];
+ updateLabels();
+}
+function randomPosition(){
+ const w=W(),h=H();
+ if(settings.cluster){
+  const centers=[[w*.25,h*.32],[w*.72,h*.35],[w*.48,h*.73]];
+  const c=centers[Math.floor(Math.random()*centers.length)];
+  return {x:Math.max(5,Math.min(w-5,c[0]+(Math.random()-.5)*w*.23)),
+          y:Math.max(5,Math.min(h-5,c[1]+(Math.random()-.5)*h*.23))};
+ }
+ return {x:8+Math.random()*(w-16),y:8+Math.random()*(h-16)};
+}
+function reset(){
+ stop();readSettings();tick=0;transmissionCount=0;events=[];history=[];nextId=1;people=[];
+ const n=settings.pop,vaxN=Math.round(n*settings.vax);
+ for(let i=0;i<n;i++){
+  const p=randomPosition();
+  const vaccinated=i<vaxN;
+  people.push({id:nextId++,x:p.x,y:p.y,vx:(Math.random()-.5)*1.4,vy:(Math.random()-.5)*1.4,
+   state:vaccinated?"V":"S",age:0,infectedAt:null,source:null,secondary:0});
+ }
+ const available=people.filter(p=>p.state==="S");
+ if(available.length){const p=available[Math.floor(Math.random()*available.length)];infect(p,null);}
+ history.push({newE:0,I:count("I")});
+ $("status").textContent="Reset complete. One index case introduced; "+vaxN+" initially vaccinated.";
+ $("log").innerHTML="<li>Index case introduced. No onward transmissions yet.</li>";
+ $("debrief").textContent="Predict how the outbreak will behave, then press Start. Repeat the run to explore random variation.";
+ updateUI();drawWorld();drawCurve();
+}
+function infect(p,source){
+ p.state=settings.latent===0?"I":"E";p.age=0;p.infectedAt=tick;p.source=source?source.id:null;
+ if(p.state==="I")p.age=0;
+ if(source){source.secondary++;transmissionCount++;events.unshift({t:tick,from:source.id,to:p.id});events=events.slice(0,30);}
+}
+function count(s){return people.filter(p=>p.state===s).length}
+function everInfected(){return people.filter(p=>["E","I","R"].includes(p.state)).length}
+function stop(){running=false;if(timer){clearInterval(timer);timer=null;}$("startBtn").textContent="▶ Start"}
+function start(){
+ if(running)return;running=true;$("startBtn").textContent="Ⅱ Pause";
+ timer=setInterval(step,180);
+}
+function step(){
+ if(!people.length)return;
+ tick++;let newE=0;
+ // Move particles; isolation reduces movement of infectious people.
+ for(const p of people){
+  const speed=(settings.isolation&&p.state==="I")?.18:1;
+  p.x+=p.vx*speed;p.y+=p.vy*speed;
+  if(p.x<4||p.x>W()-4)p.vx*=-1;
+  if(p.y<4||p.y>H()-4)p.vy*=-1;
+  p.x=Math.max(4,Math.min(W()-4,p.x));p.y=Math.max(4,Math.min(H()-4,p.y));
+  if(Math.random()<.025){p.vx+=(Math.random()-.5)*.35;p.vy+=(Math.random()-.5)*.35}
+  const mag=Math.hypot(p.vx,p.vy)||1;
+  if(mag>1.5){p.vx=p.vx/mag*1.5;p.vy=p.vy/mag*1.5}
+ }
+ // Transmission uses the state at the start of each person's exposure check.
+ const infectious=people.filter(p=>p.state==="I");
+ const susceptible=people.filter(p=>p.state==="S");
+ for(const s of susceptible){
+  for(const inf of infectious){
+   const dx=s.x-inf.x,dy=s.y-inf.y;
+   if(dx*dx+dy*dy<settings.contact*settings.contact){
+    let prob=settings.prob;
+    if(settings.masks)prob*=.45;
+    if(settings.cluster)prob*=1.15;
+    if(Math.random()<Math.min(.95,prob)){
+     infect(s,inf);newE++;break;
+    }
+   }
+  }
+ }
+ for(const p of people){
+  if(p.state==="E"){
+   p.age++;
+   if(p.age>=settings.latent){p.state="I";p.age=0}
+  }else if(p.state==="I"){
+   p.age++;
+   if(p.age>=settings.duration){p.state="R";p.age=0}
+  }
+ }
+ history.push({newE,I:count("I")});if(history.length>180)history.shift();
+ updateUI();drawWorld();drawCurve();updateDebrief();
+ if(count("I")===0&&count("E")===0){
+  stop();$("status").textContent="Transmission has ended in this run. Reset and repeat to compare outcomes.";
+ }
+}
+function updateUI(){
+ for(const s of ["S","E","I","R","V"])$("m"+s).textContent=count(s);
+ $("mTotal").textContent=everInfected();
+ $("time").textContent=tick;$("transmissions").textContent=transmissionCount;
+ const infPeople=people.filter(p=>p.infectedAt!==null);
+ const mean=infPeople.length?infPeople.reduce((a,p)=>a+p.secondary,0)/infPeople.length:0;
+ $("meanR").textContent=infPeople.length?mean.toFixed(2):"—";
+ $("attackBar").style.width=(100*everInfected()/Math.max(1,people.length))+"%";
+ $("activeBar").style.width=(100*count("I")/Math.max(1,people.length))+"%";
+ const log=$("log");log.innerHTML="";
+ events.slice(0,12).forEach(e=>{
+  const li=document.createElement("li");li.textContent="Step "+e.t+": Person "+e.from+" → Person "+e.to;log.appendChild(li);
+ });
+ if(!events.length)log.innerHTML="<li>No transmissions yet.</li>";
+}
+function drawWorld(){
+ if(!ctx||!lastWidth)return;
+ const w=W(),h=H();ctx.clearRect(0,0,w,h);
+ ctx.fillStyle="#f0f9ff";ctx.fillRect(0,0,w,h);
+ // Faint contact guides
+ ctx.strokeStyle="#dbeafe";ctx.lineWidth=1;
+ for(let x=0;x<w;x+=50){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}
+ for(let y=0;y<h;y+=50){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+ // Short-lived lines show recent transmission links.
+ for(const e of events.slice(0,10)){
+  const a=people.find(p=>p.id===e.from),b=people.find(p=>p.id===e.to);
+  if(a&&b){ctx.strokeStyle="#fca5a5aa";ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}
+ }
+ for(const p of people){
+  if(p.state==="I"){
+   ctx.beginPath();ctx.arc(p.x,p.y,settings.contact/2,0,Math.PI*2);
+   ctx.fillStyle="#fecaca35";ctx.fill();
+  }
+  ctx.beginPath();ctx.arc(p.x,p.y,p.state==="I"?5:4,0,Math.PI*2);
+  ctx.fillStyle=COLORS[p.state];ctx.fill();
+  if(p.state==="I"){ctx.strokeStyle="#7f1d1d";ctx.lineWidth=1;ctx.stroke()}
+ }
+ ctx.fillStyle="#334155";ctx.font="12px system-ui";
+ ctx.fillText("Step "+tick+" · "+people.length+" people",10,17);
+}
+function drawCurve(){
+ if(!cctx)return;
+ const rect=curve.getBoundingClientRect(),w=rect.width||600,h=225;
+ cctx.clearRect(0,0,w,h);cctx.fillStyle="#fff";cctx.fillRect(0,0,w,h);
+ const pad={l:35,r:10,t:14,b:27},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
+ const max=Math.max(1,...history.map(x=>Math.max(x.newE,x.I)));
+ cctx.strokeStyle="#e2e8f0";cctx.fillStyle="#64748b";cctx.font="11px system-ui";
+ for(let i=0;i<=4;i++){const y=pad.t+ph*i/4;cctx.beginPath();cctx.moveTo(pad.l,y);cctx.lineTo(w-pad.r,y);cctx.stroke();cctx.fillText(Math.round(max*(1-i/4)),3,y+4)}
+ function line(key,color){
+  if(history.length<2)return;cctx.beginPath();cctx.strokeStyle=color;cctx.lineWidth=2;
+  history.forEach((d,i)=>{const x=pad.l+pw*i/Math.max(1,history.length-1),y=pad.t+ph*(1-d[key]/max);if(i===0)cctx.moveTo(x,y);else cctx.lineTo(x,y)});
+  cctx.stroke();
+ }
+ line("newE","#d97706");line("I","#dc2626");
+ cctx.fillStyle="#64748b";cctx.fillText("Earlier",pad.l,h-7);cctx.fillText("Now",w-38,h-7);
+}
+function updateDebrief(){
+ const n=people.length,attack=everInfected(),pct=Math.round(100*attack/Math.max(1,n));
+ let text="So far, "+attack+" of "+n+" people ("+pct+"%) have been infected at least once. ";
+ if(transmissionCount===0)text+="No onward transmission has occurred yet. A single introduction does not guarantee an outbreak.";
+ else if(count("I")>0||count("E")>0)text+="Transmission is still possible because exposed or infectious people remain.";
+ else text+="No exposed or infectious people remain, so this run has ended.";
+ if(settings.masks||settings.isolation||settings.vax>0)text+=" Prevention settings are active; compare against a reset baseline to explore their effect.";
+ text+=" Repeat identical settings: random movement and transmission mean results will vary.";
+ $("debrief").textContent=text;
+}
+$("startBtn").addEventListener("click",()=>running?stop():start());
+$("stepBtn").addEventListener("click",()=>{if(running)stop();step()});
+$("resetBtn").addEventListener("click",reset);
+$("applyBtn").addEventListener("click",()=>{updateLabels();reset()});
+$("seedBtn").addEventListener("click",()=>{
+ const p=people.find(p=>p.state==="S");
+ if(!p){$("status").textContent="No susceptible people are available for another index case.";return}
+ infect(p,null);updateUI();drawWorld();$("status").textContent="An additional index case has been introduced.";
+});
+["pop","contact","prob","latent","duration","vax"].forEach(id=>$(id).addEventListener("input",updateLabels));
+$("disease").addEventListener("change",()=>{preset();$("status").textContent="Preset selected. Press Apply settings & reset to start a new run."});
+$("cluster").addEventListener("change",()=>{$("status").textContent="Contact pattern changed. Apply settings & reset to rebuild the population."});
+window.addEventListener("resize",resizeCanvas);
+updateLabels();
+requestAnimationFrame(()=>{resizeCanvas();reset()});
+})();
+</script>
+</body>
+</html>
