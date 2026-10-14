@@ -640,7 +640,7 @@ const ihciMonitoringReports = [
 
 const interactiveWebProducts = [
   {
-    file: "clcp-river-of-life.html",
+    file: "river-of-life.html",
     title: "River of Life Diagram Generator",
     description: "Score where your community stands today and where you dream of being, with this River of Life chart generator."
   },
