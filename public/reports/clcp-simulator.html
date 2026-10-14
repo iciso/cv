@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community Participation Simulator | The Constellation</title>
+<style>
+:root {
+  --navy:#1e3a8a; --blue:#3b82f6; --teal:#0f766e;
+  --bg:#f8fafc; --ink:#1e293b; --muted:#64748b;
+  --line:#e2e8f0; --gold:#fef3c7; --green:#dcfce7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+header{background:linear-gradient(120deg,var(--navy),var(--teal));
+  color:white;padding:28px 18px}
+.wrap{max-width:1050px;margin:auto;padding:18px}
+header .wrap{padding:0 18px}
+h1{font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.15;margin:8px 0}
+h2{font-size:1.35rem;margin-top:0}
+h3{font-size:1.05rem}
+p{margin:.55rem 0}
+.sub{opacity:.94;max-width:760px}
+.pill{display:inline-block;border:1px solid #ffffff80;border-radius:30px;
+  padding:4px 10px;font-size:.82rem;margin:3px}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;
+  padding:18px;margin-bottom:16px;box-shadow:0 3px 12px #0f172a08}
+button,select{font:inherit}
+button{border:0;border-radius:10px;padding:11px 15px;cursor:pointer;
+  font-weight:700;background:var(--navy);color:white;margin:4px 4px 4px 0}
+button:hover{filter:brightness(1.1)}
+button.secondary{background:#e2e8f0;color:var(--ink)}
+button.teal{background:var(--teal)}
+button:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}
+.option{display:block;width:100%;text-align:left;background:white;color:var(--ink);
+  border:1px solid var(--line);padding:13px;margin:9px 0;font-weight:500}
+.option:hover{border-color:var(--blue);background:#eff6ff}
+.option strong{display:block;color:var(--navy);margin-bottom:3px}
+.muted{color:var(--muted);font-size:.92rem}
+.progress{height:10px;background:#e2e8f0;border-radius:20px;overflow:hidden}
+.progress div{height:100%;width:0;background:var(--teal);transition:width .3s}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:#f1f5f9;border-radius:12px;padding:12px;text-align:center}
+.stat b{font-size:1.45rem;display:block;color:var(--navy)}
+.feedback{background:#ecfeff;border-left:4px solid var(--teal);
+  border-radius:8px;padding:14px;margin:12px 0}
+.lesson{background:#f8fafc;border:1px dashed #cbd5e1;padding:13px;border-radius:10px}
+details{padding:12px 0;border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-weight:700;color:var(--navy)}
+.small{font-size:.85rem}
+footer{background:#e2e8f0;padding:22px;text-align:center;color:#334155}
+a{color:var(--navy)}
+.hidden{display:none}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.wrap{padding:12px}
+  .statgrid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="pill">The Constellation</span>
+    <span class="pill">Learn by doing</span>
+    <h1>🌍 The Community Participation Simulator</h1>
+    <p class="sub">Can you accompany a community without taking over? Explore SALT, practise the CLCP learning cycle, and discover how local strengths can lead to community-owned action.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card">
+    <h2>🎯 Your mission</h2>
+    <p>You are accompanying a community concerned about children missing school and families struggling to support their education.</p>
+    <p>Some parents know how to help. Some young people have ideas. A few people speak often, while others remain quiet. The community has strengths, but has not yet agreed on what to do together.</p>
+    <p><b>Your role:</b> help people connect, discover strengths, agree on a shared direction, take action, and learn from experience.</p>
+    <div class="lesson">
+      <b>Remember:</b> this is a learning model, not a prediction of how real people will behave. The indicators illustrate possible effects of facilitation choices.
+    </div>
+    <button onclick="startGame()">Start / Restart journey 🚀</button>
+  </section>
+
+  <div class="grid">
+    <section class="card" id="game">
+      <p class="muted" id="stepLabel">YOUR JOURNEY</p>
+      <h2 id="stepTitle">Ready to begin?</h2>
+      <div class="progress"><div id="progressBar"></div></div>
+      <p id="scene"></p>
+      <div id="choices"></div>
+      <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+      <div id="lesson" class="lesson hidden"></div>
+      <div id="nextArea"></div>
+    </section>
+
+    <aside>
+      <section class="card">
+        <h2>📍 Community pulse</h2>
+        <p class="muted">These are illustrative learning indicators, not validated measures of community competence.</p>
+        <div class="statgrid">
+          <div class="stat"><b id="trust">35</b><span class="small">Trust</span></div>
+          <div class="stat"><b id="voice">25</b><span class="small">Voices heard</span></div>
+          <div class="stat"><b id="ownership">20</b><span class="small">Ownership</span></div>
+        </div>
+        <h3>What is changing?</h3>
+        <p id="pulseText">The community is just beginning to explore its strengths.</p>
+      </section>
+
+      <section class="card">
+        <h2>🧠 SALT pocket guide</h2>
+        <details>
+          <summary>S — Stimulate / Support</summary>
+          <p>Encourage people to express themselves, connect, and begin acting. Support the community's own response rather than supplying every answer.</p>
+          <p class="muted">Ask: “What has helped us come together before?”</p>
+        </details>
+        <details>
+          <summary>A — Appreciate / Accompany</summary>
+          <p>Notice strengths, effort, experience, and what is already working. Accompany people through progress and setbacks.</p>
+          <p class="muted">Ask: “What are we already doing well?”</p>
+        </details>
+        <details>
+          <summary>L — Listen / Learn / Link</summary>
+          <p>Listen with curiosity, learn from community experience, and connect people so they can learn from one another.</p>
+          <p class="muted">Ask: “What have we learned, and who else might learn from it?”</p>
+        </details>
+        <details>
+          <summary>T — Transfer / Team / Trust / Transform</summary>
+          <p>Help useful experience travel between people and communities, build teamwork and trust, and support change that people own.</p>
+          <p class="muted">Ask: “Who else could adapt this learning to their situation?”</p>
+        </details>
+      </section>
+    </aside>
+  </div>
+
+  <section class="card">
+    <h2>🔄 The CLCP learning cycle</h2>
+    <p class="muted">Move through these seven stages. In real community life, the process is cyclical: reflection leads to another round of learning and action.</p>
+    <div id="cycleList"></div>
+  </section>
+
+  <section class="card">
+    <h2>💡 Quick revision: frequently asked questions</h2>
+    <details>
+      <summary>Is participation the same as attendance?</summary>
+      <p>No. People may attend a meeting without influencing the decisions. Participation means having opportunities to express experience, contribute ideas, and shape action.</p>
+    </details>
+    <details>
+      <summary>Who owns the solution?</summary>
+      <p>The community. A facilitator creates space for discussion, reflection, learning, and action; the facilitator should not replace community decision-making.</p>
+    </details>
+    <details>
+      <summary>Why start with strengths?</summary>
+      <p>Recognising existing capacities helps people see that they can already take action and build on what they have learned from experience.</p>
+    </details>
+    <details>
+      <summary>Does SALT mean ignoring problems?</summary>
+      <p>No. An appreciative approach does not require ignoring difficulties. It helps people face challenges while also identifying capacities and useful experience.</p>
+    </details>
+    <details>
+      <summary>Is there a final endpoint to CLCP?</summary>
+      <p>No. The learning cycle continues. Each round of action and reflection can inform the next.</p>
+    </details>
+    <details>
+      <summary>What if the community's first action fails?</summary>
+      <p>Failure or setbacks can become material for reflection. Ask what happened, what was learned, and what the community wants to try next.</p>
+    </details>
+  </section>
+
+  <section class="card hidden" id="finish">
+    <h2>🎉 Journey reflection</h2>
+    <p id="ending"></p>
+    <h3>Discuss with your learning group</h3>
+    <ol>
+      <li>When were you tempted to provide the answer instead of asking a question?</li>
+      <li>Whose voice might still be missing from the discussion?</li>
+      <li>What can the community learn from its own experience?</li>
+      <li>How could another community adapt this learning without simply copying it?</li>
+    </ol>
+    <button onclick="startGame()">Try a new journey ↻</button>
+  </section>
+</main>
+
+<footer>
+  <b>The Constellation</b><br>
+  <span class="small">A practice tool for reflection, facilitation, and community-owned learning.</span><br>
+  <a href="https://the-constellation.org/our-approach/salt-clcp/" target="_blank" rel="noopener">Read The Constellation's SALT–CLCP approach</a><br><br>
+  <a href="https://chat.whatsapp.com/GS7KNHGBsOBCi9vL4Liefk" target="_blank" rel="noopener">Join the CLCP Group on WhatsApp</a>
+</footer>
+
+<script>
+const stages = [
+{
+ name:"1. WHO ARE WE?",
+ short:"Create a safe space",
+ scene:"At the first meeting, the village head speaks for several minutes. Two parents look uncomfortable, and a young person has not spoken. What will you do?",
+ choices:[
+  {title:"Invite every person to introduce a strength or experience",desc:"Give people time; allow passing if they prefer not to speak.",delta:[12,15,5],fb:"You made space for different voices without forcing anyone to speak.",lesson:"SALT link: Stimulate and Support. A safe space helps people connect as human beings. Participation grows when people can contribute without being pressured."},
+  {title:"Ask the village head to explain the problem and decide the priorities",desc:"It is efficient, and the leader knows the area.",delta:[-4,-10,-8],fb:"The meeting may move quickly, but some experience remains unheard.",lesson:"Reflection: leadership can be valuable, but a single voice may not represent the whole community. Ask whose perspectives are missing."},
+  {title:"Explain the programme and tell everyone what the community must do",desc:"Provide a ready-made agenda to save time.",delta:[-8,-8,-10],fb:"People know what you want, but may feel the process belongs to the visitor.",lesson:"Reflection: a facilitator can guide the process without owning the community's decisions."}
+ ]
+},
+{
+ name:"2. WHERE DO WE WANT TO GO?",
+ short:"Build a shared dream",
+ scene:"People offer different hopes: children learning confidently, safer journeys to school, and families supporting one another. How do you help them move forward?",
+ choices:[
+  {title:"Invite people to describe their hopes, then explore common ground",desc:"Let the shared dream emerge from their ideas.",delta:[8,12,12],fb:"People begin to see connections between their hopes.",lesson:"A shared dream gives direction to collective action. It should express what the community wants, not just what an outside organisation expects."},
+  {title:"Choose the most measurable target and announce it",desc:"A clear target makes planning easier.",delta:[-2,-7,-8],fb:"The target is clear, but ownership may be weak if people did not shape it.",lesson:"Targets can be useful later. First explore what a meaningful future looks like to the people who will work towards it."},
+  {title:"Let the loudest supporters vote immediately",desc:"A quick vote resolves disagreement.",delta:[-3,-8,-6],fb:"A decision emerges, but quiet people may not feel included.",lesson:"Voting can be useful in some contexts, but first help people explain their hopes and listen to one another."}
+ ]
+},
+{
+ name:"3. WHAT ARE WE ALREADY DOING?",
+ short:"Surface existing practices",
+ scene:"You discover that several families help children study together, a retired teacher volunteers, and older students sometimes tutor younger ones. What next?",
+ choices:[
+  {title:"Explore these practices and ask what makes them work",desc:"Discover local knowledge before planning something new.",delta:[8,8,10],fb:"The group recognises that useful resources already exist within the community.",lesson:"Appreciating existing practices is not pretending everything is fine. It reveals capacities that can be strengthened or adapted."},
+  {title:"Ignore informal efforts and propose a new external project",desc:"A formal programme may look more organised.",delta:[-5,-3,-10],fb:"A new project is proposed, but existing strengths may be overlooked.",lesson:"Before introducing something new, discover what people already know and do. Local experience may offer a starting point."},
+  {title:"Praise only the most successful family",desc:"Their example may motivate everyone.",delta:[3,-4,0],fb:"Recognition helps, but focusing on one family may leave other contributions unseen.",lesson:"Appreciation is strongest when it notices a range of strengths and makes room for learning from different experiences."}
+ ]
+},
+{
+ name:"4. WHERE ARE WE NOW?",
+ short:"Reflect and assess",
+ scene:"The community discusses its current situation. Some children attend regularly, others miss school because of transport, caring duties, or learning difficulties. How do you proceed?",
+ choices:[
+  {title:"Help the group describe current strengths and gaps together",desc:"Use their experience to understand the situation honestly.",delta:[6,10,8],fb:"The group can discuss both progress and difficulties more openly.",lesson:"Self-assessment is a learning conversation, not an exam. It helps a community consider where it is now in relation to its shared dream."},
+  {title:"Rank households publicly by their performance",desc:"Visible rankings may create pressure to improve.",delta:[-10,-8,-8],fb:"Public ranking can create shame and reduce willingness to share honestly.",lesson:"Consider dignity, privacy, and trust. A useful assessment helps people learn rather than humiliating them."},
+  {title:"Ask an outside expert to assess the village alone",desc:"An expert might provide technical insight.",delta:[-2,-6,-5],fb:"External expertise may contribute information, but the community's own understanding is essential.",lesson:"External information can complement community knowledge. It should not automatically replace the community's perspective."}
+ ]
+},
+{
+ name:"5. WHAT SHALL WE DO?",
+ short:"Make an action plan",
+ scene:"The community has several ideas: peer tutoring, a shared school-journey group, and parent learning circles. How should the group plan?",
+ choices:[
+  {title:"Let community members choose a feasible first action and agree who will do what",desc:"Start with local resources and clear responsibilities.",delta:[6,8,14],fb:"The plan begins to feel like something the community can own.",lesson:"A useful action plan connects the shared dream to realistic actions, responsibilities, and available resources. Outside help can be considered when needed."},
+  {title:"Promise a large programme before checking local capacity",desc:"Ambition may attract attention and funding.",delta:[-4,-3,-7],fb:"The plan sounds impressive, but the first steps may be hard to sustain.",lesson:"A manageable first step can create experience, confidence, and learning for the next step."},
+  {title:"Ask the facilitator to assign every task",desc:"This ensures that someone is in charge.",delta:[0,-5,-10],fb:"Tasks are assigned, but responsibility may remain with the facilitator.",lesson:"Coordination matters. Invite the community to shape commitments so that people understand and own them."}
+ ]
+},
+{
+ name:"6. JUST DO IT!",
+ short:"Take community action",
+ scene:"The first peer-tutoring sessions begin. Some volunteers are enthusiastic, but attendance is uneven and one session is cancelled. What do you do?",
+ choices:[
+  {title:"Appreciate what happened, listen to difficulties, and help the group adapt",desc:"Treat the setback as information for the next attempt.",delta:[8,8,10],fb:"The group has permission to learn instead of pretending everything went perfectly.",lesson:"Action is part of the learning cycle. SALT can help people sustain momentum through difficulties and setbacks."},
+  {title:"Take over the sessions to ensure they run properly",desc:"You can guarantee immediate delivery.",delta:[-3,-4,-8],fb:"The session may happen, but community responsibility could weaken.",lesson:"Sometimes urgent support is appropriate, but ask whether it builds local capacity or makes the community dependent on you."},
+  {title:"Declare the experiment a failure and abandon it",desc:"Avoid wasting more time.",delta:[-4,-3,-5],fb:"A learning opportunity may be lost before the group understands what happened.",lesson:"Before stopping, reflect: what worked, what did not, and what might be adapted? Not every activity should continue unchanged."}
+ ]
+},
+{
+ name:"7. WHAT DID WE LEARN?",
+ short:"Reflect, learn, and transfer",
+ scene:"After several weeks, the group has mixed results. Peer tutoring helped some children, but transport remains difficult. A neighbouring village wants to hear what happened. What next?",
+ choices:[
+  {title:"Reflect together, share learning honestly, and invite the other village to adapt it",desc:"Share successes, setbacks, and questions—not a recipe to copy blindly.",delta:[8,8,12],fb:"Learning becomes a resource for the next cycle and for peers.",lesson:"Transfer is not simply copying. Communities can learn from each other and adapt useful ideas to their own context. The cycle continues."},
+  {title:"Report only the successes so the project looks good",desc:"A positive story may attract support.",delta:[-3,-3,-4],fb:"The story sounds good, but important lessons may be lost.",lesson:"Honest reflection includes achievements and difficulties. Both can help a community make better decisions."},
+  {title:"Tell the neighbouring village to adopt the same plan exactly",desc:"The approach worked partly here.",delta:[0,-2,-5],fb:"The neighbouring village receives an idea, but its own strengths and context may differ.",lesson:"Share experience as an invitation to learn, not as a universal prescription. Local ownership matters in each community."}
+ ]
+}
+];
+
+let current=0, scores={trust:35,voice:25,ownership:20}, history=[];
+const clamp=n=>Math.max(0,Math.min(100,n));
+function el(id){return document.getElementById(id)}
+function startGame(){
+ current=0;scores={trust:35,voice:25,ownership:20};history=[];
+ el("finish").classList.add("hidden");
+ el("game").classList.remove("hidden");
+ renderStage();updatePulse();
+ el("game").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function renderStage(){
+ const s=stages[current];
+ el("stepLabel").textContent="STAGE "+(current+1)+" OF "+stages.length;
+ el("stepTitle").textContent=s.name;
+ el("scene").textContent=s.scene;
+ el("progressBar").style.width=(current/stages.length*100)+"%";
+ el("choices").innerHTML="";
+ el("feedback").classList.add("hidden");
+ el("lesson").classList.add("hidden");
+ el("nextArea").innerHTML="";
+ s.choices.forEach((c,i)=>{
+  const b=document.createElement("button");
+  b.className="option";
+  b.innerHTML="<strong>"+String.fromCharCode(65+i)+". "+c.title+"</strong>"+c.desc;
+  b.onclick=()=>choose(i);
+  el("choices").appendChild(b);
+ });
+ renderCycle();
+}
+function choose(i){
+ const s=stages[current],c=s.choices[i];
+ scores.trust=clamp(scores.trust+c.delta[0]);
+ scores.voice=clamp(scores.voice+c.delta[1]);
+ scores.ownership=clamp(scores.ownership+c.delta[2]);
+ history.push({stage:s.name,choice:c.title,feedback:c.fb});
+ updatePulse();
+ el("choices").innerHTML="";
+ el("feedback").textContent=c.fb;
+ el("feedback").classList.remove("hidden");
+ el("lesson").innerHTML="<b>🧠 Remember:</b><br>"+c.lesson;
+ el("lesson").classList.remove("hidden");
+ const b=document.createElement("button");
+ b.className="teal";
+ b.textContent=current===stages.length-1?"Complete journey 🎉":"Continue to next stage →";
+ b.onclick=()=>{
+  current++;
+  if(current<stages.length)renderStage();
+  else finishGame();
+ };
+ el("nextArea").appendChild(b);
+ renderCycle();
+}
+function updatePulse(){
+ el("trust").textContent=scores.trust;
+ el("voice").textContent=scores.voice;
+ el("ownership").textContent=scores.ownership;
+ let t=scores.trust,v=scores.voice,o=scores.ownership;
+ let msg="The community is beginning to explore its strengths.";
+ if(t>60&&v>60)msg="More voices are being heard, and trust is growing.";
+ if(o>60)msg="People are increasingly shaping and owning their own actions.";
+ if(t<25||v<20)msg="Pause and reflect: some voices may be missing or trust may need attention.";
+ if(o>65&&v>65&&t>65)msg="The learning conditions look encouraging. Keep listening; the journey is not finished.";
+ el("pulseText").textContent=msg;
+}
+function renderCycle(){
+ const names=["Who are we?","Where do we want to go?","What are we already doing? / What skills do we need?","Where are we now?","What are we going to do?","Actions: just do it!","Reflect: where did we get to, what did we learn, what can we share?"];
+ el("cycleList").innerHTML=names.map((n,i)=>{
+  let status=i<current?"✓ Explored":i===current&&current<7?"▶ Current stage":"○ Ahead";
+  return '<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b>'+status+'</b> — '+n+'</div>';
+ }).join("");
+}
+function finishGame(){
+ el("progressBar").style.width="100%";
+ el("stepLabel").textContent="JOURNEY COMPLETE — FOR NOW";
+ el("stepTitle").textContent="The cycle continues 🔄";
+ el("scene").textContent="You have explored seven stages. In real life, the community's journey does not end here.";
+ el("choices").innerHTML="";
+ el("feedback").classList.add("hidden");
+ el("lesson").classList.add("hidden");
+ el("nextArea").innerHTML="";
+ el("finish").classList.remove("hidden");
+ let strongest=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
+ let labels={trust:"trust",voice:"participation and voices heard",ownership:"community ownership"};
+ el("ending").textContent="In this illustrative simulation, your strongest final indicator was "+labels[strongest]+". Trust: "+scores.trust+"/100; voices heard: "+scores.voice+"/100; ownership: "+scores.ownership+"/100. These numbers are not an assessment of a real community. Use them as prompts to discuss the choices you made and what you might do differently next time.";
+ el("game").scrollIntoView({behavior:"smooth",block:"start"});
+}
+startGame();
+</script>
+</body>
+</html>
