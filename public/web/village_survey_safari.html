@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Village Survey Safari — Learn Sampling by Playing</title>
+<style>
+:root{--ink:#17324d;--muted:#587086;--paper:#f5f8fb;--card:#fff;--line:#d8e2ec;--blue:#2167a5;--teal:#087f8c;--orange:#d97706;--red:#b83b4b;--green:#27734d;--softblue:#eaf3fb;--softorange:#fff4e5;--softgreen:#eaf7ef}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(120deg,#143b5b,#087f8c);color:white;padding:25px 18px 23px}
+.wrap{max-width:1100px;margin:auto;padding:0 14px}h1{font-size:clamp(1.65rem,4vw,2.5rem);line-height:1.08;margin:0 0 10px}header p{max-width:760px;margin:0;color:#e7f5fb}
+.tag{display:inline-block;border:1px solid #ffffff70;border-radius:999px;padding:4px 10px;font-size:.78rem;margin-bottom:10px}
+main{padding:18px 0 38px}.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:17px;box-shadow:0 4px 18px #17324d0a;margin-bottom:16px}
+h2{font-size:1.18rem;margin:0 0 10px}h3{font-size:1rem;margin:0 0 8px}p{margin:7px 0}.muted{color:var(--muted)}.small{font-size:.87rem}.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-weight:700;font-size:.9rem;margin-bottom:5px}select,input[type=range]{width:100%}select{padding:10px;border:1px solid #bdcbd8;border-radius:10px;background:white;color:var(--ink);font:inherit}
+input[type=range]{accent-color:var(--teal)}.range-line{display:flex;justify-content:space-between;gap:10px;font-size:.9rem}.range-line strong{color:var(--teal)}
+button{border:0;border-radius:11px;padding:11px 14px;font:inherit;font-weight:750;cursor:pointer;background:var(--blue);color:white}button.secondary{background:#e9f1f7;color:var(--ink);border:1px solid var(--line)}button:hover{filter:brightness(.96)}.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.scene{background:#f0f7f7;border:1px solid #d6e9e8;border-radius:14px;padding:10px}
+.scene svg{width:100%;height:auto;display:block}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin-top:4px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.metric{padding:12px 10px;background:#f5f8fb;border-radius:12px;border:1px solid var(--line)}.metric span{display:block;color:var(--muted);font-size:.78rem}.metric strong{display:block;font-size:1.4rem;line-height:1.2;margin-top:3px}
+.big-estimate{display:flex;align-items:center;gap:14px;margin:12px 0}.dial{width:94px;height:94px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--teal) var(--angle),#e5edf3 0);position:relative;flex:none}.dial:before{content:"";position:absolute;inset:8px;border-radius:50%;background:white}.dial strong{position:relative;font-size:1.28rem}.result-label{font-weight:800;font-size:1.08rem}.status{display:inline-block;border-radius:999px;padding:4px 9px;font-size:.78rem;font-weight:800;margin-top:4px}.status.good{background:var(--softgreen);color:var(--green)}.status.warn{background:var(--softorange);color:#9a5300}.status.bad{background:#fdecef;color:var(--red)}
+.chart{width:100%;height:230px;display:block}.callout{border-left:4px solid var(--teal);background:#eff9fa;padding:11px 12px;border-radius:0 10px 10px 0;margin-top:11px}
+.lesson{background:#f7f9fc;border:1px dashed #b8cad8;border-radius:12px;padding:12px;margin-top:12px}.lesson strong{color:var(--teal)}.mnemonic{font-size:1.04rem;font-weight:850;letter-spacing:.01em}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.step{background:#f5f8fb;border-radius:11px;padding:10px}.step b{display:block;color:var(--blue);font-size:.82rem;margin-bottom:4px}
+details{border-top:1px solid var(--line);padding:10px 0}summary{cursor:pointer;font-weight:750}.footer-note{font-size:.82rem;color:var(--muted);margin-top:14px}
+@media(max-width:780px){.grid{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.metrics{grid-template-columns:repeat(3,1fr)}.card{padding:14px}.steps{grid-template-columns:1fr}}
+@media(max-width:420px){.controls{grid-template-columns:1fr}.metrics{gap:5px}.metric{padding:9px 7px}.metric strong{font-size:1.2rem}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="tag">PLAY • PREDICT • SAMPLE • LEARN</div>
+<h1>Village Survey Safari</h1>
+<p><strong>Can your sample speak for the whole village?</strong> Run a survey, watch estimates jump around, and discover why a bigger sample helps—but cannot rescue a biased method.</p>
+</div></header>
+<main class="wrap">
+<div class="grid">
+<section>
+<div class="card">
+<h2>1. Set up your survey</h2>
+<div class="controls">
+<div><label for="n">Sample size</label><div class="range-line"><span>People interviewed</span><strong id="nLabel">50</strong></div><input id="n" type="range" min="10" max="400" step="10" value="50"></div>
+<div><label for="method">How will you select people?</label><select id="method">
+<option value="random">Simple random sample</option>
+<option value="clinic">Clinic / hospital attendees</option>
+<option value="market">People at the morning market</option>
+<option value="systematic">Every 5th household (after random start)</option>
+<option value="stratified">Stratified random sample (age groups)</option>
+</select></div>
+<div><label for="rounds">Repeated surveys to run</label><div class="range-line"><span>Separate samples</span><strong id="roundLabel">20</strong></div><input id="rounds" type="range" min="5" max="60" step="5" value="20"></div>
+<div><label for="topic">What are we estimating?</label><select id="topic">
+<option value="condition">People with a health condition</option>
+<option value="care">People who received a service</option>
+</select></div>
+</div>
+<div class="buttons"><button id="run">▶ Run the survey</button><button class="secondary" id="one">Draw one sample</button><button class="secondary" id="reset">Reset</button></div>
+<p class="small muted">Teaching village: 1,000 people. This is a fictional population so we can compare your estimate with the known answer.</p>
+</div>
+<div class="card">
+<h2>2. Watch the village and sample</h2>
+<div class="scene"><svg id="village" viewBox="0 0 600 240" role="img" aria-label="Animated village population and selected sample"></svg>
+<div class="legend"><span><i class="dot" style="background:#d97706"></i>Has condition / did not receive service</span><span><i class="dot" style="background:#2b82b8"></i>No condition / received service</span><span><i class="dot" style="background:#8b9aaa"></i>Not selected</span></div></div>
+<div class="metrics">
+<div class="metric"><span>Whole village truth</span><strong id="truth">16%</strong></div>
+<div class="metric"><span>Your sample</span><strong id="sampleCount">—</strong></div>
+<div class="metric"><span>Estimate error</span><strong id="error">—</strong></div>
+</div>
+<div class="callout" id="feedback" aria-live="polite">Choose a sampling method and tap <b>Run the survey</b>. First predict: will your sample match the village exactly?</div>
+</div>
+<div class="card">
+<h2>3. See how estimates fluctuate</h2>
+<p class="small muted">Each point is a fresh survey using the same method and sample size. The dashed line is the true village value.</p>
+<svg id="chart" class="chart" viewBox="0 0 600 230" role="img" aria-label="Chart of estimates across repeated samples"></svg>
+<div class="metrics">
+<div class="metric"><span>Average estimate</span><strong id="avg">—</strong></div>
+<div class="metric"><span>Lowest–highest</span><strong id="range">—</strong></div>
+<div class="metric"><span>Near truth (±5 points)</span><strong id="near">—</strong></div>
+</div>
+</div>
+</section>
+<aside>
+<div class="card">
+<h2>Your field-note card</h2>
+<div class="big-estimate"><div class="dial" id="dial"><strong id="estimate">—</strong></div><div><div class="result-label">Your latest estimate</div><div id="status" class="status warn">Ready to sample</div><p id="estimateText" class="small muted">The estimate will appear after you draw a sample.</p></div></div>
+<div class="lesson"><div class="mnemonic">“BIGGER helps; BETTER selection matters.”</div><p class="small">A large biased sample can be confidently wrong. Sampling design comes before sample size.</p></div>
+<div id="tip" class="callout"><strong>Field note:</strong> A sample is a small window onto a population—not the population itself.</div>
+</div>
+<div class="card">
+<h2>Quick memory hooks</h2>
+<div class="lesson"><strong>SAMPLE</strong><p class="small"><b>S</b>elect fairly • <b>A</b>sk a clear question • <b>M</b>ix in all groups • <b>P</b>lan size • <b>L</b>ook for bias • <b>E</b>xplain uncertainty.</p></div>
+<div class="lesson"><strong>“More people, less wobble—unless the doorway is wrong.”</strong><p class="small">Increasing n usually reduces random fluctuation. It does not remove selection bias.</p></div>
+<div class="lesson"><strong>“Random is not haphazard.”</strong><p class="small">A probability sample uses a planned method so eligible people have a known chance of selection. Convenience sampling just takes whoever is easiest to reach.</p></div>
+<div class="lesson"><strong>“Clinic ≠ community.”</strong><p class="small">People attending a clinic may be sicker or more health-conscious than those who do not attend. Clinic data answer clinic questions—not automatically village questions.</p></div>
+</div>
+<div class="card">
+<h2>What just happened?</h2>
+<div id="debrief"><p class="muted">Run a survey to get a short interpretation linked to your choices.</p></div>
+<details><summary>Why do estimates change between surveys?</summary><p class="small">Different random samples include different people. This is <b>sampling variability</b>. With small samples, a few people can move the percentage a lot.</p></details>
+<details><summary>Why can a large survey still be wrong?</summary><p class="small">If the selection process systematically misses or over-represents a group, the estimate can be biased. A bigger sample may make that biased estimate more precise without making it representative.</p></details>
+<details><summary>What does “±5 percentage points” mean here?</summary><p class="small">It is a simple visual learning target, not a formal confidence interval. Real uncertainty depends on design, weighting, non-response, clustering and other factors.</p></details>
+<p class="footer-note">Educational model only. The fictional numbers are chosen to teach sampling; they are not estimates for any real village, disease or service.</p>
+</div>
+</aside>
+</div>
+</main>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const NPOP = 1000;
+let population = [];
+let last = null;
+let estimates = [];
+let runNo = 0;
+function makePopulation(){
+  population=[];
+  // Fictional age mix: 30% older adults, with a higher condition prevalence.
+  // This creates a meaningful way to demonstrate age-related selection bias.
+  for(let i=0;i<NPOP;i++){
+    const older=i<300;
+    const condition=Math.random() < (older?0.30:0.10);
+    const service=Math.random() < (older?0.58:0.36);
+    population.push({id:i,older,condition,service,clinic:Math.random()<(condition?0.72:0.12),market:Math.random()<(older?0.25:0.72)});
+  }
+  // Stable order by household for the systematic sampling demonstration.
+  population.sort((a,b)=>a.id-b.id);
+}
+function valueOf(p){return $('topic').value==='condition'?p.condition:p.service}
+function truth(){return population.filter(valueOf).length/NPOP}
+function pct(v){return (100*v).toFixed(1)+'%'}
+function points(v){return (100*v).toFixed(1)+' pp'}
+function samplePeople(){
+  const n=Number($('n').value), method=$('method').value;
+  let chosen=[];
+  if(method==='random'){
+    chosen=[...population].sort(()=>Math.random()-.5).slice(0,n);
+  }else if(method==='clinic'){
+    const pool=population.filter(p=>p.clinic);
+    chosen=[...pool].sort(()=>Math.random()-.5).slice(0,Math.min(n,pool.length));
+    while(chosen.length<n) chosen.push(population[Math.floor(Math.random()*NPOP)]);
+  }else if(method==='market'){
+    const pool=population.filter(p=>p.market);
+    chosen=[...pool].sort(()=>Math.random()-.5).slice(0,Math.min(n,pool.length));
+    while(chosen.length<n) chosen.push(population[Math.floor(Math.random()*NPOP)]);
+  }else if(method==='systematic'){
+    const interval=NPOP/n, start=Math.random()*interval;
+    for(let i=0;i<n;i++) chosen.push(population[Math.min(NPOP-1,Math.floor(start+i*interval))]);
+  }else{
+    const older=population.filter(p=>p.older), younger=population.filter(p=>!p.older);
+    const nOlder=Math.round(n*.30), nYounger=n-nOlder;
+    chosen=[...older.sort(()=>Math.random()-.5).slice(0,nOlder),...younger.sort(()=>Math.random()-.5).slice(0,nYounger)];
+  }
+  return chosen;
+}
+function drawVillage(chosen=[]){
+  const svg=$('village'); const chosenSet=new Set(chosen.map(p=>p.id));
+  let out='<rect x="0" y="0" width="600" height="240" rx="12" fill="#f0f7f7"/><path d="M0 185 Q140 150 260 185 T600 175 L600 240 L0 240Z" fill="#d7eadb"/>';
+  out+='<g fill="#b8d6e5" stroke="#6c9db7" stroke-width="1.5"><path d="M35 86 L65 60 L95 86 V128 H35Z"/><path d="M110 103 L137 80 L164 103 V135 H110Z"/><path d="M455 90 L485 64 L515 90 V130 H455Z"/><path d="M515 108 L542 85 L569 108 V137 H515Z"/></g><g fill="#f5f8fb" stroke="#6c9db7"><rect x="52" y="98" width="15" height="17"/><rect x="127" y="112" width="12" height="13"/><rect x="472" y="102" width="15" height="17"/><rect x="531" y="119" width="12" height="12"/></g>';
+  // A compact 40x25 population map; sample members animate to a bright outline.
+  for(let i=0;i<NPOP;i++){
+    const p=population[i], x=9+(i%40)*14.5, y=9+Math.floor(i/40)*8.7;
+    let fill=chosenSet.has(p.id)?(valueOf(p)?'#d97706':'#2b82b8'):'#9aaab7';
+    const r=chosenSet.has(p.id)?3.2:2.2;
+    out+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="${fill}" opacity="${chosenSet.has(p.id)?1:.62}" stroke="${chosenSet.has(p.id)?'#17324d':'none'}" stroke-width=".55"><title>Villager ${p.id+1}${p.older?', older adult':''}${valueOf(p)?', target characteristic present':', target characteristic absent'}${chosenSet.has(p.id)?', selected':''}</title></circle>`;
+  }
+  out+='<text x="12" y="229" font-size="11" fill="#426277">1,000 villagers • each dot = one person</text>';
+  svg.innerHTML=out;
+}
+function drawChart(vals){
+  const svg=$('chart'), W=600,H=230,L=48,R=16,T=16,B=32,ph=H-T-B,pw=W-L-R;
+  const t=truth(), max= Math.max(.5,Math.min(1,Math.ceil((Math.max(t,...vals,0.1)+.12)*10)/10));
+  const y=v=>T+ph-(v/max)*ph, x=i=>L+(vals.length<=1?pw/2:i/(vals.length-1)*pw);
+  let out=`<rect width="${W}" height="${H}" fill="white"/>`;
+  for(let j=0;j<=4;j++){const v=max*j/4, yy=y(v);out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="#e1e8ee"/><text x="${L-8}" y="${yy+4}" text-anchor="end" font-size="11" fill="#587086">${Math.round(v*100)}%</text>`}
+  out+=`<line x1="${L}" y1="${y(t)}" x2="${W-R}" y2="${y(t)}" stroke="#087f8c" stroke-width="2" stroke-dasharray="6 5"/><text x="${W-R-2}" y="${Math.max(12,y(t)-6)}" text-anchor="end" font-size="10" fill="#087f8c">Village truth</text>`;
+  if(vals.length){let path=vals.map((v,i)=>(i?'L':'M')+x(i)+' '+y(v)).join(' ');out+=`<path d="${path}" fill="none" stroke="#2167a5" stroke-width="2" opacity=".7"/>`;
+    vals.forEach((v,i)=>{out+=`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="${Math.abs(v-t)<=.05?'#27734d':'#d97706'}"><title>Survey ${i+1}: ${pct(v)}</title></circle>`});
+  }
+  out+=`<text x="${L}" y="${H-8}" font-size="11" fill="#587086">Survey number →</text>`;
+  svg.innerHTML=out;
+}
+function explain(chosen, est, allVals){
+ const method=$('method').value,n=chosen.length,t=truth(),err=Math.abs(est-t);
+ let note='';
+ if(method==='clinic') note='Clinic attendees are selected through a health-care doorway. People who are ill or seek care may be over-represented; more clinic interviews do not automatically represent non-attendees.';
+ else if(method==='market') note='Market visitors are easy to reach, but people who are at home, working elsewhere, unwell or unable to travel may be missed. Convenience is not the same as representativeness.';
+ else if(method==='stratified') note='You sampled within age groups and kept their village proportions. This helps ensure both age groups are represented; in real surveys, weights may be needed if you sample groups at different rates.';
+ else if(method==='systematic') note='A random start plus every k-th household can spread the sample across the village. It works best with a good list and no hidden repeating pattern in the list.';
+ else note='Simple random sampling gives eligible villagers a fair, known chance of selection. It reduces selection bias, but a small sample can still differ from the village by chance.';
+ if(n<50) note+=' With this small sample, a handful of people can move the estimate noticeably.';
+ else if(n>=200) note+=' A larger sample usually makes random fluctuation smaller—but it cannot fix a biased selection process.';
+ const near=err<=.05;
+ $('feedback').innerHTML=`<b>${near?'Close this time!':'Compare, don’t panic:'}</b> Your sample estimate is ${pct(est)}; the village truth is ${pct(t)}. The difference is ${points(err)}. One sample can land high or low by chance.`;
+ $('tip').innerHTML='<strong>Field note:</strong> '+note;
+ $('debrief').innerHTML=`<p>${note}</p><p><b>Remember:</b> check <i>who could get into the sample</i> before celebrating the sample size.</p>`;
+ $('estimateText').textContent=`${n} people selected by ${methodName(method).toLowerCase()}.`;
+ const s=$('status');s.className='status '+(method==='clinic'||method==='market'?'bad':near?'good':'warn');s.textContent=(method==='clinic'||method==='market')?'Selection-bias risk':near?'Within 5 points this time':'Sampling wobble';
+}
+function methodName(m){return ({random:'Simple random sampling',clinic:'Clinic / hospital attendees',market:'Morning market convenience sample',systematic:'Systematic household sample',stratified:'Proportional stratified sample'})[m]}
+function updateSample(chosen, addToHistory=true){
+ const est=chosen.filter(valueOf).length/Math.max(1,chosen.length), t=truth();
+ last={chosen,est}; if(addToHistory) estimates.push(est);
+ $('truth').textContent=pct(t);$('sampleCount').textContent=`${chosen.filter(valueOf).length}/${chosen.length}`;
+ $('error').textContent=points(Math.abs(est-t));$('estimate').textContent=pct(est);
+ $('dial').style.setProperty('--angle',(est*360)+'deg');
+ drawVillage(chosen);drawChart(estimates);explain(chosen,est,estimates);
+}
+function runMany(){
+ estimates=[]; const rounds=Number($('rounds').value);
+ for(let i=0;i<rounds;i++){const s=samplePeople();estimates.push(s.filter(valueOf).length/s.length)}
+ const lastSample=samplePeople(); last={chosen:lastSample,est:lastSample.filter(valueOf).length/lastSample.length};
+ // show last sample but chart retains all repeated estimates
+ updateSample(lastSample,false);drawChart(estimates);
+ const avg=estimates.reduce((a,b)=>a+b,0)/estimates.length,min=Math.min(...estimates),max=Math.max(...estimates),near=estimates.filter(v=>Math.abs(v-truth())<=.05).length;
+ $('avg').textContent=pct(avg);$('range').textContent=`${pct(min)}–${pct(max)}`;$('near').textContent=`${near}/${estimates.length}`;
+ $('roundLabel').textContent=rounds;
+}
+function oneSample(){
+ const s=samplePeople();estimates.push(s.filter(valueOf).length/s.length);updateSample(s,false);
+ const avg=estimates.reduce((a,b)=>a+b,0)/estimates.length,min=Math.min(...estimates),max=Math.max(...estimates),near=estimates.filter(v=>Math.abs(v-truth())<=.05).length;
+ $('avg').textContent=pct(avg);$('range').textContent=`${pct(min)}–${pct(max)}`;$('near').textContent=`${near}/${estimates.length}`;drawChart(estimates);
+}
+function reset(){
+ makePopulation();estimates=[];last=null;
+ $('avg').textContent='—';$('range').textContent='—';$('near').textContent='—';$('sampleCount').textContent='—';$('error').textContent='—';$('estimate').textContent='—';$('truth').textContent=pct(truth());
+ $('dial').style.setProperty('--angle','0deg');$('status').className='status warn';$('status').textContent='Ready to sample';$('estimateText').textContent='The estimate will appear after you draw a sample.';
+ $('feedback').innerHTML='Choose a sampling method and tap <b>Run the survey</b>. First predict: will your sample match the village exactly?';
+ $('tip').innerHTML='<strong>Field note:</strong> A sample is a small window onto a population—not the population itself.';$('debrief').innerHTML='<p class="muted">Run a survey to get a short interpretation linked to your choices.</p>';
+ drawVillage([]);drawChart([]);
+}
+$('n').addEventListener('input',()=>{$('nLabel').textContent=$('n').value});
+$('rounds').addEventListener('input',()=>{$('roundLabel').textContent=$('rounds').value});
+$('run').addEventListener('click',runMany);$('one').addEventListener('click',oneSample);$('reset').addEventListener('click',reset);
+$('topic').addEventListener('change',()=>{if(last) updateSample(last.chosen,false);else reset()});
+$('method').addEventListener('change',()=>{if(last) runMany()});
+makePopulation();reset();
+})();
+</script>
+</body>
+</html>
