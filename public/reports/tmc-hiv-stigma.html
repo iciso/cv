@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every Patient, Same Precautions | TMC Case Conference Group</title>
+<style>
+:root{--navy:#1e3a8a;--blue:#3b82f6;--teal:#0f766e;
+--bg:#f8fafc;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;
+--green:#dcfce7;--amber:#fef3c7;--red:#fee2e2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:16px/1.6 Arial,Helvetica,sans-serif}
+header{color:white;background:linear-gradient(120deg,var(--navy),var(--teal));padding:28px 16px}
+.wrap{max-width:1000px;margin:auto;padding:16px}
+h1{font-size:clamp(1.8rem,5vw,2.7rem);line-height:1.15;margin:10px 0}
+h2{font-size:1.4rem;margin-top:0}
+h3{font-size:1.05rem}
+p{margin:8px 0}
+.pill{display:inline-block;border:1px solid #ffffff88;border-radius:30px;
+padding:4px 10px;margin:3px;font-size:.82rem}
+.sub{max-width:780px;opacity:.95}
+.card{background:white;border:1px solid var(--line);border-radius:16px;
+padding:20px;margin-bottom:16px;box-shadow:0 3px 12px #0f172a08}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+button{font:inherit;font-weight:bold;border:0;border-radius:10px;
+padding:12px 15px;cursor:pointer;background:var(--navy);color:white;margin:4px 4px 4px 0}
+button:hover{filter:brightness(1.1)}
+button:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}
+button.secondary{background:#e2e8f0;color:var(--ink)}
+button.teal{background:var(--teal)}
+.option{display:block;width:100%;text-align:left;color:var(--ink);
+background:white;border:1px solid var(--line);font-weight:normal;margin:10px 0}
+.option strong{display:block;color:var(--navy);margin-bottom:3px}
+.option:hover{border-color:var(--blue);background:#eff6ff}
+.muted{color:var(--muted);font-size:.92rem}
+.callout{background:#ecfeff;border-left:4px solid var(--teal);
+border-radius:8px;padding:14px;margin:12px 0}
+.warning{background:#fffbeb;border-left:4px solid #d97706;
+border-radius:8px;padding:14px;margin:12px 0}
+.progress{height:10px;background:#e2e8f0;border-radius:20px;overflow:hidden}
+.progress div{height:100%;width:0;background:var(--teal);transition:width .3s}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:#f1f5f9;border-radius:12px;padding:12px;text-align:center}
+.stat b{display:block;font-size:1.5rem;color:var(--navy)}
+details{border-bottom:1px solid var(--line);padding:12px 0}
+summary{cursor:pointer;font-weight:bold;color:var(--navy)}
+.small{font-size:.86rem}
+.hidden{display:none}
+a{color:var(--navy);overflow-wrap:anywhere}
+footer{background:#e2e8f0;text-align:center;padding:24px}
+@media(max-width:740px){.grid{grid-template-columns:1fr}.wrap{padding:12px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <span class="pill">TMC Case Conference Group</span>
+  <span class="pill">Respect • Evidence • Safety</span>
+  <h1>🩺 Every Patient, Same Precautions</h1>
+  <p class="sub">The HIV Stigma Detective: an interactive learning game for healthcare workers, PLHIV, students, and service providers.</p>
+  <p class="sub">Discover how good clinical practice protects healthcare workers while preserving every patient's dignity.</p>
+ </div>
+</header>
+
+<main class="wrap">
+<section class="card">
+ <h2>🎯 The mission</h2>
+ <p>A patient living with HIV comes to hospital for treatment. The clinical team must make decisions about surgery, protective equipment, cleaning, ward placement, and occupational exposure.</p>
+ <p>Your mission is to choose care that is <b>clinically appropriate, safe, respectful, and evidence-based.</b></p>
+ <div class="callout"><b>Three principles to remember</b>
+  <br>1. HIV status alone is not a reason to deny or unnecessarily delay indicated surgery.
+  <br>2. Standard Precautions apply to every patient.
+  <br>3. Respectful care and proper infection prevention go together.
+ </div>
+ <p class="muted">This educational simulation does not replace local hospital policy, specialist advice, or individual clinical assessment.</p>
+ <button onclick="startGame()">Start the challenge 🚀</button>
+</section>
+
+<div class="grid">
+ <section class="card" id="play">
+  <p class="muted" id="stage">SCENARIO 1 OF 5</p>
+  <h2 id="questionTitle">The patient who needs surgery</h2>
+  <div class="progress"><div id="bar"></div></div>
+  <p id="story"></p>
+  <div id="choices"></div>
+  <div id="feedback" class="callout hidden" aria-live="polite"></div>
+  <div id="explain" class="warning hidden"></div>
+  <div id="next"></div>
+ </section>
+
+ <aside>
+  <section class="card">
+   <h2>🏅 Your learning dashboard</h2>
+   <p class="muted">These are game scores, not measures of a person's character or clinical competence.</p>
+   <div class="stats">
+    <div class="stat"><b id="dignity">0</b><span class="small">Dignity</span></div>
+    <div class="stat"><b id="safety">0</b><span class="small">Safety</span></div>
+    <div class="stat"><b id="fairness">0</b><span class="small">Fairness</span></div>
+   </div>
+   <p id="dashboard" class="muted">Your decisions will shape your learning feedback.</p>
+  </section>
+  <section class="card">
+   <h2>🧠 Pocket definitions</h2>
+   <details>
+    <summary>PLHIV</summary>
+    <p>People living with HIV. This language recognises the person before the medical condition.</p>
+   </details>
+   <details>
+    <summary>ART</summary>
+    <p>Antiretroviral therapy: medicines that suppress HIV and help people live longer, healthier lives.</p>
+   </details>
+   <details>
+    <summary>CD4 count</summary>
+    <p>A blood test that helps assess immune function. The result is one part of a person's clinical assessment.</p>
+   </details>
+   <details>
+    <summary>Viral load: TND</summary>
+    <p>“Target Not Detected” means HIV RNA was not detected by that test at its detection limit. It does not mean the virus has been eradicated from the body.</p>
+   </details>
+   <details>
+    <summary>Standard Precautions</summary>
+    <p>Routine infection-prevention measures for every patient. They include hand hygiene, safe sharps handling, and PPE selected according to anticipated exposure.</p>
+   </details>
+   <details>
+    <summary>U=U</summary>
+    <p>Undetectable = Untransmittable: sustained viral suppression prevents sexual transmission of HIV. Do not extend this slogan to claim zero risk from occupational needlestick or blood exposure.</p>
+   </details>
+  </section>
+ </aside>
+</div>
+
+<section class="card">
+ <h2>🔎 Five scenarios, five opportunities to rethink</h2>
+ <p>Each scenario asks what a healthcare team should do. The feedback explains the principle behind the choice.</p>
+ <div id="scenarioList"></div>
+</section>
+
+<section class="card">
+ <h2>❓ Quick revision: frequently asked questions</h2>
+ <details>
+  <summary>1. Can a person living with HIV undergo surgery for a fibroid?</summary>
+  <p>Yes, if the procedure is clinically indicated and the individual assessment supports it. A patient taking ART with suppressed viral load and a CD4 count above 200 cells/mm³ can generally proceed with the planned surgery as a patient without HIV, while receiving the same ordinary perioperative assessment. The gynaecological indication, other medical conditions, medications, and surgical risks still matter.</p>
+ </details>
+ <details>
+  <summary>2. Does a TND viral load mean occupational exposure is impossible?</summary>
+  <p>No. TND is reassuring evidence of viral suppression, and sustained suppression prevents sexual transmission. It should not be used to declare occupational blood exposure risk to be zero. If a needlestick or other qualifying exposure occurs, follow the occupational exposure protocol promptly.</p>
+ </details>
+ <details>
+  <summary>3. Should an “HIV kit” be used for every patient known to have HIV?</summary>
+  <p>HIV status alone is not a reason for a separate PPE kit. Use the PPE indicated by the procedure and anticipated exposure under Standard Precautions. If local policy specifies equipment for a genuine procedural hazard, follow that policy for the relevant hazard—not as a stigma-based ritual.</p>
+ </details>
+ <details>
+  <summary>4. Must the operating theatre be specially disinfected after a PLHIV case?</summary>
+  <p>Routine cleaning, environmental disinfection, and instrument reprocessing should follow the same validated infection-prevention procedures used after other patients. Clean and disinfect based on contamination and the procedure, not solely on HIV status.</p>
+ </details>
+ <details>
+  <summary>5. Does HIV status alone require an isolated ward?</summary>
+  <p>No. HIV alone does not justify isolation. Isolation or additional precautions may be needed for a separate clinical reason, such as another infection requiring transmission-based precautions.</p>
+ </details>
+ <details>
+  <summary>6. What if a healthcare worker gets a needlestick?</summary>
+  <p>Immediately follow the facility's exposure protocol: wash the area with soap and water, report the exposure promptly, obtain urgent occupational-health assessment, and start HIV post-exposure prophylaxis (PEP) as soon as indicated. Do not wait for symptoms. Follow local testing and follow-up recommendations.</p>
+ </details>
+ <details>
+  <summary>7. What about a patient whose HIV status is unknown?</summary>
+  <p>Apply Standard Precautions to every patient, regardless of known or unknown status. Testing and consent should follow applicable policy. Do not rely on appearance, assumptions, or disclosure to decide who receives safe care.</p>
+ </details>
+ <details>
+  <summary>8. What is the difference between universal safety and HIV-specific fear?</summary>
+  <p>Universal safety means using appropriate precautions consistently for everyone. HIV-specific fear means adding unnecessary restrictions solely because of a diagnosis. The first protects people; the second can waste resources and cause stigma.</p>
+ </details>
+</section>
+
+<section class="card">
+ <h2>📚 Evidence and further reading</h2>
+ <p><b>Perioperative care in adults with HIV — New York State Department of Health AIDS Institute, 2024.</b><br>
+ <a href="https://www.hivguidelines.org/guideline/hiv-perioperative/" target="_blank" rel="noopener">Read the perioperative guideline</a></p>
+ <p><b>CDC — Standard Precautions.</b><br>
+ <a href="https://www.cdc.gov/infection-control/hcp/isolation-precautions/precautions.html" target="_blank" rel="noopener">Read precautions for all patients</a></p>
+ <p><b>CDC — Infection prevention and environmental cleaning.</b><br>
+ <a href="https://www.cdc.gov/infection-control/hcp/isolation-precautions/prevention.html" target="_blank" rel="noopener">Read core prevention guidance</a></p>
+ <p><b>National AIDS Control Organisation (NACO), India.</b><br>
+ <a href="https://naco.mohfw.gov.in/" target="_blank" rel="noopener">Visit the official NACO website for national guidance</a></p>
+ <p class="muted">Before formal hospital use, align the page with current NACO guidance, local infection-prevention policy, and the institution's occupational exposure/PEP protocol.</p>
+</section>
+
+<section class="card hidden" id="finish">
+ <h2>🎉 Challenge complete!</h2>
+ <p id="result"></p>
+ <h3>Discuss with your team</h3>
+ <ol>
+  <li>Which practice protects patients and staff, but is sometimes applied inconsistently?</li>
+  <li>Which extra procedure was based on HIV status rather than a specific clinical indication?</li>
+  <li>How would you respond respectfully if a colleague requested unnecessary isolation?</li>
+  <li>What should happen immediately after a needlestick injury?</li>
+ </ol>
+ <button onclick="startGame()">Play again ↻</button>
+</section>
+</main>
+
+<footer>
+ <b>Thanjavur Medical College (TMC) Case Conference Group</b><br>
+ <span class="small">Education for dignity, patient safety, and evidence-based care.</span><br><br>
+ <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70" target="_blank" rel="noopener">TMC Case Conference Group on WhatsApp</a>
+</footer>
+
+<script>
+const scenes=[
+{
+title:"1. The patient who needs surgery",
+story:"A woman living with HIV needs surgery for a symptomatic uterine fibroid. She takes ART, has a TND viral load, and a normal CD4 count. The team must decide how to proceed.",
+choices:[
+{t:"Proceed with the indicated operation after the usual individual preoperative assessment",d:"This respects her access to treatment while maintaining ordinary clinical safety.",p:[2,2,2],f:"Best-supported choice: HIV alone is not a contraindication to surgery.",e:"A suppressed viral load and preserved CD4 count are reassuring. Assess the fibroid indication, anaesthetic and surgical risks, comorbidities, medicines, and recovery needs as you would for any patient. Do not promise zero risk or identical outcomes for every individual."},
+{t:"Refuse surgery because the patient has HIV",d:"Avoid the operation solely because of the diagnosis.",p:[-2,-2,-2],f:"This is discriminatory and not evidence-based.",e:"HIV status alone is not a reason to deny indicated care. If a genuine clinical concern exists, assess it specifically and involve the relevant clinicians."},
+{t:"Delay automatically until another HIV test is obtained, despite adequate recent results",d:"Repeat tests just because the diagnosis feels concerning.",p:[-1,0,-1],f:"Automatic delay can create barriers without adding useful information.",e:"Review appropriate recent results and clinical status. Emergency or urgent surgery should not be delayed to obtain CD4 or viral-load results. For elective surgery, follow current guidance and individual assessment."}
+]},
+{
+title:"2. The special HIV kit",
+story:"Before the operation, a team member asks for an extra HIV-labelled kit, although the same procedure is routinely performed using the hospital's standard PPE and sharps-safety procedures.",
+choices:[
+{t:"Use Standard Precautions and PPE selected for the anticipated exposure",d:"Apply the same procedure-based safety rules used for every patient.",p:[2,2,2],f:"Correct: precautions should follow the task and exposure risk, not stigma.",e:"Gloves, gown, eye/face protection, and other PPE are chosen according to anticipated exposure and local policy. Do not use a separate kit solely because a patient's HIV status is known."},
+{t:"Use extra PPE only because the patient is HIV-positive",d:"Add equipment because the diagnosis is frightening.",p:[-1,0,-2],f:"More equipment is not automatically safer if it is not indicated by the task.",e:"Unnecessary diagnosis-based procedures can reinforce stigma and waste supplies. Correctly selected PPE and consistent practice are the safety goal."},
+{t:"Use less PPE because the viral load is undetectable",d:"Assume suppression removes all occupational blood risk.",p:[0,-2,0],f:"This choice misunderstands U=U.",e:"U=U refers to sexual transmission with sustained viral suppression. Continue appropriate Standard Precautions and manage occupational exposures according to protocol."}
+]},
+{
+title:"3. The isolated ward",
+story:"A ward staff member proposes placing a stable patient living with HIV in a separate room solely because of HIV status. There is no other known reason for isolation.",
+choices:[
+{t:"Use the ordinary appropriate ward placement unless another clinical indication requires isolation",d:"Protect privacy and apply isolation criteria consistently.",p:[2,2,2],f:"Correct: HIV alone does not require isolation.",e:"Additional precautions are based on a specific infection or clinical indication, not on HIV status by itself. Keep the patient's information confidential."},
+{t:"Isolate the patient to reassure other staff and patients",d:"Treat anxiety as the reason for isolation.",p:[-2,0,-2],f:"Comforting others is not a clinical indication for discriminatory isolation.",e:"Address concerns through education and consistent infection-prevention practice, not by segregating a patient."},
+{t:"Ask the patient to explain their diagnosis to the ward",d:"Use disclosure to reassure everyone.",p:[-2,0,-2],f:"This can violate privacy and dignity.",e:"Confidential medical information should only be shared on a lawful, need-to-know basis. Staff education should not depend on exposing a patient's identity."}
+]},
+{
+title:"4. The operating theatre after surgery",
+story:"After the patient leaves theatre, someone requests extra disinfection because the patient had HIV. The theatre has already been used under normal procedures.",
+choices:[
+{t:"Perform routine cleaning, appropriate disinfection, and instrument reprocessing under standard protocol",d:"Follow the validated procedure for the room, equipment, and any contamination.",p:[2,2,2],f:"Correct: HIV status alone does not require a special theatre-cleaning ritual.",e:"Routine environmental cleaning and validated instrument reprocessing are essential for all patients. Respond to actual contamination or other pathogen-specific requirements according to policy."},
+{t:"Repeat the whole theatre disinfection solely because of HIV",d:"Do more cleaning without a specific contamination or policy reason.",p:[0,1,-2],f:"Extra work is not automatically extra safety.",e:"Follow the same validated cleaning and reprocessing rules. Diagnosis-based additions may waste time and resources without improving infection control."},
+{t:"Skip cleaning because the viral load was TND",d:"Assume viral suppression makes normal cleaning unnecessary.",p:[0,-2,0],f:"Incorrect: routine cleaning remains essential.",e:"Do not change routine cleaning standards because of viral load. Environmental hygiene and equipment reprocessing remain necessary for every patient."}
+]},
+{
+title:"5. A needlestick injury",
+story:"During a procedure, a healthcare worker sustains a needlestick involving blood from a patient known to be living with HIV. What should happen next?",
+choices:[
+{t:"Wash the area, report immediately, obtain urgent assessment, and start PEP as indicated",d:"Use the facility's exposure protocol without delay.",p:[1,2,1],f:"Correct: manage the exposure promptly and confidentially.",e:"Do not rely on the patient's viral load or on assumptions to skip assessment. PEP decisions depend on exposure details and current guidance. Start indicated PEP as soon as possible; do not delay reporting."},
+{t:"Ignore the injury because the patient is taking ART",d:"Assume TND means occupational transmission is impossible.",p:[0,-2,0],f:"Unsafe: TND must not be used to dismiss an occupational exposure.",e:"Sustained viral suppression is highly reassuring, but a qualifying blood exposure still needs prompt professional assessment under the occupational protocol."},
+{t:"Blame or publicly identify the patient",d:"Warn colleagues by disclosing the patient's diagnosis.",p:[-2,-1,-2],f:"Blame and unnecessary disclosure do not make the workplace safer.",e:"Manage the exposure confidentially, document appropriately, and use the established clinical pathway. Focus on safe care, not blame."}
+]}
+];
+
+let idx=0,score={d:0,s:0,f:0},history=[];
+const $=id=>document.getElementById(id);
+function startGame(){
+ idx=0;score={d:0,s:0,f:0};history=[];
+ $("finish").classList.add("hidden");
+ $("play").classList.remove("hidden");
+ render();
+ $("play").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function render(){
+ const x=scenes[idx];
+ $("stage").textContent="SCENARIO "+(idx+1)+" OF "+scenes.length;
+ $("questionTitle").textContent=x.title;
+ $("story").textContent=x.story;
+ $("bar").style.width=(idx/scenes.length*100)+"%";
+ $("choices").innerHTML="";
+ $("feedback").classList.add("hidden");
+ $("explain").classList.add("hidden");
+ $("next").innerHTML="";
+ x.choices.forEach((c,i)=>{
+  let b=document.createElement("button");
+  b.className="option";
+  let strong=document.createElement("strong");
+  strong.textContent=String.fromCharCode(65+i)+". "+c.t;
+  let span=document.createElement("span");span.textContent=c.d;
+  b.append(strong,span);b.onclick=()=>choose(i);
+  $("choices").appendChild(b);
+ });
+}
+function choose(i){
+ const c=scenes[idx].choices[i];
+ score.d+=c.p[0];score.s+=c.p[1];score.f+=c.p[2];
+ history.push({title:scenes[idx].title,choice:c.t});
+ $("dignity").textContent=score.d;
+ $("safety").textContent=score.s;
+ $("fairness").textContent=score.f;
+ $("dashboard").textContent="You have completed "+(idx+1)+" of "+scenes.length+" scenarios. Read the explanation, then continue.";
+ $("choices").innerHTML="";
+ $("feedback").textContent=c.f;
+ $("feedback").classList.remove("hidden");
+ $("explain").innerHTML="<b>Why?</b><br>"+c.e;
+ $("explain").classList.remove("hidden");
+ let b=document.createElement("button");b.className="teal";
+ b.textContent=idx===scenes.length-1?"See my learning summary 🎉":"Next scenario →";
+ b.onclick=()=>{idx++;if(idx<scenes.length)render();else finish()};
+ $("next").appendChild(b);
+}
+function finish(){
+ $("bar").style.width="100%";
+ $("play").classList.add("hidden");
+ $("finish").classList.remove("hidden");
+ let total=score.d+score.s+score.f;
+ let msg=total>=20?"Your choices consistently favoured dignity, safety, and fair treatment. Keep applying these principles in real clinical decisions.":
+ total>=8?"You identified several evidence-based practices. Review the explanations for choices where fear or habit may have influenced a decision.":
+ "This exercise revealed opportunities to rethink familiar practices. Review the pocket definitions and FAQs, then try again.";
+ $("result").textContent=msg+" Game scores are prompts for reflection, not a formal assessment. Dignity: "+score.d+", Safety: "+score.s+", Fairness: "+score.f+".";
+ $("finish").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function buildList(){
+ $("scenarioList").innerHTML=scenes.map((s,i)=>
+  '<div style="padding:9px 0;border-bottom:1px solid var(--line)"><b>Scenario '+(i+1)+':</b> '+s.title.replace(/^\d+\.\s*/,'')+'</div>'
+ ).join("");
+}
+buildList();startGame();
+</script>
+</body>
+</html>
