@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chaque Patient, Mêmes Précautions | TMC Case Conference Group</title>
+<style>
+:root{--navy:#1e3a8a;--blue:#3b82f6;--teal:#0f766e;
+--bg:#f8fafc;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;
+--green:#dcfce7;--amber:#fef3c7;--red:#fee2e2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:16px/1.6 Arial,Helvetica,sans-serif}
+header{color:white;background:linear-gradient(120deg,var(--navy),var(--teal));padding:28px 16px}
+.wrap{max-width:1000px;margin:auto;padding:16px}
+h1{font-size:clamp(1.8rem,5vw,2.7rem);line-height:1.15;margin:10px 0}
+h2{font-size:1.4rem;margin-top:0}
+h3{font-size:1.05rem}
+p{margin:8px 0}
+.pill{display:inline-block;border:1px solid #ffffff88;border-radius:30px;
+padding:4px 10px;margin:3px;font-size:.82rem}
+.sub{max-width:780px;opacity:.95}
+.card{background:white;border:1px solid var(--line);border-radius:16px;
+padding:20px;margin-bottom:16px;box-shadow:0 3px 12px #0f172a08}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+button{font:inherit;font-weight:bold;border:0;border-radius:10px;
+padding:12px 15px;cursor:pointer;background:var(--navy);color:white;margin:4px 4px 4px 0}
+button:hover{filter:brightness(1.1)}
+button:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}
+button.secondary{background:#e2e8f0;color:var(--ink)}
+button.teal{background:var(--teal)}
+.option{display:block;width:100%;text-align:left;color:var(--ink);
+background:white;border:1px solid var(--line);font-weight:normal;margin:10px 0}
+.option strong{display:block;color:var(--navy);margin-bottom:3px}
+.option:hover{border-color:var(--blue);background:#eff6ff}
+.muted{color:var(--muted);font-size:.92rem}
+.callout{background:#ecfeff;border-left:4px solid var(--teal);
+border-radius:8px;padding:14px;margin:12px 0}
+.warning{background:#fffbeb;border-left:4px solid #d97706;
+border-radius:8px;padding:14px;margin:12px 0}
+.progress{height:10px;background:#e2e8f0;border-radius:20px;overflow:hidden}
+.progress div{height:100%;width:0;background:var(--teal);transition:width .3s}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:#f1f5f9;border-radius:12px;padding:12px;text-align:center}
+.stat b{display:block;font-size:1.5rem;color:var(--navy)}
+details{border-bottom:1px solid var(--line);padding:12px 0}
+summary{cursor:pointer;font-weight:bold;color:var(--navy)}
+.small{font-size:.86rem}
+.hidden{display:none}
+a{color:var(--navy);overflow-wrap:anywhere}
+footer{background:#e2e8f0;text-align:center;padding:24px}
+@media(max-width:740px){.grid{grid-template-columns:1fr}.wrap{padding:12px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <span class="pill">TMC Case Conference Group</span>
+  <span class="pill">Respect • Données probantes • Sécurité</span>
+  <h1>🩺 Chaque Patient, Mêmes Précautions</h1>
+  <p class="sub">Le détective de la stigmatisation liée au VIH : un jeu d'apprentissage interactif destiné aux professionnels de santé, aux PVVIH, aux étudiants et aux prestataires de services.</p>
+  <p class="sub">Découvrez comment de bonnes pratiques cliniques protègent les soignants tout en préservant la dignité de chaque patient.</p>
+ </div>
+</header>
+
+<main class="wrap">
+<section class="card">
+ <h2>🎯 La mission</h2>
+ <p>Un patient vivant avec le VIH se rend à l'hôpital pour y être traité. L'équipe clinique doit prendre des décisions concernant la chirurgie, l'équipement de protection, le nettoyage, l'attribution des chambres et l'exposition professionnelle.</p>
+ <p>Votre mission est de choisir des soins qui sont <b>cliniquement appropriés, sûrs, respectueux et fondés sur des données probantes.</b></p>
+ <div class="callout"><b>Trois principes à retenir</b>
+  <br>1. Le statut VIH à lui seul ne constitue pas un motif de refus ou de retard injustifié d'une chirurgie indiquée.
+  <br>2. Les précautions standard s'appliquent à chaque patient.
+  <br>3. Des soins respectueux et une prévention efficace des infections vont de pair.
+ </div>
+ <p class="muted">Cette simulation pédagogique ne remplace pas la politique de l'hôpital local, l'avis d'un spécialiste ou l'évaluation clinique individuelle.</p>
+ <button onclick="startGame()">Commencer le défi 🚀</button>
+</section>
+
+<div class="grid">
+ <section class="card" id="play">
+  <p class="muted" id="stage">SCÉNARIO 1 SUR 5</p>
+  <h2 id="questionTitle">Le patient qui a besoin d'une chirurgie</h2>
+  <div class="progress"><div id="bar"></div></div>
+  <p id="story"></p>
+  <div id="choices"></div>
+  <div id="feedback" class="callout hidden" aria-live="polite"></div>
+  <div id="explain" class="warning hidden"></div>
+  <div id="next"></div>
+ </section>
+
+ <aside>
+  <section class="card">
+   <h2>🏅 Votre tableau de bord d'apprentissage</h2>
+   <p class="muted">Ces scores sont des scores de jeu et ne mesurent en rien la personnalité ou la compétence clinique d'une personne.</p>
+   <div class="stats">
+    <div class="stat"><b id="dignity">0</b><span class="small">Dignité</span></div>
+    <div class="stat"><b id="safety">0</b><span class="small">Sécurité</span></div>
+    <div class="stat"><b id="fairness">0</b><span class="small">Équité</span></div>
+   </div>
+   <p id="dashboard" class="muted">Vos décisions façonneront vos retours d'apprentissage.</p>
+  </section>
+  <section class="card">
+   <h2>🧠 Définitions de poche</h2>
+   <details>
+    <summary>PVVIH</summary>
+    <p>Personnes vivant avec le VIH. Cette terminologie place la personne avant la condition médicale.</p>
+   </details>
+   <details>
+    <summary>ART (Tar/ARV)</summary>
+    <p>Thérapie antirétrovirale : médicaments qui suppriment le VIH et aident les personnes à vivre plus longtemps et en meilleure santé.</p>
+   </details>
+   <details>
+    <summary>Nombre de CD4</summary>
+    <p>Analyse de sang permettant d'évaluer la fonction immunitaire. Le résultat ne représente qu'un élément de l'évaluation clinique globale d'une personne.</p>
+   </details>
+   <details>
+    <summary>Charge virale : IUD (Indétectable / Target Not Detected)</summary>
+    <p>« Cible non détectée » signifie que l'ARN du VIH n'a pas été détecté par le test à sa limite de détection. Cela ne signifie pas que le virus a été éradiqué de l'organisme.</p>
+   </details>
+   <details>
+    <summary>Précautions standard</summary>
+    <p>Mesures de prévention des infections de routine applicables à chaque patient. Elles comprennent l'hygiène des mains, la manipulation sécurisée des objets piquants/tranchants et le choix des EPI en fonction de l'exposition anticipée.</p>
+   </details>
+   <details>
+    <summary>I=I</summary>
+    <p>Indétectable = Intransmissible : une suppression virale durable empêche la transmission sexuelle du VIH. N'étendez pas ce slogan pour affirmer un risque nul en cas de blessure par piqûre d'aiguille ou d'exposition professionnelle au sang.</p>
+   </details>
+  </section>
+ </aside>
+</div>
+
+<section class="card">
+ <h2>🔎 Cinq scénarios, cinq occasions de repenser nos pratiques</h2>
+ <p>Chaque scénario pose la question de ce que doit faire une équipe de soins. Le retour d'information explique le principe sous-jacent au choix.</p>
+ <div id="scenarioList"></div>
+</section>
+
+<section class="card">
+ <h2>❓ Révision rapide : foire aux questions</h2>
+ <details>
+  <summary>1. Une personne vivant avec le VIH peut-elle subir une chirurgie pour un fibrome ?</summary>
+  <p>Oui, si l'intervention est cliniquement indiquée et que l'évaluation individuelle le confirme. Un patient sous antirétroviraux avec une charge virale supprimée et un taux de CD4 supérieur à 200 cellules/mm³ peut généralement subir la chirurgie planifiée comme n'importe quel patient sans VIH, tout en bénéficiant de la même évaluation préopératoire habituelle. L'indication gynécologique, les autres pathologies, les médicaments et les risques chirurgicaux restent pertinents.</p>
+ </details>
+ <details>
+  <summary>2. Une charge virale indétectable (IUD) signifie-t-elle qu'une exposition professionnelle est impossible ?</summary>
+  <p>Non. L'indétectabilité est un signe rassurant de suppression virale, et une suppression durable prévient la transmission sexuelle. Elle ne doit pas être utilisée pour déclarer nul le risque d'exposition professionnelle au sang. Si une piqûre d'aiguille ou toute autre exposition admissible survient, suivez immédiatement le protocole d'exposition professionnelle.</p>
+ </details>
+ <details>
+  <summary>3. Faut-il utiliser un « kit VIH » spécifique pour chaque patient séropositif connu ?</summary>
+  <p>Le statut VIH à lui seul ne justifie pas un kit d'EPI séparé. Utilisez les EPI indiqués par l'intervention et l'exposition anticipée conformément aux précautions standard. Si la politique locale impose un équipement pour un risque procédural réel, suivez cette politique pour ce risque spécifique, et non comme un rituel fondé sur la stigmatisation.</p>
+ </details>
+ <details>
+  <summary>4. Le bloc opératoire doit-il faire l'objet d'une désinfection spéciale après le cas d'une PVVIH ?</summary>
+  <p>Le nettoyage de routine, la désinfection environnementale et le traitement des instruments doivent suivre les mêmes procédures validées de prévention des infections que celles utilisées pour les autres patients. Nettoyez et désinfectez en fonction de la contamination et de l'intervention, et non uniquement sur la base du statut VIH.</p>
+ </details>
+ <details>
+  <summary>5. Le statut VIH à lui seul nécessite-t-il une mise en isolement en chambre seule ?</summary>
+  <p>Non. Le VIH à lui seul ne justifie pas l'isolement. L'isolement ou des précautions additionnelles peuvent s'avérer nécessaires pour une raison clinique distincte, telle qu'une autre infection nécessitant des précautions basées sur le mode de transmission.</p>
+ </details>
+ <details>
+  <summary>6. Que faire si un soignant subit une blessure par piqûre d'aiguille ?</summary>
+  <p>Suivez immédiatement le protocole d'exposition de l'établissement : lavez la zone à l'eau et au savon, signalez l'exposition sans délai, obtenez une évaluation de santé au travail en urgence et commencez la prophylaxie post-exposition (PPE) au VIH dès qu'elle est indiquée. N'attendez pas l'apparition de symptômes. Suivez les recommandations locales de dépistage et de suivi.</p>
+ </details>
+ <details>
+  <summary>7. Qu'en est-il d'un patient dont le statut VIH est inconnu ?</summary>
+  <p>Appliquez les précautions standard à tous les patients, quel que soit leur statut connu ou inconnu. Le dépistage et le consentement doivent respecter la politique en vigueur. Ne vous fiez pas à l'apparence, aux suppositions ou aux déclarations pour décider qui bénéficie de soins sécuritaires.</p>
+ </details>
+ <details>
+  <summary>8. Quelle est la différence entre la sécurité universelle et la peur liée au VIH ?</summary>
+  <p>La sécurité universelle consiste à appliquer systématiquement des précautions adaptées pour tout le monde. La peur liée au VIH consiste à ajouter des restrictions inutiles uniquement en raison d'un diagnostic. La première protège les personnes ; la seconde peut gaspiller des ressources et engendrer de la stigmatisation.</p>
+ </details>
+</section>
+
+<section class="card">
+ <h2>📚 Données probantes et lectures complémentaires</h2>
+ <p><b>Perioperative care in adults with HIV — New York State Department of Health AIDS Institute, 2024.</b><br>
+ <a href="https://www.hivguidelines.org/guideline/hiv-perioperative/" target="_blank" rel="noopener">Lire les lignes directrices périopératoires</a></p>
+ <p><b>CDC — Standard Precautions.</b><br>
+ <a href="https://www.cdc.gov/infection-control/hcp/isolation-precautions/precautions.html" target="_blank" rel="noopener">Lire les précautions pour tous les patients</a></p>
+ <p><b>CDC — Infection prevention and environmental cleaning.</b><br>
+ <a href="https://www.cdc.gov/infection-control/hcp/isolation-precautions/prevention.html" target="_blank" rel="noopener">Lire les orientations essentielles en matière de prévention</a></p>
+ <p><b>National AIDS Control Organisation (NACO), Inde.</b><br>
+ <a href="https://naco.mohfw.gov.in/" target="_blank" rel="noopener">Visiter le site officiel de la NACO pour les directives nationales</a></p>
+ <p class="muted">Avant toute utilisation officielle à l'hôpital, alignez cette page sur les directives actuelles de la NACO, la politique locale de prévention des infections et le protocole d'exposition professionnelle/PPE de l'établissement.</p>
+</section>
+
+<section class="card hidden" id="finish">
+ <h2>🎉 Défi terminé !</h2>
+ <p id="result"></p>
+ <h3>À discuter avec votre équipe</h3>
+ <ol>
+  <li>Quelle pratique protège à la fois les patients et le personnel, mais est parfois appliquée de manière incohérente ?</li>
+  <li>Quelle procédure supplémentaire a été décidée sur la base du statut VIH plutôt que sur une indication clinique spécifique ?</li>
+  <li>Comment réagiriez-vous avec respect si un collègue demandait un isolement inutile ?</li>
+  <li>Que faut-il faire immédiatement après une blessure par piqûre d'aiguille ?</li>
+ </ol>
+ <button onclick="startGame()">Rejouer ↻</button>
+</section>
+</main>
+
+<footer>
+ <b>Thanjavur Medical College (TMC) Case Conference Group</b><br>
+ <span class="small">Éducation pour la dignité, la sécurité des patients et des soins fondés sur des données probantes.</span><br><br>
+ <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70" target="_blank" rel="noopener">Groupe WhatsApp de la Conférence de cas du TMC</a>
+</footer>
+
+<script>
+const scenes=[
+{
+title:"1. Le patient qui a besoin d'une chirurgie",
+story:"Une femme vivant avec le VIH a besoin d'une intervention chirurgicale pour un fibrome utérin symptomatique. Elle prend un traitement antirétroviral (TAR), présente une charge virale indétectable et un taux de CD4 normal. L'équipe doit décider de la marche à suivre.",
+choices:[
+{t:"Procéder à l'opération indiquée après l'évaluation préopératoire individuelle habituelle",d:"Cela respecte son accès aux traitements tout en maintenant la sécurité clinique ordinaire.",p:[2,2,2],f:"Choix le mieux soutenu : le VIH à lui seul ne constitue pas une contre-indication à la chirurgie.",e:"Une charge virale supprimée et un taux de CD4 préservé sont rassurants. Évaluez l'indication du fibrome, les risques anesthésiques et chirurgicaux, les comorbidités, les médicaments et les besoins de récupération comme vous le feriez pour n'importe quel patient. Ne promettez pas un risque nul ni des résultats identiques pour chaque individu."},
+{t:"Refuser la chirurgie parce que la patiente a le VIH",d:"Éviter l'opération uniquement en raison du diagnostic.",p:[-2,-2,-2],f:"C'est discriminatoire et cela ne repose pas sur des données probantes.",e:"Le statut VIH à lui seul ne constitue pas un motif de refus de soins indiqués. Si un problème clinique réel existe, évaluez-le spécifiquement et impliquez les cliniciens concernés."},
+{t:"Reporter automatiquement l'intervention jusqu'à l'obtention d'un nouveau test VIH, malgré des résultats récents adéquats",d:"Répéter les tests simplement parce que le diagnostic semble préoccupant.",p:[-1,0,-1],f:"Un report automatique peut créer des obstacles sans apporter d'informations utiles.",e:"Examinez les résultats récents appropriés ainsi que l'état clinique. Les interventions d'urgence ou urgentes ne doivent pas être retardées pour obtenir les résultats des CD4 ou de la charge virale. Pour la chirurgie élective, suivez les directives actuelles et l'évaluation individuelle."}
+]},
+{
+title:"2. Le kit VIH spécial",
+story:"Avant l'opération, un membre de l'équipe demande un kit supplémentaire étiqueté « VIH », bien que la même intervention soit systématiquement réalisée en utilisant les EPI standard de l'hôpital et les procédures de sécurité pour les objets tranchants.",
+choices:[
+{t:"Utiliser les précautions standard et les EPI sélectionnés pour l'exposition anticipée",d:"Appliquer les mêmes règles de sécurité basées sur l'intervention et utilisées pour chaque patient.",p:[2,2,2],f:"Correct : les précautions doivent suivre la tâche et le risque d'exposition, et non la stigmatisation.",e:"Les gants, la blouse, la protection oculaire/faciale et les autres EPI sont choisis en fonction de l'exposition anticipée et de la politique locale. N'utilisez pas de kit séparé simplement parce que le statut VIH d'un patient est connu."},
+{t:"Utiliser des EPI supplémentaires uniquement parce que le patient est séropositif",d:"Ajouter de l'équipement parce que le diagnostic fait peur.",p:[-1,0,-2],f:"Davantage d'équipement n'est pas automatiquement plus sûr s'il n'est pas indiqué par la tâche.",e:"Les procédures inutiles fondées sur le diagnostic peuvent renforcer la stigmatisation et gaspiller du matériel. Des EPI correctement sélectionnés et une pratique cohérente constituent l'objectif de sécurité."},
+{t:"Utiliser moins d' EPI parce que la charge virale est indétectable",d:"Partir du principe que la suppression virale élimine tout risque professionnel lié au sang.",p:[0,-2,0],f:"Ce choix traduit une mauvaise compréhension du principe I=I.",e:"I=I fait référence à la transmission sexuelle en cas de suppression virale durable. Continuez à appliquer les précautions standard appropriées et gérez les expositions professionnelles conformément au protocole."}
+]},
+{
+title:"3. La chambre d'isolement",
+story:"Un membre du personnel soignant propose de placer un patient stable vivant avec le VIH dans une chambre séparée uniquement en raison de son statut VIH. Il n'y a aucune autre raison médicale justifiant l'isolement.",
+choices:[
+{t:"Utiliser l'attribution de chambre ordinaire appropriée, sauf si une autre indication clinique exige l'isolement",d:"Protéger la confidentialité et appliquer les critères d'isolement de manière cohérente.",p:[2,2,2],f:"Correct : le VIH à lui seul ne nécessite pas d'isolement.",e:"Les précautions additionnelles reposent sur une infection spécifique ou une indication clinique, et non sur le statut VIH en soi. Préservez la confidentialité des informations du patient."},
+{t:"Isoler le patient pour rassurer les autres membres du personnel et les patients",d:"Faire de l'anxiété la raison de l'isolement.",p:[-2,0,-2],f:"Réconforter autrui ne constitue pas une indication clinique justifiant un isolement discriminatoire.",e:"Répondez aux préoccupations par l'éducation et par des pratiques cohérentes de prévention des infections, et non en isolant un patient."},
+{t:"Demander au patient d'expliquer son diagnostic au service",d:"Utiliser la divulgation pour rassurer tout le monde.",p:[-2,0,-2],f:"Cela peut violer la vie privée et la dignité.",e:"Les informations médicales confidentielles ne doivent être partagées que sur une base légale et de nécessité absolue d'en connaître. L'éducation du personnel ne doit pas dépendre de la divulgation de l'identité d'un patient."}
+]},
+{
+title:"4. Le bloc opératoire après la chirurgie",
+story:"Une fois que le patient a quitté le bloc, quelqu'un demande une désinfection supplémentaire parce que le patient avait le VIH. Le bloc a déjà été utilisé dans le cadre des procédures normales.",
+choices:[
+{t:"Effectuer un nettoyage de routine, une désinfection appropriée et un traitement des instruments selon le protocole standard",d:"Suivre la procédure validée pour la salle, l'équipement et toute contamination éventuelle.",p:[2,2,2],f:"Correct : le statut VIH à lui seul ne nécessite pas de rituel spécial de nettoyage du bloc.",e:"Le nettoyage environnemental de routine et le traitement validé des instruments sont essentiels pour tous les patients. Réagissez à une contamination réelle ou à d'autres exigences spécifiques aux agents pathogènes conformément à la politique en vigueur."},
+{t:"Répéter toute la désinfection du bloc uniquement à cause du VIH",d:"Effectuer un nettoyage accru sans contamination spécifique ni motif réglementaire.",p:[0,1,-2],f:"Un travail supplémentaire ne garantit pas automatiquement une sécurité accrue.",e:"Suivez les mêmes règles validées de nettoyage et de retraitement. Les ajouts fondés sur le diagnostic peuvent gaspiller du temps et des ressources sans améliorer la lutte contre les infections."},
+{t:"Omettre le nettoyage parce que la charge virale était indétectable (IUD)",d:"Supposer que la suppression virale rend le nettoyage normal inutile.",p:[0,-2,0],f:"Incorrect : le nettoyage de routine reste essentiel.",e:"Ne modifiez pas les normes de nettoyage de routine en fonction de la charge virale. L'hygiène environnementale et le retraitement du matériel demeurent nécessaires pour chaque patient."}
+]},
+{
+title:"5. Une blessure par piqûre d'aiguille",
+story:"Au cours d'une intervention, un professionnel de santé subit une blessure par piqûre d'aiguille impliquant le sang d'un patient connu pour vivre avec le VIH. Que doit-il se passer ensuite ?",
+choices:[
+{t:"Laver la zone, signaler immédiatement, obtenir une évaluation urgente et commencer la PPE selon les indications",d:"Utiliser le protocole d'exposition de l'établissement sans délai.",p:[1,2,1],f:"Correct : gérer l'exposition rapidement et en toute confidentialité.",e:"Ne vous fiez pas à la charge virale du patient ni à des suppositions pour faire l'impasse sur l'évaluation. Les décisions relatives à la PPE dépendent des détails de l'exposition et des directives actuelles. Commencez la PPE indiquée dès que possible ; ne retardez pas le signalement."},
+{t:"Ignorer la blessure parce que le patient prend un traitement antirétroviral (TAR)",d:"Supposer qu'une charge virale indétectable rend la transmission professionnelle impossible.",p:[0,-2,0],f:"Dangereux : l'indétectabilité ne doit pas servir à écarter une exposition professionnelle.",e:"La suppression virale durable est très rassurante, mais une exposition qualifiante au sang nécessite tout de même une évaluation professionnelle rapide dans le cadre du protocole professionnel."},
+{t:"Blâmer le patient ou l'identifier publiquement",d:"Mettre en garde les collègues en divulguant le diagnostic du patient.",p:[-2,-1,-2],f:"Le blâme et la divulgation inutile ne rendent pas le lieu de travail plus sûr.",e:"Gérez l'exposition de manière confidentielle, documentez-la de façon appropriée et utilisez le parcours clinique établi. Concentrez-vous sur des soins sûrs, et non sur les reproches."}
+]}
+];
+
+let idx=0,score={d:0,s:0,f:0},history=[];
+const $=id=>document.getElementById(id);
+function startGame(){
+ idx=0;score={d:0,s:0,f:0};history=[];
+ $("finish").classList.add("hidden");
+ $("play").classList.remove("hidden");
+ render();
+ $("play").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function render(){
+ const x=scenes[idx];
+ $("stage").textContent="SCÉNARIO "+(idx+1)+" SUR "+scenes.length;
+ $("questionTitle").textContent=x.title;
+ $("story").textContent=x.story;
+ $("bar").style.width=(idx/scenes.length*100)+"%";
+ $("choices").innerHTML="";
+ $("feedback").classList.add("hidden");
+ $("explain").classList.add("hidden");
+ $("next").innerHTML="";
+ x.choices.forEach((c,i)=>{
+  let b=document.createElement("button");
+  b.className="option";
+  let strong=document.createElement("strong");
+  strong.textContent=String.fromCharCode(65+i)+". "+c.t;
+  let span=document.createElement("span");span.textContent=c.d;
+  b.append(strong,span);b.onclick=()=>choose(i);
+  $("choices").appendChild(b);
+ });
+}
+function choose(i){
+ const c=scenes[idx].choices[i];
+ score.d+=c.p[0];score.s+=c.p[1];score.f+=c.p[2];
+ history.push({title:scenes[idx].title,choice:c.t});
+ $("dignity").textContent=score.d;
+ $("safety").textContent=score.s;
+ $("fairness").textContent=score.f;
+ $("dashboard").textContent="Vous avez complété "+(idx+1)+" scénario(s) sur "+scenes.length+". Lisez l'explication, puis continuez.";
+ $("choices").innerHTML="";
+ $("feedback").textContent=c.f;
+ $("feedback").classList.remove("hidden");
+ $("explain").innerHTML="<b>Pourquoi ?</b><br>"+c.e;
+ $("explain").classList.remove("hidden");
+ let b=document.createElement("button");b.className="teal";
+ b.textContent=idx===scenes.length-1?"Voir mon résumé d'apprentissage 🎉":"Scénario suivant →";
+ b.onclick=()=>{idx++;if(idx<scenes.length)render();else finish()};
+ $("next").appendChild(b);
+}
+function finish(){
+ $("bar").style.width="100%";
+ $("play").classList.add("hidden");
+ $("finish").classList.remove("hidden");
+ let total=score.d+score.s+score.f;
+ let msg=total>=20?"Vos choix ont constamment favorisé la dignité, la sécurité et l'équité des traitements. Continuez à appliquer ces principes dans vos décisions cliniques réelles.":
+ total>=8?"Vous avez identifié plusieurs pratiques fondées sur des données probantes. Révisez les explications pour les choix où la peur ou l'habitude ont pu influencer une décision.":
+ "Cet exercice a mis en lumière des pistes pour repenser des pratiques familières. Révisez les définitions de poche et la foire aux questions, puis réessayez.";
+ $("result").textContent=msg+" Les scores du jeu servent de pistes de réflexion et non d'évaluation formelle. Dignité : "+score.d+", Sécurité : "+score.s+", Équité : "+score.f+".";
+ $("finish").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function buildList(){
+ $("scenarioList").innerHTML=scenes.map((s,i)=>
+  '<div style="padding:9px 0;border-bottom:1px solid var(--line)"><b>Scénario '+(i+1)+' :</b> '+s.title.replace(/^\d+\.\s*/,'')+'</div>'
+ ).join("");
+}
+buildList();startGame();
+</script>
+</body>
+</html>
