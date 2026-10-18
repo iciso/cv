@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SALT Facilitator Compass: 25 Maxims & Daily Practice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            earth: {
+              50: '#fbf8f5',
+              100: '#f6f0ea',
+              200: '#ede0d4',
+              300: '#dfc7b4',
+              600: '#9d6b49',
+              700: '#7f5235',
+              800: '#64412a',
+              900: '#432918'
+            },
+            salt: {
+              emerald: '#1b7a5a',
+              lightgreen: '#e8f5ed',
+              terracotta: '#c85a32',
+              amber: '#d97706',
+              warmgray: '#f9f9fb'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Card Flip 3D Perspective */
+    .perspective-1000 { perspective: 1000px; }
+    .transform-style-3d { transform-style: preserve-3d; }
+    .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .rotate-y-180 { transform: rotateY(180deg); }
+    
+    /* Smooth transitions */
+    .transition-flip { transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1); }
+    
+    /* Custom Scrollbar for maxims list */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1ede8; }
+    ::-webkit-scrollbar-thumb { background: #dfc7b4; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #9d6b49; }
+  </style>
+</head>
+<body class="bg-earth-50 text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-salt-emerald selection:text-white">
+
+  <!-- TOP APP HEADER -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-earth-200 shadow-sm">
+    <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-xl bg-salt-emerald flex items-center justify-center text-white font-bold text-lg shadow-sm">
+          🧭
+        </div>
+        <div>
+          <h1 class="text-sm font-bold text-earth-900 leading-tight tracking-tight" id="ui-title">SALT Facilitator Compass</h1>
+          <p class="text-[11px] text-earth-600 font-medium tracking-wide" id="ui-subtitle">CLCP & Community-Led Development</p>
+        </div>
+      </div>
+
+      <!-- Language Switcher & Browse Maxims button -->
+      <div class="flex items-center space-x-2">
+        <button id="browse-btn" onclick="openDrawer()" class="px-2.5 py-1.5 rounded-lg border border-earth-200 text-xs font-medium text-earth-800 hover:bg-earth-100 transition flex items-center space-x-1" title="View all 25 Maxims">
+          <span>📜</span>
+          <span class="hidden sm:inline" id="ui-browse-btn">All 25</span>
+        </button>
+        <div class="flex rounded-lg bg-earth-100 p-0.5 border border-earth-200 text-xs font-semibold">
+          <button id="lang-en" onclick="setLanguage('en')" class="px-2 py-1 rounded-md transition shadow-xs">EN</button>
+          <button id="lang-fr" onclick="setLanguage('fr')" class="px-2 py-1 rounded-md transition">FR</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN TABS NAVIGATION -->
+    <nav class="max-w-2xl mx-auto px-4 flex justify-between border-t border-earth-100">
+      <button onclick="switchTab('prompt')" id="tab-btn-prompt" class="tab-btn flex-1 py-3 text-center text-xs font-semibold text-salt-emerald border-b-2 border-salt-emerald flex items-center justify-center space-x-1.5 transition">
+        <span>✨</span>
+        <span id="nav-prompt">Story Prompt</span>
+      </button>
+      <button onclick="switchTab('mirror')" id="tab-btn-mirror" class="tab-btn flex-1 py-3 text-center text-xs font-medium text-slate-500 border-b-2 border-transparent hover:text-earth-800 flex items-center justify-center space-x-1.5 transition">
+        <span>🪞</span>
+        <span id="nav-mirror">Ego Mirror</span>
+      </button>
+      <button onclick="switchTab('clinic')" id="tab-btn-clinic" class="tab-btn flex-1 py-3 text-center text-xs font-medium text-slate-500 border-b-2 border-transparent hover:text-earth-800 flex items-center justify-center space-x-1.5 transition">
+        <span>🌱</span>
+        <span id="nav-clinic">Stumble Clinic</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main class="flex-1 max-w-2xl w-full mx-auto p-4 sm:p-5">
+
+    <!-- TAB 1: STORY PROMPT / DAILY COMPASS CARD -->
+    <section id="section-prompt" class="tab-content space-y-4">
+      <div class="text-center space-y-1 mb-2">
+        <h2 class="text-lg font-bold text-earth-900" id="prompt-heading">Daily Compass Card</h2>
+        <p class="text-xs text-earth-600 max-w-md mx-auto" id="prompt-desc">Tap to flip between the inner self-reflection and today's SALT Maxim action.</p>
+      </div>
+
+      <!-- CARD CONTROLS -->
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center space-x-2">
+          <label for="maxim-select" class="text-xs text-slate-500 font-medium" id="lbl-maxim">Select #:</label>
+          <select id="maxim-select" onchange="loadSpecificCard(this.value)" class="bg-white border border-earth-200 text-xs rounded-lg px-2 py-1 text-earth-900 focus:outline-none focus:ring-1 focus:ring-salt-emerald">
+            <!-- options generated dynamically -->
+          </select>
+        </div>
+        <button onclick="drawRandomCard()" class="text-xs font-semibold text-white bg-salt-emerald hover:bg-emerald-800 px-3 py-1.5 rounded-lg shadow-sm flex items-center space-x-1 transition active:scale-95">
+          <span>🎲</span>
+          <span id="btn-draw">Draw Random</span>
+        </button>
+      </div>
+
+      <!-- 3D FLIPPABLE CARD CONTAINER -->
+      <div class="w-full h-[380px] sm:h-[400px] perspective-1000 cursor-pointer" onclick="toggleCardFlip()">
+        <div id="flashcard" class="relative w-full h-full transform-style-3d transition-flip">
+          
+          <!-- CARD FRONT (Introspection / Reflection) -->
+          <div class="absolute inset-0 backface-hidden bg-white border-2 border-earth-200 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-md hover:border-earth-300">
+            <div>
+              <div class="flex items-center justify-between border-b border-earth-100 pb-3">
+                <span class="inline-flex items-center text-[11px] font-bold tracking-wider uppercase text-salt-terracotta bg-red-50 px-2 py-0.5 rounded-md" id="card-tag-front">
+                  Inner Introspection
+                </span>
+                <span id="card-num-front" class="text-xs font-mono font-bold text-earth-700 bg-earth-100 px-2 py-0.5 rounded">
+                  # 01
+                </span>
+              </div>
+              <div class="mt-8 sm:mt-10 text-center px-2">
+                <div class="text-3xl mb-3">🪞</div>
+                <h3 id="card-question" class="text-base sm:text-lg font-semibold text-earth-900 leading-snug">
+                  <!-- Dynamic Question -->
+                </h3>
+              </div>
+            </div>
+
+            <div class="bg-earth-50 rounded-xl p-3 text-center border border-earth-100">
+              <p class="text-xs text-earth-600 italic" id="card-front-hint">
+                💡 Tap card to discover the SALT Maxim & Field Micro-Action
+              </p>
+            </div>
+          </div>
+
+          <!-- CARD BACK (Maxim & Action) -->
+          <div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-earth-100 via-white to-earth-50 border-2 border-salt-emerald/30 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-md">
+            <div>
+              <div class="flex items-center justify-between border-b border-earth-200 pb-3">
+                <span class="inline-flex items-center text-[11px] font-bold tracking-wider uppercase text-salt-emerald bg-salt-lightgreen px-2 py-0.5 rounded-md" id="card-tag-back">
+                  CLCP / SALT Maxim
+                </span>
+                <span id="card-num-back" class="text-xs font-mono font-bold text-salt-emerald bg-emerald-50 px-2 py-0.5 rounded">
+                  # 01
+                </span>
+              </div>
+              <div class="mt-4">
+                <p class="text-xs font-bold text-earth-600 uppercase tracking-wide" id="lbl-truth">Universal Truth:</p>
+                <h3 id="card-maxim" class="text-sm sm:text-base font-bold text-earth-900 mt-1 leading-snug">
+                  <!-- Dynamic Maxim -->
+                </h3>
+              </div>
+              <div class="mt-4 bg-emerald-50/80 border border-emerald-100 rounded-xl p-3">
+                <p class="text-[11px] font-bold text-salt-emerald uppercase tracking-wider flex items-center space-x-1" id="lbl-micro">
+                  <span>🌱</span>
+                  <span>Today's Field Micro-Practice:</span>
+                </p>
+                <p id="card-micro" class="text-xs text-slate-700 mt-1 leading-relaxed">
+                  <!-- Dynamic Micro-practice -->
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-earth-200">
+              <span class="text-[11px] text-earth-600 italic" id="card-back-hint">Tap to flip back</span>
+              <button onclick="event.stopPropagation(); sharePromptWhatsApp();" class="text-xs bg-[#25D366] hover:bg-[#20ba5a] text-white font-semibold px-3 py-1.5 rounded-lg shadow-xs flex items-center space-x-1 transition active:scale-95">
+                <span>💬</span>
+                <span id="btn-share-card">Share to WhatsApp</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+      <p class="text-[11px] text-center text-slate-400" id="prompt-footer-hint">Tip: Facilitators in triads draw one card each morning as a quiet intention.</p>
+    </section>
+
+    <!-- TAB 2: EGO MIRROR (MICRO-SIMULATIONS) -->
+    <section id="section-mirror" class="tab-content hidden space-y-4">
+      <div class="text-center space-y-1 mb-2">
+        <h2 class="text-lg font-bold text-earth-900" id="mirror-heading">Ego Mirror Dilemmas</h2>
+        <p class="text-xs text-earth-600 max-w-md mx-auto" id="mirror-desc">Field simulations to test our natural urge to take control versus holding space.</p>
+      </div>
+
+      <!-- Dilemma Selector Tabs -->
+      <div class="flex overflow-x-auto space-x-2 py-1 scrollbar-none" id="dilemma-pill-bar">
+        <!-- Generated Dynamically -->
+      </div>
+
+      <!-- Dilemma Card -->
+      <div class="bg-white border border-earth-200 rounded-2xl p-5 shadow-sm space-y-4">
+        <div>
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-earth-600 bg-earth-100 px-2 py-0.5 rounded" id="dilemma-context-tag">Field Dilemma</span>
+            <span class="text-xs font-mono font-bold text-earth-700 bg-earth-100 px-2 py-0.5 rounded" id="dilemma-num-indicator"># 01 / 15</span>
+          </div>
+          <h3 id="dilemma-title" class="text-base font-bold text-earth-900 mt-2"></h3>
+          <p id="dilemma-story" class="text-xs text-slate-600 mt-2 leading-relaxed bg-earth-50 p-3.5 rounded-xl border border-earth-100 font-serif italic"></p>
+          <p id="dilemma-prompt-question" class="text-xs font-semibold text-earth-800 mt-3 flex items-center gap-1.5"></p>
+        </div>
+
+        <!-- Choice Options -->
+        <div class="space-y-2.5 pt-1" id="dilemma-options-box">
+          <!-- Dynamic Buttons -->
+        </div>
+
+        <!-- Feedback & Consequence Area -->
+        <div id="dilemma-feedback-box" class="hidden rounded-xl p-4 border transition-all duration-300">
+          <div class="flex items-start space-x-2.5">
+            <span id="dilemma-fb-icon" class="text-xl"></span>
+            <div class="space-y-2 flex-1">
+              <h4 id="dilemma-fb-verdict" class="text-xs font-bold uppercase tracking-wide"></h4>
+              <p id="dilemma-fb-story" class="text-xs text-slate-700 leading-relaxed"></p>
+              
+              <div class="bg-white/80 p-3 rounded-lg border border-earth-200 mt-2">
+                <span class="text-[10px] font-bold text-salt-emerald uppercase tracking-wider block" id="lbl-dilemma-maxim">Associated Maxim:</span>
+                <p id="dilemma-fb-maxim" class="text-xs font-semibold text-earth-900 mt-0.5"></p>
+              </div>
+
+              <div class="pt-2 flex justify-end">
+                <button onclick="shareDilemmaWhatsApp()" class="text-xs bg-[#25D366] hover:bg-[#20ba5a] text-white font-semibold px-3 py-1.5 rounded-lg flex items-center space-x-1 shadow-xs transition active:scale-95">
+                  <span>💬</span>
+                  <span id="btn-share-dilemma">Discuss with Triad on WhatsApp</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 3: THE STUMBLE CLINIC (PEER DEBRIEF BUILDER) -->
+    <section id="section-clinic" class="tab-content hidden space-y-4">
+      <div class="text-center space-y-1 mb-2">
+        <h2 class="text-lg font-bold text-earth-900" id="clinic-heading">The Stumble Clinic</h2>
+        <p class="text-xs text-earth-600 max-w-md mx-auto" id="clinic-desc">In CLCP, our stumble is where the learning begins. Prepare your 1-minute peer reflection.</p>
+      </div>
+
+      <div class="bg-white border border-earth-200 rounded-2xl p-5 shadow-sm space-y-4">
+        <!-- Step 1 -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-earth-800 flex items-center justify-between" for="stumble-input-sit">
+            <span id="clinic-lbl-step1">1. The Field Stumble (What happened?):</span>
+            <span class="text-[10px] text-slate-400 font-normal">Factual & brief</span>
+          </label>
+          <textarea id="stumble-input-sit" rows="2" class="w-full text-xs p-3 rounded-xl border border-earth-200 focus:ring-1 focus:ring-salt-emerald focus:outline-none bg-earth-50/50" placeholder="e.g. During the youth dialogue in Kabala, I answered for them when the elder looked skeptical..."></textarea>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-earth-800 flex items-center justify-between" for="stumble-input-emo">
+            <span id="clinic-lbl-step2">2. The Ego Reflex (What triggered in you?):</span>
+            <span class="text-[10px] text-slate-400 font-normal">Honest self-check</span>
+          </label>
+          <input type="text" id="stumble-input-emo" class="w-full text-xs p-3 rounded-xl border border-earth-200 focus:ring-1 focus:ring-salt-emerald focus:outline-none bg-earth-50/50" placeholder="e.g. Fear of looking incompetent; urge to save face; impatience with silence...">
+        </div>
+
+        <!-- Step 3 -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-earth-800" for="stumble-maxim-select" id="clinic-lbl-step3">
+            3. The Maxim that illuminates this moment:
+          </label>
+          <select id="stumble-maxim-select" class="w-full text-xs p-2.5 rounded-xl border border-earth-200 focus:ring-1 focus:ring-salt-emerald focus:outline-none bg-white text-earth-900">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <!-- Action Generate -->
+        <div class="pt-2">
+          <button onclick="generateStumbleNote()" class="w-full py-2.5 bg-earth-800 hover:bg-earth-900 text-white font-semibold text-xs rounded-xl shadow-xs transition active:scale-98 flex items-center justify-center space-x-1.5">
+            <span>📝</span>
+            <span id="clinic-btn-generate">Generate Structured Note</span>
+          </button>
+        </div>
+
+        <!-- Generated Preview & WhatsApp Dispatch -->
+        <div id="stumble-preview-container" class="hidden space-y-3 pt-3 border-t border-earth-100">
+          <div class="bg-earth-50 rounded-xl p-3 border border-earth-200">
+            <p class="text-[10px] uppercase font-bold text-earth-600 mb-1" id="clinic-lbl-preview">WhatsApp Preview:</p>
+            <pre id="stumble-preview-text" class="text-xs text-slate-800 font-sans whitespace-pre-wrap leading-relaxed select-all bg-white p-2.5 rounded-lg border border-earth-100"></pre>
+          </div>
+
+          <div class="flex space-x-2">
+            <button onclick="copyStumbleNote()" class="flex-1 py-2 bg-earth-100 hover:bg-earth-200 text-earth-800 font-semibold text-xs rounded-xl border border-earth-200 transition text-center" id="clinic-btn-copy">
+              📋 Copy Text
+            </button>
+            <button onclick="sendStumbleWhatsApp()" class="flex-1 py-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-semibold text-xs rounded-xl shadow-xs transition flex items-center justify-center space-x-1.5">
+              <span>💬</span>
+              <span id="clinic-btn-whatsapp">Send to WhatsApp</span>
+            </button>
+          </div>
+          <p id="clinic-copied-toast" class="hidden text-center text-xs text-salt-emerald font-semibold">✓ Copied to clipboard!</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ALL 25 MAXIMS MODAL / DRAWER -->
+  <div id="maxims-drawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs hidden flex justify-end transition-opacity">
+    <div class="bg-white w-full max-w-lg h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-200">
+      <div class="p-4 border-b border-earth-200 flex items-center justify-between bg-earth-50">
+        <div>
+          <h2 class="text-sm font-bold text-earth-900" id="drawer-title">The 25 SALT / CLCP Maxims</h2>
+          <p class="text-[11px] text-earth-600" id="drawer-sub">Principles for Community-Led Facilitators</p>
+        </div>
+        <button onclick="closeDrawer()" class="w-8 h-8 rounded-full bg-earth-200 hover:bg-earth-300 text-earth-800 flex items-center justify-center text-base font-bold transition">✕</button>
+      </div>
+
+      <!-- Search bar inside drawer -->
+      <div class="p-3 border-b border-earth-100 bg-white">
+        <input type="text" id="drawer-search" oninput="filterMaxims(this.value)" placeholder="Search maxims..." class="w-full text-xs px-3 py-2 rounded-lg border border-earth-200 focus:outline-none focus:ring-1 focus:ring-salt-emerald">
+      </div>
+
+      <!-- Scrollable Maxims List -->
+      <div id="maxims-list-container" class="flex-1 overflow-y-auto p-4 space-y-3">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div class="p-3 border-t border-earth-200 bg-earth-50 text-center">
+        <button onclick="closeDrawer()" class="text-xs text-earth-700 font-semibold px-4 py-1.5 rounded-lg border border-earth-300 hover:bg-earth-200 transition" id="drawer-close-btn">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto border-t border-earth-200 bg-white/80 py-4 text-center text-xs text-earth-600">
+    <div class="max-w-2xl mx-auto px-4 space-y-1">
+      <p class="font-medium">
+        <span class="text-salt-emerald font-bold">SALT</span>: Support • Appreciate • Listen-Learn • Transfer
+      </p>
+      <p class="text-[11px] text-slate-400">
+        Based on the Community Life Competence Process (The Constellation). For field facilitators globally.
+      </p>
+    </div>
+  </footer>
+
+  <!-- DATA & APPLICATION LOGIC SCRIPT -->
+  <script>
+    /* ==========================================================
+       DATA: 25 BILINGUAL MAXIMS, REFLECTIONS & MICRO-PRACTICES
+       ========================================================== */
+    const MAXIMS_DATA = [
+      {
+        id: 1,
+        en: {
+          maxim: "Having all the answers doesn't make you a facilitator. It awakens the community when you step back and trust their wisdom.",
+          question: "Am I tempted to show off my expert solutions instead of drawing out the community's inherent brilliance?",
+          micro: "In your next session, refrain from offering any solution for the first 30 minutes. Ask: 'What have you already tried that showed promise?'"
+        },
+        fr: {
+          maxim: "Avoir toutes les réponses ne fait pas de vous un facilitateur. C'est en faisant un pas en retrait et en faisant confiance à leur sagesse que la communauté s'éveille.",
+          question: "Suis-je tenté de brandir mes solutions d'expert au lieu de révéler le génie propre de la communauté ?",
+          micro: "Lors de votre prochaine rencontre, ne proposez aucune solution pendant les 30 premières minutes. Demandez : « Qu'avez-vous déjà tenté qui a porté des fruits ? »"
+        }
+      },
+      {
+        id: 2,
+        en: {
+          maxim: "Communities don't judge your methodology. They remember how deeply you respected their stories and validated their lived experiences.",
+          question: "Am I treating community members as data points for a framework, or as human beings with sacred stories?",
+          micro: "Before taking any notes today, look each speaker directly in the eyes and nod with wholehearted presence."
+        },
+        fr: {
+          maxim: "Les communautés ne jugent pas votre méthodologie. Elles se souviennent à quel point vous avez respecté leurs récits et valorisé leur vécu.",
+          question: "Est-ce que je traite les membres de la communauté comme des données d'un projet, ou comme des êtres humains porteurs d'histoires sacrées ?",
+          micro: "Avant d'écrire quoi que ce soit aujourd'hui, regardez chaque intervenant dans les yeux et offrez une présence chaleureuse et attentive."
+        }
+      },
+      {
+        id: 3,
+        en: {
+          maxim: "The facilitator who listens deeply catalyzes more transformation than the one who speaks with eloquent development jargon.",
+          question: "Am I speaking to impress donors, or listening so carefully that people feel safe to speak their deepest truths?",
+          micro: "Erase technical acronyms (NGO, KPI, capacity building) from your vocabulary today. Speak only the language of everyday life."
+        },
+        fr: {
+          maxim: "Le facilitateur qui écoute profondément catalyse plus de transformations que celui qui manie le jargon du développement avec éloquence.",
+          question: "Est-ce que je parle pour impressionner ou est-ce que j'écoute au point que les gens se sentent en confiance pour dire leur vérité ?",
+          micro: "Bannissez tous les acronymes de votre vocabulaire aujourd'hui. Parlez uniquement la langue simple de la vie quotidienne."
+        }
+      },
+      {
+        id: 4,
+        en: {
+          maxim: "Quiet presence builds trust. Genuine appreciation of local strengths creates lasting momentum.",
+          question: "Did I spend more time hunting for problems and deficiencies today, or spotting existing resilience?",
+          micro: "Voice at least three specific, sincere appreciations of local resilience before mid-day."
+        },
+        fr: {
+          maxim: "Une présence silencieuse bâtit la confiance. L'appréciation sincère des forces locales engendre un élan durable.",
+          question: "Ai-je passé plus de temps aujourd'hui à traquer les manques et les problèmes, ou à repérer la résilience existante ?",
+          micro: "Exprimez au moins trois appréciations concrètes et sincères sur les forces locales avant midi."
+        }
+      },
+      {
+        id: 5,
+        en: {
+          maxim: "Community ownership grows fastest when you deliberately step out of the spotlight and leave the room.",
+          question: "Can this initiative continue without my physical presence, or have I made myself the bottleneck?",
+          micro: "During a small group breakout, physically stand up and step outside under the tree. Let them conclude without you."
+        },
+        fr: {
+          maxim: "L'appropriation communautaire grandit plus vite lorsque vous quittez délibérément le devant de la scène pour laisser la place.",
+          question: "Cette initiative peut-elle continuer sans ma présence, ou suis-je devenu le goulot d'étranglement ?",
+          micro: "Pendant un échange en petits groupes, levez-vous et allez prendre l'air sous un arbre. Laissez-les conclure entre eux."
+        }
+      },
+      {
+        id: 6,
+        en: {
+          maxim: "Lasting social change rarely comes from formal project proposals. It emerges from genuine human relationships and mutual trust.",
+          question: "Am I prioritizing the project schedule over building a bond of unconditional human respect?",
+          micro: "Spend 10 minutes sharing tea or water with an elder or youth without speaking about the project at all."
+        },
+        fr: {
+          maxim: "Le changement durable naît rarement des dossiers de projet. Il émerge des relations humaines authentiques et de la confiance mutuelle.",
+          question: "Suis-je en train de privilégier le calendrier du projet au détriment du respect et de la relation humaine ?",
+          micro: "Partagez 10 minutes autour d'un thé avec un aîné ou un jeune sans évoquer le moindre mot sur le projet."
+        }
+      },
+      {
+        id: 7,
+        en: {
+          maxim: "The facilitator running the most community meetings is rarely the one fostering authentic, self-sustaining local action.",
+          question: "Is my busy calendar creating dependent gatherings or independent local action?",
+          micro: "Ask the community: 'When would you like to meet on your own without any external visitors?'"
+        },
+        fr: {
+          maxim: "L'animateur qui accumule le plus de réunions est rarement celui qui favorise une action locale autonome et pérenne.",
+          question: "Mon emploi du temps surchargé engendre-t-il la dépendance ou nourrit-il une initiative autonome ?",
+          micro: "Demandez au groupe : « Quand aimeriez-vous vous réunir seuls, sans aucun intervenant extérieur ? »"
+        }
+      },
+      {
+        id: 8,
+        en: {
+          maxim: "Trying to solve every issue yourself is the fastest route to dependency and burnout. Let the community carry its own journey.",
+          question: "Am I carrying burdens that belong to the collective shoulders of the community?",
+          micro: "When someone asks you 'What should we do about this crisis?', smile and reply: 'You know this place best. What do you see?'"
+        },
+        fr: {
+          maxim: "Vouloir résoudre tous les soucis est le chemin le plus court vers l'épuisement et l'assistanat. Laissez la communauté cheminer par elle-même.",
+          question: "Suis-je en train de porter sur mes épaules un fardeau qui appartient à la responsabilité collective ?",
+          micro: "Quand on vous demande « Que devons-nous faire ? », souriez et répondez : « Vous connaissez ce lieu mieux que quiconque. Qu'en pensez-vous ? »"
+        }
+      },
+      {
+        id: 9,
+        en: {
+          maxim: "Spontaneous community dialogue is rooted in unseen preparation—grounded in self-awareness, humility, and the SALT mindset.",
+          question: "Did I ground my heart in appreciation before walking into this village today?",
+          micro: "Take 3 silent breaths at the village border. Remind yourself: 'I come to discover and appreciate, not to teach.'"
+        },
+        fr: {
+          maxim: "Le dialogue spontané s'enracine dans une préparation invisible : celle de la posture intérieure, de l'humilité et de l'esprit SALT.",
+          question: "Ai-je préparé mon cœur à l'appréciation avant de franchir le seuil de cette communauté ?",
+          micro: "Prenez trois respirations conscientes à l'entrée du village. Dites-vous : « Je viens pour découvrir et apprécier, non pour faire la leçon. »"
+        }
+      },
+      {
+        id: 10,
+        en: {
+          maxim: "Facilitating dozens of visits doesn't make you wiser. Intentional, shared reflection (Learn) with the community does.",
+          question: "Are we rushing from one village visit to the next without pausing to harvest the lessons?",
+          micro: "Dedicate the final 15 minutes of every meeting to: 'What did we discover about ourselves today?'"
+        },
+        fr: {
+          maxim: "Multiplier les visites de terrain ne rend pas plus sage. Seule la réflexion partagée et intentionnelle (Apprendre) le permet.",
+          question: "Courons-nous d'une visite à l'autre sans jamais prendre le temps de récolter les leçons vécues ?",
+          micro: "Consacrez les 15 dernières minutes de chaque rencontre à cette question : « Qu'avons-nous découvert sur nous-mêmes aujourd'hui ? »"
+        }
+      },
+      {
+        id: 11,
+        en: {
+          maxim: "You do not sustain change on pure goodwill. You sustain it through consistent, community-owned practices and local support systems.",
+          question: "Have we anchored today's community enthusiasm in a realistic, peer-supported local rhythm?",
+          micro: "Encourage community pairs to commit to checking in on each other once next week without you."
+        },
+        fr: {
+          maxim: "On ne pérennise pas le changement avec de simples vœux pieux, mais grâce à des pratiques ancrées et un soutien mutuel local.",
+          question: "Avons-nous ancré l'enthousiasme d'aujourd'hui dans un rythme communautaire réaliste et soutenu par les pairs ?",
+          micro: "Invitez les membres à former des binômes pour prendre des nouvelles l'un de l'autre la semaine prochaine sans vous."
+        }
+      },
+      {
+        id: 12,
+        en: {
+          maxim: "Doing everything for the community doesn't show commitment. It robs them of agency and the chance to lead their own development.",
+          question: "Did I take a task out of someone's hands today because I could do it quicker?",
+          micro: "Notice when you are about to hold the marker or speak for someone. Hand the marker to a silent participant."
+        },
+        fr: {
+          maxim: "Tout faire à la place des gens n'est pas un gage de dévouement. Cela les prive de leur pouvoir d'agir et de diriger leur destin.",
+          question: "Ai-je retiré une tâche des mains d'un participant aujourd'hui simplement parce que j'allais plus vite ?",
+          micro: "Remarquez le moment où vous allez prendre la parole ou le marqueur. Donnez le feutre à un participant discret."
+        }
+      },
+      {
+        id: 13,
+        en: {
+          maxim: "The most credentialed experts often struggle most to step back and let the community take the steering wheel.",
+          question: "Is my academic or professional pride getting in the way of learning from illiterate grandmothers?",
+          micro: "Ask someone who never went to school to teach you how they solve a local conflict."
+        },
+        fr: {
+          maxim: "Les experts les plus diplômés sont souvent ceux qui ont le plus de mal à s'effacer pour laisser la communauté aux commandes.",
+          question: "Mon titre ou ma fierté intellectuelle m'empêchent-ils d'apprendre des grands-mères du village ?",
+          micro: "Demandez à une personne non scolarisée de vous expliquer comment elle désamorce un conflit de voisinage."
+        }
+      },
+      {
+        id: 14,
+        en: {
+          maxim: "Aid frameworks reward technical outputs. Community life competence thrives on empathetic listening and human connection.",
+          question: "Am I stressing over filling indicator sheets while missing the emotional reality in the room?",
+          micro: "Close your clipboard for an entire dialogue. Focus 100% on emotional tone and body language."
+        },
+        fr: {
+          maxim: "Les bailleurs récompensent les indicateurs chiffrés. La compétence communautaire grandit par l'écoute empathique et le lien humain.",
+          question: "Suis-je obnubilé par mes formulaires au point de ne pas voir la réalité émotionnelle de la pièce ?",
+          micro: "Fermez vos dossiers pendant tout un échange. Portez votre attention totale sur les regards et l'atmosphère."
+        }
+      },
+      {
+        id: 15,
+        en: {
+          maxim: "The community members who challenge your presence today often become the strongest champions of local ownership tomorrow.",
+          question: "Am I defensive when greeted with skepticism, or can I appreciate their protective love for their village?",
+          micro: "Thank your most vocal skeptic: 'Thank you for protecting this community. We need your honesty here.'"
+        },
+        fr: {
+          maxim: "Les personnes qui contestent votre présence aujourd'hui deviennent souvent les plus ardents défenseurs de l'action locale demain.",
+          question: "Suis-je sur la défensive face aux sceptiques, ou sais-je apprécier leur souci légitime de protéger leur village ?",
+          micro: "Remerciez celui qui doute ouvertement : « Merci de veiller sur votre village. Votre franchise nous est précieuse. »"
+        }
+      },
+      {
+        id: 16,
+        en: {
+          maxim: "Not every setback is your failure. Not every breakthrough belongs to you. The community is the primary author of its own story.",
+          question: "Am I privately taking credit for community breakthroughs, or feeling unnecessarily crushed by their plateaus?",
+          micro: "When praised for a success, say: 'This was born from your courage and unity. I was simply blessed to witness it.'"
+        },
+        fr: {
+          maxim: "Tout revers n'est pas votre échec. Tout succès ne vous appartient pas. La communauté est la seule créatrice de son histoire.",
+          question: "M'attribue-t-on secrètement le succès, ou suis-je abattu quand la communauté fait une pause ?",
+          micro: "Si l'on vous félicite, répondez : « C'est votre courage qui a accompli cela. J'ai simplement eu la joie d'en être témoin. »"
+        }
+      },
+      {
+        id: 17,
+        en: {
+          maxim: "The most uncomfortable conversations around vulnerability and stigma are invariably the ones that open the door to healing and action.",
+          question: "Did I steer away from a sensitive community taboo today out of personal awkwardness?",
+          micro: "Hold space with gentle, compassionate silence when painful shared experiences are brought to light."
+        },
+        fr: {
+          maxim: "Les dialogues les plus délicats autour des tabous et de la vulnérabilité sont précisément ceux qui ouvrent la porte à la guérison collective.",
+          question: "Ai-je esquivé un sujet sensible par simple gêne personnelle ?",
+          micro: "Accueillez avec un silence bienveillant et respectueux les confidences douloureuses qui émergent."
+        }
+      },
+      {
+        id: 18,
+        en: {
+          maxim: "Every facilitator remembers the one dialogue that stalled, forgetting the countless local dreams that quietly came alive.",
+          question: "Am I allowing one difficult encounter to blind me to the quiet resilience taking root all around?",
+          micro: "List 5 small seeds of change you have witnessed in the past 6 months before you sleep tonight."
+        },
+        fr: {
+          maxim: "Chaque facilitateur rumine la réunion qui a piétiné, oubliant les dizaines d'espoirs qui ont éclos dans l'ombre.",
+          question: "Une seule séance difficile me fait-elle oublier les graines de résilience qui germent tout autour ?",
+          micro: "Notez ce soir 5 petites victoires discrètes observées dans les communautés au cours des six derniers mois."
+        }
+      },
+      {
+        id: 19,
+        en: {
+          maxim: "The humility and respect you practice in your personal life protect the integrity of the space you hold in the village square.",
+          question: "Do I live the SALT principles at home with family and colleagues, or is it only a work persona?",
+          micro: "Practice Support, Appreciate, Listen, and Transfer with someone in your own household tonight."
+        },
+        fr: {
+          maxim: "L'humilité et le respect que vous cultivez dans votre vie quotidienne garantissent la pureté de l'espace que vous tenez au village.",
+          question: "Est-ce que j'incarne les valeurs SALT chez moi avec mes proches, ou n'est-ce qu'une posture professionnelle ?",
+          micro: "Pratiquez le Soutien, l'Appréciation et l'Écoute ce soir avec un membre de votre famille ou un collègue."
+        }
+      },
+      {
+        id: 20,
+        en: {
+          maxim: "Sacrificing your well-being helps no one if it leaves you cynical and frustrated when local processes take time to mature.",
+          question: "Am I working in a state of exhaustion that makes me irritable with community pacing?",
+          micro: "Take a full restful break without your phone. Remember: community development is a marathon of love, not a sprint."
+        },
+        fr: {
+          maxim: "Sacrifier votre santé n'aide personne si cela vous rend amer et impatient face à la lenteur naturelle du cheminement communautaire.",
+          question: "Suis-je dans un état de fatigue qui me rend impatient envers le rythme des habitants ?",
+          micro: "Accordez-vous une vraie pause sans écran. Rappelez-vous : le développement communautaire est un chemin de patience."
+        }
+      },
+      {
+        id: 21,
+        en: {
+          maxim: "Being valued by donors and being trusted by community elders and youth require fundamentally different mindsets.",
+          question: "Whose trust am I serving first: the grant contract requirements or the human dignity of the community?",
+          micro: "Make sure your dialogue starts with what matters to them, not the questionnaire from the headquarters."
+        },
+        fr: {
+          maxim: "Être bien vu des bailleurs et être respecté par les anciens et les jeunes du village exigent deux postures totalement opposées.",
+          question: "Quelle confiance sers-je en priorité : celle du formulaire de subvention ou la dignité des personnes ?",
+          micro: "Commencez toujours l'échange par ce qui leur tient à cœur, et non par le questionnaire du siège."
+        }
+      },
+      {
+        id: 22,
+        en: {
+          maxim: "The deeper you grow in the SALT approach, the more natural and empowering it feels to say: 'I don't know—what do you think?'",
+          question: "Do I still feel an insecure pressure to have an answer for every crisis?",
+          micro: "When asked for advice today, reply: 'I don't know the exact answer, but together we have the wisdom to find it.'"
+        },
+        fr: {
+          maxim: "Plus vous mûrissez dans l'approche SALT, plus il devient naturel et libérateur de dire : « Je ne sais pas... et vous, qu'en pensez-vous ? »",
+          question: "Ressens-je encore le besoin anxieux de détenir une réponse à chaque problème soulevé ?",
+          micro: "Si l'on vous demande conseil, osez dire : « Je ne détiens pas la réponse, mais ensemble nous avons tout pour la trouver. »"
+        }
+      },
+      {
+        id: 23,
+        en: {
+          maxim: "Your expert ego will derail community ownership far faster than any external challenge ever could.",
+          question: "Where did my desire to be seen as the 'clever leader' hinder the group's self-confidence today?",
+          micro: "Notice when you feel the itch to correct someone. Pause, take a breath, and let another community member respond."
+        },
+        fr: {
+          maxim: "L'ego de l'expert détruit l'autonomie communautaire bien plus vite que n'importe quel obstacle extérieur.",
+          question: "Où mon envie d'apparaître comme le « guide éclairé » a-t-elle diminué la confiance du groupe en lui-même ?",
+          micro: "Surveillez votre envie de rectifier un propos. Respirez et laissez un autre habitant intervenir."
+        }
+      },
+      {
+        id: 24,
+        en: {
+          maxim: "The most effective SALT facilitators remain lifelong learners, finding teachers in every community member they encounter.",
+          question: "What did the quietest person in the circle teach me today about life, courage, or patience?",
+          micro: "Write down one insight you learned from a community member in your personal learning journal."
+        },
+        fr: {
+          maxim: "Les facilitateurs SALT les plus inspirants restent d'éternels apprenants, découvrant un maître en chaque habitant rencontré.",
+          question: "Qu'est-ce que la personne la plus discrète du cercle m'a enseigné aujourd'hui sur le courage ou la vie ?",
+          micro: "Notez ce soir dans votre carnet une leçon de vie apprise auprès d'un habitant."
+        }
+      },
+      {
+        id: 25,
+        en: {
+          maxim: "One day you will realize your greatest gift was never your toolkit or presentation—it was your ability to step aside, hold space, and believe in their strength.",
+          question: "Am I relying on slide decks and flipcharts, or on genuine belief in the human spirit?",
+          micro: "Look around the circle today and silently affirm your faith in their collective power to solve their own challenges."
+        },
+        fr: {
+          maxim: "Un jour, vous réaliserez que votre plus beau don ne fut ni vos outils ni vos présentations, mais votre capacité à vous effacer, à tenir l'espace et à croire en eux.",
+          question: "Est-ce que je compte sur mes fiches méthodologiques, ou sur ma foi sincère dans la force de la communauté ?",
+          micro: "Regardez l'assemblée aujourd'hui et affirmez en votre for intérieur votre confiance absolue en leur capacité d'action."
+        }
+      }
+    ];
+
+    /* ==========================================================
+       DATA: EGO MIRROR DILEMMAS (FIELD MICRO-SIMULATIONS)
+       ========================================================== */
+    const DILEMMAS_DATA = [
+      {
+        id: "d1",
+        maxim_id: 1,
+        title_en: "The Expert Answer Trap",
+        title_fr: "Le Piège de la Réponse d'Expert",
+        story_en: "During a meeting on clean drinking water, a mother asks you point-blank: 'Sir, our filter broke last month. As a trained specialist from the city, which brand should we buy?' Everyone stares at you holding their breath, waiting for your instruction.",
+        story_fr: "Lors d'un échange sur l'eau potable, une mère vous demande de but en blanc : « Monsieur, notre filtre s'est cassé le mois dernier. En tant que spécialiste venu de la ville, quelle marque devons-nous acheter ? » Tout le monde vous regarde en attendant votre verdict.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Recommend the best ceramic candle filter model from your technical NGO handbook and specify where to purchase it.",
+            text_fr: "Recommander le modèle de filtre céramique le plus performant selon votre manuel technique et indiquer où l'acheter.",
+            outcome_en: "The community nods passively. They expect you or the NGO to supply the filters. When one breaks six months later, nobody knows how to repair it and they wait for your return.",
+            outcome_fr: "La communauté acquiesce docilement. Elle attend désormais que votre ONG finance ces filtres. Quand l'un d'eux casse six mois plus tard, personne ne le répare.",
+            maxim_id: 1
+          },
+          {
+            type: "passive",
+            text_en: "Shrug your shoulders, say 'That's not my job to answer', and look away in silence.",
+            text_fr: "Hausser les épaules, dire « Ce n'est pas mon rôle de répondre » et détourner le regard.",
+            outcome_en: "The atmosphere turns awkward. The mother feels dismissed and foolish for asking, and participants withdraw into polite silence.",
+            outcome_fr: "L'ambiance se glace. La mère se sent rabaissée d'avoir posé la question et l'assemblée se replie dans un silence poli.",
+            maxim_id: 1
+          },
+          {
+            type: "salt",
+            text_en: "Acknowledge the vital question, then reflect it back to local wisdom: 'Clean water is the lifeline of our families. Before filters arrived here, how did our grandparents keep drinking water safe during the floods?'",
+            text_fr: "Accueillir la question vitale et la relier à la sagesse locale : « L'eau propre protège la vie de nos enfants. Avant l'arrivée de ces filtres, comment nos grands-parents assuraient-ils une eau saine durant les crues ? »",
+            outcome_en: "Two grandmothers smile and describe traditional sand filtration and moringa seed purification. A young blacksmith realizes he can repair the broken brass valve right in the village.",
+            outcome_fr: "Deux aînées sourient et décrivent le filtrage par le sable et les graines de moringa. Un jeune forgeron réalise qu'il peut réparer la valve en laiton sur place.",
+            maxim_id: 1
+          }
+        ]
+      },
+      {
+        id: "d2",
+        maxim_id: 2,
+        title_en: "The Strict Logframe vs. The Sacred Story",
+        title_fr: "Le Cadre Logique Face au Récit Sacré",
+        story_en: "You have only 40 minutes left to complete the five required baseline matrix indicators. An elder starts weeping softly while recounting how a previous epidemic in 1994 took three of his siblings and split the clan.",
+        story_fr: "Il ne vous reste que 40 minutes pour remplir la matrice des cinq indicateurs de référence. Un aîné se met à pleurer en racontant comment l'épidémie de 1994 a emporté trois de ses frères et déchiré le clan.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Politely interrupt him: 'We deeply sympathize with your grief, Baba, but we have five mandatory matrix boxes left and our vehicle must leave at 5:00 PM.'",
+            text_fr: "L'interrompre poliment : « Nous compatissons de tout cœur, Baba, mais nous devons valider nos indicateurs avant le départ de notre véhicule à 17h. »",
+            outcome_en: "The elder falls silent and hangs his head. The human soul leaves the room; the community fills out the numbers with detached indifference.",
+            outcome_fr: "L'aîné baisse la tête et se tait. L'âme quitte la pièce ; la communauté finit de remplir les cases dans une indifférence glaciale.",
+            maxim_id: 2
+          },
+          {
+            type: "passive",
+            text_en: "Stare intensely at your phone clock, fidgeting with your papers to hint that time is ticking away.",
+            text_fr: "Regarder nerveusement sa montre en tripotant ses dossiers pour faire comprendre que le temps presse.",
+            outcome_en: "Participants sense your annoyance. The elder cuts his story short in embarrassment, feeling his pain was an inconvenient interruption.",
+            outcome_fr: "L'assemblée perçoit votre agacement. L'aîné abrège son récit, honteux d'avoir dérangé le calendrier du projet.",
+            maxim_id: 2
+          },
+          {
+            type: "salt",
+            text_en: "Put your pen down, lean forward, and honor the sacred memory: 'Baba, thank you for trusting us with this sorrow. The resilience that carried your family through 1994 is the very foundation we stand upon today.'",
+            text_fr: "Poser son stylo, s'incliner légèrement et honorer ce moment : « Baba, merci pour cette mémoire sacrée. La résilience qui a porté votre famille en 1994 est la racine même sur laquelle nous nous appuyons aujourd'hui. »",
+            outcome_en: "A deep hush falls. Other families share how they healed communal bonds after that grief. The indicators are completed afterwards in ten minutes with immense depth and mutual trust.",
+            outcome_fr: "Un profond recueillement s'installe. D'autres familles racontent comment elles se sont relevées. Les indicateurs sont renseignés en dix minutes par la suite, avec une sincérité rare.",
+            maxim_id: 2
+          }
+        ]
+      },
+      {
+        id: "d3",
+        maxim_id: 3,
+        title_en: "The Jargon-Heavy Facilitator",
+        title_fr: "L'Excès de Jargon Technocratique",
+        story_en: "A young co-facilitator starts presenting on 'synergistic multi-stakeholder governance paradigms and monitoring frameworks.' Blank stares spread across the room; women at the back start tending to their babies and looking outside.",
+        story_fr: "Votre jeune co-facilitateur disserte sur « les paradigmes synergiques de gouvernance multipartite et les dispositifs d'évaluation d'impact ». Les regards deviennent vides et les femmes commencent à regarder dehors.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Take the marker and draw complex flowcharts on the whiteboard to explain the technical definitions of these foreign concepts.",
+            text_fr: "Prendre le marqueur pour tracer des diagrammes au tableau afin d'expliquer les définitions savantes de ces termes.",
+            outcome_en: "People nod out of politeness, intimidated by the academic language. They leave convinced that community development is something only university graduates can manage.",
+            outcome_fr: "Les gens hochent la tête par respect, intimidés. Ils repartent persuadés que le développement est une affaire d'intellectuels et non la leur.",
+            maxim_id: 3
+          },
+          {
+            type: "passive",
+            text_en: "Sit back and scroll on your tablet, letting your colleague exhaust the room until the session ends.",
+            text_fr: "Rester assis en consultant ses messages, laissant votre collègue épuiser la salle jusqu'au terme de l'heure.",
+            outcome_en: "Half the participants sneak out early. Those who remain feel alienated from the entire process.",
+            outcome_fr: "La moitié des participants s'éclipse discrètement. Ceux qui restent se sentent étrangers à toute la démarche.",
+            maxim_id: 3
+          },
+          {
+            type: "salt",
+            text_en: "Gently bridge into everyday village reality: 'My colleague is describing something we all do when we harvest together. How do the neighbors down the river cooperate when a fishing net tears?'",
+            text_fr: "Relier avec douceur ces concepts à la vie du village : « Ce que décrit mon collègue ressemble à ce que nous faisons pour la récolte. Comment les voisins de la rivière coopèrent-ils quand un filet de pêche se déchire ? »",
+            outcome_en: "Smiles return instantly. A farmer explains their mutual aid network ('Mwethya'), translating the alien concept into a rich, living communal practice.",
+            outcome_fr: "Les visages s'éclairent. Un pêcheur explique l'entraide coutumière (« Mwethya »), traduisant le jargon en une pratique vivante et connue de tous.",
+            maxim_id: 3
+          }
+        ]
+      },
+      {
+        id: "d4",
+        maxim_id: 4,
+        title_en: "The Wall of Complaints",
+        title_fr: "Le Mur des Doléances",
+        story_en: "Opening the meeting, the village chief hands you an eight-page list of deficiencies: broken bridges, missing doctors, corrupt officials, and failed rains. 'We have nothing here. What can your organization give us?'",
+        story_fr: "À l'ouverture, le chef vous tend une liste de huit pages de réclamations : ponts écroulés, dispensaire sans soignant, élus corrompus et pluies inexistantes. « Nous n'avons rien ici. Que venez-vous nous donner ? »",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Promise to advocate with district authorities and donor embassies to fund the top three items on their complaint list.",
+            text_fr: "Promettre de plaider auprès des ministères et des ambassades pour financer les trois premiers besoins de la liste.",
+            outcome_en: "The village sinks back into the waiting posture. They treat you as a lobbyist and take zero communal action while awaiting foreign aid.",
+            outcome_fr: "Le village retombe dans la posture d'attente. Ils vous considèrent comme un bienfaiteur et ne posent aucun acte en attendant les aides promises.",
+            maxim_id: 4
+          },
+          {
+            type: "passive",
+            text_en: "Bluntly reply: 'Our project has no funding for infrastructure, so don't ask us for anything tangible.'",
+            text_fr: "Répondre froidement : « Notre projet n'a aucun budget pour les infrastructures, ne nous demandez rien de matériel. »",
+            outcome_en: "Defensiveness and resentment flare up. The leaders feel deceived and consider terminating the partnership immediately.",
+            outcome_fr: "La rancœur éclate. Les dirigeants se sentent bernés et envisagent de mettre fin à la rencontre sur-le-champ.",
+            maxim_id: 4
+          },
+          {
+            type: "salt",
+            text_en: "Validate their heavy challenges, then gently search for the seed: 'Chief, these trials are immense. Yet this community has stood for 300 years. What internal strengths have kept your children fed despite these broken bridges?'",
+            text_fr: "Valider la rudesse des épreuves puis chercher la graine de vie : « Chef, ces fardeaux sont lourds. Pourtant, votre communauté est debout depuis des siècles. Quelles forces ont permis de nourrir vos enfants malgré ces ponts rompus ? »",
+            outcome_en: "The room shifts from despair to self-respect. Women describe cooperative grain storage and traditional dispute resolution that keeps peace.",
+            outcome_fr: "L'énergie de la salle bascule du découragement vers la dignité. Les femmes évoquent les greniers communs et les solidarités familiales.",
+            maxim_id: 4
+          }
+        ]
+      },
+      {
+        id: "d5",
+        maxim_id: 5,
+        title_en: "Stepping Out of the Circle",
+        title_fr: "S'Éclipser du Cercle",
+        story_en: "During a self-assessment on youth empowerment, small groups are arguing vigorously in the local language. Every time you walk close to a group, they instantly freeze, stop arguing, and turn toward you for validation.",
+        story_fr: "Lors d'une auto-évaluation sur la jeunesse, les groupes débattent passionnément en langue locale. Dès que vous vous approchez d'un groupe, la discussion s'arrête net et tous attendent votre accord.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Sit down directly in the middle of each circle and facilitate their consensus question by question.",
+            text_fr: "S'asseoir au centre de chaque cercle pour animer leur échange question par question.",
+            outcome_en: "The discussion switches to whatever participants think you want to hear. Authentic debate dies and external validation rules.",
+            outcome_fr: "L'échange s'oriente vers ce que les gens croient que vous attendez. Le débat sincère s'éteint au profit de la conformité.",
+            maxim_id: 5
+          },
+          {
+            type: "passive",
+            text_en: "Stand right over them, holding a clipboard and jotting down notes while watching their faces.",
+            text_fr: "Rester debout au-dessus d'eux avec un calepin, en prenant des notes en silence tout en les observant.",
+            outcome_en: "Participants feel monitored like school children being evaluated by an inspector, stifling vulnerability.",
+            outcome_fr: "Les participants se sentent surveillés comme des écoliers en examen, ce qui étouffe toute spontanéité.",
+            maxim_id: 5
+          },
+          {
+            type: "salt",
+            text_en: "Smile, point to a bench 20 meters away under the shade, and say: 'This conversation belongs to you. I will sit over there so you can speak your raw truth without an outsider watching.'",
+            text_fr: "Sourire, désigner un banc à 20 mètres sous l'arbre et dire : « Cette discussion vous appartient. Je m'installe là-bas pour vous laisser débattre en toute vérité. »",
+            outcome_en: "Uninhibited laughter and fierce debate erupt immediately. When they return an hour later, they present courageous decisions that no outsider could have brokered.",
+            outcome_fr: "Des rires francs et des échanges vifs reprennent aussitôt. À leur retour, ils présentent des engagements courageux qu'aucun intervenant externe n'aurait pu imaginer.",
+            maxim_id: 5
+          }
+        ]
+      },
+      {
+        id: "d6",
+        maxim_id: 6,
+        title_en: "The Formal MOU vs. The Cup of Tea",
+        title_fr: "Le Protocole Écrit Face à la Tasse de Thé",
+        story_en: "You have arrived with a 12-page legal Memorandum of Understanding that the project requires community leaders to sign before any dialogue begins. The village elders seem hesitant and uncomfortable with the stamp and signatures.",
+        story_fr: "Vous arrivez avec un accord formel de 12 pages que le projet exige de faire signer par les notables avant tout dialogue. Les chefs traditionnels semblent méfiants face aux tampons et aux paraphes.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Insist on signing immediately: 'Without this signed legal protocol today, donor compliance forbids us from taking the next step.'",
+            text_fr: "Exiger la signature immédiate : « Sans ce protocole paraphé aujourd'hui, les règles de conformité nous interdisent de continuer. »",
+            outcome_en: "They sign with cold reluctance. An unseen wall of suspicion is erected; the elders suspect you are secretly securing land rights or commercial claims.",
+            outcome_fr: "Ils signent avec une réticence glaciale. Un mur invisible de méfiance s'érige ; ils craignent des clauses cachées sur leurs terres.",
+            maxim_id: 6
+          },
+          {
+            type: "passive",
+            text_en: "Pack your folders and declare the mission suspended due to non-cooperation by community leadership.",
+            text_fr: "Ranger ses dossiers et déclarer la mission suspendue pour refus de signature des autorités locales.",
+            outcome_en: "A promising collaboration collapses before it even starts, leaving bitterness on both sides.",
+            outcome_fr: "Une collaboration prometteuse avorte avant même d'avoir commencé, laissant un goût amer.",
+            maxim_id: 6
+          },
+          {
+            type: "salt",
+            text_en: "Put the papers aside inside your bag: 'Let us set these forms aside. First, let us share tea, learn your clan lineages, and listen to how you have protected this land.'",
+            text_fr: "Ranger les feuilles dans son sac : « Mettons ces formulaires de côté. Partageons d'abord un thé, apprenez-nous l'histoire de vos lignages et la mémoire de cette terre. »",
+            outcome_en: "Human connection is sealed through eye contact and shared hospitality. Later, the elders review the paper with ease, stating: 'Now that we know your heart, this paper is simple.'",
+            outcome_fr: "Le lien humain se tisse autour de l'hospitalité partagée. Plus tard, les anciens parcourent le texte en confiance : « À présent que nous connaissons votre cœur, cette feuille va de soi. »",
+            maxim_id: 6
+          }
+        ]
+      },
+      {
+        id: "d7",
+        maxim_id: 7,
+        title_en: "The Frenzy of Endless Assemblies",
+        title_fr: "La Frénésie des Réunions sans Fin",
+        story_en: "Your monthly facilitation target demands hosting 12 community assemblies. A volunteer whispers: 'We love you, but our crops are ripe and if we attend three meetings every week, our harvest will rot in the fields.'",
+        story_fr: "Votre fiche d'objectifs mensuels vous impose d'animer 12 assemblées communautaires. Un paysan vous glisse : « Nous vous apprécions, mais le sorgho est mûr. Si nous venons à trois réunions par semaine, nos récoltes vont pourrir. »",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Offer lunch stipends or small food rations to entice them to keep attending all twelve assemblies.",
+            text_fr: "Offrir des per diem ou des collations pour les inciter à venir malgré tout aux douze réunions prévues.",
+            outcome_en: "People show up just for the food stipend, while their fields suffer. The moment stipends stop, attendance plummets to zero.",
+            outcome_fr: "Les habitants viennent uniquement pour la collation, négligeant leurs champs. Dès l'arrêt des per diem, la fréquentation tombe à zéro.",
+            maxim_id: 7
+          },
+          {
+            type: "passive",
+            text_en: "Cancel the meetings and blame the community in your donor report for 'lack of local motivation.'",
+            text_fr: "Annuler les rencontres et inscrire dans le rapport bailleur : « Manque d'intérêt et de motivation des populations. »",
+            outcome_en: "Donors reduce support based on a false narrative, punishing a community that was simply trying to survive the harvest season.",
+            outcome_fr: "Le bailleur réduit son appui sur la base d'une conclusion fausse, pénalisant des paysans occupés à nourrir leurs familles.",
+            maxim_id: 7
+          },
+          {
+            type: "salt",
+            text_en: "Respect the agricultural rhythm completely: 'Harvest comes first! Let us pause our big gatherings and align with your work rhythm. How can our triad support your harvesting circles?'",
+            text_fr: "Épouser totalement le rythme agraire : « La récolte avant tout ! Suspendons nos assemblées. Comment pouvons-nous encourager vos corvées de récolte collective ? »",
+            outcome_en: "The community feels deeply understood. During rest breaks in the fields, they organize spontaneous mutual support that achieves more than any indoor workshop.",
+            outcome_fr: "La communauté se sent profondément respectée. Durant les pauses au champ, des solidarités spontanées s'organisent, bien plus fécondes qu'en salle de réunion.",
+            maxim_id: 7
+          }
+        ]
+      },
+      {
+        id: "d8",
+        maxim_id: 8,
+        title_en: "The Heavy Burden of Rescuing Everyone",
+        title_fr: "Le Fardeau Écrasant du Sauveur",
+        story_en: "It is 10:00 PM on a Sunday. A community representative calls your private mobile phone weeping because the village water committee has an argument over $40 missing from their treasury. You have had four hours of sleep.",
+        story_fr: "Il est 22 heures un dimanche. Le trésorier du comité de l'eau vous appelle en larmes car un litige de 40 $ déchire le groupe. Vous n'avez dormi que quatre heures la nuit précédente.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Jump on your motorbike right away or send $40 from your own pocket via mobile money to make the problem go away.",
+            text_fr: "Enfourcher votre moto dans la nuit ou envoyer 40 $ de votre propre poche pour étouffer le conflit immédiatement.",
+            outcome_en: "You burn out rapidly. The committee learns that whenever their accounting is messy, the facilitator will bail them out financially and emotionally.",
+            outcome_fr: "Vous filez vers l'épuisement. Le comité intègre que toute négligence de gestion sera épongée par la poche ou l'énergie du facilitateur.",
+            maxim_id: 8
+          },
+          {
+            type: "passive",
+            text_en: "Switch off your phone and ignore their calls for the rest of the week out of exhaustion.",
+            text_fr: "Éteindre votre téléphone et refuser de leur répondre pendant une semaine par ras-le-bol.",
+            outcome_en: "The committee fractures into accusations of theft, and mutual trust is poisoned without gentle guidance.",
+            outcome_fr: "Le comité éclate dans des accusations mutuelles de vol, détruisant la cohésion locale par manque de repères.",
+            maxim_id: 8
+          },
+          {
+            type: "salt",
+            text_en: "Take a calming breath, offer calm emotional support, and return agency: 'I hear your distress. You have respected elders and wise auditors on your committee. When you meet together tomorrow morning, what truth-telling practice from your culture will help restore transparency?'",
+            text_fr: "Respirer calmement, offrir un soutien apaisant et renvoyer la responsabilité : « J'entends votre peine. Vous avez des aînés avisés dans ce comité. Demain matin, quelle coutume de vérité de votre village vous permettra d'éclaircir les comptes ensemble ? »",
+            outcome_en: "The committee convenes at sunrise, investigates peacefully, discovers a simple ledger error, and restores balance on their own. Their collective capability strengthens.",
+            outcome_fr: "Le comité se réunit à l'aube, résout une erreur d'écriture comptable et rétablit la confiance par ses propres moyens. Leur compétence collective en sort grandie.",
+            maxim_id: 8
+          }
+        ]
+      },
+      {
+        id: "d9",
+        maxim_id: 9,
+        title_en: "The Unprepared Heart",
+        title_fr: "Le Cœur Non Préparé",
+        story_en: "You had a massive fight with your supervisor in the morning, arrived in the village two hours late due to a flat tyre, and are boiling with frustration. The village welcoming song feels loud and irritating to your ears.",
+        story_fr: "Vous avez eu une violente dispute le matin avec votre hiérarchie, crevé sur la route et deux heures de retard vous accablent. Les chants d'accueil des femmes vous semblent bruyants et insupportables.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Put on a fake, theatrical plastic smile, wave frantically, and rush into the schedule without pausing.",
+            text_fr: "Plaquer un sourire forcé et commercial, gesticuler et entamer l'ordre du jour au pas de charge sans respirer.",
+            outcome_en: "Participants instantly register the artificial mask. They sense tension and guard themselves, keeping contributions shallow.",
+            outcome_fr: "L'assemblée flaire immédiatement le manque de sincérité. Une gêne s'installe et les participants restent sur la réserve.",
+            maxim_id: 9
+          },
+          {
+            type: "passive",
+            text_en: "Complain openly to the village chief about your supervisor and the bad road, venting your anger on them.",
+            text_fr: "Vous plaindre ostensiblement auprès du chef de village des mauvaises routes et de vos chefs de bureau.",
+            outcome_en: "You place your emotional debris onto the hosts, violating the dignity of the guest-host relationship.",
+            outcome_fr: "Vous déversez votre amertume personnelle sur vos hôtes, froissant leur hospitalité.",
+            maxim_id: 9
+          },
+          {
+            type: "salt",
+            text_en: "Ask for five minutes alone by the well. Breathe deeply, ground yourself in humility, and silently repeat: 'Let my anger fall away; I am here as an instrument of appreciation.'",
+            text_fr: "Demander cinq minutes de grâce près du puits. Respirer profondément, faire le vide et se dire en silence : « Que mon agitation tombe ; je suis ici pour servir et apprécier. »",
+            outcome_en: "Your nervous system calms. When you step into the circle, your authentic warmth and gratitude touch everyone present, opening heart-to-heart dialogue.",
+            outcome_fr: "Votre calme intérieur revient. En rejoignant le cercle, votre paix et votre gratitude sincère touchent chacun, permettant une vraie rencontre.",
+            maxim_id: 9
+          }
+        ]
+      },
+      {
+        id: "d10",
+        maxim_id: 10,
+        title_en: "The Hurried Facilitator Rushing Past Learning",
+        title_fr: "La Course en Avant sans Récolte",
+        story_en: "A vibrant community dream-building session finishes with electrifying energy. Your co-facilitator says: 'Pack up fast! If we speed down the highway, we can reach the next parish and do another meeting before sundown!'",
+        story_fr: "Une magnifique séance de partage de rêves s'achève dans une liesse communicative. Votre collègue s'écrie : « Rangeons vite ! En roulant vite, on peut boucler une seconde communauté avant la nuit ! »",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Rush into the vehicle immediately to log double output numbers for your quarterly organizational dashboard.",
+            text_fr: "Sauter dans le véhicule pour doubler le nombre de villages visités dans le bilan d'activité.",
+            outcome_en: "You accumulate superficial numbers. None of the learning from the village is integrated, and by nightfall you have forgotten what the community actually taught you.",
+            outcome_fr: "Vous accumulez des chiffres sans consistance. Aucun enseignement n'est capitalisé et, le soir venu, vous avez déjà oublié l'essentiel.",
+            maxim_id: 10
+          },
+          {
+            type: "passive",
+            text_en: "Sleep in the passenger seat while the driver speeds, completely disengaging your mind from the day.",
+            text_fr: "S'endormir sur le siège passager pendant que la voiture file, sans penser une seule seconde à ce qui s'est passé.",
+            outcome_en: "The transformative moments vanish from memory like smoke. Facilitation becomes robotic routine work.",
+            outcome_fr: "Les pépites de la journée s'évaporent sans laisser de trace. Le travail devient une routine mécanique.",
+            maxim_id: 10
+          },
+          {
+            type: "salt",
+            text_en: "Advocate for an intentional pause: 'Wait. Let us sit with the community under this tree for 15 minutes and reflect: What did this process reveal to us today that we never saw before?'",
+            text_fr: "Proposer une pause réflexive sacrée : « Attendons. Asseyons-nous 15 minutes avec l'équipe locale : Qu'avons-nous appris aujourd'hui que nous ne soupçonnions pas ? »",
+            outcome_en: "A young local facilitator shares a stunning insight about bridging ethnic tensions. That single reflection becomes the foundation of their entire regional transfer strategy.",
+            outcome_fr: "Un jeune facilitateur local formule une découverte capitale sur l'apaisement des clans. Cet apprentissage devient la clé de leur essaimage régional.",
+            maxim_id: 10
+          }
+        ]
+      },
+      {
+        id: "d11",
+        maxim_id: 11,
+        title_en: "The Fragile Spark vs. The Living Habit",
+        title_fr: "L'Étincelle d'un Jour Face à l'Habitude Durable",
+        story_en: "At the end of an inspiring self-assessment, participants stand cheering and clapping: 'We will change our entire ward in two weeks!' Yet, there is no agreement on who meets whom, when, or with what local tools.",
+        story_fr: "À la fin d'une séance enthousiasmante, tout le monde se lève et applaudit : « Nous allons métamorphoser le quartier en quinze jours ! » Pourtant, aucun rendez-vous concret ni relais n'a été convenu.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Draw up an exhaustive master spreadsheet with 20 deadlines and assign people tasks from your notebook.",
+            text_fr: "Dresser un tableau Excel complexe de 20 tâches avec des échéances que vous imposez aux participants.",
+            outcome_en: "The community feels micromanaged by a project boss. When you leave, nobody looks at your complex matrix.",
+            outcome_fr: "Les habitants se sentent embrigadés. Dès votre départ, personne n'ouvre votre grille technique.",
+            maxim_id: 11
+          },
+          {
+            type: "passive",
+            text_en: "Bask in the emotional applause, congratulate everyone on the euphoria, and pack your bags without cementing follow-up.",
+            text_fr: "Se gargariser des applaudissements, féliciter tout le monde pour l'euphorie ambiante et partir sans rien ancrer.",
+            outcome_en: "Within four days, daily chores consume everyone. The motivation evaporates like morning mist, leaving no lasting behavioral change.",
+            outcome_fr: "En quatre jours, les tracas du quotidien reprennent le dessus. L'énergie s'évanouit comme rosée au soleil sans le moindre changement.",
+            maxim_id: 11
+          },
+          {
+            type: "salt",
+            text_en: "Channel the joy into local habits: 'This enthusiasm is glorious! To keep this fire burning, let each of us pick one learning partner right now. When and where will you two meet next Tuesday to review our dream?'",
+            text_fr: "Canaliser cette joie dans une discipline de pairs : « Cette énergie est magnifique ! Pour garder ce feu vivant, choisissons un binôme de veille ici présent. Où et quand vous retrouverez-vous mardi pour faire le point ? »",
+            outcome_en: "Participants link hands in neighborhood pairs. A self-sustaining weekly rhythm is born that endures for years without requiring external visitors.",
+            outcome_fr: "Chacun choisit son voisin de quartier. Un rythme de soutien mutuel s'installe naturellement et perdure des années sans dépendre d'un intervenant.",
+            maxim_id: 11
+          }
+        ]
+      },
+      {
+        id: "d12",
+        maxim_id: 12,
+        title_en: "The Temptation to Grab the Marker",
+        title_fr: "La Tentation de Confisquer le Marqueur",
+        story_en: "A shy village woman is holding the marker at the flipchart, struggling slowly to draw the dream icon for child nutrition. You notice the pen is trembling and you could draw the entire diagram in 15 seconds flat.",
+        story_fr: "Une jeune femme timide tient le marqueur devant le tableau de papier et hésite longuement pour dessiner le symbole de la nutrition des enfants. Vous pourriez faire le croquis en 15 secondes.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Step in and take the marker from her hands: 'Here, let me sketch it for you quickly so our presentation looks professional.'",
+            text_fr: "Lui prendre délicatement le feutre des mains : « Donnez, je vais vous le tracer proprement pour que l'affiche soit présentable. »",
+            outcome_en: "She quietly walks back to her seat and never stands up again. The diagram belongs to you, not to the mothers of the community.",
+            outcome_fr: "Elle retourne s'asseoir en silence et ne reprendra plus la parole. L'affiche est jolie, mais elle est devenue vôtre et non la leur.",
+            maxim_id: 12
+          },
+          {
+            type: "passive",
+            text_en: "Look down with mild embarrassment, sighing audibly while waiting for her to finish.",
+            text_fr: "Regarder le sol avec un soupir d'impatience perceptible en attendant qu'elle termine son gribouillis.",
+            outcome_en: "She feels judged and humiliated by your impatience. Her peer group retreats into defensive silence.",
+            outcome_fr: "Elle se sent jugée et malhabile. Son groupe de pairs se referme dans un mutisme blessé.",
+            maxim_id: 12
+          },
+          {
+            type: "salt",
+            text_en: "Step back two paces, catch her eye, and encourage her with genuine warmth: 'Take all your time, sister. Every line drawn by your own hand carries the soul and future of this village.'",
+            text_fr: "Reculer de deux pas, croiser son regard et l'encourager avec douceur : « Prenez tout votre temps. Chaque trait tracé par votre main porte l'avenir de nos enfants. »",
+            outcome_en: "Her hand stabilizes. She draws an original local motif depicting grain and child care. The room bursts into proud applause, and she becomes the group's lead documenter.",
+            outcome_fr: "Sa main s'affermit. Elle dessine un symbole traditionnel de semence. Toute l'assemblée l'acclame et elle devient la référente fière du groupe.",
+            maxim_id: 12
+          }
+        ]
+      },
+      {
+        id: "d13",
+        maxim_id: 13,
+        title_en: "The Professor in the Mud Hut",
+        title_fr: "Le Savoir Universitaire dans la Case",
+        story_en: "A professor of public health joins your facilitation visit. When a local herbalist explains how she treats newborn infant fever with guava leaf teas and hydration, the professor laughs sarcastically: 'That is unscientific folklore!'",
+        story_fr: "Un médecin universitaire vous accompagne. Lorsqu'une accoucheuse traditionnelle explique comment elle hydrate un nourrisson fiévreux avec une tisane de goyavier, l'universitaire ricane : « C'est de l'obscurantisme sans preuve ! »",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Agree with the professor publicly to protect medical orthodoxy: 'Yes, only certified clinical protocols must be discussed here.'",
+            text_fr: "Prendre parti pour le professeur : « En effet, seules les démarches médicales homologuées ont leur place ici. »",
+            outcome_en: "The traditional birth attendants shut their doors permanently to health teams. Home births continue in secret without safety nets.",
+            outcome_fr: "Les matrones ferment définitivement leurs portes aux soignants. Les accouchements à risque se poursuivent dans la clandestinité.",
+            maxim_id: 13
+          },
+          {
+            type: "passive",
+            text_en: "Say nothing and look down at your notes to avoid offending a prestigious academic.",
+            text_fr: "Garder le silence pour ne pas froisser une personnalité universitaire respectée.",
+            outcome_en: "Your silence is seen as complicity with scientific arrogance. The community's deep experiential knowledge is discredited.",
+            outcome_fr: "Votre silence vaut approbation de ce mépris. Les savoirs traditionnels éprouvés sont réduits à néant.",
+            maxim_id: 13
+          },
+          {
+            type: "salt",
+            text_en: "Bridge modern science and ancestral care: 'Professor, your science of hydration is vital. And Mama, your ancestral tea has kept feverish babies drinking fluids for generations. How can the clinic and the herbalist honor each other?'",
+            text_fr: "Bâtir un pont entre rigueur et savoir ancestral : « Professeur, vos connaissances sauvent des vies. Et Mama, vos tisanes ont permis d'hydrater des générations de nouveau-nés. Comment dispensaire et matrones peuvent-ils s'allier ? »",
+            outcome_en: "The tension dissolves. The physician and the herbalist agree on an alert protocol: using hydration teas while transferring danger signs promptly to the clinic.",
+            outcome_fr: "L'hostilité retombe. Médecin et accoucheuse créent un protocole commun : hydratation locale immédiate et alerte rapide au centre de santé en cas de danger.",
+            maxim_id: 13
+          }
+        ]
+      },
+      {
+        id: "d14",
+        maxim_id: 14,
+        title_en: "The Spreadsheet Obsession",
+        title_fr: "L'Obsession du Fichier Numérique",
+        story_en: "Your donor requires disaggregated age and gender headcounts submitted by noon via an online mobile app. Meanwhile, two neighboring families in the circle are quietly holding hands, forgiving a five-year feud over grazing land.",
+        story_fr: "Votre bailleur exige la saisie des présences par sexe et tranche d'âge avant midi sur votre application. Au même moment, deux familles rivales se prennent la main en silence, scellant la paix après cinq ans de litige foncier.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Interrupt the reconciliation to pass around your digital tablet for mandatory facial photos and ID number verifications.",
+            text_fr: "Interrompre ce moment pour faire passer la tablette numérique afin d'enregistrer les photos et numéros d'identité.",
+            outcome_en: "The sacred moment of forgiveness is shattered by biometric data collection. Trust gives way to bureaucracy.",
+            outcome_fr: "La solennité de la réconciliation est brisée par l'intrusion numérique. La grâce laisse place au contrôle administratif.",
+            maxim_id: 14
+          },
+          {
+            type: "passive",
+            text_en: "Keep typing on your tablet with your head buried in the screen, totally oblivious to the tearful embrace happening three feet away.",
+            text_fr: "Continuer à pianoter frénétiquement sur son écran sans même apercevoir l'étreinte émouvante qui se produit à deux mètres.",
+            outcome_en: "The community sees you as an unfeeling data-clerk who treats their lives as transaction receipts.",
+            outcome_fr: "Les habitants voient en vous un bureaucrate insensible qui réduit leurs larmes à des lignes comptables.",
+            maxim_id: 14
+          },
+          {
+            type: "salt",
+            text_en: "Lock your tablet screen, place it out of sight, and join the sacred silence with bowed head and heartfelt respect.",
+            text_fr: "Verrouiller sa tablette, la glisser sous sa chaise et accueillir ce silence de paix la tête inclinée avec révérence.",
+            outcome_en: "The reconciliation is sealed into community lore. You register the numbers quietly after the blessing without disrupting the human bond.",
+            outcome_fr: "La réconciliation s'enracine pour toujours dans l'histoire du village. Vous saisirez les données techniques après le départ, dans le calme.",
+            maxim_id: 14
+          }
+        ]
+      },
+      {
+        id: "d15",
+        maxim_id: 15,
+        title_en: "The Hostile Community Skeptic",
+        title_fr: "L'Opposant Farouche de la Première Heure",
+        story_en: "A respected retired teacher stands up in anger: 'We know your kind! You NGO people arrive in white Land Cruisers, take our photos for your glossy brochures, make money off our poverty, and never return!'",
+        story_fr: "Un instituteur à la retraite se lève furieux : « On vous connaît, vous autres ! Vous venez en gros 4x4, vous prenez des photos pour vos rapports de luxe, vous vous enrichissez sur notre misère et on ne vous revoit jamais ! »",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Defend your organization defensively: 'We are a reputable international NGO with certified auditing and five UN awards!'",
+            text_fr: "Défendre son honneur d'institution : « Notre ONG est auditée, certifiée et nous avons reçu cinq prix des Nations Unies ! »",
+            outcome_en: "The teacher sneers, others rally behind him, and the meeting devolves into an angry confrontation over external exploitation.",
+            outcome_fr: "L'enseignant ricane, la salle lui emboîte le pas et la séance vire au réquisitoire contre l'ingérence extérieure.",
+            maxim_id: 15
+          },
+          {
+            type: "passive",
+            text_en: "Ask the village police or local guards to escort the disruptive man out of the community hall.",
+            text_fr: "Faire signe aux agents de sécurité d'évacuer cet homme perturbateur hors de la salle.",
+            outcome_en: "You have confirmed his accusation: outside power silencing local voices. The community shuts down completely.",
+            outcome_fr: "Vous venez de prouver ses dires : le pouvoir extérieur fait taire les contestataires locaux. Tout le monde se bloque.",
+            maxim_id: 15
+          },
+          {
+            type: "salt",
+            text_en: "Look him in the eyes with genuine humility: 'Mwalimu, everything you just said is painful because it is largely true of how aid has treated your people. Thank you for protecting this village. We are not here to bring projects, but to learn if you will allow us to stand with you.'",
+            text_fr: "Le regarder droit dans les yeux avec humilité : « Mwalimu, ce que vous dites fait mal parce que c'est souvent vrai. Merci de veiller ainsi sur votre village. Nous ne venons pas vendre un projet, mais apprendre à vos côtés si vous nous y autorisez. »",
+            outcome_en: "His anger softens. Stunned by honest humility, he sits down. Three weeks later, that very teacher becomes the most tireless local volunteer for the youth self-assessment.",
+            outcome_fr: "Sa colère désarme. Ébahi par cette humilité sans fard, il se rassied. Trois semaines plus tard, ce même enseignant devient le plus fervent artisan de l'auto-évaluation locale.",
+            maxim_id: 15
+          }
+        ]
+      },
+      {
+        id: "d16",
+        maxim_id: 16,
+        title_en: "The Vanity of Taking the Credit",
+        title_fr: "L'Orgueil de S'Approprier le Succès",
+        story_en: "A village you visited six months ago successfully builds a maternity waiting room with their own brickmakers and funds. At a national conference, your supervisor introduces you as 'the brilliant mastermind who built this maternity center.'",
+        story_fr: "Un village visité six mois plus tôt a bâti une maison des mères avec ses propres maçons et cotisations. Lors d'un colloque national, votre directeur vous présente comme « l'artisan visionnaire de cette maternité ».",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Accept the standing ovation, enjoy the personal applause, and talk about your facilitation genius.",
+            text_fr: "Savourer l'ovation, accepter les louanges et disserter sur votre savoir-faire méthodologique d'exception.",
+            outcome_en: "Word reaches the village that the outsider took credit in the capital. The community feels robbed of their sweat and dignity.",
+            outcome_fr: "La nouvelle parvient au village : l'expert s'attribue les lauriers dans la capitale. La communauté se sent dépouillée de son courage.",
+            maxim_id: 16
+          },
+          {
+            type: "passive",
+            text_en: "Mumble an unclear thanks, saying nothing about the community to avoid complicating the executive presentation.",
+            text_fr: "Murmurer un vague merci sans mentionner les villageois pour ne pas alourdir la présentation officielle.",
+            outcome_en: "You allow the toxic falsehood of top-down development saviorism to perpetuate unchallenged.",
+            outcome_fr: "Vous laissez prospérer le mythe paternaliste du sauveur extérieur indispensable au progrès.",
+            maxim_id: 16
+          },
+          {
+            type: "salt",
+            text_en: "Step to the microphone and deflect all glory: 'I did not lay a single brick. Mama Sarah and the youth of Wamba carried every stone on their heads. They are the authors; I was only a humble witness to their strength.'",
+            text_fr: "Prendre le micro et rendre l'honneur : « Je n'ai pas posé une seule brique. Mama Sarah et les jeunes ont charrié chaque pierre sur leurs épaules. Ils sont les seuls bâtisseurs ; je n'ai été que le témoin émerveillé de leur force. »",
+            outcome_en: "The room understands the real power of SALT. Two community delegates in the back burst into tears of pride, standing tall as masters of their destiny.",
+            outcome_fr: "La salle perçoit l'essence même de l'approche SALT. Les délégués du village présents au fond pleurent de fierté, maîtres debout de leur destin.",
+            maxim_id: 16
+          }
+        ]
+      },
+      {
+        id: "d17",
+        maxim_id: 17,
+        title_en: "The Uncomfortable Taboo",
+        title_fr: "Le Tabou Inconfortable",
+        story_en: "During a village dream dialogue, an adolescent girl whispers that several girls drop out of school because of sexual harassment by older relatives. The men in the circle shift uncomfortably; an elder suggests moving quickly to roads.",
+        story_fr: "Lors du partage des rêves, une adolescente murmure que plusieurs filles quittent l'école à cause d'attouchements d'oncles proches. Les hommes se raidissent ; un notable suggère vite de passer au sujet des routes.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Deliver an aggressive human rights sermon, shaming the elders loudly and threatening them with legal action.",
+            text_fr: "Lancer un réquisitoire moralisateur violent en culpabilisant les notables et en brandissant le code pénal.",
+            outcome_en: "The elders dig in defensively to protect clan honor. The girl is blamed for bringing shame to the family and is silenced at home.",
+            outcome_fr: "Les chefs se braquent pour sauver l'honneur du clan. La jeune fille est punie chez elle pour avoir jeté l'opprobre sur la famille.",
+            maxim_id: 17
+          },
+          {
+            type: "passive",
+            text_en: "Comply with the elder and quickly change the subject to road repairs to maintain peaceful politeness.",
+            text_fr: "Obtempérer et enchaîner immédiatement sur les pistes rurales pour préserver un semblant de concorde.",
+            outcome_en: "Vulnerable youth learn that their suffering is expendable. The abuse continues unaddressed behind walls of silence.",
+            outcome_fr: "Les jeunes filles comprennent que leur sécurité ne compte pas. Le silence protège la poursuite des violences.",
+            maxim_id: 17
+          },
+          {
+            type: "salt",
+            text_en: "Hold space with tender solemnity: 'This courage took immense love for our children. As parents and elders who cherish our daughters, how can our community protect the safety and honor of every girl here?'",
+            text_fr: "Accueillir ce moment avec gravité et respect : « Il a fallu un courage immense pour exprimer ceci par amour de nos enfants. En tant que pères et mères aimants, comment notre communauté peut-elle sanctuariser la dignité de nos filles ? »",
+            outcome_en: "A respected grandmother speaks up in agreement. The men lower their heads and agree to establish a community protection circle, breaking generational denial.",
+            outcome_fr: "Une grand-mère respectée prend la parole et appuie ce cri. Les hommes acceptent de créer une cellule de veille communautaire, brisant le tabou.",
+            maxim_id: 17
+          }
+        ]
+      },
+      {
+        id: "d18",
+        maxim_id: 18,
+        title_en: "The Ghost of the Stalled Meeting",
+        title_fr: "Le Spectre de l'Échec Passé",
+        story_en: "You are driving to a new village, but your mind is tormented by yesterday's meeting in Maradi where only four people showed up and the chief walked out. You feel heavy with self-doubt and consider quitting facilitation.",
+        story_fr: "Sur la route d'un nouveau village, votre esprit ressasse l'échec de la veille où seules quatre personnes sont venues avant que le délégué ne claque la porte. Vous songez à renoncer.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Arrive at the new village armed with loud gimmicks, loudspeakers, and excessive energy to overcompensate for your insecurity.",
+            text_fr: "Débarquer dans le nouveau village avec des haut-parleurs et un surcroît d'agitation artificielle pour masquer votre angoisse.",
+            outcome_en: "Your manic desperation is transparent. People find you overwhelming and keep their distance.",
+            outcome_fr: "Votre fébrilité transpire. Les habitants vous trouvent envahissant et gardent une distance méfiante.",
+            maxim_id: 18
+          },
+          {
+            type: "passive",
+            text_en: "Go through the motions with flat, hopeless delivery, assuming this village will reject the process too.",
+            text_fr: "Animer la rencontre d'une voix morne et désabusée, persuadé par avance que ce village rejettera aussi l'échange.",
+            outcome_en: "Your negative energy infects the circle. The gathering ends early in dreary apathy.",
+            outcome_fr: "Votre découragement contamine la salle. La rencontre s'enlise dans une lassitude partagée.",
+            maxim_id: 18
+          },
+          {
+            type: "salt",
+            text_en: "Breathe out yesterday's ghost: 'One stalled meeting does not define the power of communities. Remember the ten villages where youth stepped up!' Step into the circle with clean presence and fresh hope.",
+            text_fr: "Chasser le fantôme d'hier : « Un faux pas n'efface pas la force des communautés. Rappelle-toi les dix villages où la jeunesse s'est levée ! » Entrer dans le cercle l'esprit neuf.",
+            outcome_en: "You encounter the new community on its own terms. The dialogue blossoms into an unforgettable afternoon of collective discovery.",
+            outcome_fr: "Vous offrez à ce village un regard sans a priori. L'échange débouche sur une après-midi mémorable d'éveil collectif.",
+            maxim_id: 18
+          }
+        ]
+      },
+      {
+        id: "d19",
+        maxim_id: 19,
+        title_en: "The Two Faces of the Facilitator",
+        title_fr: "Le Double Visage du Facilitateur",
+        story_en: "You are known in villages as the patient apostle of SALT who never raises his voice. But back at the NGO compound, you treat the junior driver and cook with rude disdain, shouting when your tea is cold.",
+        story_fr: "Au village, vous êtes perçu comme l'apôtre patient de la méthode SALT qui ne s'énerve jamais. Mais au bureau, vous rudoyez le chauffeur et criez sur la cuisinière dès que le café tiédit.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Justify it: 'Field facilitation is professional methodology; in office management, you have to be tough to get things done.'",
+            text_fr: "Justifier votre attitude : « Le terrain est une méthode ; au bureau, il faut de la poigne sinon rien n'avance. »",
+            outcome_en: "The driver happens to have cousins in your target village. He tells them: 'He acts like an angel with you, but treats workers like dirt in town.' Your credibility is ruined.",
+            outcome_fr: "Le chauffeur est le cousin du chef du village. Il leur confie : « Il joue les saints chez vous mais nous traite comme des chiens en ville. » Votre autorité morale s'effondre.",
+            maxim_id: 19
+          },
+          {
+            type: "passive",
+            text_en: "Ignore the hypocrisy, compartmentalizing your life between 'sacred community time' and 'ordinary behavior.'",
+            text_fr: "Ignorer cette contradiction, en compartimentant votre vie entre « posture terrain » et « vie courante ».",
+            outcome_en: "Inner cynicism hollows out your facilitation. It becomes an empty theatrical performance that loses its transformative power.",
+            outcome_fr: "Le cynisme vous ronge de l'intérieur. Vos animations deviennent des représentations théâtrales vides d'énergie vraie.",
+            maxim_id: 19
+          },
+          {
+            type: "salt",
+            text_en: "Undergo sincere self-reckoning: Apologize honestly to the cook and driver, practice deep listening in the office, and make SALT your true personal way of life.",
+            text_fr: "Faire son examen de conscience : Demander pardon humblement à l'équipe de soutien et appliquer l'Écoute et l'Appréciation partout, au bureau comme au village.",
+            outcome_en: "Integrity is restored. The driver becomes your greatest facilitation partner, spotting local strengths that you would have missed.",
+            outcome_fr: "L'intégrité renaît. Le chauffeur devient votre allié le plus précieux, vous signalant les trésors cachés des villages que vous n'auriez jamais vus.",
+            maxim_id: 19
+          }
+        ]
+      },
+      {
+        id: "d20",
+        maxim_id: 20,
+        title_en: "The Martyrdom Trap",
+        title_fr: "Le Piège du Martyre Épuisé",
+        story_en: "You have facilitated 28 days straight without a single weekend off. You skip meals, have persistent migraines, and feel a simmering anger toward the community: 'After all I sacrifice for them, they don't even arrive on time!'",
+        story_fr: "Vous enchaînez 28 jours sans repos. Vous sautez vos repas, avez des migraines permanentes et ruminez : « Après tous les sacrifices que je fais pour eux, ils ne sont même pas fichus d'être à l'heure ! »",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Push through the pain, drink five coffees, and boast on social media about your relentless sacrifice for the poor.",
+            text_fr: "Serrer les dents, boire cinq cafés et vanter sur les réseaux votre abnégation surhumaine pour les démunis.",
+            outcome_en: "You collapse from physical exhaustion two days later. The resentment leaks out through passive-aggressive remarks that harm community spirit.",
+            outcome_fr: "Vous vous effondrez d'épuisement. Votre amertume transparaît dans des piques blessantes qui démoralisent l'équipe locale.",
+            maxim_id: 20
+          },
+          {
+            type: "passive",
+            text_en: "Arrive at the circle looking miserable and sigh continuously so everyone feels guilty for your suffering.",
+            text_fr: "Arriver livide et soupirer bruyamment pour que toute la communauté se sente coupable de votre martyre.",
+            outcome_en: "Participants feel your guilt trip. Rather than feeling empowered, they feel like burdensome charity cases.",
+            outcome_fr: "La communauté prend votre fardeau sur ses épaules. Loin d'être autonomes, ils se sentent coupables et redevables.",
+            maxim_id: 20
+          },
+          {
+            type: "salt",
+            text_en: "Honor your limits with honesty: 'Friends, to serve you with a clean heart, I must rest this weekend. Community life is a sacred long run, and caring for the facilitator is part of caring for the process.'",
+            text_fr: "Reconnaître ses limites avec vérité : « Chers amis, pour vous servir avec un cœur pur, je dois me reposer ce week-end. Le chemin est long et prendre soin de soi fait partie du respect du processus. »",
+            outcome_en: "The elders bless you warmly, reminding you that rest is sacred. You return renewed, joyful, and completely free of resentment.",
+            outcome_fr: "Les aînés saluent votre sagesse : le repos est béni. Vous revenez frais et disponible, lavé de toute rancœur.",
+            maxim_id: 20
+          }
+        ]
+      },
+      {
+        id: "d21",
+        maxim_id: 21,
+        title_en: "Pleasing the Inspector vs. Trusting the Circle",
+        title_fr: "L'Audit des Bailleurs Face à la Confiance des Gens",
+        story_en: "A donor monitoring officer with an iPad accompanies you to a village. He frowns and complains: 'Why are they telling childhood stories? Where is the standardized quantitative survey on latrine usage?'",
+        story_fr: "Un évaluateur muni d'une tablette vous accompagne. Il s'impatiente : « Pourquoi perdent-ils du temps avec des souvenirs d'enfance ? Où est le questionnaire quantitatif normé sur les latrines ? »",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Cut off the storytelling immediately, pull out the donor's checklist, and force the group into binary Yes/No answers.",
+            text_fr: "Couper court au récit, sortir la check-list du bailleur et forcer le groupe à répondre par Oui ou par Non aux questions techniques.",
+            outcome_en: "The officer smiles and checks his boxes. The community retreats into polite silence; their true reality remains completely hidden.",
+            outcome_fr: "L'évaluateur coche ses cases avec satisfaction. La communauté s'éteint ; ses vraies forces restent invisibles.",
+            maxim_id: 21
+          },
+          {
+            type: "passive",
+            text_en: "Argue bitterly with the donor in front of the community, creating a tense and stressful spectacle.",
+            text_fr: "Se disputer vivement avec le bailleur devant toute l'assemblée ébahie.",
+            outcome_en: "The community feels trapped in the middle of a family quarrel between outsiders. Trust collapses entirely.",
+            outcome_fr: "La communauté se sent prise en otage dans un règlement de comptes entre étrangers. Le malaise est total.",
+            maxim_id: 21
+          },
+          {
+            type: "salt",
+            text_en: "Gently interpret the process for the visitor: 'Watch closely, sir. In this culture, their stories reveal which households take collective pride in hygiene. The story is the root of the latrine practice we are measuring.'",
+            text_fr: "Éclairer l'évaluateur avec calme : « Observez bien. Dans cette culture, ces récits révèlent quelles familles ont l'honneur de la propreté. L'histoire vécue est la racine même de la pratique des latrines que nous évaluons. »",
+            outcome_en: "The officer learns a profound lesson in anthropology. The community completes their self-assessment, yielding data richer than any checkbox.",
+            outcome_fr: "L'évaluateur reçoit une leçon d'anthropologie vivante. La communauté termine son auto-évaluation en livrant des données d'une richesse inouïe.",
+            maxim_id: 21
+          }
+        ]
+      },
+      {
+        id: "d22",
+        maxim_id: 22,
+        title_en: "The Freedom of 'I Don't Know'",
+        title_fr: "La Force Libératrice du « Je Ne Sais Pas »",
+        story_en: "A strange new plant disease is destroying cassava roots in the valley. The farmers place an infected root in your hands: 'You are the expert from the city institute. Tell us: what chemical must we spray to cure this tomorrow?'",
+        story_fr: "Une nouvelle maladie flétrit le manioc dans la vallée. Les paysans déposent une racine noircie dans vos mains : « Vous venez de l'institut de la capitale. Dites-nous quel produit chimique pulvériser dès demain ! »",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Make up a confident guess using scientific-sounding words: 'Spray a 2% copper sulfate solution twice weekly!'",
+            text_fr: "Hasarder un diagnostic docte : « Pulvérisez une solution de sulfate de cuivre à 2 % deux fois par semaine ! »",
+            outcome_en: "The chemical burns their crops, poisoning the soil. The community loses their food supply because your pride would not let you say 'I don't know.'",
+            outcome_fr: "Le produit brûle les plants restants. Les récoltes sont anéanties parce que votre ego n'a pas su reconnaître son ignorance.",
+            maxim_id: 22
+          },
+          {
+            type: "passive",
+            text_en: "Throw your hands up dramatically: 'I know nothing about farming, you are on your own!'",
+            text_fr: "Lever les bras au ciel avec dédain : « Je n'y connais rien en agronomie, débrouillez-vous ! »",
+            outcome_en: "The farmers feel abandoned in their crisis, concluding that your visit was entirely useless.",
+            outcome_fr: "Les paysans se sentent abandonnés face au désastre, concluant à l'inutilité de votre présence.",
+            maxim_id: 22
+          },
+          {
+            type: "salt",
+            text_en: "Breathe deeply and speak with serene humility: 'I do not know what this blight is. But in this valley, who among our neighbors had healthy cassava leaves last season? And how can our agricultural university investigate this together with our farmers?'",
+            text_fr: "Respirer et dire avec sérénité : « En toute honnêteté, j'ignore la nature de ce mal. Mais dans la vallée, qui parmi vos voisins a conservé des plants sains ? Et comment pouvons-nous mettre nos agronomes en lien avec votre veille locale ? »",
+            outcome_en: "An elder recalls that an upstream hamlet intercrops with sweet potatoes to resist root rot. A joint investigation between local growers and the agronomy center is launched as equal partners.",
+            outcome_fr: "Un ancien se souvient qu'un village voisin associe la patate douce pour contrer le pourrissement. Une recherche collaborative s'engage d'égal à égal.",
+            maxim_id: 22
+          }
+        ]
+      },
+      {
+        id: "d23",
+        maxim_id: 23,
+        title_en: "The Ego on the Pedestal",
+        title_fr: "L'Ego sur le Piédestal",
+        story_en: "At the start of a meeting, the youth leader makes an exaggerated speech praising you as 'our messiah who came from overseas to rescue our backward village from ignorance.' Everyone looks up at you with idolizing gazes.",
+        story_fr: "En ouverture, un jeune responsable vous présente avec grandiloquence comme « le messie venu de l'étranger pour sortir notre pauvre village arriéré de l'obscurantisme ». Tous les regards vous déifient.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Enjoy the praise, nod graciously, and deliver a dramatic speech about your tireless dedication to uplifting them.",
+            text_fr: "Boire ces éloges du regard, acquiescer avec condescendance et prononcer un discours héroïque sur votre dévouement.",
+            outcome_en: "You have cemented their feeling of inferiority. They remain children waiting for a foreign savior, incapable of owning their future.",
+            outcome_fr: "Vous ancrez leur complexe d'infériorité. Ils demeurent des spectateurs passifs attendant la manne extérieure.",
+            maxim_id: 23
+          },
+          {
+            type: "passive",
+            text_en: "Giggle awkwardly, look away, and let the speech pass without addressing the dangerous pedestal.",
+            text_fr: "Ricaner d'un air gêné sans relever le danger mortel de ce piédestal pour l'auto-développement.",
+            outcome_en: "Tacit acceptance reinforces the myth that wisdom exists elsewhere, keeping local agency dormant.",
+            outcome_fr: "Votre complaisance passive confirme l'illusion : le salut viendrait de l'extérieur, endormant leur responsabilité.",
+            maxim_id: 23
+          },
+          {
+            type: "salt",
+            text_en: "Immediately kneel or sit down on the floor mat beside the youth: 'Brother, stop there. There is no messiah here. I am an ordinary person with my own brokenness. The only strength that can lift this village is the fire beating in your own chests!'",
+            text_fr: "S'asseoir immédiatement par terre au même niveau que les autres : « Mon frère, arrêtons-nous là. Il n'y a aucun messie ici. Je suis un être faillible. La seule force qui relèvera ce village bat déjà dans vos propres poitrines ! »",
+            outcome_en: "The psychological chains break. The circle erupts into spontaneous joy; they realize the power is in their own hands, not in the visitor.",
+            outcome_fr: "Les chaînes invisibles de la dépendance se brisent. L'assemblée vibre d'un soulagement immense : le pouvoir d'agir est ici, entre leurs mains.",
+            maxim_id: 23
+          }
+        ]
+      },
+      {
+        id: "d24",
+        maxim_id: 24,
+        title_en: "The Arrogance of Experience",
+        title_fr: "L'Arrogance de la Bouteille",
+        story_en: "You have facilitated SALT visits for twenty years in 30 countries. When a young village woman suggests a new method of using dance to map clan strengths, you catch yourself thinking: 'I was facilitating before she was born.'",
+        story_fr: "Vous facilitez depuis vingt ans dans 30 pays. Quand une jeune femme propose d'utiliser des pas de danse pour cartographier les forces du clan, vous vous surprenez à penser : « J'animais déjà avant sa naissance. »",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Shut her down authoritatively: 'That is not standard CLCP methodology. We use the certified 5-step dream protocol.'",
+            text_fr: "Rétablir l'ordre méthodologique : « Cela ne fait pas partie du protocole CLCP officiel. Nous suivons les 5 étapes homologuées. »",
+            outcome_en: "Her creative enthusiasm is snuffed out. The session turns rigid and stale, suffocated by your veteran arrogance.",
+            outcome_fr: "Sa créativité est fauchée net. La séance devient rigide et scolaire, étouffée par le conservatisme du vétéran.",
+            maxim_id: 24
+          },
+          {
+            type: "passive",
+            text_en: "Roll your eyes privately to your colleague while letting her dance, treating it as childish playtime.",
+            text_fr: "Lever discrètement les yeux au ciel devant votre collègue, en traitant son idée comme un caprice enfantin.",
+            outcome_en: "The youth sense your patronizing mockery. The generational divide widens, and they stop offering innovation.",
+            outcome_fr: "Les jeunes sentent votre mépris condescendant. Le fossé se creuse et plus aucune idée neuve n'émerge.",
+            maxim_id: 24
+          },
+          {
+            type: "salt",
+            text_en: "Become an excited student: 'What a brilliant insight! My daughter, teach me how to dance this step. Let us learn how music maps the beating heart of this community!'",
+            text_fr: "Devenir un élève émerveillé : « Quelle intuition magnifique ! Ma fille, apprends-moi ces pas. Montre-nous comment le rythme fait parler l'âme de votre village ! »",
+            outcome_en: "Generations merge in joy. The dance-mapping reveals hidden community champions who had never spoken in formal chairs. You discover a brand new facilitation practice.",
+            outcome_fr: "Les générations fusionnent dans l'allégresse. La cartographie dansée révèle des leaders méconnus. Vous enrichissez votre pratique d'une innovation lumineuse.",
+            maxim_id: 24
+          }
+        ]
+      },
+      {
+        id: "d25",
+        maxim_id: 25,
+        title_en: "The Vanishing Facilitator",
+        title_fr: "La Présence Invisible du Guide",
+        story_en: "The village is celebrating the launch of their community-financed dispensary. Ministers, journalists, and district chiefs are arriving. The community forgot to reserve a seat for you in the front VIP pavilion.",
+        story_fr: "Le village fête l'ouverture de son dispensaire autofinancé. Préfet, journalistes et notables affluent. Le comité a oublié de vous réserver un fauteuil dans la tribune VIP.",
+        options: [
+          {
+            type: "rescue",
+            text_en: "Make a quiet complaint to the organizers about protocol, ensuring your organization's logo is positioned on the podium.",
+            text_fr: "Faire remarquer discrètement aux organisateurs l'oubli de protocole et exiger que la bannière de votre ONG soit visible au micro.",
+            outcome_en: "You taint a historic community triumph with personal grievance. The leaders feel guilty and realize you still crave the spotlight.",
+            outcome_fr: "Vous ternissez un sacre communautaire par une susceptibilité d'ego. Les responsables réalisent que vous cherchiez la gloire.",
+            maxim_id: 25
+          },
+          {
+            type: "passive",
+            text_en: "Leave the celebration in anger, drive off in your car, and refuse to answer their congratulatory messages.",
+            text_fr: "Quitter la fête vexé, monter dans son véhicule et bouder en ignorant leurs messages de remerciement.",
+            outcome_en: "Your childish petulance exposes the limits of your dedication, ruining a relationship that took months to build.",
+            outcome_fr: "Votre dépit infantile brise en un instant la beauté de mois de fraternité partagée.",
+            maxim_id: 25
+          },
+          {
+            type: "salt",
+            text_en: "Smile from the bottom of your heart, find a spot among the trees at the very back with the children, and whisper in prayer: 'It worked. They own it so completely that they have forgotten I was ever here.'",
+            text_fr: "Sourire du fond du cœur, s'asseoir au fond sous un manguier avec les enfants et murmurer : « C'est réussi. L'œuvre est tellement la leur qu'ils ont oublié que je suis un jour venu ici. »",
+            outcome_en: "You have arrived at the summit of facilitation mastery: the community is fully sovereign, celebrating their own triumph with unconditional ownership.",
+            outcome_fr: "Vous atteignez le sommet de la maîtrise de l'accompagnement : la communauté est debout, souveraine, célébrant sa propre victoire dans une autonomie absolue.",
+            maxim_id: 25
+          }
+        ]
+      }
+    ];
+
+    /* ==========================================================
+       UI TRANSLATION DICTIONARY
+       ========================================================== */
+    const UI_I18N = {
+      en: {
+        title: "SALT Facilitator Compass",
+        subtitle: "CLCP & Community-Led Development",
+        browseBtn: "All 25",
+        navPrompt: "Story Prompt",
+        navMirror: "Ego Mirror",
+        navClinic: "Stumble Clinic",
+        promptHeading: "Daily Compass Card",
+        promptDesc: "Tap to flip between the inner self-reflection and today's SALT Maxim action.",
+        lblMaxim: "Select #:",
+        btnDraw: "Draw Random",
+        cardTagFront: "Inner Introspection",
+        cardTagBack: "CLCP / SALT Maxim",
+        cardFrontHint: "💡 Tap card to discover the SALT Maxim & Field Micro-Action",
+        lblTruth: "Universal Truth:",
+        lblMicro: "Today's Field Micro-Practice:",
+        cardBackHint: "Tap to flip back",
+        btnShareCard: "Share to WhatsApp",
+        promptFooterHint: "Tip: Facilitators in triads draw one card each morning as a quiet intention.",
+        mirrorHeading: "Ego Mirror Dilemmas",
+        mirrorDesc: "25 field simulations testing our urge to take control versus holding space.",
+        lblDilemmaMaxim: "Associated Maxim:",
+        btnShareDilemma: "Discuss with Triad on WhatsApp",
+        clinicHeading: "The Stumble Clinic",
+        clinicDesc: "In CLCP, our stumble is where learning begins. Prepare your 1-minute peer reflection.",
+        clinicLblStep1: "1. The Field Stumble (What happened?):",
+        clinicLblStep2: "2. The Ego Reflex (What triggered inside you?):",
+        clinicLblStep3: "3. The Maxim that illuminates this moment:",
+        clinicBtnGenerate: "Generate Structured Note",
+        clinicLblPreview: "WhatsApp Preview:",
+        clinicBtnCopy: "📋 Copy Text",
+        clinicBtnWhatsapp: "Send to WhatsApp",
+        drawerTitle: "The 25 SALT / CLCP Maxims",
+        drawerSub: "Principles for Community-Led Facilitators",
+        drawerCloseBtn: "Close",
+        drawerSearchPlaceholder: "Search maxims...",
+        optRescue: "The Expert Rescue",
+        optPassive: "Passive Avoidance",
+        optSalt: "The SALT Posture",
+        verdictRescue: "The Trap: Outside Expert Taking Over",
+        verdictPassive: "The Trap: Disengagement & Avoidance",
+        verdictSalt: "The SALT Way: Awakening Community Agency",
+        phSit: "e.g. During the youth dialogue in Kabala, I answered for them when the elder looked skeptical...",
+        phEmo: "e.g. Fear of looking incompetent; urge to save face; impatience with silence...",
+        dilemmaLabel: "Dilemma",
+        dilemmaBadge: "Field Dilemma"
+      },
+      fr: {
+        title: "Boussole du Facilitateur SALT",
+        subtitle: "Processus CLCP & Développement par la Communauté",
+        browseBtn: "Les 25",
+        navPrompt: "Cartes Récit",
+        navMirror: "Miroir de l'Ego",
+        navClinic: "Clinique des Trébuchements",
+        promptHeading: "Carte Boussole du Jour",
+        promptDesc: "Touchez la carte pour basculer entre l'introspection et la maxime d'action SALT.",
+        lblMaxim: "Choisir N°:",
+        btnDraw: "Tirer au sort",
+        cardTagFront: "Introspection Intérieure",
+        cardTagBack: "Maxime CLCP / SALT",
+        cardFrontHint: "💡 Touchez la carte pour révéler la Maxime & la Micro-Pratique",
+        lblTruth: "Vérité Universelle :",
+        lblMicro: "Micro-Pratique de Terrain du Jour :",
+        cardBackHint: "Touchez pour retourner",
+        btnShareCard: "Partager sur WhatsApp",
+        promptFooterHint: "Conseil : Les facilitateurs en triades tirent une carte le matin en guise d'intention silencieuse.",
+        mirrorHeading: "Miroir de l'Ego : Mises en Situation",
+        mirrorDesc: "25 simulations de terrain pour tester le réflexe de diriger face à l'art d'offrir l'espace.",
+        lblDilemmaMaxim: "Maxime Associée :",
+        btnShareDilemma: "En discuter avec sa Triade sur WhatsApp",
+        clinicHeading: "La Clinique des Trébuchements",
+        clinicDesc: "Dans le CLCP, nos trébuchements sont le terreau de l'apprentissage. Préparez votre partage.",
+        clinicLblStep1: "1. Le Trébuchement de Terrain (Que s'est-il passé ?) :",
+        clinicLblStep2: "2. Le Réflexe de l'Ego (Qu'est-ce qui s'est réveillé en vous ?) :",
+        clinicLblStep3: "3. La Maxime qui éclaire cet événement :",
+        clinicBtnGenerate: "Générer la Note de Partage",
+        clinicLblPreview: "Aperçu pour WhatsApp :",
+        clinicBtnCopy: "📋 Copier le texte",
+        clinicBtnWhatsapp: "Envoyer sur WhatsApp",
+        drawerTitle: "Les 25 Maximes SALT / CLCP",
+        drawerSub: "Principes pour la Facilitation Communautaire",
+        drawerCloseBtn: "Fermer",
+        drawerSearchPlaceholder: "Rechercher une maxime...",
+        optRescue: "Le Sauvetage de l'Expert",
+        optPassive: "L'Évitement Passif",
+        optSalt: "La Posture SALT",
+        verdictRescue: "Le Piège : L'expert extérieur prend le contrôle",
+        verdictPassive: "Le Piège : Désengagement & Silence gêné",
+        verdictSalt: "La Posture SALT : Révéler le pouvoir d'agir local",
+        phSit: "Ex. Lors du dialogue des jeunes à Kabala, j'ai répondu à leur place dès que le doyen a montré du scepticisme...",
+        phEmo: "Ex. Peur de paraître incompétent ; besoin de sauver la face ; malaise face au silence...",
+        dilemmaLabel: "Dilemme",
+        dilemmaBadge: "Mise en Situation"
+      }
+    };
+
+    /* ==========================================================
+       APPLICATION STATE
+       ========================================================== */
+    let currentLang = localStorage.getItem('salt_compass_lang') || 'en';
+    let currentMaximIndex = 0; // 0 to 24
+    let isFlipped = false;
+    let currentDilemmaIndex = 0;
+    let selectedOptionIndex = null;
+
+    /* ==========================================================
+       INITIALIZATION
+       ========================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      initLanguage();
+      populateMaximDropdowns();
+      renderCard();
+      renderDilemmaTabs();
+      renderCurrentDilemma();
+      renderMaximsList();
+    });
+
+    /* ==========================================================
+       LANGUAGE HANDLING
+       ========================================================== */
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('salt_compass_lang', lang);
+      updateLanguageUI();
+      populateMaximDropdowns();
+      renderCard();
+      renderDilemmaTabs();
+      renderCurrentDilemma();
+      renderMaximsList();
+      if (!document.getElementById('stumble-preview-container').classList.contains('hidden')) {
+        generateStumbleNote();
+      }
+    }
+
+    function initLanguage() {
+      updateLanguageUI();
+    }
+
+    function updateLanguageUI() {
+      const t = UI_I18N[currentLang];
+      
+      // Header & Nav
+      document.getElementById('ui-title').textContent = t.title;
+      document.getElementById('ui-subtitle').textContent = t.subtitle;
+      document.getElementById('ui-browse-btn').textContent = t.browseBtn;
+      document.getElementById('nav-prompt').textContent = t.navPrompt;
+      document.getElementById('nav-mirror').textContent = t.navMirror;
+      document.getElementById('nav-clinic').textContent = t.navClinic;
+
+      // Tab 1: Prompt
+      document.getElementById('prompt-heading').textContent = t.promptHeading;
+      document.getElementById('prompt-desc').textContent = t.promptDesc;
+      document.getElementById('lbl-maxim').textContent = t.lblMaxim;
+      document.getElementById('btn-draw').textContent = t.btnDraw;
+      document.getElementById('card-tag-front').textContent = t.cardTagFront;
+      document.getElementById('card-tag-back').textContent = t.cardTagBack;
+      document.getElementById('card-front-hint').textContent = t.cardFrontHint;
+      document.getElementById('lbl-truth').textContent = t.lblTruth;
+      document.getElementById('lbl-micro').innerHTML = `<span>🌱</span><span>${t.lblMicro}</span>`;
+      document.getElementById('card-back-hint').textContent = t.cardBackHint;
+      document.getElementById('btn-share-card').textContent = t.btnShareCard;
+      document.getElementById('prompt-footer-hint').textContent = t.promptFooterHint;
+
+      // Tab 2: Mirror
+      document.getElementById('mirror-heading').textContent = t.mirrorHeading;
+      document.getElementById('mirror-desc').textContent = t.mirrorDesc;
+      document.getElementById('lbl-dilemma-maxim').textContent = t.lblDilemmaMaxim;
+      document.getElementById('btn-share-dilemma').textContent = t.btnShareDilemma;
+      document.getElementById('dilemma-context-tag').textContent = t.dilemmaTagText;
+
+      // Tab 3: Clinic
+      document.getElementById('clinic-heading').textContent = t.clinicHeading;
+      document.getElementById('clinic-desc').textContent = t.clinicDesc;
+      document.getElementById('clinic-lbl-step1').textContent = t.clinicLblStep1;
+      document.getElementById('clinic-lbl-step2').textContent = t.clinicLblStep2;
+      document.getElementById('clinic-lbl-step3').textContent = t.clinicLblStep3;
+      document.getElementById('clinic-btn-generate').textContent = t.clinicBtnGenerate;
+      document.getElementById('clinic-lbl-preview').textContent = t.clinicLblPreview;
+      document.getElementById('clinic-btn-copy').textContent = t.clinicBtnCopy;
+      document.getElementById('clinic-btn-whatsapp').textContent = t.clinicBtnWhatsapp;
+      document.getElementById('stumble-input-sit').placeholder = t.phSit;
+      document.getElementById('stumble-input-emo').placeholder = t.phEmo;
+
+      // Drawer
+      document.getElementById('drawer-title').textContent = t.drawerTitle;
+      document.getElementById('drawer-sub').textContent = t.drawerSub;
+      document.getElementById('drawer-close-btn').textContent = t.drawerCloseBtn;
+      document.getElementById('drawer-search').placeholder = t.drawerSearchPlaceholder;
+
+      // Language button classes
+      const btnEn = document.getElementById('lang-en');
+      const btnFr = document.getElementById('lang-fr');
+      if (currentLang === 'en') {
+        btnEn.className = "px-2 py-1 rounded-md bg-white text-earth-900 font-bold shadow-xs";
+        btnFr.className = "px-2 py-1 rounded-md text-slate-500 hover:text-earth-900";
+      } else {
+        btnFr.className = "px-2 py-1 rounded-md bg-white text-earth-900 font-bold shadow-xs";
+        btnEn.className = "px-2 py-1 rounded-md text-slate-500 hover:text-earth-900";
+      }
+    }
+
+    /* ==========================================================
+       NAVIGATION TABS
+       ========================================================== */
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('text-salt-emerald', 'border-salt-emerald', 'font-semibold');
+        btn.classList.add('text-slate-500', 'border-transparent', 'font-medium');
+      });
+
+      document.getElementById(`section-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      activeBtn.classList.remove('text-slate-500', 'border-transparent', 'font-medium');
+      activeBtn.classList.add('text-salt-emerald', 'border-salt-emerald', 'font-semibold');
+    }
+
+    /* ==========================================================
+       TAB 1: STORY PROMPT / CARD FLIP LOGIC
+       ========================================================== */
+    function populateMaximDropdowns() {
+      const selectCard = document.getElementById('maxim-select');
+      const selectClinic = document.getElementById('stumble-maxim-select');
+      
+      const currentValCard = selectCard.value || "1";
+      const currentValClinic = selectClinic.value || "1";
+
+      selectCard.innerHTML = "";
+      selectClinic.innerHTML = "";
+
+      MAXIMS_DATA.forEach(item => {
+        const text = `#${item.id}: ${item[currentLang].maxim.substring(0, 48)}...`;
+        
+        const opt1 = document.createElement('option');
+        opt1.value = item.id;
+        opt1.textContent = `#${item.id}`;
+        selectCard.appendChild(opt1);
+
+        const opt2 = document.createElement('option');
+        opt2.value = item.id;
+        opt2.textContent = text;
+        selectClinic.appendChild(opt2);
+      });
+
+      selectCard.value = currentValCard;
+      selectClinic.value = currentValClinic;
+    }
+
+    function renderCard() {
+      const item = MAXIMS_DATA[currentMaximIndex];
+      const langData = item[currentLang];
+
+      document.getElementById('card-num-front').textContent = `# ${String(item.id).padStart(2, '0')}`;
+      document.getElementById('card-num-back').textContent = `# ${String(item.id).padStart(2, '0')}`;
+      document.getElementById('card-question').textContent = `"${langData.question}"`;
+      document.getElementById('card-maxim').textContent = langData.maxim;
+      document.getElementById('card-micro').textContent = langData.micro;
+      document.getElementById('maxim-select').value = item.id;
+    }
+
+    function toggleCardFlip() {
+      const card = document.getElementById('flashcard');
+      isFlipped = !isFlipped;
+      if (isFlipped) {
+        card.classList.add('rotate-y-180');
+      } else {
+        card.classList.remove('rotate-y-180');
+      }
+    }
+
+    function drawRandomCard() {
+      let nextIndex;
+      do {
+        nextIndex = Math.floor(Math.random() * MAXIMS_DATA.length);
+      } while (nextIndex === currentMaximIndex && MAXIMS_DATA.length > 1);
+
+      currentMaximIndex = nextIndex;
+      const card = document.getElementById('flashcard');
+      card.classList.remove('rotate-y-180');
+      isFlipped = false;
+      
+      setTimeout(() => {
+        renderCard();
+      }, 150);
+    }
+
+    function loadSpecificCard(id) {
+      currentMaximIndex = parseInt(id) - 1;
+      const card = document.getElementById('flashcard');
+      card.classList.remove('rotate-y-180');
+      isFlipped = false;
+      renderCard();
+    }
+
+    function sharePromptWhatsApp() {
+      const item = MAXIMS_DATA[currentMaximIndex];
+      const langData = item[currentLang];
+      const isFr = currentLang === 'fr';
+
+      const text = isFr 
+        ? `🧭 *Boussole du Facilitateur SALT (CLCP)*\n*Maxime #${item.id}* :\n"${langData.maxim}"\n\n🌱 *Pratique de terrain du jour* :\n${langData.micro}\n\n❓ *Question pour notre Triade* :\n"${langData.question}"\n\n_Partagé depuis la Boussole SALT_`
+        : `🧭 *SALT Facilitator Compass (CLCP)*\n*Maxim #${item.id}* :\n"${langData.maxim}"\n\n🌱 *Today's Field Micro-Practice* :\n${langData.micro}\n\n❓ *Question for our Triad* :\n"${langData.question}"\n\n_Shared from the SALT Compass_`;
+
+      const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    /* ==========================================================
+       TAB 2: EGO MIRROR DILEMMAS LOGIC
+       ========================================================== */
+    function renderDilemmaTabs() {
+      const bar = document.getElementById('dilemma-pill-bar');
+      bar.innerHTML = "";
+      const t = UI_I18N[currentLang];
+
+      DILEMMAS_DATA.forEach((dilemma, idx) => {
+        const btn = document.createElement('button');
+        const num = idx + 1;
+        const isSelected = idx === currentDilemmaIndex;
+        
+        btn.className = `whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-semibold transition shrink-0 ${
+          isSelected 
+            ? 'bg-earth-800 text-white shadow-sm ring-2 ring-earth-800/30' 
+            : 'bg-white text-earth-800 border border-earth-200 hover:bg-earth-100'
+        }`;
+        btn.textContent = `${t.dilemmaLabel} ${num}`;
+        btn.onclick = () => {
+          currentDilemmaIndex = idx;
+          selectedOptionIndex = null;
+          renderDilemmaTabs();
+          renderCurrentDilemma();
+          // Keep active pill in view
+          btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        };
+        bar.appendChild(btn);
+      });
+    }
+
+    function renderCurrentDilemma() {
+      const d = DILEMMAS_DATA[currentDilemmaIndex];
+      const t = UI_I18N[currentLang];
+      const num = currentDilemmaIndex + 1;
+
+      document.getElementById('dilemma-context-tag').textContent = `${t.dilemmaBadge} #${num} / 25`;
+      document.getElementById('dilemma-title').textContent = currentLang === 'fr' ? d.title_fr : d.title_en;
+      document.getElementById('dilemma-story').textContent = currentLang === 'fr' ? d.story_fr : d.story_en;
+
+      const optsBox = document.getElementById('dilemma-options-box');
+      optsBox.innerHTML = "";
+
+      d.options.forEach((opt, idx) => {
+        const isSelected = selectedOptionIndex === idx;
+        const btn = document.createElement('button');
+        
+        let typeBadge = "";
+        let borderClass = isSelected ? "border-earth-800 bg-earth-50 ring-1 ring-earth-800" : "border-earth-200 bg-white hover:bg-earth-50/60";
+
+        if (opt.type === 'rescue') typeBadge = `[${t.optRescue}]`;
+        if (opt.type === 'passive') typeBadge = `[${t.optPassive}]`;
+        if (opt.type === 'salt') typeBadge = `[${t.optSalt}]`;
+
+        btn.className = `w-full text-left p-3.5 rounded-xl border text-xs leading-relaxed transition flex flex-col space-y-1 ${borderClass}`;
+        btn.innerHTML = `
+          <span class="text-[10px] font-bold tracking-wider text-earth-600 uppercase">${typeBadge}</span>
+          <span class="text-slate-800 font-medium">${currentLang === 'fr' ? opt.text_fr : opt.text_en}</span>
+        `;
+        btn.onclick = () => selectDilemmaOption(idx);
+        optsBox.appendChild(btn);
+      });
+
+      const feedbackBox = document.getElementById('dilemma-feedback-box');
+      if (selectedOptionIndex !== null) {
+        showFeedback(d.options[selectedOptionIndex]);
+      } else {
+        feedbackBox.classList.add('hidden');
+      }
+    }
+
+    function selectDilemmaOption(idx) {
+      selectedOptionIndex = idx;
+      renderCurrentDilemma();
+    }
+
+    function showFeedback(option) {
+      const fbBox = document.getElementById('dilemma-feedback-box');
+      const icon = document.getElementById('dilemma-fb-icon');
+      const verdict = document.getElementById('dilemma-fb-verdict');
+      const story = document.getElementById('dilemma-fb-story');
+      const maximText = document.getElementById('dilemma-fb-maxim');
+      const t = UI_I18N[currentLang];
+
+      fbBox.classList.remove('hidden', 'bg-red-50', 'border-red-200', 'bg-amber-50', 'border-amber-200', 'bg-emerald-50', 'border-emerald-200');
+
+      if (option.type === 'rescue') {
+        fbBox.classList.add('bg-red-50', 'border-red-200');
+        icon.textContent = "⚠️";
+        verdict.className = "text-xs font-bold uppercase tracking-wide text-red-800";
+        verdict.textContent = t.verdictRescue;
+      } else if (option.type === 'passive') {
+        fbBox.classList.add('bg-amber-50', 'border-amber-200');
+        icon.textContent = "⏳";
+        verdict.className = "text-xs font-bold uppercase tracking-wide text-amber-800";
+        verdict.textContent = t.verdictPassive;
+      } else {
+        fbBox.classList.add('bg-emerald-50', 'border-emerald-200');
+        icon.textContent = "🌱";
+        verdict.className = "text-xs font-bold uppercase tracking-wide text-emerald-800";
+        verdict.textContent = t.verdictSalt;
+      }
+
+      story.textContent = currentLang === 'fr' ? option.outcome_fr : option.outcome_en;
+
+      const maximObj = MAXIMS_DATA.find(m => m.id === option.maxim_id);
+      if (maximObj) {
+        maximText.textContent = `#${maximObj.id}: "${maximObj[currentLang].maxim}"`;
+      }
+    }
+
+    function shareDilemmaWhatsApp() {
+      const d = DILEMMAS_DATA[currentDilemmaIndex];
+      const opt = d.options[selectedOptionIndex];
+      const maximObj = MAXIMS_DATA.find(m => m.id === opt.maxim_id);
+      const isFr = currentLang === 'fr';
+
+      const dTitle = isFr ? d.title_fr : d.title_en;
+      const optText = isFr ? opt.text_fr : opt.text_en;
+      const outcome = isFr ? opt.outcome_fr : opt.outcome_en;
+      const maximStr = maximObj ? `Maxim #${maximObj.id}: "${maximObj[currentLang].maxim}"` : '';
+
+      const text = isFr
+        ? `🪞 *Miroir de l'Ego SALT (Simulation)*\n*Cas : ${dTitle}*\n\nJ'ai testé ce choix :\n"${optText}"\n\n📌 *Ce qui s'est produit* :\n${outcome}\n\n💡 *Leçon clé* :\n${maximStr}\n\n*Pour notre Triade* : Comment auriez-vous réagi face à cette situation ?`
+        : `🪞 *SALT Ego Mirror (Simulation)*\n*Dilemma: ${dTitle}*\n\nI tested this choice:\n"${optText}"\n\n📌 *Outcome* :\n${outcome}\n\n💡 *Key Lesson* :\n${maximStr}\n\n*For our Triad*: How would you have held space in this situation?`;
+
+      const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    /* ==========================================================
+       TAB 3: STUMBLE CLINIC BUILDER
+       ========================================================== */
+    function generateStumbleNote() {
+      const sit = document.getElementById('stumble-input-sit').value.trim();
+      const emo = document.getElementById('stumble-input-emo').value.trim();
+      const maximId = parseInt(document.getElementById('stumble-maxim-select').value);
+      const maximObj = MAXIMS_DATA.find(m => m.id === maximId);
+
+      const isFr = currentLang === 'fr';
+      const defaultSit = isFr ? "(Situation de terrain partagée en triade)" : "(Field situation shared with triad)";
+      const defaultEmo = isFr ? "(Prise de conscience du réflexe d'ego)" : "(Inner awareness of ego reaction)";
+
+      const formatted = isFr
+        ? `🌱 *Clinique des Trébuchements SALT - Ma Réflexion*\n\n1️⃣ *Le Fait de terrain :*\n${sit || defaultSit}\n\n2️⃣ *Le Réflexe Intérieur :*\n${emo || defaultEmo}\n\n3️⃣ *La Maxime Éclairante :*\n*#${maximObj.id}* : "${maximObj.fr.maxim}"\n\n_« Dans le CLCP, nos trébuchements sont les graines de notre sagesse collective. »_`
+        : `🌱 *SALT Stumble Clinic - My Peer Reflection*\n\n1️⃣ *The Field Stumble :*\n${sit || defaultSit}\n\n2️⃣ *The Inner Reflex :*\n${emo || defaultEmo}\n\n3️⃣ *The Illuminating Maxim :*\n*#${maximObj.id}* : "${maximObj.en.maxim}"\n\n_“In CLCP, our stumbles are the seeds of collective wisdom.”_`;
+
+      document.getElementById('stumble-preview-text').textContent = formatted;
+      document.getElementById('stumble-preview-container').classList.remove('hidden');
+    }
+
+    function copyStumbleNote() {
+      const text = document.getElementById('stumble-preview-text').textContent;
+      
+      // Fallback-safe clipboard copy for iframe/sandbox environments
+      const tempTextArea = document.createElement("textarea");
+      tempTextArea.value = text;
+      document.body.appendChild(tempTextArea);
+      tempTextArea.select();
+      try {
+        document.execCommand('copy');
+        const toast = document.getElementById('clinic-copied-toast');
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 2500);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
+      document.body.removeChild(tempTextArea);
+    }
+
+    function sendStumbleWhatsApp() {
+      const text = document.getElementById('stumble-preview-text').textContent;
+      const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    /* ==========================================================
+       ALL 25 MAXIMS MODAL / DRAWER
+       ========================================================== */
+    function openDrawer() {
+      document.getElementById('maxims-drawer').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('drawer-search').value = "";
+      renderMaximsList();
+    }
+
+    function closeDrawer() {
+      document.getElementById('maxims-drawer').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function renderMaximsList(query = '') {
+      const container = document.getElementById('maxims-list-container');
+      container.innerHTML = "";
+
+      const q = query.toLowerCase().trim();
+
+      const filtered = MAXIMS_DATA.filter(item => {
+        const text = (item[currentLang].maxim + " " + item[currentLang].question + " " + item[currentLang].micro).toLowerCase();
+        return text.includes(q);
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<p class="text-xs text-center text-slate-400 py-8">${currentLang === 'fr' ? 'Aucune maxime trouvée.' : 'No maxims found.'}</p>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const div = document.createElement('div');
+        div.className = "p-3.5 rounded-xl border border-earth-200 bg-earth-50/50 hover:bg-earth-100/60 transition cursor-pointer space-y-1";
+        div.onclick = () => {
+          loadSpecificCard(item.id);
+          switchTab('prompt');
+          closeDrawer();
+        };
+
+        div.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-salt-emerald">#${String(item.id).padStart(2, '0')}</span>
+            <span class="text-[10px] text-earth-600 font-semibold uppercase">${currentLang === 'fr' ? 'Ouvrir en carte' : 'Open in Card'} →</span>
+          </div>
+          <p class="text-xs font-bold text-earth-900 leading-snug">${item[currentLang].maxim}</p>
+          <p class="text-[11px] text-slate-600 italic">"${item[currentLang].question}"</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function filterMaxims(query) {
+      renderMaximsList(query);
+    }
+  </script>
+</body>
+</html>
