@@ -665,7 +665,7 @@ const interactiveWebProducts = [
     description: "Find out which SALT personality pattern is most like you."
   },
   {
-    file: "daee-self-assessment",
+    file: "daee-self-assessment.html",
     title: "🪞The Ego Mirror",
     description: "A self-accountability diagnostic for callers to Islam."
   },
