@@ -641,17 +641,17 @@ const ihciMonitoringReports = [
 const interactiveWebProducts = [
   {
     file: "river-of-life.html",
-    title: "River of Life Diagram Generator",
+    title: "🚣 River of Life Diagram Generator",
     description: "Score where your community stands today and where you dream of being, with this River of Life chart generator."
   },
   {
     file: "clcp-simulator.html",
-    title: "Community Participation Simulator",
+    title: "👥 Community Participation Simulator",
     description: "Practically learn to accompany a community without taking over."
   },
    {
     file: "salt-buzz-quiz.html",
-    title: "SALT Personality Pattern",
+    title: "🔷 SALT Personality Pattern",
     description: "Find out which SALT personality pattern is most like you."
   },
   {
@@ -661,47 +661,52 @@ const interactiveWebProducts = [
   },
   {
     file: "tmc-sampling-size.html",
-    title: "Village Survey Safari",
+    title: "🛖 Village Survey Safari",
     description: "Find out which SALT personality pattern is most like you."
   },
   {
+    file: "daee-self-assessment",
+    title: "🪞The Ego Mirror",
+    description: "A self-accountability diagnostic for callers to Islam."
+  },
+  {
     file: "chart.html",
-    title: "IHCI Interactive Chart: A Tale of 4 Districts",
+    title: "📈 IHCI Interactive Chart: A Tale of 4 Districts",
     description: "A data visualization charting interface mapping, isolating, and evaluating comparative hypertension control metrics across four operational index districts."
   },
   {
     file: "coapimodal.html",
-    title: "COVID-19 Real-Time Live API Modal Node",
+    title: "🦠 COVID-19 Real-Time Live API Modal Node",
     description: "An integrated web script pop-up interface parsing, capturing, and transforming active public health data arrays dynamically via an external API connection."
   },
   {
     file: "cocheck.html",
-    title: "Co-Check Digital Self-Assessment Tracker",
+    title: "💉Co-Check Digital Self-Assessment Tracker",
     description: "An open platform rendering customized client-side evaluation models based on the Community Life Competence Process (CLCP) framework approaches."
   },
   {
     file: "codsd.html",
-    title: "CLCP Localized Data-Sharing Engine",
-    description: "A structural information sharing script built to surface specialized indicators tracking regional safety measures and community resilience scores."
+    title: "🤢 CLCP Denial Stigma Discrimination Engine",
+    description: "A structural information sharing script built to surface specialized indicators tracking Denial, Stigma, and Discrimination as community resilience scores."
   },
   {
     file: "comemgame.html",
-    title: "Coronavirus Educational Serious Game (CoMemGame)",
+    title: "🧫Coronavirus Educational Serious Game (CoMemGame)",
     description: "A micro-cognitive memory puzzle application designed to gamify virus structural identification and encourage preventive action awareness mechanics."
   },
   {
     file: "cotestbmj.html",
-    title: "BMJ Clinical Quality Validation Framework",
+    title: "🔬 BMJ Clinical Quality Validation Framework",
     description: "A web assessment test environment built around the British Medical Journal intervention and clinical guidelines metrics."
   },
   {
     file: "ihciquizcertificate.html",
-    title: "IHCI Training Quiz & E-Certificate Node",
+    title: "🩸 IHCI Training Quiz & E-Certificate Node",
     description: "An automated clinical education platform that calculates exam performance modules and produces downloadable programmatic verification certificates."
   },
   {
     file: "tmjinfog.html",
-    title: "TMJ Interactive Health Infographic Portal",
+    title: "🩺 TMJ Interactive Health Infographic Portal",
     description: "An dynamic graphic presentation framework leveraging localized vectors to make multifaceted wellness parameters legible to grassroot agents."
   }
 ]
