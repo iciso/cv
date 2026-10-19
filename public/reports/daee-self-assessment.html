@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ego Mirror: Field Retrospection & Diagnostic Engine</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts: Plus Jakarta Sans for UI, Amiri for Scriptural References -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              850: '#064e3b',
+              900: '#043e2f',
+              950: '#02241b',
+            },
+            parchment: {
+              50: '#fcfbf7',
+              100: '#f7f4ea',
+              200: '#ece5d3',
+              300: '#ded3b6',
+              400: '#cbb98f',
+              500: '#b09965',
+            },
+            gold: {
+              300: '#fde68a',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            amiri: ['"Amiri"', 'serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    .islamic-ambient-bg {
+      background-color: #02241b;
+      background-image: radial-gradient(#d97706 0.75px, transparent 0.75px), radial-gradient(#10b981 0.75px, #02241b 0.75px);
+      background-size: 28px 28px;
+      background-position: 0 0, 14px 14px;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(236, 229, 211, 0.5);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbb98f;
+      border-radius: 9999px;
+    }
+    @media print {
+      body * { visibility: hidden !important; }
+      #print-area, #print-area * { visibility: visible !important; }
+      #print-area {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 24px !important;
+        background: white !important;
+        color: black !important;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-parchment-50 text-slate-800 antialiased selection:bg-emerald-850 selection:text-gold-300">
+
+  <!-- HEADER -->
+  <header class="relative islamic-ambient-bg text-parchment-100 border-b-2 border-gold-600/40 shadow-2xl overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 relative z-10">
+      
+      <!-- Top Action Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-emerald-850">
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-900/90 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-wide">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-gold-400"></i>
+            <span>Busaiteen Chat Dialogue Centre • Eng. Abdul Hameed Essa</span>
+          </span>
+        </div>
+
+        <!-- Medium Toggle Pill -->
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-parchment-300 font-semibold uppercase tracking-wider mr-1 hidden md:inline">Setting:</span>
+          <div class="inline-flex p-1 rounded-xl bg-emerald-950 border border-gold-600/30 shadow-inner">
+            <button id="mode-street-btn" onclick="setMedium('street')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-emerald-900 text-gold-300 shadow">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-gold-400"></i>
+              <span>Street / Table</span>
+            </button>
+            <button id="mode-chat-btn" onclick="setMedium('chat')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-parchment-300 hover:text-white">
+              <i data-lucide="messages-square" class="w-3.5 h-3.5 text-gold-400"></i>
+              <span>Online 1-on-1 Chat</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Title -->
+      <div class="mt-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 text-gold-400 text-xs tracking-wider uppercase font-semibold mb-2">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>Prophetic Field Diagnostic & Retrospection Engine</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-amiri font-bold text-parchment-50 tracking-wide flex flex-wrap items-center gap-3">
+            <span>The Ego Mirror</span>
+            <span class="text-gold-500 font-light">|</span>
+            <span class="text-gold-400 font-normal text-3xl sm:text-4xl md:text-5xl">مِرْآةُ النَّفْسِ لِلدَّاعِيَة</span>
+          </h1>
+          <p class="text-parchment-300/90 text-xs sm:text-sm mt-3 max-w-3xl leading-relaxed">
+            A self-accountability diagnostic for callers to Islam facing emotional friction, debate bait, or burnout. Whenever an exchange becomes tense or causes distress, examine your internal state before judging the seeker.
+          </p>
+        </div>
+
+        <button onclick="resetAudit()" class="self-start md:self-end px-4 py-2.5 rounded-xl bg-parchment-200/10 hover:bg-parchment-200/20 text-parchment-200 border border-parchment-400/20 text-xs font-semibold transition flex items-center gap-2">
+          <i data-lucide="rotate-ccw" class="w-4 h-4 text-gold-400"></i>
+          <span>Reset Sliders</span>
+        </button>
+      </div>
+
+      <!-- Sacred Scriptural Anchors -->
+      <div class="mt-8 pt-6 border-t border-emerald-900 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+        <div class="bg-emerald-900/60 p-4 rounded-2xl border border-emerald-800 flex items-start gap-3.5 backdrop-blur-sm">
+          <div class="p-2 rounded-xl bg-emerald-950 border border-gold-500/30 text-gold-400 shrink-0">
+            <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <p class="font-amiri text-lg text-parchment-50 tracking-wide leading-relaxed" dir="rtl">
+              «ادْعُ إِلَىٰ سَبِيلِ رَبِّكَ بِالْحِكْمَةِ وَالْمَوْعِظَةِ الْحَسَنَةِ ۖ وَجَادِلْهُم بِالَّتِي هِيَ أَحْسَنُ»
+            </p>
+            <p class="text-parchment-300/90 text-xs mt-1.5 italic">
+              "Invite to the way of your Lord with wisdom and good instruction, and argue with them in a way that is best."
+            </p>
+            <span class="text-[11px] text-gold-400 font-semibold font-mono mt-1 block">— Surah An-Nahl (16:125)</span>
+          </div>
+        </div>
+
+        <div class="bg-emerald-900/60 p-4 rounded-2xl border border-emerald-800 flex items-start gap-3.5 backdrop-blur-sm">
+          <div class="p-2 rounded-xl bg-emerald-950 border border-gold-500/30 text-gold-400 shrink-0">
+            <i data-lucide="scale" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <p class="font-amiri text-lg text-parchment-50 tracking-wide leading-relaxed" dir="rtl">
+              «فَإِنَّمَا عَلَيْكَ الْبَلَاغُ وَعَلَيْنَا الْحِسَابُ»
+            </p>
+            <p class="text-parchment-300/90 text-xs mt-1.5 italic">
+              "Your duty is only to convey the message, and upon Us is the reckoning."
+            </p>
+            <span class="text-[11px] text-gold-400 font-semibold font-mono mt-1 block">— Surah Ar-Ra'd (13:40)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN TABS -->
+    <div class="bg-emerald-950 border-t border-emerald-850 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto flex overflow-x-auto custom-scrollbar gap-2 py-2.5">
+        <button onclick="switchTab('audit')" id="tab-btn-audit" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 whitespace-nowrap bg-emerald-900 text-gold-300 border border-gold-500/30">
+          <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+          <span>1. Field Audit Engine</span>
+        </button>
+        <button onclick="switchTab('triage')" id="tab-btn-triage" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap text-parchment-300 hover:text-white hover:bg-emerald-900/50">
+          <i data-lucide="users" class="w-4 h-4"></i>
+          <span>2. Visitor Triage Matrix</span>
+        </button>
+        <button onclick="switchTab('cope')" id="tab-btn-cope" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap text-parchment-300 hover:text-white hover:bg-emerald-900/50">
+          <i data-lucide="shield" class="w-4 h-4"></i>
+          <span>3. The COPE Protocol</span>
+        </button>
+        <button onclick="switchTab('hardship')" id="tab-btn-hardship" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap text-parchment-300 hover:text-white hover:bg-emerald-900/50">
+          <i data-lucide="activity" class="w-4 h-4"></i>
+          <span>4. Taxonomy of Hardship</span>
+        </button>
+        <button onclick="switchTab('maxims')" id="tab-btn-maxims" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap text-parchment-300 hover:text-white hover:bg-emerald-900/50">
+          <i data-lucide="book-open" class="w-4 h-4"></i>
+          <span>5. The 9 Core Maxims</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN VIEW CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+    <!-- ==================== TAB 1: FIELD AUDIT & SCORING ==================== -->
+    <div id="tab-content-audit" class="space-y-8">
+      
+      <!-- Preset Loader -->
+      <section class="bg-white rounded-3xl shadow-sm border border-parchment-200 p-6 sm:p-7">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-parchment-200">
+          <div class="flex-1">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5 flex items-center gap-2">
+              <i data-lucide="crosshair" class="w-4 h-4 text-gold-600"></i>
+              <span>Simulate Real Field Scenarios (BCDC Archive)</span>
+            </label>
+            <select id="scenario-selector" onchange="applyScenarioPreset(this.value)" class="w-full bg-parchment-50 border border-parchment-300 text-slate-800 text-xs sm:text-sm rounded-xl py-3 px-3.5 pr-9 focus:ring-2 focus:ring-emerald-850 focus:border-emerald-850 outline-none font-medium transition cursor-pointer">
+              <option value="">-- Select a Scenario Preset or Score Freely --</option>
+              <optgroup label="Online 1-on-1 Chat Scenarios">
+                <option value="grieving">The Grieving Seeker (Cold Academic / Link-Dumper Trap)</option>
+                <option value="troll">Hostile Online Provoker (Keyboard Outrage Trap)</option>
+                <option value="skeptic">Analytical Skeptic (Philosophical Diversion Trap)</option>
+              </optgroup>
+              <optgroup label="Street Corner & Outreach Tables">
+                <option value="heckler">The Heckler & Bystander (Audience Theater Trap)</option>
+                <option value="hostage">The Physical Hostage (Rush-Hour Hurried Commuter)</option>
+                <option value="controversy">The Controversy Maze (Losing Core Tawheed)</option>
+                <option value="empty_net">The 'Empty Net' Disappointment (Resentment at Zero Conversions)</option>
+              </optgroup>
+              <optgroup label="Internal Da'ee Struggles">
+                <option value="burnout">Caller Burnout & Exhaustion (Unregulated Effort)</option>
+                <option value="imposter">Imposter Syndrome & Crowd Anxiety (Musa AS Supplication)</option>
+                <option value="prophetic">The Prophetic Benchmark (Radiant Balagh with Complete COPE)</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="lg:w-80">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5 flex items-center gap-2">
+              <i data-lucide="radio" class="w-4 h-4 text-emerald-850"></i>
+              <span>Active Environment</span>
+            </label>
+            <div id="active-medium-badge" class="py-2.5 px-4 rounded-xl bg-parchment-100 border border-parchment-300 text-xs font-bold text-emerald-950 flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-4 h-4 text-gold-600"></i>
+              <span id="active-medium-text">Street Corner / Public Table</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="medium-banner" class="mt-5 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-emerald-950 flex items-start sm:items-center gap-3">
+          <div class="p-2 rounded-xl bg-emerald-900 text-gold-400 shrink-0">
+            <i data-lucide="info" class="w-4 h-4"></i>
+          </div>
+          <div class="leading-relaxed" id="medium-banner-content">
+            <span class="font-bold text-emerald-900">Street Corner Setting:</span>
+            <span>Focus on body language, comfortable personal space, and brevity. Never obstruct an inquirer in transit or play to bystanders.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sliders + Mirror Card Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- LEFT: 5 Dimension Sliders & Notes -->
+        <section class="lg:col-span-7 space-y-6">
+          <div class="bg-white rounded-3xl shadow-sm border border-parchment-200 p-6 sm:p-7">
+            
+            <div class="flex items-center justify-between pb-5 border-b border-parchment-200 mb-6">
+              <div>
+                <h2 class="text-xl sm:text-2xl font-bold font-amiri text-emerald-950 flex items-center gap-2.5">
+                  <i data-lucide="sliders-horizontal" class="w-5 h-5 text-gold-600"></i>
+                  <span>5-Dimension Field Self-Audit</span>
+                </h2>
+                <p class="text-xs text-slate-500 mt-0.5">
+                  Rate honestly from 1 (severe slip / ego flare) to 5 (Prophetic composure).
+                </p>
+              </div>
+              <div class="text-right">
+                <span id="score-pill-header" class="inline-block text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-parchment-100 text-emerald-900 border border-parchment-300">
+                  Total: 15 / 25
+                </span>
+              </div>
+            </div>
+
+            <!-- Dimension 1 -->
+            <div class="mb-8 pb-7 border-b border-parchment-100">
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-sm font-bold text-slate-900 flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-full bg-emerald-900 text-gold-400 text-xs flex items-center justify-center font-mono font-bold">1</span>
+                  <span>Ikhlas & Result Detachment (Convey vs. Convert)</span>
+                </label>
+                <span id="badge-dim-1" class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-200">
+                  3 / 5
+                </span>
+              </div>
+              <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+                Did you focus exclusively on clear, compassionate conveyance (Balagh), or were you attached to "winning", scoring a conversion metric, or personal validation?
+              </p>
+              <div class="space-y-2">
+                <input type="range" min="1" max="5" value="3" step="1" id="slider-dim-1" oninput="handleSliderChange(1, this.value)" class="w-full accent-emerald-850 h-2 bg-parchment-200 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[11px] font-semibold text-slate-400 px-1">
+                  <span class="text-rose-700">1: Trophy-Seeking</span>
+                  <span class="text-amber-700">3: Subtly Attached</span>
+                  <span class="text-emerald-700">5: Pure Balagh</span>
+                </div>
+              </div>
+              <div id="rubric-dim-1" class="mt-3 text-xs bg-parchment-50 p-3 rounded-xl border border-parchment-200 text-slate-700 italic">
+                "Courteous outwardly, but inwardly frustrated when the listener hesitated or walked away without agreeing."
+              </div>
+            </div>
+
+            <!-- Dimension 2 -->
+            <div class="mb-8 pb-7 border-b border-parchment-100">
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-sm font-bold text-slate-900 flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-full bg-emerald-900 text-gold-400 text-xs flex items-center justify-center font-mono font-bold">2</span>
+                  <span>Hilm & Emotional Mastery Under Fire (Rifq vs. Anger)</span>
+                </label>
+                <span id="badge-dim-2" class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-200">
+                  3 / 5
+                </span>
+              </div>
+              <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+                When faced with sarcasm, interrupts, or mockery, did you keep your composure, or retaliate with sharp sarcasm, defensive shouting, or patronizing retorts?
+              </p>
+              <div class="space-y-2">
+                <input type="range" min="1" max="5" value="3" step="1" id="slider-dim-2" oninput="handleSliderChange(2, this.value)" class="w-full accent-emerald-850 h-2 bg-parchment-200 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[11px] font-semibold text-slate-400 px-1">
+                  <span class="text-rose-700">1: Retaliatory Anger</span>
+                  <span class="text-amber-700">3: Rigid / Defensive</span>
+                  <span class="text-emerald-700">5: Prophetic Softness</span>
+                </div>
+              </div>
+              <div id="rubric-dim-2" class="mt-3 text-xs bg-parchment-50 p-3 rounded-xl border border-parchment-200 text-slate-700 italic">
+                "Resisted shouting, but irritation leaked into the phrasing with rigid, defensive posture."
+              </div>
+            </div>
+
+            <!-- Dimension 3 -->
+            <div class="mb-8 pb-7 border-b border-parchment-100">
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-sm font-bold text-slate-900 flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-full bg-emerald-900 text-gold-400 text-xs flex items-center justify-center font-mono font-bold">3</span>
+                  <span>Tawheed-Centering Ratio (Root vs. Branch)</span>
+                </label>
+                <span id="badge-dim-3" class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-200">
+                  3 / 5
+                </span>
+              </div>
+              <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+                Did you anchor peripheral social, political, or historical controversies back to the Creator and revelation, or get lost defending secondary branches?
+              </p>
+              <div class="space-y-2">
+                <input type="range" min="1" max="5" value="3" step="1" id="slider-dim-3" oninput="handleSliderChange(3, this.value)" class="w-full accent-emerald-850 h-2 bg-parchment-200 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[11px] font-semibold text-slate-400 px-1">
+                  <span class="text-rose-700">1: Lost in Branches</span>
+                  <span class="text-amber-700">3: Branch with afterthought</span>
+                  <span class="text-emerald-700">5: Rooted in Tawheed</span>
+                </div>
+              </div>
+              <div id="rubric-dim-3" class="mt-3 text-xs bg-parchment-50 p-3 rounded-xl border border-parchment-200 text-slate-700 italic">
+                "Spent most of the time explaining secondary rules, only mentioning the Creator as a brief wrap-up."
+              </div>
+            </div>
+
+            <!-- Dimension 4 -->
+            <div class="mb-8 pb-7 border-b border-parchment-100">
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-sm font-bold text-slate-900 flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-full bg-emerald-900 text-gold-400 text-xs flex items-center justify-center font-mono font-bold">4</span>
+                  <span>Istima' & Deep Empathy (Compassion vs. Cold Lecture)</span>
+                </label>
+                <span id="badge-dim-4" class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-200">
+                  3 / 5
+                </span>
+              </div>
+              <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+                Did you listen for the underlying emotional hurt or personal isolation, or did you deliver a sterile academic lecture and dump raw web links?
+              </p>
+              <div class="space-y-2">
+                <input type="range" min="1" max="5" value="3" step="1" id="slider-dim-4" oninput="handleSliderChange(4, this.value)" class="w-full accent-emerald-850 h-2 bg-parchment-200 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[11px] font-semibold text-slate-400 px-1">
+                  <span class="text-rose-700">1: Cold Lecture / Link Dump</span>
+                  <span class="text-amber-700">3: Answered words, missed pain</span>
+                  <span class="text-emerald-700">5: Deep Warmth & Active Care</span>
+                </div>
+              </div>
+              <div id="rubric-dim-4" class="mt-3 text-xs bg-parchment-50 p-3 rounded-xl border border-parchment-200 text-slate-700 italic">
+                "Answered the literal question accurately, but overlooked the emotional vulnerability or loneliness behind it."
+              </div>
+            </div>
+
+            <!-- Dimension 5 -->
+            <div class="mb-2">
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-sm font-bold text-slate-900 flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-full bg-emerald-900 text-gold-400 text-xs flex items-center justify-center font-mono font-bold">5</span>
+                  <span>Hikmah of the Medium & COPE Protocol</span>
+                </label>
+                <span id="badge-dim-5" class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-200">
+                  3 / 5
+                </span>
+              </div>
+              <p id="dim5-context-desc" class="text-xs text-slate-600 mb-3 leading-relaxed">
+                Street: Personal boundaries, non-threatening stance, time awareness. Online: Concise conversational replies, avoiding massive text walls, remaining Cool, Optimistic, Patient, and Enduring.
+              </p>
+              <div class="space-y-2">
+                <input type="range" min="1" max="5" value="3" step="1" id="slider-dim-5" oninput="handleSliderChange(5, this.value)" class="w-full accent-emerald-850 h-2 bg-parchment-200 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[11px] font-semibold text-slate-400 px-1">
+                  <span class="text-rose-700">1: Overbearing / Wall of Text</span>
+                  <span class="text-amber-700">3: Passable rhythm</span>
+                  <span class="text-emerald-700">5: Perfect Pacing & COPE</span>
+                </div>
+              </div>
+              <div id="rubric-dim-5" class="mt-3 text-xs bg-parchment-50 p-3 rounded-xl border border-parchment-200 text-slate-700 italic">
+                "Adequate delivery, though slightly longer than the person could comfortably absorb."
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Field Encounter Journal Notes -->
+          <div class="bg-white rounded-3xl shadow-sm border border-parchment-200 p-6">
+            <label class="block text-sm font-bold text-slate-800 mb-2 flex items-center justify-between">
+              <span class="flex items-center gap-2">
+                <i data-lucide="edit-3" class="w-4 h-4 text-emerald-800"></i>
+                Field Encounter Journal (Confidential Notes)
+              </span>
+              <span class="text-xs font-normal text-slate-400">Describe what was said & where you felt friction</span>
+            </label>
+            <textarea id="encounter-notes" rows="4" placeholder="e.g., A gentleman approached the table asking about why God permits war. I quoted Quranic verses immediately, but I noticed he became defensive. I might have sounded dismissive of his grandmother's recent passing..." class="w-full bg-parchment-50 border border-parchment-300 text-slate-800 text-sm rounded-xl p-3.5 focus:ring-2 focus:ring-emerald-850 focus:border-emerald-850 outline-none leading-relaxed custom-scrollbar"></textarea>
+            <div class="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
+              <span>Your notes will be seamlessly compiled into the final Retrospection Audit Card.</span>
+              <button onclick="clearNotes()" class="text-slate-400 hover:text-red-600 transition underline">Clear Notes</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT: Dynamic Diagnosis & Ego Mirror (5 Cols) -->
+        <section class="lg:col-span-5 space-y-6 lg:sticky lg:top-6">
+          
+          <!-- Score Card & Gauge -->
+          <div class="bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-850 text-parchment-50 rounded-3xl shadow-lg border border-gold-600/30 p-6 relative overflow-hidden">
+            <div class="absolute -right-12 -bottom-12 w-48 h-48 bg-gold-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs uppercase tracking-widest text-gold-400 font-semibold">Audit Assessment</span>
+                <h3 id="verdict-title" class="text-2xl font-bold font-amiri tracking-wide mt-1 text-parchment-100">
+                  Sincere but Strained
+                </h3>
+              </div>
+              <div class="text-right">
+                <span id="score-total-large" class="text-4xl font-extrabold text-gold-400 font-mono">15</span>
+                <span class="text-parchment-400 text-sm font-mono">/ 25</span>
+              </div>
+            </div>
+
+            <!-- Progress Bar Indicator -->
+            <div class="mt-4">
+              <div class="w-full bg-emerald-950/80 rounded-full h-2.5 overflow-hidden border border-emerald-700/50 p-0.5">
+                <div id="score-progress-bar" class="bg-gradient-to-r from-amber-400 to-gold-500 h-full rounded-full transition-all duration-500" style="width: 60%"></div>
+              </div>
+              <div class="flex justify-between text-[10px] text-parchment-300/70 mt-1.5 font-mono">
+                <span>Trap Intercept (&lt;16)</span>
+                <span>Strained (16-20)</span>
+                <span>Radiant Balagh (21-25)</span>
+              </div>
+            </div>
+
+            <p id="verdict-summary" class="mt-4 text-xs text-parchment-200/90 leading-relaxed border-t border-emerald-800/80 pt-3">
+              Your intention is dedicated, but subtle friction points occurred in the interaction. Review the lowest scoring dimension below to re-calibrate.
+            </p>
+          </div>
+
+          <!-- The Ego Trap Alert (Dynamic based on lowest rating) -->
+          <div id="trap-card" class="bg-white rounded-3xl shadow-sm border border-parchment-300 p-6 relative">
+            <div class="flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-amber-700 mb-2">
+              <span class="flex h-2.5 w-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+              Primary Vulnerability Detected
+            </div>
+            <h4 id="trap-headline" class="text-lg font-bold text-slate-900 font-amiri">
+              The Knowledge Void / Bluffing Reflex
+            </h4>
+            
+            <!-- Mirror Diagnostic Question -->
+            <div class="mt-3 p-3.5 bg-amber-50/70 rounded-xl border border-amber-200/80 text-xs sm:text-sm text-amber-950 leading-relaxed">
+              <div class="font-semibold text-amber-900 flex items-center gap-1.5 mb-1">
+                <i data-lucide="eye" class="w-4 h-4 text-amber-700"></i>
+                The Ego Mirror Asks:
+              </div>
+              <p id="trap-mirror-prompt">
+                "Did shame or the fear of looking incompetent make you guess an answer? Remember that saying 'I do not know' is half of knowledge."
+              </p>
+            </div>
+
+            <!-- Scriptural Anchor (Ayah & Hadith) -->
+            <div class="mt-4 space-y-2.5">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-900 flex items-center gap-1.5">
+                <i data-lucide="bookmark" class="w-3.5 h-3.5 text-gold-600"></i>
+                Scriptural Anchor & Maxim
+              </span>
+              <div class="bg-parchment-50 p-3 rounded-xl border border-parchment-200 text-xs text-slate-700 leading-relaxed">
+                <p id="trap-quran-anchor" class="font-medium text-slate-900 italic mb-1">
+                  "And do not pursue that of which you have no knowledge. Indeed, the hearing, the sight and the heart - about all those one will be questioned." (Surah Al-Isra 17:36)
+                </p>
+                <p id="trap-hadith-anchor" class="text-slate-600 text-[11px]">
+                  When the Angel Jibreel asked the Prophet ﷺ about the Hour, he replied: "The one questioned knows no better than the questioner." (Bukhari & Muslim)
+                </p>
+              </div>
+            </div>
+
+            <!-- Actionable Reset Protocol -->
+            <div class="mt-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-950 leading-relaxed">
+              <span class="font-bold text-emerald-900 flex items-center gap-1.5 mb-1">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-700"></i>
+                Immediate Reset Protocol:
+              </span>
+              <p id="trap-action-reset">
+                Make Istighfar for any pride in speech. If the encounter is still active, follow up with an honest note: "I want to be precise and not mislead you; let me double-check this point with trusted scholarship."
+              </p>
+            </div>
+          </div>
+
+          <!-- Retrospection Actions -->
+          <div class="space-y-3">
+            <button onclick="generateAuditModal()" class="w-full py-3.5 px-4 rounded-xl bg-emerald-900 hover:bg-emerald-950 text-gold-400 hover:text-gold-300 font-semibold text-sm transition shadow-md flex items-center justify-center gap-2">
+              <i data-lucide="file-text" class="w-4 h-4"></i>
+              Generate Comprehensive Retrospection Card
+            </button>
+            <div class="flex items-center gap-3">
+              <button onclick="copyAuditSummary()" class="flex-1 py-2.5 px-3 rounded-xl bg-parchment-200 hover:bg-parchment-300 text-slate-800 text-xs font-medium transition flex items-center justify-center gap-1.5 border border-parchment-300">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span id="copy-btn-text">Copy Summary</span>
+              </button>
+              <button onclick="window.print()" class="flex-1 py-2.5 px-3 rounded-xl bg-parchment-200 hover:bg-parchment-300 text-slate-800 text-xs font-medium transition flex items-center justify-center gap-1.5 border border-parchment-300">
+                <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                Print / PDF
+              </button>
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: VISITOR TRIAGE MATRIX ==================== -->
+    <div id="tab-content-triage" class="hidden space-y-8">
+      <section class="bg-white rounded-3xl shadow-sm border border-parchment-200 p-6 sm:p-8">
+        <h2 class="text-2xl font-bold font-amiri text-emerald-950 mb-2 flex items-center gap-3">
+          <i data-lucide="users" class="w-6 h-6 text-gold-600"></i>
+          Visitor Triage Matrix
+        </h2>
+        <p class="text-sm text-slate-600 mb-6">From BCDC “Mastering Online Da’wah”. The Da’ee’s first task is not to speak, but to listen and diagnose. Adjust tone to the visitor’s spiritual and emotional state at the moment of connection.</p>
+
+        <!-- Three Environments -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+          <div class="p-5 rounded-2xl border border-rose-200 bg-rose-50/60">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="heart" class="w-5 h-5 text-rose-700"></i>
+              <h3 class="font-bold text-rose-950">The Heavy-Hearted</h3>
+            </div>
+            <p class="text-xs text-slate-700 mb-2">People going through stress • People dissatisfied despite blessings</p>
+            <p class="text-xs font-semibold text-rose-800">Core Need: Empathy and Alleviation</p>
+          </div>
+          <div class="p-5 rounded-2xl border border-sky-200 bg-sky-50/60">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="book-open" class="w-5 h-5 text-sky-700"></i>
+              <h3 class="font-bold text-sky-950">The Seekers of Clarity</h3>
+            </div>
+            <p class="text-xs text-slate-700 mb-2">Confused about their religion • Intellectuals & seekers of truth</p>
+            <p class="text-xs font-semibold text-sky-800">Core Need: Accurate Information & Wisdom</p>
+          </div>
+          <div class="p-5 rounded-2xl border border-amber-200 bg-amber-50/60">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="shield" class="w-5 h-5 text-amber-700"></i>
+              <h3 class="font-bold text-amber-950">The Misinformed & Antagonistic</h3>
+            </div>
+            <p class="text-xs text-slate-700 mb-2">Curious due to Islamophobia • Prejudiced • Trolls & time-wasters</p>
+            <p class="text-xs font-semibold text-amber-800">Core Need: Factual Clarity & Firm Boundaries</p>
+          </div>
+        </div>
+
+        <!-- Full Triage Table -->
+        <div class="overflow-x-auto rounded-2xl border border-parchment-300">
+          <table class="w-full text-xs sm:text-sm">
+            <thead class="bg-emerald-950 text-parchment-50">
+              <tr>
+                <th class="px-4 py-3 text-left font-semibold">Category</th>
+                <th class="px-4 py-3 text-left font-semibold">Core Issue</th>
+                <th class="px-4 py-3 text-left font-semibold">Required Posture</th>
+                <th class="px-4 py-3 text-left font-semibold">Actionable Strategy</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-parchment-200">
+              <tr class="bg-parchment-50"><td class="px-4 py-2.5 font-medium">Stressed</td><td class="px-4 py-2.5">Emotional Burden</td><td class="px-4 py-2.5 text-emerald-800 font-semibold">Empathy</td><td class="px-4 py-2.5">Alleviate & Comfort</td></tr>
+              <tr><td class="px-4 py-2.5 font-medium">Dissatisfied</td><td class="px-4 py-2.5">Lack of Peace</td><td class="px-4 py-2.5 text-emerald-800 font-semibold">Reflection</td><td class="px-4 py-2.5">Cultivate Gratitude</td></tr>
+              <tr class="bg-parchment-50"><td class="px-4 py-2.5 font-medium">Confused</td><td class="px-4 py-2.5">Misunderstanding</td><td class="px-4 py-2.5 text-emerald-800 font-semibold">Simplification</td><td class="px-4 py-2.5">Clarify Core Concepts (Tawhid, Prophethood, Akhirah)</td></tr>
+              <tr><td class="px-4 py-2.5 font-medium">Islamophobic</td><td class="px-4 py-2.5">Media Bias</td><td class="px-4 py-2.5 text-emerald-800 font-semibold">Openness</td><td class="px-4 py-2.5">Dispel Myths Factually</td></tr>
+              <tr class="bg-parchment-50"><td class="px-4 py-2.5 font-medium">Intellectuals</td><td class="px-4 py-2.5">Search for Truth</td><td class="px-4 py-2.5 text-emerald-800 font-semibold">Analytical Rigor</td><td class="px-4 py-2.5">Provide Evidences & Discourse</td></tr>
+              <tr><td class="px-4 py-2.5 font-medium">Prejudiced</td><td class="px-4 py-2.5">Misinformation</td><td class="px-4 py-2.5 text-emerald-800 font-semibold">Factual Clarity</td><td class="px-4 py-2.5">Counter Falsehood Respectfully</td></tr>
+              <tr class="bg-parchment-50"><td class="px-4 py-2.5 font-medium">Trolls</td><td class="px-4 py-2.5">Agitation</td><td class="px-4 py-2.5 text-emerald-800 font-semibold">Firm Boundaries</td><td class="px-4 py-2.5">Maintain Professionalism / Disengage</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-4 text-xs text-slate-500 italic">Source: Mastering Online Da’wah – Busaiteen Chat Dialogue Centre (Abdul Hameed Essa)</p>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 3: THE COPE PROTOCOL ==================== -->
+    <div id="tab-content-cope" class="hidden space-y-8">
+      <section class="bg-white rounded-3xl shadow-sm border border-parchment-200 p-6 sm:p-8">
+        <h2 class="text-2xl font-bold font-amiri text-emerald-950 mb-2 flex items-center gap-3">
+          <i data-lucide="shield" class="w-6 h-6 text-gold-600"></i>
+          The Resilient Chat Advisor Should COPE
+        </h2>
+        <p class="text-sm text-slate-600 mb-6">Official BCDC framework from “Mastering Online Da’wah”. The Shield protects outward interaction; the Anchor grounds the heart.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- The Shield -->
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-10 h-10 rounded-xl bg-emerald-900 text-gold-400 flex items-center justify-center">
+                <i data-lucide="shield" class="w-5 h-5"></i>
+              </div>
+              <h3 class="text-lg font-bold text-emerald-950">The Shield (Outward Interaction)</h3>
+            </div>
+            <div class="p-5 rounded-2xl bg-emerald-950 text-parchment-50 border border-gold-600/30">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="w-10 h-10 rounded-xl bg-gold-500/20 border border-gold-400/40 flex items-center justify-center text-xl font-bold text-gold-400">C</span>
+                <div>
+                  <h4 class="font-bold">Cool</h4>
+                  <p class="text-xs text-parchment-300">Stay cool and calm in all interactions</p>
+                </div>
+              </div>
+              <p class="text-sm text-parchment-200 leading-relaxed">“Do not get angry.” (Bukhari)</p>
+            </div>
+            <div class="p-5 rounded-2xl bg-emerald-50 border border-emerald-200">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="w-10 h-10 rounded-xl bg-emerald-900 text-gold-400 flex items-center justify-center text-xl font-bold">O</span>
+                <div>
+                  <h4 class="font-bold text-emerald-950">Optimistic</h4>
+                  <p class="text-xs text-emerald-700">Remain hopeful and positive, no matter the situation</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-700 leading-relaxed">Assume guidance is possible. Speak with husn al-zann.</p>
+            </div>
+          </div>
+
+          <!-- The Anchor -->
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-10 h-10 rounded-xl bg-emerald-900 text-gold-400 flex items-center justify-center">
+                <i data-lucide="anchor" class="w-5 h-5"></i>
+              </div>
+              <h3 class="text-lg font-bold text-emerald-950">The Anchor (Inward Grounding)</h3>
+            </div>
+            <div class="p-5 rounded-2xl bg-amber-50 border border-amber-200">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="w-10 h-10 rounded-xl bg-amber-700 text-white flex items-center justify-center text-xl font-bold">P</span>
+                <div>
+                  <h4 class="font-bold text-amber-950">Patience</h4>
+                  <p class="text-xs text-amber-800">Practice patience even when abused</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-700 leading-relaxed">“And be patient, for indeed, Allah is with the patient.” (Quran 8:46)</p>
+            </div>
+            <div class="p-5 rounded-2xl bg-sky-50 border border-sky-200">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="w-10 h-10 rounded-xl bg-sky-800 text-white flex items-center justify-center text-xl font-bold">E</span>
+                <div>
+                  <h4 class="font-bold text-sky-950">Endurance</h4>
+                  <p class="text-xs text-sky-800">Continue efforts even when faced with challenges</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-700 leading-relaxed">“Whoever strives in the path of Allah is rewarded, even if he does not succeed.” (Bukhari)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 p-5 rounded-2xl bg-parchment-100 border border-parchment-300">
+          <h4 class="font-bold text-emerald-950 mb-2 flex items-center gap-2">
+            <i data-lucide="lightbulb" class="w-4 h-4 text-gold-600"></i>
+            Field Application
+          </h4>
+          <p class="text-sm text-slate-700 leading-relaxed">Before every reply (spoken or typed), run a one-second COPE check: Am I Cool? Optimistic? Patient? Still Enduring? If any answer is no, delay the reply or step back. This single habit prevents most ego traps.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 4: TAXONOMY OF HARDSHIP ==================== -->
+    <div id="tab-content-hardship" class="hidden space-y-8">
+      <section class="bg-white rounded-3xl shadow-sm border border-parchment-200 p-6 sm:p-8">
+        <h2 class="text-2xl font-bold font-amiri text-emerald-950 mb-2 flex items-center gap-3">
+          <i data-lucide="activity" class="w-6 h-6 text-gold-600"></i>
+          The Taxonomy of Hardship
+        </h2>
+        <p class="text-sm text-slate-600 mb-6">From BCDC “Dawah Psychology Field Guide”. Every setback has a specific Prophetic remedy. Identify the symptom to apply the cure.</p>
+
+        <!-- Three Categories Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+          <div class="p-5 rounded-2xl border border-sky-200 bg-sky-50/60">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="shield" class="w-5 h-5 text-sky-700"></i>
+              <h3 class="font-bold text-sky-950">External Frictions</h3>
+            </div>
+            <p class="text-xs text-slate-700">Navigating the World</p>
+            <ul class="mt-2 text-xs text-slate-600 space-y-1 list-disc list-inside">
+              <li>Rejection</li>
+              <li>Lack of Results</li>
+              <li>Harsh Criticism</li>
+              <li>Online Abuse</li>
+            </ul>
+          </div>
+          <div class="p-5 rounded-2xl border border-rose-200 bg-rose-50/60">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="heart" class="w-5 h-5 text-rose-700"></i>
+              <h3 class="font-bold text-rose-950">Internal Struggles</h3>
+            </div>
+            <p class="text-xs text-slate-700">Navigating the Mind</p>
+            <ul class="mt-2 text-xs text-slate-600 space-y-1 list-disc list-inside">
+              <li>Self-Doubt</li>
+              <li>Fear of Public Speaking</li>
+              <li>Emotional Attachment</li>
+              <li>Loneliness</li>
+            </ul>
+          </div>
+          <div class="p-5 rounded-2xl border border-amber-200 bg-amber-50/60">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="flame" class="w-5 h-5 text-amber-700"></i>
+              <h3 class="font-bold text-amber-950">Spiritual Pitfalls</h3>
+            </div>
+            <p class="text-xs text-slate-700">Navigating the Soul</p>
+            <ul class="mt-2 text-xs text-slate-600 space-y-1 list-disc list-inside">
+              <li>Burnout</li>
+              <li>Arrogance</li>
+              <li>Anger</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Diagnostic Matrix I -->
+        <h3 class="text-lg font-bold text-emerald-950 mb-3 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-full bg-emerald-900 text-gold-400 text-xs flex items-center justify-center font-mono">I</span>
+          External Frictions
+        </h3>
+        <div class="overflow-x-auto rounded-2xl border border-parchment-300 mb-8">
+          <table class="w-full text-xs">
+            <thead class="bg-emerald-950 text-parchment-50">
+              <tr>
+                <th class="px-3 py-2.5 text-left">Setback</th>
+                <th class="px-3 py-2.5 text-left">Psychological Trigger</th>
+                <th class="px-3 py-2.5 text-left">Prophetic Response</th>
+                <th class="px-3 py-2.5 text-left">The Anchor</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-parchment-200">
+              <tr class="bg-parchment-50"><td class="px-3 py-2 font-medium">Rejection</td><td class="px-3 py-2">People mock or ignore the message</td><td class="px-3 py-2">Do not take it personally; Prophets were denied</td><td class="px-3 py-2 italic">Messengers before you were denied but remained patient (6:34)</td></tr>
+              <tr><td class="px-3 py-2 font-medium">Lack of Results</td><td class="px-3 py-2">No response for years</td><td class="px-3 py-2">Focus on sincerity, not statistics (Nuh A.S.)</td><td class="px-3 py-2 italic">Nuh continued calling his people (71:5-6)</td></tr>
+              <tr class="bg-parchment-50"><td class="px-3 py-2 font-medium">Harsh Criticism</td><td class="px-3 py-2">Insults from enemies or Muslims</td><td class="px-3 py-2">Avoid emotional reactions; respond with good manners</td><td class="px-3 py-2 italic">Repel evil with what is better (41:34)</td></tr>
+              <tr><td class="px-3 py-2 font-medium">Online Abuse</td><td class="px-3 py-2">Hostility in social media Dawah</td><td class="px-3 py-2">Ignore pointless debates; protect mental health</td><td class="px-3 py-2 italic">The servants of the Most Merciful avoid ignorant conflict (25:63)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Diagnostic Matrix II -->
+        <h3 class="text-lg font-bold text-emerald-950 mb-3 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-full bg-emerald-900 text-gold-400 text-xs flex items-center justify-center font-mono">II</span>
+          Internal Struggles
+        </h3>
+        <div class="overflow-x-auto rounded-2xl border border-parchment-300 mb-8">
+          <table class="w-full text-xs">
+            <thead class="bg-emerald-950 text-parchment-50">
+              <tr>
+                <th class="px-3 py-2.5 text-left">Setback</th>
+                <th class="px-3 py-2.5 text-left">Psychological Trigger</th>
+                <th class="px-3 py-2.5 text-left">Prophetic Response</th>
+                <th class="px-3 py-2.5 text-left">The Anchor</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-parchment-200">
+              <tr class="bg-parchment-50"><td class="px-3 py-2 font-medium">Doubting Yourself</td><td class="px-3 py-2">Feeling unqualified or weak</td><td class="px-3 py-2">Continue learning while giving Dawah humbly</td><td class="px-3 py-2 italic">Convey from me, even if one verse (Bukhari)</td></tr>
+              <tr><td class="px-3 py-2 font-medium">Fear of Public Speaking</td><td class="px-3 py-2">Anxiety when addressing crowds</td><td class="px-3 py-2">Prepare well, practice gradually, rely on Allah</td><td class="px-3 py-2 italic">Musa asked for ease in speech (20:25-28)</td></tr>
+              <tr class="bg-parchment-50"><td class="px-3 py-2 font-medium">Emotional Attachment</td><td class="px-3 py-2">Devastation when loved ones reject the truth</td><td class="px-3 py-2">Trust Allah’s wisdom over personal grief</td><td class="px-3 py-2 italic">Do not destroy yourself with grief over them (18:6)</td></tr>
+              <tr><td class="px-3 py-2 font-medium">Loneliness</td><td class="px-3 py-2">Feeling isolated on the path</td><td class="px-3 py-2">Build righteous friendships and teamwork</td><td class="px-3 py-2 italic">Allah is with the believers (9:40)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Diagnostic Matrix III -->
+        <h3 class="text-lg font-bold text-emerald-950 mb-3 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-full bg-emerald-900 text-gold-400 text-xs flex items-center justify-center font-mono">III</span>
+          Spiritual Pitfalls
+        </h3>
+        <div class="overflow-x-auto rounded-2xl border border-parchment-300 mb-6">
+          <table class="w-full text-xs">
+            <thead class="bg-emerald-950 text-parchment-50">
+              <tr>
+                <th class="px-3 py-2.5 text-left">Setback</th>
+                <th class="px-3 py-2.5 text-left">Psychological Trigger</th>
+                <th class="px-3 py-2.5 text-left">Prophetic Response</th>
+                <th class="px-3 py-2.5 text-left">The Anchor</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-parchment-200">
+              <tr class="bg-parchment-50"><td class="px-3 py-2 font-medium">Burnout</td><td class="px-3 py-2">Overworking without spiritual balance or rest</td><td class="px-3 py-2">Rest, organise time, renew intention</td><td class="px-3 py-2 italic">Your body has a right over you (Bukhari)</td></tr>
+              <tr><td class="px-3 py-2 font-medium">Arrogance</td><td class="px-3 py-2">Knowledge and success creating pride</td><td class="px-3 py-2">Renew sincerity; remember all guidance is from Allah</td><td class="px-3 py-2 italic">Call with wisdom and humility (16:125)</td></tr>
+              <tr class="bg-parchment-50"><td class="px-3 py-2 font-medium">Anger</td><td class="px-3 py-2">Arguments becoming harsh and emotional</td><td class="px-3 py-2">Pause, control emotions, respond calmly</td><td class="px-3 py-2 italic">Do not become angry (Bukhari)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Prophetic Anchor -->
+        <div class="mt-6 p-5 rounded-2xl bg-emerald-950 text-parchment-50 border border-gold-600/30">
+          <h4 class="font-bold text-gold-400 mb-3 flex items-center gap-2">
+            <i data-lucide="compass" class="w-4 h-4"></i>
+            The Prophetic Anchor
+          </h4>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+            <div><span class="font-bold text-gold-300">Sabr</span><br>Shield against rejection & lack of results</div>
+            <div><span class="font-bold text-gold-300">Rahmah</span><br>Antidote to harshness & anger</div>
+            <div><span class="font-bold text-gold-300">Hikmah</span><br>Knowing when & how to speak</div>
+            <div><span class="font-bold text-gold-300">Rifq</span><br>Prevents arrogance & preserves relationships</div>
+          </div>
+          <p class="mt-3 text-[11px] text-parchment-300 italic">“Allah is gentle and loves gentleness.” (Muslim)</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 5: THE 9 CORE MAXIMS ==================== -->
+    <div id="tab-content-maxims" class="hidden space-y-8">
+      <section class="bg-white rounded-3xl shadow-sm border border-parchment-200 p-6 sm:p-8">
+        <h2 class="text-2xl font-bold font-amiri text-emerald-950 mb-2 flex items-center gap-3">
+          <i data-lucide="book-open" class="w-6 h-6 text-gold-600"></i>
+          The 9 Authentic Maxims of Da'wah
+        </h2>
+        <p class="text-sm text-slate-600 mb-6">Derived from the Noble Qur'an and the 23-year Prophetic mission. Use these as the permanent calibration standard.</p>
+
+        <!-- Category 1 -->
+        <div class="mb-8">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-900 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200/80 mb-3 flex items-center gap-2">
+            <i data-lucide="heart" class="w-3.5 h-3.5 text-emerald-700"></i>
+            Internal & Spiritual Orientation (The Heart)
+          </h4>
+          <div class="space-y-3">
+            <div class="p-4 rounded-xl bg-parchment-50 border border-parchment-200">
+              <span class="font-bold text-slate-900">Maxim 1: Purify the intention; convey, do not convert.</span>
+              <p class="text-xs text-slate-600 mt-1 italic">"Your duty is only to convey the message, and upon Us is the reckoning." (Surah Ar-Ra'd 13:40)</p>
+              <p class="text-[11px] text-emerald-850 mt-1 font-medium">Mirror Check: Are you keeping score of declarations, or remaining content as an honest conduit?</p>
+            </div>
+            <div class="p-4 rounded-xl bg-parchment-50 border border-parchment-200">
+              <span class="font-bold text-slate-900">Maxim 2: Proactive Rahmah (Mercy) over intellectual victory.</span>
+              <p class="text-xs text-slate-600 mt-1 italic">"And We have not sent you, [O Muhammad], except as a mercy to the worlds." (Surah Al-Anbiya 21:107)</p>
+              <p class="text-[11px] text-emerald-850 mt-1 font-medium">Mirror Check: Do you see an opponent to defeat, or a soul deserving of eternal salvation?</p>
+            </div>
+            <div class="p-4 rounded-xl bg-parchment-50 border border-parchment-200">
+              <span class="font-bold text-slate-900">Maxim 3: Embody before you articulate (Qudwah qabla Da'wah).</span>
+              <p class="text-xs text-slate-600 mt-1 italic">"Do you order righteousness of the people and forget yourselves..." (Surah Al-Baqarah 2:44)</p>
+              <p class="text-[11px] text-emerald-850 mt-1 font-medium">Mirror Check: Does your personal composure and truthfulness match the perfection of Islam?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 2 -->
+        <div class="mb-8">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-900 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200/80 mb-3 flex items-center gap-2">
+            <i data-lucide="target" class="w-3.5 h-3.5 text-emerald-700"></i>
+            Methodological & Strategic Principles (The Delivery)
+          </h4>
+          <div class="space-y-3">
+            <div class="p-4 rounded-xl bg-parchment-50 border border-parchment-200">
+              <span class="font-bold text-slate-900">Maxim 4: Calibrate wisdom, gentle counsel, and constructive engagement.</span>
+              <p class="text-xs text-slate-600 mt-1 italic">"Invite to the way of your Lord with wisdom and good instruction, and argue with them in a way that is best." (16:125)</p>
+              <p class="text-[11px] text-emerald-850 mt-1 font-medium">Mirror Check: Are you tailoring your words to this person's specific emotional and mental state?</p>
+            </div>
+            <div class="p-4 rounded-xl bg-parchment-50 border border-parchment-200">
+              <span class="font-bold text-slate-900">Maxim 5: Maintain gentle speech under provocation.</span>
+              <p class="text-xs text-slate-600 mt-1 italic">"And speak to him with gentle speech that perhaps he may be reminded or fear [Allah]." (Surah Taha 20:44)</p>
+              <p class="text-[11px] text-emerald-850 mt-1 font-medium">Mirror Check: When insulted, does your pulse race to counter-attack or do you de-escalate with dignity?</p>
+            </div>
+            <div class="p-4 rounded-xl bg-parchment-50 border border-parchment-200">
+              <span class="font-bold text-slate-900">Maxim 6: Build common ground before addressing divergences.</span>
+              <p class="text-xs text-slate-600 mt-1 italic">"Say, 'O People of the Scripture, come to a word that is equitable between us and you...'" (Surah Ali 'Imran 3:64)</p>
+              <p class="text-[11px] text-emerald-850 mt-1 font-medium">Mirror Check: Did you start with shared ethics and purpose, or dive straight into contentious points?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 3 -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-900 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200/80 mb-3 flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-700"></i>
+            Tactical Field Principles (The Engagement)
+          </h4>
+          <div class="space-y-3">
+            <div class="p-4 rounded-xl bg-parchment-50 border border-parchment-200">
+              <span class="font-bold text-slate-900">Maxim 7: Prioritize foundational theology (Tawheed) over auxiliary details.</span>
+              <p class="text-xs text-slate-600 mt-1 italic">"Let the first thing to which you invite them be the Tawheed of Allah..." (Sahih al-Bukhari)</p>
+              <p class="text-[11px] text-emerald-850 mt-1 font-medium">Mirror Check: Did you allow secondary debates on laws to obscure the question of who created the universe?</p>
+            </div>
+            <div class="p-4 rounded-xl bg-parchment-50 border border-parchment-200">
+              <span class="font-bold text-slate-900">Maxim 8: Simplify, do not burden; offer glad tidings, do not repel.</span>
+              <p class="text-xs text-slate-600 mt-1 italic">"Make things easy and do not make them difficult; give glad tidings and do not repel people." (Bukhari)</p>
+              <p class="text-[11px] text-emerald-850 mt-1 font-medium">Mirror Check: Did you present Islam as a heavy burden of prohibitions, or as a liberating path to peace?</p>
+            </div>
+            <div class="p-4 rounded-xl bg-parchment-50 border border-parchment-200">
+              <span class="font-bold text-slate-900">Maxim 9: Exit gracefully when dialogue decays into bad faith.</span>
+              <p class="text-xs text-slate-600 mt-1 italic">"And when the ignorant address them [harshly], they say [words of] peace." (Surah Al-Furqan 25:63)</p>
+              <p class="text-[11px] text-emerald-850 mt-1 font-medium">Mirror Check: Are you still arguing just to have the last word? Say Salam and walk away.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- MODAL: Comprehensive Retrospection Summary & Print Card -->
+  <div id="summary-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-parchment-300 overflow-hidden">
+      
+      <div class="bg-emerald-950 text-parchment-50 p-5 flex items-center justify-between border-b border-gold-600/30">
+        <div class="flex items-center gap-3">
+          <i data-lucide="clipboard-check" class="w-6 h-6 text-gold-400"></i>
+          <div>
+            <h3 class="text-lg font-bold font-amiri">Retrospection Audit Summary Card</h3>
+            <span id="summary-date-badge" class="text-xs text-parchment-300/80"></span>
+          </div>
+        </div>
+        <button onclick="closeSummaryModal()" class="text-parchment-300 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div id="print-area" class="p-6 overflow-y-auto space-y-5 custom-scrollbar text-slate-800 text-sm">
+        
+        <div class="border-b border-parchment-200 pb-4 flex items-center justify-between">
+          <div>
+            <span class="text-xs uppercase tracking-wider text-slate-400 font-bold block">Encounter Mode</span>
+            <span id="summary-medium" class="text-sm font-bold text-emerald-900">Street Corner</span>
+          </div>
+          <div class="text-right">
+            <span class="text-xs uppercase tracking-wider text-slate-400 font-bold block">Total Audit Score</span>
+            <span id="summary-score" class="text-lg font-mono font-bold text-emerald-800">15 / 25</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Dimension Breakdown</h4>
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between p-2 rounded bg-parchment-50 border border-parchment-200">
+              <span>1. Ikhlas & Result-Detachment</span>
+              <span id="sum-d1" class="font-mono font-bold">3/5</span>
+            </div>
+            <div class="flex justify-between p-2 rounded bg-parchment-50 border border-parchment-200">
+              <span>2. Hilm & Composure</span>
+              <span id="sum-d2" class="font-mono font-bold">3/5</span>
+            </div>
+            <div class="flex justify-between p-2 rounded bg-parchment-50 border border-parchment-200">
+              <span>3. Tawheed-Centering Ratio</span>
+              <span id="sum-d3" class="font-mono font-bold">3/5</span>
+            </div>
+            <div class="flex justify-between p-2 rounded bg-parchment-50 border border-parchment-200">
+              <span>4. Istima' (Active Empathy)</span>
+              <span id="sum-d4" class="font-mono font-bold">3/5</span>
+            </div>
+            <div class="flex justify-between p-2 rounded bg-parchment-50 border border-parchment-200">
+              <span>5. Hikmah of the Medium & COPE</span>
+              <span id="sum-d5" class="font-mono font-bold">3/5</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="summary-notes-block">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Da'ee Field Reflections</h4>
+          <p id="summary-notes-text" class="text-xs bg-parchment-50 p-3 rounded-xl border border-parchment-200 text-slate-700 italic">
+            No notes entered.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-950 space-y-2">
+          <span class="font-bold text-emerald-900 block">The Ego Mirror Diagnostic & Prescribed Reset:</span>
+          <p id="summary-reset-text" class="leading-relaxed"></p>
+        </div>
+
+        <div class="text-[11px] text-slate-500 text-center pt-2 italic">
+          "O Allah, I seek refuge in You lest I associate anything with You knowingly, and I ask Your forgiveness for that which I do not know."
+        </div>
+
+      </div>
+
+      <div class="p-4 bg-parchment-100 border-t border-parchment-200 flex justify-between items-center no-print">
+        <button onclick="copyAuditSummary()" class="px-4 py-2 rounded-xl bg-white border border-parchment-300 text-xs font-medium text-slate-700 hover:bg-parchment-50">
+          Copy Text
+        </button>
+        <div class="flex gap-2">
+          <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-parchment-300 hover:bg-parchment-400 text-slate-900 text-xs font-medium">
+            Print
+          </button>
+          <button onclick="closeSummaryModal()" class="px-4 py-2 rounded-xl bg-emerald-900 hover:bg-emerald-950 text-white text-xs font-medium">
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-emerald-950 text-parchment-50 border border-gold-500/40 px-4 py-3 rounded-xl shadow-xl text-xs flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <i data-lucide="check" class="w-4 h-4 text-gold-400"></i>
+    <span id="toast-message">Summary copied to clipboard.</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-16 py-8 border-t border-parchment-300/80 bg-white text-center text-xs text-slate-500">
+    <div class="max-w-4xl mx-auto px-4 space-y-2">
+      <p class="font-amiri text-base text-slate-700">«وَمَنْ أَحْسَنُ قَوْلًا مِّمَّن دَعَا إِلَى اللَّهِ وَعَمِلَ صَالِحًا وَقَالَ إِنَّنِي مِنَ الْمُسْلِمِينَ»</p>
+      <p>"And who is better in speech than one who invites to Allah and does righteousness and says, 'Indeed, I am of the Muslims'?" — Surah Fussilat (41:33)</p>
+      <p class="text-[11px] text-slate-400 pt-2">Constructed for Da'ees worldwide — street teams, campus tables, and online counseling desks. Busaiteen Chat Dialogue Centre.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // State management
+    let state = {
+      medium: 'street',
+      scores: [3, 3, 3, 3, 3],
+      notes: ''
+    };
+
+    // Diagnostic Dictionary for Dimensions
+    const dimensionMeta = {
+      1: {
+        name: "Ikhlas & Result-Detachment",
+        label: "The Deal-Closer / Trophy Trap",
+        quran: '"Your duty is only to convey the message, and upon Us is the reckoning." (Surah Ar-Ra\'d 13:40)',
+        hadith: 'The Prophet ﷺ said: "A prophet will come on the Day of Resurrection with only one follower, and another with none." (Sahih al-Bukhari)',
+        prompt: "Did you feel personal validation depended on a Shahadah declaration or agreement? Remind your heart that guidance belongs exclusively to Allah; you are merely a courier.",
+        reset: "Recite Istighfar. Make sincere Du'a for their guidance regardless of whether you ever see them again. Unclench from the outcome.",
+        levels: {
+          1: "1: Aggressive pressure, guilt-tripping, or feeling crushed when they walked away.",
+          2: "2: Showed obvious signs of frustration that they weren't agreeing.",
+          3: "3: Outwardly courteous, but felt an urgent internal push to get a conversion score.",
+          4: "4: Peaceful conveyance with only minor fleeting desires to 'win'.",
+          5: "5: Complete spiritual detachment; purely focused on faithful, tender conveyance."
+        }
+      },
+      2: {
+        name: "Hilm & Composure Under Pressure",
+        label: "The Defensive Retaliation / Pride Trap",
+        quran: '"Repel [evil] by that which is better; and thereupon the one whom between you and him was enmity will become as though he was a devoted friend." (Surah Fussilat 41:34)',
+        hadith: 'The Prophet ﷺ said: "The strong man is not the good wrestler; the strong man is the one who controls himself in a fit of rage." (Sahih al-Bukhari)',
+        prompt: "Did you respond to sneers or hostile questions with sharp tongue or intellectual arrogance? If the Prophet ﷺ endured Ta'if with prayers for their progeny, why did a bystander's remark unsettle you?",
+        reset: "Lower your shoulders, breathe, and re-center on Hilm. In future moments of hostility, smile warmly, offer a calm greeting of peace, or step back gracefully.",
+        levels: {
+          1: "1: Retaliated with sarcasm, raised voice, aggressive body language, or all-caps snark.",
+          2: "2: Suppressed insults outwardly, but tension and passive-aggression were obvious.",
+          3: "3: Maintained composure, but felt defensive and lost the warmth of empathy.",
+          4: "4: Calmed the tension effectively with gentle tone.",
+          5: "5: Prophetic forbearance: disarmed malice with profound gentleness or honorable peace."
+        }
+      },
+      3: {
+        name: "Tawheed-Centering Ratio",
+        label: "The Controversy Maze / Rabbit-Hole Trap",
+        quran: '"Say, \'O People of the Scripture, come to a word that is equitable between us and you - that we will not worship except Allah...\'" (Surah Ali \'Imran 3:64)',
+        hadith: 'Mu\'adh reported that the Prophet ﷺ instructed: "Let the first thing to which you invite them be the Tawheed of Allah." (Sahih al-Bukhari)',
+        prompt: "Did you spend half an hour defending political history, scientific minutiae, or fiqh details before establishing who Allah is? Can a roof stand before the pillars are raised?",
+        reset: "Acknowledge the objection warmly, then bridge back: 'That is a reasonable practical question, but whether a divine law is just only matters if we first verify there is a Creator. May we examine the source first?'",
+        levels: {
+          1: "1: Spent the whole encounter trapped in geopolitical or cultural debates without mentioning Allah.",
+          2: "2: Defended side-issues at length, barely mentioning the core purpose of life.",
+          3: "3: Answered secondary objection adequately, added a quick note on God at the end.",
+          4: "4: Skillfully addressed the query and naturally bridged toward Tawheed.",
+          5: "5: Masterful focus on the Lawgiver and revelation; never derailed by peripheral traps."
+        }
+      },
+      4: {
+        name: "Istima' (Active Empathy & Deep Listening)",
+        label: "The Cold Academic / Link-Dumper Trap",
+        quran: '"And We have not sent you, [O Muhammad], except as a mercy to the worlds." (Surah Al-Anbiya 21:107)',
+        hadith: 'The Prophet ﷺ wept when his son Ibrahim passed, saying: "The eyes shed tears and the heart grieves, but we will not say anything except what pleases our Lord." (Bukhari)',
+        prompt: "Did you hear an aching, grieving, or skeptical human being and immediately fire off syllogisms or paste URLs? A broken heart cannot digest cold doctrine without love.",
+        reset: "Step away from apologetics textbooks. Next time, acknowledge the pain first: 'I am so sorry you had to carry that weight. Can you tell me more about how that affected you?' Hear before prescribing.",
+        levels: {
+          1: "1: Interrupted mid-thought, pasted huge text walls, or ignored deep personal grief.",
+          2: "2: Treated their life experience like an abstract debate premise to be refuted.",
+          3: "3: Addressed the literal question, but ignored the emotional subtext beneath it.",
+          4: "4: Listened patiently and showed genuine compassion before offering insights.",
+          5: "5: Deep, radiant empathy: made the interlocutor feel truly seen, valued, and comforted."
+        }
+      },
+      5: {
+        name: "Hikmah of the Medium & COPE",
+        label: "The Physical Hostage / Algorithmic Clutter Trap",
+        quran: '"Invite to the way of your Lord with wisdom (Hikmah) and good instruction..." (Surah An-Nahl 16:125)',
+        hadith: 'Ibn Mas\'ud (RA) said: "The Prophet ﷺ used to take care of us by not preaching to us all the time, fearing that we might get bored." (Sahih al-Bukhari)',
+        prompt: "Did you trap someone who was physically backing away or overwhelm them with a wall of text? Da'wah is an invitation, not an interrogation or a lecture dump.",
+        reset: "Read their feet, posture, or reply length. If they need to leave, bless them and release. In chat, limit replies to 2-3 short conversational sentences ending with a gentle question.",
+        levels: {
+          1: "1: Stepped into personal space / sent massive unformatted text walls.",
+          2: "2: Somewhat oblivious to time limits or attention fatigue.",
+          3: "3: Fair flow, though slightly too long-winded for the setting.",
+          4: "4: Good contextual sensitivity and respect for their time/screen attention.",
+          5: "5: Flawless calibration of presence, brevity, timing, and COPE discipline."
+        }
+      }
+    };
+
+    // Scenario Presets (expanded from both source files + BCDC archive style)
+    const presets = {
+      grieving: {
+        medium: 'chat',
+        scores: [3, 4, 2, 1, 1],
+        notes: "Visitor messaged: 'My teenage sister died 3 months ago, if God is merciful why did He let her die terrified?' I immediately pasted a multi-paragraph answer on Qadar and dropped an article link on the Problem of Evil. They went offline."
+      },
+      troll: {
+        medium: 'chat',
+        scores: [2, 1, 1, 1, 2],
+        notes: "A hostile troll claimed Islam was spread by the sword. I spent an hour writing an aggressive critique of European imperialism and medieval wars, trading insults. Almost no mention of Tawheed."
+      },
+      skeptic: {
+        medium: 'chat',
+        scores: [3, 3, 2, 3, 3],
+        notes: "Analytical skeptic kept shifting from cosmology to historical criticism to moral philosophy. I followed every branch instead of gently returning to the existence of a Creator and the need for revelation."
+      },
+      heckler: {
+        medium: 'street',
+        scores: [3, 1, 2, 2, 2],
+        notes: "A passerby yelled that Islam oppresses people while I was speaking to a polite student. I turned and fired back sarcastic comments to win over bystanders. The original student quietly slipped away."
+      },
+      hostage: {
+        medium: 'street',
+        scores: [2, 3, 3, 2, 1],
+        notes: "The person had their backpack on and was looking at the station clock, taking steps back. I felt if I let them walk they'd miss the truth, so I kept holding them and speaking faster. They left irritated."
+      },
+      controversy: {
+        medium: 'street',
+        scores: [3, 3, 1, 3, 3],
+        notes: "Questioner brought up inheritance division and polygyny. I spent the entire 25 minutes explaining 7th-century Arab economic structures. We never discussed whether God actually revealed the Quran."
+      },
+      empty_net: {
+        medium: 'street',
+        scores: [1, 3, 4, 3, 3],
+        notes: "Spoke with an open-minded gentleman for 90 minutes. Everything seemed ready for Shahadah, but he said 'I need to think for a few months.' I felt internal resentment and my final farewell was cold."
+      },
+      burnout: {
+        medium: 'street',
+        scores: [2, 2, 3, 2, 2],
+        notes: "Third consecutive long shift without rest. Voice was flat, empathy was forced, and I caught myself counting minutes until the table closed. The seekers deserved better presence."
+      },
+      imposter: {
+        medium: 'street',
+        scores: [2, 2, 3, 2, 3],
+        notes: "Was asked about an obscure manuscript variation. I froze, felt embarrassed in front of bystanders, and guessed an answer that later proved incorrect. Should have admitted I didn't know."
+      },
+      prophetic: {
+        medium: 'street',
+        scores: [5, 5, 5, 5, 5],
+        notes: "Encounter was calm and grounded. Listened to their questions about purpose, centered every answer around the Creator's wisdom, maintained gentle posture, and released them with a sincere prayer when they had to catch their bus."
+      }
+    };
+
+    // Tab switching
+    function switchTab(tabId) {
+      const tabs = ['audit', 'triage', 'cope', 'hardship', 'maxims'];
+      tabs.forEach(t => {
+        const content = document.getElementById(`tab-content-${t}`);
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (t === tabId) {
+          content.classList.remove('hidden');
+          btn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 whitespace-nowrap bg-emerald-900 text-gold-300 border border-gold-500/30";
+        } else {
+          content.classList.add('hidden');
+          btn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap text-parchment-300 hover:text-white hover:bg-emerald-900/50";
+        }
+      });
+      lucide.createIcons();
+    }
+
+    // Medium change handler
+    function setMedium(med) {
+      state.medium = med;
+      const streetBtn = document.getElementById('mode-street-btn');
+      const chatBtn = document.getElementById('mode-chat-btn');
+      const banner = document.getElementById('medium-banner-content');
+      const badgeText = document.getElementById('active-medium-text');
+      const dim5Desc = document.getElementById('dim5-context-desc');
+
+      if (med === 'street') {
+        streetBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-emerald-900 text-gold-300 shadow";
+        chatBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-parchment-300 hover:text-white";
+        banner.innerHTML = '<span class="font-bold text-emerald-900">Street Corner Setting:</span> <span>Focus on body language, comfortable personal space, and brevity. Never obstruct an inquirer in transit or play to bystanders.</span>';
+        badgeText.textContent = "Street Corner / Public Table";
+        dim5Desc.textContent = "Street: Personal boundaries, non-threatening stance, time awareness. Never trap someone who is backing away.";
+      } else {
+        chatBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-emerald-900 text-gold-300 shadow";
+        streetBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-parchment-300 hover:text-white";
+        banner.innerHTML = '<span class="font-bold text-emerald-900">Online Chat Setting:</span> <span>Keep messages concise (2-4 lines), warm, and dialogical. Avoid impersonal text walls and link-dumping. Stay Cool, Optimistic, Patient, Enduring.</span>';
+        badgeText.textContent = "Online 1-on-1 Chat / Messaging";
+        dim5Desc.textContent = "Online: Concise conversational replies, avoiding massive text walls, remaining Cool, Optimistic, Patient, and Enduring (COPE).";
+      }
+      updateAllDisplays();
+      lucide.createIcons();
+    }
+
+    // Apply Scenario Presets
+    function applyScenarioPreset(key) {
+      if (!key || !presets[key]) return;
+      const p = presets[key];
+      setMedium(p.medium);
+      for (let i = 0; i < 5; i++) {
+        state.scores[i] = p.scores[i];
+        document.getElementById(`slider-dim-${i+1}`).value = p.scores[i];
+      }
+      document.getElementById('encounter-notes').value = p.notes;
+      state.notes = p.notes;
+      updateAllDisplays();
+      showToast(`Scenario loaded: ${key.replace('_', ' ').toUpperCase()}`);
+    }
+
+    // Score change handler
+    function handleSliderChange(dimIndex, val) {
+      state.scores[dimIndex - 1] = parseInt(val, 10);
+      updateAllDisplays();
+    }
+
+    function updateAllDisplays() {
+      for (let i = 1; i <= 5; i++) {
+        const val = state.scores[i - 1];
+        document.getElementById(`badge-dim-${i}`).textContent = `${val} / 5`;
+        const meta = dimensionMeta[i];
+        const rubricEl = document.getElementById(`rubric-dim-${i}`);
+        if (rubricEl && meta && meta.levels[val]) {
+          rubricEl.textContent = `"${meta.levels[val]}"`;
+        }
+      }
+
+      const total = state.scores.reduce((a, b) => a + b, 0);
+      document.getElementById('score-total-large').textContent = total;
+      document.getElementById('score-pill-header').textContent = `Total: ${total} / 25`;
+
+      const progressBar = document.getElementById('score-progress-bar');
+      const percentage = Math.round((total / 25) * 100);
+      progressBar.style.width = `${percentage}%`;
+
+      const verdictTitle = document.getElementById('verdict-title');
+      const verdictSummary = document.getElementById('verdict-summary');
+
+      if (total >= 21) {
+        verdictTitle.textContent = "Radiant Balagh (Prophetic Alignment)";
+        verdictTitle.className = "text-2xl font-bold font-amiri tracking-wide mt-1 text-emerald-300";
+        progressBar.className = "bg-gradient-to-r from-emerald-400 to-gold-400 h-full rounded-full transition-all duration-500";
+        verdictSummary.textContent = "Masha'Allah. Your engagement embodied high detachment, gentle composure, and clear Tawheed. Continue making Istighfar to guard against self-satisfaction.";
+      } else if (total >= 16) {
+        verdictTitle.textContent = "Sincere but Strained (Field Friction)";
+        verdictTitle.className = "text-2xl font-bold font-amiri tracking-wide mt-1 text-amber-300";
+        progressBar.className = "bg-gradient-to-r from-amber-400 to-gold-500 h-full rounded-full transition-all duration-500";
+        verdictSummary.textContent = "Your foundational intention is sincere, but certain ego reflexes slipped through under pressure. Review the lowest-scoring dimension below.";
+      } else {
+        verdictTitle.textContent = "Ego Intercept Triggered (Stumble Detected)";
+        verdictTitle.className = "text-2xl font-bold font-amiri tracking-wide mt-1 text-rose-300";
+        progressBar.className = "bg-gradient-to-r from-rose-500 to-amber-500 h-full rounded-full transition-all duration-500";
+        verdictSummary.textContent = "Warning: The encounter was heavily hijacked by personal ego, defense traps, or inappropriate pacing. Step back, re-anchor with Istighfar, and examine the diagnosis.";
+      }
+
+      recalculateDiagnosis();
+    }
+
+    function recalculateDiagnosis() {
+      let lowestIndex = 0;
+      let minScore = 6;
+      for (let i = 0; i < 5; i++) {
+        if (state.scores[i] < minScore) {
+          minScore = state.scores[i];
+          lowestIndex = i + 1;
+        }
+      }
+      const meta = dimensionMeta[lowestIndex];
+      document.getElementById('trap-headline').textContent = `${meta.name} — ${meta.label}`;
+      document.getElementById('trap-mirror-prompt').textContent = `"${meta.prompt}"`;
+      document.getElementById('trap-quran-anchor').textContent = meta.quran;
+      document.getElementById('trap-hadith-anchor').textContent = meta.hadith;
+      document.getElementById('trap-action-reset').textContent = meta.reset;
+    }
+
+    function resetAudit() {
+      state.scores = [3, 3, 3, 3, 3];
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById(`slider-dim-${i}`).value = 3;
+      }
+      document.getElementById('encounter-notes').value = '';
+      document.getElementById('scenario-selector').value = '';
+      updateAllDisplays();
+      showToast("Audit restored to baseline.");
+    }
+
+    function clearNotes() {
+      document.getElementById('encounter-notes').value = '';
+      showToast("Notes cleared.");
+    }
+
+    // Summary Modal
+    function generateAuditModal() {
+      const total = state.scores.reduce((a, b) => a + b, 0);
+      document.getElementById('summary-date-badge').textContent = new Date().toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+      document.getElementById('summary-medium').textContent = state.medium === 'street' ? 'Street Corner / Out-and-About' : 'Online 1-on-1 Chat / Messaging';
+      document.getElementById('summary-score').textContent = `${total} / 25`;
+
+      document.getElementById('sum-d1').textContent = `${state.scores[0]} / 5`;
+      document.getElementById('sum-d2').textContent = `${state.scores[1]} / 5`;
+      document.getElementById('sum-d3').textContent = `${state.scores[2]} / 5`;
+      document.getElementById('sum-d4').textContent = `${state.scores[3]} / 5`;
+      document.getElementById('sum-d5').textContent = `${state.scores[4]} / 5`;
+
+      const notesVal = document.getElementById('encounter-notes').value.trim();
+      document.getElementById('summary-notes-text').textContent = notesVal ? `"${notesVal}"` : "No specific encounter notes recorded.";
+
+      let lowestIndex = 0;
+      let minScore = 6;
+      for (let i = 0; i < 5; i++) {
+        if (state.scores[i] < minScore) {
+          minScore = state.scores[i];
+          lowestIndex = i + 1;
+        }
+      }
+      const meta = dimensionMeta[lowestIndex];
+      document.getElementById('summary-reset-text').textContent = `Primary Area of Focus: ${meta.name}. ${meta.prompt} Corrective Action: ${meta.reset}`;
+
+      document.getElementById('summary-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeSummaryModal() {
+      document.getElementById('summary-modal').classList.add('hidden');
+    }
+
+    function copyAuditSummary() {
+      const total = state.scores.reduce((a, b) => a + b, 0);
+      const notes = document.getElementById('encounter-notes').value.trim() || "None";
+      
+      let lowestIndex = 0;
+      let minScore = 6;
+      for (let i = 0; i < 5; i++) {
+        if (state.scores[i] < minScore) {
+          minScore = state.scores[i];
+          lowestIndex = i + 1;
+        }
+      }
+      const meta = dimensionMeta[lowestIndex];
+
+      const text = `=== THE EGO MIRROR: DA'EE FIELD AUDIT CARD ===
+Medium: ${state.medium === 'street' ? 'Street Outreach' : 'Online 1-on-1 Chat'}
+Total Score: ${total} / 25
+------------------------------------------------
+1. Ikhlas & Result-Detachment: ${state.scores[0]}/5
+2. Hilm & Composure under Pressure: ${state.scores[1]}/5
+3. Tawheed-Centering Ratio: ${state.scores[2]}/5
+4. Istima' (Active Empathy): ${state.scores[3]}/5
+5. Hikmah of the Medium & COPE: ${state.scores[4]}/5
+------------------------------------------------
+Field Notes:
+${notes}
+
+Primary Ego Trap: ${meta.name} (${meta.label})
+Mirror Reflection: "${meta.prompt}"
+Prophetic Anchor: ${meta.quran}
+Reset Protocol: ${meta.reset}
+================================================`;
+
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast("Summary copied to clipboard!");
+      } catch (err) {
+        showToast("Failed to copy. Please select and copy manually.");
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-message');
+      text.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2600);
+    }
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      updateAllDisplays();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeSummaryModal();
+      }
+    });
+  </script>
+</body>
+</html>
