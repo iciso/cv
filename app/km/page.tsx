@@ -639,6 +639,11 @@ const ihciMonitoringReports = [
 ]
 
 const interactiveWebProducts = [
+   {
+    file: "salt-facilitator-compass.html",
+    title: "🧭 SALT Facilitator Compass",
+    description: "Daily practice for facilitators —with 25 Maxims, Ego Mirror dilemmas & Stumble Clinic."
+  },  
   {
     file: "river-of-life.html",
     title: "🚣 River of Life Diagram Generator",
