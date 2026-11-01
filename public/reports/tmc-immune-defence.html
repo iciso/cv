@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inside the Body: Immune Defence | TMC</title>
+<style>
+:root {
+  --navy: #1e3a8a;
+  --blue: #3b82f6;
+  --teal: #0f766e;
+  --bg: #f8fafc;
+  --ink: #1e293b;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --green: #dcfce7;
+  --amber: #fef3c7;
+  --red: #fee2e2;
+  --pathogen-color: #fb7185;
+  --innate-color: #fbbf24;
+  --adaptive-color: #60a5fa;
+  --antibody-color: #34d399;
+  --memory-color: #c084fc;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.55 Arial, Helvetica, sans-serif;
+}
+
+header {
+  background: linear-gradient(120deg, var(--navy), var(--teal));
+  color: white;
+  padding: 28px 16px;
+}
+
+.wrap {
+  max-width: 1050px;
+  margin: auto;
+  padding: 16px;
+}
+
+header .wrap { padding: 0 16px; }
+
+h1 {
+  font-size: clamp(1.8rem, 5vw, 2.7rem);
+  line-height: 1.15;
+  margin: 10px 0;
+}
+
+h2 { font-size: 1.4rem; margin-top: 0; color: var(--navy); }
+h3 { font-size: 1.05rem; color: var(--navy); margin-top: 18px; }
+p { margin: 8px 0; }
+
+.pill {
+  display: inline-block;
+  border: 1px solid #ffffff88;
+  border-radius: 30px;
+  padding: 4px 10px;
+  margin: 3px;
+  font-size: .82rem;
+}
+
+.sub { max-width: 800px; opacity: .95; }
+
+.card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 12px #0f172a08;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+button {
+  font: inherit;
+  font-weight: bold;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 15px;
+  cursor: pointer;
+  background: var(--navy);
+  color: white;
+  margin: 4px 4px 4px 0;
+  transition: background 0.2s, filter 0.2s;
+}
+
+button:hover:not(:disabled) { filter: brightness(1.1); }
+button:disabled { opacity: 0.55; cursor: not-allowed; }
+button:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+button.secondary { background: #e2e8f0; color: var(--ink); }
+button.teal { background: var(--teal); }
+
+.option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: white;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  font-weight: normal;
+  margin: 9px 0;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.option strong { display: block; color: var(--navy); margin-bottom: 3px; }
+.option:hover { background: #eff6ff; border-color: var(--blue); }
+
+.muted { color: var(--muted); font-size: .92rem; }
+
+.callout {
+  background: #ecfeff;
+  border-left: 4px solid var(--teal);
+  padding: 13px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.warn {
+  background: #fffbeb;
+  border-left: 4px solid #d97706;
+  padding: 13px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.stat {
+  background: #f1f5f9;
+  padding: 11px;
+  border-radius: 12px;
+  text-align: center;
+}
+.stat b { display: block; font-size: 1.4rem; color: var(--navy); }
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 12px;
+  font-size: 0.95rem;
+}
+
+input[type=range] {
+  width: 100%;
+  accent-color: var(--teal);
+  margin-top: 4px;
+}
+
+.bar {
+  height: 12px;
+  background: #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 5px 0 12px;
+}
+.bar div { height: 100%; background: var(--teal); transition: width .3s ease; }
+
+details {
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--navy);
+}
+
+.small { font-size: .86rem; }
+.hidden { display: none !important; }
+a { color: var(--navy); overflow-wrap: anywhere; }
+
+/* Simulation Specific Styling */
+.immune-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.immune-controls label {
+  margin-top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: normal;
+}
+
+.immune-controls select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font: inherit;
+}
+
+.immune-status {
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background: #eff6ff;
+  border-left: 4px solid var(--blue);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.immune-canvas-wrap {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+  background: #0b1730;
+  position: relative;
+}
+
+#immuneCanvas {
+  display: block;
+  width: 100%;
+  height: 320px;
+}
+
+.immune-counts {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.immune-counts .count {
+  padding: 10px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.immune-counts span { display: block; font-size: 0.78rem; color: var(--muted); }
+.immune-counts strong { display: block; font-size: 1.3rem; margin-top: 2px; }
+
+.pathogen-count strong { color: var(--pathogen-color); }
+.innate-count strong { color: var(--innate-color); }
+.adaptive-count strong { color: var(--adaptive-color); }
+.antibody-count strong { color: var(--antibody-color); }
+.memory-count strong { color: var(--memory-color); }
+
+.immune-key {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.immune-key > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.key-dot { font-size: 20px; line-height: 1; font-weight: 900; }
+.key-dot.pathogen-dot { color: var(--pathogen-color); }
+.key-dot.innate-dot { color: var(--innate-color); }
+.key-dot.adaptive-dot { color: var(--adaptive-color); }
+.key-dot.antibody-dot { color: var(--antibody-color); font-size: 18px; }
+.key-dot.memory-dot { color: var(--memory-color); }
+
+footer {
+  background: #e2e8f0;
+  text-align: center;
+  padding: 24px;
+}
+
+@media(max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+  .wrap { padding: 12px; }
+  #immuneCanvas { height: 260px; }
+  .immune-counts { grid-template-columns: repeat(2, 1fr); }
+  .immune-key { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="wrap">
+  <span class="pill">TMC Case Conference Group</span>
+  <span class="pill">Learn by playing</span>
+  <h1>🛡️ Inside the Body: Immune Defence</h1>
+  <p class="sub">How the immune system responds to infection — a game of rapid defence, targeted recognition, immune memory, vaccination, and misinformation detection.</p>
+ </div>
+</header>
+
+<main class="wrap">
+
+<!-- MISSION SECTION -->
+<section class="card">
+ <h2>🎮 Your Mission</h2>
+ <p>A pathogen has entered the body. Can you help the immune team mount an effective response, learn from the encounter, and prepare for the next invasion?</p>
+ <div class="callout">
+  <b>Three Unforgettable Ideas:</b><br>
+  ⚡ <b>Innate immunity</b> responds rapidly to common danger signals.<br>
+  🎯 <b>Adaptive immunity</b> recognises specific targets but requires time to proliferate.<br>
+  🧠 <b>Immune memory</b> enables subsequent responses to be faster and more decisive.
+ </div>
+ <p class="muted">The animations and numbers below are teaching illustrations to demonstrate biological concepts, not clinical predictions or mathematical clinical models.</p>
+</section>
+
+<!-- SECTION 1: THE IMMUNE BATTLE -->
+<section class="card">
+ <h2>1. 🔬 The Immune Battle</h2>
+ <p>Adjust the parameters and observe how initial pathogen burden, rapid innate response, and targeted adaptive responses unfold in slow motion.</p>
+
+ <div class="immune-controls">
+  <button id="runImmune">▶ Run encounter</button>
+  <button id="pauseImmune" class="secondary" disabled>⏸ Pause</button>
+  <button id="resetImmune" class="secondary">↺ Reset</button>
+  <button id="secondImmune" class="teal" disabled>🧠 Second encounter</button>
+  <label>
+    Speed:
+    <select id="immuneSpeed">
+      <option value="1.5">Very slow (1.5x)</option>
+      <option value="2.5" selected>Slow (2.5x)</option>
+      <option value="4.0">Faster (4.0x)</option>
+    </select>
+  </label>
+ </div>
+
+ <div class="immune-status" id="immuneStatus" aria-live="polite">
+  Ready: Adjust parameters and press "Run encounter".
+ </div>
+
+ <div class="immune-canvas-wrap">
+  <canvas id="immuneCanvas" aria-label="Animated immune response simulation"></canvas>
+ </div>
+
+ <div class="immune-counts">
+  <div class="count pathogen-count">
+    <span>🦠 Pathogens remaining</span>
+    <strong id="pathogenCount">0</strong>
+  </div>
+  <div class="count innate-count">
+    <span>⚡ Active innate cells</span>
+    <strong id="innateCount">0</strong>
+  </div>
+  <div class="count adaptive-count">
+    <span>🎯 Activated adaptive cells</span>
+    <strong id="adaptiveCount">0</strong>
+  </div>
+  <div class="count antibody-count">
+    <span>Y Antibody particles</span>
+    <strong id="antibodyCount">0</strong>
+  </div>
+  <div class="count memory-count">
+    <span>🧠 Memory cells</span>
+    <strong id="memoryCount">0</strong>
+  </div>
+ </div>
+
+ <div class="grid" style="margin-top: 15px;">
+  <div>
+   <label for="entry">Initial pathogen challenge</label>
+   <input id="entry" type="range" min="20" max="100" value="65">
+   <p class="muted">Challenge level: <b id="entryVal">65</b></p>
+
+   <label for="innate">Early innate response</label>
+   <input id="innate" type="range" min="10" max="90" value="55">
+   <p class="muted">Illustrative strength: <b id="innateVal">55</b></p>
+
+   <label for="adaptive">Adaptive response</label>
+   <input id="adaptive" type="range" min="10" max="100" value="70">
+   <p class="muted">Illustrative strength: <b id="adaptiveVal">70</b></p>
+  </div>
+
+  <div>
+   <h3>What is happening?</h3>
+   <p><b>1. Barriers:</b> Skin, mucus, and cilia physically block or sweep away microbes.</p>
+   <p><b>2. Innate Defence:</b> Rapid-acting phagocytes engulf pathogens and signal inflammation.</p>
+   <p><b>3. Adaptive Defence:</b> B cells make targeted antibodies; T cells destroy infected cells or assist response.</p>
+   <div class="callout" id="battleNote">Start the encounter to see live clinical teaching notes.</div>
+  </div>
+ </div>
+
+ <h3>🔑 Key to Representative Elements</h3>
+ <div class="immune-key">
+  <div><span class="key-dot pathogen-dot">●</span><strong>Pathogen</strong><small class="muted">Invading microbes</small></div>
+  <div><span class="key-dot innate-dot">●</span><strong>Innate Cell</strong><small class="muted">Rapid, broad response</small></div>
+  <div><span class="key-dot adaptive-dot">●</span><strong>Adaptive Cell</strong><small class="muted">Specific lymphocytes</small></div>
+  <div><span class="key-dot antibody-dot">Y</span><strong>Antibody</strong><small class="muted">Neutralises targets</small></div>
+  <div><span class="key-dot memory-dot">●</span><strong>Memory Cell</strong><small class="muted">Accelerates later response</small></div>
+ </div>
+</section>
+
+<!-- SECTION 2: VACCINE TIME MACHINE -->
+<section class="card">
+ <h2>2. 🕰️ The Vaccine Time Machine</h2>
+ <p>Compare a primary infection with a secondary encounter after immunological memory has been established. Vaccination mimics primary exposure safely.</p>
+ <div class="grid">
+  <div>
+   <label for="memory">Immune memory readiness</label>
+   <input id="memory" type="range" min="0" max="100" value="75">
+   <p>Memory readiness: <b id="memoryVal">75</b>/100</p>
+
+   <label for="challenge">Pathogen challenge level</label>
+   <input id="challenge" type="range" min="20" max="100" value="60">
+   <p>Challenge level: <b id="challengeVal">60</b></p>
+
+   <h3>🧩 Compare encounters</h3>
+  </div>
+  <div>
+   <h3>First Encounter (Primary)</h3>
+   <div class="bar"><div id="firstBar" style="width:70%"></div></div>
+   <p id="firstText" class="muted">A specific response takes days to build momentum.</p>
+
+   <h3>Later Encounter (Secondary / Post-Vaccine)</h3>
+   <div class="bar"><div id="secondBar" style="width:30%"></div></div>
+   <p id="secondText" class="muted">Pre-existing memory cells react swiftly.</p>
+  </div>
+ </div>
+ <div class="callout" id="memoryNote">Move the sliders and compare relative pathogen loads.</div>
+ <div class="warn">
+  <b>Important Clinical Context:</b> Memory is target-specific. Protection can wane over time or vary against mutated antigen variants.
+ </div>
+</section>
+
+<!-- SECTION 3: MEET THE IMMUNE TEAM -->
+<section class="card">
+ <h2>3. 🧩 Meet the Immune Team</h2>
+ <p>Click any component to explore its primary physiological role within the immune network.</p>
+ <div class="grid" id="cells">
+  <button class="option" onclick="reveal('barriers')"><strong>🧱 Physical & Chemical Barriers</strong>Skin, mucosal surfaces, secretions, cilia</button>
+  <button class="option" onclick="reveal('phagocytes')"><strong>🍽️ Phagocytes</strong>Neutrophils & macrophages that engulf invaders</button>
+  <button class="option" onclick="reveal('bcell')"><strong>🎯 B Lymphocytes</strong>Differentiate into antibody-secreting plasma cells</button>
+  <button class="option" onclick="reveal('antibody')"><strong>🔑 Antibodies</strong>Immunoglobulins that bind specific pathogen epitopes</button>
+  <button class="option" onclick="reveal('tcell')"><strong>⚔️ T Lymphocytes</strong>Helper (CD4+) & Cytotoxic (CD8+) immune coordinators/killers</button>
+  <button class="option" onclick="reveal('memorycell')"><strong>🧠 Memory Cells</strong>Long-lived B & T cells primed for secondary exposure</button>
+ </div>
+ <div id="cellInfo" class="callout">Select an immune component above to inspect details.</div>
+</section>
+
+<!-- SECTION 4: MISINFORMATION DETECTIVE -->
+<section class="card">
+ <h2>4. 🕵️ Misinformation Detective</h2>
+ <p>A claim regarding immunology or vaccination has been shared. Choose the best evidence-based response for healthcare counseling.</p>
+ <p class="muted" id="claimProgress">Claim 1 of 5</p>
+ <h3 id="claim"></h3>
+ <div id="claimChoices"></div>
+ <div id="claimFeedback" class="callout hidden" aria-live="polite"></div>
+ <div id="claimNext"></div>
+
+ <div class="stats">
+  <div class="stat"><b id="claimScore">0</b><span class="small">Evidence Points</span></div>
+  <div class="stat"><b id="claimDone">0</b><span class="small">Claims Examined</span></div>
+  <div class="stat"><b id="claimLevel">—</b><span class="small">Detective Rank</span></div>
+ </div>
+</section>
+
+<!-- SECTION 5: REVISION CARDS -->
+<section class="card">
+ <h2>5. 🧠 Quick Revision Cards</h2>
+ <details><summary>What distinguishes innate from adaptive immunity?</summary>
+ <p>Innate immunity provides rapid, non-specific recognition via pattern recognition receptors (PRRs). Adaptive immunity relies on somatic recombination of antigen receptors (TCR/BCR), producing high specificity and memory, but takes time to deploy initially.</p></details>
+ 
+ <details><summary>What is an antigen vs. an antibody?</summary>
+ <p>An <b>antigen</b> is a molecule or structure capable of binding specifically to immune components. An <b>antibody</b> is a Y-shaped immunoglobulin produced by plasma cells that binds specific antigenic epitopes.</p></details>
+ 
+ <details><summary>How does vaccination induce immunological memory without illness?</summary>
+ <p>Vaccines present non-pathogenic antigens (attenuated, inactivated, subunit, or mRNA encoded) to naive lymphocytes. This stimulates clonal expansion and memory cell formation without causing disease complications.</p></details>
+ 
+ <details><summary>Why are booster doses sometimes required?</summary>
+ <p>Antibody titers and memory cell populations can decline over time (waning immunity). Additionally, viral antigenic drift may require updated antigenic stimulation to maintain efficacy.</p></details>
+
+ <details><summary>How should clinicians address vaccine hesitancy respectfully?</summary>
+ <p>Acknowledge patient concerns empathetically, clarify specific doubts without jargon, cite reliable public health data (WHO/CDC), and transparently explain risk versus benefit profiles.</p></details>
+</section>
+
+<!-- EVIDENCE DESK -->
+<section class="card">
+ <h2>📚 Evidence Desk</h2>
+ <p><b>WHO — How Vaccines Work</b><br><a href="https://www.who.int/news-room/feature-stories/detail/how-do-vaccines-work" target="_blank" rel="noopener">Read the WHO foundational guide on vaccine mechanisms</a></p>
+ <p><b>CDC — Principles of Immunisation</b><br><a href="https://www.cdc.gov/pinkbook/hcp/table-of-contents/chapter-1-principles-of-vaccination.html" target="_blank" rel="noopener">Epidemiology & Prevention of Vaccine-Preventable Diseases</a></p>
+ <p><b>WHO — Addressing Vaccine Misinformation</b><br><a href="https://www.who.int/news-room/feature-stories/detail/how-to-talk-about-vaccines" target="_blank" rel="noopener">Clinical communication strategies for healthcare providers</a></p>
+ <p class="muted">For clinical decision-making, refer to official national immunisation guidelines. This tool is designed strictly for educational illustration.</p>
+</section>
+
+<!-- FINAL CHALLENGE -->
+<section class="card">
+ <h2>🏁 Final Challenge</h2>
+ <p>Summarise these core concepts to a colleague in 60 seconds:</p>
+ <ol>
+  <li>The temporal difference between innate and adaptive responses.</li>
+  <li>How vaccines generate memory cells safely.</li>
+  <li>A structured, empathetic protocol for evaluating medical claims online.</li>
+ </ol>
+ <button onclick="resetAll()">Play Everything Again ↻</button>
+</section>
+
+</main>
+
+<footer>
+ <b>Thanjavur Medical College (TMC) Case Conference Group</b><br>
+ <span class="small">Interactive Medical Education Series</span><br><br>
+ <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70" target="_blank" rel="noopener">Join the TMC Academic WhatsApp Group</a>
+</footer>
+
+<script>
+// Helper functions
+const $ = id => document.getElementById(id);
+
+// --- SIMULATION ENGINE ---
+(function() {
+  const canvas = $("immuneCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  // DOM Elements
+  const runBtn = $("runImmune");
+  const pauseBtn = $("pauseImmune");
+  const resetBtn = $("resetImmune");
+  const secondBtn = $("secondImmune");
+  const speedSelect = $("immuneSpeed");
+  const statusEl = $("immuneStatus");
+  const battleNote = $("battleNote");
+
+  const countEls = {
+    pathogen: $("pathogenCount"),
+    innate: $("innateCount"),
+    adaptive: $("adaptiveCount"),
+    antibody: $("antibodyCount"),
+    memory: $("memoryCount")
+  };
+
+  const colors = {
+    pathogen: "#fb7185",
+    innate: "#fbbf24",
+    adaptive: "#60a5fa",
+    antibody: "#34d399",
+    memory: "#c084fc",
+    muted: "#94a3b8"
+  };
+
+  let W = 800, H = 320, dpr = 1;
+  let particles = [];
+  let running = false;
+  let paused = false;
+  let animFrame = null;
+  let startTime = 0;
+  let elapsed = 0;
+  let lastTime = 0;
+  let isSecondEncounter = false;
+  let hasMemoryCreated = false;
+  
+  const totalDuration = 16000; // base simulation duration in ms
+
+  function rand(min, max) { return min + Math.random() * (max - min); }
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = Math.max(300, rect.width);
+    H = Math.max(220, rect.height);
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+
+  function makeParticle(type, x, y) {
+    const radii = { pathogen: 5, innate: 8, adaptive: 7, antibody: 4, memory: 6.5 };
+    return {
+      type, x, y, r: radii[type],
+      vx: rand(-0.6, 0.6),
+      vy: rand(-0.6, 0.6),
+      phase: rand(0, Math.PI * 2),
+      alive: true
+    };
+  }
+
+  function initSimulation(preserveMemory = false) {
+    const pathChallenge = Number($("entry").value);
+    const innateStrength = Number($("innate").value);
+
+    let existingMemory = [];
+    if (preserveMemory) {
+      existingMemory = particles.filter(p => p.alive && p.type === "memory");
+    } else {
+      hasMemoryCreated = false;
+      secondBtn.disabled = true;
+    }
+
+    particles = [...existingMemory];
+
+    // Create Pathogens proportional to slider
+    const initialPathogens = Math.round(15 + pathChallenge * 0.5);
+    for (let i = 0; i < initialPathogens; i++) {
+      particles.push(makeParticle("pathogen", rand(W * 0.55, W - 20), rand(25, H - 25)));
+    }
+
+    // Create Initial Innate Cells proportional to slider
+    const initialInnate = Math.round(4 + innateStrength * 0.12);
+    for (let i = 0; i < initialInnate; i++) {
+      particles.push(makeParticle("innate", rand(20, W * 0.35), rand(25, H - 25)));
+    }
+
+    elapsed = 0;
+    updateCounts();
+    draw();
+  }
+
+  function updateCounts() {
+    const counts = { pathogen: 0, innate: 0, adaptive: 0, antibody: 0, memory: 0 };
+    particles.forEach(p => { if (p.alive) counts[p.type]++; });
+    
+    for (const key in countEls) {
+      countEls[key].textContent = counts[key];
+    }
+    return counts;
+  }
+
+  function setStatus(msg) { statusEl.textContent = msg; }
+
+  function startEncounter(second = false) {
+    if (running && !paused) return;
+    
+    if (!paused) {
+      isSecondEncounter = second;
+      initSimulation(second);
+      elapsed = 0;
+    }
+
+    running = true;
+    paused = false;
+    lastTime = performance.now();
+    runBtn.disabled = true;
+    pauseBtn.disabled = false;
+    secondBtn.disabled = true;
+
+    if (isSecondEncounter) {
+      setStatus("Second Encounter Running: Pre-existing memory accelerates adaptive lymphocyte expansion and antibody secretion.");
+      battleNote.textContent = "Secondary response in progress: Memory B/T cells recognize pathogen epitopes quickly, yielding faster clearance.";
+    } else {
+      setStatus("Primary Encounter Running: Innate cells react rapidly while specific adaptive immunity builds up.");
+      battleNote.textContent = "Primary response in progress: Innate phagocytes attempt containment while antigen presentation primes adaptive response.";
+    }
+
+    cancelAnimationFrame(animFrame);
+    animFrame = requestAnimationFrame(tick);
+  }
+
+  function pauseEncounter() {
+    if (!running) return;
+    paused = true;
+    running = false;
+    runBtn.disabled = false;
+    pauseBtn.disabled = true;
+    setStatus("Simulation Paused. Click 'Run encounter' to resume.");
+  }
+
+  function resetSimulation() {
+    running = false;
+    paused = false;
+    cancelAnimationFrame(animFrame);
+    runBtn.disabled = false;
+    pauseBtn.disabled = true;
+    isSecondEncounter = false;
+    hasMemoryCreated = false;
+    secondBtn.disabled = true;
+    initSimulation(false);
+    setStatus("Simulation Reset. Adjust parameters and start when ready.");
+    battleNote.textContent = "Settings reset. Modify sliders to explore different response kinetics.";
+  }
+
+  function addParticle(type, x, y) {
+    particles.push(makeParticle(type, x, y));
+  }
+
+  function updatePhysics(dt, progress) {
+    const innateStrength = Number($("innate").value) / 100;
+    const adaptiveStrength = Number($("adaptive").value) / 100;
+    const isFast = isSecondEncounter;
+
+    // Pathogen Replication in early stages
+    const livePathogens = particles.filter(p => p.alive && p.type === "pathogen");
+    if (progress < 0.35 && livePathogens.length < 80 && Math.random() < dt * 1.5) {
+      const parent = livePathogens[Math.floor(Math.random() * livePathogens.length)];
+      if (parent) addParticle("pathogen", parent.x + rand(-12, 12), parent.y + rand(-12, 12));
+    }
+
+    // Adaptive Recruitment Timing
+    const adaptiveStartTime = isFast ? 0.08 : (0.42 - adaptiveStrength * 0.15);
+    if (progress > adaptiveStartTime && progress < 0.85) {
+      const currentAdaptive = particles.filter(p => p.alive && p.type === "adaptive").length;
+      const targetAdaptive = Math.round((isFast ? 24 : 16) * (0.5 + adaptiveStrength));
+      if (currentAdaptive < targetAdaptive && Math.random() < dt * (isFast ? 6.0 : 3.0)) {
+        addParticle("adaptive", rand(15, W * 0.35), rand(20, H - 20));
+      }
+    }
+
+    // Antibody Production Timing
+    const antibodyStartTime = isFast ? 0.12 : (0.55 - adaptiveStrength * 0.15);
+    if (progress > antibodyStartTime && progress < 0.9) {
+      const currentAntibody = particles.filter(p => p.alive && p.type === "antibody").length;
+      const targetAntibody = Math.round((isFast ? 35 : 20) * (0.5 + adaptiveStrength));
+      if (currentAntibody < targetAntibody && Math.random() < dt * (isFast ? 8.0 : 4.0)) {
+        addParticle("antibody", rand(20, W * 0.4), rand(20, H - 20));
+      }
+    }
+
+    // Move Particles
+    particles.forEach(p => {
+      if (!p.alive) return;
+      p.phase += dt * 2;
+
+      if (p.type === "pathogen") {
+        p.x += (p.vx + 0.2) * dt * 12;
+        p.y += Math.sin(p.phase) * dt * 8;
+      } else if (p.type === "innate") {
+        const target = findNearest(p, "pathogen");
+        if (target) moveTowards(p, target, dt, 30 * (0.6 + innateStrength));
+      } else if (p.type === "adaptive") {
+        const target = findNearest(p, "pathogen");
+        if (target) moveTowards(p, target, dt, 26 * (0.6 + adaptiveStrength));
+      } else if (p.type === "antibody") {
+        const target = findNearest(p, "pathogen");
+        if (target) moveTowards(p, target, dt, 50);
+        else { p.x += p.vx * dt * 10; p.y += p.vy * dt * 10; }
+      } else if (p.type === "memory") {
+        p.x += Math.sin(p.phase) * dt * 4;
+        p.y += Math.cos(p.phase) * dt * 4;
+      }
+
+      // Boundary collisions
+      if (p.x < 6 || p.x > W - 6) p.vx *= -1;
+      if (p.y < 6 || p.y > H - 6) p.vy *= -1;
+      p.x = Math.max(6, Math.min(W - 6, p.x));
+      p.y = Math.max(6, Math.min(H - 6, p.y));
+    });
+
+    // Neutralisation Logic
+    particles.filter(p => p.alive && p.type === "pathogen").forEach(p => {
+      const defenders = particles.filter(d => d.alive && d.type !== "pathogen" && d.type !== "memory");
+      for (const d of defenders) {
+        const dist = Math.hypot(p.x - d.x, p.y - d.y);
+        if (dist < p.r + d.r + 2) {
+          p.alive = false;
+          if (d.type === "antibody") d.alive = false; // Antibody consumed upon binding
+          break;
+        }
+      }
+    });
+
+    // Generate Memory Cells near the end of primary encounter
+    if (!isFast && progress > 0.82 && !hasMemoryCreated) {
+      const memoryCount = 6;
+      for (let i = 0; i < memoryCount; i++) {
+        particles.push(makeParticle("memory", rand(15, W * 0.3), rand(25, H - 25)));
+      }
+      hasMemoryCreated = true;
+    }
+
+    updateCounts();
+  }
+
+  function findNearest(from, type) {
+    let best = null, minDist = Infinity;
+    particles.forEach(p => {
+      if (p.alive && p.type === type) {
+        const d = Math.hypot(p.x - from.x, p.y - from.y);
+        if (d < minDist) { minDist = d; best = p; }
+      }
+    });
+    return best;
+  }
+
+  function moveTowards(p, target, dt, speed) {
+    const dx = target.x - p.x, dy = target.y - p.y;
+    const dist = Math.max(1, Math.hypot(dx, dy));
+    p.x += (dx / dist) * speed * dt;
+    p.y += (dy / dist) * speed * dt;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "#0b1730";
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid Overlay
+    ctx.strokeStyle = "rgba(148, 163, 184, 0.08)";
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+    // Zone Header Labels
+    ctx.font = "11px Arial";
+    ctx.fillStyle = colors.muted;
+    ctx.fillText("HOST TISSUE / IMMUNE RESERVOIR", 12, 18);
+    ctx.fillText("SITE OF INFECTION", Math.max(12, W - 145), 18);
+
+    // Render Particles
+    particles.forEach(p => {
+      if (!p.alive) return;
+
+      if (p.type === "antibody") {
+        // Render Y-Shape
+        ctx.strokeStyle = colors.antibody;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y + 4);
+        ctx.lineTo(p.x, p.y);
+        ctx.lineTo(p.x - 3.5, p.y - 3.5);
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + 3.5, p.y - 3.5);
+        ctx.stroke();
+        return;
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = colors[p.type];
+      ctx.fill();
+
+      // Specialized visual markers
+      if (p.type === "innate") {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = "#78350f";
+        ctx.fill();
+      } else if (p.type === "adaptive") {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r + 2, 0, Math.PI * 2);
+        ctx.strokeStyle = "rgba(96, 165, 250, 0.6)";
+        ctx.stroke();
+      } else if (p.type === "memory") {
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 9px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("M", p.x, p.y);
+        ctx.textAlign = "start";
+        ctx.textBaseline = "alphabetic";
+      }
+    });
+
+    // Time Bar
+    const progress = Math.min(1, elapsed / totalDuration);
+    ctx.fillStyle = "#334155";
+    ctx.fillRect(12, H - 10, W - 24, 4);
+    ctx.fillStyle = "#38bdf8";
+    ctx.fillRect(12, H - 10, (W - 24) * progress, 4);
+  }
+
+  function tick(now) {
+    if (!running || paused) return;
+
+    const speed = Number(speedSelect.value) || 2.5;
+    const dt = Math.min(0.05, (now - lastTime) / 1000) * speed;
+    lastTime = now;
+    elapsed += (now - lastTime + dt * 1000 / speed); // accurate elapsed sync
+    
+    const progress = Math.min(1, elapsed / totalDuration);
+
+    updatePhysics(dt, progress);
+    draw();
+
+    if (progress < 1) {
+      animFrame = requestAnimationFrame(tick);
+    } else {
+      running = false;
+      runBtn.disabled = false;
+      pauseBtn.disabled = true;
+
+      const counts = updateCounts();
+      if (!isSecondEncounter) {
+        secondBtn.disabled = false;
+        if (counts.pathogen === 0) {
+          setStatus("Primary Encounter Complete: Pathogens fully cleared! Memory cells have been established.");
+          battleNote.textContent = "Successful primary clearance: Antigens were eliminated, leaving behind immunological memory cells (purple).";
+        } else {
+          setStatus("Primary Encounter Complete: Pathogen burden reduced. Memory cells established.");
+          battleNote.textContent = "Primary encounter finished: The host cleared most pathogens. Try enabling 'Second encounter' to observe rapid secondary clearance.";
+        }
+      } else {
+        secondBtn.disabled = false;
+        setStatus("Second Encounter Complete: Secondary immune memory enabled rapid antibody production and rapid pathogen clearance.");
+        battleNote.textContent = "Secondary encounter complete: Notice how pre-existing memory cells bypassed the delayed priming phase.";
+      }
+    }
+  }
+
+  // Event Listeners for Simulation Controls
+  runBtn.addEventListener("click", () => startEncounter(false));
+  pauseBtn.addEventListener("click", pauseEncounter);
+  resetBtn.addEventListener("click", resetSimulation);
+  secondBtn.addEventListener("click", () => startEncounter(true));
+
+  ["entry", "innate", "adaptive"].forEach(id => {
+    $(id).addEventListener("input", () => {
+      $(id + "Val").textContent = $(id).value;
+      if (!running) initSimulation(hasMemoryCreated);
+    });
+  });
+
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(resize).observe(canvas);
+  } else {
+    window.addEventListener("resize", resize);
+  }
+
+  // Initialize
+  resize();
+  initSimulation(false);
+})();
+
+
+// --- SECTION 2: VACCINE TIME MACHINE ---
+function timeMachine() {
+  const m = +$("memory").value;
+  const c = +$("challenge").value;
+  $("memoryVal").textContent = m;
+  $("challengeVal").textContent = c;
+
+  const first = Math.min(100, c * 1.05);
+  const second = Math.max(5, Math.min(100, c * (1 - m / 120)));
+
+  $("firstBar").style.width = first + "%";
+  $("secondBar").style.width = second + "%";
+
+  $("firstText").textContent = "Illustrative primary burden: " + Math.round(first) + "/100. Specific response requires priming.";
+  $("secondText").textContent = "Illustrative secondary burden: " + Math.round(second) + "/100. Memory accelerates clearance.";
+
+  $("memoryNote").textContent = m >= 60 ?
+    "High memory readiness enables rapid secondary antibody deployment, mirroring post-vaccination protection." :
+    "Low memory readiness leads to response times similar to a primary infection. Booster doses aim to optimize this memory index.";
+}
+
+$("memory").addEventListener("input", timeMachine);
+$("challenge").addEventListener("input", timeMachine);
+
+
+// --- SECTION 3: MEET THE IMMUNE TEAM ---
+const cellFacts = {
+  barriers: "<b>Physical & Chemical Barriers:</b> Skin, mucus, antimicrobial peptides (e.g., defensins), and ciliary movement form the first line of defence, physically blocking or neutralizing pathogens prior to tissue invasion.",
+  phagocytes: "<b>Phagocytes (Neutrophils & Macrophages):</b> Internalize foreign organisms via endocytosis. Macrophages also act as key Antigen-Presenting Cells (APCs) to initiate adaptive immunity.",
+  bcell: "<b>B Lymphocytes:</b> Naive B cells recognize native antigens via BCRs. Upon helper T-cell activation, they proliferate into plasma cells capable of secreting thousands of antibody molecules per second.",
+  antibody: "<b>Antibodies (Immunoglobulins):</b> Y-shaped proteins that bind specific antigenic determinants. Functions include pathogen neutralisation, opsonisation (enhancing phagocytosis), and complement activation.",
+  tcell: "<b>T Lymphocytes:</b> Helper T cells (CD4+) release cytokines to coordinate B cell and macrophage responses. Cytotoxic T cells (CD8+) induce apoptosis in infected host cells via perforin and granzymes.",
+  memorycell: "<b>Memory Cells:</b> Quiescent B and T lymphocytes with extended lifespans. Upon secondary exposure to the same antigen, they undergo rapid proliferation without requiring lengthy initial priming."
+};
+
+function reveal(key) {
+  $("cellInfo").innerHTML = cellFacts[key];
+}
+
+
+// --- SECTION 4: MISINFORMATION DETECTIVE ---
+const claims = [
+  {
+    q: "“If a patient develops a mild fever after vaccination, it indicates the vaccine has damaged their immune system.”",
+    opts: [
+      "True: Fever is a direct sign of immune toxicity.",
+      "False: Mild fever is an expected physiological manifestation of innate inflammatory signaling (e.g., IL-1, IL-6, TNF-alpha) during immune induction.",
+      "True: Any fever post-vaccination requires immediate broad-spectrum antibiotics."
+    ],
+    correct: 1,
+    why: "Mild fever is a normal physiological byproduct of cytokine release as the innate immune system recognizes vaccine antigens and initiates adaptive priming."
+  },
+  {
+    q: "“Acquiring immunity through natural infection is always clinically superior to vaccination.”",
+    opts: [
+      "True: Infection carries zero long-term risks compared to vaccines.",
+      "False: Natural infection entails risks of severe illness, organ damage, or death; vaccines safely induce immunological memory without disease exposure.",
+      "True: Vaccines fail to induce memory B cells."
+    ],
+    correct: 1,
+    why: "While infection generates immunity, it carries severe clinical risks. Vaccination provides target-specific immunological training while bypassing disease morbidity and mortality."
+  },
+  {
+    q: "“If a vaccine does not prevent 100% of breakthrough infections, it is ineffective.”",
+    opts: [
+      "True: Immunisation must guarantee sterilising immunity to be useful.",
+      "False: Vaccines significantly reduce severe disease endpoints, hospitalization rates, and mortality even when non-sterilising.",
+      "True: Breakthrough infections prove a vaccine lacks efficacy."
+    ],
+    correct: 1,
+    why: "Vaccine efficacy encompasses multiple endpoints. Reducing disease severity, viral load, and ICU admission rates are key clinical successes of immunisation."
+  },
+  {
+    q: "“A viral message on social media claims a vaccine causes reproductive harm. What is the correct initial action?”",
+    opts: [
+      "Forward immediately to warn family members.",
+      "Dismiss the sender with sarcasm.",
+      "Pause, verify the claim against authoritative peer-reviewed data and WHO/CDC updates, and communicate evidence empathetically."
+    ],
+    correct: 2,
+    why: "Healthcare providers should evaluate claims against peer-reviewed evidence and public health consensus, addressing concerns calmly without spreading unverified assertions."
+  },
+  {
+    q: "“Maintaining a healthy diet and adequate sleep renders recommended immunisations unnecessary.”",
+    opts: [
+      "True: General wellness provides antigen-specific antibodies against all pathogens.",
+      "False: Lifestyle factors support baseline immunity but cannot generate specific memory receptors against novel pathogen epitopes.",
+      "True: Vaccines are only effective in malnourished individuals."
+    ],
+    correct: 1,
+    why: "Healthy habits optimize baseline immune cell function, but target-specific protection against virulent pathogens requires specific antigen exposure via vaccination."
+  }
+];
+
+let claimIndex = 0;
+let claimScore = 0;
+let claimAnswered = 0;
+
+function renderClaim() {
+  const c = claims[claimIndex];
+  $("claimProgress").textContent = `Claim ${claimIndex + 1} of ${claims.length}`;
+  $("claim").textContent = c.q;
+  $("claimChoices").innerHTML = "";
+  $("claimFeedback").classList.add("hidden");
+  $("claimNext").innerHTML = "";
+
+  c.opts.forEach((o, i) => {
+    const b = document.createElement("button");
+    b.className = "option";
+    b.innerHTML = `<strong>Option ${String.fromCharCode(65 + i)}:</strong> ${o}`;
+    b.onclick = () => answerClaim(i);
+    $("claimChoices").appendChild(b);
+  });
+}
+
+function answerClaim(selected) {
+  const c = claims[claimIndex];
+  claimAnswered++;
+  const isCorrect = selected === c.correct;
+  if (isCorrect) claimScore++;
+
+  $("claimScore").textContent = claimScore;
+  $("claimDone").textContent = claimAnswered;
+  $("claimLevel").textContent = claimScore >= 4 ? "Clinical Expert" : claimScore >= 2 ? "Intermediate" : "Novice";
+
+  $("claimChoices").innerHTML = "";
+  $("claimFeedback").innerHTML = (isCorrect ? "<b>Correct Clinical Decision!</b> " : "<b>Clinical Rationale:</b> ") + c.why;
+  $("claimFeedback").classList.remove("hidden");
+
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "teal";
+  nextBtn.textContent = claimIndex === claims.length - 1 ? "Complete Investigation" : "Next Claim →";
+  nextBtn.onclick = () => {
+    claimIndex++;
+    if (claimIndex < claims.length) renderClaim();
+    else showFinalQuizScore();
+  };
+  $("claimNext").appendChild(nextBtn);
+}
+
+function showFinalQuizScore() {
+  $("claim").textContent = "Investigation Completed!";
+  $("claimChoices").innerHTML = "";
+  $("claimFeedback").innerHTML = `<b>Final Score:</b> You achieved ${claimScore} out of ${claims.length} evidence points. Continue advocating for evidence-based practice in patient care.`;
+  $("claimNext").innerHTML = "";
+
+  const restartBtn = document.createElement("button");
+  restartBtn.textContent = "Restart Quiz ↻";
+  restartBtn.onclick = () => {
+    claimIndex = 0;
+    claimScore = 0;
+    claimAnswered = 0;
+    $("claimScore").textContent = 0;
+    $("claimDone").textContent = 0;
+    $("claimLevel").textContent = "—";
+    renderClaim();
+  };
+  $("claimNext").appendChild(restartBtn);
+}
+
+
+// --- GLOBAL RESET ---
+function resetAll() {
+  claimIndex = 0;
+  claimScore = 0;
+  claimAnswered = 0;
+  $("claimScore").textContent = 0;
+  $("claimDone").textContent = 0;
+  $("claimLevel").textContent = "—";
+
+  $("entry").value = 65;
+  $("innate").value = 55;
+  $("adaptive").value = 70;
+  $("entryVal").textContent = 65;
+  $("innateVal").textContent = 55;
+  $("adaptiveVal").textContent = 70;
+
+  $("memory").value = 75;
+  $("challenge").value = 60;
+
+  timeMachine();
+  renderClaim();
+
+  $("runImmune").click();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// Initialise Page
+timeMachine();
+renderClaim();
+</script>
+
+</body>
+</html>
