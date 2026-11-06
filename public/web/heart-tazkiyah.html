@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polishing the Heart (Tazkiyah Visualizer)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            850: '#064e3b',
+                            900: '#022c22',
+                            950: '#011c16',
+                        },
+                        gold: {
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Anek Malayalam', 'Anek Tamil', 'sans-serif'],
+                        serif: ['Amiri', 'Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts for English, Arabic, Malayalam & Tamil -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Anek+Malayalam:wght@400;600;700&family=Anek+Tamil:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', 'Anek Malayalam', 'Anek Tamil', sans-serif;
+            background-color: #011c16;
+            color: #ecfdf5;
+        }
+
+        .font-arabic {
+            font-family: 'Amiri', serif;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.3)); }
+            50% { transform: scale(1.02); filter: drop-shadow(0 0 25px rgba(234, 179, 8, 0.7)); }
+        }
+
+        .heart-pulse {
+            animation: heartPulse 3.5s infinite ease-in-out;
+        }
+
+        .heart-cell {
+            transition: all 0.4s ease;
+        }
+        .heart-cell:hover {
+            stroke: #facc15;
+            stroke-width: 1.5px;
+            cursor: pointer;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #022c22;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #059669;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+    </style>
+</head>
+<body class="min-h-full flex flex-col justify-between selection:bg-gold-500 selection:text-emerald-950">
+
+    <!-- Header / Navigation Bar -->
+    <header class="bg-emerald-900/80 backdrop-blur-md border-b border-emerald-800/50 sticky top-0 z-30 px-4 py-3 sm:px-6">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-start">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold-600 to-emerald-600 flex items-center justify-center text-white shadow-lg shadow-gold-500/20">
+                        <i class="fa-solid fa-heart-pulse text-gold-300 text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 id="appTitle" class="text-lg sm:text-xl font-bold bg-gradient-to-r from-gold-300 via-emerald-100 to-emerald-300 bg-clip-text text-transparent">
+                            Polishing the Heart
+                        </h1>
+                        <p id="appSubtitle" class="text-xs text-emerald-300/80">Tazkiyah Visualizer & Daily Sunnah Tracker</p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons Mobile -->
+                <div class="flex sm:hidden items-center space-x-1">
+                    <button onclick="toggleReferenceModal()" class="p-2 text-emerald-300 hover:text-gold-400 bg-emerald-800/60 rounded-lg">
+                        <i class="fa-solid fa-book-quran"></i>
+                    </button>
+                    <button onclick="toggleSettingsModal()" class="p-2 text-emerald-300 hover:text-gold-400 bg-emerald-800/60 rounded-lg">
+                        <i class="fa-solid fa-sliders"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Language Switcher Tabs & Desktop Buttons -->
+            <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-3">
+                <!-- Language Selector -->
+                <div class="bg-emerald-950/80 p-1 rounded-xl border border-emerald-800 flex items-center space-x-1 text-xs">
+                    <button id="lang-en" onclick="setLanguage('en')" class="px-2.5 py-1 rounded-lg transition-all font-semibold bg-gold-500 text-emerald-950 shadow-sm">
+                        English
+                    </button>
+                    <button id="lang-ml" onclick="setLanguage('ml')" class="px-2.5 py-1 rounded-lg transition-all font-semibold text-emerald-300 hover:text-gold-300">
+                        മലയാളം
+                    </button>
+                    <button id="lang-ta" onclick="setLanguage('ta')" class="px-2.5 py-1 rounded-lg transition-all font-semibold text-emerald-300 hover:text-gold-300">
+                        தமிழ்
+                    </button>
+                </div>
+
+                <div class="hidden sm:flex items-center space-x-2">
+                    <button onclick="toggleReferenceModal()" class="px-3 py-1.5 text-xs sm:text-sm bg-emerald-800/60 hover:bg-emerald-700/80 border border-emerald-700/60 text-emerald-100 rounded-lg transition-all flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-book-quran text-gold-400"></i>
+                        <span id="btnRefText">Quran & Hadith</span>
+                    </button>
+                    <button onclick="toggleSettingsModal()" class="p-2 text-emerald-300 hover:text-gold-400 hover:bg-emerald-800/40 rounded-lg transition-all" title="Options">
+                        <i class="fa-solid fa-sliders text-base"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl w-full mx-auto px-4 py-6 sm:px-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- LEFT COLUMN: The Heart Visualizer & Radiance Stats (5 cols on lg) -->
+        <section class="lg:col-span-5 flex flex-col space-y-6">
+
+            <!-- Heart Visualizer Card -->
+            <div class="bg-emerald-900/40 border border-emerald-800/60 rounded-2xl p-5 relative overflow-hidden backdrop-blur-sm shadow-xl flex flex-col justify-between">
+                <div class="flex justify-between items-start z-10 mb-2">
+                    <div>
+                        <span id="levelBadge" class="inline-block px-3 py-1 bg-gold-500/20 text-gold-300 border border-gold-500/30 text-xs font-semibold rounded-full mb-1">
+                            Heart State: Polishing in Progress
+                        </span>
+                        <h2 id="heartTitle" class="text-xl font-bold text-emerald-100">The Illuminated Heart</h2>
+                        <p id="heartSubtitle" class="text-xs text-emerald-300/70">"Good deeds polish the heart until it shines like a mirror"</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold text-gold-400" id="radianceScoreDisplay">0%</div>
+                        <div id="scoreLabel" class="text-[10px] uppercase tracking-wider text-emerald-300/60">Polished Radiance</div>
+                    </div>
+                </div>
+
+                <!-- Interactive Heart Canvas -->
+                <div class="relative w-full h-72 sm:h-80 my-2 flex items-center justify-center">
+                    <svg id="heartSvg" viewBox="0 0 200 180" class="w-full h-full max-h-80 heart-pulse">
+                        <defs>
+                            <radialGradient id="heartGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#facc15" stop-opacity="0.35"/>
+                                <stop offset="100%" stop-color="#022c22" stop-opacity="0"/>
+                            </radialGradient>
+                            <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="3" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+
+                        <!-- Ambient Background Light -->
+                        <circle cx="100" cy="90" r="85" fill="url(#heartGlow)" id="heartBgGlow" class="transition-all duration-1000"/>
+
+                        <!-- Dynamic Heart Pixel Cells Grid (Generated via JS) -->
+                        <g id="heartCellsGroup"></g>
+                    </svg>
+                </div>
+
+                <!-- Quran Verse Banner (Surah Al-Mutaffifin 83:14) -->
+                <div class="bg-emerald-950/80 border border-emerald-800/50 rounded-xl p-3 text-center backdrop-blur-sm">
+                    <p class="font-arabic text-gold-300 text-base font-bold mb-1 leading-relaxed">
+                        كَلَّا ۖ بَلْ ۜ رَانَ عَلَىٰ قُلُوبِهِم مَّا كَانُواْ يَكۡسِبُونَ
+                    </p>
+                    <p id="verseText" class="text-[11px] text-emerald-200/90 italic">
+                        "No! Rather, the stain has covered their hearts of that which they were earning."
+                    </p>
+                    <span id="verseRef" class="text-[10px] text-gold-400/80 block mt-0.5">— Surah Al-Mutaffifin (83:14) & Authentic Sunnah</span>
+                </div>
+
+                <!-- Stats Summary Row -->
+                <div class="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-emerald-800/40 text-center">
+                    <div class="p-2 rounded-lg bg-emerald-950/50">
+                        <div id="lblCurrentStreak" class="text-[11px] text-emerald-400">Current Streak</div>
+                        <div class="text-base font-bold text-gold-300" id="currentStreakDisplay">0 Days</div>
+                    </div>
+                    <div class="p-2 rounded-lg bg-emerald-950/50">
+                        <div id="lblTodayProgress" class="text-[11px] text-emerald-400">Today's Progress</div>
+                        <div class="text-base font-bold text-emerald-200" id="todayProgressDisplay">0 / 0</div>
+                    </div>
+                    <div class="p-2 rounded-lg bg-emerald-950/50">
+                        <div id="lblTotalDeeds" class="text-[11px] text-emerald-400">Total Actions</div>
+                        <div class="text-base font-bold text-emerald-200" id="totalDeedsDisplay">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Heatmap Summary Card -->
+            <div class="bg-emerald-900/40 border border-emerald-800/60 rounded-2xl p-5 backdrop-blur-sm shadow-xl flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <h3 id="heatmapTitle" class="text-sm font-bold text-emerald-100 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-days text-gold-400"></i>
+                            Heart Polishing History
+                        </h3>
+                        <p id="heatmapSubtitle" class="text-[11px] text-emerald-300/70">Past 56 days heart radiance log</p>
+                    </div>
+                    <div class="flex items-center space-x-1 text-[10px] text-emerald-400">
+                        <span id="lblLess">Stained</span>
+                        <span class="w-2.5 h-2.5 rounded-sm bg-emerald-950 border border-emerald-800"></span>
+                        <span class="w-2.5 h-2.5 rounded-sm bg-emerald-800"></span>
+                        <span class="w-2.5 h-2.5 rounded-sm bg-emerald-600"></span>
+                        <span class="w-2.5 h-2.5 rounded-sm bg-gold-500"></span>
+                        <span id="lblMore">Polished</span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto pb-1">
+                    <div id="heatmapGrid" class="grid grid-rows-7 grid-flow-col gap-1.5 min-w-[300px] justify-start">
+                        <!-- Dynamic cells injected via JS -->
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- RIGHT COLUMN: Hierarchical 5 Pillars Accordion (7 cols on lg) -->
+        <section class="lg:col-span-7 flex flex-col space-y-6">
+
+            <div class="bg-emerald-900/40 border border-emerald-800/60 rounded-2xl p-5 backdrop-blur-sm shadow-xl flex-grow flex flex-col">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-emerald-800/50 mb-4 gap-2">
+                    <div>
+                        <h2 id="pillarsTitle" class="text-lg font-bold text-emerald-100">Daily Tazkiyah Pillars & Actions</h2>
+                        <p class="text-xs text-emerald-300/70" id="currentDateDisplay">Today</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="expandAllPillars()" class="px-2.5 py-1 text-[11px] bg-emerald-800/60 hover:bg-emerald-700/80 text-emerald-200 rounded-lg border border-emerald-700">
+                            Expand All
+                        </button>
+                        <button onclick="collapseAllPillars()" class="px-2.5 py-1 text-[11px] bg-emerald-800/60 hover:bg-emerald-700/80 text-emerald-200 rounded-lg border border-emerald-700">
+                            Collapse
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Accordion Container for 5 Pillars -->
+                <div id="pillarsAccordion" class="space-y-3.5 flex-grow">
+                    <!-- Injected via JS -->
+                </div>
+
+                <!-- Daily Reflection Log -->
+                <div class="mt-6 pt-4 border-t border-emerald-800/50">
+                    <label for="dailyNote" class="block text-xs font-medium text-emerald-300 mb-1 flex items-center justify-between">
+                        <span id="lblReflectionTitle"><i class="fa-solid fa-pen-nib text-gold-400 me-1"></i> Heart Reflection Journal</span>
+                        <span id="lblAutoSave" class="text-[10px] text-emerald-400/60">Saved automatically</span>
+                    </label>
+                    <textarea id="dailyNote" rows="2" 
+                        class="w-full bg-emerald-950/80 border border-emerald-800 rounded-xl p-2.5 text-xs text-emerald-100 focus:ring-1 focus:ring-gold-400 focus:border-gold-400 transition-all outline-none resize-none placeholder-emerald-600"
+                        placeholder="How did completing these actions polish your heart and strengthen your connection with Allah today?"></textarea>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-950 border-t border-emerald-900 py-4 px-4 text-center text-xs text-emerald-400/70">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>
+                <span id="footerCopy">Polishing the Heart &copy; Tazkiyah & Sunnah Visualizer</span>
+            </div>
+            <div class="font-serif italic text-emerald-300/80">
+                "Take advantage of five before five..." — Prophet Muhammad ﷺ
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: Quran & Hadith References -->
+    <div id="referenceModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-emerald-900 border border-emerald-700 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 sm:p-5 border-b border-emerald-800 flex justify-between items-center bg-emerald-950">
+                <h3 id="modalRefTitle" class="text-lg font-bold text-emerald-100 flex items-center gap-2">
+                    <i class="fa-solid fa-book-bookmark text-gold-400"></i>
+                    Quran & Hadith Metaphor
+                </h3>
+                <button onclick="toggleReferenceModal()" class="text-emerald-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div id="modalRefContent" class="p-5 overflow-y-auto space-y-4 text-sm text-emerald-200 leading-relaxed">
+                <!-- Dynamic Content -->
+            </div>
+            <div class="p-4 bg-emerald-950 border-t border-emerald-800 text-right">
+                <button id="modalCloseBtn" onclick="toggleReferenceModal()" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-semibold rounded-lg">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Options & Settings -->
+    <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-emerald-900 border border-emerald-700 rounded-2xl max-w-md w-full shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-emerald-800 flex justify-between items-center bg-emerald-950">
+                <h3 id="settingsTitle" class="text-md font-bold text-emerald-100 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-gold-400"></i> Settings & Backup
+                </h3>
+                <button onclick="toggleSettingsModal()" class="text-emerald-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="p-5 space-y-4">
+                <div>
+                    <h4 id="lblExpImp" class="text-xs font-semibold text-emerald-200 mb-2">Export / Import Progress</h4>
+                    <div class="flex gap-2">
+                        <button onclick="exportData()" class="flex-1 px-3 py-2 bg-emerald-800 hover:bg-emerald-700 text-emerald-100 text-xs font-medium rounded-lg border border-emerald-700 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-download"></i> Export JSON
+                        </button>
+                        <button onclick="triggerImport()" class="flex-1 px-3 py-2 bg-emerald-800 hover:bg-emerald-700 text-emerald-100 text-xs font-medium rounded-lg border border-emerald-700 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-upload"></i> Import JSON
+                        </button>
+                        <input type="file" id="importFileInput" class="hidden" accept=".json" onchange="importData(event)">
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-emerald-800">
+                    <h4 id="lblShare" class="text-xs font-semibold text-emerald-200 mb-2">Share Tracker</h4>
+                    <button onclick="copyShareLink()" class="w-full px-3 py-2 bg-gold-600/30 hover:bg-gold-600/40 text-gold-300 text-xs font-medium rounded-lg border border-gold-500/40 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-share-nodes"></i> Copy App Text for WhatsApp/Telegram
+                    </button>
+                </div>
+
+                <div class="pt-3 border-t border-emerald-800">
+                    <h4 id="lblDanger" class="text-xs font-semibold text-red-400 mb-2">Reset History</h4>
+                    <button onclick="resetData()" class="w-full px-3 py-2 bg-red-950/60 hover:bg-red-900/80 text-red-300 text-xs font-medium rounded-lg border border-red-800/80 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-trash-can"></i> Reset All Saved History
+                    </button>
+                </div>
+            </div>
+            <div class="p-3 bg-emerald-950 border-t border-emerald-800 text-right">
+                <button onclick="toggleSettingsModal()" class="px-4 py-1.5 bg-emerald-800 hover:bg-emerald-700 text-emerald-200 text-xs rounded-lg">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-gold-500 text-emerald-950 font-semibold text-xs px-4 py-2.5 rounded-xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMsg">Notification message</span>
+    </div>
+
+    <!-- Application JavaScript Logic -->
+    <script>
+        // TRILINGUAL DATASET (ENGLISH, MALAYALAM, TAMIL)
+        const TRANSLATIONS = {
+            en: {
+                appTitle: "Polishing the Heart",
+                appSubtitle: "Tazkiyah Visualizer & Daily Sunnah Tracker",
+                btnRefText: "Quran & Hadith",
+                heartTitle: "The Illuminated Heart",
+                heartSubtitle: '"Good deeds polish the heart until it shines like a mirror"',
+                scoreLabel: "Polished Radiance",
+                verseText: '"No! Rather, the stain has covered their hearts of that which they were earning."',
+                verseRef: "— Surah Al-Mutaffifin (83:14) & Authentic Sunnah",
+                lblCurrentStreak: "Current Streak",
+                lblTodayProgress: "Today's Progress",
+                lblTotalDeeds: "Total Actions",
+                daysSuffix: " Days",
+                heatmapTitle: "Heart Polishing History",
+                heatmapSubtitle: "Past 56 days heart radiance log",
+                lblLess: "Stained",
+                lblMore: "Polished",
+                pillarsTitle: "Daily Tazkiyah Pillars & Actions",
+                lblReflectionTitle: "Heart Reflection Journal",
+                lblAutoSave: "Saved automatically",
+                reflectionPlaceholder: "How did completing these actions polish your heart and strengthen your connection with Allah today?",
+                footerCopy: "Polishing the Heart © Tazkiyah & Sunnah Visualizer",
+                modalRefTitle: "Quran & Hadith Metaphor",
+                modalCloseBtn: "Close References",
+                settingsTitle: "Settings & Backup",
+                lblExpImp: "Export / Import Progress",
+                lblShare: "Share Tracker",
+                lblDanger: "Reset History",
+                levels: [
+                    "Needs Polishing",
+                    "Sparks of Light",
+                    "Growing Radiance",
+                    "Illuminated Heart"
+                ],
+                pillars: [
+                    {
+                        id: 'p1',
+                        title: 'Dawn & Morning Barakah',
+                        desc: 'Fajr, morning Adhkar, Qur\'an & early energy',
+                        icon: 'fa-sun',
+                        items: [
+                            { id: 'fajr_work', text: 'Work after Fajr prayer; avoid going back to sleep' },
+                            { id: 'fajr_sit', text: 'Sit in remembrance until the sun rises' },
+                            { id: 'quran_page', text: 'Read at least one page of the Noble Qur\'an' },
+                            { id: 'morning_adhkar', text: 'Recite morning Adhkar (remembrances)' },
+                            { id: 'dua_guidance', text: 'Ask Allah for guidance & protection from laziness and debt' },
+                            { id: 'gratitude_sun', text: 'Be grateful; get sunlight and drink water' },
+                            { id: 'phone_delay', text: 'Make your bed; don’t touch your phone early' },
+                            { id: 'morning_fuel', text: 'Eat small breakfast or fast (Sunnah)' }
+                        ]
+                    },
+                    {
+                        id: 'p2',
+                        title: 'Focused Work & Productivity',
+                        desc: 'Halal effort, study, business fiqh & discipline',
+                        icon: 'fa-briefcase',
+                        items: [
+                            { id: 'hardest_task', text: 'Write down priority tasks; start with the hardest task' },
+                            { id: 'study_build', text: 'Study, write, build, read; finish what you start' },
+                            { id: 'keep_word', text: 'Keep your word and pay debts when due' },
+                            { id: 'high_protein', text: 'Eat clean high-protein meals' },
+                            { id: 'avoid_riba', text: 'Learn fiqh of trade & strictly avoid Riba (usury)' },
+                            { id: 'business_mind', text: 'Understand business, create useful products & make them clear' },
+                            { id: 'no_wasted_pm', text: 'Prevent a good morning from turning into a wasted afternoon' }
+                        ]
+                    },
+                    {
+                        id: 'p3',
+                        title: '5-Prayer Anchor & Well-being',
+                        desc: 'Structuring life around Salah, body movement & Dhikr',
+                        icon: 'fa-kaaba',
+                        items: [
+                            { id: 'salah_anchor', text: 'Build entire daily schedule strictly around 5 Salah times' },
+                            { id: 'step_dhuhr', text: 'Step away on time for Dhuhr and refocus' },
+                            { id: 'dhikr_walk', text: 'Take a Dhikr walk; move your body intentionally' },
+                            { id: 'qailulah_nap', text: 'Take a 20-minute mid-day nap (Qailulah)' },
+                            { id: 'abundant_istighfar', text: 'Engage in abundant Istighfar (seeking forgiveness)' },
+                            { id: 'no_skip_chain', text: 'Do not let one skipped day become a skipped week' }
+                        ]
+                    },
+                    {
+                        id: 'p4',
+                        title: 'Wealth, Assets & Excellence',
+                        desc: 'Halal investments, building & economic strength',
+                        icon: 'fa-coins',
+                        items: [
+                            { id: 'save_give', text: 'Save from earnings and give charity consistently' },
+                            { id: 'own_assets', text: 'Build and own physical assets, digital assets, or land' },
+                            { id: 'support_muslim_biz', text: 'Support Muslim businesses and hire fellow Muslims' },
+                            { id: 'train_youth', text: 'Train someone younger and create new jobs' },
+                            { id: 'build_useful', text: 'Build tools and assets that remain useful after you pass' }
+                        ]
+                    },
+                    {
+                        id: 'p5',
+                        title: 'Sadaqah, Community & Legacy',
+                        desc: 'Parents, widows, students & Sadaqah Jariyah',
+                        icon: 'fa-hands-holding-child',
+                        items: [
+                            { id: 'call_parents', text: 'Call and honor your parents with kindness' },
+                            { id: 'help_debts', text: 'Help someone clear a burdensome debt' },
+                            { id: 'feed_poor', text: 'Feed the poor and support widows in need' },
+                            { id: 'fund_students', text: 'Fund students of sacred knowledge' },
+                            { id: 'build_masajid', text: 'Contribute to building Masajid, schools, or homes' },
+                            { id: 'teach_knowledge', text: 'Teach what you know to benefit others' }
+                        ]
+                    }
+                ]
+            },
+            ml: {
+                appTitle: "ഹൃദയം തെളിയിക്കൽ (തസ്കിയത്ത്)",
+                appSubtitle: "ആത്മീയ വിശുദ്ധിയും ദിനചര്യ ട്രാക്കറും",
+                btnRefText: "പ്രമാണങ്ങൾ",
+                heartTitle: "പ്രകാശമാനമായ ഹൃദയം",
+                heartSubtitle: '"നന്മകൾ കണ്ണാടി പോലെ ഹൃദയത്തെ തിളക്കമുള്ളതാക്കുന്നു"',
+                scoreLabel: "ഹൃദയ വിശുദ്ധി",
+                verseText: '"അല്ല, അവർ പ്രവർത്തിച്ചുകൊണ്ടിരുന്നത് അവരുടെ ഹൃദയങ്ങളിൽ തുരുമ്പായി പിടിച്ചിരിക്കുന്നു."',
+                verseRef: "— സൂറഃ അൽ മുത്വഫ്ഫിഫീൻ (83:14) & സുന്നത്ത്",
+                lblCurrentStreak: "തുടർച്ചയായ ദിവസങ്ങൾ",
+                lblTodayProgress: "ഇന്നത്തെ പുരോഗതി",
+                lblTotalDeeds: "ആകെ ചെയ്തവ",
+                daysSuffix: " ദിവസങ്ങൾ",
+                heatmapTitle: "ഹൃദയ വിശുദ്ധി ഹീറ്റ്‌മാപ്പ്",
+                heatmapSubtitle: "കഴിഞ്ഞ 56 ദിവസങ്ങളിലെ പ്രകാശം",
+                lblLess: "മങ്ങൽ",
+                lblMore: "തിളക്കം",
+                pillarsTitle: "ദിനചര്യകളും ആത്മീയ കാവലുകളും",
+                lblReflectionTitle: "ഇന്നത്തെ ആത്മീയ കുറിപ്പ്",
+                lblAutoSave: "സ്വയം സേവ് ആകുന്നു",
+                reflectionPlaceholder: "ഇന്നത്തെ പ്രവൃത്തികൾ അല്ലാഹുവിലേക്ക് അടുക്കാനും ഹൃദയം ശുദ്ധീകരിക്കാനും എങ്ങനെ സഹായിച്ചു?",
+                footerCopy: "ഹൃദയം തെളിയിക്കൽ © തസ്കിയത്ത് & സുന്നത്ത് വിഷുവലൈസർ",
+                modalRefTitle: "ഖുർആനും ഹദീസും",
+                modalCloseBtn: "അടയ്ക്കുക",
+                settingsTitle: "വിവരങ്ങളും ബാക്കപ്പും",
+                lblExpImp: "ഡാറ്റ ബാക്കപ്പ് / റീസ്റ്റോർ",
+                lblShare: "ആപ്പ് പങ്കുവെക്കുക",
+                lblDanger: "ഡാറ്റ മാറ്റുക",
+                levels: [
+                    "ശുദ്ധീകരണം ആവശ്യമാണ്",
+                    "പ്രകാശ കിരണങ്ങൾ",
+                    "വളരുന്ന തിളക്കം",
+                    "പ്രകാശമാനമായ ഹൃദയം"
+                ],
+                pillars: [
+                    {
+                        id: 'p1',
+                        title: 'പ്രഭാത ബറകത്ത് (ഫജ്ർ മുതൽ)',
+                        desc: 'ഫജ്ർ നമസ്കാരം, ദിക്റുകൾ, ഖുർആൻ ഓത്ത്',
+                        icon: 'fa-sun',
+                        items: [
+                            { id: 'fajr_work', text: 'ഫജ്ർ നമസ്കാര ശേഷം ജോലിയിൽ പ്രവേശിക്കുക; വീണ്ടും ഉറങ്ങാതിരിക്കുക' },
+                            { id: 'fajr_sit', text: 'സൂര്യൻ ഉദിക്കുന്നത് വരെ ദിക്റുകളിൽ തുടരുക' },
+                            { id: 'quran_page', text: 'വിശുദ്ധ ഖുർആനിൽ നിന്ന് ഒരു പേജെങ്കിലും ഓതുക' },
+                            { id: 'morning_adhkar', text: 'പ്രഭാത ദിക്റുകൾ പതിവാക്കുക' },
+                            { id: 'dua_guidance', text: 'മടിയിൽ നിന്നും കടത്തിൽ നിന്നും അല്ലാഹുവിനോട് സംരക്ഷണം ചോദിക്കുക' },
+                            { id: 'gratitude_sun', text: 'നന്ദിയുള്ളവരാവുക; വെയിൽ കൊള്ളുക, വെള്ളം കുടിക്കുക' },
+                            { id: 'phone_delay', text: 'കിടക്ക ഒതുക്കി വെക്കുക; പ്രഭാതത്തിൽ ഫോൺ ഉപയോഗം കുറക്കുക' },
+                            { id: 'morning_fuel', text: 'ചെറിയ പ്രഭാതഭക്ഷണം കഴിക്കുക അല്ലെങ്കിൽ നോമ്പ് നോൽക്കുക' }
+                        ]
+                    },
+                    {
+                        id: 'p2',
+                        title: 'ജോലിയും ഉൽപാദനക്ഷമതയും',
+                        desc: 'ഹലാലായ അധ്വാനം, പഠനം, കച്ചവട ഫിഖ്ഹ്',
+                        icon: 'fa-briefcase',
+                        items: [
+                            { id: 'hardest_task', text: 'ഇന്നത്തെ പ്രധാന കാര്യങ്ങൾ കുറിക്കുക; പ്രയാസമുള്ളതിൽ തുടങ്ങുക' },
+                            { id: 'study_build', text: 'പഠിക്കുക, എഴുതുക, നിർമ്മിക്കുക; തുടങ്ങിയവ പൂർത്തിയാക്കുക' },
+                            { id: 'keep_word', text: 'വാക്ക് പാലിക്കുക; കടങ്ങൾ സമയത്ത് വീട്ടുക' },
+                            { id: 'high_protein', text: 'ഗുണനിലവാരമുള്ള ഭക്ഷണം കഴിക്കുക' },
+                            { id: 'avoid_riba', text: 'കച്ചവടത്തിലെ ഫിഖ്ഹ് പഠിക്കുക; പലിശയിൽ നിന്ന് പൂർണ്ണമായി വിട്ടുനിൽക്കുക' },
+                            { id: 'business_mind', text: 'ഉപകാരപ്രദമായ കാര്യങ്ങൾ ലളിതമായി നിർമ്മിച്ച് നൽകുക' },
+                            { id: 'no_wasted_pm', text: 'നല്ലൊരു പ്രഭാതം പാഴായ ഉച്ചയായി മാറാതിരിക്കാൻ ശ്രദ്ധിക്കുക' }
+                        ]
+                    },
+                    {
+                        id: 'p3',
+                        title: '5 നമസ്കാരങ്ങളും ശാരീരിക സുഖവും',
+                        desc: 'നമസ്കാര സമയങ്ങൾ കേന്ദ്രീകരിച്ചുള്ള ജീവിതം',
+                        icon: 'fa-kaaba',
+                        items: [
+                            { id: 'salah_anchor', text: '5 സമയ നമസ്കാരങ്ങൾക്ക് ചുറ്റും ദിവസത്തെ ക്രമീകരിക്കുക' },
+                            { id: 'step_dhuhr', text: 'ദുഹ്‌ർ സമയത്ത് ജോലി നിർത്തി നമസ്കരിക്കുക' },
+                            { id: 'dhikr_walk', text: 'ദിക്റോട് കൂടി നടക്കുക; ശരീരം ചലിപ്പിക്കുക' },
+                            { id: 'qailulah_nap', text: 'ഉച്ചക്ക് ശേഷം 20 മിനിറ്റ് വിശ്രമിക്കുക (ഖൈലൂല)' },
+                            { id: 'abundant_istighfar', text: 'ധാരാളമായി ഇസ്തിഗ്ഫാർ (പാപമോചനം) ചെയ്യുക' },
+                            { id: 'no_skip_chain', text: 'ഒരു ദിവസത്തെ വീഴ്ച ഒരു ആഴ്ചയായി മാറാതിരിക്കാൻ ശ്രദ്ധിക്കുക' }
+                        ]
+                    },
+                    {
+                        id: 'p4',
+                        title: 'സമ്പത്തും സാമൂഹിക മുന്നേറ്റവും',
+                        desc: 'സമ്പാദ്യം, നിക്ഷേപം, തൊഴിൽ അവസരങ്ങൾ',
+                        icon: 'fa-coins',
+                        items: [
+                            { id: 'save_give', text: 'സമ്പാദ്യത്തിൽ നിന്ന് നീക്കിവെക്കുക; സ്വദഖ ചെയ്യുക' },
+                            { id: 'own_assets', text: 'ഭൂമി, ഡിജിറ്റൽ അല്ലെങ്കിൽ റിയൽ എസ്റ്റേറ്റ് സ്വത്തുക്കൾ വളർത്തുക' },
+                            { id: 'support_muslim_biz', text: 'മുസ്ലിം ബിസിനസുകളെ പിന്തുണക്കുക; മുസ്ലിംകളെ ജോലിക്കെടുക്കുക' },
+                            { id: 'train_youth', text: 'ഇളമുറക്കാരെ പരിശീലിപ്പിക്കുക; പുതിയ തൊഴിലുകൾ സൃഷ്ടിക്കുക' },
+                            { id: 'build_useful', text: 'മരണശേഷവും ഉപകാരപ്പെടുന്ന കാര്യങ്ങൾ ഉണ്ടാക്കിവെക്കുക' }
+                        ]
+                    },
+                    {
+                        id: 'p5',
+                        title: 'സേവനവും പാരിതോഷികവും',
+                        desc: 'മാതാപിതാക്കൾ, വിധവകൾ, വിദ്യാർത്ഥികൾ',
+                        icon: 'fa-hands-holding-child',
+                        items: [
+                            { id: 'call_parents', text: 'മാതാപിതാക്കളെ വിളിച്ച് സൗഖ്യം അന്വേഷിക്കുക; സ്നേഹിക്കുക' },
+                            { id: 'help_debts', text: 'മറ്റുള്ളവരുടെ കടങ്ങൾ വീട്ടാൻ സഹായിക്കുക' },
+                            { id: 'feed_poor', text: 'പാവപ്പെട്ടവർക്ക് ഭക്ഷണം നൽകുക; വിധവകളെ സഹായിക്കുക' },
+                            { id: 'fund_students', text: 'ദീനീ വിദ്യാർത്ഥികളെ സഹായിക്കുക' },
+                            { id: 'build_masajid', text: 'പള്ളികൾ, മദ്റസകൾ, വീടുകൾ എന്നിവയുടെ നിർമ്മാണത്തിൽ പങ്കാളിയാവുക' },
+                            { id: 'teach_knowledge', text: 'അറിവുകൾ മറ്റുള്ളവർക്ക് പകർന്നുനൽകുക' }
+                        ]
+                    }
+                ]
+            },
+            ta: {
+                appTitle: "இதயத்தை தூய்மைப்படுத்தல் (தஸ்கியா)",
+                appSubtitle: "ஆன்மீக தூய்மை மற்றும் சுன்னா செயலி",
+                btnRefText: "ஆதாரங்கள்",
+                heartTitle: "ஒளிரும் இதயம்",
+                heartSubtitle: '"நற்செயல்கள் கண்ணாடியைப் போல் இதயத்தை ஒளிரச் செய்கின்றன"',
+                scoreLabel: "இதய ஒளி",
+                verseText: '"அவ்வாறில்லை! மாறாக, அவர்கள் செய்து வந்தவை அவர்களின் இதயங்களில் துருவாகப் படிந்துவிட்டது."',
+                verseRef: "— சூரா அல்-முஃதஃபிஃபீன் (83:14) & சுன்னா",
+                lblCurrentStreak: "தொடர்ச்சியான நாட்கள்",
+                lblTodayProgress: "இன்றைய முன்னேற்றம்",
+                lblTotalDeeds: "மொத்த அமல்கள்",
+                daysSuffix: " நாட்கள்",
+                heatmapTitle: "இதய தூய்மை வரைபடம்",
+                heatmapSubtitle: "கடந்த 56 நாட்களின் ஒளிப் பதிவு",
+                lblLess: "துரு",
+                lblMore: "ஒளி",
+                pillarsTitle: "தினசரி அமல்களும் வழிகாட்டல்களும்",
+                lblReflectionTitle: "இன்றைய ஆன்மீக குறிப்பு",
+                lblAutoSave: "தானாக சேமிக்கப்படுகிறது",
+                reflectionPlaceholder: "இன்றைய அமல்கள் அல்லாஹ்வை நெருங்கவும் இதயத்தை தூய்மையாக்கவும் எவ்வாறு உதவின?",
+                footerCopy: "இதயத்தை தூய்மைப்படுத்தல் © தஸ்கியா Visualizer",
+                modalRefTitle: "குர்ஆன் மற்றும் ஹதீஸ்",
+                modalCloseBtn: "மூடுக",
+                settingsTitle: "தரவு & அமைப்புகள்",
+                lblExpImp: "தரவை ஏற்றுமதி / இறக்குமதி செய்",
+                lblShare: "செயலியைப் பகிர்",
+                lblDanger: "தரவை நீக்கு",
+                levels: [
+                    "தூய்மை தேவைப்படுகிறது",
+                    "ஒளிப் பொறிகள்",
+                    "வளரும் பிரகாசம்",
+                    "ஒளிரும் இதயம்"
+                ],
+                pillars: [
+                    {
+                        id: 'p1',
+                        title: 'அதிகாலை பரகத் (ஃபஜ்ர் முதல்)',
+                        desc: 'ஃபஜ்ர், காலை திக்ருகள், குர்ஆன் ஓதுதல்',
+                        icon: 'fa-sun',
+                        items: [
+                            { id: 'fajr_work', text: 'ஃபஜ்ருக்குப் பின் வேலையைத் தொடங்குங்கள்; மீண்டும் தூங்க வேண்டாம்' },
+                            { id: 'fajr_sit', text: 'சூரியன் உதிக்கும் வரை அமர்ந்து திக்ரு செய்யுங்கள்' },
+                            { id: 'quran_page', text: 'திருக்குர்ஆனில் குறைந்தது ஒரு பக்கமாவது ஓதுங்கள்' },
+                            { id: 'morning_adhkar', text: 'காலை திக்ருகளைத் தவறாமல் ஓதுங்கள்' },
+                            { id: 'dua_guidance', text: 'சோம்பல் மற்றும் கடனிலிருந்து அல்லாஹ்விடம் பாதுகாப்புத் தேடுங்கள்' },
+                            { id: 'gratitude_sun', text: 'நன்றியுடையவராக இருங்கள்; சூரிய ஒளி மற்றும் தண்ணீர் அருந்துங்கள்' },
+                            { id: 'phone_delay', text: 'படுக்கையைச் சரிசெய்யுங்கள்; காலையில் தொலைபேசியைத் தொடாதீர்கள்' },
+                            { id: 'morning_fuel', text: 'சிறிய காலை உணவு உண்ணுங்கள் அல்லது நோன்பு நோற்கவும்' }
+                        ]
+                    },
+                    {
+                        id: 'p2',
+                        title: 'பணியும் சுன்னத்தான உழைப்பும்',
+                        desc: 'ஹலாலான உழைப்பு, கல்வி, வியாபார ஃபிக்ஹ்',
+                        icon: 'fa-briefcase',
+                        items: [
+                            { id: 'hardest_task', text: 'இன்றைய முக்கிய வேலைகளைக் குறிக்கவும்; கடினமானதிலிருந்து தொடங்குங்கள்' },
+                            { id: 'study_build', text: 'படியுங்கள், எழுதுங்கள், உருவாக்குங்கள்; தொடங்கியதை முடியுங்கள்' },
+                            { id: 'keep_word', text: 'வாக்கைக் காப்பாற்றுங்கள்; கடன்களை உரிய நேரத்தில் செலுத்துங்கள்' },
+                            { id: 'high_protein', text: 'சத்தான உணவை உண்ணுங்கள்' },
+                            { id: 'avoid_riba', text: 'வியாபார ஃபிக்ஹைக் கற்று வட்டி (ரிபா) முற்றிலும் தவிர்க்கவும்' },
+                            { id: 'business_mind', text: 'பயனுள்ள பொருட்களை எளிய முறையில் உருவாக்கி வழங்குங்கள்' },
+                            { id: 'no_wasted_pm', text: 'நல்ல காலை பொழுது வீணான பிற்பகலாக மாறாமல் பார்த்துக் கொள்ளுங்கள்' }
+                        ]
+                    },
+                    {
+                        id: 'p3',
+                        title: '5 நேரத் தொழுகையும் உடல் நலனும்',
+                        desc: 'தொழுகையை மையமாகக் கொண்ட வாழ்க்கையமைப்பு',
+                        icon: 'fa-kaaba',
+                        items: [
+                            { id: 'salah_anchor', text: '5 நேர தொழுகை நேரங்களை மையமாக வைத்து நாளைத் திட்டமிடுங்கள்' },
+                            { id: 'step_dhuhr', text: 'ளுஹர் நேரத்தில் வேலையை நிறுத்தி தொழுகைக்குச் செல்லுங்கள்' },
+                            { id: 'dhikr_walk', text: 'திக்ரு நடை பழகுங்கள்; உடலை இயங்க வையுங்கள்' },
+                            { id: 'qailulah_nap', text: 'மதிய உணவுக்குப் பின் 20 நிமிடங்கள் ஓய்வெடுங்கள் (கைலூலா)' },
+                            { id: 'abundant_istighfar', text: 'அதிகமாக இஸ்திக்பார் (பாவமன்னிப்பு) செய்யுங்கள்' },
+                            { id: 'no_skip_chain', text: 'ஒரு நாள் தவறினாலும் அது ஒரு வாரமாக மாறாமல் தடுத்து நிறுத்துங்கள்' }
+                        ]
+                    },
+                    {
+                        id: 'p4',
+                        title: 'செல்வமும் சமுதாய வளர்ச்சியும்',
+                        desc: 'சேமிப்பு, முதலீடு, வேலைவாய்ப்புகளை உருவாக்குதல்',
+                        icon: 'fa-coins',
+                        items: [
+                            { id: 'save_give', text: 'சம்பாத்தியத்தில் சேமித்து தொடர்ச்சியாக தர்மம் செய்யுங்கள்' },
+                            { id: 'own_assets', text: 'நிலம், டிஜிட்டல் மற்றும் சொத்துக்களை உருவாக்குங்கள்' },
+                            { id: 'support_muslim_biz', text: 'முஸ்லிம் வியாபாரங்களை ஆதரியுங்கள்; முஸ்லிம்களுக்கு வேலையளியுங்கள்' },
+                            { id: 'train_youth', text: 'இளைஞர்களுக்குப் பயிற்சியளித்து புதிய வேலைகளை உருவாக்குங்கள்' },
+                            { id: 'build_useful', text: 'உங்கள் மறைவுக்குப் பின்னும் பயனளிக்கும் காரியங்களை உருவாக்குங்கள்' }
+                        ]
+                    },
+                    {
+                        id: 'p5',
+                        title: 'சேவையும் நற்செயல்களும்',
+                        desc: 'பெற்றோர், விதவைகள், மாணவர்கள் மற்றும் சதகா ஜாரியா',
+                        icon: 'fa-hands-holding-child',
+                        items: [
+                            { id: 'call_parents', text: 'பெற்றோரை அழைத்து அன்போடு பேசுங்கள்; சேவை செய்யுங்கள்' },
+                            { id: 'help_debts', text: 'பிறரின் கடன் சுமையைக் குறைக்க உதவுங்கள்' },
+                            { id: 'feed_poor', text: 'ஏழைகளுக்கு உணவளியுங்கள்; விதவைகளுக்கு உதவுங்கள்' },
+                            { id: 'fund_students', text: 'மார்க்கக் கல்வி பயிலும் மாணவர்களுக்கு நிதியுதவி செய்யுங்கள்' },
+                            { id: 'build_masajid', text: 'பள்ளிகவாசல், மதரஸாக்கள் மற்றும் வீடுகள் கட்ட உதவுங்கள்' },
+                            { id: 'teach_knowledge', text: 'நீங்கள் கற்ற கல்வியைப் பிறருக்குக் கற்றுக்கொடுங்கள்' }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Grid Mapping for SVG Heart Mask (Pixel positions matching heart shape)
+        const HEART_GRID_NODES = [
+            // Row 1
+            {x: 60, y: 30}, {x: 80, y: 30}, {x: 120, y: 30}, {x: 140, y: 30},
+            // Row 2
+            {x: 40, y: 50}, {x: 60, y: 50}, {x: 80, y: 50}, {x: 100, y: 50}, {x: 120, y: 50}, {x: 140, y: 50}, {x: 160, y: 50},
+            // Row 3
+            {x: 30, y: 70}, {x: 50, y: 70}, {x: 70, y: 70}, {x: 90, y: 70}, {x: 110, y: 70}, {x: 130, y: 70}, {x: 150, y: 70}, {x: 170, y: 70},
+            // Row 4
+            {x: 30, y: 90}, {x: 50, y: 90}, {x: 70, y: 90}, {x: 90, y: 90}, {x: 110, y: 90}, {x: 130, y: 90}, {x: 150, y: 90}, {x: 170, y: 90},
+            // Row 5
+            {x: 40, y: 110}, {x: 60, y: 110}, {x: 80, y: 110}, {x: 100, y: 110}, {x: 120, y: 110}, {x: 140, y: 110}, {x: 160, y: 110},
+            // Row 6
+            {x: 50, y: 130}, {x: 70, y: 130}, {x: 90, y: 130}, {x: 110, y: 130}, {x: 130, y: 130}, {x: 150, y: 130},
+            // Row 7
+            {x: 70, y: 150}, {x: 90, y: 150}, {x: 110, y: 150}, {x: 130, y: 150},
+            // Row 8 (Tip)
+            {x: 90, y: 165}, {x: 110, y: 165}
+        ];
+
+        // Global State
+        let appState = {
+            lang: 'en',
+            history: {}, // Key: YYYY-MM-DD -> { deeds: ['id1', 'id2'], note: '...' }
+            todayKey: new Date().toISOString().split('T')[0],
+            expandedPillars: new Set(['p1']) // p1 open by default
+        };
+
+        // DOM Loaded Init
+        window.addEventListener('DOMContentLoaded', () => {
+            loadLocalStorage();
+            applyLanguage(appState.lang);
+            renderDate();
+            renderPillarsAccordion();
+            renderHeatmap();
+            updateStatsAndHeart();
+            setupNoteListener();
+        });
+
+        // Set Language
+        function setLanguage(langCode) {
+            appState.lang = langCode;
+            localStorage.setItem('tazkiyah_app_lang', langCode);
+            applyLanguage(langCode);
+            renderPillarsAccordion();
+            updateStatsAndHeart();
+        }
+
+        // Apply Language Strings
+        function applyLanguage(lang) {
+            const dict = TRANSLATIONS[lang] || TRANSLATIONS.en;
+
+            ['en', 'ml', 'ta'].forEach(l => {
+                const btn = document.getElementById(`lang-${l}`);
+                if (l === lang) {
+                    btn.className = "px-2.5 py-1 rounded-lg transition-all font-semibold bg-gold-500 text-emerald-950 shadow-sm";
+                } else {
+                    btn.className = "px-2.5 py-1 rounded-lg transition-all font-semibold text-emerald-300 hover:text-gold-300";
+                }
+            });
+
+            document.getElementById('appTitle').innerText = dict.appTitle;
+            document.getElementById('appSubtitle').innerText = dict.appSubtitle;
+            document.getElementById('btnRefText').innerText = dict.btnRefText;
+            document.getElementById('heartTitle').innerText = dict.heartTitle;
+            document.getElementById('heartSubtitle').innerText = dict.heartSubtitle;
+            document.getElementById('scoreLabel').innerText = dict.scoreLabel;
+            document.getElementById('verseText').innerText = dict.verseText;
+            document.getElementById('verseRef').innerText = dict.verseRef;
+            document.getElementById('lblCurrentStreak').innerText = dict.lblCurrentStreak;
+            document.getElementById('lblTodayProgress').innerText = dict.lblTodayProgress;
+            document.getElementById('lblTotalDeeds').innerText = dict.lblTotalDeeds;
+            document.getElementById('heatmapTitle').innerHTML = `<i class="fa-solid fa-calendar-days text-gold-400 me-1"></i> ${dict.heatmapTitle}`;
+            document.getElementById('heatmapSubtitle').innerText = dict.heatmapSubtitle;
+            document.getElementById('lblLess').innerText = dict.lblLess;
+            document.getElementById('lblMore').innerText = dict.lblMore;
+            document.getElementById('pillarsTitle').innerText = dict.pillarsTitle;
+            document.getElementById('lblReflectionTitle').innerHTML = `<i class="fa-solid fa-pen-nib text-gold-400 me-1"></i> ${dict.lblReflectionTitle}`;
+            document.getElementById('lblAutoSave').innerText = dict.lblAutoSave;
+            document.getElementById('dailyNote').placeholder = dict.reflectionPlaceholder;
+            document.getElementById('footerCopy').innerText = dict.footerCopy;
+            document.getElementById('modalRefTitle').innerHTML = `<i class="fa-solid fa-book-bookmark text-gold-400 me-1"></i> ${dict.modalRefTitle}`;
+            document.getElementById('modalCloseBtn').innerText = dict.modalCloseBtn;
+            document.getElementById('settingsTitle').innerHTML = `<i class="fa-solid fa-sliders text-gold-400 me-1"></i> ${dict.settingsTitle}`;
+            document.getElementById('lblExpImp').innerText = dict.lblExpImp;
+            document.getElementById('lblShare').innerText = dict.lblShare;
+            document.getElementById('lblDanger').innerText = dict.lblDanger;
+
+            renderModalReferences(dict);
+        }
+
+        // Render Modal Reference Content
+        function renderModalReferences(dict) {
+            const container = document.getElementById('modalRefContent');
+            container.innerHTML = `
+                <div class="bg-emerald-950/80 p-4 rounded-xl border border-emerald-800/60">
+                    <div class="font-arabic text-right text-lg text-gold-300 mb-2 font-bold leading-relaxed">
+                        كَلَّا ۖ بَلْ ۜ رَانَ عَلَىٰ قُلُوبِهِم مَّا كَانُواْ يَكۡسِبُونَ
+                    </div>
+                    <p class="italic text-xs text-emerald-100 mb-1">
+                        "No! Rather, the stain has covered their hearts of that which they were earning." (Surah Al-Mutaffifin 83:14)
+                    </p>
+                    <p class="text-xs text-emerald-200/90 leading-relaxed mt-2">
+                        <strong>Prophetic Explanation (Hadith):</strong> The Messenger of Allah ﷺ said: 
+                        <em>"Verily, when the servant commits a sin, a black spot is etched upon his heart. If he desists, seeks forgiveness, and repents, his heart is polished clean. But if he returns to sin, the spots increase until they cover his heart entirely. That is the 'Rān' (stain) which Allah mentioned in the Quran."</em> 
+                        <span class="text-gold-400 block mt-1">— Sunan al-Tirmidhi (3334), Graded Sahih</span>
+                    </p>
+                </div>
+                <div class="bg-emerald-950/60 p-4 rounded-xl border border-emerald-800/60 text-xs text-emerald-200 space-y-2">
+                    <h4 class="font-bold text-gold-300 text-sm">The 5 Pillars of Daily Tazkiyah</h4>
+                    <p>This application synthesizes the comprehensive daily Sunnah habits into 5 core pillars spanning spiritual mindfulness, halal productivity, physical health, economic strength, and community legacy.</p>
+                </div>
+            `;
+        }
+
+        // Date Display
+        function renderDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+            const todayText = new Date().toLocaleDateString(appState.lang === 'en' ? 'en-US' : appState.lang, options);
+            document.getElementById('currentDateDisplay').innerText = todayText;
+        }
+
+        // Load LocalStorage
+        function loadLocalStorage() {
+            const saved = localStorage.getItem('tazkiyah_app_data');
+            const savedLang = localStorage.getItem('tazkiyah_app_lang');
+            if (saved) {
+                try {
+                    appState.history = JSON.parse(saved);
+                } catch(e) { console.error(e); }
+            }
+            if (savedLang && ['en', 'ml', 'ta'].includes(savedLang)) {
+                appState.lang = savedLang;
+            }
+        }
+
+        // Save State
+        function saveState() {
+            localStorage.setItem('tazkiyah_app_data', JSON.stringify(appState.history));
+            updateStatsAndHeart();
+            renderHeatmap();
+        }
+
+        // Total Available Items Count
+        function getTotalActionsCount() {
+            const dict = TRANSLATIONS[appState.lang] || TRANSLATIONS.en;
+            let total = 0;
+            dict.pillars.forEach(p => total += p.items.length);
+            return total;
+        }
+
+        // Render 5 Pillars Accordion
+        function renderPillarsAccordion() {
+            const container = document.getElementById('pillarsAccordion');
+            container.innerHTML = '';
+
+            const dict = TRANSLATIONS[appState.lang] || TRANSLATIONS.en;
+            const todayData = appState.history[appState.todayKey] || { deeds: [], note: '' };
+            const completedSet = new Set(todayData.deeds || []);
+
+            dict.pillars.forEach(pillar => {
+                const isOpen = appState.expandedPillars.has(pillar.id);
+                
+                // Pillar done count
+                const pillarCompletedCount = pillar.items.filter(item => completedSet.has(item.id)).length;
+                const totalPillarItems = pillar.items.length;
+                const isPillarComplete = pillarCompletedCount === totalPillarItems;
+
+                const card = document.createElement('div');
+                card.className = `border rounded-xl transition-all overflow-hidden ${
+                    isPillarComplete 
+                    ? 'bg-emerald-900/60 border-gold-500/40' 
+                    : 'bg-emerald-950/40 border-emerald-800/60'
+                }`;
+
+                // Header
+                const header = document.createElement('div');
+                header.className = 'p-3.5 flex items-center justify-between cursor-pointer select-none hover:bg-emerald-850/40 transition-colors';
+                header.onclick = () => togglePillar(pillar.id);
+
+                header.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center ${
+                            isPillarComplete ? 'bg-gold-500 text-emerald-950' : 'bg-emerald-900 text-emerald-300'
+                        }">
+                            <i class="fa-solid ${pillar.icon} text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-emerald-100 flex items-center gap-2">
+                                ${pillar.title}
+                            </h3>
+                            <p class="text-[11px] text-emerald-300/70">${pillar.desc}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-[11px] px-2.5 py-0.5 rounded-full border ${
+                            isPillarComplete 
+                            ? 'bg-gold-500/20 text-gold-300 border-gold-500/40 font-semibold' 
+                            : 'bg-emerald-900 text-emerald-300 border-emerald-700'
+                        }">
+                            ${pillarCompletedCount} / ${totalPillarItems}
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-xs text-emerald-400 transition-transform ${isOpen ? 'rotate-180' : ''}"></i>
+                    </div>
+                `;
+
+                // Body (Items)
+                const body = document.createElement('div');
+                body.className = `px-3.5 pb-3.5 space-y-2 pt-1 border-t border-emerald-800/40 ${isOpen ? 'block' : 'hidden'}`;
+
+                pillar.items.forEach(item => {
+                    const isChecked = completedSet.has(item.id);
+
+                    const row = document.createElement('div');
+                    row.className = `p-2.5 rounded-lg border transition-all cursor-pointer flex items-center justify-between text-xs ${
+                        isChecked 
+                        ? 'bg-emerald-900/80 border-gold-500/30 text-emerald-100' 
+                        : 'bg-emerald-950/60 border-emerald-850/60 hover:border-emerald-700 text-emerald-200/80'
+                    }`;
+
+                    row.onclick = () => toggleDeedItem(item.id);
+
+                    row.innerHTML = `
+                        <div class="flex items-center space-x-2.5 pr-2">
+                            <div class="w-4 h-4 rounded border flex items-center justify-center transition-all flex-shrink-0 ${
+                                isChecked ? 'bg-gold-500 border-gold-400 text-emerald-950' : 'border-emerald-700 bg-emerald-950'
+                            }">
+                                ${isChecked ? '<i class="fa-solid fa-check text-[10px]"></i>' : ''}
+                            </div>
+                            <span class="${isChecked ? 'line-through text-emerald-300/80' : ''}">${item.text}</span>
+                        </div>
+                    `;
+
+                    body.appendChild(row);
+                });
+
+                card.appendChild(header);
+                card.appendChild(body);
+                container.appendChild(card);
+            });
+
+            // Note text update
+            document.getElementById('dailyNote').value = todayData.note || '';
+        }
+
+        // Toggle Accordion Item
+        function togglePillar(pillarId) {
+            if (appState.expandedPillars.has(pillarId)) {
+                appState.expandedPillars.delete(pillarId);
+            } else {
+                appState.expandedPillars.add(pillarId);
+            }
+            renderPillarsAccordion();
+        }
+
+        function expandAllPillars() {
+            appState.expandedPillars = new Set(['p1', 'p2', 'p3', 'p4', 'p5']);
+            renderPillarsAccordion();
+        }
+
+        function collapseAllPillars() {
+            appState.expandedPillars.clear();
+            renderPillarsAccordion();
+        }
+
+        // Toggle Individual Action Item
+        function toggleDeedItem(itemId) {
+            if (!appState.history[appState.todayKey]) {
+                appState.history[appState.todayKey] = { deeds: [], note: '' };
+            }
+
+            const currentDeeds = appState.history[appState.todayKey].deeds || [];
+            const idx = currentDeeds.indexOf(itemId);
+
+            if (idx > -1) {
+                currentDeeds.splice(idx, 1);
+            } else {
+                currentDeeds.push(itemId);
+                showToast(appState.lang === 'ml' ? 'ഹൃദയം തെളിയുന്നു! അല്ലാഹു സ്വീകരിക്കട്ടെ.' : appState.lang === 'ta' ? 'இதயம் ஒளிர்கிறது! அல்லாஹ் ஏற்றுக்கொள்வானாக.' : 'Heart Polished! May Allah accept.');
+            }
+
+            appState.history[appState.todayKey].deeds = currentDeeds;
+            saveState();
+            renderPillarsAccordion();
+        }
+
+        // Reflection Note Listener
+        function setupNoteListener() {
+            const noteInput = document.getElementById('dailyNote');
+            noteInput.addEventListener('input', (e) => {
+                if (!appState.history[appState.todayKey]) {
+                    appState.history[appState.todayKey] = { deeds: [], note: '' };
+                }
+                appState.history[appState.todayKey].note = e.target.value;
+                localStorage.setItem('tazkiyah_app_data', JSON.stringify(appState.history));
+            });
+        }
+
+        // Metrics Calculation
+        function calculateMetrics() {
+            const totalActionsAvailable = getTotalActionsCount();
+            const todayEntry = appState.history[appState.todayKey] || { deeds: [] };
+            const todayDone = todayEntry.deeds ? todayEntry.deeds.length : 0;
+
+            // 30-Day Radiance Score
+            let past30TotalDone = 0;
+            const today = new Date();
+            for (let i = 0; i < 30; i++) {
+                const d = new Date();
+                d.setDate(today.getDate() - i);
+                const key = d.toISOString().split('T')[0];
+                if (appState.history[key] && appState.history[key].deeds) {
+                    past30TotalDone += appState.history[key].deeds.length;
+                }
+            }
+
+            const radianceScore = Math.min(100, Math.round((past30TotalDone / (totalActionsAvailable * 20)) * 100));
+
+            // Streak Counter
+            let currentStreak = 0;
+            let checkDate = new Date();
+            let checkKey = checkDate.toISOString().split('T')[0];
+
+            if (!appState.history[checkKey] || appState.history[checkKey].deeds.length === 0) {
+                checkDate.setDate(checkDate.getDate() - 1);
+                checkKey = checkDate.toISOString().split('T')[0];
+            }
+
+            while (appState.history[checkKey] && appState.history[checkKey].deeds.length > 0) {
+                currentStreak++;
+                checkDate.setDate(checkDate.getDate() - 1);
+                checkKey = checkDate.toISOString().split('T')[0];
+            }
+
+            // Total Lifetime Actions
+            let grandTotal = 0;
+            Object.keys(appState.history).forEach(k => {
+                if (appState.history[k].deeds) grandTotal += appState.history[k].deeds.length;
+            });
+
+            return {
+                todayDone,
+                totalActionsAvailable,
+                radianceScore,
+                currentStreak,
+                grandTotal
+            };
+        }
+
+        // Update Stats & Heart SVG Render
+        function updateStatsAndHeart() {
+            const metrics = calculateMetrics();
+            const dict = TRANSLATIONS[appState.lang] || TRANSLATIONS.en;
+
+            document.getElementById('radianceScoreDisplay').innerText = `${metrics.radianceScore}%`;
+            document.getElementById('currentStreakDisplay').innerText = `${metrics.currentStreak}${dict.daysSuffix}`;
+            document.getElementById('todayProgressDisplay').innerText = `${metrics.todayDone} / ${metrics.totalActionsAvailable}`;
+            document.getElementById('totalDeedsDisplay').innerText = metrics.grandTotal;
+
+            // Level Text
+            let lvlIdx = 0;
+            if (metrics.radianceScore >= 75) lvlIdx = 3;
+            else if (metrics.radianceScore >= 45) lvlIdx = 2;
+            else if (metrics.radianceScore >= 20) lvlIdx = 1;
+
+            document.getElementById('levelBadge').innerText = `${dict.levels[lvlIdx]}`;
+
+            renderHeartSVG(metrics.radianceScore, metrics.todayDone, metrics.totalActionsAvailable);
+        }
+
+        // Render SVG Pixel Heart Canvas
+        function renderHeartSVG(score, todayDone, totalAvailable) {
+            const container = document.getElementById('heartCellsGroup');
+            container.innerHTML = '';
+
+            const bgGlow = document.getElementById('heartBgGlow');
+            bgGlow.setAttribute('opacity', Math.max(0.15, score / 100));
+
+            const totalNodes = HEART_GRID_NODES.length;
+            
+            // Calculate how many heart cells are illuminated based on today's progress & consistency
+            const activeCount = Math.floor((todayDone / totalAvailable) * totalNodes);
+            const overallLitCount = Math.min(totalNodes, Math.max(activeCount, Math.floor((score / 100) * totalNodes)));
+
+            HEART_GRID_NODES.forEach((node, i) => {
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', node.x - 7);
+                rect.setAttribute('y', node.y - 7);
+                rect.setAttribute('width', 14);
+                rect.setAttribute('height', 14);
+                rect.setAttribute('rx', 3);
+                rect.setAttribute('class', 'heart-cell');
+
+                const isLit = i < overallLitCount;
+
+                if (isLit) {
+                    rect.setAttribute('fill', i < activeCount ? '#facc15' : '#10b981');
+                    rect.setAttribute('opacity', '0.9');
+                    rect.setAttribute('filter', 'url(#glowEffect)');
+                } else {
+                    rect.setAttribute('fill', '#064e3b');
+                    rect.setAttribute('opacity', '0.4');
+                    rect.setAttribute('stroke', '#022c22');
+                    rect.setAttribute('stroke-width', '1');
+                }
+
+                container.appendChild(rect);
+            });
+        }
+
+        // Render Heatmap
+        function renderHeatmap() {
+            const grid = document.getElementById('heatmapGrid');
+            grid.innerHTML = '';
+
+            const daysToShow = 56;
+            const today = new Date();
+            const totalAvailable = getTotalActionsCount();
+
+            for (let i = daysToShow - 1; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(today.getDate() - i);
+                const key = d.toISOString().split('T')[0];
+                const entry = appState.history[key];
+                const count = (entry && entry.deeds) ? entry.deeds.length : 0;
+
+                const cell = document.createElement('div');
+                cell.className = `w-3.5 h-3.5 rounded-sm transition-all duration-300 ${getHeatmapColor(count, totalAvailable)}`;
+                cell.title = `${key}: ${count} actions completed`;
+
+                grid.appendChild(cell);
+            }
+        }
+
+        function getHeatmapColor(count, total) {
+            if (count === 0) return 'bg-emerald-950 border border-emerald-900';
+            const ratio = count / total;
+            if (ratio < 0.25) return 'bg-emerald-800';
+            if (ratio < 0.5) return 'bg-emerald-600';
+            if (ratio < 0.75) return 'bg-emerald-500 shadow-sm shadow-emerald-400';
+            return 'bg-gold-400 shadow-md shadow-gold-400/80';
+        }
+
+        // Toast Messages
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Modals
+        function toggleReferenceModal() {
+            document.getElementById('referenceModal').classList.toggle('hidden');
+        }
+
+        function toggleSettingsModal() {
+            document.getElementById('settingsModal').classList.toggle('hidden');
+        }
+
+        // Export Data
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState.history, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `tazkiyah_heart_progress_${appState.todayKey}.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            showToast('Progress exported successfully!');
+        }
+
+        function triggerImport() {
+            document.getElementById('importFileInput').click();
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedObj = JSON.parse(e.target.result);
+                    appState.history = importedObj;
+                    saveState();
+                    renderPillarsAccordion();
+                    showToast('History imported successfully!');
+                    toggleSettingsModal();
+                } catch(err) {
+                    showToast('Failed to import: Invalid JSON file.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function copyShareLink() {
+            const shareText = `Explore "Polishing the Heart (Tazkiyah Visualizer)" (Trilingual: EN / ML / TA) - Grounded in Surah Al-Mutaffifin (83:14) & Authentic Sunnah!\n\n"Good deeds polish the heart until it shines like a mirror." Track your daily 5 Sunnah Pillars now!`;
+            
+            const tempInput = document.createElement('textarea');
+            tempInput.value = shareText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast('App details copied to clipboard!');
+        }
+
+        function resetData() {
+            if (window.confirm("Are you sure you want to reset all your recorded history?")) {
+                appState.history = {};
+                saveState();
+                renderPillarsAccordion();
+                showToast('All progress history has been reset.');
+                toggleSettingsModal();
+            }
+        }
+    </script>
+</body>
+</html>
