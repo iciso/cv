@@ -111,7 +111,7 @@ footer a{color:#7dd3fc;font-weight:bold;text-decoration:none}
  you see above.</p>
 
  <div class="chart-wrap"><canvas id="mealChart"></canvas></div>
- <div class="legend">🩺
+ <div class="legend">
   <span><i class="dot" style="background:#94a3b8"></i>Reference: no meal</span>
   <span><i class="dot" style="background:#2563eb"></i>Selected meal</span>
  </div>
@@ -128,7 +128,6 @@ footer a{color:#7dd3fc;font-weight:bold;text-decoration:none}
    <input id="portion" type="range" min="25" max="200" step="25" value="100">
    <div class="small">25% = quarter of the model's reference serving;
    100% = one reference serving; 200% = twice that serving.</div>
-   <div class="portion-readout" id="portionText">1 reference serving</div>
   </div>
    <div class="control">
     <label for="fibre">Fibre-rich component <span id="fibreOut">30%</span></label>
@@ -628,8 +627,6 @@ function updateFood(){
  $("foodName").textContent=c.f.name;
  $("foodDescription").textContent=c.f.description;
  $("portionOut").textContent=Math.round(c.portion*100)+"%";
- $("portionText").textContent=c.portion===1?"1 reference serving":
-  c.portion.toFixed(2).replace(/0+$/,"").replace(/\.$/,"")+" reference serving(s)";
  $("fibreOut").textContent=Math.round(c.fibre*100)+"%";
  $("proteinOut").textContent=Math.round(c.protein*100)+"%";
  $("fatOut").textContent=Math.round(c.fat*100)+"%";
