@@ -659,10 +659,15 @@ const interactiveWebProducts = [
     title: "🔷 SALT Personality Pattern",
     description: "Find out which SALT personality pattern is most like you."
   },
+   {
+    file: "tmc-diabetes-game.html",
+    title: "🚶 The Diabetes 🧁 Balancing Game 💉",
+    description: "Watch Indian meals, portion size, physical activity and insulin in play."
+  },
   {
     file: "tmc-disease-game.html",
     title: "🏥 Disease Spreading Game",
-    description: "see how infections move, how outbreaks grow, and where prevention can break the chain."
+    description: "See how infections move, how outbreaks grow, and where prevention can break the chain."
   },
   {
     file: "tmc-sampling-size.html",
