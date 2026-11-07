@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🏥TMC Diabetes 🧁 Balancing Game 💉 — Stage 2</title>
+<style>
+:root{
+ --navy:#1e3a8a;--blue:#3b82f6;--teal:#0f766e;
+ --bg:#f8fafc;--ink:#1e293b;--muted:#64748b;
+ --line:#e2e8f0;--amber:#d97706;--green:#15803d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:16px/1.5 Arial,Helvetica,sans-serif}
+header{background:linear-gradient(120deg,var(--navy),var(--teal));
+ color:white;text-align:center;padding:25px 16px 30px}
+header .eyebrow{font-size:.78rem;letter-spacing:2px;opacity:.85}
+header h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:8px 0}
+header p{max-width:760px;margin:auto;opacity:.94}
+main{max-width:1150px;margin:22px auto;padding:0 14px}
+.panel{background:white;border:1px solid var(--line);border-radius:15px;
+ padding:18px;margin-bottom:16px;box-shadow:0 3px 12px #0f172a08}
+h2{font-size:1.2rem;color:var(--navy);margin:0 0 12px}
+h3{font-size:1rem;margin:0 0 8px}
+.small{font-size:.84rem;color:var(--muted)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.metric{background:#f1f5f9;border-radius:12px;padding:13px;text-align:center}
+.metric .value{font-size:1.6rem;font-weight:750;font-variant-numeric:tabular-nums}
+.metric .label{font-size:.77rem;color:var(--muted)}
+#glucoseValue{color:var(--teal)}
+.chart-wrap{height:300px;width:100%;position:relative}
+canvas{width:100%;height:100%;display:block}
+.actions{display:flex;flex-wrap:wrap;gap:9px}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;
+ cursor:pointer;background:var(--blue);color:white}
+button:hover{filter:brightness(.95)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.secondary{background:#e2e8f0;color:var(--ink)}
+button.teal{background:var(--teal)}
+button.event{background:#eaf2ff;color:var(--navy);border:1px solid #bfdbfe}
+button.event:hover{background:#dbeafe}
+button.amber{background:#b45309}
+input[type=range],select{width:100%;accent-color:var(--teal)}
+input[type=range]{margin:10px 0 4px}
+select{padding:11px;border:1px solid #cbd5e1;border-radius:9px;
+ background:white;color:var(--ink);font-size:1rem}
+label{font-weight:650;display:block}
+.control{border:1px solid var(--line);border-radius:12px;padding:13px}
+.control label span{float:right;color:var(--teal)}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.food-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:15px}
+.food-row{display:grid;grid-template-columns:auto 1fr;align-items:end;gap:12px}
+.btn-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+.btn-col{display:flex;flex-direction:column;gap:8px}
+.btn-col h4{margin:0 0 4px;font-size:.9rem;color:var(--navy)}
+.btn-col .actions{flex-direction:column;align-items:stretch;margin:0}
+.btn-col button{width:100%;text-align:center}
+.food-preview{background:#f8fafc;border:1px solid var(--line);
+ border-radius:12px;padding:15px}
+.food-emoji{font-size:2.8rem}
+.portion-readout{font-size:1.5rem;font-weight:750;color:var(--teal)}
+.status{padding:12px;border-radius:10px;background:#f1f5f9;
+ border-left:4px solid var(--teal);min-height:55px}
+.note{background:#eff6ff;border-left:4px solid var(--blue);
+ padding:12px;border-radius:8px}
+.warning{background:#fff7ed;border-left:4px solid var(--amber);
+ padding:13px;border-radius:8px}
+.key-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.key-item{padding:11px;background:#f8fafc;border-radius:10px}
+.event-log{max-height:160px;overflow:auto;padding-left:20px}
+.event-log li{font-size:.9rem;padding:3px 0}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;
+ font-size:.8rem;color:var(--muted)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;
+ margin-right:5px}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+footer{margin-top:28px;background:#0f172a;color:#e2e8f0;
+ text-align:center;padding:24px 15px;font-size:.88rem}
+footer a{color:#7dd3fc;font-weight:bold;text-decoration:none}
+@media(max-width:700px){
+ .metrics{grid-template-columns:repeat(2,1fr)}
+ .controls,.food-grid,.food-row,.btn-columns,.key-grid{grid-template-columns:1fr}
+ .chart-wrap{height:260px}.panel{padding:14px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="eyebrow">🏥 TMC CASE CONFERENCE GROUP 🩺</div>
+ <h1>🚶 The Diabetes 🧁 Balancing Game 💉</h1>
+ <p>One body. One day. Many interactions. Explore Indian meals, portion
+ size, physical activity and insulin action through play.</p>
+</header>
+
+<main>
+<section class="panel" id="foodChallenge">
+ <h2>1. Indian Food Challenge — what does your portion do?</h2>
+ <p>Choose a familiar food, adjust the portion and explore how meal
+ composition changes the shape of the simulated response. This is the
+ jewel of the page: play with real Indian meals first.</p>
+
+ 
+ <hr>
+ <h3>Separate meal-response comparison</h3>
+ <p class="small">The reference curve shows the model without the selected
+ meal. The challenge curve shows the selected meal's illustrative effect
+ over the next four hours. This is a model comparison, not a clinical
+ prediction. The controls <strong>below the graph</strong> change the curve
+ you see above.</p>
+
+ <div class="chart-wrap"><canvas id="mealChart"></canvas></div>
+ <div class="legend">🩺
+  <span><i class="dot" style="background:#94a3b8"></i>Reference: no meal</span>
+  <span><i class="dot" style="background:#2563eb"></i>Selected meal</span>
+ </div>
+ 
+
+ <!-- CONTROLS IMMEDIATELY BELOW THE MEAL GRAPH (same card) -->
+ <div style="margin-top:16px">
+
+  
+
+  <div class="controls" style="margin-top:12px">
+  <div class="control">
+   <label for="portion">Portion size <span id="portionOut">100%</span></label>
+   <input id="portion" type="range" min="25" max="200" step="25" value="100">
+   <div class="small">25% = quarter of the model's reference serving;
+   100% = one reference serving; 200% = twice that serving.</div>
+   <div class="portion-readout" id="portionText">1 reference serving</div>
+  </div>
+   <div class="control">
+    <label for="fibre">Fibre-rich component <span id="fibreOut">30%</span></label>
+    <input id="fibre" type="range" min="0" max="100" value="30">
+    <div class="small">Explore the effect of a fibre-rich meal pattern.</div>
+   </div>
+   <div class="control">
+    <label for="protein">Protein component <span id="proteinOut">25%</span></label>
+    <input id="protein" type="range" min="0" max="100" value="25">
+    <div class="small">Explore the effect of including protein-containing foods.</div>
+   </div>
+   <div class="control">
+    <label for="fat">Fat component <span id="fatOut">20%</span></label>
+    <input id="fat" type="range" min="0" max="100" value="20">
+    <div class="small">Fat can alter gastric emptying and response timing.</div>
+   </div>
+  </div>
+
+
+       <!--New position: buttons left + food select in one row -->
+<div class="food-row">
+  <div class="actions" style="margin:0;flex-wrap:nowrap">
+   <button class="teal" id="compareBtn">Compare meal response</button>
+   <button class="amber" id="addFoodBtn">
+    + Add this meal to my 24-hour day
+   </button>
+  </div>
+  <div>
+   <label for="foodSelect">Choose your food or meal</label>
+   <select id="foodSelect">
+    <option value="idli">Idli with sambar</option>
+    <option value="dosa">Dosa with sambar</option>
+    <option value="pongal">Ven pongal</option>
+    <option value="rice">Cooked rice meal</option>
+    <option value="chapati">Chapati</option>
+    <option value="millet">Cooked millet meal</option>
+    <option value="tea">Sweetened tea</option>
+    <option value="mixed">Mixed meal: rice, vegetables and dal</option>
+    <option value="laddu">Laddu (Diwali sweet)</option>
+   </select>
+  </div>
+ </div>
+   <!--End of new position-->
+
+  <p class="small" style="margin-top:8px">Adding the meal records it at the current simulated time.
+  It will influence the 24-hour curve as the day runs (see section 3).</p>
+
+<!-- 2nd new position -->
+  <div class="status" id="foodExplanation" style="margin-top:12px" aria-live="polite">
+  Choose a food and press “Compare meal response”.
+ </div>
+
+ <div class="food-preview">
+   <div class="food-emoji" id="foodEmoji">🥣</div>
+   <h3 id="foodName">Idli with sambar</h3>
+   <p class="small" id="foodDescription">A familiar fermented rice-and-lentil
+   meal. The number and size of idlis and the accompanying sambar matter.</p>
+   <hr>
+   <div class="small">Illustrative carbohydrate-load index</div>
+   <div class="portion-readout" id="carbIndex">45 units</div>
+   <p class="small">This is a relative teaching index, not grams of
+   carbohydrate or a laboratory nutritional analysis.</p>
+   <div class="note" id="foodInsight">
+    Try changing the portion and meal composition. Compare the curves below.
+   </div>
+  </div>
+<!-- End of 2nd new position -->
+
+ </div>
+</section>
+
+<!-- ========== 2. OTHER EVENTS & BODY SETTINGS ========== -->
+
+<!-- ========== 2. THE 24-HOUR GLUCOSE CURVE + ITS CONTROLS ========== -->
+<section class="panel">
+ <h2>2. The 24-hour glucose curve</h2>
+ <p class="small">The familiar full-day view. Metrics update as you run the
+ simulation. Meals and activity added from the Indian Food Challenge (or the
+ controls below) appear on this curve. The buttons and sliders <strong>below
+ the graph</strong> are the controls for this simulation.</p>
+
+ <div class="metrics">
+  <div class="metric"><div class="value" id="glucoseValue">95</div>
+   <div class="label">Simulated glucose (mg/dL)</div></div>
+  <div class="metric"><div class="value" id="clockValue">06:00</div>
+   <div class="label">Time of day</div></div>
+  <div class="metric"><div class="value" id="dayValue">0%</div>
+   <div class="label">Day completed</div></div>
+  <div class="metric"><div class="value" id="statusValue">Steady</div>
+   <div class="label">Model status</div></div>
+ </div>
+ <p class="small">Illustrative model values only. They are not real glucose
+ measurements or predictions for an individual.</p>
+
+ <div class="chart-wrap" style="margin-top:12px"><canvas id="dayChart"></canvas></div>
+ <div class="legend">
+  <span><i class="dot" style="background:#0f766e"></i>Simulated glucose</span>
+  <span><i class="dot" style="background:#94a3b8"></i>Illustrative 70–180 band</span>
+  <span>Dashed line: 100 mg/dL</span>
+ </div>
+ <p class="small">The shaded band is an illustrative reference band commonly
+ used in diabetes education, not an individual treatment target.</p>
+
+ <!-- Three-column button row: Run controls | Quick meals | Activity -->
+ <div class="btn-columns">
+  <div class="btn-col">
+   <h4>Day controls</h4>
+   <div class="actions">
+    <button class="teal" id="runBtn">▶ Run the day</button>
+    <button class="secondary" id="pauseBtn" disabled>Ⅱ Pause</button>
+    <button class="secondary" id="resetBtn">↺ Reset day</button>
+   </div>
+  </div>
+  <div class="btn-col">
+   <h4>Quick meal events</h4>
+   <div class="actions">
+    <button class="event" data-meal="15">Small snack</button>
+    <button class="event" data-meal="30">Moderate meal</button>
+    <button class="event" data-meal="50">Large meal</button>
+   </div>
+  </div>
+  <div class="btn-col">
+   <h4>Physical activity</h4>
+   <div class="actions">
+    <button class="event" data-activity="1">🚶 20-min walk</button>
+    <button class="event" data-activity="2">🏃 40-min brisk activity</button>
+    <button class="event" data-activity="3">🪑 Remain inactive</button>
+   </div>
+  </div>
+ </div>
+ <p class="small" style="margin-top:10px">Press Run, then add meals or activity. The curve updates live. Pause to change settings, then resume.</p>
+
+ <hr>
+
+ <!-- CONTROLS THAT DRIVE THE 24h GRAPH — immediately below it, same card -->
+ <h3>Explore the body's settings</h3>
+ <p class="small">These controls act on the 24-hour simulation above.
+ They are teaching controls, not medication instructions.</p>
+ <div class="controls">
+  <div class="control">
+   <label for="insulin">Insulin-effect strength <span id="insulinOut">65%</span></label>
+   <input id="insulin" type="range" min="10" max="100" value="65">
+   <div class="small">A conceptual representation of insulin action.
+   It is not an insulin dose or injection setting.</div>
+  </div>
+  <div class="control">
+   <label for="sensitivity">Insulin sensitivity <span id="sensitivityOut">100%</span></label>
+   <input id="sensitivity" type="range" min="40" max="150" value="100">
+   <div class="small">Lower sensitivity represents greater insulin
+   resistance in this simplified model.</div>
+  </div>
+  <div class="control">
+   <label for="stress">Stress / counter-regulatory drive <span id="stressOut">20%</span></label>
+   <input id="stress" type="range" min="0" max="100" value="20">
+   <div class="small">A simplified influence on glucose production.</div>
+  </div>
+  <div class="control">
+   <label for="activity">Background activity <span id="activityOut">20%</span></label>
+   <input id="activity" type="range" min="0" max="100" value="20">
+   <div class="small">General movement during the day, separate from
+   individual activity events.</div>
+  </div>
+ </div>
+</section>
+
+<section class="panel">
+ <h2>3. What is happening inside the body?</h2>
+ <div class="status" id="explanation" aria-live="polite">
+  The simulated day is ready. Press Run the day, then add a meal or activity.
+ </div>
+ <div class="key-grid" style="margin-top:13px">
+  <div class="key-item"><strong>🍚 Gut and food</strong>
+   <div class="small">Carbohydrates are digested and absorbed. Their appearance
+   in the bloodstream takes time.</div></div>
+  <div class="key-item"><strong>🟠 Pancreas and insulin</strong>
+   <div class="small">Insulin helps regulate glucose, including by promoting
+   uptake in muscle and fat and suppressing liver glucose output.</div></div>
+  <div class="key-item"><strong>🟢 Muscle</strong>
+   <div class="small">Muscle is a major site of glucose disposal. Activity
+   can increase muscle glucose uptake.</div></div>
+  <div class="key-item"><strong>🟣 Liver</strong>
+   <div class="small">The liver stores and releases glucose. It contributes
+   to glucose regulation between meals and overnight.</div></div>
+ </div>
+</section>
+
+<!-- ========== 5. EVENT DIARY + LEARNING CHECKS ========== -->
+<section class="panel">
+ <h2>4. Your event diary</h2>
+ <ul class="event-log" id="eventLog">
+  <li>06:00 — Simulated day begins.</li>
+ </ul>
+</section>
+
+<section class="panel">
+ <h2>5. Quick learning checks</h2>
+ <div class="quiz-question">
+  <strong>1. Why can glucose rise after a carbohydrate-containing meal?</strong>
+  <div class="actions" style="margin-top:8px">
+   <button class="event quiz" data-q="1" data-a="a">A. Glucose is absorbed from the gut into the blood</button>
+   <button class="event quiz" data-q="1" data-a="b">B. The kidneys manufacture all the glucose</button>
+  </div>
+  <p class="small" id="answer1"></p>
+ </div>
+ <hr>
+ <div class="quiz-question">
+  <strong>2. Why can physical activity help lower glucose?</strong>
+  <div class="actions" style="margin-top:8px">
+   <button class="event quiz" data-q="2" data-a="a">A. Active muscle takes up more glucose</button>
+   <button class="event quiz" data-q="2" data-a="b">B. Exercise switches off the liver permanently</button>
+  </div>
+  <p class="small" id="answer2"></p>
+ </div>
+ <hr>
+ <div class="quiz-question">
+  <strong>3. What does insulin resistance mean?</strong>
+  <div class="actions" style="margin-top:8px">
+   <button class="event quiz" data-q="3" data-a="a">A. Body tissues respond less effectively to insulin</button>
+   <button class="event quiz" data-q="3" data-a="b">B. There is no glucose in the bloodstream</button>
+  </div>
+  <p class="small" id="answer3"></p>
+ </div>
+ <hr>
+ <div class="quiz-question">
+  <strong>4. Does choosing a millet automatically guarantee a lower
+  glucose response than rice?</strong>
+  <div class="actions" style="margin-top:8px">
+   <button class="event quiz" data-q="4" data-a="a">A. Yes, always</button>
+   <button class="event quiz" data-q="4" data-a="b">B. No. Type, processing, portion and meal composition matter</button>
+  </div>
+  <p class="small" id="answer4"></p>
+ </div>
+</section>
+
+<!-- ========== 6. SAFETY ========== -->
+<section class="panel">
+ <h2>6. Safety and interpretation</h2>
+ <div class="warning">
+  <strong>Educational simulation only — not for clinical decisions.</strong>
+  <p>This game is not a glucose monitor, diagnostic instrument, treatment
+  planner or insulin calculator. Never use it to choose, change or calculate
+  insulin or other medication doses.</p>
+  <p>The simulated values, food indices, portion effects and response times
+  are invented teaching parameters, not validated physiological predictions.
+  They are not measured nutritional values or individual glucose forecasts.</p>
+  <p>Real glucose responses vary with the individual, diabetes type, medication,
+  food preparation, portion, illness, sleep, hormones and many other factors.
+  Clinical decisions require individual assessment and appropriate
+  professional guidance. Hypoglycaemia can be dangerous and requires
+  appropriate recognition and management.</p>
+ </div>
+ <p class="small">The next planned learning stages can explore the thin-fat
+ phenotype, insulin resistance, muscle mass, visceral fat and dawn phenomenon.</p>
+</section>
+
+</main>
+
+<footer>
+ <strong>TMC Case Conference Group</strong><br>
+ Learning through interaction. Understanding through discussion.<br><br>
+ <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70"
+ target="_blank" rel="noopener">Join the TMC WhatsApp Group</a>
+</footer>
+
+<script>
+(() => {
+"use strict";
+const $ = id => document.getElementById(id);
+const dayCanvas = $("dayChart");
+const dayCtx = dayCanvas.getContext("2d");
+const mealCanvas = $("mealChart");
+const mealCtx = mealCanvas.getContext("2d");
+
+const foods = {
+ idli:{
+  name:"Idli with sambar",emoji:"🥣",index:45,
+  description:"A familiar fermented rice-and-lentil meal. Number and size of idlis and the accompanying sambar matter."
+ },
+ dosa:{
+  name:"Dosa with sambar",emoji:"🥞",index:50,
+  description:"A fermented batter-based meal. Dosa size, number, recipe and accompaniments all influence the meal."
+ },
+ pongal:{
+  name:"Ven pongal",emoji:"🍲",index:48,
+  description:"A rice-and-dal preparation. Recipe, serving size and added ingredients influence its composition."
+ },
+ rice:{
+  name:"Cooked rice meal",emoji:"🍚",index:60,
+  description:"The rice portion, rice variety, preparation and accompanying vegetables, dal or protein all matter."
+ },
+ chapati:{
+  name:"Chapati",emoji:"🫓",index:35,
+  description:"The number, size and flour composition matter. Accompaniments contribute to the whole meal."
+ },
+ millet:{
+  name:"Cooked millet meal",emoji:"🌾",index:48,
+  description:"Millet type, processing, cooking method and portion matter. Millet is not automatically low-glycaemic."
+ },
+ tea:{
+  name:"Sweetened tea",emoji:"☕",index:18,
+  description:"Cup size and added sugar matter. Sugar in drinks can add carbohydrate without much satiety."
+ },
+ mixed:{
+  name:"Rice, vegetables and dal",emoji:"🍛",index:55,
+  description:"A mixed meal includes several food groups. Portion size and the relative amounts of rice, dal and vegetables matter."
+ },
+ laddu:{
+  name:"Laddu (Diwali sweet)",emoji:"🟡",index:62,
+  description:"A classic festival sweet—often gram flour, sugar and ghee. Size, number of laddus and the recipe (motichoor, besan, coconut) strongly change the carbohydrate load. Enjoy mindfully; portion still matters on Diwali night."
+ }
+};
+
+let glucose,time,gut,activityMinutes,running,timer,history;
+const startTime=360;
+const stepMinutes=10;
+const mealAnswers={
+ 1:"Correct. Digested carbohydrate is absorbed from the gut and contributes glucose to the circulation.",
+ 2:"Correct. Contracting muscle increases glucose uptake. The effect depends on activity and individual circumstances.",
+ 3:"Correct. Insulin resistance means tissues respond less effectively to insulin.",
+ 4:"Correct. Food type, processing, portion, cooking and the rest of the meal all matter."
+};
+
+function settings(){
+ return {
+  insulin:Number($("insulin").value)/100,
+  sensitivity:Number($("sensitivity").value)/100,
+  stress:Number($("stress").value)/100,
+  activity:Number($("activity").value)/100
+ };
+}
+function clockString(total){
+ const m=((total%1440)+1440)%1440;
+ return String(Math.floor(m/60)).padStart(2,"0")+":"+
+ String(m%60).padStart(2,"0");
+}
+function log(message){
+ const li=document.createElement("li");
+ li.textContent=clockString(startTime+time)+" — "+message;
+ $("eventLog").prepend(li);
+}
+function explain(message){$("explanation").textContent=message;}
+
+function stop(){
+ running=false;
+ if(timer)clearInterval(timer);
+ timer=null;
+ $("runBtn").disabled=false;
+ $("pauseBtn").disabled=true;
+}
+function reset(){
+ stop();
+ glucose=95;time=0;gut=0;activityMinutes=0;
+ history=[{t:0,g:glucose}];
+ $("eventLog").innerHTML="<li>06:00 — Simulated day begins.</li>";
+ explain("The simulated day is ready. Press Run the day, then add a meal or activity.");
+ update();
+ drawDay();
+}
+function start(){
+ if(time>=1440){
+  explain("The 24-hour day is complete. Reset to try another day.");
+  return;
+ }
+ if(running)return;
+ running=true;
+ $("runBtn").disabled=true;
+ $("pauseBtn").disabled=false;
+ timer=setInterval(tick,180);
+}
+function pause(){
+ stop();
+ explain("Simulation paused. Change a setting or add an event, then resume.");
+}
+
+function tick(){
+ if(time>=1440){
+  stop();
+  explain("Your 24-hour simulation is complete. Reset and try another combination.");
+  return;
+ }
+ const s=settings();
+
+ // Illustrative delayed absorption from the gut.
+ const absorbed=gut*0.12;
+ gut-=absorbed;
+ const insulinAction=s.insulin*s.sensitivity;
+ const mealRise=absorbed*0.72;
+ const insulinRemoval=Math.max(0,glucose-85)*0.032*insulinAction;
+ const activityRemoval=0.12+s.activity*0.75+
+  (activityMinutes>0?1.15:0);
+ const liverDrive=0.18+s.stress*0.55;
+ const baselineCorrection=(95-glucose)*0.012;
+
+ glucose+=mealRise-insulinRemoval-activityRemoval+
+  liverDrive+baselineCorrection;
+ glucose=Math.max(55,Math.min(300,glucose));
+ activityMinutes=Math.max(0,activityMinutes-stepMinutes);
+ time+=stepMinutes;
+ history.push({t:time,g:glucose});
+ update();drawDay();explainCurrent();
+}
+function explainCurrent(){
+ if(glucose<70){
+  explain("The model has entered a low-glucose region. This is a teaching alert, not a clinical prediction.");
+ }else if(glucose>180){
+  explain("The simulated glucose is above the illustrative band. Consider food absorption, insulin action, activity and liver glucose output.");
+ }else if(gut>10){
+  explain("Carbohydrate is still being absorbed from the gut. Glucose may continue to rise after the meal event.");
+ }else if(activityMinutes>0){
+  explain("The activity event is still influencing the model. Active muscle can take up more glucose.");
+ }else{
+  explain("The model is relatively steady. The gut, liver, pancreas and muscle continually contribute to glucose regulation.");
+ }
+}
+
+function update(){
+ $("glucoseValue").textContent=Math.round(glucose);
+ $("clockValue").textContent=clockString(startTime+time);
+ $("dayValue").textContent=Math.round(time/1440*100)+"%";
+ $("statusValue").textContent=glucose<70?"Low region":
+  glucose>180?"High region":glucose>140?"Above start":"Steady";
+ ["insulin","sensitivity","stress","activity"].forEach(id=>{
+  $(id+"Out").textContent=$(id).value+"%";
+ });
+ document.querySelectorAll("[data-meal],[data-activity]").forEach(b=>{
+  b.disabled=time>=1440;
+ });
+ $("addFoodBtn").disabled=time>=1440;
+}
+
+function drawChart(canvas,ctx,points,options){
+ const rect=canvas.getBoundingClientRect();
+ const dpr=window.devicePixelRatio||1;
+ canvas.width=Math.max(1,Math.round(rect.width*dpr));
+ canvas.height=Math.max(1,Math.round(rect.height*dpr));
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ const w=rect.width,h=rect.height;
+ const left=45,right=13,top=15,bottom=32;
+ const cw=w-left-right,ch=h-top-bottom;
+ const minY=50,maxY=250;
+ const x=t=>left+(t/options.maxT)*cw;
+ const y=v=>top+(maxY-v)/(maxY-minY)*ch;
+ ctx.clearRect(0,0,w,h);
+ ctx.fillStyle="#fff";ctx.fillRect(0,0,w,h);
+ ctx.fillStyle="#ecfdf5";ctx.fillRect(left,y(180),cw,y(70)-y(180));
+
+ ctx.font="11px Arial";ctx.textAlign="right";
+ [50,70,100,150,180,250].forEach(v=>{
+  ctx.strokeStyle=v===100?"#94a3b8":"#e2e8f0";
+  ctx.setLineDash(v===100?[5,4]:[]);
+  ctx.beginPath();ctx.moveTo(left,y(v));ctx.lineTo(w-right,y(v));ctx.stroke();
+  ctx.fillStyle="#64748b";ctx.fillText(v,left-7,y(v)+4);
+ });
+ ctx.setLineDash([]);
+ ctx.textAlign="center";
+ options.ticks.forEach(t=>{
+  ctx.fillStyle="#64748b";ctx.fillText(t.label,x(t.value),h-10);
+ });
+ if(points.length){
+  ctx.beginPath();
+  points.forEach((p,i)=>{
+   if(i===0)ctx.moveTo(x(p.t),y(p.g));
+   else ctx.lineTo(x(p.t),y(p.g));
+  });
+  ctx.strokeStyle=options.color;ctx.lineWidth=3;
+  ctx.lineJoin="round";ctx.lineCap="round";ctx.stroke();
+  const p=points[points.length-1];
+  ctx.beginPath();ctx.arc(x(p.t),y(p.g),4.5,0,Math.PI*2);
+  ctx.fillStyle=options.color;ctx.fill();
+ }
+ ctx.textAlign="left";ctx.fillStyle="#64748b";
+ ctx.fillText("mg/dL",5,11);
+}
+function drawDay(){
+ drawChart(dayCanvas,dayCtx,history,{
+  maxT:1440,color:"#0f766e",
+  ticks:[0,240,480,720,960,1200,1440].map((v,i)=>({
+   value:v,label:["06:00","10:00","14:00","18:00","22:00","02:00","06:00"][i]
+  }))
+ });
+}
+
+// Food challenge: the index and curves are illustrative model parameters.
+// Composition changes timing and spread, not total carbohydrate load.
+function getFoodChoice(){
+ const f=foods[$("foodSelect").value];
+ const portion=Number($("portion").value)/100;
+ const fibre=Number($("fibre").value)/100;
+ const protein=Number($("protein").value)/100;
+ const fat=Number($("fat").value)/100;
+ const index=f.index*portion;
+ return {f,portion,fibre,protein,fat,index};
+}
+function updateFood(){
+ const c=getFoodChoice();
+ $("foodEmoji").textContent=c.f.emoji;
+ $("foodName").textContent=c.f.name;
+ $("foodDescription").textContent=c.f.description;
+ $("portionOut").textContent=Math.round(c.portion*100)+"%";
+ $("portionText").textContent=c.portion===1?"1 reference serving":
+  c.portion.toFixed(2).replace(/0+$/,"").replace(/\.$/,"")+" reference serving(s)";
+ $("fibreOut").textContent=Math.round(c.fibre*100)+"%";
+ $("proteinOut").textContent=Math.round(c.protein*100)+"%";
+ $("fatOut").textContent=Math.round(c.fat*100)+"%";
+ $("carbIndex").textContent=Math.round(c.index)+" units";
+ const insight=c.portion<0.75?
+  "A smaller portion reduces the model's total carbohydrate-load index. Remember: the smallest portion is not automatically a nutritionally adequate meal.":
+  c.portion>1.25?
+  "A larger portion increases the model's carbohydrate-load index. Consider how portion size fits into the whole meal and the person's nutritional needs.":
+  "Explore how changing portion size alters the carbohydrate-load index. Meal adequacy and overall dietary pattern matter too.";
+ $("foodInsight").textContent=insight;
+}
+function mealCurve(){
+ const c=getFoodChoice();
+ const pts=[];
+ const start=95;
+ // A four-hour teaching curve. The meal load affects the amplitude.
+ // Fibre/protein/fat spread the appearance over time in this toy model.
+ const spread=1+c.fibre*0.75+c.protein*0.35+c.fat*0.5;
+ const amplitude=c.index*0.72;
+ for(let t=0;t<=240;t+=5){
+  const peakTime=55+spread*18;
+  const rise=Math.exp(-Math.pow((t-peakTime)/(48*spread),2)/2);
+  const tail=Math.exp(-t/(125*spread));
+  const response=amplitude*(0.68*rise+0.32*tail);
+  pts.push({t,g:start+response});
+ }
+ return pts;
+}
+function drawMeal(){
+ const challenge=mealCurve();
+ const baseline=[];
+ for(let t=0;t<=240;t+=5)baseline.push({t,g:95});
+ drawChart(mealCanvas,mealCtx,baseline,{
+  maxT:240,color:"#94a3b8",
+  ticks:[0,60,120,180,240].map((v,i)=>({
+   value:v,label:["0","1 hr","2 hr","3 hr","4 hr"][i]
+  }))
+ });
+ // Overlay challenge curve on the same chart.
+ const rect=mealCanvas.getBoundingClientRect();
+ const dpr=window.devicePixelRatio||1;
+ const w=rect.width,h=rect.height;
+ const left=45,right=13,top=15,bottom=32;
+ const cw=w-left-right,ch=h-top-bottom;
+ const x=t=>left+(t/240)*cw;
+ const y=v=>top+(250-v)/(250-50)*ch;
+ mealCtx.setTransform(dpr,0,0,dpr,0,0);
+ mealCtx.beginPath();
+ challenge.forEach((p,i)=>{
+  if(i===0)mealCtx.moveTo(x(p.t),y(p.g));
+  else mealCtx.lineTo(x(p.t),y(p.g));
+ });
+ mealCtx.strokeStyle="#2563eb";mealCtx.lineWidth=3;
+ mealCtx.lineJoin="round";mealCtx.stroke();
+
+ const c=getFoodChoice();
+ const peak=Math.max(...challenge.map(p=>p.g));
+ const peakPoint=challenge.reduce((a,b)=>b.g>a.g?b:a);
+ $("foodExplanation").textContent=
+  c.f.name+" at "+Math.round(c.portion*100)+
+  "% portion: the illustrative model peak is about "+
+  Math.round(peak)+" mg/dL, around "+
+  peakPoint.t+" minutes after the meal. This is a model output, not a predicted real response. Fibre, protein and fat alter the modelled timing and shape; they do not remove the carbohydrate.";
+}
+function addFoodToDay(){
+ if(time>=1440)return;
+ const c=getFoodChoice();
+ gut+=c.index*0.8;
+ log(c.f.name+" added at "+Math.round(c.portion*100)+
+  "% reference portion (teaching index "+Math.round(c.index)+").");
+ explain("Your selected Indian meal has been added to the 24-hour simulation. Its carbohydrate load will enter the model gradually. The separate meal graph is a comparison, not a second glucose reading.");
+}
+
+$("runBtn").addEventListener("click",start);
+$("pauseBtn").addEventListener("click",pause);
+$("resetBtn").addEventListener("click",reset);
+
+document.querySelectorAll("[data-meal]").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  const load=Number(btn.dataset.meal);
+  gut+=load*0.8;
+  log("Quick meal event added (teaching load "+load+").");
+  explain("A meal event has been added. Digestion and absorption take time.");
+ });
+});
+document.querySelectorAll("[data-activity]").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  const kind=Number(btn.dataset.activity);
+  if(kind===1){activityMinutes+=20;log("20-minute walk added.");}
+  if(kind===2){activityMinutes+=40;log("40-minute brisk activity added.");}
+  if(kind===3){log("Inactivity selected; no extra activity effect added.");}
+  explain("The activity setting has been updated. Muscle activity can increase glucose uptake.");
+ });
+});
+
+["insulin","sensitivity","stress","activity"].forEach(id=>{
+ $(id).addEventListener("input",update);
+});
+["foodSelect","portion","fibre","protein","fat"].forEach(id=>{
+ $(id).addEventListener("input",()=>{updateFood();});
+ $(id).addEventListener("change",()=>{updateFood();});
+});
+$("compareBtn").addEventListener("click",()=>{
+ updateFood();drawMeal();
+});
+$("addFoodBtn").addEventListener("click",addFoodToDay);
+
+document.querySelectorAll(".quiz").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  const q=Number(btn.dataset.q),a=btn.dataset.a;
+  const correct=a==="a" && q!==4 || a==="b" && q===4;
+  const el=$("answer"+q);
+  el.textContent=correct?mealAnswers[q]:
+   "Not quite. Try again and think about the physiology involved.";
+  el.style.color=correct?"#15803d":"#b45309";
+ });
+});
+
+window.addEventListener("resize",()=>{drawDay();drawMeal();});
+reset();
+updateFood();
+drawMeal();
+})();
+</script>
+</body>
+</html>
