@@ -1,6 +1,16 @@
 import Link from "next/link"
 import { ArrowLeft, Download, FileText } from "lucide-react"
 
+/*
+Listing CVs that were substituted on this page, yet remain in /public:
+ {
+    title: "Islamic Studies & Interfaith Profile",
+    description: "Shows Rafique's Bridge to Masters expertise, neurobiological research in spiritual resilience, and comparative interfaith studies.",
+    file: "/cv-islamic-interfaith.pdf"
+  }
+*/
+
+
 const cvProfiles = [
   {
     title: "IT & AI Architecture Profile",
@@ -28,9 +38,9 @@ const cvProfiles = [
     file: "/cv-ai-app-islamic.pdf"
   },
   {
-    title: "Islamic Studies & Interfaith Profile",
-    description: "Shows Rafique's Bridge to Masters expertise, neurobiological research in spiritual resilience, and comparative interfaith studies.",
-    file: "/cv-islamic-interfaith.pdf"
+    title: "BCDC-IOU Medical Ethics Certificate Course Developer",
+    description: "Shows Rafique's Bridge to Masters expertise, and IT skills are the core competencies for building the Medical Ethics Certificate Course.",
+    file: "/cv-iou-medical-ethics-it.pdf"
   }
 ];
 
