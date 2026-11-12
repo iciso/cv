@@ -160,6 +160,7 @@ const interactiveWebPages = [
   { title: "Number Trick", category: "Interactive Game", description: "Algorithmic logic puzzle and mathematical engagement tool.", url: "/web/number-trick.html" },
   { title: "One-Two-Many", category: "Arabic Singular-Dual-Plural", description: "Interactive quiz on Singular, Dual, and Plural forms in Arabic", url: "/web/sing-dual-i.html" },
   { title: "Qawaid COVID", category: "Public Health", description: "Rule-based public health guidance engine during pandemic parameters.", url: "/web/qawaid-covid.html" },
+  { title: "114 Surah Quest", category: "Quran Surah Names", description: "Master all 114 Surahs Names, and their translations.", url: "/web/surah-quest.html" }, 
   { title: "Takaful Quiz", category: "Islamic Finance", description: "Testing engine covering Islamic cooperative financial systems.", url: "/web/takaful-quiz.html" },
   { title: "Top 10 Quranic Surahs", category: "Surah Recitation", description: "Listen to Top 10 of Sheikh Mahmoud Khalil Al-Husary (رحمه الله).", url: "/web/top-ten-quran.html" },
   { title: "TMC HLA-Disease Game", category: "HLA Matching Game", description: "Match each HLA allele with its associated disease(s).", url: "/web/tmc-hla-disease.html" }, 
