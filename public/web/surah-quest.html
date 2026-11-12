@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123d32">
+<title>114-Surah Quest | Three-Clue Challenge</title>
+<style>
+:root{--g:#123d32;--g2:#1e5b49;--gold:#c99b3b;--cream:#fbf8ef;--paper:#fffdf8;--ink:#1d2c27;--muted:#63716b;--line:#e6e0d2;--good:#236b45;--bad:#92502b;--shadow:0 12px 32px #18362b12}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#f2efe5,#fbf9f3 340px);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+button,select{font:inherit}.header{background:var(--g);color:white;padding:22px 16px 25px;border-bottom:4px solid var(--gold)}.wrap{width:min(980px,calc(100% - 28px));margin:auto}
+.brand{display:flex;align-items:center;gap:12px}.mark{width:44px;height:44px;border:1px solid #d8bd76;border-radius:50%;display:grid;place-items:center;color:#f2d88d;font-size:24px}
+.eyebrow{font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:#e8d69d;font-weight:750}h1{font-size:clamp(1.8rem,5vw,2.7rem);line-height:1.08;margin:5px 0 7px;letter-spacing:-.035em}.header p{margin:0;color:#e5eee9}
+main{padding:24px 0 36px}.intro{display:flex;justify-content:space-between;gap:15px;align-items:start;margin-bottom:18px}.intro h2{font-size:1.25rem;margin:0 0 4px}.intro p{margin:0;color:var(--muted);max-width:680px}.pill{background:#e7efe9;color:var(--g);border-radius:99px;padding:6px 11px;font-size:.78rem;font-weight:750;white-space:nowrap}
+.set-hub{background:#fffdf8;border:1px solid var(--line);border-radius:18px;padding:18px;margin:0 0 18px;box-shadow:var(--shadow)}.hub-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}.hub-head h2{font-size:1.12rem;margin:0 0 3px;color:var(--g)}.hub-head p{margin:0;color:var(--muted);font-size:.88rem}.hub-actions{display:flex;gap:7px;flex-wrap:wrap}.hub-btn{border:1px solid #d9d1bf;background:#f5f1e7;color:var(--g);border-radius:9px;padding:8px 11px;font-weight:700;font-size:.82rem}.hub-btn:hover{background:#e9efe9}.set-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin-top:15px}.set-link{display:block;text-align:center;text-decoration:none;color:#42534a;border:1px solid var(--line);border-radius:9px;padding:8px 3px;font-size:.8rem;background:white}.set-link span{display:block;font-size:.68rem;color:var(--muted)}.set-link[aria-current=true]{background:var(--g);border-color:var(--g);color:white}.set-link[aria-current=true] span{color:#e4ebdf}.set-summary{margin-top:12px;color:var(--muted);font-size:.85rem}.set-summary strong{color:var(--g)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.progress{padding:16px 20px 13px;border-bottom:1px solid var(--line);background:#fffefb}.ptop{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.88rem;margin-bottom:9px}.ptop strong{color:var(--g)}.track{height:8px;background:#e9e5da;border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--g2),#76a17e);transition:width .2s}
+.body{padding:clamp(17px,4vw,30px)}.modes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}.mode{border:1px solid var(--line);background:white;border-radius:99px;padding:9px 13px;color:#485750;font-size:.88rem;font-weight:650}.mode[aria-pressed=true]{background:var(--g);border-color:var(--g);color:white}
+.clue{border:1px solid #e9dfc5;border-radius:16px;background:linear-gradient(135deg,#fffaf0,#fffdf8);padding:22px 16px;text-align:center;margin-bottom:20px}.clabel{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:#8b6b25;font-weight:800}.cmain{font-size:clamp(2rem,8vw,3.3rem);font-weight:800;color:var(--g);line-height:1.25;margin:9px 0 4px;overflow-wrap:anywhere}.carabic{font-family:"Noto Naskh Arabic","Amiri","Traditional Arabic",serif;font-size:clamp(2.1rem,8vw,3.6rem);direction:rtl}.csub{color:var(--muted)}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;font-size:.9rem;font-weight:750;margin-bottom:7px}.field select{width:100%;min-height:50px;border:1px solid #cfcfc3;border-radius:11px;padding:10px 12px;background:white;color:var(--ink)}.field select:focus{outline:3px solid #dcebdc;border-color:var(--g2)}.hint{font-size:.78rem;color:var(--muted);margin:6px 0 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{border:0;border-radius:11px;padding:12px 17px;font-weight:750;min-height:46px}.primary{background:var(--g);color:white;flex:1}.secondary{background:#f0ede4;color:var(--g);border:1px solid #e0d9c8}.btn:focus-visible,.mode:focus-visible{outline:3px solid #d9b65e;outline-offset:2px}
+.feedback{display:none;margin-top:18px;border-radius:13px;padding:15px 16px}.feedback.show{display:block}.feedback.good{background:#eaf4ed;border:1px solid #c5dfcc}.feedback.retry{background:#fff4e7;border:1px solid #ead2b2}.feedback h3{margin:0 0 6px;font-size:1rem}.feedback p{margin:4px 0}.reveal{border-top:1px solid #3246372b;margin-top:10px;padding-top:10px}.reveal strong{color:var(--g)}
+.bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:18px;color:var(--muted);font-size:.86rem}.scores{display:flex;gap:9px;flex-wrap:wrap}.score{border:1px solid var(--line);background:white;border-radius:10px;padding:8px 11px}.score b{color:var(--g)}
+.note{margin-top:18px;padding:15px 17px;border-left:4px solid var(--gold);background:#f7f3e8;border-radius:0 12px 12px 0;color:#49574f;font-size:.9rem}.note strong{color:var(--g)}footer{background:var(--g);color:#e7eee9;padding:20px 16px;text-align:center;font-size:.85rem}footer p{margin:3px 0}.small{font-size:.78rem;color:var(--muted);margin:12px 3px 0}
+.lang-selector{display:flex;gap:5px;align-items:center;margin-top:12px}
+.lang-btn{border:1px solid #d8bd76;background:transparent;color:#f2d88d;border-radius:6px;padding:4px 8px;font-weight:700;font-size:.78rem;cursor:pointer}
+.lang-btn[aria-pressed="true"], .lang-btn:hover{background:#c99b3b;color:white}
+@media(max-width:620px){.set-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hub-actions{width:100%}.hub-btn{flex:1}.intro{display:block}.intro .pill{display:inline-block;margin-top:11px}.answers{grid-template-columns:1fr}.progress{padding:14px 15px}.body{padding:16px}.clue{padding:19px 12px}.actions .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<header class="header"><div class="wrap"><div class="brand"><div class="mark" aria-hidden="true">۞</div><div><div class="eyebrow" id="ui-eyebrow">Learn • Recall • Retain</div><h1 id="ui-title">114-Surah Quest</h1></div></div><p id="ui-subtitle">A step-by-step challenge connecting every Surah’s number, Arabic name and English meaning.</p><div class="lang-selector"><button class="lang-btn" data-lang="en" aria-pressed="true">EN</button><button class="lang-btn" data-lang="ta" aria-pressed="false">TA</button><button class="lang-btn" data-lang="ml" aria-pressed="false">ML</button></div></div></header>
+<main class="wrap">
+<section class="intro"><div><h2 id="ui-challenge-title">Three-Clue Challenge</h2><p id="ui-challenge-desc">No typing and no spelling penalties. Practise just six Surahs at a time, then move to any other set when you are ready.</p></div><span class="pill" id="ui-sets-pill">19 sets · 6 Surahs each</span></section>
+<section class="set-hub" aria-label="Choose a learning set">
+ <div class="hub-head"><div><h2 id="ui-hub-title">Choose your learning set</h2><p id="ui-hub-desc">114 Surahs · 19 sets · 6 Surahs in each set. Start anywhere, or follow the sequence.</p></div><div class="hub-actions"><button class="hub-btn" id="randomSet">Surprise me ↗</button><button class="hub-btn" id="prevSet">← Previous set</button><button class="hub-btn" id="nextSet">Next set →</button></div></div>
+ <nav class="set-grid" id="setGrid" aria-label="All 19 Surah sets"></nav>
+ <div class="set-summary" id="setSummary" aria-live="polite"></div>
+</section>
+<section class="panel" aria-label="Three-Clue Challenge">
+<div class="progress"><div class="ptop"><span id="round">Set 1 · Practice round 1</span><strong id="position">Surah 1 · Set 1 of 19</strong></div><div class="track" role="progressbar" aria-label="Progress within this set" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" id="bar"><div class="fill" id="fill"></div></div></div>
+<div class="body">
+<div class="modes" role="group" aria-label="Choose clue direction">
+<button class="mode" data-mode="number" aria-pressed="true" id="mode-num">Number → Name + meaning</button>
+<button class="mode" data-mode="arabic" aria-pressed="false" id="mode-arb">Arabic name → Number + meaning</button>
+<button class="mode" data-mode="meaning" aria-pressed="false" id="mode-mean">Meaning → Name + number</button>
+<button class="mode" data-mode="grand" aria-pressed="false" id="mode-grand">Grand Revision · All 114</button>
+</div>
+<div class="clue" aria-live="polite"><div class="clabel" id="clabel">Your clue · Surah number</div><div class="cmain" id="cmain">1</div><div class="csub" id="csub">Choose the Arabic name and English meaning</div></div>
+<div class="answers">
+<div class="field" id="nameField"><label for="nameChoice" id="label-name">Arabic name / transliteration</label><select id="nameChoice"></select><p class="hint" id="hint-name">Only these six Surahs are in the current set.</p></div>
+<div class="field" id="meaningField"><label for="meaningChoice" id="label-meaning">English meaning</label><select id="meaningChoice"></select><p class="hint" id="hint-meaning">Choose from the six meanings in this set.</p></div>
+<div class="field" id="numberField" hidden><label for="numberChoice" id="label-number">Surah number</label><select id="numberChoice"></select><p class="hint" id="hint-number">Choose a number from 1 to 114.</p></div>
+</div>
+<div class="actions"><button class="btn primary" id="check">Check my answers</button><button class="btn secondary" id="reveal">Reveal reference answer</button><button class="btn secondary" id="next">Next Surah →</button></div>
+<div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+<div class="bottom"><div class="scores"><div class="score"><span id="txt-checked">Checked</span>: <b id="checked">0</b></div><div class="score"><span id="txt-correct">All correct</span>: <b id="correct">0</b></div><div class="score"><span id="txt-accuracy">Accuracy</span>: <b id="accuracy">—</b></div></div><button class="btn secondary" id="restart">Restart this set</button></div>
+<div class="note"><strong id="txt-tip-title">Learning tip:</strong> <span id="txt-tip-desc">Try to recall before selecting. If you miss one part, the feedback shows exactly which clue needs revision. Review the full three-part answer, then try again later.</span></div>
+</div></section>
+<p class="small" id="ui-footer-note">English titles are concise learning glosses; wording can differ among translations. Arabic names and standard Surah order are included for all 114 Surahs. This is a learning aid, not a substitute for Qur’an study or tafsir.</p>
+</main>
+<footer><p><strong>114-Surah Quest</strong></p><p id="ui-footer-desc">A respectful learning tool for remembering the Qur’an’s Surah names, meanings and order.</p></footer>
+<script>
+const surahs = [{n:1,name:'Al-Fatihah',meaning:'The Opening',ar:'الفاتحة',ta:'அல்-பாத்திஹா (திறப்பு)',ml:'അൽ-ഫാതിഹ (തുറവ്)'},
+{n:2,name:'Al-Baqarah',meaning:'The Cow',ar:'البقرة',ta:'அல்-பகரா (பசு)',ml:'അൽ-ബഖറ (പശു)'},
+{n:3,name:"Al 'Imran",meaning:'The Family of Imran',ar:'آل عمران',ta:'ஆல் இம்ரான் (இம்ரானின் குடும்பம்)',ml:'ആൽ ഇംറാൻ (ഇംറാന്റെ കുടുംബം)'},
+{n:4,name:'An-Nisa',meaning:'The Women',ar:'النساء',ta:'அன்-நிஸா (பெண்கள்)',ml:'അൻ-നിസാഅ് (സ്ത്രീകൾ)'},
+{n:5,name:"Al-Ma'idah",meaning:'The Table Spread',ar:'المائدة',ta:'அல்-மாயிதா (உணவு மேசை)',ml:'അൽ-മാഇദ (ഭക്ഷണ മേശ)'},
+{n:6,name:"Al-An'am",meaning:'The Cattle',ar:'الأنعام',ta:'அல்-அன்ஆம் (கால்நடைகள்)',ml:'അൽ-അൻആം (കന്നുകാലികൾ)'},
+{n:7,name:"Al-A'raf",meaning:'The Heights',ar:'الأعراف',ta:'அல்-அஃராப் (உயரமான இடங்கள்)',ml:'അൽ-അഅ്റാഫ് (ഉയർന്ന സ്ഥലങ്ങൾ)'},
+{n:8,name:'Al-Anfal',meaning:'The Spoils of War',ar:'الأنفال',ta:'அல்-அன்பால் (போர்ச் சொத்துக்கள்)',ml:'അൽ-അൻഫാൽ (യുദ്ധമുതൽ)'},
+{n:9,name:'At-Tawbah',meaning:'The Repentance',ar:'التوبة',ta:'அத்-தவ்பா (மன்னிப்பு கோருதல்)',ml:'അത്-തൗബ (പശ്ചാത്താപ്തം)'},
+{n:10,name:'Yunus',meaning:'Jonah',ar:'يونس',ta:'யூனுஸ் (யூனுஸ் நபி)',ml:'യൂനുസ് (യൂനുസ് നബി)'},
+{n:11,name:'Hud',meaning:'Hud',ar:'هود',ta:'ஹூத் (ஹூத் நபி)',ml:'ഹൂദ് (ഹൂദ് നബി)'},
+{n:12,name:'Yusuf',meaning:'Joseph',ar:'يوسف',ta:'யூசுப் (யூசுப் நபி)',ml:'യൂസുഫ് (യൂസുഫ് നബി)'},
+{n:13,name:"Ar-Ra'd",meaning:'The Thunder',ar:'الرعد',ta:'அர்-ரஃத் (இடிமுழக்கம்)',ml:'അർ-റഅ്ദ് (ഇടിമിന്നൽ)'},
+{n:14,name:'Ibrahim',meaning:'Abraham',ar:'إبراهيم',ta:'இப்ராஹிம் (இப்ராஹிம் நபி)',ml:'ഇബ്രാഹിം (ഇബ്രാഹിം നബി)'},
+{n:15,name:'Al-Hijr',meaning:'The Rocky Tract',ar:'الحجر',ta:'அல்-ஹிஜ்ர் (பாறைகள் நிறைந்த பகுதி)',ml:'അൽ-ഹിജ്ർ (പാറപ്രദേശം)'},
+{n:16,name:'An-Nahl',meaning:'The Bee',ar:'النحل',ta:'அன்-நஹ்ல் (தேனீ)',ml:'അൻ-നഹ്ൽ (തേനീച്ച)'},
+{n:17,name:'Al-Isra',meaning:'The Night Journey',ar:'الإسراء',ta:'அல்-இஸ்ரா (இரவுப் பயணம்)',ml:'അൽ-ഇസ്റാഅ് (രാത്രിയാത്ര)'},
+{n:18,name:'Al-Kahf',meaning:'The Cave',ar:'الكهف',ta:'அல்-கஹ்ஃப் (குகை)',ml:'അൽ-കഹ്ഫ് (ഗുഹ)'},
+{n:19,name:'Maryam',meaning:'Mary',ar:'மரியம்',ta:'மரியம் (மரியம் நபி)',ml:'മർയം (മർയം)'},
+{n:20,name:'Ta-Ha',meaning:'Ta-Ha',ar:'طه',ta:'த்ஹா (தா-ஹா)',ml:'ത്വാഹാ (ത്വാ-ഹാ)'},
+{n:21,name:'Al-Anbiya',meaning:'The Prophets',ar:'الأنبياء',ta:'அல்-அன்பியா (நபிமார்கள்)',ml:'അൽ-അമ്പിയാഅ് (പ്രവാചകൻമാർ)'},
+{n:22,name:'Al-Hajj',meaning:'The Pilgrimage',ar:'الحج',ta:'அல்-ஹஜ் (ஹஜ் பயணம்)',ml:'അൽ-ഹജ്ജ് (തീർത്ഥാടനം)'},
+{n:23,name:"Al-Mu'minun",meaning:'The Believers',ar:'المؤمنون',ta:'அல்-முஃமினூன் (நம்பிக்கையாளர்கள்)',ml:'അൽ-മുഅ്മിനൂൻ (വിശ്വാസികൾ)'},
+{n:24,name:'An-Nur',meaning:'The Light',ar:'النور',ta:'அன்-னூர் (ஒளி)',ml:'അൻ-നൂർ (പ്രകാശം)'},
+{n:25,name:'Al-Furqan',meaning:'The Criterion',ar:'الفرقان',ta:'அல்-புர்கான் (உண்மை-பொய் பிரித்தறிவிப்பவை)',ml:'അൽ-ഫുർഖാൻ (സത്യസന്ധത വേർതിരിക്കുന്നത്)'},
+{n:26,name:"Ash-Shu'ara",meaning:'The Poets',ar:'الشعراء',ta:'அஷ்-ஷுஅரா (கவிஞர்கள்)',ml:'അശ്-ശുഅറാഅ് (കവികൾ)'},
+{n:27,name:'An-Naml',meaning:'The Ants',ar:'النمل',ta:'அன்-நமல் (எறும்புகள்)',ml:'അൻ-നമ്ൽ (ഉറുമ്പുകൾ)'},
+{n:28,name:'Al-Qasas',meaning:'The Stories',ar:'القصص',ta:'அல்-கஸஸ் (வரலாறுகள் / கதைகள்)',ml:'അൽ-ഖസ്വസ്വ് (ചരിത്രകഥകൾ)'},
+{n:29,name:"Al-'Ankabut",meaning:'The Spider',ar:'العنكبوت',ta:'அல்-அன்கபூத் (சிலந்தி)',ml:'അൽ-അൻകബൂത് (ചിലന്തി)'},
+{n:30,name:'Ar-Rum',meaning:'The Romans',ar:'الروم',ta:'அர்-ரூம் (ரோமானியர்கள்)',ml:'അർ-റൂം (റോമാക്കാർ)'},
+{n:31,name:'Luqman',meaning:'Luqman',ar:'لقمان',ta:'லுக்மான் (லுக்மான் ஞானி)',ml:'ലഖ്മാൻ (ലുഖ്മാൻ)'},
+{n:32,name:'As-Sajdah',meaning:'The Prostration',ar:'السجدة',ta:'அஸ்-சஜ்தா (சிரைபணிதல்)',ml:'അസ്സജ്ദ (സാഷ്ടാംഗം)'},
+{n:33,name:'Al-Ahzab',meaning:'The Confederates',ar:'الأحزاب',ta:'அல்-அஹ்ஸாப் (கூட்டணிகள்)',ml:'അൽ-അഹ്സാബ് (കക്ഷികൾ)'},
+{n:34,name:'Saba',meaning:'Sheba',ar:'سبأ',ta:'சபா (சபா சமூகம்)',ml:'സബഅ് (ശബാ)'},
+{n:35,name:'Fatir',meaning:'Originator',ar:'فاطر',ta:'பாதிர் (படைப்பாளர்)',ml:'ഫാത്വിർ (സ്രഷ്ടാവ്)'},
+{n:36,name:'Ya-Sin',meaning:'Ya-Sin',ar:'يس',ta:'யாஸீன்',ml:'യാസീൻ (യാ-സീൻ)'},
+{n:37,name:'As-Saffat',meaning:'Those Ranged in Ranks',ar:'الصافات',ta:'அஸ்-ஸாப்பாத் (வரிசையாக நிற்பவர்கள்)',ml:'അസ്സ്വാഫാത്ത് (വരിവരിയായി അണിനിരന്നവർ)'},
+{n:38,name:'Sad',meaning:'Sad',ar:'ص',ta:'ஸாத்',ml:'സ്വദ് (സ്വാദ്)'},
+{n:39,name:'Az-Zumar',meaning:'The Groups',ar:'الزمر',ta:'அத்-ஜுமர் (கூட்டங்கள்)',ml:'അസ്സുമർ (കൂട്ടങ്ങൾ)'},
+{n:40,name:'Ghafir',meaning:'The Forgiver',ar:'غافر',ta:'காபிர் (மன்னிக்கிறவன்)',ml:'ഗാഫിർ (പാപങ്ങൾ പൊറുക്കുന്നവൻ)'},
+{n:41,name:'Fussilat',meaning:'Explained in Detail',ar:'فصلت',ta:'புஸ்ஸிலத் (விவரிக்கப்பட்டவை)',ml:'ഫുസ്സിലത്ത് (വിശദീകരിക്കപ്പെട്ടത്)'},
+{n:42,name:'Ash-Shura',meaning:'The Consultation',ar:'الشورى',ta:'அஷ்-ஷூரா (ஆலோசனை)',ml:'അശ്-ശൂറാ (ആലോചന)'},
+{n:43,name:'Az-Zukhruf',meaning:'The Ornaments of Gold',ar:'الزخرف',ta:'அத்-துக்ருப் (தங்க ஆபரணங்கள்)',ml:'അസ്സുഖ്റുഫ് (സ്വർണ്ണാഭരണങ്ങൾ)'},
+{n:44,name:'Ad-Dukhan',meaning:'The Smoke',ar:'الدخان',ta:'அத்-துகான் (புகை)',ml:'അദ്ദുഖാൻ (പുക)'},
+{n:45,name:'Al-Jathiyah',meaning:'The Crouching',ar:'الجاثية',ta:'அல்-ஜாதியா (முழங்காலிட்டு நிற்பவர்கள்)',ml:'അൽജാഥിയ (മുട്ടുകുത്തിയ നിലയിൽ)'},
+{n:46,name:'Al-Ahqaf',meaning:'The Wind-Curved Sandhills',ar:'الأحقاف',ta:'அல்-அஹ்காஃப் (மணல் குன்றுகள்)',ml:'അൽ-അഹ്ഖാഫ് (മണൽതിട്ടകൾ)'},
+{n:47,name:'Muhammad',meaning:'Muhammad',ar:'محمد',ta:'முகம்மது (ஸல்)',ml:'മുഹമ്മദ് (നബി)'},
+{n:48,name:'Al-Fath',meaning:'The Victory',ar:'الفتح',ta:'அல்-பத்ஹ் (வெற்றி)',ml:'അൽ-ഫത്ഹ് (വിജയം)'},
+{n:49,name:'Al-Hujurat',meaning:'The Rooms',ar:'الحجرات',ta:'அல்-ஹுஜுராத் (அறைகள்)',ml:'അൽ-ഹുജുറാത്ത് (അറകൾ)'},
+{n:50,name:'Qaf',meaning:'Qaf',ar:'ق',ta:'காஃப்',ml:'ഖാഫ് (ഖാഫ്)'},
+{n:51,name:'Adh-Dhariyat',meaning:'The Winnowing Winds',ar:'الذاريات',ta:'அத்-தாரியாத் (காற்றைப் போல பறக்கடிப்பவை)',ml:'അദ്ദാരിയാത്ത് (പറത്തിക്കളയുന്ന കാറ്റുകൾ)'},
+{n:52,name:'At-Tur',meaning:'The Mount',ar:'الطور',ta:'அத்-தூர் (மலை - சீனா மலை)',ml:'അത്ത്തൂർ (പർവ്വതം)'},
+{n:53,name:'An-Najm',meaning:'The Star',ar:'النجم',ta:'அன்-நஜ்ம் (நட்சத்திரம்)',ml:'അന്നജ്മ് (നക്ഷത്രം)'},
+{n:54,name:'Al-Qamar',meaning:'The Moon',ar:'القمر',ta:'அல்-கமர் (சந்திரன்)',ml:'അൽഖമർ (ചന്ദ്രൻ)'},
+{n:55,name:'Ar-Rahman',meaning:'The Most Merciful',ar:'الرحمن',ta:'அர்-ரஹ்மான் (அளவற்ற அருளாளன்)',ml:'അർറഹ്മാൻ (പരമകാരുണികൻ)'},
+{n:56,name:"Al-Waqi'ah",meaning:'The Inevitable Event',ar:'الواقعة',ta:'அல்-வாகிஆ (நிச்சயமாக நடக்கும் நிகழ்வு)',ml:'അൽവാനിഅത്ത് / അൽവാഖിഅ (സംഭവിക്കാൻ പോകുന്ന വിധി)'},
+{n:57,name:'Al-Hadid',meaning:'The Iron',ar:'الحديد',ta:'அல்-ஹதீத் (இரும்பு)',ml:'അൽഹദീദ് (ഇരുമ്പ്)'},
+{n:58,name:'Al-Mujadilah',meaning:'The Pleading Woman',ar:'المجادلة',ta:'அல்-முஜாதிலா (வாதிட்ட பெண்)',ml:'അൽമുജാദില (തർക്കിച്ച സ്ത്രീ)'},
+{n:59,name:'Al-Hashr',meaning:'The Gathering',ar:'الحشر',ta:'அல்-ஹஷ்ர் (ஒன்றுகூட்டுதல்)',ml:'അൽഹശർ (ഒന്നിച്ചുകൂടൽ)'},
+{n:60,name:'Al-Mumtahanah',meaning:'The Woman to Be Examined',ar:'الممتحنة',ta:'அல்-மும்தஹனா (சோதிக்கப்பட வேண்டிய பெண்)',ml:'അൽമുുംതഹന (പരിശോധിക്കപ്പെടേണ്ട സ്ത്രീ)'},
+{n:61,name:'As-Saff',meaning:'The Ranks',ar:'الصف',ta:'அஸ்-ஸஃப் (வரிசை)',ml:'അസ്സഫ്ഫ് (വരി)'},
+{n:62,name:"Al-Jumu'ah",meaning:'Friday',ar:'الجمعة',ta:'அல்-ஜும்ஆ (வெள்ளிக்கிழமை)',ml:'അൽജുമുഅ (വെള്ളിയാഴ്ച)'},
+{n:63,name:'Al-Munafiqun',meaning:'The Hypocrites',ar:'المنافقون',ta:'அல்-முனாபிகூன் (நயவஞ்சகர்கள்)',ml:'അൽമുനാഫിഖൂൻ (കപടവിശ്വാസികൾ)'},
+{n:64,name:'At-Taghabun',meaning:'Mutual Loss and Gain',ar:'التغابن',ta:'அத்-தகாபுன் (இழப்பு மற்றும் லாபம்)',ml:'അത്തഗാബും (പരസ്പരം വഞ്ചിക്കപ്പെടുന്നത്)'},
+{n:65,name:'At-Talaq',meaning:'The Divorce',ar:'الطلاق',ta:'அத்-தலாக் (விவாகரத்து)',ml:'അത്തലാഖ് (വിവാഹമോചനം)'},
+{n:66,name:'At-Tahrim',meaning:'The Prohibition',ar:'التحريم',ta:'அத்-தஹ்ரீம் (தடை செய்தல்)',ml:'അത്തഹ്റീം (വിലക്കൽ)'},
+{n:67,name:'Al-Mulk',meaning:'The Sovereignty',ar:'الملك',ta:'அல்-முல்க் (அதிகாரம் / ஆட்சி)',ml:'അൽമുൽക് (ആധിപത്യം)'},
+{n:68,name:'Al-Qalam',meaning:'The Pen',ar:'القلم',ta:'அல்-கலம் (பேனா)',ml:'അൽഖലം (പേന)'},
+{n:69,name:'Al-Haqqah',meaning:'The Reality',ar:'الحاقة',ta:'அல்-ஹக்கா (உண்மையான நிகழ்வு)',ml:'അൽഹാഖ (ഉറപ്പായ സംഭവം)'},
+{n:70,name:"Al-Ma'arij",meaning:'The Ascending Stairways',ar:'المعارج',ta:'அல்-மஆரிஜ் (ஏறும் படிகள்)',ml:'അൽമആരിജ് (കയറാനുള്ള വഴികൾ)'},
+{n:71,name:'Nuh',meaning:'Noah',ar:'نوح',ta:'நூஹ் (நூஹ் நபி)',ml:'നൂഹ് (നൂഹ് നബി)'},
+{n:72,name:'Al-Jinn',meaning:'The Jinn',ar:'الجن',ta:'அல்-ஜின் (ஜின் இனத்தவர்)',ml:'അൽജിൻ (ജിന്നുകൾ)'},
+{n:73,name:'Al-Muzzammil',meaning:'The Enwrapped One',ar:'المزمل',ta:'அல்-முஸ்ஸம்மில் (போர்வை போர்த்திக்கொண்டிருப்பவர்)',ml:'അൽമുസ്സമ്മിൽ (വസ്ത്രം ചുറ്റിക്കൂട്ടിയവൻ)'},
+{n:74,name:'Al-Muddaththir',meaning:'The Cloaked One',ar:'المدثر',ta:'அல்-முத்தஸ்ஷிர் (போர்வை போர்த்தியவர்)',ml:'അൽമുദ്ദഥിർ (പുതച്ചു മൂടിയവൻ)'},
+{n:75,name:'Al-Qiyamah',meaning:'The Resurrection',ar:'القيامة',ta:'அல்-கியாமா (மறுமை நாள்)',ml:'അൽഖിയാമ (പുനരുത്ഥാനം)'},
+{n:76,name:'Al-Insan',meaning:'The Human',ar:'الإنسان',ta:'அல்-இன்ஸான் (மனிதன்)',ml:'അൽഇൻസാൻ (മനുഷ്യൻ)'},
+{n:77,name:'Al-Mursalat',meaning:'Those Sent Forth',ar:'المرسلات',ta:'அல்-முர்ஸலாத் (அனுப்பப்பட்டவர்கள்)',ml:'അൽമുർസലാത്ത് (അയക്കപ്പെട്ടവ)'},
+{n:78,name:'An-Naba',meaning:'The Great News',ar:'النبأ',ta:'அன்-நபா (பெரும் செய்தி)',ml:'അന്നബഅ് (വലിയ വാർത്ത)'},
+{n:79,name:"An-Nazi'at",meaning:'Those Who Pull Out',ar:'النازعات',ta:'அன்-நாஸிஆத் (உயிரை உருவி எடுப்பவை)',ml:'അന്നാസിആത്ത് (ഊരിയെടുക്കുന്നവ)'},
+{n:80,name:'Abasa',meaning:'He Frowned',ar:'عبس',ta:'அபஸா (அவர் முகம்கொடுக்கவில்லை / நெரித்தார்)',ml:'അബസ (അദ്ദേഹം മുഖം ചുളിച്ചു)'},
+{n:81,name:'At-Takwir',meaning:'The Folding Up',ar:'التكوير',ta:'அத்-தக்வீர் (சுருட்டப்படுதல்)',ml:'അത്തക്വീർ (ചുരുട്ടപ്പെടുന്നത്)'},
+{n:82,name:'Al-Infitar',meaning:'The Cleaving',ar:'الانفطار',ta:'அல்-இன்பிதார் (பிளக்கப்படுதல்)',ml:'അൽഇൻഫിത്വാർ (പിളർക്കപ്പെടൽ)'},
+{n:83,name:'Al-Mutaffifin',meaning:'Those Who Give Less',ar:'المطففين',ta:'அல்-முதப்ப்பிபீன் (அளவையில் மோசடி செய்பவர்கள்)',ml:'അൽമുത്വഫ്ഫിഫീൻ (അളവിൽ കുറവുചെയ്യുന്നവർ)'},
+{n:84,name:'Al-Inshiqaq',meaning:'The Splitting Open',ar:'الانشقاق',ta:'அல்-இன்ஷிகாக் (பிளந்து போதல்)',ml:'അൽഇൻഷിഖാഖ് (പിളർന്ന് መარൽ)'},
+{n:85,name:'Al-Buruj',meaning:'The Great Stars',ar:'البروج',ta:'அல்-புரூஜ் (நட்சத்திரக் கூட்டங்கள்)',ml:'അൽബുറൂജ് (രാശികൾ)'},
+{n:86,name:'At-Tariq',meaning:'The Nightcomer',ar:'الطارق',ta:'அத்-தாரிக் (இரவில் வருபவர்)',ml:'അത്ധാരിഖ് (രാത്രിയിലെ അതിഥി)'},
+{n:87,name:"Al-A'la",meaning:'The Most High',ar:'الأعلى',ta:'அல்-அஃலா (மிக உயர்ந்தவன்)',ml:'അൽഅഅ്ലാ (ഏറ്റവും ഉന്നതൻ)'},
+{n:88,name:'Al-Ghashiyah',meaning:'The Overwhelming Event',ar:'الغاشية',ta:'அல்-கா<bos>4தியா (மூடிக்கொள்ளும் நிகழ்வு)',ml:'അൽഗാശിയ (എല്ലാം മൂടിക്കളയുന്ന സംഭവം)'},
+{n:89,name:'Al-Fajr',meaning:'The Dawn',ar:'الفجر',ta:'அல்-பஜ்ர் (வைகறை / விடியல்)',ml:'അൽഫജ്ർ (പ്രഭാതം)'},
+{n:90,name:'Al-Balad',meaning:'The City',ar:'البلد',ta:'அல்-பலத் (நகரம் - மக்கா)',ml:'അൽബലദ് (നാട്)'},
+{n:91,name:'Ash-Shams',meaning:'The Sun',ar:'الشمس',ta:'அஷ்-ஷம்ஸ் (சூரியன்)',ml:'അശ്ശംസ് (സൂര്യൻ)'},
+{n:92,name:'Al-Layl',meaning:'The Night',ar:'الليل',ta:'அல்-லைல் (இரவு)',ml:'അല്ലൈൽ (രാത്രി)'},
+{n:93,name:'Ad-Duha',meaning:'The Morning Brightness',ar:'الضحى',ta:'அத்-துஹா (முற்பகல்)',ml:'അദ്ദുഹാ (പകൽവെളിച്ചം)'},
+{n:94,name:'Ash-Sharh',meaning:'The Relief',ar:'الشرح',ta:'அஷ்-ஷர்ஹ் (மார்பை அகலமாக்குதல் / ஆறுதல்)',ml:'അശ്ശർഹ് (വിശാലമാക്കൽ)'},
+{n:95,name:'At-Tin',meaning:'The Fig',ar:'التين',ta:'அத்-தின் (அத்திப் பழம்)',ml:'അത്തിൻ (അത്തിപ്പഴം)'},
+{n:96,name:"Al-'Alaq",meaning:'The Clinging Clot',ar:'العلق',ta:'அல்-அலக் (கருக்கட்டி / ஒட்டிக்கொள்ளும் பொருள்)',ml:'അൽഅലഖ് (ഭ്രൂണം)'},
+{n:97,name:'Al-Qadr',meaning:'The Decree',ar:'القدر',ta:'அல்-கத்ர் (கண்ணியம் / நிர்ணயம்)',ml:'അൽഖദ്ർ (നിർണ്ണയം)'},
+{n:98,name:'Al-Bayyinah',meaning:'The Clear Proof',ar:'البينة',ta:'அல்-பய்யினா (தெளிவான சான்று)',ml:'അൽബയ്യിന (വ്യക്തമായ തെളിവ്)'},
+{n:99,name:'Az-Zalzalah',meaning:'The Earthquake',ar:'الزلزلة',ta:'அத்-தல்ஜலா (பூமி அதிர்ச்சி)',ml:'അസ്സൽസല (ഭൂമികുലുക്കം)'},
+{n:100,name:"Al-'Adiyat",meaning:'The Charging Horses',ar:'العاديات',ta:'அல்-ஆதியாத் (மூச்சிறைக்கும் குதிரைகள்)',ml:'അൽആദിയാത്ത് (കുതിച്ചുപാസ്സ് കുതിരകൾ)'},
+{n:101,name:"Al-Qari'ah",meaning:'The Striking Calamity',ar:'القارعة',ta:'அல்-காரிஆ (இதயத்தை அதிரச்செய்யும் நிகழ்வு)',ml:'അൽഖാരിഅ (ഹൃദയം തകർക്കുന്ന സംഭവം)'},
+{n:102,name:'At-Takathur',meaning:'Competition in Increase',ar:'التكاثر',ta:'அத்-தகாதுர் (பெருமைக்காக போட்டி போடுதல்)',ml:'അത്തകാഥുർ (പരസ്പരം പെരുപ്പം കാണിക്കൽ)'},
+{n:103,name:"Al-'Asr",meaning:'Time',ar:'العصر',ta:'அல்-அஸ்ர் (காலம்)',ml:'അൽഅസ്ർ (കാലം)'},
+{n:104,name:'Al-Humazah',meaning:'The Slanderer',ar:'الهمزة',ta:'அல்-ஹுமஸா (புறம் பேசுபவன் / ஏளனம் செய்பவன்)',ml:'അൽഹുമസ (കുറ്റപ്പെടുത്തുന്നവൻ)'},
+{n:105,name:'Al-Fil',meaning:'The Elephant',ar:'الفيل',ta:'அல்-பில் (யானை)',ml:'അൽഫീൽ (ആന)'},
+{n:106,name:'Quraysh',meaning:'Quraysh',ar:'قريش',ta:'குறைஷ் (குறைஷ் கோத்திரம்)',ml:'ഖുറൈഷ് (ഖുറൈഷ് ഗോത്രം)'},
+{n:107,name:"Al-Ma'un",meaning:'Small Kindnesses',ar:'الماعون',ta:'அல்-மாயூன் (தேவையான உதவிகள்)',ml:'അൽമാഊൻ (പശുവിറച്ചതും മറ്റും കൊടുക്കൽ / സഹായം)'},
+{n:108,name:'Al-Kawthar',meaning:'Abundance',ar:'الكوثر',ta:'அல்-கவ்ஸர் (நன்மைப் பெருக்கம் / சொர்க்க நதி)',ml:'അൽക്വൗഥർ (സമൃദ്ധി)'},
+{n:109,name:'Al-Kafirun',meaning:'The Disbelievers',ar:'الكافرون',ta:'அல்-காபிரூன் (நிராகரிப்பாளர்கள்)',ml:'അൽകാഫിറൂൻ (സത്യനിഷേധികൾ)'},
+{n:110,name:'An-Nasr',meaning:'The Divine Support',ar:'النصر',ta:'அன்-நஸ்ர் (இறைவனின் உதவி)',ml:'അന്നസ്ർ (സഹായം)'},
+{n:111,name:'Al-Masad',meaning:'The Palm Fibre',ar:'المسد',ta:'அல்-மஸத் (பேரீச்சம்பா நாரினால் ஆன கயிறு)',ml:'അൽമസദ് (ഈന്തപ്പന നാര്)'},
+{n:112,name:'Al-Ikhlas',meaning:'Sincerity',ar:'الإخلاص',ta:'அல்-இக்லாஸ் (தூய ஏகத்துவம் / உளமாசு இன்மை)',ml:'അൽഇഖ്്ലാസ് (ഏകദൈവവിശ്വാസം)'},
+{n:113,name:'Al-Falaq',meaning:'The Daybreak',ar:'الفلق',ta:'அல்-பலக் (விடியற்காலை)',ml:'അൽഫലഖ് (പുലരി)'},
+{n:114,name:'An-Nas',meaning:'Humankind',ar:'നാസ്',ta:'அன்-நாஸ் (மனிதர்கள்)',ml:'അന്നാസ് (മനുഷ്യർ)'}];
+
+let index=0, setNo=1, mode="number", checked=0, correct=0, grandIndex=0, currentLang="en";
+
+const translations = {
+  en: {
+    eyebrow: "Learn • Recall • Retain",
+    title: "114-Surah Quest",
+    subtitle: "A step-by-step challenge connecting every Surah’s number, Arabic name and English meaning.",
+    challengeTitle: "Three-Clue Challenge",
+    challengeDesc: "No typing and no spelling penalties. Practise just six Surahs at a time, then move to any other set when you are ready.",
+    setsPill: "19 sets · 6 Surahs each",
+    hubTitle: "Choose your learning set",
+    hubDesc: "114 Surahs · 19 sets · 6 Surahs in each set. Start anywhere, or follow the sequence.",
+    randomSet: "Surprise me ↗",
+    prevSet: "← Previous set",
+    nextSet: "Next set →",
+    modeNum: "Number → Name + meaning",
+    modeArb: "Arabic name → Number + meaning",
+    modeMean: "Meaning → Name + number",
+    modeGrand: "Grand Revision · All 114",
+    clueNum: "Your clue · Surah number",
+    clueArb: "Your clue · Arabic name",
+    clueMean: "Your clue · English meaning",
+    subNum: "Choose the Arabic name and English meaning",
+    subMean: "Choose the Arabic name and Surah number",
+    grandSub: "Choose the Arabic name and English meaning (mixed from all 114)",
+    labelName: "Arabic name / transliteration",
+    labelMeaning: "English meaning",
+    labelNumber: "Surah number",
+    hintName: "Only these six Surahs are in the current set.",
+    hintMeaning: "Choose from the six meanings in this set.",
+    hintNumber: "Choose a number from 1 to 114.",
+    checkBtn: "Check my answers",
+    revealBtn: "Reveal reference answer",
+    nextBtn: "Next Surah →",
+    txtChecked: "Checked",
+    txtCorrect: "All correct",
+    txtAccuracy: "Accuracy",
+    restartBtn: "Restart this set",
+    tipTitle: "Learning tip:",
+    tipDesc: "Try to recall before selecting. If you miss one part, the feedback shows exactly which clue needs revision. Review the full three-part answer, then try again later.",
+    footerNote: "English titles are concise learning glosses; wording can differ among translations. Arabic names and standard Surah order are included for all 114 Surahs. This is a learning aid, not a substitute for Qur’an study or tafsir.",
+    footerDesc: "A respectful learning tool for remembering the Qur’an’s Surah names, meanings and order.",
+    phName: "— Choose a Surah name —",
+    phMeaning: "— Choose an English meaning —",
+    phNumber: "— Choose a number —",
+    excellent: "Excellent! Both answers are correct.",
+    goodEffort: "Good effort. Let's learn from this attempt.",
+    refAnswer: "Reference answer",
+    lookRemember: "Look, remember, and then test yourself."
+  },
+  ta: {
+    eyebrow: "கற்றுக்கொள் • நினைகூர் • நிலைநிறுத்து",
+    title: "114-சூரா வினாடி வினா",
+    subtitle: "ஒவ்வொரு சூராவின் எண், அரபுப் பெயர் மற்றும் அதன் பொருளை இணைக்கும் ஒரு படிப்படியான சவால்.",
+    challengeTitle: "மூன்று குறிப்பு சவால்",
+    challengeDesc: "தட்டச்சு செய்ய வேண்டியதில்லை, எழுத்துப்பிழை அபராதமும் இல்லை. ஒரே நேரத்தில் ஆறு சூராக்களை மட்டும் பயிற்சி செய்யுங்கள், பின்னர் நீங்கள் தயாரானதும் வேறு எந்தத் தொகுப்பிற்கும் செல்லுங்கள்.",
+    setsPill: "19 தொகுப்புகள் · தலா 6 சூராக்கள்",
+    hubTitle: "உங்கள் கற்றல் தொகுப்பைத் தேர்ந்தெடுக்கவும்",
+    hubDesc: "114 சூராக்கள் · 19 தொகுப்புகள் · ஒவ்வொரு தொகுப்பிலும் 6 சூராக்கள். எங்கு வேண்டுமானாலும் தொடங்குங்கள் அல்லது வரிசையைப் பின்பற்றுங்கள்.",
+    randomSet: "ரேண்டம் தொகுப்பு ↗",
+    prevSet: "← முந்தைய தொகுப்பு",
+    nextSet: "அடுத்த தொகுப்பு →",
+    modeNum: "எண் → பெயர் + பொருள்",
+    modeArb: "அரபுப் பெயர் → எண் + பொருள்",
+    modeMean: "பொருள் → பெயர் + எண்",
+    modeGrand: "பெருந் திருத்தம் · அனைத்து 114",
+    clueNum: "உங்கள் குறிப்பு · சூராவின் எண்",
+    clueArb: "உங்கள் குறிப்பு · அரபுப் பெயர்",
+    clueMean: "உங்கள் குறிப்பு · பொருள்",
+    subNum: "அரபுப் பெயரையும் ஆங்கிலப் பொருள We தேர்ந்தெடுக்கவும்",
+    subMean: "அரபுப் பெயர் மற்றும் சூராவின் எண்ணைத் தேர்ந்தெடுக்கவும்",
+    grandSub: "அரபுப் பெயர் மற்றும் பொருளைத் தேர்ந்தெடுக்கவும் (அனைத்து 114-லிருந்தும் கலந்தது)",
+    labelName: "அரபுப் பெயர் / ஒலிபெயர்ப்பு",
+    labelMeaning: "தமிழ்/ஆங்கிலப் பொருள்",
+    labelNumber: "சூரா எண்",
+    hintName: "இந்தத் தொகுப்பில் இந்த ஆறு சூராக்கள் மட்டுமே உள்ளன.",
+    hintMeaning: "இந்தத் தொகுப்பில் உள்ள ஆறு பொருட்களிலிருந்து தேர்ந்தெடுக்கவும்.",
+    hintNumber: "1 முதல் 114 வரை ஒரு எண்ணைத் தேர்ந்தெடுக்கவும்.",
+    checkBtn: "பதவிகளைச் சரிபார்க்கவும்",
+    revealBtn: "சரியான பதவியைக் காட்டு",
+    nextBtn: "அடுத்த சூரா →",
+    txtChecked: "சரிபார்க்கப்பட்டது",
+    txtCorrect: "அனைத்தும் சரி",
+    txtAccuracy: "துல்லியம்",
+    restartBtn: "இந்தத் தொகுப்பை மீட்டமை",
+    tipTitle: "கற்றல் குறிப்பு:",
+    tipDesc: "தேர்ந்தெடுப்பதற்கு முன் நினைவுகூர முயற்சிக்கவும். நீங்கள் ஒரு பகுதியைத் தவறவிட்டால், எதில் கவனம் செலுத்த வேண்டும் என்பதைப் பின்னூட்டம் காட்டும்.",
+    footerNote: "தலைப்புகள் கற்றலுக்கான சுருக்கமான விளக்கங்களாகும்; மொழிபெயர்ப்புகளுக்கு ஏற்ப சொற்கள் மாறுபடலாம். இது குர்ஆன் ஆய்வுக்கான மாற்றீடு அல்ல, ஒரு கற்றல் கருவியாகும்.",
+    footerDesc: "குர்ஆனின் சூரா பெயர்கள், பொருள்கள் மற்றும் வரிசையை நினைவில் கொள்ள உதவும் ஒரு மரியாதைமிகு கற்றல் கருவி.",
+    phName: "— ஒரு சூராவின் பெயரைத் தேர்ந்தெடுக்கவும் —",
+    phMeaning: "— பொருளைத் தேர்ந்தெடுக்கவும் —",
+    phNumber: "— ஒரு எண்ணைத் தேர்ந்தெடுக்கவும் —",
+    excellent: "சிறப்பு! இரண்டும் சரியான பதில்கள்.",
+    goodEffort: "நல் முயற்சி. இதிலிருந்து கற்றுக்கொள்வோம்.",
+    refAnswer: "சரியான பதில்",
+    lookRemember: "பார்த்து, நினைவில் கொண்டு, உங்களைச் சோதித்துப் பாருங்கள்."
+  },
+  ml: {
+    eyebrow: "പഠിക്കുക • ഓർമ്മിക്കുക • നിലനിർത്തുക",
+    title: "114-സൂറ ക്വസ്റ്റ്",
+    subtitle: "ഓരോ സൂറയുടെയും നമ്പർ, അറബി പേര്, അർത്ഥം എന്നിവ ബന്ധിപ്പിക്കുന്ന പടിപടിയായുള്ള പരിശീലനം.",
+    challengeTitle: "മൂന്ന് സൂചന വെല്ലുവിളി",
+    challengeDesc: "ടൈപ്പിംഗ് ഇല്ല, അക്ഷരത്തെറ്റ് പിഴവുകളുമില്ല. ഒരേസമയം ആറ് സൂറകൾ വീതം പരിശീലിക്കുക.",
+    setsPill: "19 സെറ്റുകൾ · ഓരോന്നിലും 6 സൂറകൾ",
+    hubTitle: "നിങ്ങളുടെ പഠന സെറ്റ് തിരഞ്ഞെടുക്കുക",
+    hubDesc: "114 സൂറകൾ · 19 സെറ്റുകൾ · ഓരോ സെറ്റിലും 6 സൂറകൾ.",
+    randomSet: "ക്രമരഹിതമായി ↗",
+    prevSet: "← മുൻ സെറ്റ്",
+    nextSet: "അടുത്ത സെറ്റ് →",
+    modeNum: "നമ്പർ → പേര് + അർത്ഥം",
+    modeArb: "അറബി പേര് → നമ്പർ + അർത്ഥം",
+    modeMean: "അർത്ഥം → പേര് + നമ്പർ",
+    modeGrand: "ഗ്രാൻഡ് റിവിഷൻ · 114 സൂറകളും",
+    clueNum: "നിങ്ങളുടെ സൂചന · സൂറ നമ്പർ",
+    clueArb: "നിങ്ങളുടെ സൂചന · അറബി പേര്",
+    clueMean: "നിങ്ങളുടെ സൂചന · അർത്ഥം",
+    subNum: "അറബി നാമവും അർത്ഥവും തിരഞ്ഞെടുക്കുക",
+    subMean: "അറബി നാമവും സൂറ നമ്പറും തിരഞ്ഞെടുക്കുക",
+    grandSub: "അറബി നാമവും അർത്ഥവും തിരഞ്ഞെടുക്കുക (114-ൽ നിന്നുള്ളവ)",
+    labelName: "അറബി പേര് / ഉച്ചാരണം",
+    labelMeaning: "മലയാളം/ഇംഗ്ലീഷ് അർത്ഥം",
+    labelNumber: "സൂറ നമ്പർ",
+    hintName: "ഈ സെറ്റിൽ ഈ ആറ് സൂറകൾ മാത്രമേ ഉള്ളൂ.",
+    hintMeaning: "ഈ സെറ്റിലെ ആറ് അർത്ഥങ്ങളിൽ നിന്ന് തിരഞ്ഞെടുക്കുക.",
+    hintNumber: "1 മുതൽ 114 വരെയുള്ള നമ്പർ തിരഞ്ഞെടുക്കുക.",
+    checkBtn: " ഉത്തരങ്ങൾ പരിശോധിക്കുക",
+    revealBtn: "ശരിയുത്തരം കാണിക്കുക",
+    nextBtn: "അടുത്ത സൂറ →",
+    txtChecked: "പരിശോധിച്ചത്",
+    txtCorrect: "എല്ലാം ശരി",
+    txtAccuracy: "കൃത്യത",
+    restartBtn: "ഈ സെറ്റ് പുനഃക്രമീകരിക്കുക",
+    tipTitle: "പഠന നുറുങ്ങ്:",
+    tipDesc: "തിരഞ്ഞെടുക്കുന്നതിന് മുമ്പ് ഓർത്തെടുക്കാൻ ശ്രമിക്കുക.",
+    footerNote: "ഇതൊരു പഠനസഹായി മാത്രമാണ്, ഖുർആൻ പഠനത്തിനോ തഫ്സീറിനോ പകരമല്ല.",
+    footerDesc: "ഖുർആനിലെ സൂറകളുടെ പേരുകളും അർത്ഥങ്ങളും ഓർമ്മിക്കാനുള്ള ഒരു പഠന സഹായി.",
+    phName: "— ഒരു സൂറയുടെ പേര് തിരഞ്ഞെടുക്കുക —",
+    phMeaning: "— ഒരു അർത്ഥം തിരഞ്ഞെടുക്കുക —",
+    phNumber: "— ഒരു നമ്പർ തിരഞ്ഞെടുക്കുക —",
+    excellent: "മികച്ചത്! ഉത്തരങ്ങൾ ശരിയാണ്.",
+    goodEffort: "നല്ല ശ്രമം. നമുക്ക് പഠിക്കാം.",
+    refAnswer: "ശരിയുത്തരം",
+    lookRemember: "വായിച്ച് മനസ്സിലാക്കി സ്വയം പരിശോധിക്കുക."
+  }
+};
+
+const $=id=>document.getElementById(id);
+function shuffled(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function fillSelect(el, items, placeholder){
+  el.innerHTML="";
+  const first=document.createElement("option");
+  first.value="";
+  first.textContent=placeholder;
+  el.append(first);
+  shuffled(items).forEach(item=>{
+    const o=document.createElement("option");
+    o.value=String(item.n);
+    o.textContent=item.label;
+    el.append(o);
+  });
+}
+
+function optionPool(){
+  if(mode==="grand"){
+    const correct=current();
+    const others=shuffled(surahs.filter(s=>s.n!==correct.n)).slice(0,5);
+    return shuffled([correct,...others]);
+  }
+  return currentSet();
+}
+
+function nameOptions(){
+  return optionPool().map(s=>{
+    let label = `${s.name} — ${s.ar}`;
+    if(currentLang === 'ta') label = `${s.ta} (${s.ar})`;
+    if(currentLang === 'ml') label = `${s.ml} (${s.ar})`;
+    return {n:s.n, label: label};
+  });
+}
+
+function meaningOptions(){
+  return optionPool().map(s=>{
+    let label = s.meaning;
+    if(currentLang === 'ta') label = s.ta.split(' ')[0] + ' - ' + s.meaning;
+    if(currentLang === 'ml') label = s.ml;
+    return {n:s.n, label: label};
+  });
+}
+
+function numberOptions(){return optionPool().map(s=>({n:s.n,label:String(s.n)}))}
+function currentSet(){return surahs.slice((setNo-1)*6,setNo*6)}
+function current(){return mode==="grand"?surahs[grandIndex]:currentSet()[index]}
+
+function setHash(n){location.hash=`set-${String(n).padStart(2,"0")}`}
+function chooseSet(n,updateHash=true){setNo=Math.max(1,Math.min(19,n));index=0;resetSelections();hideFeedback();if(updateHash)setHash(setNo);render();renderSetHub()}
+
+function renderSetHub(){
+  const grid=$("setGrid");
+  grid.innerHTML="";
+  for(let n=1;n<=19;n++){
+    const first=(n-1)*6+1, last=n*6;
+    const a=document.createElement("a");
+    a.className="set-link";
+    a.href=`#set-${String(n).padStart(2,"0")}`;
+    a.setAttribute("aria-current",String(n===setNo));
+    a.innerHTML=`Set ${n}<span>${first}–${last}</span>`;
+    a.addEventListener("click",()=>chooseSet(n,false));
+    grid.append(a);
+  }
+  const t = translations[currentLang];
+  $("setSummary").innerHTML=`<strong>Set ${setNo} · Surahs ${(setNo-1)*6+1}–${setNo*6}</strong> · 6 Surahs to practise`;
+}
+
+function resetSelections(){["nameChoice","meaningChoice","numberChoice"].forEach(id=>$(id).value="")}
+
+function setMode(m){
+  mode=m;
+  document.querySelectorAll(".mode").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===m)));
+  if(m==="grand"){
+    $("nameField").hidden=false;
+    $("meaningField").hidden=false;
+    $("numberField").hidden=true;
+  }else{
+    $("nameField").hidden=m==="arabic";
+    $("meaningField").hidden=m==="meaning";
+    $("numberField").hidden=m==="number";
+  }
+  hideFeedback();
+  resetSelections();
+  if(m==="grand") grandIndex=0;
+  render();
+}
+
+function switchLanguage(lang) {
+  currentLang = lang;
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
+  });
+  const t = translations[lang];
+  $("ui-eyebrow").textContent = t.eyebrow;
+  $("ui-title").textContent = t.title;
+  $("ui-subtitle").textContent = t.subtitle;
+  $("ui-challenge-title").textContent = t.challengeTitle;
+  $("ui-challenge-desc").textContent = t.challengeDesc;
+  $("ui-sets-pill").textContent = t.setsPill;
+  $("ui-hub-title").textContent = t.hubTitle;
+  $("ui-hub-desc").textContent = t.hubDesc;
+  $("randomSet").textContent = t.randomSet;
+  $("prevSet").textContent = t.prevSet;
+  $("nextSet").textContent = t.nextSet;
+  $("mode-num").textContent = t.modeNum;
+  $("mode-arb").textContent = t.modeArb;
+  $("mode-mean").textContent = t.modeMean;
+  $("mode-grand").textContent = t.modeGrand;
+  $("label-name").textContent = t.labelName;
+  $("label-meaning").textContent = t.labelMeaning;
+  $("label-number").textContent = t.labelNumber;
+  $("hint-name").textContent = t.hintName;
+  $("hint-meaning").textContent = t.hintMeaning;
+  $("hint-number").textContent = t.hintNumber;
+  $("check").textContent = t.checkBtn;
+  $("reveal").textContent = t.revealBtn;
+  $("next").textContent = t.nextBtn;
+  $("txt-checked").textContent = t.txtChecked;
+  $("txt-correct").textContent = t.txtCorrect;
+  $("txt-accuracy").textContent = t.txtAccuracy;
+  $("restart").textContent = t.restartBtn;
+  $("txt-tip-title").textContent = t.tipTitle;
+  $("txt-tip-desc").textContent = t.tipDesc;
+  $("ui-footer-note").textContent = t.footerNote;
+  $("ui-footer-desc").textContent = t.footerDesc;
+  render();
+  renderSetHub();
+}
+
+function render(){
+  const s=current();
+  const t = translations[currentLang];
+  if(mode==="grand"){
+    $("position").textContent=`Surah ${s.n} · Grand Revision (all 114)`;
+    $("fill").style.width=`${(grandIndex+1)/114*100}%`;
+    $("bar").setAttribute("aria-valuenow",grandIndex+1);
+    $("bar").setAttribute("aria-valuemax",114);
+    $("round").textContent=`Grand Revision · Practice round ${checked+1}`;
+    $("clabel").textContent=t.clueNum;
+    $("cmain").textContent=s.n;
+    $("csub").textContent=t.grandSub;
+  }else{
+    $("position").textContent=`Surah ${s.n} · Set ${setNo} of 19`;
+    $("fill").style.width=`${(index+1)/6*100}%`;
+    $("bar").setAttribute("aria-valuenow",index+1);
+    $("bar").setAttribute("aria-valuemax",6);
+    $("round").textContent=`Set ${setNo} · Practice round ${checked+1}`;
+    if(mode==="number"){
+      $("clabel").textContent=t.clueNum;
+      $("cmain").textContent=s.n;
+      $("csub").textContent=t.subNum;
+    }
+    if(mode==="arabic"){
+      $("clabel").textContent=t.clueArb;
+      $("cmain").innerHTML=`<span class="carabic" lang="ar" dir="rtl">${s.ar}</span>`;
+      $("csub").textContent=(currentLang === 'ta' ? s.ta : currentLang === 'ml' ? s.ml : s.name);
+    }
+    if(mode==="meaning"){
+      $("clabel").textContent=t.clueMean;
+      $("cmain").textContent=(currentLang === 'ta' ? s.ta : currentLang === 'ml' ? s.ml : s.meaning);
+      $("csub").textContent=t.subMean;
+    }
+  }
+ fillSelect($("nameChoice"),nameOptions(),t.phName);
+ fillSelect($("meaningChoice"),meaningOptions(),t.phMeaning);
+ fillSelect($("numberChoice"),numberOptions(),t.phNumber);
+ $("checked").textContent=checked;$("correct").textContent=correct;$("accuracy").textContent=checked?Math.round(correct/checked*100)+"%":"—";
+}
+
+function hideFeedback(){$("feedback").className="feedback";$("feedback").innerHTML=""}
+
+function answerHtml(){
+  const s=current();
+  const t = translations[currentLang];
+  let displayName = currentLang === 'ta' ? s.ta : currentLang === 'ml' ? s.ml : s.name;
+  let displayMeaning = currentLang === 'ta' ? s.ta : currentLang === 'ml' ? s.ml : s.meaning;
+  return `<div class="reveal"><strong>${t.refAnswer}</strong><p><b>Surah ${s.n}</b> · <span class="carabic" lang="ar" dir="rtl">${s.ar}</span> · ${displayName} · “${displayMeaning}”</p></div>`;
+}
+
+function check(){
+ const s=current();let tests=[];
+ const t = translations[currentLang];
+ if(mode==="number"||mode==="grand")tests=[["Arabic name",Number($("nameChoice").value)===s.n],["English meaning",Number($("meaningChoice").value)===s.n]];
+ if(mode==="arabic")tests=[["Surah number",Number($("numberChoice").value)===s.n],["English meaning",Number($("meaningChoice").value)===s.n]];
+ if(mode==="meaning")tests=[["Arabic name",Number($("nameChoice").value)===s.n],["Surah number",Number($("numberChoice").value)===s.n]];
+ if(tests.some(t=>!t[1] && !t[0]))return;
+ const complete=tests.every(t=>t[1]) && tests.every(t=>$(t[0]==="Arabic name"?"nameChoice":t[0]==="English meaning"?"meaningChoice":"numberChoice").value!=="");
+ checked++;if(complete)correct++;
+ $("checked").textContent=checked;$("correct").textContent=correct;$("accuracy").textContent=Math.round(correct/checked*100)+"%";$("round").textContent=`Set ${setNo} · Practice round ${checked}`;
+ const fb=$("feedback");fb.className="feedback show "+(complete?"good":"retry");
+ fb.innerHTML=`<h3>${complete?t.excellent:t.goodEffort}</h3><p>${tests.map(([label,ok])=>`${label}: ${ok?"correct":"not correct yet"}`).join(" · ")}</p>${answerHtml()}`;
+}
+
+function reveal(){
+  const fb=$("feedback");
+  const t = translations[currentLang];
+  fb.className="feedback show good";
+  fb.innerHTML=`<h3>${t.lookRemember}</h3>${answerHtml()}`;
+}
+
+function next(){
+  if(mode==="grand"){
+    grandIndex=(grandIndex+1)%114;
+  }else{
+    if(index<5){index++;}
+    else if(setNo<19){setNo++;index=0;setHash(setNo);renderSetHub();}
+    else{setNo=1;index=0;setHash(setNo);renderSetHub();}
+  }
+  resetSelections();
+  hideFeedback();
+  render();
+  document.querySelector(".clue").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+document.querySelectorAll(".mode").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>switchLanguage(b.dataset.lang)));
+
+$("check").addEventListener("click",check);
+$("reveal").addEventListener("click",reveal);
+$("next").addEventListener("click",next);
+$("restart").addEventListener("click",()=>{
+  if(mode==="grand") grandIndex=0;
+  else index=0;
+  checked=0;correct=0;
+  hideFeedback();
+  render();
+});
+$("randomSet").addEventListener("click",()=>{let n;do{n=1+Math.floor(Math.random()*19)}while(n===setNo);chooseSet(n)});
+$("prevSet").addEventListener("click",()=>chooseSet(setNo===1?19:setNo-1));
+$("nextSet").addEventListener("click",()=>chooseSet(setNo===19?1:setNo+1));
+window.addEventListener("hashchange",()=>{const m=location.hash.match(/^#set-(\d{1,2})$/);if(m)chooseSet(Number(m[1]),false)});
+const initial=location.hash.match(/^#set-(\d{1,2})$/);if(initial)setNo=Math.max(1,Math.min(19,Number(initial[1])));
+render();renderSetHub();
+</script></body></html>
