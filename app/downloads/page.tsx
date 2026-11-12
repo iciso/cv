@@ -40,7 +40,7 @@ const cvProfiles = [
   {
     title: "BCDC-IOU Medical Ethics Certificate Course Developer",
     description: "Shows Rafique's Bridge to Masters expertise, and IT skills are the core competencies for building the Medical Ethics Certificate Course.",
-    file: "/cv-iou-medical-ethics-it.pdf"
+    file: "/cv-medical-ethics-it.pdf"
   }
 ];
 
