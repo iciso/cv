@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="pageTitle">🕌 Ilm al-Fara'id 📖 Islamic Inheritance Calculator 💰</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Amiri for dignified Arabic/Jurisprudence typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Amiri', 'serif'],
+          },
+          colors: {
+            emerald: {
+              850: '#064e3b',
+              925: '#022c22',
+            },
+            gold: {
+              50: '#fdfbf7',
+              100: '#fbf5e8',
+              200: '#f5e6c4',
+              400: '#d4af37',
+              500: '#b89225',
+              600: '#967419',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Subtle Islamic geometric pattern overlay for header */
+    .islamic-pattern {
+      background-color: #022c22;
+      background-image: radial-gradient(#065f46 1px, transparent 1px), radial-gradient(#d4af37 0.75px, #022c22 0.75px);
+      background-size: 28px 28px;
+      background-position: 0 0, 14px 14px;
+    }
+
+    /* Custom smooth transitions and print optimizations */
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .print-full {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border: 1px solid #e5e7eb !important;
+      }
+    }
+
+    /* Number input spinner refinement */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-stone-50 text-slate-800 font-sans antialiased selection:bg-emerald-800 selection:text-white">
+
+  <!-- Header Banner -->
+  <header class="islamic-pattern text-white border-b-4 border-gold-400 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/90 border border-gold-400/40 text-gold-200 text-xs font-medium tracking-wide uppercase mb-2">
+            <span>Surah An-Nisa (4:11, 4:12, 4:176) &amp; Authentic Sunnah</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white flex items-center gap-3">
+            <span id="headerMainTitle">Ilm al-Fara'id</span>
+            <span class="font-serif text-gold-400 text-2xl sm:text-3xl font-normal">عِلْمُ الْفَرَائِض</span>
+          </h1>
+          <p id="headerSubtitle" class="mt-1 text-emerald-100 text-sm sm:text-base max-w-2xl">
+            Comprehensive Islamic Inheritance Calculator implementing Quranic fixed shares (<em>Ashab al-Furud</em>), residuaries (<em>Asabah</em>), exclusion rules (<em>Hajb</em>), <em>Awl</em>, <em>Radd</em>, <em>Umariyyatayn</em>, and <em>Kalalah</em>.
+          </p>
+        </div>
+
+        <!-- Action Buttons & Language Switcher -->
+        <div class="flex flex-wrap items-center gap-2.5 no-print">
+          <!-- EN, TA, ML Language Switcher Option Buttons -->
+          <div class="flex gap-1 bg-emerald-900/80 p-1 rounded-xl border border-emerald-700">
+            <button type="button" onclick="switchLanguage('en')" id="lang-en" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-gold-500 text-white transition shadow-sm">EN</button>
+            <button type="button" onclick="switchLanguage('ta')" id="lang-ta" class="px-2.5 py-1 rounded-lg text-xs font-bold text-emerald-200 hover:text-white transition">TA</button>
+            <button type="button" onclick="switchLanguage('ml')" id="lang-ml" class="px-2.5 py-1 rounded-lg text-xs font-bold text-emerald-200 hover:text-white transition">ML</button>
+          </div>
+
+          <button type="button" onclick="resetForm()" id="btnReset" class="px-4 py-2.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 text-emerald-100 border border-emerald-700 text-sm font-medium transition shadow-sm">
+            Reset All
+          </button>
+          <button type="button" onclick="window.print()" id="btnPrint" class="px-4 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white text-sm font-semibold transition shadow-sm flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+            Print / Save PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- Preset Scenarios Bar -->
+      <div class="mt-6 pt-4 border-t border-emerald-800/80 no-print">
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="lblTestCases" class="text-xs font-semibold uppercase tracking-wider text-gold-200 mr-1">Test Fiqh Cases:</span>
+          <button type="button" onclick="applyPreset('standard')" id="presetStd" class="px-3 py-1.5 rounded-lg bg-emerald-900/90 hover:bg-emerald-700 text-xs font-medium text-white border border-emerald-700/80 transition">Standard Family</button>
+          <button type="button" onclick="applyPreset('umariyyatayn_husband')" id="presetUh" class="px-3 py-1.5 rounded-lg bg-emerald-900/90 hover:bg-emerald-700 text-xs font-medium text-white border border-emerald-700/80 transition">Umariyyatayn (Husband)</button>
+          <button type="button" onclick="applyPreset('umariyyatayn_wife')" id="presetUw" class="px-3 py-1.5 rounded-lg bg-emerald-900/90 hover:bg-emerald-700 text-xs font-medium text-white border border-emerald-700/80 transition">Umariyyatayn (Wife)</button>
+          <button type="button" onclick="applyPreset('awl')" id="presetAwl" class="px-3 py-1.5 rounded-lg bg-emerald-900/90 hover:bg-emerald-700 text-xs font-medium text-white border border-emerald-700/80 transition">Awl (Minbariyyah 24→27)</button>
+          <button type="button" onclick="applyPreset('radd')" id="presetRadd" class="px-3 py-1.5 rounded-lg bg-emerald-900/90 hover:bg-emerald-700 text-xs font-medium text-white border border-emerald-700/80 transition">Radd (Surplus Return)</button>
+          <button type="button" onclick="applyPreset('kalalah')" id="presetKalalah" class="px-3 py-1.5 rounded-lg bg-emerald-900/90 hover:bg-emerald-700 text-xs font-medium text-white border border-emerald-700/80 transition">Kalalah (Siblings)</button>
+          <button type="button" onclick="applyPreset('mushtarakah')" id="presetMushtarakah" class="px-3 py-1.5 rounded-lg bg-emerald-900/90 hover:bg-emerald-700 text-xs font-medium text-white border border-emerald-700/80 transition">Mushtarakah (Shared)</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Grid -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- LEFT COLUMN: INPUTS (5 Columns on Large Screens) -->
+      <div class="lg:col-span-5 space-y-6 no-print">
+
+        <!-- Section 1: Estate & Pre-Distribution Deductions -->
+        <section class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
+          <div class="bg-emerald-950 text-white px-5 py-3.5 flex items-center justify-between">
+            <h2 id="sec1Title" class="font-semibold text-base flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-gold-500 text-emerald-950 text-xs font-bold flex items-center justify-center">1</span>
+              <span>Estate &amp; Fiqh Deductions</span>
+            </h2>
+            <span id="sec1Sub" class="text-xs text-emerald-200">Priority Order</span>
+          </div>
+
+          <div class="p-5 space-y-4">
+            <!-- Currency & Gross Estate -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label for="currency" id="lblCurrency" class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1">Currency</label>
+                <select id="currency" onchange="calculateInheritance()" class="w-full rounded-xl border border-stone-300 bg-stone-50 px-3 py-2.5 text-sm font-medium text-slate-800 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 outline-none">
+                  <option value="INR" selected>INR (₹)</option>
+                  <option value="USD">USD ($)</option>
+                  <option value="SAR">SAR (﷼)</option>
+                  <option value="AED">AED (د.إ)</option>
+                  <option value="GBP">GBP (£)</option>
+                  <option value="EUR">EUR (€)</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="grossEstate" id="lblGrossEstate" class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1">Gross Estate Value (Tarikah)</label>
+                <input type="number" id="grossEstate" min="0" step="any" value="1200000" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-900 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 outline-none" placeholder="0.00" />
+              </div>
+            </div>
+
+            <!-- Priority 1: Funeral Expenses -->
+            <div>
+              <label for="funeralCost" class="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span id="lblFuneral">1. Funeral &amp; Burial Expenses (Tajhiz wa Takfin)</span>
+                <span id="lblFuneralPri" class="text-[11px] font-normal text-slate-500">1st Priority</span>
+              </label>
+              <input type="number" id="funeralCost" min="0" step="any" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3.5 py-2 text-sm text-slate-800 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 outline-none" />
+            </div>
+
+            <!-- Priority 2: Debts -->
+            <div>
+              <label for="debts" class="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span id="lblDebts">2. Outstanding Debts (Duyun — Allah &amp; People)</span>
+                <span id="lblDebtsPri" class="text-[11px] font-normal text-slate-500">2nd Priority</span>
+              </label>
+              <input type="number" id="debts" min="0" step="any" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3.5 py-2 text-sm text-slate-800 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 outline-none" />
+            </div>
+
+            <!-- Priority 3: Bequest / Wasiyyah -->
+            <div class="pt-1 border-t border-stone-100">
+              <label for="wasiyyah" class="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span id="lblWasiyyah">3. Valid Bequest / Will (Wasiyyah)</span>
+                <span id="lblWasiyyahMax" class="text-[11px] font-normal text-amber-700">Max 1/3 (33.33%)</span>
+              </label>
+              <input type="number" id="wasiyyah" min="0" step="any" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3.5 py-2 text-sm text-slate-800 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 outline-none" />
+
+              <label class="mt-2 flex items-start gap-2 cursor-pointer select-none">
+                <input type="checkbox" id="wasiyyahConsent" onchange="calculateInheritance()" class="mt-0.5 rounded border-stone-300 text-emerald-700 focus:ring-emerald-700" />
+                <span id="lblWasiyyahConsent" class="text-xs text-slate-600 leading-snug">All adult legal heirs voluntarily consent to Wasiyyah exceeding 1/3 of the remaining estate.</span>
+              </label>
+              <p id="lblWasiyyahNote" class="mt-1.5 text-[11px] text-slate-500 italic">
+                Note: Per authentic Sunnah ("La wasiyyata li-warith"), no bequest may be made to an inheriting heir unless all other adult heirs consent after death.
+              </p>
+              <div id="wasiyyahWarning" class="hidden mt-2 p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800"></div>
+            </div>
+
+            <!-- Net Estate Summary Box -->
+            <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-3.5 flex items-center justify-between">
+              <div>
+                <div id="netEstateBoxTitle" class="text-xs font-semibold text-emerald-900 uppercase tracking-wide">Net Distributable Estate</div>
+                <div id="netEstateBoxSub" class="text-[11px] text-emerald-700">After funeral, debts &amp; valid Wasiyyah</div>
+              </div>
+              <div class="text-lg font-bold text-emerald-950" id="netEstateDisplay">₹1,200,000.00</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Deceased & Surviving Relatives -->
+        <section class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
+          <div class="bg-emerald-950 text-white px-5 py-3.5 flex items-center justify-between">
+            <h2 id="sec2Title" class="font-semibold text-base flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-gold-500 text-emerald-950 text-xs font-bold flex items-center justify-center">2</span>
+              <span>Deceased &amp; Surviving Relatives</span>
+            </h2>
+            <span id="sec2Sub" class="text-xs text-emerald-200">Eligible Heirs</span>
+          </div>
+
+          <div class="p-5 space-y-5">
+            <!-- Gender of Deceased & Spouse -->
+            <div class="p-3.5 rounded-xl bg-stone-50 border border-stone-200 space-y-3">
+              <div>
+                <label id="lblGenderDeceased" class="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Gender of the Deceased</label>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="cursor-pointer">
+                    <input type="radio" name="deceasedGender" value="male" checked onchange="handleGenderChange()" class="peer sr-only" />
+                    <div id="lblMaleHusband" class="text-center py-2 px-3 rounded-xl border border-stone-300 bg-white text-sm font-medium text-slate-700 peer-checked:bg-emerald-800 peer-checked:text-white peer-checked:border-emerald-800 transition">
+                      Male (Husband)
+                    </div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="radio" name="deceasedGender" value="female" onchange="handleGenderChange()" class="peer sr-only" />
+                    <div id="lblFemaleWife" class="text-center py-2 px-3 rounded-xl border border-stone-300 bg-white text-sm font-medium text-slate-700 peer-checked:bg-emerald-800 peer-checked:text-white peer-checked:border-emerald-800 transition">
+                      Female (Wife)
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Dynamic Spouse Control -->
+              <div id="wivesInputGroup">
+                <label for="wivesCount" class="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1">
+                  <span id="lblWivesCount">Surviving Wife / Wives (Zawjah)</span>
+                  <span id="lblWivesMax" class="text-[11px] font-normal text-slate-500">0 to 4 max</span>
+                </label>
+                <select id="wivesCount" onchange="calculateInheritance()" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 focus:border-emerald-700 outline-none">
+                  <option value="0" id="optWife0">None (0)</option>
+                  <option value="1" id="optWife1" selected>1 Wife</option>
+                  <option value="2" id="optWife2">2 Wives (Share equally)</option>
+                  <option value="3" id="optWife3">3 Wives (Share equally)</option>
+                  <option value="4" id="optWife4">4 Wives (Share equally)</option>
+                </select>
+              </div>
+
+              <div id="husbandInputGroup" class="hidden">
+                <label class="flex items-center justify-between cursor-pointer p-2.5 rounded-xl bg-white border border-stone-300">
+                  <span id="lblHusband" class="text-sm font-medium text-slate-800">Surviving Husband (Zawj)</span>
+                  <input type="checkbox" id="hasHusband" onchange="calculateInheritance()" class="w-4 h-4 rounded text-emerald-700 focus:ring-emerald-700" />
+                </label>
+              </div>
+            </div>
+
+            <!-- Descendants (Furu') -->
+            <div>
+              <h3 id="hdrDescendants" class="text-xs font-bold uppercase tracking-wider text-emerald-900 border-b border-stone-200 pb-1.5 mb-3">Descendants (Children &amp; Agnate Grandchildren)</h3>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label for="sons" id="lblSons" class="block text-xs font-medium text-slate-700 mb-1">Sons (Ibn)</label>
+                  <input type="number" id="sons" min="0" max="50" value="1" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold focus:border-emerald-700 outline-none" />
+                </div>
+                <div>
+                  <label for="daughters" id="lblDaughters" class="block text-xs font-medium text-slate-700 mb-1">Daughters (Bint)</label>
+                  <input type="number" id="daughters" min="0" max="50" value="2" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold focus:border-emerald-700 outline-none" />
+                </div>
+                <div>
+                  <label for="sonsSons" id="lblSonsSons" class="block text-xs font-medium text-slate-700 mb-1">Son's Sons (Ibn Ibn)</label>
+                  <input type="number" id="sonsSons" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold focus:border-emerald-700 outline-none" />
+                </div>
+                <div>
+                  <label for="sonsDaughters" id="lblSonsDaughters" class="block text-xs font-medium text-slate-700 mb-1">Son's Daughters (Bint Ibn)</label>
+                  <input type="number" id="sonsDaughters" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold focus:border-emerald-700 outline-none" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Ascendants (Usul) -->
+            <div>
+              <h3 id="hdrAscendants" class="text-xs font-bold uppercase tracking-wider text-emerald-900 border-b border-stone-200 pb-1.5 mb-3">Ascendants (Parents &amp; Grandparents)</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <label class="flex items-center justify-between p-2.5 rounded-xl border border-stone-200 hover:bg-stone-50 cursor-pointer">
+                  <span id="lblFather" class="text-sm font-medium text-slate-800">Father (Ab)</span>
+                  <input type="checkbox" id="hasFather" checked onchange="calculateInheritance()" class="w-4 h-4 rounded text-emerald-700 focus:ring-emerald-700" />
+                </label>
+                <label class="flex items-center justify-between p-2.5 rounded-xl border border-stone-200 hover:bg-stone-50 cursor-pointer">
+                  <span id="lblMother" class="text-sm font-medium text-slate-800">Mother (Umm)</span>
+                  <input type="checkbox" id="hasMother" checked onchange="calculateInheritance()" class="w-4 h-4 rounded text-emerald-700 focus:ring-emerald-700" />
+                </label>
+                <label class="flex items-center justify-between p-2.5 rounded-xl border border-stone-200 hover:bg-stone-50 cursor-pointer">
+                  <span id="lblPGF" class="text-xs font-medium text-slate-700">Paternal Grandfather (Jadd)</span>
+                  <input type="checkbox" id="hasPaternalGrandfather" onchange="calculateInheritance()" class="w-4 h-4 rounded text-emerald-700 focus:ring-emerald-700" />
+                </label>
+                <label class="flex items-center justify-between p-2.5 rounded-xl border border-stone-200 hover:bg-stone-50 cursor-pointer">
+                  <span id="lblMGM" class="text-xs font-medium text-slate-700">Maternal Grandmother</span>
+                  <input type="checkbox" id="hasMaternalGrandmother" onchange="calculateInheritance()" class="w-4 h-4 rounded text-emerald-700 focus:ring-emerald-700" />
+                </label>
+                <label class="flex items-center justify-between p-2.5 rounded-xl border border-stone-200 hover:bg-stone-50 cursor-pointer sm:col-span-2">
+                  <span id="lblPGM" class="text-xs font-medium text-slate-700">Paternal Grandmother (Father's Mother)</span>
+                  <input type="checkbox" id="hasPaternalGrandmother" onchange="calculateInheritance()" class="w-4 h-4 rounded text-emerald-700 focus:ring-emerald-700" />
+                </label>
+              </div>
+            </div>
+
+            <!-- Collaterals (Siblings) -->
+            <div>
+              <h3 id="hdrSiblings" class="text-xs font-bold uppercase tracking-wider text-emerald-900 border-b border-stone-200 pb-1.5 mb-3">Siblings (Hawashi)</h3>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label for="fullBrothers" id="lblFullBrothers" class="block text-xs font-medium text-slate-700 mb-1">Full Brothers (Shaqiq)</label>
+                  <input type="number" id="fullBrothers" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold focus:border-emerald-700 outline-none" />
+                </div>
+                <div>
+                  <label for="fullSisters" id="lblFullSisters" class="block text-xs font-medium text-slate-700 mb-1">Full Sisters (Shaqiqah)</label>
+                  <input type="number" id="fullSisters" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold focus:border-emerald-700 outline-none" />
+                </div>
+                <div>
+                  <label for="paternalBrothers" id="lblPatBrothers" class="block text-xs font-medium text-slate-700 mb-1">Paternal Half-Brothers</label>
+                  <input type="number" id="paternalBrothers" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold focus:border-emerald-700 outline-none" />
+                </div>
+                <div>
+                  <label for="paternalSisters" id="lblPatSisters" class="block text-xs font-medium text-slate-700 mb-1">Paternal Half-Sisters</label>
+                  <input type="number" id="paternalSisters" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold focus:border-emerald-700 outline-none" />
+                </div>
+                <div>
+                  <label for="maternalBrothers" id="lblMatBrothers" class="block text-xs font-medium text-slate-700 mb-1">Maternal Half-Brothers</label>
+                  <input type="number" id="maternalBrothers" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold focus:border-emerald-700 outline-none" />
+                </div>
+                <div>
+                  <label for="maternalSisters" id="lblMatSisters" class="block text-xs font-medium text-slate-700 mb-1">Maternal Half-Sisters</label>
+                  <input type="number" id="maternalSisters" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold focus:border-emerald-700 outline-none" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Extended Asabah & Special Fiqh Options Accordion -->
+            <details class="group rounded-xl border border-stone-200 bg-stone-50/70">
+              <summary class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-700 cursor-pointer flex items-center justify-between select-none">
+                <span id="extAsabahTitle">Extended Asabah (Nephews, Uncles, Cousins) &amp; Rulings</span>
+                <span class="text-emerald-700 group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <div class="px-4 pb-4 pt-2 space-y-4 border-t border-stone-200">
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label for="fullBrotherSons" id="lblFBH" class="block text-xs font-medium text-slate-700 mb-1">Full Brother's Sons</label>
+                    <input type="number" id="fullBrotherSons" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-1.5 text-sm font-semibold" />
+                  </div>
+                  <div>
+                    <label for="paternalBrotherSons" id="lblPBH" class="block text-xs font-medium text-slate-700 mb-1">Paternal Brother's Sons</label>
+                    <input type="number" id="paternalBrotherSons" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-1.5 text-sm font-semibold" />
+                  </div>
+                  <div>
+                    <label for="fullUncles" id="lblFU" class="block text-xs font-medium text-slate-700 mb-1">Full Paternal Uncles</label>
+                    <input type="number" id="fullUncles" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-1.5 text-sm font-semibold" />
+                  </div>
+                  <div>
+                    <label for="paternalUncles" id="lblPU" class="block text-xs font-medium text-slate-700 mb-1">Paternal Half-Uncles</label>
+                    <input type="number" id="paternalUncles" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-1.5 text-sm font-semibold" />
+                  </div>
+                  <div>
+                    <label for="fullCousins" id="lblFC" class="block text-xs font-medium text-slate-700 mb-1">Full Paternal Cousins</label>
+                    <input type="number" id="fullCousins" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-1.5 text-sm font-semibold" />
+                  </div>
+                  <div>
+                    <label for="paternalCousins" id="lblPC" class="block text-xs font-medium text-slate-700 mb-1">Paternal Half-Cousins</label>
+                    <input type="number" id="paternalCousins" min="0" max="50" value="0" oninput="calculateInheritance()" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-1.5 text-sm font-semibold" />
+                  </div>
+                </div>
+
+                <!-- Special Fiqh Rulings Toggle -->
+                <div class="pt-2 border-t border-stone-200 space-y-2">
+                  <label class="flex items-start gap-2 cursor-pointer">
+                    <input type="checkbox" id="mushtarakahRule" checked onchange="calculateInheritance()" class="mt-0.5 rounded text-emerald-700 focus:ring-emerald-700" />
+                    <span id="lblMushtarakah" class="text-xs text-slate-700 leading-snug">
+                      <strong>Al-Mushtarakah (Shared Case):</strong> If Husband (1/2) + Mother/Grandmother (1/6) + 2+ Maternal Siblings (1/3) + Full Brother(s) exhaust the estate, allow Full Brothers (and Full Sisters with them) to share the 1/3 equally with Maternal siblings (Maliki/Shafi'i ruling; uncheck for Hanafi/Hanbali ruling where Full Brothers receive 0).
+                    </span>
+                  </label>
+
+                  <label class="flex items-start gap-2 cursor-pointer">
+                    <input type="checkbox" id="raddToSpouseIfAlone" checked onchange="calculateInheritance()" class="mt-0.5 rounded text-emerald-700 focus:ring-emerald-700" />
+                    <span id="lblRaddSpouse" class="text-xs text-slate-700 leading-snug">
+                      <strong>Radd to Spouse when Sole Survivor:</strong> If the Spouse is the <em>only</em> surviving relative (no Furud, Asabah, or Dhawu al-Arham), return the remainder to the Spouse (later Juristic consensus in absence of an Islamic Public Treasury / Bayt al-Mal).
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </details>
+
+            <!-- Impediments to Inheritance (Mawani' al-Irth) Note -->
+            <div class="rounded-xl bg-amber-50/70 border border-amber-200/80 p-3.5 text-xs text-slate-700 space-y-1">
+              <div id="impedimentsTitle" class="font-semibold text-amber-900 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Impediments to Inheritance (Mawani' al-Irth)</span>
+              </div>
+              <p id="impedimentsDesc" class="text-[11px] text-slate-600 leading-relaxed">
+                Do <strong>not</strong> include any relative who is disqualified due to: (1) <strong>Unlawful Homicide</strong> of the deceased, or (2) <strong>Difference of Religion</strong> (a non-Muslim does not inherit from a Muslim nor vice-versa per authentic Hadith in Bukhari &amp; Muslim). Such individuals are treated as non-existent and do not cause <em>Hajb</em> (exclusion) to other heirs.
+              </p>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN: RESULTS & AUDIT (7 Columns on Large Screens) -->
+      <div class="lg:col-span-7 space-y-6 print-full">
+
+        <!-- Top KPI Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white rounded-2xl p-4 border border-stone-200 shadow-sm">
+            <div id="kpiNetEstateTitle" class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Net Estate</div>
+            <div class="mt-1 text-xl font-bold text-slate-900" id="kpiNetEstate">₹1,200,000.00</div>
+            <div class="mt-1 text-xs text-emerald-700 font-medium" id="kpiDistributedPct">100% Allocated</div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-stone-200 shadow-sm">
+            <div id="kpiBaseTitle" class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Asl al-Mas'alah (Base)</div>
+            <div class="mt-1 text-xl font-bold text-emerald-900" id="kpiBaseDenominator">24</div>
+            <div class="mt-1 text-xs text-slate-600" id="kpiBaseNote">Standard Common Denominator</div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-stone-200 shadow-sm">
+            <div id="kpiFiqhTitle" class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Fiqh Doctrine Applied</div>
+            <div class="mt-1 text-base font-bold text-gold-600 leading-tight" id="kpiDoctrine">Furud + Asabah</div>
+            <div class="mt-1 text-xs text-slate-600" id="kpiDoctrineSub">Fixed shares &amp; residuary</div>
+          </div>
+        </div>
+
+        <!-- Special Doctrine Banner -->
+        <div id="doctrineBanner" class="hidden rounded-2xl p-4 border shadow-sm">
+          <div class="flex items-start gap-3">
+            <div id="doctrineIcon" class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 font-bold text-sm">!</div>
+            <div>
+              <h3 id="doctrineTitle" class="font-bold text-sm">Special Ruling Applied</h3>
+              <p id="doctrineDesc" class="mt-1 text-xs leading-relaxed"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Distribution Table Card -->
+        <section class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
+          <div class="bg-emerald-950 text-white px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+              <h2 id="scheduleTitle" class="font-semibold text-base">Estate Distribution Schedule</h2>
+              <p id="scheduleSub" class="text-xs text-emerald-200">Exact Quranic shares, fractions, percentages, and monetary payouts</p>
+            </div>
+            <span id="activeHeirsBadge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-800 text-gold-200 border border-gold-400/30 self-start sm:self-auto">
+              0 Inheriting Heirs
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-stone-100 border-b border-stone-200 text-[11px] font-bold uppercase tracking-wider text-slate-600">
+                  <th id="thHeir" class="py-3 px-4">Heir / Category</th>
+                  <th id="thCount" class="py-3 px-3 text-center">Count</th>
+                  <th id="thType" class="py-3 px-3">Share Type</th>
+                  <th id="thFraction" class="py-3 px-3 text-right">Fraction</th>
+                  <th id="thPct" class="py-3 px-3 text-right">Share %</th>
+                  <th id="thEach" class="py-3 px-4 text-right">Each Person</th>
+                  <th id="thTotal" class="py-3 px-4 text-right">Group Total</th>
+                </tr>
+              </thead>
+              <tbody id="resultsTableBody" class="divide-y divide-stone-200 text-sm">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+              <tfoot id="resultsTableFoot" class="bg-emerald-50/80 border-t-2 border-emerald-800/20 font-bold text-slate-900 text-sm">
+                <!-- Populated dynamically via JS -->
+              </tfoot>
+            </table>
+          </div>
+        </section>
+
+        <!-- Daleel (Quranic & Sunnah Evidence) Breakdown -->
+        <section class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
+          <div class="px-5 py-3.5 bg-stone-100 border-b border-stone-200 flex items-center justify-between">
+            <h3 id="daleelTitle" class="font-bold text-sm text-slate-800">Jurisprudential Basis &amp; Daleel (Evidence)</h3>
+            <span id="daleelSub" class="text-xs text-slate-500">Surah An-Nisa &amp; Sunnah</span>
+          </div>
+          <div id="daleelList" class="p-5 space-y-3 text-xs text-slate-700">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </section>
+
+        <!-- Hajb (Exclusion) & Audit Log -->
+        <section id="excludedSection" class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
+          <div class="px-5 py-3.5 bg-stone-100 border-b border-stone-200 flex items-center justify-between">
+            <h3 id="excludedTitle" class="font-bold text-sm text-slate-800">Excluded Relatives Audit Log (Hajb al-Hirman)</h3>
+            <span id="excludedCountBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-stone-200 text-slate-700">0 Excluded</span>
+          </div>
+          <div id="excludedList" class="p-5 text-xs text-slate-600 space-y-2">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </section>
+
+        <!-- Educational Reference Footer -->
+        <footer class="rounded-2xl bg-stone-100 border border-stone-200 p-4 text-xs text-slate-600 space-y-1.5">
+          <div id="refNoteTitle" class="font-semibold text-slate-800">Reference Note on Sunni Ilm al-Fara'id Methodology:</div>
+          <p id="refNoteDesc" class="leading-relaxed">
+            Calculations follow classical Sunni jurisprudence based on Surah An-Nisa (verses 11, 12, and 176) and the prophetic directive: <em>"Give the fixed shares (Fara'id) to those entitled to them, and whatever remains goes to the nearest male agnate (Asabah)."</em> (Sahih al-Bukhari &amp; Sahih Muslim). For complex estates involving <em>Dhawu al-Arham</em> (distant uterine relatives when no Furud or Asabah exist), hermaphrodites (<em>Khuntha</em>), missing persons (<em>Mafqud</em>), or unborn fetuses (<em>Haml</em>), consult a qualified Mufti or Islamic judicial council.
+          </p>
+        </footer>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- JAVASCRIPT FIQH ENGINE & TRANSLATIONS -->
+  <script>
+    /**
+     * Multilingual Dictionary for EN, TA, and ML
+     */
+    const translations = {
+      en: {
+        appTitle: "Ilm al-Fara'id — Islamic Inheritance Calculator",
+        subtitle: "Comprehensive Islamic Inheritance Calculator implementing Quranic fixed shares (Ashab al-Furud), residuaries (Asabah), exclusion rules (Hajb), Awl, Radd, Umariyyatayn, and Kalalah.",
+        resetAll: "Reset All",
+        printPdf: "Print / Save PDF",
+        testCases: "Test Fiqh Cases:",
+        presetStandard: "Standard Family",
+        presetUmariyyataynHusband: "Umariyyatayn (Husband)",
+        presetUmariyyataynWife: "Umariyyatayn (Wife)",
+        presetAwl: "Awl (Minbariyyah 24→27)",
+        presetRadd: "Radd (Surplus Return)",
+        presetKalalah: "Kalalah (Siblings)",
+        presetMushtarakah: "Mushtarakah (Shared)",
+        sec1Title: "Estate & Fiqh Deductions",
+        sec1Sub: "Priority Order",
+        currency: "Currency",
+        grossEstate: "Gross Estate Value (Tarikah)",
+        funeralCost: "1. Funeral & Burial Expenses (Tajhiz wa Takfin)",
+        funeralPriority: "1st Priority",
+        debts: "2. Outstanding Debts (Duyun — Allah & People)",
+        debtsPriority: "2nd Priority",
+        wasiyyah: "3. Valid Bequest / Will (Wasiyyah)",
+        wasiyyahMax: "Max 1/3 (33.33%)",
+        wasiyyahConsent: "All adult legal heirs voluntarily consent to Wasiyyah exceeding 1/3 of the remaining estate.",
+        wasiyyahNote: "Note: Per authentic Sunnah (\"La wasiyyata li-warith\"), no bequest may be made to an inheriting heir unless all other adult heirs consent after death.",
+        netEstateTitle: "Net Distributable Estate",
+        netEstateSub: "After funeral, debts & valid Wasiyyah",
+        sec2Title: "Deceased & Surviving Relatives",
+        sec2Sub: "Eligible Heirs",
+        genderDeceased: "Gender of the Deceased",
+        maleHusband: "Male (Husband)",
+        femaleWife: "Female (Wife)",
+        survivingWives: "Surviving Wife / Wives (Zawjah)",
+        wivesMax: "0 to 4 max",
+        noneWife: "None (0)",
+        oneWife: "1 Wife",
+        twoWives: "2 Wives (Share equally)",
+        threeWives: "3 Wives (Share equally)",
+        fourWives: "4 Wives (Share equally)",
+        survivingHusband: "Surviving Husband (Zawj)",
+        descendantsHeader: "Descendants (Children & Agnate Grandchildren)",
+        sons: "Sons (Ibn)",
+        daughters: "Daughters (Bint)",
+        sonsSons: "Son's Sons (Ibn Ibn)",
+        sonsDaughters: "Son's Daughters (Bint Ibn)",
+        ascendantsHeader: "Ascendants (Parents & Grandparents)",
+        father: "Father (Ab)",
+        mother: "Mother (Umm)",
+        paternalGrandfather: "Paternal Grandfather (Jadd)",
+        maternalGrandmother: "Maternal Grandmother",
+        paternalGrandmother: "Paternal Grandmother (Father's Mother)",
+        siblingsHeader: "Siblings (Hawashi)",
+        fullBrothers: "Full Brothers (Shaqiq)",
+        fullSisters: "Full Sisters (Shaqiqah)",
+        paternalBrothers: "Paternal Half-Brothers",
+        paternalSisters: "Paternal Half-Sisters",
+        maternalBrothers: "Maternal Half-Brothers",
+        maternalSisters: "Maternal Half-Sisters",
+        extendedAsabahTitle: "Extended Asabah (Nephews, Uncles, Cousins) & Rulings",
+        fullBrotherSons: "Full Brother's Sons",
+        paternalBrotherSons: "Paternal Brother's Sons",
+        fullUncles: "Full Paternal Uncles",
+        paternalUncles: "Paternal Half-Uncles",
+        fullCousins: "Full Paternal Cousins",
+        paternalCousins: "Paternal Half-Cousins",
+        mushtarakahLabel: "Al-Mushtarakah (Shared Case): If Husband (1/2) + Mother/Grandmother (1/6) + 2+ Maternal Siblings (1/3) + Full Brother(s) exhaust the estate, allow Full Brothers (and Full Sisters with them) to share the 1/3 equally with Maternal siblings (Maliki/Shafi'i ruling; uncheck for Hanafi/Hanbali ruling where Full Brothers receive 0).",
+        raddSpouseLabel: "Radd to Spouse when Sole Survivor: If the Spouse is the only surviving relative (no Furud, Asabah, or Dhawu al-Arham), return the remainder to the Spouse (later Juristic consensus in absence of an Islamic Public Treasury / Bayt al-Mal).",
+        impedimentsTitle: "Impediments to Inheritance (Mawani' al-Irth)",
+        impedimentsDesc: "Do not include any relative who is disqualified due to: (1) Unlawful Homicide of the deceased, or (2) Difference of Religion (a non-Muslim does not inherit from a Muslim nor vice-versa per authentic Hadith in Bukhari & Muslim). Such individuals are treated as non-existent and do not cause Hajb (exclusion) to other heirs.",
+        netEstateKpi: "Net Estate",
+        allocatedPct: "100% Allocated",
+        aslMasalah: "Asl al-Mas'alah (Base)",
+        baseNote: "Standard Common Denominator",
+        fiqhDoctrine: "Fiqh Doctrine Applied",
+        fiqhDoctrineSub: "Fixed shares & residuary",
+        scheduleTitle: "Estate Distribution Schedule",
+        scheduleSub: "Exact Quranic shares, fractions, percentages, and monetary payouts",
+        thHeir: "Heir / Category",
+        thCount: "Count",
+        thType: "Share Type",
+        thFraction: "Fraction",
+        thPct: "Share %",
+        thEach: "Each Person",
+        thTotal: "Group Total",
+        daleelTitle: "Jurisprudential Basis & Daleel (Evidence)",
+        daleelSub: "Surah An-Nisa & Sunnah",
+        excludedTitle: "Excluded Relatives Audit Log (Hajb al-Hirman)",
+        refNoteTitle: "Reference Note on Sunni Ilm al-Fara'id Methodology:",
+        refNoteDesc: "Calculations follow classical Sunni jurisprudence based on Surah An-Nisa (verses 11, 12, and 176) and the prophetic directive: \"Give the fixed shares (Fara'id) to those entitled to them, and whatever remains goes to the nearest male agnate (Asabah).\" (Sahih al-Bukhari & Sahih Muslim). For complex estates involving Dhawu al-Arham (distant uterine relatives when no Furud or Asabah exist), hermaphrodites (Khuntha), missing persons (Mafqud), or unborn fetuses (Haml), consult a qualified Mufti or Islamic judicial council."
+      },
+      ta: {
+        appTitle: "இம்முல் ஃபராயித் — இஸ்லாமிய வாரிசு உரிமை கணக்கீடு",
+        subtitle: "குர்ஆனிய நிலையான பங்குகள் (அஷாப் அல்-புருத்), மீத பங்குகள் (அசபா), விலக்கு விதிகள் (ஹஜ்ப்), அவ்ல், ரத், உமரிய்யதைன் மற்றும் கலாலா ஆகியவற்றைச் செயல்படுத்தும் விரிவான இஸ்லாமிய வாரிசு உரிமை கணக்கீடு.",
+        resetAll: "அனைத்தையும் மீட்டமை",
+        printPdf: "அச்சிடு / PDF சேமி",
+        testCases: "ஃபிக்ஹ் சோதனைக் வழக்குகள்:",
+        presetStandard: "வழக்கமான குடும்பம்",
+        presetUmariyyataynHusband: "உமரிய்யதைன் (கணவன்)",
+        presetUmariyyataynWife: "உமரிய்யதைன் (மனைவி)",
+        presetAwl: "அவ்ல் (மின்பரிய்யா 24→27)",
+        presetRadd: "ரத் (உபரி மீதம் திரும்பப் பெறுதல்)",
+        presetKalalah: "கலாலா (உடன்பிறப்புகள்)",
+        presetMushtarakah: "முஷ் தாரகா (பகிரப்பட்ட வழக்கு)",
+        sec1Title: "சொத்து மற்றும் ஃபிக்ஹ் கழிவுகள்",
+        sec1Sub: "முன்னுரிமை வரிசை",
+        currency: "நாணயம்",
+        grossEstate: "மொத்த சொத்து மதிப்பு (தாரிகா)",
+        funeralCost: "1. இறுதி சடங்கு & நல்லடக்கம் செலவுகள்",
+        funeralPriority: "1வது முன்னுரிமை",
+        debts: "2. நிலுவையில் உள்ள கடன்கள்",
+        debtsPriority: "2வது முன்னுரிமை",
+        wasiyyah: "3. ஏற்புடைய மரண சாசனம் (வசிய்யத்)",
+        wasiyyahMax: "அதிகபட்சம் 1/3 (33.33%)",
+        wasiyyahConsent: "மீதமுள்ள சொத்தில் 1/3-க்கு மேற்பட்ட வசிய்யத்திற்கு அனைத்து வயது வந்த சட்டப்பூர்வ வாரிசுகளும் ஒப்புக்கொள்கின்றனர்.",
+        wasiyyahNote: "குறிப்பு: ஆதாரபூர்வமான சுன்னாவின்படி, மற்ற அனைத்து வயது வந்த வாரிசுகளும் மரணத்திற்குப் பிறகு ஒப்புக்கொண்டால் ஒழிய, வாரிசுதாரருக்கு வசிய்யத் செய்யப்பட முடியாது.",
+        netEstateTitle: "பங்கீட்டுக்குரிய நிகர சொத்து",
+        netEstateSub: "இறுதிச் சடங்கு, கடன்கள் & வசிய்யத்திற்குப் பிறகு",
+        sec2Title: "இறந்தவர் & உயிருள்ள உறவினர்கள்",
+        sec2Sub: "தகுதிவாய்ந்த வாரிசுகள்",
+        genderDeceased: "இறந்தவரின் பாலினம்",
+        maleHusband: "ஆண் (கணவன்)",
+        femaleWife: "பெண் (மனைவி)",
+        survivingWives: "உயிருள்ள மனைவி / மனைவிகள் (ஜவ்ஜா)",
+        wivesMax: "அதிகபட்சம் 0 முதல் 4 வரை",
+        noneWife: "யாருமில்லை (0)",
+        oneWife: "1 மனைவி",
+        twoWives: "2 மனைவிகள் (சமமாகப் பகிரவும்)",
+        threeWives: "3 மனைவிகள் (சமமாகப் பகிரவும்)",
+        fourWives: "4 மனைவிகள் (சமமாகப் பகிரவும்)",
+        survivingHusband: "உயிருள்ள கணவன் (ஜவ்ஜ்)",
+        descendantsHeader: "வழித்தோன்றல்கள் (குழந்தைகள் & பேரன்/பேத்திகள்)",
+        sons: "மகன்கள் (இப்ன்)",
+        daughters: "மகள்கள் (பின்த்)",
+        sonsSons: "மகன் வழி மகன்கள்",
+        sonsDaughters: "மகன் வழி மகள்கள்",
+        ascendantsHeader: "மூதாதையர்கள் (பெற்றோர் & பாட்டன்/பாட்டி)",
+        father: "தந்தை (அப்)",
+        mother: "தாய் (உம்)",
+        paternalGrandfather: "தந்தை வழி பாட்டன்",
+        maternalGrandmother: "தாய் வழி பாட்டி",
+        paternalGrandmother: "தந்தை வழி பாட்டி",
+        siblingsHeader: "உடன்பிறப்புகள் (ஹவாஷி)",
+        fullBrothers: "உடன்பிறந்த சகோதரர்கள்",
+        fullSisters: "உடன்பிறந்த சகோதரிகள்",
+        paternalBrothers: "தந்தை வழி அரைச் சகோதரர்கள்",
+        paternalSisters: "தந்தை வழி அரைச் சகோதரிகள்",
+        maternalBrothers: "தாய் வழி அரைச் சகோதரர்கள்",
+        maternalSisters: "தாய் வழி அரைச் சகோதரிகள்",
+        extendedAsabahTitle: "நீட்டிக்கப்பட்ட அசபா (மருமக்கள், பெரியப்பா/சித்தப்பா) & விதிகள்",
+        fullBrotherSons: "உடன்பிறந்த சகோதரரின் மகன்கள்",
+        paternalBrotherSons: "தந்தை வழி சகோதரரின் மகன்கள்",
+        fullUncles: "உடன்பிறந்த தந்தை வழி பெரியப்பா/சித்தப்பா",
+        paternalUncles: "தந்தை வழி அரைச் பெரியப்பா/சித்தப்பா",
+        fullCousins: "உடன்பிறந்த சகோதரர்களின் மகன்கள்",
+        paternalCousins: "தந்தை வழி அரைச் சகோதரர்களின் மகன்கள்",
+        mushtarakahLabel: "அல்-முஷ் தாரகா (பகிரப்பட்ட வழக்கு): கணவன் (1/2) + தாய்/பாட்டி (1/6) + 2+ தாய் வழி உடன்பிறப்புகள் (1/3) + உடன்பிறந்த சகோதரர்(கள்) சொத்தை முழுமையாகப் பகிர்ந்தால், தாய் வழி உடன்பிறப்புகளுடன் சகோதரர்களும் 1/3 பங்கைச் சமமாகப் பகிர அனுமதிக்கவும்.",
+        raddSpouseLabel: "மனைவி/கணவன் மட்டுமே தனியாக இருந்தால் ரத்: வாரிசுதாரர் கணவன்/மனைவி மட்டுமே இருந்தால், மீதமுள்ள சொத்தை அவர்களுக்கே திருப்பிக் கொடுக்கவும்.",
+        impedimentsTitle: "வாரிசுரிமைக்கான தடைகள் (மவானி அல்-இர்க்)",
+        impedimentsDesc: "கொலை செய்தல் அல்லது மதம் மாறுதல் போன்ற தடைகள் உள்ளவர்களை வாரிசுதாரராக சேர்க்க வேண்டாம்.",
+        netEstateKpi: "நிகர சொத்து",
+        allocatedPct: "100% ஒதுக்கப்பட்டது",
+        aslMasalah: "அஸ்ல் அல்-மஸ்அலா (அடிபடை)",
+        baseNote: "பொதுவான வகு எண்",
+        fiqhDoctrine: "பயன்படுத்தப்பட்ட ஃபிக்ஹ் கோட்பாடு",
+        fiqhDoctrineSub: "நிலையான பங்குகள் & மீதம்",
+        scheduleTitle: "சொத்து விநியோக அட்டவணை",
+        scheduleSub: "சரியான குர்ஆனிய பங்குகள், பின்னங்கள், சதவீதங்கள் மற்றும் தொகை",
+        thHeir: "வாரிசு / பிரிவு",
+        thCount: "எண்ணிக்கை",
+        thType: "பங்கு வகை",
+        thFraction: "பின்னம்",
+        thPct: "பங்கு %",
+        thEach: "ஒவ்வொரு நபருக்கும்",
+        thTotal: "குழு மொத்தம்",
+        daleelTitle: "ஃபிக்ஹ் அடிப்படை & தலீல் (சான்றுகள்)",
+        daleelSub: "சூரா அன்-நிஸா & சுன்னா",
+        excludedTitle: "விலக்கப்பட்ட உறவினர்கள் தணிக்கை பதிவு",
+        refNoteTitle: "சுன்னி இம்முல் ஃபராயித் முறை பற்றிய குறிப்பு:",
+        refNoteDesc: "சூரா அன்-நிஸா மற்றும் சுன்னாவின் அடிப்படையில் கணக்கீடுகள் செய்யப்படுகின்றன."
+      },
+      ml: {
+        appTitle: "ഇൽമുൽ ഫറായിദ് — ഇസ്‌ലാമിക അനന്തരാവകാശ കാൽക്കുലേറ്റർ",
+        subtitle: "ഖുർആനിക ഓഹരികൾ (അശ്ഹാബ് അൽ-ഫുറൂദ്), അവശേഷിക്കുന്നവ (അസ്വബ), തടസ്സ നിയമങ്ങൾ (ഹജ്ബ്), ഔൽ, റദ്ദ്, ഉമരിയ്യത്വൈൻ, കകാല എന്നിവ നടപ്പിലാക്കുന്ന സമഗ്ര കാൽക്കുലേറ്റർ.",
+        resetAll: "എല്ലാം പുനഃക്രമീകരിക്കുക",
+        printPdf: "പ്രിന്റ് / PDF സേവ് ചെയ്യുക",
+        testCases: "ഫിഖ്ഹ് കേസ് മാതൃകകൾ:",
+        presetStandard: "സാധാരണ കുടുംബം",
+        presetUmariyyataynHusband: "ഉമരിയ്യത്വൈൻ (ഭർത്താവ്)",
+        presetUmariyyataynWife: "ഉമരിയ്യത്വൈൻ (ഭാര്യ)",
+        presetAwl: "ഔൽ (മിൻബരിയ്യ 24→27)",
+        presetRadd: "റദ്ദ് (മിച്ചം തിരിച്ചുകൊടുക്കൽ)",
+        presetKalalah: "കകാല (സഹോദരങ്ങൾ)",
+        presetMushtarakah: "മുശ്തറക (പങ്കിട്ട കേസ്)",
+        sec1Title: "സ്വത്തും ഫിഖ്ഹ് കിഴിവുകളും",
+        sec1Sub: "മുൻഗണനാ ക്രമം",
+        currency: "കറൻസി",
+        grossEstate: "മൊത്തം സ്വത്ത് മൂല്യം (തരിഖ)",
+        funeralCost: "1. ഖബറടക്ക ചെലവുകൾ (തജ്ഹീസ്)",
+        funeralPriority: "ഒന്നാം മുൻഗണന",
+        debts: "2. ബാക്കി നിൽക്കുന്ന കടങ്ങൾ",
+        debtsPriority: "രണ്ടാം മുൻഗണന",
+        wasiyyah: "3. വസിയ്യത്ത് (മരണപത്രം)",
+        wasiyyahMax: "പരമാവധി 1/3 (33.33%)",
+        wasiyyahConsent: "ബാക്കി സ്വത്തിന്റെ 1/3-ൽ കവിഞ്ഞ വസിയ്യത്തിന് എല്ലാ അവകാശികളും സമ്മതം നൽകുന്നു.",
+        wasiyyahNote: "ശ്രദ്ധിക്കുക: പ്രമാണബദ്ധമായ സുന്നത்படி, മറ്റ് അവകാശികൾ സമ്മതിച്ചാൽ മാത്രമേ വസിയ്യത്ത് ബാധകമാകൂ.",
+        netEstateTitle: "വീതിച്ചുനൽകാൻ കഴിയുന്ന നികര് സ്വത്ത്",
+        netEstateSub: "ഖബറടക്കം, കടങ്ങൾ & വസിയ്യത്തിന് ശേഷം",
+        sec2Title: "മരണപ്പെട്ട വ്യക്തിയും അവകാശികളും",
+        sec2Sub: "അർഹരായ അവകാശികൾ",
+        genderDeceased: "മരണപ്പെട്ടയാളുടെ ലിംഗഭേദം",
+        maleHusband: "പുരുഷൻ (ഭർത്താവ്)",
+        femaleWife: "സ്ത്രീ (ഭാര്യ)",
+        survivingWives: "ഭാര്യ / ഭാര്യമാർ",
+        wivesMax: "പരമാവധി 0 മുതൽ 4 വരെ",
+        noneWife: "ആരുമില്ല (0)",
+        oneWife: "1 ഭാര്യ",
+        twoWives: "2 ഭാര്യമാർ",
+        threeWives: "3 ഭാര്യമാർ",
+        fourWives: "4 ഭാര്യമാർ",
+        survivingHusband: "ഭർത്താവ്",
+        descendantsHeader: "മക്കൾ & പേരമക്കൾ",
+        sons: "ആൺമക്കൾ (ഇബ്ൻ)",
+        daughters: "പെൺമക്കൾ (ബിന്ത്)",
+        sonsSons: "മകൻ്റെ ആൺമക്കൾ",
+        sonsDaughters: "മകൻ്റെ പെൺമക്കൾ",
+        ascendantsHeader: "മാതാപിതാക്കൾ & മുത്തശ്ശൻമാർ",
+        father: "പിതാവ്",
+        mother: "മാതാവ്",
+        paternalGrandfather: "പിതാവിന്റെ പിതാവ്",
+        maternalGrandmother: "മാതാവിന്റെ മാതാവ്",
+        paternalGrandmother: "പിതാവിന്റെ മാതാവ്",
+        siblingsHeader: "സഹോദരങ്ങൾ",
+        fullBrothers: "സഹോദരങ്ങൾ (പൂർണ്ണ)",
+        fullSisters: "സഹോദരിമാർ (പൂർണ്ണ)",
+        paternalBrothers: "പിതാവ് വഴിയുള്ള സഹോദരങ്ങൾ",
+        paternalSisters: "പിതാവ് വഴിയുള്ള സഹോദരിമാർ",
+        maternalBrothers: "മാതാവ് വഴിയുള്ള സഹോദരങ്ങൾ",
+        maternalSisters: "മാതാവ് വഴിയുള്ള സഹോദരിമാർ",
+        extendedAsabahTitle: "മറ്റ് അസ്വബ അവകാശികൾ (അമ്മാവന്മാർ, മക്കൾ)",
+        fullBrotherSons: "സഹോദരന്റെ മക്കൾ",
+        paternalBrotherSons: "പിതാവ് വഴിയുള്ള സഹോദരന്റെ മക്കൾ",
+        fullUncles: "പിതൃവ്യന്മാർ",
+        paternalUncles: "പിതൃവ്യന്മാർ (അര)",
+        fullCousins: "കസിൻമാർ (പൂർണ്ണ)",
+        paternalCousins: "കസിൻമാർ (അര)",
+        mushtarakahLabel: "മുശ്തറക കേസ്: ഭർത്താവ് (1/2) + മാതാവ്/മുത്തശ്ശി (1/6) + മാതാവ് വഴിയുള്ള സഹോദരങ്ങൾ (1/3) + സഹോദരങ്ങൾ.",
+        raddSpouseLabel: "ഭാര്യ/ഭർത്താവ് മാത്രമുള്ളപ്പോൾ റദ്ദ് ചെയ്യൽ.",
+        impedimentsTitle: "അനന്തരാവകാശ തടസ്സങ്ങൾ",
+        impedimentsDesc: "കൊലപാതകം അല്ലെങ്കിൽ മതവ്യത്യാസം ഉള്ളവരെ ഒഴിവാക്കുക.",
+        netEstateKpi: "നികര സ്വത്ത്",
+        allocatedPct: "100% വീതിച്ചുനൽകി",
+        aslMasalah: "അസ്ൽ അൽ-മസഅല",
+        baseNote: "പൊതു ഹരിത സംഖ്യ",
+        fiqhDoctrine: "ഫിഖ്ഹ് തത്വം",
+        fiqhDoctrineSub: "നിശ്ചിത ഓഹരികളും മിച്ചവും",
+        scheduleTitle: "സ്വത്ത് വിതരണ പട്ടിക",
+        scheduleSub: "ഖുർആനിക ഓഹരികളും ഭിന്നസംഖ്യകളും",
+        thHeir: "അവകാശി / വിഭാഗം",
+        thCount: "എണ്ണം",
+        thType: "ഓഹരി തരം",
+        thFraction: "ഭിന്നസംഖ്യ",
+        thPct: "ഓഹരി %",
+        thEach: "ഓരോരുത്തർക്കും",
+        thTotal: "ഗ്രൂപ്പ് ആകെ",
+        daleelTitle: "പ്രമാണ തെളിവുകൾ (ദലീൽ)",
+        daleelSub: "സൂറത്തുന്നിസാഅ് & സുന്നത്ത്",
+        excludedTitle: "ഒഴിവാക്കപ്പെട്ട അവകാശികൾ",
+        refNoteTitle: "സുന്നി ഫറായിദ് രീതിയെക്കുറിച്ചുള്ള കുറിപ്പ്:",
+        refNoteDesc: "ഖുർആന്റെയും സുന്നത്തിന്റെയും അടിസ്ഥാനത്തിലാണ് കണക്കുകൂട്ടലുകൾ."
+      }
+    };
+
+    let currentLang = 'en';
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+
+      // Update active button styling
+      ['en', 'ta', 'ml'].forEach(l => {
+        const btn = document.getElementById(`lang-${l}`);
+        if (l === lang) {
+          btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold bg-gold-500 text-white transition shadow-sm";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold text-emerald-200 hover:text-white transition";
+        }
+      });
+
+      // Update static UI elements
+      document.getElementById('pageTitle').textContent = t.appTitle;
+      document.getElementById('headerMainTitle').textContent = "Ilm al-Fara'id";
+      document.getElementById('headerSubtitle').textContent = t.subtitle;
+      document.getElementById('btnReset').textContent = t.resetAll;
+      document.getElementById('btnPrint').innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg> ${t.printPdf}`;
+
+      document.getElementById('lblTestCases').textContent = t.testCases;
+      document.getElementById('presetStd').textContent = t.presetStandard;
+      document.getElementById('presetUh').textContent = t.presetUmariyyataynHusband;
+      document.getElementById('presetUw').textContent = t.presetUmariyyataynWife;
+      document.getElementById('presetAwl').textContent = t.presetAwl;
+      document.getElementById('presetRadd').textContent = t.presetRadd;
+      document.getElementById('presetKalalah').textContent = t.presetKalalah;
+      document.getElementById('presetMushtarakah').textContent = t.presetMushtarakah;
+
+      document.getElementById('sec1Title').innerHTML = `<span class="w-6 h-6 rounded-full bg-gold-500 text-emerald-950 text-xs font-bold flex items-center justify-center">1</span><span>${t.sec1Title}</span>`;
+      document.getElementById('sec1Sub').textContent = t.sec1Sub;
+      document.getElementById('lblCurrency').textContent = t.currency;
+      document.getElementById('lblGrossEstate').textContent = t.grossEstate;
+      document.getElementById('lblFuneral').textContent = t.funeralCost;
+      document.getElementById('lblFuneralPri').textContent = t.funeralPriority;
+      document.getElementById('lblDebts').textContent = t.debts;
+      document.getElementById('lblDebtsPri').textContent = t.debtsPriority;
+      document.getElementById('lblWasiyyah').textContent = t.wasiyyah;
+      document.getElementById('lblWasiyyahMax').textContent = t.wasiyyahMax;
+      document.getElementById('lblWasiyyahConsent').textContent = t.wasiyyahConsent;
+      document.getElementById('lblWasiyyahNote').textContent = t.wasiyyahNote;
+      document.getElementById('netEstateBoxTitle').textContent = t.netEstateTitle;
+      document.getElementById('netEstateBoxSub').textContent = t.netEstateSub;
+
+      document.getElementById('sec2Title').innerHTML = `<span class="w-6 h-6 rounded-full bg-gold-500 text-emerald-950 text-xs font-bold flex items-center justify-center">2</span><span>${t.sec2Title}</span>`;
+      document.getElementById('sec2Sub').textContent = t.sec2Sub;
+      document.getElementById('lblGenderDeceased').textContent = t.genderDeceased;
+      document.getElementById('lblMaleHusband').textContent = t.maleHusband;
+      document.getElementById('lblFemaleWife').textContent = t.femaleWife;
+      document.getElementById('lblWivesCount').textContent = t.survivingWives;
+      document.getElementById('lblWivesMax').textContent = t.wivesMax;
+      document.getElementById('optWife0').textContent = t.noneWife;
+      document.getElementById('optWife1').textContent = t.oneWife;
+      document.getElementById('optWife2').textContent = t.twoWives;
+      document.getElementById('optWife3').textContent = t.threeWives;
+      document.getElementById('optWife4').textContent = t.fourWives;
+      document.getElementById('lblHusband').textContent = t.survivingHusband;
+
+      document.getElementById('hdrDescendants').textContent = t.descendantsHeader;
+      document.getElementById('lblSons').textContent = t.sons;
+      document.getElementById('lblDaughters').textContent = t.daughters;
+      document.getElementById('lblSonsSons').textContent = t.sonsSons;
+      document.getElementById('lblSonsDaughters').textContent = t.sonsDaughters;
+
+      document.getElementById('hdrAscendants').textContent = t.ascendantsHeader;
+      document.getElementById('lblFather').textContent = t.father;
+      document.getElementById('lblMother').textContent = t.mother;
+      document.getElementById('lblPGF').textContent = t.paternalGrandfather;
+      document.getElementById('lblMGM').textContent = t.maternalGrandmother;
+      document.getElementById('lblPGM').textContent = t.paternalGrandmother;
+
+      document.getElementById('hdrSiblings').textContent = t.siblingsHeader;
+      document.getElementById('lblFullBrothers').textContent = t.fullBrothers;
+      document.getElementById('lblFullSisters').textContent = t.fullSisters;
+      document.getElementById('lblPatBrothers').textContent = t.paternalBrothers;
+      document.getElementById('lblPatSisters').textContent = t.paternalSisters;
+      document.getElementById('lblMatBrothers').textContent = t.maternalBrothers;
+      document.getElementById('lblMatSisters').textContent = t.maternalSisters;
+
+      document.getElementById('extAsabahTitle').textContent = t.extendedAsabahTitle;
+      document.getElementById('lblFBH').textContent = t.fullBrotherSons;
+      document.getElementById('lblPBH').textContent = t.paternalBrotherSons;
+      document.getElementById('lblFU').textContent = t.fullUncles;
+      document.getElementById('lblPU').textContent = t.paternalUncles;
+      document.getElementById('lblFC').textContent = t.fullCousins;
+      document.getElementById('lblPC').textContent = t.paternalCousins;
+      document.getElementById('lblMushtarakah').innerHTML = t.mushtarakahLabel;
+      document.getElementById('lblRaddSpouse').innerHTML = t.raddSpouseLabel;
+
+      document.getElementById('impedimentsTitle').innerHTML = `<svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>${t.impedimentsTitle}</span>`;
+      document.getElementById('impedimentsDesc').innerHTML = t.impedimentsDesc;
+
+      document.getElementById('kpiNetEstateTitle').textContent = t.netEstateKpi;
+      document.getElementById('kpiDistributedPct').textContent = t.allocatedPct;
+      document.getElementById('kpiBaseTitle').textContent = t.aslMasalah;
+      document.getElementById('kpiBaseNote').textContent = t.baseNote;
+      document.getElementById('kpiFiqhTitle').textContent = t.fiqhDoctrine;
+
+      document.getElementById('scheduleTitle').textContent = t.scheduleTitle;
+      document.getElementById('scheduleSub').textContent = t.scheduleSub;
+      document.getElementById('thHeir').textContent = t.thHeir;
+      document.getElementById('thCount').textContent = t.thCount;
+      document.getElementById('thType').textContent = t.thType;
+      document.getElementById('thFraction').textContent = t.thFraction;
+      document.getElementById('thPct').textContent = t.thPct;
+      document.getElementById('thEach').textContent = t.thEach;
+      document.getElementById('thTotal').textContent = t.thTotal;
+
+      document.getElementById('daleelTitle').textContent = t.daleelTitle;
+      document.getElementById('daleelSub').textContent = t.daleelSub;
+      document.getElementById('excludedTitle').textContent = t.excludedTitle;
+      document.getElementById('refNoteTitle').textContent = t.refNoteTitle;
+      document.getElementById('refNoteDesc').textContent = t.refNoteDesc;
+
+      calculateInheritance();
+    }
+
+    /**
+     * Exact Rational Fraction Arithmetic Class
+     */
+    class Fraction {
+      constructor(num, den = 1) {
+        if (den === 0) throw new Error("Division by zero in Fraction");
+        if (den < 0) {
+          num = -num;
+          den = -den;
+        }
+        const g = Fraction.gcd(Math.abs(num), Math.abs(den));
+        this.num = num / g;
+        this.den = den / g;
+      }
+
+      static gcd(a, b) {
+        a = Math.round(a);
+        b = Math.round(b);
+        while (b !== 0) {
+          const t = b;
+          b = a % b;
+          a = t;
+        }
+        return a || 1;
+      }
+
+      static lcm(a, b) {
+        if (a === 0 || b === 0) return 0;
+        return Math.abs(a * b) / Fraction.gcd(a, b);
+      }
+
+      add(other) {
+        return new Fraction(this.num * other.den + other.num * this.den, this.den * other.den);
+      }
+
+      sub(other) {
+        return new Fraction(this.num * other.den - other.num * this.den, this.den * other.den);
+      }
+
+      mul(other) {
+        return new Fraction(this.num * other.num, this.den * other.den);
+      }
+
+      div(other) {
+        return new Fraction(this.num * other.den, this.den * other.num);
+      }
+
+      isZero() {
+        return this.num === 0;
+      }
+
+      isPositive() {
+        return this.num > 0;
+      }
+
+      valueOf() {
+        return this.num / this.den;
+      }
+
+      toString() {
+        if (this.num === 0) return "0";
+        if (this.den === 1) return `${this.num}`;
+        return `${this.num}/${this.den}`;
+      }
+    }
+
+    const ZERO = new Fraction(0, 1);
+    const ONE = new Fraction(1, 1);
+
+    /**
+     * Currency formatter supporting Indian numbering system (Lakhs & Crores) for INR
+     */
+    function formatMoney(amount, currency) {
+      const symbols = {
+        INR: '₹',
+        USD: '$',
+        SAR: 'SAR ',
+        AED: 'AED ',
+        GBP: '£',
+        EUR: '€'
+      };
+      const sym = symbols[currency] || '';
+      const absAmount = Math.abs(amount);
+      const fixed = absAmount.toFixed(2);
+      const [intPart, decPart] = fixed.split('.');
+
+      let groupedInt;
+      if (currency === 'INR') {
+        if (intPart.length <= 3) {
+          groupedInt = intPart;
+        } else {
+          const last3 = intPart.slice(-3);
+          const rest = intPart.slice(0, -3);
+          const restGrouped = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+          groupedInt = restGrouped + ',' + last3;
+        }
+      } else {
+        groupedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+
+      const sign = amount < 0 ? '-' : '';
+      return `${sign}${sym}${groupedInt}.${decPart}`;
+    }
+
+    function handleGenderChange() {
+      const gender = document.querySelector('input[name="deceasedGender"]:checked').value;
+      const wivesGroup = document.getElementById('wivesInputGroup');
+      const husbandGroup = document.getElementById('husbandInputGroup');
+
+      if (gender === 'male') {
+        wivesGroup.classList.remove('hidden');
+        husbandGroup.classList.add('hidden');
+        document.getElementById('hasHusband').checked = false;
+      } else {
+        wivesGroup.classList.add('hidden');
+        husbandGroup.classList.remove('hidden');
+        document.getElementById('hasHusband').checked = true; // Default selected when female deceased
+      }
+      calculateInheritance();
+    }
+
+    function getInputs() {
+      const getInt = (id) => Math.max(0, Math.floor(Number(document.getElementById(id).value) || 0));
+      const getFloat = (id) => Math.max(0, Number(document.getElementById(id).value) || 0);
+      const getCheck = (id) => Boolean(document.getElementById(id).checked);
+
+      const gender = document.querySelector('input[name="deceasedGender"]:checked').value;
+
+      return {
+        currency: document.getElementById('currency').value,
+        grossEstate: getFloat('grossEstate'),
+        funeralCost: getFloat('funeralCost'),
+        debts: getFloat('debts'),
+        wasiyyah: getFloat('wasiyyah'),
+        wasiyyahConsent: getCheck('wasiyyahConsent'),
+
+        gender,
+        wives: gender === 'male' ? Math.min(4, getInt('wivesCount')) : 0,
+        husband: gender === 'female' && getCheck('hasHusband') ? 1 : 0,
+
+        sons: getInt('sons'),
+        daughters: getInt('daughters'),
+        sonsSons: getInt('sonsSons'),
+        sonsDaughters: getInt('sonsDaughters'),
+
+        father: getCheck('hasFather') ? 1 : 0,
+        mother: getCheck('hasMother') ? 1 : 0,
+        paternalGrandfather: getCheck('hasPaternalGrandfather') ? 1 : 0,
+        maternalGrandmother: getCheck('hasMaternalGrandmother') ? 1 : 0,
+        paternalGrandmother: getCheck('hasPaternalGrandmother') ? 1 : 0,
+
+        fullBrothers: getInt('fullBrothers'),
+        fullSisters: getInt('fullSisters'),
+        paternalBrothers: getInt('paternalBrothers'),
+        paternalSisters: getInt('paternalSisters'),
+        maternalBrothers: getInt('maternalBrothers'),
+        maternalSisters: getInt('maternalSisters'),
+
+        fullBrotherSons: getInt('fullBrotherSons'),
+        paternalBrotherSons: getInt('paternalBrotherSons'),
+        fullUncles: getInt('fullUncles'),
+        paternalUncles: getInt('paternalUncles'),
+        fullCousins: getInt('fullCousins'),
+        paternalCousins: getInt('paternalCousins'),
+
+        mushtarakahRule: getCheck('mushtarakahRule'),
+        raddToSpouseIfAlone: getCheck('raddToSpouseIfAlone')
+      };
+    }
+
+    function computeNetEstate(inp) {
+      const warningEl = document.getElementById('wasiyyahWarning');
+      warningEl.classList.add('hidden');
+      warningEl.textContent = '';
+
+      let afterFuneral = Math.max(0, inp.grossEstate - inp.funeralCost);
+      let afterDebts = Math.max(0, afterFuneral - inp.debts);
+
+      const maxAllowedWasiyyah = afterDebts / 3;
+      let validWasiyyah = inp.wasiyyah;
+
+      if (inp.wasiyyah > afterDebts) {
+        validWasiyyah = inp.wasiyyahConsent ? afterDebts : maxAllowedWasiyyah;
+        warningEl.classList.remove('hidden');
+        warningEl.textContent = `Wasiyyah capped at total remaining estate (${formatMoney(afterDebts, inp.currency)}) after funeral and debts.`;
+      } else if (inp.wasiyyah > maxAllowedWasiyyah + 0.005 && !inp.wasiyyahConsent) {
+        validWasiyyah = maxAllowedWasiyyah;
+        warningEl.classList.remove('hidden');
+        warningEl.textContent = `Per authentic Sunnah, Wasiyyah is capped at 1/3 (${formatMoney(maxAllowedWasiyyah, inp.currency)}) of the estate remaining after debts.`;
+      }
+
+      const netEstate = Math.max(0, afterDebts - validWasiyyah);
+      return {
+        netEstate,
+        validWasiyyah,
+        totalDeductions: inp.grossEstate - netEstate
+      };
+    }
+
+    /**
+     * Core Ilm al-Fara'id Fiqh Engine
+     */
+    function solveFaraid(inp) {
+      const excluded = [];
+      const heirs = [];
+
+      const hasSons = inp.sons > 0;
+      const hasDaughters = inp.daughters > 0;
+      const hasSonsSons = inp.sonsSons > 0;
+      const hasSonsDaughters = inp.sonsDaughters > 0;
+
+      const hasMaleDescendant = hasSons || hasSonsSons;
+      const hasAnyDescendant = hasSons || hasDaughters || hasSonsSons || hasSonsDaughters;
+
+      const hasFather = inp.father > 0;
+      const hasMother = inp.mother > 0;
+      const hasPGF = inp.paternalGrandfather > 0;
+      const hasMGM = inp.maternalGrandmother > 0;
+      const hasPGM = inp.paternalGrandmother > 0;
+
+      const totalSiblingsCount =
+        inp.fullBrothers + inp.fullSisters +
+        inp.paternalBrothers + inp.paternalSisters +
+        inp.maternalBrothers + inp.maternalSisters;
+
+      const isKalalah = !hasFather && !hasPGF && !hasAnyDescendant;
+
+      // 1. HAJB AL-HIRMAN
+      let effSonsSons = inp.sonsSons;
+      let effSonsDaughters = inp.sonsDaughters;
+      if (hasSons) {
+        if (inp.sonsSons > 0) {
+          excluded.push({ name: "Son's Sons", count: inp.sonsSons, reason: "Excluded by closer direct Son." });
+          effSonsSons = 0;
+        }
+        if (inp.sonsDaughters > 0) {
+          excluded.push({ name: "Son's Daughters", count: inp.sonsDaughters, reason: "Excluded by closer direct Son." });
+          effSonsDaughters = 0;
+        }
+      } else if (inp.daughters >= 2 && effSonsSons === 0 && effSonsDaughters > 0) {
+        excluded.push({ name: "Son's Daughters", count: effSonsDaughters, reason: "Excluded because 2+ direct Daughters exhaust 2/3 female share." });
+        effSonsDaughters = 0;
+      }
+
+      let effPGF = inp.paternalGrandfather;
+      if (hasFather && hasPGF) {
+        excluded.push({ name: "Paternal Grandfather", count: 1, reason: "Excluded by Father." });
+        effPGF = 0;
+      }
+
+      let effMGM = inp.maternalGrandmother;
+      let effPGM = inp.paternalGrandmother;
+      if (hasMother) {
+        if (effMGM > 0) { excluded.push({ name: "Maternal Grandmother", count: 1, reason: "Excluded by Mother." }); effMGM = 0; }
+        if (effPGM > 0) { excluded.push({ name: "Paternal Grandmother", count: 1, reason: "Excluded by Mother." }); effPGM = 0; }
+      } else if (hasFather && effPGM > 0) {
+        excluded.push({ name: "Paternal Grandmother", count: 1, reason: "Excluded by Father." });
+        effPGM = 0;
+      }
+
+      let effMaternalBrothers = inp.maternalBrothers;
+      let effMaternalSisters = inp.maternalSisters;
+      if (hasAnyDescendant || hasFather || effPGF > 0) {
+        if (effMaternalBrothers > 0) { excluded.push({ name: "Maternal Half-Brothers", count: effMaternalBrothers, reason: "Excluded (Kalalah condition not met)." }); effMaternalBrothers = 0; }
+        if (effMaternalSisters > 0) { excluded.push({ name: "Maternal Half-Sisters", count: effMaternalSisters, reason: "Excluded (Kalalah condition not met)." }); effMaternalSisters = 0; }
+      }
+
+      let effFullBrothers = inp.fullBrothers;
+      let effFullSisters = inp.fullSisters;
+      let effPaternalBrothers = inp.paternalBrothers;
+      let effPaternalSisters = inp.paternalSisters;
+
+      if (hasMaleDescendant || hasFather || effPGF > 0) {
+        if (effFullBrothers > 0) { excluded.push({ name: "Full Brothers", count: effFullBrothers, reason: "Excluded by male descendant or father/grandfather." }); effFullBrothers = 0; }
+        if (effFullSisters > 0) { excluded.push({ name: "Full Sisters", count: effFullSisters, reason: "Excluded by male descendant or father/grandfather." }); effFullSisters = 0; }
+        if (effPaternalBrothers > 0) { excluded.push({ name: "Paternal Brothers", count: effPaternalBrothers, reason: "Excluded by male descendant or father/grandfather." }); effPaternalBrothers = 0; }
+        if (effPaternalSisters > 0) { excluded.push({ name: "Paternal Sisters", count: effPaternalSisters, reason: "Excluded by male descendant or father/grandfather." }); effPaternalSisters = 0; }
+      }
+
+      // 2. UMARIYYATAYN
+      const totalOtherHeirs =
+        inp.sons + inp.daughters + effSonsSons + effSonsDaughters +
+        effPGF + effMGM + effPGM +
+        effFullBrothers + effFullSisters + effPaternalBrothers + effPaternalSisters +
+        effMaternalBrothers + effMaternalSisters;
+
+      const isUmariyyatayn = (inp.husband === 1 || inp.wives > 0) && hasMother && hasFather && totalOtherHeirs === 0 && totalSiblingsCount === 0;
+
+      if (isUmariyyatayn) {
+        if (inp.husband === 1) {
+          heirs.push({ id: 'husband', name: 'Husband', arabic: 'الزوج', count: 1, type: 'Fard', baseFraction: new Fraction(1, 2), finalFraction: new Fraction(1, 2), daleel: 'Surah An-Nisa 4:12' });
+          heirs.push({ id: 'mother', name: 'Mother', arabic: 'الأم', count: 1, type: 'Umariyyatayn', baseFraction: new Fraction(1, 6), finalFraction: new Fraction(1, 6), daleel: 'Umariyyatayn Ruling (1/3 of Remainder)' });
+          heirs.push({ id: 'father', name: 'Father', arabic: 'الأب', count: 1, type: 'Asabah', baseFraction: new Fraction(1, 3), finalFraction: new Fraction(1, 3), daleel: 'Surah An-Nisa 4:11' });
+        } else {
+          heirs.push({ id: 'wives', name: 'Wife', arabic: 'الزوجة', count: inp.wives, type: 'Fard', baseFraction: new Fraction(1, 4), finalFraction: new Fraction(1, 4), daleel: 'Surah An-Nisa 4:12' });
+          heirs.push({ id: 'mother', name: 'Mother', arabic: 'الأم', count: 1, type: 'Umariyyatayn', baseFraction: new Fraction(1, 4), finalFraction: new Fraction(1, 4), daleel: 'Umariyyatayn Ruling (1/3 of Remainder)' });
+          heirs.push({ id: 'father', name: 'Father', arabic: 'الأب', count: 1, type: 'Asabah', baseFraction: new Fraction(1, 2), finalFraction: new Fraction(1, 2), daleel: 'Surah An-Nisa 4:11' });
+        }
+        return { heirs, excluded, baseDenominator: inp.husband === 1 ? 6 : 4, finalDenominator: inp.husband === 1 ? 6 : 4, doctrine: 'Umariyyatayn (Al-Gharrawayn)', doctrineDesc: 'Special classical ruling where Mother receives 1/3 of the remainder after Spouse.', doctrineTone: 'amber', isKalalah: false, unallocatedFraction: ZERO };
+      }
+
+      // 3. MUSHTARAKAH
+      const totalMaternalSibs = effMaternalBrothers + effMaternalSisters;
+      const hasMotherOrGrandmother = hasMother || effMGM > 0 || effPGM > 0;
+      const isMushtarakahCondition = inp.husband === 1 && hasMotherOrGrandmother && totalMaternalSibs >= 2 && effFullBrothers >= 1 && !hasAnyDescendant && !hasFather && effPGF === 0;
+
+      if (isMushtarakahCondition && inp.mushtarakahRule) {
+        heirs.push({ id: 'husband', name: 'Husband', arabic: 'الزوج', count: 1, type: 'Fard', baseFraction: new Fraction(1, 2), finalFraction: new Fraction(1, 2), daleel: 'Surah An-Nisa 4:12' });
+        heirs.push({ id: 'mother', name: 'Mother', arabic: 'الأم', count: 1, type: 'Fard', baseFraction: new Fraction(1, 6), finalFraction: new Fraction(1, 6), daleel: 'Surah An-Nisa 4:11' });
+        const sharedCount = totalMaternalSibs + effFullBrothers + effFullSisters;
+        const matShare = new Fraction(totalMaternalSibs, 3 * sharedCount);
+        const fullShare = new Fraction(effFullBrothers + effFullSisters, 3 * sharedCount);
+        heirs.push({ id: 'maternal_siblings', name: 'Maternal Siblings', arabic: 'الإخوة لأم', count: totalMaternalSibs, type: 'Mushtarakah', baseFraction: matShare, finalFraction: matShare, daleel: 'Al-Mushtarakah Ruling' });
+        heirs.push({ id: 'full_siblings', name: 'Full Siblings', arabic: 'الإخوة الأشقاء', count: effFullBrothers + effFullSisters, type: 'Mushtarakah', baseFraction: fullShare, finalFraction: fullShare, daleel: 'Al-Mushtarakah Ruling' });
+        return { heirs, excluded, baseDenominator: 6, finalDenominator: 6 * sharedCount, doctrine: 'Al-Mushtarakah (Shared Case)', doctrineDesc: 'Full siblings share the 1/3 equally per head with maternal siblings.', doctrineTone: 'emerald', isKalalah: true, unallocatedFraction: ZERO };
+      }
+
+      // 4. FIXED SHARES (FURUD)
+      if (inp.husband === 1) {
+        const share = hasAnyDescendant ? new Fraction(1, 4) : new Fraction(1, 2);
+        heirs.push({ id: 'husband', name: 'Husband', arabic: 'الزوج', count: 1, type: 'Fard', baseFraction: share, finalFraction: share, daleel: 'Surah An-Nisa 4:12' });
+      } else if (inp.wives > 0) {
+        const share = hasAnyDescendant ? new Fraction(1, 8) : new Fraction(1, 4);
+        heirs.push({ id: 'wives', name: 'Wife', arabic: 'الزوجة', count: inp.wives, type: 'Fard', baseFraction: share, finalFraction: share, daleel: 'Surah An-Nisa 4:12' });
+      }
+
+      if (hasMother) {
+        const reduced = hasAnyDescendant || totalSiblingsCount >= 2;
+        const share = reduced ? new Fraction(1, 6) : new Fraction(1, 3);
+        heirs.push({ id: 'mother', name: 'Mother', arabic: 'الأم', count: 1, type: 'Fard', baseFraction: share, finalFraction: share, daleel: 'Surah An-Nisa 4:11' });
+      }
+
+      if (!hasMother && (effMGM > 0 || effPGM > 0)) {
+        heirs.push({ id: 'grandmothers', name: 'Grandmother', arabic: 'الجدة', count: effMGM + effPGM, type: 'Sunnah', baseFraction: new Fraction(1, 6), finalFraction: new Fraction(1, 6), daleel: 'Sunnah (Abu Dawud)' });
+      }
+
+      let fatherTakesAsabah = false;
+      if (hasFather) {
+        if (hasMaleDescendant) {
+          heirs.push({ id: 'father', name: 'Father', arabic: 'الأب', count: 1, type: 'Fard', baseFraction: new Fraction(1, 6), finalFraction: new Fraction(1, 6), daleel: 'Surah An-Nisa 4:11' });
+        } else if (hasAnyDescendant) {
+          fatherTakesAsabah = true;
+          heirs.push({ id: 'father', name: 'Father', arabic: 'الأب', count: 1, type: 'Fard + Asabah', baseFraction: new Fraction(1, 6), finalFraction: new Fraction(1, 6), daleel: 'Surah An-Nisa 4:11' });
+        } else {
+          fatherTakesAsabah = true;
+          heirs.push({ id: 'father', name: 'Father', arabic: 'الأب', count: 1, type: 'Asabah', baseFraction: ZERO, finalFraction: ZERO, daleel: 'Surah An-Nisa 4:11' });
+        }
+      }
+
+      let pgfTakesAsabah = false;
+      if (!hasFather && effPGF > 0) {
+        if (hasMaleDescendant) {
+          heirs.push({ id: 'paternal_grandfather', name: 'Paternal Grandfather', arabic: 'الجد الصحيح', count: 1, type: 'Fard', baseFraction: new Fraction(1, 6), finalFraction: new Fraction(1, 6), daleel: 'Ijma' });
+        } else if (hasAnyDescendant) {
+          pgfTakesAsabah = true;
+          heirs.push({ id: 'paternal_grandfather', name: 'Paternal Grandfather', arabic: 'الجد الصحيح', count: 1, type: 'Fard + Asabah', baseFraction: new Fraction(1, 6), finalFraction: new Fraction(1, 6), daleel: 'Ijma' });
+        } else {
+          pgfTakesAsabah = true;
+          heirs.push({ id: 'paternal_grandfather', name: 'Paternal Grandfather', arabic: 'الجد الصحيح', count: 1, type: 'Asabah', baseFraction: ZERO, finalFraction: ZERO, daleel: 'Ijma' });
+        }
+      }
+
+      if (!hasSons && hasDaughters) {
+        const share = inp.daughters === 1 ? new Fraction(1, 2) : new Fraction(2, 3);
+        heirs.push({ id: 'daughters', name: 'Daughters', arabic: 'البنت', count: inp.daughters, type: 'Fard', baseFraction: share, finalFraction: share, daleel: 'Surah An-Nisa 4:11' });
+      }
+
+      if (totalMaternalSibs > 0) {
+        const share = totalMaternalSibs === 1 ? new Fraction(1, 6) : new Fraction(1, 3);
+        heirs.push({ id: 'maternal_siblings', name: 'Maternal Siblings', arabic: 'الإخوة لأم', count: totalMaternalSibs, type: 'Fard', baseFraction: share, finalFraction: share, daleel: 'Surah An-Nisa 4:12' });
+      }
+
+      if (effFullBrothers === 0 && effFullSisters > 0 && !hasAnyDescendant) {
+        const share = effFullSisters === 1 ? new Fraction(1, 2) : new Fraction(2, 3);
+        heirs.push({ id: 'full_sisters', name: 'Full Sisters', arabic: 'الأخت الشقيقة', count: effFullSisters, type: 'Fard', baseFraction: share, finalFraction: share, daleel: 'Surah An-Nisa 4:176' });
+      }
+
+      // 5. SUM FIXED SHARES & AWL CHECK
+      let totalFixed = ZERO;
+      let baseDenominator = 1;
+      for (const h of heirs) {
+        if (h.baseFraction.isPositive()) {
+          totalFixed = totalFixed.add(h.baseFraction);
+          baseDenominator = Fraction.lcm(baseDenominator, h.baseFraction.den);
+        }
+      }
+
+      if (totalFixed.valueOf() > 1 + 1e-12) {
+        const awlDenominator = Math.round(totalFixed.num * (baseDenominator / totalFixed.den));
+        for (const h of heirs) {
+          if (h.baseFraction.isPositive()) {
+            h.finalFraction = h.baseFraction.div(totalFixed);
+            h.type = `${h.type} [Awl]`;
+          }
+        }
+        return { heirs, excluded, baseDenominator, finalDenominator: awlDenominator, doctrine: `Awl Applied (${baseDenominator} → ${awlDenominator})`, doctrineDesc: 'Fixed shares exceed 1; base denominator increased proportionally.', doctrineTone: 'amber', isKalalah, unallocatedFraction: ZERO };
+      }
+
+      const remainder = ONE.sub(totalFixed);
+      let asabahAssigned = false;
+
+      // 6. ASABAH (RESIDUARY)
+      if (remainder.isPositive()) {
+        if (hasSons) {
+          asabahAssigned = true;
+          const units = inp.sons * 2 + inp.daughters;
+          heirs.push({ id: 'sons', name: 'Sons', arabic: 'الابن', count: inp.sons, type: hasDaughters ? 'Asabah (2:1)' : 'Asabah', baseFraction: remainder.mul(new Fraction(inp.sons * 2, units)), finalFraction: remainder.mul(new Fraction(inp.sons * 2, units)), daleel: 'Surah 4:11' });
+          if (hasDaughters) {
+            heirs.push({ id: 'daughters', name: 'Daughters', arabic: 'البنت', count: inp.daughters, type: 'Asabah (2:1)', baseFraction: remainder.mul(new Fraction(inp.daughters, units)), finalFraction: remainder.mul(new Fraction(inp.daughters, units)), daleel: 'Surah 4:11' });
+          }
+        } else if (fatherTakesAsabah) {
+          asabahAssigned = true;
+          const fObj = heirs.find(h => h.id === 'father');
+          fObj.finalFraction = fObj.baseFraction.add(remainder);
+          fObj.baseFraction = fObj.finalFraction;
+        } else if (pgfTakesAsabah) {
+          asabahAssigned = true;
+          const pObj = heirs.find(h => h.id === 'paternal_grandfather');
+          pObj.finalFraction = pObj.baseFraction.add(remainder);
+          pObj.baseFraction = pObj.finalFraction;
+        } else if (effFullBrothers > 0) {
+          asabahAssigned = true;
+          const units = effFullBrothers * 2 + effFullSisters;
+          heirs.push({ id: 'full_brothers', name: 'Full Brothers', arabic: 'الأخ الشقيق', count: effFullBrothers, type: 'Asabah (2:1)', baseFraction: remainder.mul(new Fraction(effFullBrothers * 2, units)), finalFraction: remainder.mul(new Fraction(effFullBrothers * 2, units)), daleel: 'Surah 4:176' });
+          if (effFullSisters > 0) {
+            heirs.push({ id: 'full_sisters', name: 'Full Sisters', arabic: 'الأخت الشقيقة', count: effFullSisters, type: 'Asabah (2:1)', baseFraction: remainder.mul(new Fraction(effFullSisters, units)), finalFraction: remainder.mul(new Fraction(effFullSisters, units)), daleel: 'Surah 4:176' });
+          }
+        }
+      }
+
+      // 7. RADD
+      if (remainder.isPositive() && !asabahAssigned) {
+        const raddEligible = heirs.filter(h => h.id !== 'husband' && h.id !== 'wives' && h.baseFraction.isPositive());
+        const spouseHeir = heirs.find(h => h.id === 'husband' || h.id === 'wives');
+
+        if (raddEligible.length > 0) {
+          const spouseShare = spouseHeir ? spouseHeir.baseFraction : ZERO;
+          const poolForRadd = ONE.sub(spouseShare);
+          let sumRaddBase = ZERO;
+          for (const h of raddEligible) sumRaddBase = sumRaddBase.add(h.baseFraction);
+
+          let raddDenom = baseDenominator;
+          for (const h of raddEligible) {
+            h.finalFraction = h.baseFraction.div(sumRaddBase).mul(poolForRadd);
+            h.type = `${h.type} + Radd`;
+            raddDenom = Fraction.lcm(raddDenom, h.finalFraction.den);
+          }
+          return { heirs, excluded, baseDenominator, finalDenominator: raddDenom, doctrine: 'Radd (Proportional Return)', doctrineDesc: 'Surplus residue returned proportionally to blood-related Quranic sharers.', doctrineTone: 'emerald', isKalalah, unallocatedFraction: ZERO };
+        }
+      }
+
+      let finalDenominator = baseDenominator || 1;
+      for (const h of heirs) {
+        if (h.finalFraction.isPositive()) finalDenominator = Fraction.lcm(finalDenominator, h.finalFraction.den);
+      }
+
+      return {
+        heirs,
+        excluded,
+        baseDenominator: baseDenominator || finalDenominator,
+        finalDenominator,
+        doctrine: isKalalah ? 'Kalalah Estate' : 'Standard Fara\'id',
+        doctrineDesc: '',
+        doctrineTone: 'none',
+        isKalalah,
+        unallocatedFraction: ZERO
+      };
+    }
+
+    function calculateInheritance() {
+      const inp = getInputs();
+      const { netEstate } = computeNetEstate(inp);
+
+      document.getElementById('netEstateDisplay').textContent = formatMoney(netEstate, inp.currency);
+      document.getElementById('kpiNetEstate').textContent = formatMoney(netEstate, inp.currency);
+
+      const res = solveFaraid(inp);
+
+      document.getElementById('kpiBaseDenominator').textContent = res.finalDenominator;
+      document.getElementById('kpiDoctrine').textContent = res.doctrine;
+
+      const banner = document.getElementById('doctrineBanner');
+      if (res.doctrineDesc && res.doctrineTone !== 'none') {
+        banner.classList.remove('hidden', 'bg-amber-50', 'border-amber-200', 'text-amber-900', 'bg-emerald-50', 'border-emerald-200', 'text-emerald-950');
+        if (res.doctrineTone === 'amber') {
+          banner.classList.add('bg-amber-50', 'border-amber-200', 'text-amber-900');
+        } else {
+          banner.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-950');
+        }
+        document.getElementById('doctrineTitle').textContent = res.doctrine;
+        document.getElementById('doctrineDesc').textContent = res.doctrineDesc;
+      } else {
+        banner.classList.add('hidden');
+      }
+
+      const tbody = document.getElementById('resultsTableBody');
+      const tfoot = document.getElementById('resultsTableFoot');
+      const daleelList = document.getElementById('daleelList');
+      tbody.innerHTML = '';
+      daleelList.innerHTML = '';
+
+      let totalInheritingIndividuals = 0;
+      let totalDistributedAmount = 0;
+
+      if (res.heirs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="py-8 px-4 text-center text-slate-500">No eligible heirs selected.</td></tr>`;
+      } else {
+        for (const h of res.heirs) {
+          if (h.finalFraction.isPositive()) totalInheritingIndividuals += h.count;
+          const groupRatio = h.finalFraction.valueOf();
+          const groupAmount = netEstate * groupRatio;
+          const perPersonAmount = h.count > 0 ? groupAmount / h.count : 0;
+          const pct = (groupRatio * 100).toFixed(2);
+          totalDistributedAmount += groupAmount;
+
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-emerald-50/30 transition';
+          tr.innerHTML = `
+            <td class="py-3.5 px-4"><div class="font-semibold text-slate-900">${h.name}</div><div class="font-serif text-xs text-emerald-800">${h.arabic}</div></td>
+            <td class="py-3.5 px-3 text-center font-medium">${h.count}</td>
+            <td class="py-3.5 px-3"><span class="inline-block px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-900 border border-emerald-200">${h.type}</span></td>
+            <td class="py-3.5 px-3 text-right font-mono font-semibold text-slate-800">${h.finalFraction.toString()}</td>
+            <td class="py-3.5 px-3 text-right font-medium text-slate-700">${pct}%</td>
+            <td class="py-3.5 px-4 text-right font-medium text-slate-700">${formatMoney(perPersonAmount, inp.currency)}</td>
+            <td class="py-3.5 px-4 text-right font-bold text-emerald-950">${formatMoney(groupAmount, inp.currency)}</td>
+          `;
+          tbody.appendChild(tr);
+
+          const dItem = document.createElement('div');
+          dItem.className = 'p-3 rounded-xl bg-stone-50 border border-stone-200/80';
+          dItem.innerHTML = `<div class="font-semibold text-emerald-950">${h.name} — <span class="text-gold-600">${h.finalFraction.toString()} (${pct}%)</span></div><p class="mt-0.5 text-slate-600 leading-relaxed">${h.daleel}</p>`;
+          daleelList.appendChild(dItem);
+        }
+      }
+
+      document.getElementById('activeHeirsBadge').textContent = `${totalInheritingIndividuals} Inheriting Heir${totalInheritingIndividuals === 1 ? '' : 's'}`;
+
+      tfoot.innerHTML = `
+        <tr>
+          <td class="py-3.5 px-4">Total Distributed</td>
+          <td class="py-3.5 px-3 text-center">${totalInheritingIndividuals}</td>
+          <td class="py-3.5 px-3"></td>
+          <td class="py-3.5 px-3 text-right font-mono">${res.heirs.length > 0 ? '1 (100%)' : '0'}</td>
+          <td class="py-3.5 px-3 text-right">${res.heirs.length > 0 ? '100.00%' : '0.00%'}</td>
+          <td class="py-3.5 px-4 text-right">—</td>
+          <td class="py-3.5 px-4 text-right text-emerald-950">${formatMoney(totalDistributedAmount, inp.currency)}</td>
+        </tr>
+      `;
+
+      const excludedList = document.getElementById('excludedList');
+      document.getElementById('excludedCountBadge').textContent = `${res.excluded.length} Excluded`;
+      if (res.excluded.length === 0) {
+        excludedList.innerHTML = `<p class="text-slate-500 italic">No selected relatives were blocked by Hajb al-Hirman.</p>`;
+      } else {
+        excludedList.innerHTML = res.excluded.map(ex => `
+          <div class="p-3 rounded-xl bg-red-50/60 border border-red-200/80 flex items-start gap-2.5">
+            <span class="px-2 py-0.5 rounded bg-red-100 text-red-800 font-bold text-[11px] shrink-0">Mahjub</span>
+            <div><div class="font-semibold text-slate-900">${ex.name} (Count: ${ex.count})</div><p class="text-slate-600 mt-0.5">${ex.reason}</p></div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function resetForm() {
+      document.getElementById('grossEstate').value = '1200000';
+      document.getElementById('funeralCost').value = '0';
+      document.getElementById('debts').value = '0';
+      document.getElementById('wasiyyah').value = '0';
+      document.getElementById('wasiyyahConsent').checked = false;
+
+      document.querySelector('input[name="deceasedGender"][value="male"]').checked = true;
+      handleGenderChange();
+
+      document.getElementById('wivesCount').value = '1';
+      document.getElementById('sons').value = '1';
+      document.getElementById('daughters').value = '2';
+      document.getElementById('hasFather').checked = true;
+      document.getElementById('hasMother').checked = true;
+
+      calculateInheritance();
+    }
+
+    function applyPreset(type) {
+      resetForm();
+      if (type === 'standard') {
+        document.getElementById('wivesCount').value = '1';
+        document.getElementById('sons').value = '1';
+        document.getElementById('daughters').value = '2';
+      } else if (type === 'umariyyatayn_husband') {
+        document.querySelector('input[name="deceasedGender"][value="female"]').checked = true;
+        handleGenderChange();
+        document.getElementById('hasHusband').checked = true;
+        document.getElementById('sons').value = '0';
+        document.getElementById('daughters').value = '0';
+      } else if (type === 'awl') {
+        document.getElementById('wivesCount').value = '1';
+        document.getElementById('daughters').value = '2';
+        document.getElementById('sons').value = '0';
+      } else if (type === 'radd') {
+        document.getElementById('wivesCount').value = '1';
+        document.getElementById('daughters').value = '1';
+        document.getElementById('sons').value = '0';
+        document.getElementById('hasFather').checked = false;
+        document.getElementById('hasMother').checked = true;
+      }
+      calculateInheritance();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      calculateInheritance();
+    });
+  </script>
+</body>
+</html>
