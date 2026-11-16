@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KYFCT Zakat Calculator | Precision Philanthropy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', 'Noto Sans Malayalam', system-ui, -apple-system, sans-serif;
+    }
+    html[lang="ml"] body {
+      line-height: 1.65;
+    }
+    .font-arabic { font-family: 'Amiri', serif; }
+    .tab-active { border-bottom: 3px solid #0f766e; color: #0f766e; font-weight: 600; }
+    .metric-card { transition: transform 0.15s ease; }
+    .metric-card:hover { transform: translateY(-2px); }
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      body { background: white; }
+      .tab-content { display: block !important; }
+    }
+    .print-only { display: none; }
+    /* Prevent any chart from expanding the page */
+    .chart-box { position: relative; width: 100%; overflow: hidden; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-teal-800 to-emerald-700 text-white shadow-lg no-print">
+    <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight" data-i18n="headerTitle">Kattoo-Yamani Family Charitable Trust</h1>
+        <p class="text-teal-100 text-sm mt-1" data-i18n="headerSubtitle">KYFCT Zakat Calculator · Precision Philanthropy Model (2021–2026)</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2.5 self-end md:self-auto">
+        <!-- Language Switcher Pill -->
+        <div role="group" aria-label="Language Switcher" class="inline-flex items-center bg-teal-950/50 p-1 rounded-xl border border-teal-400/30 shadow-inner">
+          <button id="lang-btn-en" onclick="setLanguage('en')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 bg-white text-teal-900 shadow-sm">
+            EN
+          </button>
+          <button id="lang-btn-ml" onclick="setLanguage('ml')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 text-teal-100 hover:text-white">
+            മലയാളം
+          </button>
+        </div>
+
+        <button onclick="window.print()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition" data-i18n="btnPrint">
+          Print / PDF
+        </button>
+        <button onclick="openResetModal()" class="bg-red-500/80 hover:bg-red-600 px-4 py-2 rounded-lg text-sm font-medium transition" data-i18n="btnReset">
+          Reset Data
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="bg-white border-b sticky top-0 z-20 shadow-sm no-print">
+    <div class="max-w-6xl mx-auto px-4 flex overflow-x-auto gap-1">
+      <button data-tab="dashboard" data-i18n="tabDashboard" class="tab-btn tab-active px-4 py-3 text-sm whitespace-nowrap">Dashboard</button>
+      <button data-tab="collect" data-i18n="tabCollections" class="tab-btn px-4 py-3 text-sm whitespace-nowrap text-slate-600 hover:text-teal-700">Collections</button>
+      <button data-tab="disburse" data-i18n="tabDisbursement" class="tab-btn px-4 py-3 text-sm whitespace-nowrap text-slate-600 hover:text-teal-700">Disbursement</button>
+      <button data-tab="personal" data-i18n="tabPersonal" class="tab-btn px-4 py-3 text-sm whitespace-nowrap text-slate-600 hover:text-teal-700">Personal Zakat</button>
+      <button data-tab="method" data-i18n="tabMethodology" class="tab-btn px-4 py-3 text-sm whitespace-nowrap text-slate-600 hover:text-teal-700">Methodology</button>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+
+    <!-- ==================== DASHBOARD ==================== -->
+    <section id="dashboard" class="tab-content">
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold text-slate-800 mb-1" data-i18n="dashTitle">Impact Dashboard</h2>
+        <p class="text-sm text-slate-500" data-i18n="dashSubtitle">Quality metrics from the KYFCT Precision Philanthropy framework</p>
+      </div>
+
+      <!-- Current Snapshot -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
+        <div class="metric-card bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+          <p class="text-xs text-slate-500 uppercase tracking-wide" data-i18n="snapTotalCollected">Total Collected</p>
+          <p class="text-xl font-bold text-teal-700 mt-1" id="dash-total">₹0</p>
+        </div>
+        <div class="metric-card bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+          <p class="text-xs text-slate-500 uppercase tracking-wide" data-i18n="snapDonors">Donors</p>
+          <p class="text-xl font-bold text-slate-800 mt-1" id="dash-donors">0</p>
+        </div>
+        <div class="metric-card bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+          <p class="text-xs text-slate-500 uppercase tracking-wide" data-i18n="snapBeneficiaries">Beneficiaries</p>
+          <p class="text-xl font-bold text-slate-800 mt-1" id="dash-bens">0</p>
+        </div>
+        <div class="metric-card bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+          <p class="text-xs text-slate-500 uppercase tracking-wide" data-i18n="snapShareValue">Share Value</p>
+          <p class="text-xl font-bold text-emerald-600 mt-1" id="dash-shareval">₹0</p>
+        </div>
+        <div class="metric-card bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+          <p class="text-xs text-slate-500 uppercase tracking-wide" data-i18n="snapTotalShares">Total Shares</p>
+          <p class="text-xl font-bold text-slate-800 mt-1" id="dash-shares">0</p>
+        </div>
+        <div class="metric-card bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+          <p class="text-xs text-slate-500 uppercase tracking-wide" data-i18n="snapHighNeed">High-Need %</p>
+          <p class="text-xl font-bold text-rose-600 mt-1" id="dash-ipp">0%</p>
+        </div>
+      </div>
+
+      <!-- Metrics Comparison Table -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden mb-8">
+        <div class="px-5 py-4 border-b bg-slate-50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+          <h3 class="font-semibold" data-i18n="metricsTableTitle">Quality Metrics: 2021 Baseline vs Current</h3>
+          <span class="text-xs text-slate-500" data-i18n="metricsTableSource">From KYFCT Model Shift Paper</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 text-slate-600">
+              <tr>
+                <th class="text-left px-5 py-3 font-medium" data-i18n="colMetric">Metric</th>
+                <th class="text-left px-4 py-3 font-medium" data-i18n="colFormula">Formula</th>
+                <th class="text-right px-4 py-3 font-medium">2021</th>
+                <th class="text-right px-4 py-3 font-medium" data-i18n="colCurrent">Current</th>
+                <th class="text-right px-5 py-3 font-medium" data-i18n="colChange">Change</th>
+              </tr>
+            </thead>
+            <tbody id="metrics-table" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="grid lg:grid-cols-2 gap-6 mb-8">
+
+        <!-- LEFT: Category Doughnut -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5">
+          <h3 class="font-semibold mb-3" data-i18n="chartFundsTitle">Funds by Beneficiary</h3>
+          <div class="flex justify-between items-baseline mb-1">
+            <p class="text-[11px] text-slate-400" data-i18n="chartHoverHint">Mouse over or tap to see details</p>
+          </div>
+          <div class="chart-box" style="height: 280px;">
+            <canvas id="catChart"></canvas>
+          </div>
+        </div>
+
+        <!-- RIGHT: Four individual metric cards -->
+        <div>
+          <h3 class="font-semibold mb-3" data-i18n="chartMetricImprovementTitle">Metric Improvement (2021 → Current)</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            <!-- ADBAD Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-4">
+              <div class="flex justify-between items-baseline mb-1">
+                <p class="text-xs font-semibold text-slate-600">ADBAD</p>
+                <p class="text-[10px] text-slate-400" data-i18n="miniAdbadDesc">Avg Donation / Donor</p>
+              </div>
+              <div class="chart-box" style="height: 100px;">
+                <canvas id="chart-adbad"></canvas>
+              </div>
+              <div class="flex justify-between text-[11px] mt-1 text-slate-500">
+                <span>2021: <span id="adbad-2021">—</span></span>
+                <span class="font-medium text-teal-700"><span data-i18n="lblNow">Now</span>: <span id="adbad-now">—</span></span>
+              </div>
+            </div>
+
+            <!-- DBR Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-4">
+              <div class="flex justify-between items-baseline mb-1">
+                <p class="text-xs font-semibold text-slate-600">DBR</p>
+                <p class="text-[10px] text-slate-400" data-i18n="miniDbrDesc">Donor → Beneficiary Reach</p>
+              </div>
+              <div class="chart-box" style="height: 100px;">
+                <canvas id="chart-dbr"></canvas>
+              </div>
+              <div class="flex justify-between text-[11px] mt-1 text-slate-500">
+                <span>2021: <span id="dbr-2021">—</span></span>
+                <span class="font-medium text-teal-700"><span data-i18n="lblNow">Now</span>: <span id="dbr-now">—</span></span>
+              </div>
+            </div>
+
+            <!-- NSI Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-4">
+              <div class="flex justify-between items-baseline mb-1">
+                <p class="text-xs font-semibold text-slate-600">NSI</p>
+                <p class="text-[10px] text-slate-400" data-i18n="miniNsiDesc">Need Sensitivity Index</p>
+              </div>
+              <div class="chart-box" style="height: 100px;">
+                <canvas id="chart-nsi"></canvas>
+              </div>
+              <div class="flex justify-between text-[11px] mt-1 text-slate-500">
+                <span>2021: <span id="nsi-2021">—</span></span>
+                <span class="font-medium text-teal-700"><span data-i18n="lblNow">Now</span>: <span id="nsi-now">—</span></span>
+              </div>
+            </div>
+
+            <!-- IPP Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-4">
+              <div class="flex justify-between items-baseline mb-1">
+                <p class="text-xs font-semibold text-slate-600">IPP</p>
+                <p class="text-[10px] text-slate-400" data-i18n="miniIppDesc">Impact Priority %</p>
+              </div>
+              <div class="chart-box" style="height: 100px;">
+                <canvas id="chart-ipp"></canvas>
+              </div>
+              <div class="flex justify-between text-[11px] mt-1 text-slate-500">
+                <span>2021: <span id="ipp-2021">—</span></span>
+                <span class="font-medium text-teal-700"><span data-i18n="lblNow">Now</span>: <span id="ipp-now">—</span></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Distribution Preview -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="px-5 py-4 border-b bg-slate-50">
+          <h3 class="font-semibold" data-i18n="distPreviewTitle">Current Distribution Schedule (Preview)</h3>
+        </div>
+        <div class="overflow-x-auto max-h-96">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 sticky top-0">
+              <tr>
+                <th class="text-left px-4 py-2">#</th>
+                <th class="text-left px-4 py-2" data-i18n="colName">Name</th>
+                <th class="text-left px-4 py-2" data-i18n="colType">Type</th>
+                <th class="text-right px-4 py-2" data-i18n="colShares">Shares</th>
+                <th class="text-right px-4 py-2" data-i18n="colAmount">Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="dash-dist-table" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== COLLECTIONS ==================== -->
+    <section id="collect" class="tab-content hidden">
+      <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-semibold" data-i18n="collectTitle">Zakat Collections</h2>
+          <p class="text-sm text-slate-500" data-i18n="collectSubtitle">Record contributions from family members / donors</p>
+        </div>
+        <button onclick="addDonorRow()" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium no-print" data-i18n="btnAddDonor">
+          + Add Donor
+        </button>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden mb-6">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 text-slate-600">
+              <tr>
+                <th class="text-left px-4 py-3 w-12">#</th>
+                <th class="text-left px-4 py-3" data-i18n="colDonorName">Donor Name</th>
+                <th class="text-left px-4 py-3" data-i18n="colReceiptNo">Receipt No.</th>
+                <th class="text-right px-4 py-3" data-i18n="colAmount">Amount (₹)</th>
+                <th class="text-center px-4 py-3 no-print w-20" data-i18n="colAction">Action</th>
+              </tr>
+            </thead>
+            <tbody id="donors-table" class="divide-y divide-slate-100"></tbody>
+            <tfoot class="bg-teal-50 font-semibold">
+              <tr>
+                <td colspan="3" class="px-4 py-3 text-right" data-i18n="footTotalCollected">Total Collected</td>
+                <td class="px-4 py-3 text-right text-teal-700" id="collect-total">₹0</td>
+                <td class="no-print"></td>
+              </tr>
+              <tr>
+                <td colspan="3" class="px-4 py-2 text-right text-sm font-normal text-slate-600" data-i18n="footTotalDonors">Total Donors</td>
+                <td class="px-4 py-2 text-right text-sm" id="collect-count">0</td>
+                <td class="no-print"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-900" data-i18n="collectNote">
+        <strong>Note:</strong> Per the KYFCT model, the focus is on depth of commitment (ADBAD) rather than sheer number of donors. A smaller, highly engaged donor base can produce superior impact when distribution is precise.
+      </div>
+    </section>
+
+    <!-- ==================== DISBURSEMENT ==================== -->
+    <section id="disburse" class="tab-content hidden">
+      <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-semibold" data-i18n="disburseTitle">Disbursement Engine</h2>
+          <p class="text-sm text-slate-500" data-i18n="disburseSubtitle">Assign beneficiary types &amp; calculate share-based distribution</p>
+        </div>
+        <button onclick="addBenRow()" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium no-print" data-i18n="btnAddBen">
+          + Add Beneficiary
+        </button>
+      </div>
+
+      <!-- Share Value Control -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5 mb-6 grid sm:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-1" data-i18n="lblTotalAvailable">Total Available for Distribution (₹)</label>
+          <input type="number" id="dist-total" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" oninput="recalcAll()" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-1" data-i18n="lblShareValue">Value of 1 Share (₹)</label>
+          <input type="number" id="share-value" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-slate-50" readonly />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-1" data-i18n="lblTotalWeightedShares">Total Weighted Shares</label>
+          <input type="text" id="total-shares-display" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-slate-50" readonly />
+        </div>
+      </div>
+
+      <!-- Category Legend -->
+      <div class="bg-slate-50 rounded-xl p-4 mb-6 text-xs border border-slate-200/70">
+        <p class="font-semibold mb-2 text-slate-700" data-i18n="legendTitle">Beneficiary Share Multipliers (KYFCT Model)</p>
+        <div id="category-legend" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden mb-6">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 text-slate-600">
+              <tr>
+                <th class="text-left px-3 py-3 w-10">#</th>
+                <th class="text-left px-3 py-3" data-i18n="colBenName">Beneficiary Name</th>
+                <th class="text-left px-3 py-3" data-i18n="colType">Type</th>
+                <th class="text-right px-3 py-3" data-i18n="colShares">Shares</th>
+                <th class="text-left px-3 py-3" data-i18n="colRemarks">Remarks</th>
+                <th class="text-right px-3 py-3" data-i18n="colAmount">Amount (₹)</th>
+                <th class="text-center px-3 py-3 no-print w-16" data-i18n="colDel">Del</th>
+              </tr>
+            </thead>
+            <tbody id="bens-table" class="divide-y divide-slate-100"></tbody>
+            <tfoot class="bg-teal-50 font-semibold">
+              <tr>
+                <td colspan="3" class="px-3 py-3 text-right" data-i18n="footTotals">Totals</td>
+                <td class="px-3 py-3 text-right" id="ben-shares-total">0</td>
+                <td></td>
+                <td class="px-3 py-3 text-right text-teal-700" id="ben-amount-total">₹0</td>
+                <td class="no-print"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Category Summary -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="px-5 py-3 border-b bg-slate-50">
+          <h3 class="font-semibold text-sm" data-i18n="catSummaryTitle">Category-wise Summary</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 text-slate-600">
+              <tr>
+                <th class="text-left px-4 py-2" data-i18n="colCategory">Category</th>
+                <th class="text-right px-4 py-2" data-i18n="colCount">Count</th>
+                <th class="text-right px-4 py-2" data-i18n="colShareMultiplier">Share Multiplier</th>
+                <th class="text-right px-4 py-2" data-i18n="colTotalShares">Total Shares</th>
+                <th class="text-right px-4 py-2" data-i18n="colAmount">Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="cat-summary" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PERSONAL ZAKAT ==================== -->
+    <section id="personal" class="tab-content hidden">
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold" data-i18n="pzTitle">Personal Zakat Estimator</h2>
+        <p class="text-sm text-slate-500" data-i18n="pzSubtitle">Quick calculation for members who wish to give their Zakat through KYFCT</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 space-y-4">
+          <h3 class="font-semibold text-teal-800" data-i18n="pzAssetsHeading">Zakatable Assets</h3>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1" data-i18n="pzCashLabel">Cash, Bank Balances, Gold/Silver value (₹)</label>
+            <input type="number" id="pz-cash" class="w-full border rounded-lg px-3 py-2" value="0" oninput="calcPersonalZakat()" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1" data-i18n="pzBusinessLabel">Business Inventory / Receivables (₹)</label>
+            <input type="number" id="pz-business" class="w-full border rounded-lg px-3 py-2" value="0" oninput="calcPersonalZakat()" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1" data-i18n="pzInvestLabel">Investments / Shares (liquid) (₹)</label>
+            <input type="number" id="pz-invest" class="w-full border rounded-lg px-3 py-2" value="0" oninput="calcPersonalZakat()" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1" data-i18n="pzDebtsLabel">Deductible Debts (₹)</label>
+            <input type="number" id="pz-debts" class="w-full border rounded-lg px-3 py-2" value="0" oninput="calcPersonalZakat()" />
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-teal-700 to-emerald-800 text-white rounded-xl shadow-sm p-6 flex flex-col justify-center">
+          <p class="text-teal-100 text-sm" data-i18n="pzNetLabel">Net Zakatable Wealth</p>
+          <p class="text-3xl font-bold mt-1" id="pz-net">₹0</p>
+          <div class="mt-6 pt-4 border-t border-white/20">
+            <p class="text-teal-100 text-sm" data-i18n="pzDueLabel">Zakat Due (2.5%)</p>
+            <p class="text-4xl font-bold mt-1" id="pz-due">₹0</p>
+          </div>
+          <p class="text-xs text-teal-200 mt-4" data-i18n="pzNisabNote">Nisab reference: approx. value of 85g gold or 595g silver (check current market). This is an estimate only.</p>
+          <button onclick="openAddPersonalModal()" class="mt-5 bg-white text-teal-800 font-semibold py-2.5 px-4 rounded-lg hover:bg-teal-50 transition no-print" data-i18n="pzRecordBtn">
+            Record this amount as a KYFCT Donation
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== METHODOLOGY ==================== -->
+    <section id="method" class="tab-content hidden">
+      <div class="prose prose-slate max-w-none">
+        <h2 class="text-xl font-semibold mb-4" data-i18n="methodTitle">Methodology: Precision Philanthropy (KYFCT Model)</h2>
+
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-6">
+          <h3 class="font-semibold text-teal-800 mb-2" data-i18n="methodAbstractTitle">Abstract</h3>
+          <p class="text-sm leading-relaxed text-slate-700" data-i18n="methodAbstractBody">
+            In the landscape of Islamic social finance, family-based trusts play a pivotal role in fulfilling the Quranic mandate of prioritizing kin in charitable distribution. This framework examines the strategic evolution of the Kattoo-Yamani Family Charitable Trust (KYFCT). Faced with a contracting donor base, the Trust transitioned from a broad distribution model to a “Precision Philanthropy” framework. By implementing four qualitative metrics—Impact Priority Percentage (IPP), Average Donation per Donor (ADBAD), Need Sensitivity Index (NSI), and Donor-to-Beneficiary Reach (DBR)—the Trust demonstrated that organizational efficacy can increase even when traditional quantitative markers decline.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-6">
+          <h3 class="font-semibold text-teal-800 mb-3" data-i18n="methodFourMetricsTitle">The Four Quality Metrics</h3>
+          <ol class="list-decimal list-inside space-y-3 text-sm text-slate-700" data-i18n="methodFourMetricsList">
+            <li><strong>Impact Priority Percentage (IPP):</strong> Ratio of funds allocated to high-vulnerability categories (widows, medical emergencies, special consideration) versus standard categories.</li>
+            <li><strong>Average Donation per Donor (ADBAD):</strong> Measure of the depth of commitment within the active donor base.</li>
+            <li><strong>Need Sensitivity Index (NSI):</strong> Variance between the highest and lowest share allocations, reflecting the precision of needs assessment.</li>
+            <li><strong>Donor-to-Beneficiary Reach (DBR):</strong> The “impact multiplier” — how many individuals are supported by a single donor’s contribution.</li>
+          </ol>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-6">
+          <h3 class="font-semibold text-teal-800 mb-3" data-i18n="methodPrinciplesTitle">Strategic Principles</h3>
+          <ul class="list-disc list-inside space-y-2 text-sm text-slate-700" data-i18n="methodPrinciplesList">
+            <li><strong>Precision Targeting:</strong> Move away from flat distributions. Higher NSI indicates rigorous vetting where high-need members receive significantly more support.</li>
+            <li><strong>Resilient Donor Stewardship:</strong> Transparency and reporting sustain a smaller but deeply committed donor base.</li>
+            <li><strong>Documentation as Foundation:</strong> Regular updating of the Family Chart and Address Book maintains a closed-loop accountability system.</li>
+            <li><strong>Silat al-Rahim:</strong> Distribution prioritises the closest of kin, strengthening family bonds as enjoined in the Qur’an and Sunnah.</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-6">
+          <h3 class="font-semibold text-teal-800 mb-3" data-i18n="methodShareTitle">Share System Rationale</h3>
+          <p class="text-sm text-slate-700 leading-relaxed" data-i18n="methodShareBody">
+            The weighted share system (1× to 5×) is a practical operationalisation of need-based differentiation within the family circle. Special Consideration (SC/SCM) and medical/widow categories receive elevated multipliers so that limited funds are concentrated where hardship is greatest — the core idea behind the rise in IPP from 28% (2021) to ~65.6% (2026).
+          </p>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-900" data-i18n="methodFiqhNote">
+          <strong>Fiqh Note:</strong> This tool is an administrative aid for a lineage-based family trust distributing Zakat and charity among eligible relatives (mustahiqqūn). It does not replace the classical rulings of Zakat eligibility (the eight asnaf). Office bearers should ensure recipients fall within the legitimate categories and that the distribution upholds the spirit of prioritising kin while remaining within the bounds of the Shari’ah. For complex cases, consult a qualified scholar.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="text-center text-xs text-slate-400 py-8 px-4 no-print" data-i18n="footerText">
+    KYFCT Zakat Calculator · Based on the paper “Optimization of Lineage-Based Zakat” (Essa Mohamed Rafique) · Standalone local tool
+  </footer>
+
+  <!-- Custom Modal Dialog (Replaces native alert/confirm/prompt for consistent bilingual UX) -->
+  <div id="custom-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-xs p-4 no-print">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-100 max-w-md w-full p-6 animate-fade-in">
+      <h3 id="modal-title" class="text-lg font-bold text-slate-800 mb-2">Confirm</h3>
+      <p id="modal-message" class="text-sm text-slate-600 mb-4 leading-relaxed"></p>
+      <div id="modal-input-wrap" class="mb-4 hidden">
+        <label id="modal-input-label" class="block text-xs font-medium text-slate-500 mb-1"></label>
+        <input type="text" id="modal-input" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
+      </div>
+      <div class="flex justify-end gap-2 mt-5">
+        <button id="modal-cancel-btn" onclick="closeModal()" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100 transition">Cancel</button>
+        <button id="modal-confirm-btn" class="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 transition">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===================== TRANSLATIONS (EN & ML) =====================
+    const TRANSLATIONS = {
+      en: {
+        pageTitle: 'KYFCT Zakat Calculator | Precision Philanthropy',
+        headerTitle: 'Kattoo-Yamani Family Charitable Trust',
+        headerSubtitle: 'KYFCT Zakat Calculator · Precision Philanthropy Model (2021–2026)',
+        btnPrint: 'Print / PDF',
+        btnReset: 'Reset Data',
+
+        tabDashboard: 'Dashboard',
+        tabCollections: 'Collections',
+        tabDisbursement: 'Disbursement',
+        tabPersonal: 'Personal Zakat',
+        tabMethodology: 'Methodology',
+
+        dashTitle: 'Impact Dashboard',
+        dashSubtitle: 'Quality metrics from the KYFCT Precision Philanthropy framework',
+        snapTotalCollected: 'Total Collected',
+        snapDonors: 'Donors',
+        snapBeneficiaries: 'Beneficiaries',
+        snapShareValue: 'Share Value',
+        snapTotalShares: 'Total Shares',
+        snapHighNeed: 'High-Need %',
+
+        metricsTableTitle: 'Quality Metrics: 2021 Baseline vs Current',
+        metricsTableSource: 'From KYFCT Model Shift Paper',
+        colMetric: 'Metric',
+        colFormula: 'Formula',
+        colCurrent: 'Current',
+        colChange: 'Change',
+
+        metricAdbadLabel: 'ADBAD (Avg Donation / Donor)',
+        metricAdbadFormula: 'Total Zakat ÷ Donors',
+        metricDbrLabel: 'DBR (Donor-to-Beneficiary Reach)',
+        metricDbrFormula: 'Beneficiaries ÷ Donors',
+        metricNsiLabel: 'NSI (Need Sensitivity Index)',
+        metricNsiFormula: 'Highest Shares ÷ Lowest Shares',
+        metricVcrLabel: 'VCR (Vulnerability Coverage Ratio)',
+        metricVcrFormula: 'Vulnerable Bens ÷ Total Bens',
+        metricAbpbLabel: 'ABPB (Avg Benefit / Beneficiary)',
+        metricAbpbFormula: 'Total Zakat ÷ Beneficiaries',
+        metricIppLabel: 'IPP (Impact Priority %)',
+        metricIppFormula: 'High-Need Funds ÷ Total Zakat × 100',
+
+        chartFundsTitle: 'Funds by Beneficiary',
+        chartHoverHint: 'Mouse over or tap to see details',
+        chartMetricImprovementTitle: 'Metric Improvement (2021 → Current)',
+        miniAdbadDesc: 'Avg Donation / Donor',
+        miniDbrDesc: 'Donor → Beneficiary Reach',
+        miniNsiDesc: 'Need Sensitivity Index',
+        miniIppDesc: 'Impact Priority %',
+        lblNow: 'Now',
+
+        distPreviewTitle: 'Current Distribution Schedule (Preview)',
+        colName: 'Name',
+        colType: 'Type',
+        colShares: 'Shares',
+        colAmount: 'Amount (₹)',
+
+        collectTitle: 'Zakat Collections',
+        collectSubtitle: 'Record contributions from family members / donors',
+        btnAddDonor: '+ Add Donor',
+        colDonorName: 'Donor Name',
+        colReceiptNo: 'Receipt No.',
+        colAction: 'Action',
+        footTotalCollected: 'Total Collected',
+        footTotalDonors: 'Total Donors',
+        collectNote: '<strong>Note:</strong> Per the KYFCT model, the focus is on depth of commitment (ADBAD) rather than sheer number of donors. A smaller, highly engaged donor base can produce superior impact when distribution is precise.',
+
+        disburseTitle: 'Disbursement Engine',
+        disburseSubtitle: 'Assign beneficiary types & calculate share-based distribution',
+        btnAddBen: '+ Add Beneficiary',
+        lblTotalAvailable: 'Total Available for Distribution (₹)',
+        lblShareValue: 'Value of 1 Share (₹)',
+        lblTotalWeightedShares: 'Total Weighted Shares',
+        legendTitle: 'Beneficiary Share Multipliers (KYFCT Model)',
+        colBenName: 'Beneficiary Name',
+        colRemarks: 'Remarks',
+        colDel: 'Del',
+        footTotals: 'Totals',
+        catSummaryTitle: 'Category-wise Summary',
+        colCategory: 'Category',
+        colCount: 'Count',
+        colShareMultiplier: 'Share Multiplier',
+        colTotalShares: 'Total Shares',
+
+        pzTitle: 'Personal Zakat Estimator',
+        pzSubtitle: 'Quick calculation for members who wish to give their Zakat through KYFCT',
+        pzAssetsHeading: 'Zakatable Assets',
+        pzCashLabel: 'Cash, Bank Balances, Gold/Silver value (₹)',
+        pzBusinessLabel: 'Business Inventory / Receivables (₹)',
+        pzInvestLabel: 'Investments / Shares (liquid) (₹)',
+        pzDebtsLabel: 'Deductible Debts (₹)',
+        pzNetLabel: 'Net Zakatable Wealth',
+        pzDueLabel: 'Zakat Due (2.5%)',
+        pzNisabNote: 'Nisab reference: approx. value of 85g gold or 595g silver (check current market). This is an estimate only.',
+        pzRecordBtn: 'Record this amount as a KYFCT Donation',
+
+        methodTitle: 'Methodology: Precision Philanthropy (KYFCT Model)',
+        methodAbstractTitle: 'Abstract',
+        methodAbstractBody: 'In the landscape of Islamic social finance, family-based trusts play a pivotal role in fulfilling the Quranic mandate of prioritizing kin in charitable distribution. This framework examines the strategic evolution of the Kattoo-Yamani Family Charitable Trust (KYFCT). Faced with a contracting donor base, the Trust transitioned from a broad distribution model to a “Precision Philanthropy” framework. By implementing four qualitative metrics—Impact Priority Percentage (IPP), Average Donation per Donor (ADBAD), Need Sensitivity Index (NSI), and Donor-to-Beneficiary Reach (DBR)—the Trust demonstrated that organizational efficacy can increase even when traditional quantitative markers decline.',
+        methodFourMetricsTitle: 'The Four Quality Metrics',
+        methodFourMetricsList: `
+          <li><strong>Impact Priority Percentage (IPP):</strong> Ratio of funds allocated to high-vulnerability categories (widows, medical emergencies, special consideration) versus standard categories.</li>
+          <li><strong>Average Donation per Donor (ADBAD):</strong> Measure of the depth of commitment within the active donor base.</li>
+          <li><strong>Need Sensitivity Index (NSI):</strong> Variance between the highest and lowest share allocations, reflecting the precision of needs assessment.</li>
+          <li><strong>Donor-to-Beneficiary Reach (DBR):</strong> The “impact multiplier” — how many individuals are supported by a single donor’s contribution.</li>
+        `,
+        methodPrinciplesTitle: 'Strategic Principles',
+        methodPrinciplesList: `
+          <li><strong>Precision Targeting:</strong> Move away from flat distributions. Higher NSI indicates rigorous vetting where high-need members receive significantly more support.</li>
+          <li><strong>Resilient Donor Stewardship:</strong> Transparency and reporting sustain a smaller but deeply committed donor base.</li>
+          <li><strong>Documentation as Foundation:</strong> Regular updating of the Family Chart and Address Book maintains a closed-loop accountability system.</li>
+          <li><strong>Silat al-Rahim:</strong> Distribution prioritises the closest of kin, strengthening family bonds as enjoined in the Qur’an and Sunnah.</li>
+        `,
+        methodShareTitle: 'Share System Rationale',
+        methodShareBody: 'The weighted share system (1× to 5×) is a practical operationalisation of need-based differentiation within the family circle. Special Consideration (SC/SCM) and medical/widow categories receive elevated multipliers so that limited funds are concentrated where hardship is greatest — the core idea behind the rise in IPP from 28% (2021) to ~65.6% (2026).',
+        methodFiqhNote: '<strong>Fiqh Note:</strong> This tool is an administrative aid for a lineage-based family trust distributing Zakat and charity among eligible relatives (mustahiqqūn). It does not replace the classical rulings of Zakat eligibility (the eight asnaf). Office bearers should ensure recipients fall within the legitimate categories and that the distribution upholds the spirit of prioritising kin while remaining within the bounds of the Shari’ah. For complex cases, consult a qualified scholar.',
+        footerText: 'KYFCT Zakat Calculator · Based on the paper “Optimization of Lineage-Based Zakat” (Essa Mohamed Rafique) · Standalone local tool',
+
+        typeLabels: {
+          'Non-Related': 'Non-Related / Orphan',
+          'MM': 'Male Medical (MM)',
+          'MMD': 'Male Medical + Dep (MMD)',
+          'F/M': 'Female / Male (F/M)',
+          'FM': 'Female Medical (FM)',
+          'WD': 'Widow / Divorcee (WD)',
+          'WDD': 'Widow/Div + Dep (WDD)',
+          'WM': 'Widow Medical (WM)',
+          'SC': 'Special Consideration (SC)',
+          'SCM': 'Special + Medical (SCM)'
+        },
+        legendShortLabels: {
+          'Non-Related': 'Non-Related / Orphan',
+          'MM': 'Male Medical (MM)',
+          'MMD': 'Male Medical + Dep (MMD)',
+          'F/M': 'Female / Male (F/M)',
+          'FM': 'Female Medical (FM)',
+          'WD': 'Widow / Divorcee (WD)',
+          'WDD': 'Widow/Div + Dep (WDD)',
+          'WM': 'Widow Medical (WM)',
+          'SC': 'Special (SC)',
+          'SCM': 'Special + Medical (SCM)'
+        },
+
+        modalResetTitle: 'Reset All Data',
+        modalResetMsg: 'Reset all data to the 2026 sample figures from the KYFCT Excel? This cannot be undone.',
+        modalResetBtn: 'Reset Data',
+        modalNoAssetsTitle: 'No Assets Entered',
+        modalNoAssetsMsg: 'Please enter your zakatable assets first to calculate the Zakat due.',
+        modalOkBtn: 'OK',
+        modalCancelBtn: 'Cancel',
+        modalRecordTitle: 'Record KYFCT Donation',
+        modalRecordMsg: 'Enter the donor name to add this Zakat amount to the Collections register:',
+        modalRecordLabel: 'Donor Name',
+        modalRecordDefault: 'Family Member',
+        modalRecordSaveBtn: 'Add to Collections'
+      },
+
+      ml: {
+        pageTitle: 'KYFCT സകാത്ത് കാൽക്കുലേറ്റർ | കൃത്യതയാർന്ന ജീവകാരുണ്യം',
+        headerTitle: 'കാട്ടൂ-യമാനി ഫാമിലി ചാരിറ്റബിൾ ട്രസ്റ്റ് (KYFCT)',
+        headerSubtitle: 'KYFCT സകാത്ത് കാൽക്കുലേറ്റർ · കൃത്യതയാർന്ന ജീവകാരുണ്യ മാതൃക (2021–2026)',
+        btnPrint: 'പ്രിന്റ് / PDF',
+        btnReset: 'വിവരങ്ങൾ പുനഃക്രമീകരിക്കുക',
+
+        tabDashboard: 'ഡാഷ്‌ബോർഡ്',
+        tabCollections: 'സകാത്ത് സമാഹരണം',
+        tabDisbursement: 'സകാത്ത് വിതരണം',
+        tabPersonal: 'വ്യക്തിഗത സകാത്ത്',
+        tabMethodology: 'പ്രവർത്തന രീതി',
+
+        dashTitle: 'പ്രവർത്തന മികവ് ഡാഷ്‌ബോർഡ്',
+        dashSubtitle: 'KYFCT കൃത്യതയാർന്ന ജീവകാരുണ്യ (Precision Philanthropy) ചട്ടക്കൂടിലെ ഗുണനിലവാര സൂചികകൾ',
+        snapTotalCollected: 'ആകെ സമാഹരിച്ചത്',
+        snapDonors: 'ദാതാക്കൾ',
+        snapBeneficiaries: 'ഗുണഭോക്താക്കൾ',
+        snapShareValue: 'ഒരു ഓഹരി മൂല്യം',
+        snapTotalShares: 'ആകെ ഓഹരികൾ',
+        snapHighNeed: 'അതീവ ആവശ്യക്കാർ %',
+
+        metricsTableTitle: 'ഗുണനിലവാര സൂചികകൾ: 2021 അടിസ്ഥാന നിലവാരവും നിലവിലെ അവസ്ഥയും',
+        metricsTableSource: 'KYFCT മാതൃകാ മാറ്റ പ്രബന്ധത്തിൽ നിന്ന്',
+        colMetric: 'സൂചിക',
+        colFormula: 'സൂത്രവാക്യം',
+        colCurrent: 'നിലവിലുള്ളത്',
+        colChange: 'മാറ്റം',
+
+        metricAdbadLabel: 'ADBAD (ഒരു ദാതാവിന്റെ ശരാശരി വിഹിതം)',
+        metricAdbadFormula: 'ആകെ സകാത്ത് ÷ ദാതാക്കൾ',
+        metricDbrLabel: 'DBR (ദാതാവ്-ഗുണഭോക്താവ് അനുപാതം)',
+        metricDbrFormula: 'ഗുണഭോക്താക്കൾ ÷ ദാതാക്കൾ',
+        metricNsiLabel: 'NSI (ആവശ്യകതാ സംവേദന സൂചിക)',
+        metricNsiFormula: 'ഏറ്റവും ഉയർന്ന ഓഹരി ÷ ഏറ്റവും കുറഞ്ഞ ഓഹരി',
+        metricVcrLabel: 'VCR (ദുർബല വിഭാഗ പരിരക്ഷാ അനുപാതം)',
+        metricVcrFormula: 'അതീവ ആവശ്യക്കാർ ÷ ആകെ ഗുണഭോക്താക്കൾ',
+        metricAbpbLabel: 'ABPB (ഒരു ഗുണഭോക്താവിന് ലഭിക്കുന്ന ശരാശരി തുക)',
+        metricAbpbFormula: 'ആകെ സകാത്ത് ÷ ഗുണഭോക്താക്കൾ',
+        metricIppLabel: 'IPP (മുൻഗണനാ വിഭാഗ വിഹിതം %)',
+        metricIppFormula: 'അതീവ ആവശ്യക്കാർക്കുള്ള തുക ÷ ആകെ സകാത്ത് × 100',
+
+        chartFundsTitle: 'ഗുണഭോക്തൃ വിഭാഗം തിരിച്ചുള്ള വിഹിതം',
+        chartHoverHint: 'വിശദാംശങ്ങൾ കാണാൻ ചാർട്ടിൽ തൊടുക അല്ലെങ്കിൽ മൗസ് കൊണ്ടുവരിക',
+        chartMetricImprovementTitle: 'സൂചികകളിലെ പുരോഗതി (2021 → നിലവിലുള്ളത്)',
+        miniAdbadDesc: 'ഒരു ദാതാവിന്റെ ശരാശരി വിഹിതം',
+        miniDbrDesc: 'ദാതാവ് → ഗുണഭോക്താവ് വ്യാപ്തി',
+        miniNsiDesc: 'ആവശ്യകതാ സംവേദന സൂചിക',
+        miniIppDesc: 'മുൻഗണനാ വിഭാഗ വിഹിതം %',
+        lblNow: 'നിലവിൽ',
+
+        distPreviewTitle: 'നിലവിലെ വിതരണ പട്ടിക (അവലോകനം)',
+        colName: 'പേര്',
+        colType: 'വിഭാഗം',
+        colShares: 'ഓഹരികൾ',
+        colAmount: 'തുക (₹)',
+
+        collectTitle: 'സകാത്ത് സമാഹരണം',
+        collectSubtitle: 'കുടുംബാംഗങ്ങളിൽ നിന്നും ദാതാക്കളിൽ നിന്നുമുള്ള സംഭാവനകൾ രേഖപ്പെടുത്തുക',
+        btnAddDonor: '+ ദാതാവിനെ ചേർക്കുക',
+        colDonorName: 'ദാതാവിന്റെ പേര്',
+        colReceiptNo: 'രസീത് നമ്പർ',
+        colAction: 'നടപടി',
+        footTotalCollected: 'ആകെ സമാഹരിച്ച തുക',
+        footTotalDonors: 'ആകെ ദാതാക്കൾ',
+        collectNote: '<strong>കുറിപ്പ്:</strong> KYFCT മാതൃക അനുസരിച്ച്, ദാതാക്കളുടെ എണ്ണത്തേക്കാൾ ഓരോ ദാതാവിന്റെയും ആഴത്തിലുള്ള പ്രതിബദ്ധതയ്ക്കാണ് (ADBAD) പ്രാധാന്യം നൽകുന്നത്. കൃത്യതയോടെ വിതരണം ചെയ്യുമ്പോൾ, ആത്മാർത്ഥതയുള്ള ചെറിയൊരു കൂട്ടം ദാതാക്കളിലൂടെ പോലും വലിയ സാമൂഹിക മാറ്റം സൃഷ്ടിക്കാൻ സാധിക്കും.',
+
+        disburseTitle: 'സകാത്ത് വിതരണ സംവിധാനം',
+        disburseSubtitle: 'ഗുണഭോക്തൃ വിഭാഗങ്ങൾ നിർണ്ണയിക്കുകയും ഓഹരി അടിസ്ഥാനത്തിൽ വിഹിതം കണക്കാക്കുകയും ചെയ്യുക',
+        btnAddBen: '+ ഗുണഭോക്താവിനെ ചേർക്കുക',
+        lblTotalAvailable: 'വിതരണത്തിനായി ലഭ്യമായ ആകെ തുക (₹)',
+        lblShareValue: '1 ഓഹരിയുടെ മൂല്യം (₹)',
+        lblTotalWeightedShares: 'ആകെ വെയിറ്റഡ് ഓഹരികൾ',
+        legendTitle: 'ഗുണഭോക്തൃ ഓഹരി ഗുണിതങ്ങൾ (KYFCT മാതൃക)',
+        colBenName: 'ഗുണഭോക്താവിന്റെ പേര്',
+        colRemarks: 'കുറിപ്പുകൾ',
+        colDel: 'നീക്കുക',
+        footTotals: 'ആകെ തുക',
+        catSummaryTitle: 'വിഭാഗം തിരിച്ചുള്ള സംഗ്രഹം',
+        colCategory: 'വിഭാഗം',
+        colCount: 'എണ്ണം',
+        colShareMultiplier: 'ഓഹരി ഗുണിതം',
+        colTotalShares: 'ആകെ ഓഹരികൾ',
+
+        pzTitle: 'വ്യക്തിഗത സകാത്ത് കാൽക്കുലേറ്റർ',
+        pzSubtitle: 'KYFCT മുഖേന സകാത്ത് നൽകാൻ ആഗ്രഹിക്കുന്ന അംഗങ്ങൾക്കുള്ള ലളിതമായ കണക്കുകൂട്ടൽ',
+        pzAssetsHeading: 'സകാത്ത് ബാധകമായ ആസ്തികൾ',
+        pzCashLabel: 'കൈവശമുള്ള പണം, ബാങ്ക് നിക്ഷേപം, സ്വർണ്ണം/വെള്ളി മൂല്യം (₹)',
+        pzBusinessLabel: 'കച്ചവട ചരക്കുകൾ / ലഭിക്കാനുള്ള കടങ്ങൾ (₹)',
+        pzInvestLabel: 'നിക്ഷേപങ്ങൾ / ഓഹരികൾ (₹)',
+        pzDebtsLabel: 'കുറയ്ക്കേണ്ട കടബാധ്യതകൾ (₹)',
+        pzNetLabel: 'സകാത്ത് ബാധകമായ ആകെ സമ്പത്ത്',
+        pzDueLabel: 'നൽകേണ്ട സകാത്ത് (2.5%)',
+        pzNisabNote: 'നിസാബ് സൂചന: ഏകദേശം 85 ഗ്രാം സ്വർണ്ണത്തിന്റെയോ 595 ഗ്രാം വെള്ളിയുടെയോ മൂല്യം (നിലവിലെ വിപണി നിരക്ക് പരിശോധിക്കുക). ഇത് ഒരു ഏകദേശ കണക്ക് മാത്രമാണ്.',
+        pzRecordBtn: 'ഈ തുക KYFCT സംഭാവനയായി രേഖപ്പെടുത്തുക',
+
+        methodTitle: 'പ്രവർത്തന രീതി: കൃത്യതയാർന്ന ജീവകാരുണ്യം (KYFCT മാതൃക)',
+        methodAbstractTitle: 'സംഗ്രഹം',
+        methodAbstractBody: 'ഇസ്‌ലാമിക സാമൂഹിക ധനകാര്യ രംഗത്ത്, ജീവകാരുണ്യ വിതരണത്തിൽ അടുത്ത ബന്ധുക്കൾക്ക് മുൻഗണന നൽകണമെന്ന ഖുർആനിക നിർദ്ദേശം നടപ്പിലാക്കുന്നതിൽ കുടുംബ ട്രസ്റ്റുകൾക്ക് നിർണ്ണായക പങ്കുണ്ട്. കാട്ടൂ-യമാനി ഫാമിലി ചാരിറ്റബിൾ ട്രസ്റ്റിന്റെ (KYFCT) തന്ത്രപരമായ പരിണാമത്തെയാണ് ഈ ചട്ടക്കൂട് വിശകലനം ചെയ്യുന്നത്. ദാതാക്കളുടെ എണ്ണത്തിൽ കുറവുണ്ടായ സാഹചര്യത്തിൽ, സാധാരണ വിതരണ രീതിയിൽ നിന്ന് “കൃത്യതയാർന്ന ജീവകാരുണ്യം” (Precision Philanthropy) എന്ന മാതൃകയിലേക്ക് ട്രസ്റ്റ് മാറി. മുൻഗണനാ വിഭാഗ വിഹിതം (IPP), ഒരു ദാതാവിന്റെ ശരാശരി വിഹിതം (ADBAD), ആവശ്യകതാ സംവേദന സൂചിക (NSI), ദാതാവ്-ഗുണഭോക്താവ് വ്യാപ്തി (DBR) എന്നീ നാല് ഗുണനിലവാര സൂചികകൾ നടപ്പിലാക്കിയതിലൂടെ, പരമ്പരാഗത കണക്കുകൾ കുറയുമ്പോഴും സംഘടനയുടെ പ്രവർത്തനക്ഷമത വർദ്ധിപ്പിക്കാൻ കഴിയുമെന്ന് ട്രസ്റ്റ് തെളിയിച്ചു.',
+        methodFourMetricsTitle: 'നാല് ഗുണനിലവാര സൂചികകൾ',
+        methodFourMetricsList: `
+          <li><strong>മുൻഗണനാ വിഭാഗ വിഹിതം (IPP):</strong> സാധാരണ വിഭാഗങ്ങളെ അപേക്ഷിച്ച് അതീവ ദുർബല വിഭാഗങ്ങൾക്ക് (വിധവകൾ, ചികിത്സാ സഹായം ആവശ്യമുള്ളവർ, പ്രത്യേക പരിഗണന അർഹിക്കുന്നവർ) നീക്കിവെക്കുന്ന ഫണ്ടിന്റെ അനുപാതം.</li>
+          <li><strong>ഒരു ദാതാവിന്റെ ശരാശരി വിഹിതം (ADBAD):</strong> സജീവ ദാതാക്കളുടെ പ്രതിബദ്ധതയുടെ ആഴം അളക്കുന്ന സൂചിക.</li>
+          <li><strong>ആവശ്യകതാ സംവേദന സൂചിക (NSI):</strong> ഏറ്റവും ഉയർന്നതും താഴ്ന്നതുമായ ഓഹരി വിഹിതങ്ങൾ തമ്മിലുള്ള വ്യത്യാസം; ഇത് ആവശ്യകതാ നിർണ്ണയത്തിന്റെ കൃത്യതയെ സൂചിപ്പിക്കുന്നു.</li>
+          <li><strong>ദാതാവ്-ഗുണഭോക്താവ് വ്യാപ്തി (DBR):</strong> “സ്വാധീന ഗുണിതം” — ഒരു ദാതാവിന്റെ സംഭാവനയിലൂടെ എത്ര വ്യക്തികൾക്ക് സഹായം ലഭിക്കുന്നു എന്നതിന്റെ അളവ്.</li>
+        `,
+        methodPrinciplesTitle: 'തന്ത്രപരമായ തത്വങ്ങൾ',
+        methodPrinciplesList: `
+          <li><strong>കൃത്യതയാർന്ന ലക്ഷ്യനിർണ്ണയം:</strong> എല്ലാവർക്കും ഒരുപോലെ നൽകുന്ന രീതി ഒഴിവാക്കുക. ഉയർന്ന NSI സൂചിപ്പിക്കുന്നത് സൂക്ഷ്മമായ പരിശോധനയിലൂടെ ഏറ്റവും അർഹരായ അംഗങ്ങൾക്ക് കൂടുതൽ സഹായം ലഭിക്കുന്നു എന്നാണ്.</li>
+          <li><strong>ദാതാക്കളുമായുള്ള സുതാര്യമായ ബന്ധം:</strong> കൃത്യമായ കണക്കുകളും റിപ്പോർട്ടിംഗും ചെറിയൊരു കൂട്ടം ദാതാക്കളുടെ പോലും ഉറച്ച പിന്തുണ നിലനിർത്തുന്നു.</li>
+          <li><strong>രേഖപ്പെടുത്തൽ അടിത്തറയായി:</strong> കുടുംബ ചാർട്ടും വിലാസ പുസ്തകവും കൃത്യമായി പുതുക്കുന്നത് സുതാര്യവും ഉത്തരവാദിത്തമുള്ളതുമായ സംവിധാനം ഉറപ്പാക്കുന്നു.</li>
+          <li><strong>സ്വിലത്തുൽ റഹിം (കുടുംബബന്ധം ചേർക്കൽ):</strong> ഖുർആനും സുന്നത്തും കൽപ്പിച്ചതുപോലെ അടുത്ത ബന്ധുക്കൾക്ക് മുൻഗണന നൽകുന്നത് കുടുംബബന്ധങ്ങൾ കൂടുതൽ ദൃഢമാക്കുന്നു.</li>
+        `,
+        methodShareTitle: 'ഓഹരി സമ്പ്രദായത്തിന്റെ യുക്തി',
+        methodShareBody: 'കുടുംബവൃത്തത്തിനുള്ളിൽ ആവശ്യകതയുടെ തീവ്രത അനുസരിച്ച് സഹായം നൽകുന്നതിനുള്ള പ്രായോഗിക മാർഗ്ഗമാണ് വെയിറ്റഡ് ഓഹരി സമ്പ്രദായം (1× മുതൽ 5× വരെ). പരിമിതമായ ഫണ്ടുകൾ ഏറ്റവും കൂടുതൽ കഷ്ടത അനുഭവിക്കുന്നവരിലേക്ക് കേന്ദ്രീകരിക്കുന്നതിനായി പ്രത്യേക പരിഗണന (SC/SCM), ചികിത്സാ സഹായം, വിധവകൾ എന്നീ വിഭാഗങ്ങൾക്ക് ഉയർന്ന ഗുണിതങ്ങൾ നൽകുന്നു — 2021-ൽ 28% ആയിരുന്ന IPP 2026-ൽ ഏകദേശം 65.6% ആയി ഉയർന്നതിന്റെ പ്രധാന കാരണവും ഇതാണ്.',
+        methodFiqhNote: '<strong>ഫിഖ്ഹ് കുറിപ്പ്:</strong> അർഹരായ ബന്ധുക്കൾക്കിടയിൽ (മുസ്തഹിഖ്ഖൂൻ) സകാത്തും ധർമ്മവും വിതരണം ചെയ്യുന്ന ഒരു കുടുംബ ട്രസ്റ്റിന്റെ ഭരണപരമായ സഹായി മാത്രമാണ് ഈ ഉപകരണം. സകാത്ത് അർഹതയുടെ (എട്ട് അവകാശികൾ / അസ്നാഫ്) പ്രമാണിക നിയമങ്ങൾക്ക് ഇത് പകരമാവില്ല. ഗുണഭോക്താക്കൾ ശരീഅത്ത് അനുശാസിക്കുന്ന അർഹതയുള്ള വിഭാഗങ്ങളിൽ ഉൾപ്പെടുന്നുണ്ടെന്നും ബന്ധുക്കൾക്ക് മുൻഗണന നൽകുന്നതോടൊപ്പം ഇസ്‌ലാമിക നിയമങ്ങളുടെ പരിധിക്കുള്ളിലാണ് വിതരണം നടക്കുന്നതെന്നും ഭാരവാഹികൾ ഉറപ്പുവരുത്തേണ്ടതാണ്. സങ്കീർണ്ണമായ വിഷയങ്ങളിൽ യോഗ്യരായ പണ്ഡിതന്മാരോട് അഭിപ്രായം തേടുക.',
+        footerText: 'KYFCT സകാത്ത് കാൽക്കുലേറ്റർ · “Optimization of Lineage-Based Zakat” (ഈസാ മുഹമ്മദ് റഫീഖ്) എന്ന പ്രബന്ധത്തെ അടിസ്ഥാനമാക്കിയുള്ളത്',
+
+        typeLabels: {
+          'Non-Related': 'ബന്ധുക്കളല്ലാത്തവർ / അനാഥർ',
+          'MM': 'പുരുഷൻ - ചികിത്സാ സഹായം (MM)',
+          'MMD': 'പുരുഷൻ - ചികിത്സ + ആശ്രിതർ (MMD)',
+          'F/M': 'സ്ത്രീ / പുരുഷൻ (F/M)',
+          'FM': 'സ്ത്രീ - ചികിത്സാ സഹായം (FM)',
+          'WD': 'വിധവ / വിവാഹമോചിത (WD)',
+          'WDD': 'വിധവ/വിവാഹമോചിത + ആശ്രിതർ (WDD)',
+          'WM': 'വിധവ - ചികിത്സാ സഹായം (WM)',
+          'SC': 'പ്രത്യേക പരിഗണന (SC)',
+          'SCM': 'പ്രത്യേക പരിഗണന + ചികിത്സ (SCM)'
+        },
+        legendShortLabels: {
+          'Non-Related': 'ബന്ധുക്കളല്ലാത്തവർ / അനാഥർ',
+          'MM': 'പുരുഷൻ ചികിത്സ (MM)',
+          'MMD': 'പുരുഷൻ ചികിത്സ + ആശ്രിതർ (MMD)',
+          'F/M': 'സ്ത്രീ / പുരുഷൻ (F/M)',
+          'FM': 'സ്ത്രീ ചികിത്സ (FM)',
+          'WD': 'വിധവ / വിവാഹമോചിത (WD)',
+          'WDD': 'വിധവ + ആശ്രിതർ (WDD)',
+          'WM': 'വിധവ ചികിത്സ (WM)',
+          'SC': 'പ്രത്യേക പരിഗണന (SC)',
+          'SCM': 'പ്രത്യേക + ചികിത്സ (SCM)'
+        },
+
+        modalResetTitle: 'വിവരങ്ങൾ പുനഃക്രമീകരിക്കുക',
+        modalResetMsg: 'എല്ലാ വിവരങ്ങളും KYFCT എക്സലിലെ 2026 മാതൃകാ കണക്കുകളിലേക്ക് പുനഃക്രമീകരിക്കണോ? ഈ മാറ്റം തിരിച്ചെടുക്കാൻ കഴിയില്ല.',
+        modalResetBtn: 'പുനഃക്രമീകരിക്കുക',
+        modalNoAssetsTitle: 'ആസ്തികൾ നൽകിയിട്ടില്ല',
+        modalNoAssetsMsg: 'സകാത്ത് കണക്കാക്കുന്നതിനായി ആദ്യം സകാത്ത് ബാധകമായ ആസ്തികൾ നൽകുക.',
+        modalOkBtn: 'ശരി',
+        modalCancelBtn: 'റദ്ദാക്കുക',
+        modalRecordTitle: 'KYFCT സംഭാവനയായി രേഖപ്പെടുത്തുക',
+        modalRecordMsg: 'സകാത്ത് സമാഹരണ പട്ടികയിലേക്ക് ഈ തുക ചേർക്കുന്നതിനായി ദാതാവിന്റെ പേര് നൽകുക:',
+        modalRecordLabel: 'ദാതാവിന്റെ പേര്',
+        modalRecordDefault: 'കുടുംബാംഗം',
+        modalRecordSaveBtn: 'പട്ടികയിൽ ചേർക്കുക'
+      }
+    };
+
+    let currentLang = localStorage.getItem('kyfct_lang') || 'en';
+
+    function t(key) {
+      return (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || TRANSLATIONS.en[key] || key;
+    }
+
+    function getTypeLabel(typeKey) {
+      const map = TRANSLATIONS[currentLang]?.typeLabels || TRANSLATIONS.en.typeLabels;
+      return map[typeKey] || typeKey;
+    }
+
+    function getLegendLabel(typeKey) {
+      const map = TRANSLATIONS[currentLang]?.legendShortLabels || TRANSLATIONS.en.legendShortLabels;
+      return map[typeKey] || typeKey;
+    }
+
+    function setLanguage(lang) {
+      if (lang !== 'en' && lang !== 'ml') return;
+      currentLang = lang;
+      localStorage.setItem('kyfct_lang', lang);
+      document.documentElement.lang = lang;
+      document.title = t('pageTitle');
+
+      // Update switcher pill styling
+      const btnEn = document.getElementById('lang-btn-en');
+      const btnMl = document.getElementById('lang-btn-ml');
+      if (lang === 'en') {
+        btnEn.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 bg-white text-teal-900 shadow-sm';
+        btnMl.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 text-teal-100 hover:text-white';
+      } else {
+        btnMl.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 bg-white text-teal-900 shadow-sm';
+        btnEn.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 text-teal-100 hover:text-white';
+      }
+
+      applyStaticTranslations();
+      renderLegend();
+      renderAll();
+    }
+
+    function applyStaticTranslations() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = t(key);
+        if (val) {
+          el.innerHTML = val;
+        }
+      });
+    }
+
+    // ===================== DATA MODEL =====================
+    const SHARE_MAP = {
+      'Non-Related': 1,
+      'MM': 1.5,
+      'MMD': 2,
+      'F/M': 1.5,
+      'FM': 2,
+      'WD': 2,
+      'WDD': 3,
+      'WM': 3,
+      'SC': 4,
+      'SCM': 5
+    };
+
+    // High-need categories for IPP
+    const HIGH_NEED = new Set(['SCM', 'SC', 'WM', 'WDD', 'MM', 'MMD', 'FM', 'WD']);
+
+    // 2021 baselines
+    const BASELINE_2021 = {
+      ADBAD: 4450,
+      DBR: 1.15,
+      NSI: 4,
+      VCR: 0.40,
+      ABPB: 3869.57,
+      IPP: 28.1
+    };
+
+    // Default 2026 data
+    const DEFAULT_DONORS = [
+      { name: 'Rafique', receipt: '2', amount: 7500 },
+      { name: 'Junaid', receipt: '3', amount: 5000 },
+      { name: 'Anonymous-1', receipt: '4', amount: 10000 },
+      { name: 'Jaffer Chicha', receipt: '5', amount: 5000 },
+      { name: 'Harshad', receipt: '6', amount: 5000 },
+      { name: 'Kattoos-Ummi', receipt: '7', amount: 2000 },
+      { name: 'Sooraj', receipt: '8', amount: 3000 },
+      { name: 'Aijaz & Haseena', receipt: '9', amount: 30000 },
+      { name: 'Heba', receipt: '10', amount: 5000 },
+      { name: 'Anonymous-2', receipt: '11', amount: 23500 },
+      { name: 'Nihaal Harshad', receipt: '12', amount: 2000 },
+      { name: 'Anonymous-2', receipt: '13', amount: 3250 }
+    ];
+
+    const DEFAULT_BENS = [
+      { name: 'Haseena Janu', type: 'SC', remarks: 'Always SC' },
+      { name: 'Abdul Majeed', type: 'SCM', remarks: 'Always SC' },
+      { name: 'Zaiboon DIL of Kochi Chicha', type: 'WD', remarks: '' },
+      { name: 'Sahina GD of Noori Khala', type: 'SC', remarks: '' },
+      { name: 'Mehaboob Beevi Kochi', type: 'WM', remarks: '' },
+      { name: 'Fouzya Kasim Yamani', type: 'WDD', remarks: '' },
+      { name: 'SM Ameen', type: 'SC', remarks: '' },
+      { name: 'Rahila Vattapalli', type: 'WM', remarks: '' },
+      { name: 'Mohamed Ameen Accupunture', type: 'MMD', remarks: '' },
+      { name: 'Mansoor Taha', type: 'MMD', remarks: '' },
+      { name: 'Mohamed Ibrahim Kochi', type: 'MMD', remarks: '' },
+      { name: 'Khairunissa Khader Parambu', type: 'WM', remarks: '' },
+      { name: 'Saifunissa Khader Parambu', type: 'WM', remarks: '' },
+      { name: 'Shabeer Khan Khader Parambu', type: 'F/M', remarks: '' },
+      { name: 'Ashraff Khan Khader Parambu', type: 'MMD', remarks: '' },
+      { name: 'Nazeer Ponani Khader Parambu', type: 'MMD', remarks: '' },
+      { name: 'Saji Khader Parambu', type: 'F/M', remarks: '' },
+      { name: 'Iqbal Khan Khader Parambu', type: 'F/M', remarks: '' },
+      { name: 'Jaffer Khan Khader Parambu', type: 'MM', remarks: '' },
+      { name: 'Iqbal Khan Zakria Bazar', type: 'MM', remarks: '' },
+      { name: 'Hasan Khan Zakria Bazar', type: 'F/M', remarks: '' },
+      { name: 'Asha Bonda', type: 'F/M', remarks: '' },
+      { name: 'Ramla Adda', type: 'WD', remarks: '' },
+      { name: 'Ramla Alisserry', type: 'WD', remarks: '' },
+      { name: 'Guddi Makan', type: 'F/M', remarks: '' },
+      { name: 'Saibunissa Zakria Bazar', type: 'FM', remarks: '' },
+      { name: 'Shakila Makan', type: 'FM', remarks: '' },
+      { name: "Yahya Ramla's Bro's Son Kalavoor", type: 'MM', remarks: '' },
+      { name: 'Parveena Sultana D/o Md. Ibrahim Kochi', type: 'WD', remarks: '' }
+    ];
+
+    let donors = [];
+    let bens = [];
+    let catChart = null;
+    let chartAdbad = null;
+    let chartDbr = null;
+    let chartNsi = null;
+    let chartIpp = null;
+
+    // ===================== PERSISTENCE =====================
+    function saveData() {
+      localStorage.setItem('kyfct_donors', JSON.stringify(donors));
+      localStorage.setItem('kyfct_bens', JSON.stringify(bens));
+    }
+
+    function loadData() {
+      const d = localStorage.getItem('kyfct_donors');
+      const b = localStorage.getItem('kyfct_bens');
+      donors = d ? JSON.parse(d) : JSON.parse(JSON.stringify(DEFAULT_DONORS));
+      bens = b ? JSON.parse(b) : JSON.parse(JSON.stringify(DEFAULT_BENS));
+    }
+
+    // ===================== CUSTOM MODAL SYSTEM =====================
+    let modalCallback = null;
+
+    function openModal({ title, message, showInput = false, inputLabel = '', inputDefault = '', confirmText = 'OK', cancelText = null, confirmClass = 'bg-teal-600 hover:bg-teal-700', onConfirm = null }) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-message').textContent = message;
+
+      const inputWrap = document.getElementById('modal-input-wrap');
+      const inputEl = document.getElementById('modal-input');
+      if (showInput) {
+        inputWrap.classList.remove('hidden');
+        document.getElementById('modal-input-label').textContent = inputLabel;
+        inputEl.value = inputDefault;
+      } else {
+        inputWrap.classList.add('hidden');
+      }
+
+      const confirmBtn = document.getElementById('modal-confirm-btn');
+      confirmBtn.textContent = confirmText;
+      confirmBtn.className = `px-4 py-2 rounded-xl text-sm font-semibold text-white transition ${confirmClass}`;
+
+      const cancelBtn = document.getElementById('modal-cancel-btn');
+      if (cancelText) {
+        cancelBtn.textContent = cancelText;
+        cancelBtn.classList.remove('hidden');
+      } else {
+        cancelBtn.classList.add('hidden');
+      }
+
+      modalCallback = onConfirm;
+      const modal = document.getElementById('custom-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      if (showInput) {
+        setTimeout(() => inputEl.focus(), 50);
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('custom-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      modalCallback = null;
+    }
+
+    document.getElementById('modal-confirm-btn').addEventListener('click', () => {
+      const val = document.getElementById('modal-input').value;
+      const cb = modalCallback;
+      closeModal();
+      if (typeof cb === 'function') cb(val);
+    });
+
+    function openResetModal() {
+      openModal({
+        title: t('modalResetTitle'),
+        message: t('modalResetMsg'),
+        confirmText: t('modalResetBtn'),
+        cancelText: t('modalCancelBtn'),
+        confirmClass: 'bg-red-600 hover:bg-red-700',
+        onConfirm: () => {
+          localStorage.removeItem('kyfct_donors');
+          localStorage.removeItem('kyfct_bens');
+          loadData();
+          const distInput = document.getElementById('dist-total');
+          distInput.dataset.userEdited = '';
+          distInput.value = Math.round(totalCollected());
+          renderAll();
+        }
+      });
+    }
+
+    // ===================== CALCULATIONS =====================
+    function totalCollected() {
+      return donors.reduce((s, d) => s + (parseFloat(d.amount) || 0), 0);
+    }
+
+    function getShare(type) {
+      return SHARE_MAP[type] || 1;
+    }
+
+    function totalShares() {
+      return bens.reduce((s, b) => s + getShare(b.type), 0);
+    }
+
+    function shareValue() {
+      const ts = totalShares();
+      const tc = parseFloat(document.getElementById('dist-total')?.value) || totalCollected();
+      return ts > 0 ? tc / ts : 0;
+    }
+
+    function calcMetrics() {
+      const tc = totalCollected();
+      const nd = donors.length || 1;
+      const nb = bens.length || 1;
+      const ts = totalShares();
+      const sv = shareValue();
+
+      const sharesList = bens.map(b => getShare(b.type));
+      const maxS = Math.max(...sharesList, 1);
+      const minS = Math.min(...sharesList.filter(s => s > 0), 1);
+
+      let highFunds = 0;
+      bens.forEach(b => {
+        if (HIGH_NEED.has(b.type)) highFunds += getShare(b.type) * sv;
+      });
+
+      const vulnCount = bens.filter(b => HIGH_NEED.has(b.type)).length;
+
+      return {
+        ADBAD: tc / nd,
+        DBR: nb / nd,
+        NSI: maxS / minS,
+        VCR: vulnCount / nb,
+        ABPB: tc / nb,
+        IPP: tc > 0 ? (highFunds / tc) * 100 : 0,
+        totalCollected: tc,
+        donors: nd,
+        bens: nb,
+        totalShares: ts,
+        shareValue: sv,
+        highFunds
+      };
+    }
+
+    // ===================== RENDERERS =====================
+    function fmt(n) {
+      return '₹' + (Math.round(n * 100) / 100).toLocaleString('en-IN', { maximumFractionDigits: 0 });
+    }
+
+    function fmtNum(n, dec = 1) {
+      return (Math.round(n * Math.pow(10, dec)) / Math.pow(10, dec)).toLocaleString('en-IN', { maximumFractionDigits: dec });
+    }
+
+    function pctChange(cur, base) {
+      if (!base) return '—';
+      const p = ((cur - base) / base) * 100;
+      const sign = p >= 0 ? '+' : '';
+      return sign + fmtNum(p, 0) + '%';
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderLegend() {
+      const container = document.getElementById('category-legend');
+      if (!container) return;
+      container.innerHTML = Object.keys(SHARE_MAP).map(k =>
+        `<span class="bg-white border border-slate-200 px-2.5 py-1 rounded-lg">${getLegendLabel(k)}: <strong>${SHARE_MAP[k]}</strong></span>`
+      ).join('');
+    }
+
+    function renderDonors() {
+      const tbody = document.getElementById('donors-table');
+      tbody.innerHTML = '';
+      donors.forEach((d, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="px-4 py-2 text-slate-500">${i + 1}</td>
+          <td class="px-4 py-2"><input type="text" value="${escapeHtml(d.name)}" class="w-full border-0 bg-transparent focus:ring-1 focus:ring-teal-500 rounded px-1" onchange="donors[${i}].name=this.value;saveData();recalcAll()" /></td>
+          <td class="px-4 py-2"><input type="text" value="${escapeHtml(d.receipt)}" class="w-24 border-0 bg-transparent focus:ring-1 focus:ring-teal-500 rounded px-1" onchange="donors[${i}].receipt=this.value;saveData()" /></td>
+          <td class="px-4 py-2 text-right"><input type="number" value="${d.amount || 0}" class="w-28 text-right border-0 bg-transparent focus:ring-1 focus:ring-teal-500 rounded px-1" onchange="donors[${i}].amount=parseFloat(this.value)||0;saveData();recalcAll()" /></td>
+          <td class="px-4 py-2 text-center no-print"><button onclick="donors.splice(${i},1);saveData();recalcAll()" class="text-red-500 hover:text-red-700 text-xs px-2 py-1">✕</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('collect-total').textContent = fmt(totalCollected());
+      document.getElementById('collect-count').textContent = donors.length;
+    }
+
+    function renderBens() {
+      const tbody = document.getElementById('bens-table');
+      tbody.innerHTML = '';
+      const sv = shareValue();
+      let sumShares = 0, sumAmt = 0;
+
+      bens.forEach((b, i) => {
+        const s = getShare(b.type);
+        const amt = s * sv;
+        sumShares += s;
+        sumAmt += amt;
+        const opts = Object.keys(SHARE_MAP).map(k =>
+          `<option value="${k}" ${b.type === k ? 'selected' : ''}>${getTypeLabel(k)} (${SHARE_MAP[k]})</option>`
+        ).join('');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="px-3 py-2 text-slate-500">${i + 1}</td>
+          <td class="px-3 py-2"><input type="text" value="${escapeHtml(b.name)}" class="w-full border-0 bg-transparent focus:ring-1 focus:ring-teal-500 rounded px-1 text-sm" onchange="bens[${i}].name=this.value;saveData();recalcAll()" /></td>
+          <td class="px-3 py-2">
+            <select class="border border-slate-200 rounded px-1.5 py-1 text-xs max-w-[200px]" onchange="bens[${i}].type=this.value;saveData();recalcAll()">
+              ${opts}
+            </select>
+          </td>
+          <td class="px-3 py-2 text-right font-medium">${s}</td>
+          <td class="px-3 py-2"><input type="text" value="${escapeHtml(b.remarks)}" class="w-full border-0 bg-transparent focus:ring-1 focus:ring-teal-500 rounded px-1 text-xs" onchange="bens[${i}].remarks=this.value;saveData()" /></td>
+          <td class="px-3 py-2 text-right font-medium text-teal-700">${fmt(amt)}</td>
+          <td class="px-3 py-2 text-center no-print"><button onclick="bens.splice(${i},1);saveData();recalcAll()" class="text-red-500 hover:text-red-700 text-xs px-2 py-1">✕</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('ben-shares-total').textContent = fmtNum(sumShares, 1);
+      document.getElementById('ben-amount-total').textContent = fmt(sumAmt);
+      document.getElementById('total-shares-display').value = fmtNum(sumShares, 1);
+      document.getElementById('share-value').value = Math.round(sv);
+
+      // Category summary
+      const catMap = {};
+      Object.keys(SHARE_MAP).forEach(k => catMap[k] = { count: 0, shares: 0, amount: 0 });
+      bens.forEach(b => {
+        const s = getShare(b.type);
+        catMap[b.type].count++;
+        catMap[b.type].shares += s;
+        catMap[b.type].amount += s * sv;
+      });
+      const catBody = document.getElementById('cat-summary');
+      catBody.innerHTML = '';
+      Object.entries(catMap).filter(([_, v]) => v.count > 0).forEach(([k, v]) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="px-4 py-2">${getTypeLabel(k)}</td>
+          <td class="px-4 py-2 text-right">${v.count}</td>
+          <td class="px-4 py-2 text-right">${SHARE_MAP[k]}</td>
+          <td class="px-4 py-2 text-right">${fmtNum(v.shares, 1)}</td>
+          <td class="px-4 py-2 text-right font-medium">${fmt(v.amount)}</td>
+        `;
+        catBody.appendChild(tr);
+      });
+    }
+
+    function renderDashboard() {
+      const m = calcMetrics();
+      document.getElementById('dash-total').textContent = fmt(m.totalCollected);
+      document.getElementById('dash-donors').textContent = m.donors;
+      document.getElementById('dash-bens').textContent = m.bens;
+      document.getElementById('dash-shareval').textContent = fmt(m.shareValue);
+      document.getElementById('dash-shares').textContent = fmtNum(m.totalShares, 1);
+      document.getElementById('dash-ipp').textContent = fmtNum(m.IPP, 1) + '%';
+
+      // Metrics table
+      const rows = [
+        { key: 'ADBAD', label: t('metricAdbadLabel'), formula: t('metricAdbadFormula'), cur: m.ADBAD, base: BASELINE_2021.ADBAD, fmt: v => fmt(v) },
+        { key: 'DBR', label: t('metricDbrLabel'), formula: t('metricDbrFormula'), cur: m.DBR, base: BASELINE_2021.DBR, fmt: v => fmtNum(v, 2) },
+        { key: 'NSI', label: t('metricNsiLabel'), formula: t('metricNsiFormula'), cur: m.NSI, base: BASELINE_2021.NSI, fmt: v => fmtNum(v, 1) },
+        { key: 'VCR', label: t('metricVcrLabel'), formula: t('metricVcrFormula'), cur: m.VCR, base: BASELINE_2021.VCR, fmt: v => fmtNum(v * 100, 1) + '%' },
+        { key: 'ABPB', label: t('metricAbpbLabel'), formula: t('metricAbpbFormula'), cur: m.ABPB, base: BASELINE_2021.ABPB, fmt: v => fmt(v) },
+        { key: 'IPP', label: t('metricIppLabel'), formula: t('metricIppFormula'), cur: m.IPP, base: BASELINE_2021.IPP, fmt: v => fmtNum(v, 1) + '%' }
+      ];
+
+      const tbody = document.getElementById('metrics-table');
+      tbody.innerHTML = '';
+      rows.forEach(r => {
+        const chg = pctChange(r.cur, r.base);
+        const positive = r.cur >= r.base;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="px-5 py-3 font-medium">${r.label}</td>
+          <td class="px-4 py-3 text-slate-500 text-xs">${r.formula}</td>
+          <td class="px-4 py-3 text-right">${r.fmt(r.base)}</td>
+          <td class="px-4 py-3 text-right font-semibold text-teal-700">${r.fmt(r.cur)}</td>
+          <td class="px-5 py-3 text-right ${positive ? 'text-emerald-600' : 'text-rose-600'} font-medium">${chg}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Distribution preview
+      const distBody = document.getElementById('dash-dist-table');
+      distBody.innerHTML = '';
+      const sv = m.shareValue;
+      bens.forEach((b, i) => {
+        const s = getShare(b.type);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="px-4 py-1.5 text-slate-500">${i + 1}</td>
+          <td class="px-4 py-1.5">${escapeHtml(b.name)}</td>
+          <td class="px-4 py-1.5 text-xs">${getTypeLabel(b.type)}</td>
+          <td class="px-4 py-1.5 text-right">${s}</td>
+          <td class="px-4 py-1.5 text-right font-medium">${fmt(s * sv)}</td>
+        `;
+        distBody.appendChild(tr);
+      });
+
+      // Update small labels under mini charts
+      document.getElementById('adbad-2021').textContent = fmt(BASELINE_2021.ADBAD);
+      document.getElementById('adbad-now').textContent = fmt(m.ADBAD);
+      document.getElementById('dbr-2021').textContent = fmtNum(BASELINE_2021.DBR, 2);
+      document.getElementById('dbr-now').textContent = fmtNum(m.DBR, 2);
+      document.getElementById('nsi-2021').textContent = fmtNum(BASELINE_2021.NSI, 1);
+      document.getElementById('nsi-now').textContent = fmtNum(m.NSI, 1);
+      document.getElementById('ipp-2021').textContent = fmtNum(BASELINE_2021.IPP, 1) + '%';
+      document.getElementById('ipp-now').textContent = fmtNum(m.IPP, 1) + '%';
+
+      // Charts
+      renderCharts(m);
+    }
+
+    function renderCharts(m) {
+      // ----- Category Doughnut -----
+      const catFunds = {};
+      const sv = m.shareValue;
+      bens.forEach(b => {
+        const label = getTypeLabel(b.type);
+        catFunds[label] = (catFunds[label] || 0) + getShare(b.type) * sv;
+      });
+      const labels = Object.keys(catFunds);
+      const data = Object.values(catFunds);
+
+      if (catChart) {
+        catChart.destroy();
+        catChart = null;
+      }
+      const catCanvas = document.getElementById('catChart');
+      if (catCanvas && labels.length > 0) {
+        catChart = new Chart(catCanvas, {
+          type: 'doughnut',
+          data: {
+            labels,
+            datasets: [{
+              data,
+              backgroundColor: [
+                '#0f766e', '#14b8a6', '#2dd4bf', '#5eead4', '#99f6e4',
+                '#f97316', '#fb923c', '#fdba74', '#fbbf24', '#a3e635'
+              ],
+              borderWidth: 1,
+              borderColor: '#fff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'right',
+                labels: {
+                  boxWidth: 12,
+                  font: { size: 10, family: "'Inter', 'Noto Sans Malayalam', sans-serif" },
+                  padding: 6
+                }
+              },
+              tooltip: {
+                bodyFont: { family: "'Inter', 'Noto Sans Malayalam', sans-serif" },
+                callbacks: {
+                  label: ctx => `${ctx.label}: ${fmt(ctx.raw)}`
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // ----- Mini horizontal bar helper -----
+      function makeMiniBar(canvasId, baseVal, curVal, labelFmt, existingChart) {
+        if (existingChart) {
+          existingChart.destroy();
+        }
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return null;
+
+        const maxVal = Math.max(baseVal, curVal) * 1.35 || 1;
+        const nowLabel = t('lblNow');
+
+        return new Chart(canvas, {
+          type: 'bar',
+          data: {
+            labels: ['2021', nowLabel],
+            datasets: [{
+              data: [baseVal, curVal],
+              backgroundColor: ['#94a3b8', '#0f766e'],
+              borderRadius: 5,
+              barPercentage: 0.65,
+              categoryPercentage: 0.7
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 400 },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                bodyFont: { family: "'Inter', 'Noto Sans Malayalam', sans-serif" },
+                callbacks: {
+                  label: ctx => labelFmt(ctx.raw)
+                }
+              }
+            },
+            scales: {
+              x: {
+                beginAtZero: true,
+                max: maxVal,
+                ticks: {
+                  font: { size: 9 },
+                  maxTicksLimit: 5,
+                  callback: v => {
+                    if (typeof labelFmt === 'function') {
+                      const s = labelFmt(v);
+                      return s.length > 8 ? s.substring(0, 7) + '…' : s;
+                    }
+                    return v;
+                  }
+                },
+                grid: { color: '#f1f5f9', drawBorder: false }
+              },
+              y: {
+                ticks: {
+                  font: { size: 11, weight: '500', family: "'Inter', 'Noto Sans Malayalam', sans-serif" }
+                },
+                grid: { display: false },
+                border: { display: false }
+              }
+            }
+          }
+        });
+      }
+
+      chartAdbad = makeMiniBar('chart-adbad', BASELINE_2021.ADBAD, m.ADBAD,
+        v => '₹' + Math.round(v).toLocaleString('en-IN'), chartAdbad);
+
+      chartDbr = makeMiniBar('chart-dbr', BASELINE_2021.DBR, m.DBR,
+        v => Number(v).toFixed(2), chartDbr);
+
+      chartNsi = makeMiniBar('chart-nsi', BASELINE_2021.NSI, m.NSI,
+        v => Number(v).toFixed(1), chartNsi);
+
+      chartIpp = makeMiniBar('chart-ipp', BASELINE_2021.IPP, m.IPP,
+        v => Number(v).toFixed(1) + '%', chartIpp);
+    }
+
+    function calcPersonalZakat() {
+      const cash = parseFloat(document.getElementById('pz-cash').value) || 0;
+      const bus = parseFloat(document.getElementById('pz-business').value) || 0;
+      const inv = parseFloat(document.getElementById('pz-invest').value) || 0;
+      const debts = parseFloat(document.getElementById('pz-debts').value) || 0;
+      const net = Math.max(0, cash + bus + inv - debts);
+      const due = net * 0.025;
+      document.getElementById('pz-net').textContent = fmt(net);
+      document.getElementById('pz-due').textContent = fmt(due);
+      return due;
+    }
+
+    function openAddPersonalModal() {
+      const due = calcPersonalZakat();
+      if (due <= 0) {
+        openModal({
+          title: t('modalNoAssetsTitle'),
+          message: t('modalNoAssetsMsg'),
+          confirmText: t('modalOkBtn')
+        });
+        return;
+      }
+      openModal({
+        title: t('modalRecordTitle'),
+        message: t('modalRecordMsg'),
+        showInput: true,
+        inputLabel: t('modalRecordLabel'),
+        inputDefault: t('modalRecordDefault'),
+        confirmText: t('modalRecordSaveBtn'),
+        cancelText: t('modalCancelBtn'),
+        onConfirm: (donorName) => {
+          const cleanName = (donorName || '').trim();
+          if (!cleanName) return;
+          donors.push({ name: cleanName, receipt: '', amount: Math.round(due) });
+          saveData();
+          recalcAll();
+          document.querySelector('[data-tab="collect"]').click();
+        }
+      });
+    }
+
+    function addDonorRow() {
+      donors.push({ name: '', receipt: '', amount: 0 });
+      saveData();
+      renderDonors();
+    }
+
+    function addBenRow() {
+      bens.push({ name: '', type: 'F/M', remarks: '' });
+      saveData();
+      renderBens();
+    }
+
+    function recalcAll() {
+      const distInput = document.getElementById('dist-total');
+      if (distInput && !distInput.dataset.userEdited) {
+        distInput.value = Math.round(totalCollected());
+      }
+      renderDonors();
+      renderBens();
+      renderDashboard();
+    }
+
+    // ===================== TABS =====================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.remove('tab-active');
+          b.classList.add('text-slate-600');
+        });
+        btn.classList.add('tab-active');
+        btn.classList.remove('text-slate-600');
+        document.querySelectorAll('.tab-content').forEach(s => s.classList.add('hidden'));
+        document.getElementById(btn.dataset.tab).classList.remove('hidden');
+        if (btn.dataset.tab === 'dashboard') renderDashboard();
+      });
+    });
+
+    // Mark dist-total as user-edited when changed
+    document.getElementById('dist-total')?.addEventListener('input', function () {
+      this.dataset.userEdited = '1';
+    });
+
+    // ===================== INIT =====================
+    loadData();
+    document.getElementById('dist-total').value = Math.round(totalCollected());
+    setLanguage(currentLang);
+
+    function renderAll() {
+      renderDonors();
+      renderBens();
+      renderDashboard();
+    }
+  </script>
+</body>
+</html>
