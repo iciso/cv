@@ -1,0 +1,870 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🛖Build a Better Village 🏡💫 CLCP Game 👨‍👩‍👧‍👦</title>
+<style>
+:root{
+  --navy:#1e3a8a;--blue:#3b82f6;--teal:#0f766e;
+  --bg:#f1f5f9;--ink:#1e293b;--muted:#64748b;
+  --line:#e2e8f0;--white:#fff;--gold:#f59e0b;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+header{
+  background:linear-gradient(120deg,#1e3a8a,#0f766e);
+  color:white;padding:30px 18px;text-align:center}
+header .eyebrow{font-size:.8rem;letter-spacing:2px;text-transform:uppercase;opacity:.85}
+header h1{font-size:clamp(1.8rem,5vw,2.8rem);margin:8px 0}
+header p{max-width:760px;margin:auto;opacity:.95}
+.wrap{max-width:1050px;margin:22px auto;padding:0 14px}
+.card{background:white;border:1px solid var(--line);border-radius:17px;
+  padding:21px;margin:16px 0;box-shadow:0 3px 12px #0f172a0a}
+h2{font-size:1.35rem;color:var(--navy);margin:0 0 10px}
+h3{font-size:1.05rem;margin:0 0 8px}
+p{margin:8px 0}
+.small{font-size:.88rem;color:var(--muted)}
+.kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--teal);font-weight:bold}
+.hero{background:#e0f2fe;border-left:5px solid var(--blue)}
+.stagebar{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}
+.stagepill{background:#e2e8f0;color:#475569;padding:7px 11px;
+  border-radius:30px;font-size:.78rem;font-weight:bold}
+.stagepill.active{background:var(--navy);color:white}
+.stagepill.done{background:#ccfbf1;color:#115e59}
+button{border:0;border-radius:10px;padding:11px 16px;font-weight:bold;
+  cursor:pointer;font-size:.94rem}
+.primary{background:var(--navy);color:white}
+.secondary{background:#e0f2fe;color:#075985}
+.teal{background:var(--teal);color:white}
+button:hover{filter:brightness(.96)}
+button:focus,input:focus{outline:3px solid #93c5fd;outline-offset:2px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tile{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff}
+.tile.selected{border:2px solid var(--teal);background:#f0fdfa}
+.tile label{display:flex;gap:9px;align-items:flex-start;cursor:pointer}
+.tile input{width:19px;height:19px;margin-top:3px;accent-color:var(--teal)}
+.cost{color:var(--teal);font-weight:bold;font-size:.9rem}
+.tag{display:inline-block;background:#f1f5f9;border-radius:20px;
+  padding:3px 8px;font-size:.75rem;color:#475569;margin:3px 2px 0 0}
+input[type=text],textarea,select{
+  width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:9px;
+  font:inherit;background:white}
+textarea{min-height:75px;resize:vertical}
+.field{margin:12px 0}
+.field label{display:block;font-weight:bold;margin-bottom:5px}
+.budgetbox{display:flex;justify-content:space-between;align-items:center;
+  background:#eff6ff;border-radius:12px;padding:13px;margin:12px 0}
+.big{font-size:1.8rem;font-weight:bold;color:var(--navy)}
+.bar{height:13px;background:#e2e8f0;border-radius:20px;overflow:hidden}
+.barfill{height:100%;background:var(--teal);width:0%;transition:width .3s}
+.hidden{display:none!important}
+.note{background:#fffbeb;border-left:4px solid var(--gold);
+  padding:12px;border-radius:8px;margin:12px 0}
+.good{background:#ecfdf5;border-left:4px solid #10b981;padding:12px;border-radius:8px}
+.resultgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
+.metric{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:13px}
+.metric strong{font-size:1.6rem;color:var(--navy);display:block}
+.metric span{font-size:.82rem;color:var(--muted)}
+.projectresult{border-bottom:1px solid var(--line);padding:12px 0}
+.projectresult:last-child{border:0}
+.scorebar{height:9px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin-top:5px}
+.scorebar span{display:block;height:100%;background:var(--teal)}
+footer{background:#0f172a;color:#e2e8f0;text-align:center;padding:25px 15px;margin-top:35px}
+footer a{color:#99f6e4;font-weight:bold}
+@media(max-width:600px){
+ .card{padding:16px}.budgetbox{align-items:flex-start;gap:8px;flex-direction:column}
+ header{padding:24px 14px}
+}
+
+/* INTERACTIVE VILLAGE MAP */
+.village-map{
+  position:relative;
+  width:100%;
+  aspect-ratio: 16 / 10;
+  min-height:300px;
+  overflow:hidden;
+  border:2px solid #94a3b8;
+  border-radius:15px;
+  background:#e8f3d9;
+  cursor:crosshair;
+  isolation:isolate;
+}
+.village-map svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+}
+.map-pin{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  z-index:2;
+  border:2px solid white;
+  border-radius:50%;
+  width:37px;
+  height:37px;
+  padding:0;
+  font-size:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 2px 7px #0f172a55;
+  cursor:pointer;
+}
+.map-pin.asset{background:#0f766e;color:white}
+.map-pin.problem{background:#dc2626;color:white}
+.map-pin.project{background:#2563eb;color:white}
+.map-pin:hover{transform:translate(-50%,-50%) scale(1.15)}
+.map-key{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.map-key span{font-size:.82rem;background:#f1f5f9;padding:6px 9px;border-radius:20px}
+.map-instructions{background:#eff6ff;border-radius:10px;padding:12px;margin:10px 0}
+.map-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:12px 0}
+.map-counts{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.map-counts span{background:#f1f5f9;border-radius:9px;padding:8px 11px;font-size:.85rem}
+.map-list-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #e2e8f0;font-size:.88rem}
+.map-list-item:last-child{border:0}
+.map-list-item button{padding:5px 9px;background:#fee2e2;color:#991b1b;font-size:.78rem}
+@media(max-width:600px){
+ .village-map{aspect-ratio:1/1;min-height:280px}
+ .map-pin{width:34px;height:34px;font-size:16px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">The Constellation 🧑‍🤝‍🧑 Learning CLD & CLCP </div>
+  <h1>🏡 Build a Better Village 🌱</h1>
+  <p>A community development and resource-prioritisation game.
+  Can your village build a better future with limited resources?</p>
+</header>
+
+<main class="wrap">
+  <section class="card hero">
+    <div class="kicker">Your mission</div>
+    <h2>One village. Many needs. One shared future.</h2>
+    <p>Welcome to <b>Vasanthapuram</b>, a fictional village. Its people want
+    better health, education, water, sanitation, roads and livelihoods.
+    But the available development budget is limited.</p>
+    <p>Your task is not simply to spend money. Your task is to understand
+    the community, discover its strengths, agree on priorities and plan
+    realistic action together.</p>
+    <div class="note"><b>Remember:</b> In CLCP, the community is the main actor.
+    A facilitator helps people listen, appreciate, learn and decide.
+    The facilitator does not arrive with all the answers.</div>
+    <button class="primary" onclick="startGame()">Start the village journey →</button>
+  </section>
+
+  <div class="stagebar" id="stagebar">
+    <span class="stagepill active">1. Who are we?</span>
+    <span class="stagepill">2. Our dream</span>
+    <span class="stagepill">3. Our strengths</span>
+    <span class="stagepill">4. Our situation</span>
+    <span class="stagepill">5. Our action plan</span>
+  </div>
+
+  <!-- STAGE 1 -->
+  <section class="card stage" id="s1">
+    <div class="kicker">Stage 1 of 5 • Building relationships</div>
+    <h2>1. Who are we?</h2>
+    <p>Before discussing projects, bring the community together.
+    Every person has experiences, abilities and something valuable to contribute.</p>
+    <div class="grid">
+      <div class="tile"><h3>👩 Women and self-help groups</h3>
+        <p class="small">Knowledge of families, savings, nutrition and local needs.</p></div>
+      <div class="tile"><h3>👨‍🌾 Farmers and workers</h3>
+        <p class="small">Knowledge of land, water, work, seasons and local production.</p></div>
+      <div class="tile"><h3>👩‍🎓 Young people</h3>
+        <p class="small">Ideas, energy, digital skills and aspirations for the future.</p></div>
+      <div class="tile"><h3>👵 Elders and experienced residents</h3>
+        <p class="small">Community history, local knowledge and relationships.</p></div>
+    </div>
+    <div class="field">
+      <label for="communityStrength">What is one strength already present in this village?</label>
+      <input id="communityStrength" type="text" placeholder="e.g. active women's group, skilled masons, helpful youth...">
+    </div>
+    <div class="field">
+      <label for="whoIncluded">Who must be included in the discussion?</label>
+      <textarea id="whoIncluded" placeholder="Think about people whose voices are often missed..."></textarea>
+    </div>
+    <div class="good"><b>SALT reflection:</b> Appreciate people's contributions.
+    Listen before suggesting solutions. Create a safe space where everyone can speak.</div>
+    <div class="actions"><button class="primary" onclick="nextStage(1)">Continue to our dream →</button></div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section class="card stage hidden" id="s2">
+    <div class="kicker">Stage 2 of 5 • Shared vision</div>
+    <h2>2. Where do we want to go?</h2>
+    <p>Invite people to imagine the village they would love to live in.
+    Begin with hopes and possibilities—not a list of complaints.</p>
+    <div class="note">Imagine it is five years from today. The village has made
+    wonderful progress. What has changed in everyday life?</div>
+    <div class="field">
+      <label for="dream">Describe your community's shared dream</label>
+      <textarea id="dream" placeholder="e.g. Every household has safe water, children attend school, families have secure livelihoods..."></textarea>
+    </div>
+    <h3>Which outcomes matter most to the community?</h3>
+    <p class="small">Choose up to three. There is no correct answer.</p>
+    <div class="grid" id="dreamChoices">
+      <label class="tile"><input type="checkbox" value="Healthier families"> ❤️ Healthier families</label>
+      <label class="tile"><input type="checkbox" value="Children learning"> 📚 Children learning</label>
+      <label class="tile"><input type="checkbox" value="Safe water for all"> 💧 Safe water for all</label>
+      <label class="tile"><input type="checkbox" value="Clean surroundings"> 🚻 Clean surroundings</label>
+      <label class="tile"><input type="checkbox" value="Better livelihoods"> 🌱 Better livelihoods</label>
+      <label class="tile"><input type="checkbox" value="Safe access and mobility"> 🛣️ Safe access and mobility</label>
+    </div>
+    <div class="good"><b>CLCP insight:</b> A shared dream gives direction.
+    It should belong to the people—not only to officials or outside experts.</div>
+    <div class="actions"><button class="secondary" onclick="prevStage(2)">← Back</button>
+      <button class="primary" onclick="nextStage(2)">Explore our strengths →</button></div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section class="card stage hidden" id="s3">
+    <div class="kicker">Stage 3 of 5 • Discovering assets</div>
+    <h2>3. What are we already doing?</h2>
+    <p>A village is never an empty space waiting for development.
+    It already has people, skills, groups, knowledge and resources.</p>
+    <p><b>Choose the strengths that Vasanthapuram already has:</b></p>
+    <div class="grid" id="assetChoices">
+      <label class="tile"><input type="checkbox" value="Active women's savings group"> 👩‍👩‍👧 Active women's savings group</label>
+      <label class="tile"><input type="checkbox" value="Experienced local farmers"> 🌾 Experienced local farmers</label>
+      <label class="tile"><input type="checkbox" value="Youth volunteers"> 🙋 Youth volunteers</label>
+      <label class="tile"><input type="checkbox" value="Local health workers"> 🩺 Local health workers</label>
+      <label class="tile"><input type="checkbox" value="Skilled masons and artisans"> 🧱 Skilled masons and artisans</label>
+      <label class="tile"><input type="checkbox" value="Community meeting space"> 🏠 Community meeting space</label>
+      <label class="tile"><input type="checkbox" value="Local water knowledge"> 💧 Local water knowledge</label>
+      <label class="tile"><input type="checkbox" value="School volunteers"> 📖 School volunteers</label>
+    </div>
+    <div class="field">
+      <label for="localAction">What is the community already doing to improve village life?</label>
+      <textarea id="localAction" placeholder="e.g. maintaining a common well, tutoring children, helping vulnerable families..."></textarea>
+    </div>
+    <div class="note"><b>Important:</b> Do not overlook local assets while searching
+    for outside funding. Existing skills and relationships can make a project
+    more affordable and sustainable.</div>
+   
+    <!-- Added Map -->
+<div class="card" style="background:#f8fafc;border:2px solid #99f6e4">
+  <div class="kicker">Community mapping activity</div>
+  <h2>🗺️ Let's map our village!</h2>
+  <p>Now let us make our community's knowledge visible.
+  Together, place the strengths, concerns and possible projects
+  on this imaginary village map.</p>
+
+  <div class="map-instructions">
+    <b>How to play:</b>
+    <ol>
+      <li>Select what you want to mark on the map.</li>
+      <li>Tap or click the approximate location on the village map.</li>
+      <li>Add a short description of what is there.</li>
+      <li>Discuss what the map tells the community.</li>
+    </ol>
+  </div>
+
+  <div class="map-controls">
+    <div class="field">
+      <label for="mapType">What would you like to place?</label>
+      <select id="mapType">
+        <option value="asset">🟢 Existing asset / strength</option>
+        <option value="problem">🔴 Problem / concern</option>
+        <option value="project">🔵 Proposed project</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="mapDescription">What does this marker represent?</label>
+      <input id="mapDescription" type="text"
+        placeholder="e.g. Common well, broken drain, proposed clinic">
+    </div>
+  </div>
+
+  <div class="map-key">
+    <span>🟢 Existing asset</span>
+    <span>🔴 Problem / concern</span>
+    <span>🔵 Proposed project</span>
+  </div>
+
+  <div id="villageMap" class="village-map"
+    role="application" aria-label="Interactive village map. Click to place a marker.">
+
+    <!-- Illustrative village map background -->
+    <svg viewBox="0 0 800 500" preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <rect width="800" height="500" fill="#e8f3d9"/>
+
+      <!-- Fields -->
+      <path d="M0 0 H800 V110 Q650 150 500 100 H0Z" fill="#cde6ae"/>
+      <path d="M0 390 Q160 340 300 420 L300 500 H0Z" fill="#cde6ae"/>
+      <path d="M600 370 Q700 330 800 390 V500 H600Z" fill="#cde6ae"/>
+
+      <!-- Roads -->
+      <path d="M0 245 C170 230 250 270 410 240 S650 220 800 250"
+        stroke="#d6c6a5" stroke-width="35" fill="none"/>
+      <path d="M390 0 C370 120 430 180 410 245 S390 390 420 500"
+        stroke="#d6c6a5" stroke-width="27" fill="none"/>
+      <path d="M0 245 C170 230 250 270 410 240 S650 220 800 250"
+        stroke="#fff8e8" stroke-width="2" stroke-dasharray="12 9" fill="none"/>
+      <path d="M390 0 C370 120 430 180 410 245 S390 390 420 500"
+        stroke="#fff8e8" stroke-width="2" stroke-dasharray="12 9" fill="none"/>
+
+      <!-- Pond -->
+      <ellipse cx="120" cy="350" rx="65" ry="40" fill="#7dd3fc" stroke="#0284c7" stroke-width="3"/>
+      <text x="120" y="355" text-anchor="middle" font-size="17" fill="#075985">Pond</text>
+
+      <!-- School -->
+      <rect x="540" y="55" width="130" height="65" rx="7" fill="#fef3c7" stroke="#b45309" stroke-width="3"/>
+      <path d="M530 55 L605 15 L680 55Z" fill="#b45309"/>
+      <text x="605" y="95" text-anchor="middle" font-size="19" fill="#78350f">School</text>
+
+      <!-- Clinic -->
+      <rect x="630" y="315" width="110" height="65" rx="7" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+      <text x="685" y="355" text-anchor="middle" font-size="19" fill="#991b1b">Clinic</text>
+      <text x="685" y="340" text-anchor="middle" font-size="20" fill="#dc2626">✚</text>
+
+      <!-- Houses -->
+      <g fill="#fed7aa" stroke="#9a3412" stroke-width="2">
+        <rect x="90" y="95" width="65" height="45" rx="3"/>
+        <rect x="175" y="115" width="65" height="45" rx="3"/>
+        <rect x="100" y="175" width="65" height="45" rx="3"/>
+        <rect x="520" y="165" width="65" height="45" rx="3"/>
+        <rect x="610" y="165" width="65" height="45" rx="3"/>
+        <rect x="220" y="320" width="65" height="45" rx="3"/>
+        <rect x="310" y="350" width="65" height="45" rx="3"/>
+      </g>
+      <g fill="#9a3412">
+        <path d="M85 95 L122 68 L160 95Z"/>
+        <path d="M170 115 L207 88 L245 115Z"/>
+        <path d="M95 175 L132 148 L170 175Z"/>
+        <path d="M515 165 L552 138 L590 165Z"/>
+        <path d="M605 165 L642 138 L680 165Z"/>
+        <path d="M215 320 L252 293 L290 320Z"/>
+        <path d="M305 350 L342 323 L380 350Z"/>
+      </g>
+
+      <!-- Community centre -->
+      <rect x="290" y="115" width="100" height="65" rx="8" fill="#ddd6fe" stroke="#6d28d9" stroke-width="3"/>
+      <text x="340" y="143" text-anchor="middle" font-size="15" fill="#4c1d95">Community</text>
+      <text x="340" y="162" text-anchor="middle" font-size="15" fill="#4c1d95">Centre</text>
+
+      <!-- Fields / farms -->
+      <g stroke="#65a30d" stroke-width="3" fill="none">
+        <path d="M30 420 Q90 390 150 420 M30 440 Q90 410 150 440 M30 460 Q90 430 150 460"/>
+        <path d="M650 430 Q710 400 770 430 M650 450 Q710 420 770 450 M650 470 Q710 440 770 470"/>
+      </g>
+      <text x="400" y="480" text-anchor="middle" font-size="16" fill="#3f6212">Farms and open land</text>
+      <text x="400" y="25" text-anchor="middle" font-size="16" fill="#365314">V A S A N T H A P U R A M</text>
+    </svg>
+
+    <!-- Interactive markers are added here -->
+    <div id="mapMarkers"></div>
+  </div>
+
+  <p class="small">This is an illustrative village, not a real geographic map.
+  Place markers approximately. The community can discuss exact locations
+  using its own local knowledge.</p>
+
+  <div class="map-counts" id="mapCounts">
+    <span>🟢 Assets: 0</span>
+    <span>🔴 Concerns: 0</span>
+    <span>🔵 Projects: 0</span>
+  </div>
+
+  <h3>Our village map notes</h3>
+  <div id="mapList">
+    <p class="small">No markers yet. Select a category and tap the map to begin.</p>
+  </div>
+
+  <div class="actions">
+    <button class="secondary" onclick="clearVillageMap()">Clear all map markers</button>
+  </div>
+
+  <div class="good" style="margin-top:15px">
+    <b>Facilitator's question:</b> What do we notice when we see the
+    village's strengths and concerns together? Which proposed projects
+    build on existing assets? Which groups might be affected?
+  </div>
+</div>
+    <!-- End of Map -->
+
+    <div class="actions"><button class="secondary" onclick="prevStage(3)">← Back</button>
+      <button class="primary" onclick="nextStage(3)">Understand our situation →</button></div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section class="card stage hidden" id="s4">
+    <div class="kicker">Stage 4 of 5 • Understanding the situation</div>
+    <h2>4. Where are we now?</h2>
+    <p>Now compare the community's dream with its present reality.
+    Listen to different groups. Look at who is affected, how seriously,
+    and what is already working.</p>
+    <div class="grid">
+      <div class="tile"><h3>💧 Drinking water</h3><p class="small">Some households travel far for water. The quality and reliability of supply vary.</p></div>
+      <div class="tile"><h3>🚻 Sanitation</h3><p class="small">Drainage is poor in some lanes. Waste disposal needs improvement.</p></div>
+      <div class="tile"><h3>🩺 Health</h3><p class="small">The clinic is far away. Preventive care and timely access are concerns.</p></div>
+      <div class="tile"><h3>📚 Education</h3><p class="small">The school needs improvements. Some children struggle to attend regularly.</p></div>
+      <div class="tile"><h3>🛣️ Roads</h3><p class="small">Some roads become difficult to use during the rainy season.</p></div>
+      <div class="tile"><h3>🌱 Livelihoods</h3><p class="small">Families need more reliable income and opportunities for local work.</p></div>
+    </div>
+    <div class="field">
+      <label for="priorityGroup">Whose experience should be heard before deciding?</label>
+      <select id="priorityGroup">
+        <option value="">Choose a group to consult...</option>
+        <option>Women and caregivers</option><option>Children and young people</option>
+        <option>Older people</option><option>People with disabilities</option>
+        <option>Farmers and daily-wage workers</option><option>Marginalised households</option>
+        <option>All of the above</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="evidence">What information would help the community decide fairly?</label>
+      <textarea id="evidence" placeholder="e.g. household discussions, village walk, water testing, school attendance, seasonal calendar..."></textarea>
+    </div>
+    <div class="good"><b>CLCP insight:</b> A village walk, community conversation,
+    mapping exercise and shared observation can reveal realities that outsiders
+    may not see.</div>
+    <div class="actions"><button class="secondary" onclick="prevStage(4)">← Back</button>
+      <button class="primary" onclick="nextStage(4)">Make our action plan →</button></div>
+  </section>
+
+  <!-- STAGE 5 -->
+  <section class="card stage hidden" id="s5">
+    <div class="kicker">Stage 5 of 5 • Community decision-making</div>
+    <h2>5. What are we going to do?</h2>
+    <p>The community has a shared dream, has identified existing strengths
+    and has discussed its situation. Now it is time to choose feasible
+    first actions.</p>
+    <div class="budgetbox">
+      <div><b>Available development budget</b><div class="small">A fictional planning budget for this game</div></div>
+      <div class="big">100 coins</div>
+    </div>
+    <p>Select projects. You may not be able to fund everything.
+    Discuss what should come first, what can be done with local resources,
+    and what can be built in stages.</p>
+    <div class="grid" id="projectChoices">
+      <div class="tile project" data-id="water" data-cost="30">
+        <label><input type="checkbox" class="projectCheck">
+        <span><b>💧 Safe drinking water</b><br><span class="cost">30 coins</span><br>
+        <span class="small">Repair supply, improve storage and protect water sources.</span></span></label>
+        <div class="tag">Health</div><div class="tag">Time-saving</div>
+      </div>
+      <div class="tile project" data-id="sanitation" data-cost="20">
+        <label><input type="checkbox" class="projectCheck">
+        <span><b>🚻 Sanitation and drainage</b><br><span class="cost">20 coins</span><br>
+        <span class="small">Improve drainage, waste management and shared sanitation.</span></span></label>
+        <div class="tag">Health</div><div class="tag">Environment</div>
+      </div>
+      <div class="tile project" data-id="clinic" data-cost="30">
+        <label><input type="checkbox" class="projectCheck">
+        <span><b>🩺 Community clinic</b><br><span class="cost">30 coins</span><br>
+        <span class="small">Improve access to basic care, outreach and prevention.</span></span></label>
+        <div class="tag">Health</div><div class="tag">Early care</div>
+      </div>
+      <div class="tile project" data-id="school" data-cost="25">
+        <label><input type="checkbox" class="projectCheck">
+        <span><b>📚 School improvement</b><br><span class="cost">25 coins</span><br>
+        <span class="small">Improve learning spaces, attendance and learning support.</span></span></label>
+        <div class="tag">Education</div><div class="tag">Future skills</div>
+      </div>
+      <div class="tile project" data-id="road" data-cost="35">
+        <label><input type="checkbox" class="projectCheck">
+        <span><b>🛣️ Road improvement</b><br><span class="cost">35 coins</span><br>
+        <span class="small">Improve access to the school, clinic, markets and homes.</span></span></label>
+        <div class="tag">Access</div><div class="tag">Connectivity</div>
+      </div>
+      <div class="tile project" data-id="livelihood" data-cost="25">
+        <label><input type="checkbox" class="projectCheck">
+        <span><b>🌱 Livelihood programme</b><br><span class="cost">25 coins</span><br>
+        <span class="small">Support local skills, small enterprises and livelihood groups.</span></span></label>
+        <div class="tag">Income</div><div class="tag">Resilience</div>
+      </div>
+    </div>
+
+    <div class="budgetbox">
+      <div><b>Budget used</b><div class="small" id="budgetMessage">Select projects to begin.</div></div>
+      <div class="big"><span id="spent">0</span> / 100</div>
+    </div>
+    <div class="bar"><div class="barfill" id="budgetBar"></div></div>
+    <p id="budgetStatus" class="small">You have 100 coins available.</p>
+
+    <div class="field">
+      <label for="firstAction">What is the first action the community will take?</label>
+      <textarea id="firstAction" placeholder="e.g. Hold a village meeting, form a water committee, map households..."></textarea>
+    </div>
+    <div class="field">
+      <label for="responsibility">Who will take responsibility?</label>
+      <input id="responsibility" type="text" placeholder="e.g. water committee, youth group, panchayat and residents together...">
+    </div>
+    <div class="field">
+      <label for="localContribution">What can the community contribute?</label>
+      <input id="localContribution" type="text" placeholder="e.g. local skills, volunteer time, meeting space, maintenance...">
+    </div>
+    <div class="note">A budget is not the whole plan. A good plan also identifies
+    people responsible, local contributions, timelines, maintenance and
+    how the community will review progress.</div>
+    <div class="actions">
+      <button class="secondary" onclick="prevStage(5)">← Back</button>
+      <button class="teal" onclick="revealResults()">🌟 See the village's future</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="card hidden" id="results">
+    <div class="kicker">Your village • The consequences</div>
+    <h2>🌱 What kind of future did your decisions create?</h2>
+    <p>The following results are illustrative teaching scores, not real-world
+    forecasts. They show how different investments can influence one another.</p>
+    <div class="resultgrid" id="metrics"></div>
+    <h3 style="margin-top:20px">Short-term and long-term consequences</h3>
+    <div id="consequences"></div>
+    <h3 style="margin-top:20px">How did your projects connect?</h3>
+    <div id="connections"></div>
+    <div class="note"><b>Think about it:</b> A road may improve access to a clinic
+    and market. Safe water and sanitation may reduce illness. Education and
+    livelihoods may strengthen the village over many years. A project rarely
+    works in isolation.</div>
+    <h3>CLCP reflection: How did we make our decision?</h3>
+    <div id="reflection"></div>
+    <div class="field">
+      <label for="lesson">What is the most important lesson your group learned?</label>
+      <textarea id="lesson" placeholder="Write one lesson you will take back to your community..."></textarea>
+    </div>
+    <div class="field">
+      <label for="nextStep">What should the community do next?</label>
+      <textarea id="nextStep" placeholder="e.g. meet again, test an idea, assign responsibilities, review progress..."></textarea>
+    </div>
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print learning summary</button>
+      <button class="secondary" onclick="resetGame()">↻ Play again with a different plan</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="kicker">Learning corner</div>
+    <h2>What should we remember?</h2>
+    <div class="grid">
+      <div class="tile"><h3>🤝 Participation</h3>
+        <p class="small">People affected by a decision should have a meaningful voice in making it.</p></div>
+      <div class="tile"><h3>💎 Start with strengths</h3>
+        <p class="small">Recognise local knowledge, skills, relationships and resources—not only problems.</p></div>
+      <div class="tile"><h3>⚖️ Prioritisation</h3>
+        <p class="small">Limited resources require transparent discussion about needs, benefits and trade-offs.</p></div>
+      <div class="tile"><h3>🔗 Interconnection</h3>
+        <p class="small">Health, water, sanitation, education, roads and livelihoods influence one another.</p></div>
+      <div class="tile"><h3>🧭 Local ownership</h3>
+        <p class="small">Community members should help decide, act, maintain and review their initiatives.</p></div>
+      <div class="tile"><h3>🔄 Learning cycle</h3>
+        <p class="small">Act, reflect, learn, share and decide what to do next. The cycle continues.</p></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="kicker">Facilitator's note</div>
+    <h2>How to use this game in a CLCP session</h2>
+    <ol>
+      <li>Invite small groups to play together. Encourage different voices.</li>
+      <li>Pause at each stage. Ask participants to explain their thinking.</li>
+      <li>Ask whether the selected projects came from the community's dream and assessment.</li>
+      <li>Compare two groups' budgets. Ask why their priorities differ.</li>
+      <li>Discuss what can be started using existing local strengths.</li>
+      <li>Connect the game to a real community conversation, not just a paper exercise.</li>
+    </ol>
+    <p class="small">This game is a learning aid. Real community planning must use
+    local evidence, inclusive participation, feasibility assessment and the
+    appropriate local decision-making processes.</p>
+  </section>
+</main>
+
+<footer>
+  <b>The Constellation 🧑‍🧑</b><br>
+  •🙌 Together we are striving for Life Competence 🌱• 
+  <p><a href="https://chat.whatsapp.com/GS7KNHGBsOBCi9vL4Liefk" target="_blank" rel="noopener">Join the CLCP WhatsApp Group</a></p>
+  <small>🏡 Build a Better Village 💫 Community Learning Game 👨‍👩‍👧‍👦</small>
+</footer>
+
+<script>
+let currentStage=1;
+const totalBudget=100;
+const projectData={
+ water:{name:"Safe drinking water",cost:30,short:"More reliable access to safe water can save time and support daily health.",long:"Better water access can support school attendance, household wellbeing and productive time.",effects:{health:3,wellbeing:3,education:1,livelihood:1}},
+ sanitation:{name:"Sanitation and drainage",cost:20,short:"Cleaner surroundings and improved drainage can make daily life safer.",long:"Sustained sanitation and waste management can support a healthier environment.",effects:{health:3,wellbeing:2}},
+ clinic:{name:"Community clinic",cost:30,short:"Basic care and outreach become easier to access.",long:"Prevention, early care and continuity of services can strengthen community health.",effects:{health:4,wellbeing:2}},
+ school:{name:"School improvement",cost:25,short:"Children may benefit from better learning spaces and support.",long:"Education can strengthen knowledge, opportunities and future choices.",effects:{education:4,wellbeing:1,livelihood:1}},
+ road:{name:"Road improvement",cost:35,short:"Travel to services and markets may become easier.",long:"Better connectivity can support access to health, education and economic activity.",effects:{access:4,livelihood:2,health:1,education:1}},
+ livelihood:{name:"Livelihood programme",cost:25,short:"Skills and local enterprise support may create new opportunities.",long:"More resilient livelihoods can improve household security and local economic activity.",effects:{livelihood:4,wellbeing:2,education:1}}
+};
+function $(id){return document.getElementById(id)}
+function startGame(){
+  $("s1").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function showStage(n){
+  currentStage = n;
+  document.querySelectorAll(".stage").forEach((el,i) => el.classList.toggle("hidden", i+1 !== n));
+  document.querySelectorAll(".stagepill").forEach((el,i) => {
+    el.classList.toggle("active", i+1 === n);
+    el.classList.toggle("done", i+1 < n);
+  });
+  $("results").classList.add("hidden");
+  $("stagebar").scrollIntoView({behavior:"smooth", block:"start"});
+
+  // Force budget refresh when entering the action-plan stage
+  if (n === 5) {
+    setTimeout(updateBudget, 50);
+  }
+}
+function nextStage(n){
+  if(n===2){
+    const checked=[...document.querySelectorAll("#dreamChoices input:checked")];
+    if(checked.length>3){alert("Please choose up to three shared outcomes.");return}
+  }
+  showStage(Math.min(5,n+1));
+}
+function prevStage(n){showStage(Math.max(1,n-1))}
+
+function selectedProjects(){
+  return [...document.querySelectorAll("#projectChoices .project")].filter(p => {
+    const cb = p.querySelector("input.projectCheck, input[type=checkbox]");
+    return cb && cb.checked;
+  });
+}
+
+function updateBudget(){
+  const chosen = selectedProjects();
+  let spent = chosen.reduce((sum, p) => sum + (Number(p.dataset.cost) || 0), 0);
+
+  $("spent").textContent = spent;
+  $("budgetBar").style.width = Math.min(100, (spent / totalBudget) * 100) + "%";
+
+  if (spent > 100) {
+    $("budgetMessage").textContent = "You have exceeded the budget. Unselect a project.";
+    $("budgetStatus").textContent = "⚠️ Your choices exceed the available budget.";
+    $("budgetStatus").style.color = "#b91c1c";
+  } else {
+    $("budgetMessage").textContent = (100 - spent) + " coins remaining.";
+    $("budgetStatus").textContent = "You have " + (100 - spent) + " coins available.";
+    $("budgetStatus").style.color = "#64748b";
+  }
+
+  document.querySelectorAll("#projectChoices .project").forEach(p => {
+    const cb = p.querySelector("input.projectCheck, input[type=checkbox]");
+    p.classList.toggle("selected", cb && cb.checked);
+  });
+}
+
+// Event delegation – more reliable than attaching to each checkbox
+document.getElementById("projectChoices").addEventListener("change", function(e) {
+  if (!e.target.matches("input.projectCheck, input[type=checkbox]")) return;
+
+  // Temporarily allow the check so we can calculate
+  const wouldExceed = selectedProjects().reduce((s, p) => s + (Number(p.dataset.cost) || 0), 0) > 100;
+
+  if (wouldExceed) {
+    e.target.checked = false;
+    alert("That would exceed the 100-coin budget. Discuss which project should come first.");
+  }
+  updateBudget();
+});
+
+function revealResults(){
+  const chosen=selectedProjects();
+  const spent=chosen.reduce((s,p)=>s+Number(p.dataset.cost),0);
+  if(!chosen.length){alert("Choose at least one project, or discuss why the community might begin with a non-funded local action.");return}
+  if(spent>100){alert("Your budget is over 100 coins.");return}
+  const effects={health:0,education:0,livelihood:0,access:0,wellbeing:0};
+  chosen.forEach(p=>{
+    const e=projectData[p.dataset.id].effects;
+    Object.keys(e).forEach(k=>effects[k]+=e[k]);
+  });
+  // Synergy: related projects strengthen one another in this illustrative model.
+  const ids=chosen.map(p=>p.dataset.id);
+  const has=(id)=>ids.includes(id);
+  let synergy=0,links=[];
+  if(has("water")&&has("sanitation")){
+    effects.health+=2;synergy++;
+    links.push("Water + sanitation: safe water is more effective when surroundings and waste are managed well.");
+  }
+  if(has("road")&&has("clinic")){
+    effects.health+=1;effects.access+=1;synergy++;
+    links.push("Road + clinic: better access can make health services easier to reach.");
+  }
+  if(has("road")&&has("livelihood")){
+    effects.livelihood+=2;synergy++;
+    links.push("Road + livelihoods: connectivity can help people reach markets and customers.");
+  }
+  if(has("school")&&has("livelihood")){
+    effects.education+=1;effects.livelihood+=1;synergy++;
+    links.push("School + livelihoods: learning and skills can reinforce future work opportunities.");
+  }
+  if(!links.length)links.push("Your selected projects have fewer direct combinations in this simplified model. Consider what local partnerships or complementary actions could connect them.");
+  const scores={
+    "Community wellbeing":Math.min(100,35+effects.wellbeing*7+effects.health*3),
+    "Health":Math.min(100,30+effects.health*9),
+    "Education":Math.min(100,30+effects.education*10),
+    "Livelihoods":Math.min(100,30+effects.livelihood*10),
+    "Access":Math.min(100,30+effects.access*10)
+  };
+  $("metrics").innerHTML=Object.entries(scores).map(([k,v])=>
+    `<div class="metric"><span>${k}</span><strong>${v}</strong><div class="scorebar"><span style="width:${v}%"></span></div></div>`
+  ).join("");
+  $("consequences").innerHTML=chosen.map(p=>{
+    const d=projectData[p.dataset.id];
+    return `<div class="projectresult"><b>${d.name}</b><br><span class="tag">Short term</span> ${d.short}<br><span class="tag">Long term</span> ${d.long}</div>`;
+  }).join("");
+  $("connections").innerHTML=links.map(x=>`<p>🔗 ${x}</p>`).join("");
+  let reflection=[];
+  const assets=[...document.querySelectorAll("#assetChoices input:checked")].length;
+  const dreams=[...document.querySelectorAll("#dreamChoices input:checked")].length;
+  if($("communityStrength").value.trim()&&assets>0)
+    reflection.push("You identified at least one community strength and selected existing local assets.");
+  else reflection.push("Consider whether the group properly identified local strengths before choosing projects.");
+  if(dreams>0||$("dream").value.trim())
+    reflection.push("You considered a shared future for the village.");
+  else reflection.push("A shared dream was not clearly recorded. Whose vision guided the choices?");
+  if($("priorityGroup").value)
+    reflection.push("You identified a group whose experience should be heard: "+$("priorityGroup").value+".");
+  else reflection.push("Whose voices might have been missing from the decision?");
+  if($("firstAction").value.trim()&&$("responsibility").value.trim())
+    reflection.push("You began to identify an action and who will take responsibility.");
+  else reflection.push("A good project choice still needs a first action and agreed responsibility.");
+  if(synergy>0)reflection.push("You selected projects with "+synergy+" complementary connection(s).");
+  else reflection.push("Consider whether two smaller, connected projects might achieve more together.");
+  $("reflection").innerHTML=reflection.map(x=>`<p>• ${x}</p>`).join("");
+  $("results").classList.remove("hidden");
+  $("results").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+/* INTERACTIVE VILLAGE MAP */
+
+let villageMarkers = [];
+let nextMapMarkerId = 1;
+
+const markerStyles = {
+  asset:   {icon:"🟢", name:"Existing asset / strength"},
+  problem: {icon:"🔴", name:"Problem / concern"},
+  project: {icon:"🔵", name:"Proposed project"}
+};
+
+function addVillageMarker(event){
+  // Ignore clicks on existing pins.
+  if(event.target.closest(".map-pin")) return;
+
+  const map = $("villageMap");
+  const rect = map.getBoundingClientRect();
+
+  const x = ((event.clientX - rect.left) / rect.width) * 100;
+  const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+  const type = $("mapType").value;
+  const description = $("mapDescription").value.trim();
+
+  if(!description){
+    alert("Please enter a short description before placing your marker.");
+    $("mapDescription").focus();
+    return;
+  }
+
+  villageMarkers.push({
+    id:nextMapMarkerId++,
+    x,y,type,description
+  });
+
+  $("mapDescription").value="";
+  renderVillageMap();
+}
+
+function renderVillageMap(){
+  const layer=$("mapMarkers");
+  layer.innerHTML="";
+
+  villageMarkers.forEach(marker=>{
+    const style=markerStyles[marker.type];
+    const pin=document.createElement("button");
+    pin.type="button";
+    pin.className="map-pin "+marker.type;
+    pin.style.left=marker.x+"%";
+    pin.style.top=marker.y+"%";
+    pin.textContent=style.icon;
+    pin.title=style.name+": "+marker.description;
+    pin.setAttribute("aria-label",style.name+": "+marker.description+". Click to remove.");
+
+    pin.addEventListener("click",(event)=>{
+      event.stopPropagation();
+      if(confirm("Remove this marker: "+marker.description+"?")){
+        villageMarkers=villageMarkers.filter(m=>m.id!==marker.id);
+        renderVillageMap();
+      }
+    });
+    layer.appendChild(pin);
+  });
+
+  const counts={
+    asset:villageMarkers.filter(m=>m.type==="asset").length,
+    problem:villageMarkers.filter(m=>m.type==="problem").length,
+    project:villageMarkers.filter(m=>m.type==="project").length
+  };
+
+  $("mapCounts").innerHTML=
+    `<span>🟢 Assets: ${counts.asset}</span>
+     <span>🔴 Concerns: ${counts.problem}</span>
+     <span>🔵 Projects: ${counts.project}</span>`;
+
+  const list=$("mapList");
+  if(villageMarkers.length===0){
+    list.innerHTML='<p class="small">No markers yet. Select a category and tap the map to begin.</p>';
+  }else{
+    list.innerHTML="";
+    villageMarkers.forEach(marker=>{
+      const item=document.createElement("div");
+      item.className="map-list-item";
+
+      const description=document.createElement("span");
+      description.textContent=
+        markerStyles[marker.type].icon+" "+marker.description;
+
+      const remove=document.createElement("button");
+      remove.type="button";
+      remove.textContent="Remove";
+      remove.addEventListener("click",()=>{
+        villageMarkers=villageMarkers.filter(m=>m.id!==marker.id);
+        renderVillageMap();
+      });
+
+      item.append(description,remove);
+      list.appendChild(item);
+    });
+  }
+}
+
+function clearVillageMap(){
+  if(!villageMarkers.length)return;
+  if(confirm("Clear all the village map markers?")){
+    villageMarkers=[];
+    renderVillageMap();
+  }
+}
+
+$("villageMap").addEventListener("click",addVillageMarker);
+
+function resetGame(){
+  if(!confirm("Start a fresh village planning game? Your current choices will be cleared."))return;
+  document.querySelectorAll("input[type=checkbox]").forEach(x=>x.checked=false);
+  document.querySelectorAll("textarea,input[type=text]").forEach(x=>x.value="");
+  $("priorityGroup").value="";
+  updateBudget();
+  villageMarkers=[];
+  nextMapMarkerId=1;
+  renderVillageMap();
+  showStage(1);
+}
+// Safety: make sure budget display is correct even if Stage 5 is shown later
+document.addEventListener("DOMContentLoaded", () => {
+  // nothing needed here, but the delegation is already live
+});
+</script>
+</body>
+</html>
