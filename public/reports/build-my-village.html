@@ -485,6 +485,26 @@ footer a{color:#99f6e4;font-weight:bold}
       </div>
     </div>
 
+    <!-- CUSTOM PROJECT / SERVICE ADDER -->
+    <div class="card" style="background:#f0fdfa;border:2px solid #99f6e4;margin-top:18px;">
+      <div class="kicker">Community-designed response</div>
+      <h3 style="margin-top:4px;">➕ Add your own project or service (35 coins)</h3>
+      <p class="small">If the village faces a specific challenge (e.g. youth drug use, alcoholism, violence, mental health, disability inclusion…), design a response that fits the shared dream. Custom projects cost the highest amount — 35 coins — so the community must prioritise carefully.</p>
+      
+      <div class="field">
+        <label for="customName">Name of the service / project</label>
+        <input id="customName" type="text" placeholder="e.g. Deaddiction and IDU Services, Youth Safe Space, Community Mental Health Support…">
+      </div>
+      <div class="field">
+        <label for="customDesc">Short description – how does it help the shared dream?</label>
+        <textarea id="customDesc" rows="2" placeholder="e.g. Peer-led counselling, drop-in centre and family support to help young people recover from substance use and rebuild their lives…"></textarea>
+      </div>
+      <div class="actions">
+        <button type="button" class="teal" onclick="addCustomProject()">➕ Add this project to the list</button>
+      </div>
+      <p class="small" id="customHint" style="margin-top:8px;">You can add up to 3 custom projects. They appear above and can be selected like any other option.</p>
+    </div>
+
     <div class="budgetbox">
       <div><b>Budget used</b><div class="small" id="budgetMessage">Select projects to begin.</div></div>
       <div class="big"><span id="spent">0</span> / 100</div>
@@ -598,25 +618,30 @@ const projectData={
  road:{name:"Road improvement",cost:35,short:"Travel to services and markets may become easier.",long:"Better connectivity can support access to health, education and economic activity.",effects:{access:4,livelihood:2,health:1,education:1}},
  livelihood:{name:"Livelihood programme",cost:25,short:"Skills and local enterprise support may create new opportunities.",long:"More resilient livelihoods can improve household security and local economic activity.",effects:{livelihood:4,wellbeing:2,education:1}}
 };
+
+let customProjectCount = 0;
+const MAX_CUSTOM = 3;
+
 function $(id){return document.getElementById(id)}
+
 function startGame(){
   $("s1").scrollIntoView({behavior:"smooth",block:"start"});
 }
+
 function showStage(n){
   currentStage = n;
-  document.querySelectorAll(".stage").forEach((el,i) => el.classList.toggle("hidden", i+1 !== n));
-  document.querySelectorAll(".stagepill").forEach((el,i) => {
-    el.classList.toggle("active", i+1 === n);
-    el.classList.toggle("done", i+1 < n);
+  document.querySelectorAll(".stage").forEach((el,i)=>el.classList.toggle("hidden",i+1!==n));
+  document.querySelectorAll(".stagepill").forEach((el,i)=>{
+    el.classList.toggle("active",i+1===n);
+    el.classList.toggle("done",i+1<n);
   });
   $("results").classList.add("hidden");
-  $("stagebar").scrollIntoView({behavior:"smooth", block:"start"});
-
-  // Force budget refresh when entering the action-plan stage
-  if (n === 5) {
-    setTimeout(updateBudget, 50);
+  $("stagebar").scrollIntoView({behavior:"smooth",block:"start"});
+  if(n === 5){
+    setTimeout(updateBudget, 40);
   }
 }
+
 function nextStage(n){
   if(n===2){
     const checked=[...document.querySelectorAll("#dreamChoices input:checked")];
@@ -627,7 +652,7 @@ function nextStage(n){
 function prevStage(n){showStage(Math.max(1,n-1))}
 
 function selectedProjects(){
-  return [...document.querySelectorAll("#projectChoices .project")].filter(p => {
+  return [...document.querySelectorAll("#projectChoices .project")].filter(p=>{
     const cb = p.querySelector("input.projectCheck, input[type=checkbox]");
     return cb && cb.checked;
   });
@@ -635,12 +660,12 @@ function selectedProjects(){
 
 function updateBudget(){
   const chosen = selectedProjects();
-  let spent = chosen.reduce((sum, p) => sum + (Number(p.dataset.cost) || 0), 0);
+  let spent = chosen.reduce((sum,p)=>sum + (Number(p.dataset.cost)||0), 0);
 
   $("spent").textContent = spent;
-  $("budgetBar").style.width = Math.min(100, (spent / totalBudget) * 100) + "%";
+  $("budgetBar").style.width = Math.min(100, (spent/totalBudget)*100) + "%";
 
-  if (spent > 100) {
+  if(spent > 100){
     $("budgetMessage").textContent = "You have exceeded the budget. Unselect a project.";
     $("budgetStatus").textContent = "⚠️ Your choices exceed the available budget.";
     $("budgetStatus").style.color = "#b91c1c";
@@ -650,92 +675,199 @@ function updateBudget(){
     $("budgetStatus").style.color = "#64748b";
   }
 
-  document.querySelectorAll("#projectChoices .project").forEach(p => {
+  document.querySelectorAll("#projectChoices .project").forEach(p=>{
     const cb = p.querySelector("input.projectCheck, input[type=checkbox]");
     p.classList.toggle("selected", cb && cb.checked);
   });
 }
 
-// Event delegation – more reliable than attaching to each checkbox
-document.getElementById("projectChoices").addEventListener("change", function(e) {
-  if (!e.target.matches("input.projectCheck, input[type=checkbox]")) return;
+/* Event delegation – works for both original and newly added custom projects */
+document.getElementById("projectChoices").addEventListener("change", function(e){
+  if(!e.target.matches("input.projectCheck, input[type=checkbox]")) return;
 
-  // Temporarily allow the check so we can calculate
-  const wouldExceed = selectedProjects().reduce((s, p) => s + (Number(p.dataset.cost) || 0), 0) > 100;
-
-  if (wouldExceed) {
+  const wouldExceed = selectedProjects().reduce((s,p)=>s + (Number(p.dataset.cost)||0), 0) > 100;
+  if(wouldExceed){
     e.target.checked = false;
     alert("That would exceed the 100-coin budget. Discuss which project should come first.");
   }
   updateBudget();
 });
 
+/* ========== ADD CUSTOM PROJECT / SERVICE ========== */
+function addCustomProject(){
+  const name = ($("customName").value || "").trim();
+  const desc = ($("customDesc").value || "").trim();
+
+  if(!name){
+    alert("Please give the project or service a clear name.");
+    $("customName").focus();
+    return;
+  }
+  if(!desc){
+    alert("Please write a short description of how this service helps the community’s dream.");
+    $("customDesc").focus();
+    return;
+  }
+  if(customProjectCount >= MAX_CUSTOM){
+    alert("You can add a maximum of " + MAX_CUSTOM + " custom projects in this game. Discuss which ones matter most.");
+    return;
+  }
+
+  customProjectCount++;
+  const id = "custom_" + customProjectCount;
+
+  // Sensible default effects for community-designed responses
+  // (strong wellbeing + health, moderate livelihood)
+  projectData[id] = {
+    name: name,
+    cost: 35,
+    short: desc,
+    long: "A community-designed response that addresses a locally identified need and can strengthen trust, inclusion and long-term wellbeing.",
+    effects: { wellbeing: 3, health: 2, livelihood: 1, education: 1 },
+    isCustom: true
+  };
+
+  // Create the selectable tile
+  const tile = document.createElement("div");
+  tile.className = "tile project";
+  tile.dataset.id = id;
+  tile.dataset.cost = "35";
+  tile.innerHTML = `
+    <label>
+      <input type="checkbox" class="projectCheck">
+      <span>
+        <b>🛠️ ${name}</b><br>
+        <span class="cost">35 coins</span><br>
+        <span class="small">${desc}</span>
+      </span>
+    </label>
+    <div class="tag">Community-designed</div>
+    <div class="tag">Custom</div>
+  `;
+
+  $("projectChoices").appendChild(tile);
+
+  // Clear form
+  $("customName").value = "";
+  $("customDesc").value = "";
+  $("customHint").textContent = `Custom projects added: ${customProjectCount} of ${MAX_CUSTOM}. You can still select them in the list above.`;
+
+  // Nice feedback
+  tile.scrollIntoView({behavior:"smooth", block:"nearest"});
+  updateBudget();
+}
+
 function revealResults(){
-  const chosen=selectedProjects();
-  const spent=chosen.reduce((s,p)=>s+Number(p.dataset.cost),0);
-  if(!chosen.length){alert("Choose at least one project, or discuss why the community might begin with a non-funded local action.");return}
-  if(spent>100){alert("Your budget is over 100 coins.");return}
-  const effects={health:0,education:0,livelihood:0,access:0,wellbeing:0};
+  const chosen = selectedProjects();
+  const spent = chosen.reduce((s,p)=>s + (Number(p.dataset.cost)||0), 0);
+
+  if(!chosen.length){
+    alert("Choose at least one project, or discuss why the community might begin with a non-funded local action.");
+    return;
+  }
+  if(spent > 100){
+    alert("Your budget is over 100 coins.");
+    return;
+  }
+
+  const effects = {health:0, education:0, livelihood:0, access:0, wellbeing:0};
   chosen.forEach(p=>{
-    const e=projectData[p.dataset.id].effects;
-    Object.keys(e).forEach(k=>effects[k]+=e[k]);
+    const data = projectData[p.dataset.id];
+    if(data && data.effects){
+      Object.keys(data.effects).forEach(k => effects[k] += data.effects[k]);
+    }
   });
-  // Synergy: related projects strengthen one another in this illustrative model.
-  const ids=chosen.map(p=>p.dataset.id);
-  const has=(id)=>ids.includes(id);
-  let synergy=0,links=[];
-  if(has("water")&&has("sanitation")){
-    effects.health+=2;synergy++;
+
+  // Synergy between original projects
+  const ids = chosen.map(p => p.dataset.id);
+  const has = id => ids.includes(id);
+  let synergy = 0, links = [];
+
+  if(has("water") && has("sanitation")){
+    effects.health += 2; synergy++;
     links.push("Water + sanitation: safe water is more effective when surroundings and waste are managed well.");
   }
-  if(has("road")&&has("clinic")){
-    effects.health+=1;effects.access+=1;synergy++;
+  if(has("road") && has("clinic")){
+    effects.health += 1; effects.access += 1; synergy++;
     links.push("Road + clinic: better access can make health services easier to reach.");
   }
-  if(has("road")&&has("livelihood")){
-    effects.livelihood+=2;synergy++;
+  if(has("road") && has("livelihood")){
+    effects.livelihood += 2; synergy++;
     links.push("Road + livelihoods: connectivity can help people reach markets and customers.");
   }
-  if(has("school")&&has("livelihood")){
-    effects.education+=1;effects.livelihood+=1;synergy++;
+  if(has("school") && has("livelihood")){
+    effects.education += 1; effects.livelihood += 1; synergy++;
     links.push("School + livelihoods: learning and skills can reinforce future work opportunities.");
   }
-  if(!links.length)links.push("Your selected projects have fewer direct combinations in this simplified model. Consider what local partnerships or complementary actions could connect them.");
-  const scores={
-    "Community wellbeing":Math.min(100,35+effects.wellbeing*7+effects.health*3),
-    "Health":Math.min(100,30+effects.health*9),
-    "Education":Math.min(100,30+effects.education*10),
-    "Livelihoods":Math.min(100,30+effects.livelihood*10),
-    "Access":Math.min(100,30+effects.access*10)
+
+  // Extra recognition when a custom project is chosen
+  const customChosen = chosen.filter(p => (projectData[p.dataset.id] || {}).isCustom);
+  if(customChosen.length){
+    synergy++;
+    links.push("Community-designed project(s) selected: the group responded to a locally named need rather than only using the standard menu. This strengthens ownership.");
+  }
+
+  if(!links.length){
+    links.push("Your selected projects have fewer direct combinations in this simplified model. Consider what local partnerships or complementary actions could connect them.");
+  }
+
+  const scores = {
+    "Community wellbeing": Math.min(100, 35 + effects.wellbeing*7 + effects.health*3),
+    "Health": Math.min(100, 30 + effects.health*9),
+    "Education": Math.min(100, 30 + effects.education*10),
+    "Livelihoods": Math.min(100, 30 + effects.livelihood*10),
+    "Access": Math.min(100, 30 + effects.access*10)
   };
-  $("metrics").innerHTML=Object.entries(scores).map(([k,v])=>
+
+  $("metrics").innerHTML = Object.entries(scores).map(([k,v]) =>
     `<div class="metric"><span>${k}</span><strong>${v}</strong><div class="scorebar"><span style="width:${v}%"></span></div></div>`
   ).join("");
-  $("consequences").innerHTML=chosen.map(p=>{
-    const d=projectData[p.dataset.id];
-    return `<div class="projectresult"><b>${d.name}</b><br><span class="tag">Short term</span> ${d.short}<br><span class="tag">Long term</span> ${d.long}</div>`;
+
+  $("consequences").innerHTML = chosen.map(p => {
+    const d = projectData[p.dataset.id] || {name: p.dataset.id, short: "Community response", long: "Locally designed action."};
+    const badge = d.isCustom ? '<span class="tag">Community-designed</span> ' : '';
+    return `<div class="projectresult">${badge}<b>${d.name}</b><br>
+      <span class="tag">Short term</span> ${d.short}<br>
+      <span class="tag">Long term</span> ${d.long}</div>`;
   }).join("");
-  $("connections").innerHTML=links.map(x=>`<p>🔗 ${x}</p>`).join("");
-  let reflection=[];
-  const assets=[...document.querySelectorAll("#assetChoices input:checked")].length;
-  const dreams=[...document.querySelectorAll("#dreamChoices input:checked")].length;
-  if($("communityStrength").value.trim()&&assets>0)
+
+  $("connections").innerHTML = links.map(x => `<p>🔗 ${x}</p>`).join("");
+
+  let reflection = [];
+  const assets = [...document.querySelectorAll("#assetChoices input:checked")].length;
+  const dreams = [...document.querySelectorAll("#dreamChoices input:checked")].length;
+
+  if($("communityStrength").value.trim() && assets > 0)
     reflection.push("You identified at least one community strength and selected existing local assets.");
-  else reflection.push("Consider whether the group properly identified local strengths before choosing projects.");
-  if(dreams>0||$("dream").value.trim())
+  else
+    reflection.push("Consider whether the group properly identified local strengths before choosing projects.");
+
+  if(dreams > 0 || $("dream").value.trim())
     reflection.push("You considered a shared future for the village.");
-  else reflection.push("A shared dream was not clearly recorded. Whose vision guided the choices?");
+  else
+    reflection.push("A shared dream was not clearly recorded. Whose vision guided the choices?");
+
   if($("priorityGroup").value)
-    reflection.push("You identified a group whose experience should be heard: "+$("priorityGroup").value+".");
-  else reflection.push("Whose voices might have been missing from the decision?");
-  if($("firstAction").value.trim()&&$("responsibility").value.trim())
+    reflection.push("You identified a group whose experience should be heard: " + $("priorityGroup").value + ".");
+  else
+    reflection.push("Whose voices might have been missing from the decision?");
+
+  if($("firstAction").value.trim() && $("responsibility").value.trim())
     reflection.push("You began to identify an action and who will take responsibility.");
-  else reflection.push("A good project choice still needs a first action and agreed responsibility.");
-  if(synergy>0)reflection.push("You selected projects with "+synergy+" complementary connection(s).");
-  else reflection.push("Consider whether two smaller, connected projects might achieve more together.");
-  $("reflection").innerHTML=reflection.map(x=>`<p>• ${x}</p>`).join("");
+  else
+    reflection.push("A good project choice still needs a first action and agreed responsibility.");
+
+  if(customChosen.length)
+    reflection.push("You added and selected " + customChosen.length + " community-designed project(s). This is a strong sign of local ownership.");
+
+  if(synergy > 0)
+    reflection.push("You selected projects with " + synergy + " complementary connection(s).");
+  else
+    reflection.push("Consider whether two smaller, connected projects might achieve more together.");
+
+  $("reflection").innerHTML = reflection.map(x => `<p>• ${x}</p>`).join("");
   $("results").classList.remove("hidden");
-  $("results").scrollIntoView({behavior:"smooth",block:"start"});
+  $("results").scrollIntoView({behavior:"smooth", block:"start"});
 }
 
 /* INTERACTIVE VILLAGE MAP */
@@ -852,19 +984,28 @@ $("villageMap").addEventListener("click",addVillageMarker);
 
 function resetGame(){
   if(!confirm("Start a fresh village planning game? Your current choices will be cleared."))return;
+
+  // Remove any custom project tiles
+  document.querySelectorAll("#projectChoices .project[data-id^='custom_']").forEach(el => el.remove());
+  customProjectCount = 0;
+  if($("customHint")) $("customHint").textContent = "You can add up to 3 custom projects. They appear above and can be selected like any other option.";
+
+  // Clear form fields and checkboxes
   document.querySelectorAll("input[type=checkbox]").forEach(x=>x.checked=false);
   document.querySelectorAll("textarea,input[type=text]").forEach(x=>x.value="");
-  $("priorityGroup").value="";
+  if($("priorityGroup")) $("priorityGroup").value="";
+
+  // Clear custom project data entries
+  Object.keys(projectData).forEach(k => {
+    if(k.startsWith("custom_")) delete projectData[k];
+  });
+
   updateBudget();
   villageMarkers=[];
   nextMapMarkerId=1;
   renderVillageMap();
   showStage(1);
 }
-// Safety: make sure budget display is correct even if Stage 5 is shown later
-document.addEventListener("DOMContentLoaded", () => {
-  // nothing needed here, but the delegation is already live
-});
 </script>
 </body>
-</html>
+</html> 
