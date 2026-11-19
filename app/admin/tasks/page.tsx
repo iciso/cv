@@ -10,15 +10,15 @@ interface TaskItem {
 const todoTasks: TaskItem[] = [
   {
     id: "2",
-    description: "Make leaderboard for all individual games with a choice to skip the leaderboard given to players."
+    description: "Rafique to update dependencies for all games and interactive webpages done ages ago in HTML and still in his Laptop to CV."
   },
   {
     id: "4",
-    description: "Explain by an animated infographic the play and learn cycle, how scoring, leaderboard, and contributor rewards motivate Volunteers."
+    description: "For Joy."
   },
   {
     id: "6a",
-    description: "Plan and Establish UX Audit for all games, once active community members reach sufficient size."
+    description: "Plan and Establish Audit for all games and interactive web pages featured on CV."
   },
   {
     id: "8",
@@ -26,7 +26,7 @@ const todoTasks: TaskItem[] = [
   },
   {
     id: "9",
-    description: "Cross-link IQRA & KALAM to guide users who want or do not want challenges."
+    description: "For Joy."
   },
   {
     id: "11",
@@ -46,11 +46,11 @@ const todoTasks: TaskItem[] = [
   },
   {
     id: "15",
-    description: "Consider Ads in Meta, or Fb for Community growth."
+    description: "Placeholder."
   },
   {
     id: "16",
-    description: "Acknowledge all other AI."
+    description: "Acknowledgements."
   }
 ];
 
@@ -212,9 +212,9 @@ export default function AdminTasksPage() {
         <header className="mb-10 pb-6 border-b border-gray-200/60 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-indigo-600 mb-1">
-              <span>IQRA Admin Portal</span>
+              <span>CV Admin Portal</span>
               <span className="text-gray-300">•</span>
-              <span className="text-gray-500 font-mono text-[11px] lowercase">iqra/app/admin/tasks/page.tsx</span>
+              <span className="text-gray-500 font-mono text-[11px] lowercase">cvemrafi.vercel.app/admin/tasks.tsx</span>
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-gray-900">Project Engine Roadmap & Backlog</h1>
           </div>
