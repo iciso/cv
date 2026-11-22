@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💊 The Drug of Choice & Resistance Evolution Game 🦠</title>
+<style>
+:root{
+  --navy:#1e3a8a;--blue:#3b82f6;--teal:#0f766e;
+  --bg:#f1f5f9;--ink:#1e293b;--muted:#64748b;
+  --line:#e2e8f0;--white:#fff;--red:#dc2626;
+  --green:#059669;--amber:#d97706;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+header{
+ background:linear-gradient(120deg,#1e3a8a,#0f766e);
+ color:white;text-align:center;padding:30px 16px}
+header .eyebrow{font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;opacity:.9}
+header h1{font-size:clamp(1.7rem,5vw,2.6rem);margin:8px 0}
+header p{max-width:800px;margin:auto}
+.wrap{max-width:1050px;margin:22px auto;padding:0 14px}
+.card{background:white;border:1px solid var(--line);border-radius:17px;
+ padding:21px;margin:16px 0;box-shadow:0 3px 12px #0f172a0a}
+h2{font-size:1.35rem;color:var(--navy);margin:0 0 10px}
+h3{font-size:1.05rem;margin:0 0 8px}
+p{margin:8px 0}
+.small{font-size:.87rem;color:var(--muted)}
+.kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:1.2px;
+ color:var(--teal);font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tile{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+.tile.selected{border:2px solid var(--teal);background:#f0fdfa}
+label{font-weight:bold;display:block;margin-bottom:5px}
+select,input[type=range]{
+ width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:9px;
+ font:inherit;background:white}
+input[type=range]{padding:0;accent-color:var(--teal)}
+.field{margin:13px 0}
+button{border:0;border-radius:10px;padding:11px 15px;
+ font-size:.93rem;font-weight:bold;cursor:pointer}
+button:focus,select:focus,input:focus{outline:3px solid #93c5fd;outline-offset:2px}
+.primary{background:var(--navy);color:white}
+.teal{background:var(--teal);color:white}
+.secondary{background:#e0f2fe;color:#075985}
+.danger{background:#fee2e2;color:#991b1b}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.note{background:#fffbeb;border-left:4px solid var(--amber);
+ padding:12px;border-radius:8px;margin:12px 0}
+.good{background:#ecfdf5;border-left:4px solid var(--green);
+ padding:12px;border-radius:8px;margin:12px 0}
+.alert{background:#fef2f2;border-left:4px solid var(--red);
+ padding:12px;border-radius:8px;margin:12px 0}
+.report{background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:15px}
+.report strong{color:var(--navy)}
+.pill{display:inline-block;background:#e2e8f0;border-radius:20px;
+ padding:4px 9px;font-size:.76rem;margin:3px}
+.hidden{display:none!important}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
+.metric{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:12px}
+.metric strong{display:block;font-size:1.5rem;color:var(--navy)}
+.metric span{font-size:.8rem;color:var(--muted)}
+.population{margin:14px 0}
+.population-head{display:flex;justify-content:space-between;gap:10px;font-size:.9rem}
+.bar{height:20px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin-top:5px}
+.fill{height:100%;width:0%;transition:width .35s}
+.sus{background:#3b82f6}.res{background:#dc2626}.flora{background:#0f766e}
+canvas{width:100%;height:260px;display:block;background:#fff;
+ border:1px solid var(--line);border-radius:10px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.82rem;margin:8px 0}
+.legend span:before{content:"";display:inline-block;width:10px;height:10px;
+ border-radius:50%;margin-right:5px}
+.legend .l1:before{background:#3b82f6}
+.legend .l2:before{background:#dc2626}
+.legend .l3:before{background:#0f766e}
+footer{background:#0f172a;color:#e2e8f0;text-align:center;padding:24px 14px;margin-top:35px}
+footer a{color:#99f6e4;font-weight:bold}
+@media(max-width:600px){.card{padding:16px}canvas{height:220px}}
+
+.ast{width:100%;border-collapse:collapse;font-size:.87rem;margin:8px 0}
+.ast th,.ast td{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left}
+.ast th{background:#eff6ff;color:var(--navy);font-size:.78rem;text-transform:uppercase}
+.b{display:inline-block;border-radius:6px;padding:2px 8px;font-weight:bold;font-size:.8rem}
+.b.S{background:#d1fae5;color:#065f46}.b.I{background:#fef3c7;color:#92400e}
+.b.R{background:#fee2e2;color:#991b1b}.b.NT{background:#e2e8f0;color:#475569}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 16px;font-size:.88rem;margin:8px 0}
+.split{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.split>div{flex:1 1 300px;min-width:0;overflow-x:auto}
+.plate{max-width:340px;width:100%;display:block;margin:auto}
+.steps3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+select:disabled{background:#f1f5f9;color:#94a3b8}
+.score{font-size:1.6rem;font-weight:bold;color:var(--navy)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">🏥 TMC CASE CONFERENCE GROUP 🩺 Learning by Playing 🎯</div>
+  <h1>💊 The Drug of Choice & Resistance Evolution Game 🦠</h1>
+  <p>One population. One treatment decision. Many possible consequences.
+  Can you choose wisely and protect the microbial ecosystem?</p>
+</header>
+
+<main class="wrap">
+
+<section class="card">
+  <div class="kicker">Welcome to the laboratory</div>
+  <h2>🎯 Your mission</h2>
+  <p>You receive a laboratory report, just as in daily practice: organism, zone diameters or MICs, and S/I/R interpretations. Identify the organism, pick the single Drug of Choice from the list, and observe what happens to susceptible organisms, resistant organisms and normal flora.</p>
+  <div class="note">
+    <b>Important principle:</b> Antimicrobial resistance is not usually
+    created because a bacterium consciously learns to resist a drug.
+    Resistant organisms may already exist, may acquire resistance mechanisms,
+    and can become more common when susceptible organisms are eliminated.
+  </div>
+  <p class="small">This is an educational simulation using fictional patients, illustrative laboratory values
+  and illustrative population units. It is not a diagnostic or prescribing tool.
+  Do not use its choices, settings or numerical results for patient treatment.</p>
+</section>
+
+<section class="card">
+  <div class="kicker">Step 1 • Receive the laboratory report</div>
+  <h2>🔬 Open a case from the laboratory</h2>
+  <div class="field">
+    <label for="scenario">Select a laboratory scenario</label>
+    <select id="scenario">
+      <optgroup label="Bacteria (microbes)">
+      <option value="A">Lab A • Urine C&amp;S – ESBL E. coli (zones)</option>
+      <option value="D">Lab D • Blood culture – MRSA (zones + MIC)</option>
+      <option value="E">Lab E • Blood culture – Typhoid (zones)</option>
+      <option value="F">Lab F • ICU blood culture – carbapenem-resistant Klebsiella</option>
+      </optgroup>
+      <optgroup label="Fungi">
+      <option value="B">Lab B • Blood culture – Candida glabrata (MIC)</option>
+      <option value="H">Lab H • ICU blood culture – Candida auris (MIC)</option>
+      <option value="G">Lab G • Tissue biopsy – Mucormycosis (MIC)</option>
+      </optgroup>
+      <optgroup label="Viruses">
+      <option value="C">Lab C • Respiratory PCR – Influenza A</option>
+      <option value="I">Lab I • Febrile illness – Dengue NS1</option>
+      </optgroup>
+    </select>
+  </div>
+  <div id="progress" class="small" aria-live="polite"></div>
+  <div class="report" id="labReport"></div>
+  <p class="small">Patients and values are fictional and illustrative. Breakpoints follow CLSI-style teaching values;
+  always use the current standard (CLSI / EUCAST / ICMR) and antibiogram of your own laboratory.</p>
+</section>
+
+<section class="card">
+  <div class="kicker">Step 2 • Identify the organism, then choose the Drug of Choice</div>
+  <h2>💊 Read the report like a clinician</h2>
+  <p>Work through the three lists in order, as you would with a real C&amp;S report.
+  The drug list opens only after you identify the organism correctly.</p>
+  <div class="steps3">
+    <div class="field"><label for="dd1">① Type of pathogen</label>
+      <select id="dd1"><option value="">Choose type…</option>
+        <option value="virus">🧬 Virus</option><option value="fungus">🍄 Fungus</option>
+        <option value="microbe">🦠 Microbe (bacteria)</option></select></div>
+    <div class="field"><label for="dd2">② Organism isolated</label>
+      <select id="dd2" disabled><option value="">Choose type first…</option></select></div>
+    <div class="field"><label for="dd3">③ Drug of Choice (DOC)</label>
+      <select id="dd3" disabled><option value="">Identify organism first…</option></select></div>
+  </div>
+  <div class="note" id="idFeedback">Start with the type of pathogen shown in the report.</div>
+  <div class="field">
+    <label for="pressure">Simulated antimicrobial selection pressure:
+      <span id="pressureValue">Medium</span></label>
+    <input id="pressure" type="range" min="1" max="3" value="2">
+    <div class="small">Low • Medium • High — a conceptual setting, not a dose or schedule.</div>
+  </div>
+  <div class="actions">
+    <button class="primary" id="startBtn">▶ Prescribe &amp; run simulation</button>
+    <button class="secondary" id="resetBtn">↻ Reset population</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="kicker">Step 3 • Watch evolution under selection pressure</div>
+  <h2>🧫 What happens to the population?</h2>
+  <p class="small">Population units are illustrative. The model shows relative
+  changes, not real bacterial counts, viral load or fungal burden.</p>
+
+  <div class="metrics">
+    <div class="metric"><span>Simulation time</span><strong id="time">0</strong><span>time steps</span></div>
+    <div class="metric"><span>Susceptible organisms</span><strong id="susCount">900</strong><span>relative units</span></div>
+    <div class="metric"><span>Resistant organisms</span><strong id="resCount">100</strong><span>relative units</span></div>
+    <div class="metric"><span>Normal flora</span><strong id="floraCount">500</strong><span>relative units</span></div>
+  </div>
+
+  <div class="population">
+    <div class="population-head"><b>🔵 Susceptible target organisms</b><strong id="susPct">90%</strong></div>
+    <div class="bar"><div class="fill sus" id="susBar"></div></div>
+  </div>
+  <div class="population">
+    <div class="population-head"><b>🔴 Resistant target organisms</b><strong id="resPct">10%</strong></div>
+    <div class="bar"><div class="fill res" id="resBar"></div></div>
+  </div>
+  <div class="population">
+    <div class="population-head"><b>🟢 Normal flora</b><strong id="floraPct">100%</strong></div>
+    <div class="bar"><div class="fill flora" id="floraBar"></div></div>
+  </div>
+
+  <div class="legend">
+    <span class="l1">Susceptible</span>
+    <span class="l2">Resistant</span>
+    <span class="l3">Normal flora</span>
+  </div>
+  <canvas id="graph" aria-label="Graph of susceptible, resistant and normal flora population changes"></canvas>
+  <div class="actions">
+    <button class="teal" id="playBtn">▶ Play</button>
+    <button class="secondary" id="stepBtn">Step forward →</button>
+    <button class="secondary" id="pauseBtn">Ⅱ Pause</button>
+    <button class="danger" id="resetSimBtn">Reset simulation</button>
+  </div>
+  <p class="small" id="status">Choose a treatment category and start the simulation.</p>
+</section>
+
+<section class="card">
+  <div class="kicker">Step 4 • Interpret what you observed</div>
+  <h2>🧠 What did your decision do?</h2>
+  <div id="lessonBox" class="good">
+    The explanation will appear after you begin the simulation.
+  </div>
+  <div id="scorecard"></div>
+  <div id="eventLog" class="small" aria-live="polite">
+    Your simulation events will appear here.
+  </div>
+</section>
+
+<section class="card">
+  <div class="kicker">Step 5 • Learning by reflection</div>
+  <h2>💡 What have we learned?</h2>
+  <div class="grid">
+    <div class="tile">
+      <h3>1. Selection, not intention</h3>
+      <p class="small">Antimicrobial exposure can remove susceptible organisms
+      while resistant organisms survive and become a larger proportion.</p>
+    </div>
+    <div class="tile">
+      <h3>2. Resistance can pre-exist</h3>
+      <p class="small">A population may contain a small resistant subpopulation
+      even before treatment begins.</p>
+    </div>
+    <div class="tile">
+      <h3>3. Normal flora matters</h3>
+      <p class="small">Antimicrobials can disturb beneficial microbial communities.
+      This may allow resistant organisms or opportunistic microbes to expand.</p>
+    </div>
+    <div class="tile">
+      <h3>4. Correct organism, correct treatment</h3>
+      <p class="small">Antibiotics do not treat viral or fungal infections.
+      Antivirals and antifungals have different targets.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="challenge">
+  <div class="kicker">Step 6 • Drug of Choice Challenge</div>
+  <h2>🎯 Common pathogens and their Drug of Choice</h2>
+  <p>Pick a type, then an organism, then choose the Drug of Choice from five options. Answers are for a typical, susceptible strain in an adult; always confirm with the susceptibility report, the local antibiogram and your hospital guideline.</p>
+  <div class="split" style="margin-bottom:8px">
+    <span class="pill" id="dcAnswered">Answered 0 / 0</span><span class="pill" id="dcCorrect">Correct 0</span>
+    <span class="pill" id="dcStreak">Streak 0 (best 0)</span><span class="pill" id="dcAcc">Accuracy –</span>
+  </div>
+  <div class="steps3">
+    <div class="field"><label for="dc1">① Type of pathogen</label>
+      <select id="dc1"><option value="">Choose type…</option>
+        <option value="virus">🧬 Virus</option><option value="fungus">🍄 Fungus</option>
+        <option value="microbe">🦠 Microbe (bacteria)</option></select></div>
+    <div class="field"><label for="dc2">② Organism</label>
+      <select id="dc2" disabled><option value="">Choose type first…</option></select></div>
+    <div class="field"><label>Or let me choose</label>
+      <button class="teal" id="dcRand" style="width:100%">🎲 Surprise me</button></div>
+  </div>
+  <div id="dcCard" class="small">Your question will appear here. ✅ = answered correctly, ❌ = answered incorrectly (shown in the organism list).</div>
+  <div class="actions">
+    <button class="secondary" id="dcRev">📖 Review missed</button>
+    <button class="secondary" id="dcRes">↻ Restart challenge</button>
+  </div>
+  <div id="dcReview"></div>
+</section>
+
+<section class="card">
+  <div class="kicker">Step 7 • Quick knowledge check</div>
+  <h2>📝 Test yourself</h2>
+  <div class="field">
+    <label>1. Why can resistant bacteria become more common after antibiotic exposure?</label>
+    <select id="q1">
+      <option value="">Choose an answer</option>
+      <option value="wrong">The antibiotic teaches every bacterium to resist it.</option>
+      <option value="right">Susceptible bacteria may be reduced while resistant bacteria survive.</option>
+      <option value="wrong">All bacteria automatically become resistant after one exposure.</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>2. Do antibiotics treat ordinary viral infections?</label>
+    <select id="q2">
+      <option value="">Choose an answer</option>
+      <option value="wrong">Yes, antibiotics kill all microorganisms.</option>
+      <option value="right">No. Antibiotics target bacteria, not viruses.</option>
+      <option value="wrong">Yes, if a broad-spectrum antibiotic is selected.</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>3. What can happen to normal flora during unnecessary antibiotic exposure?</label>
+    <select id="q3">
+      <option value="">Choose an answer</option>
+      <option value="wrong">It is always unaffected.</option>
+      <option value="right">Some normal flora may be reduced, disturbing the microbial ecosystem.</option>
+      <option value="wrong">It always becomes harmful.</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>4. What is a responsible approach to a laboratory report?</label>
+    <select id="q4">
+      <option value="">Choose an answer</option>
+      <option value="wrong">Prescribe solely from the organism's name.</option>
+      <option value="right">Interpret the report with clinical findings, susceptibility and guidance.</option>
+      <option value="wrong">Always choose the broadest available antibiotic.</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>5. A bigger zone of inhibition for drug A than for drug B means A is the better drug.</label>
+    <select id="q5"><option value="">Choose an answer</option>
+      <option value="right">No. Each zone is read against that drug’s own breakpoint, never against other drugs.</option>
+      <option value="wrong">Yes. The widest zone always identifies the Drug of Choice.</option>
+      <option value="wrong">Yes, provided the drug is a carbapenem.</option></select>
+  </div>
+  <div class="field">
+    <label>6. An isolate is reported susceptible to six drugs. How do you pick the Drug of Choice?</label>
+    <select id="q6"><option value="">Choose an answer</option>
+      <option value="wrong">Choose the broadest, so nothing is missed.</option>
+      <option value="wrong">Choose the most expensive, as it is likely most potent.</option>
+      <option value="right">Choose the narrowest, safe, site-appropriate drug, guided by guideline and antibiogram.</option></select>
+  </div>
+  <div class="field">
+    <label>7. A patient has dengue (NS1 positive) with no bacterial co-infection. What is the antimicrobial plan?</label>
+    <select id="q7"><option value="">Choose an answer</option>
+      <option value="wrong">Start ceftriaxone to prevent complications.</option>
+      <option value="right">No antimicrobial. Give supportive care and watch for warning signs.</option>
+      <option value="wrong">Start oseltamivir, as for influenza.</option></select>
+  </div>
+  <button class="primary" onclick="checkQuiz()">Check my answers</button>
+  <div id="quizResult" class="good hidden" aria-live="polite"></div>
+</section>
+
+<section class="card">
+  <div class="kicker">For facilitators and HCWs</div>
+  <h2>Discussion points</h2>
+  <ul>
+    <li>Was an antimicrobial needed in the first place?</li>
+    <li>Was the organism bacterial, viral or fungal?</li>
+    <li>Was the specimen appropriate and clinically meaningful?</li>
+    <li>What did the susceptibility information tell us?</li>
+    <li>Could unnecessary broad-spectrum exposure harm normal flora?</li>
+    <li>What does antimicrobial stewardship mean in everyday clinical practice?</li>
+  </ul>
+  <div class="note">
+    <b>Clinical reminder:</b> A positive culture does not automatically mean
+    active infection requiring treatment. Colonisation, contamination,
+    specimen quality, infection site, clinical severity and patient context
+    all matter. Follow current local and national guidance.
+  </div>
+</section>
+
+</main>
+
+<footer>
+ <strong>TMC Case Conference Group</strong><br>
+📖 Learning together • Better decisions • Responsible antimicrobial use 💊<br><br>
+ <a href="https://chat.whatsapp.com/CGMi8k4j9RWFKiX5aZ2l70"
+ target="_blank" rel="noopener">Join the TMC WhatsApp Group</a>
+  <p><small>The Drug of Choice & Resistance Evolution Game</small></p>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+let state={sc:null,drug:null,idOK:false,wrong:0,pressure:2,susceptible:900,resistant:100,flora:500,
+ initialFlora:500,time:0,history:[],running:false,interval:null,started:false,log:[]};
+
+const ORG={
+ virus:["Influenza A virus","Influenza B virus","Respiratory syncytial virus (RSV)","SARS-CoV-2","Herpes simplex virus 1","Varicella-zoster virus","Cytomegalovirus","Hepatitis B virus"],
+ fungus:["Candida albicans","Candida glabrata","Candida auris","Cryptococcus neoformans","Aspergillus fumigatus","Trichophyton rubrum"],
+ microbe:["Escherichia coli","Klebsiella pneumoniae","Staphylococcus aureus","Streptococcus pneumoniae","Pseudomonas aeruginosa","Enterococcus faecalis","Salmonella Typhi","Acinetobacter baumannii"]
+};
+const QF={doc:[.8,.1,.1],ok:[.7,.1,.25],broad:[.7,.1,.6],part:[.3,.05,.1],none:[0,0,0]};
+const PTS={doc:8,ok:5,broad:3,part:2,none:0};
+const QL={doc:"✅ Drug of Choice",ok:"🟡 Active, but not the best fit",broad:"🟠 Active, but over-broad / reserve-type use",part:"🟠 Unreliable or limited activity",none:"🔴 Will not treat this organism"};
+
+const SC={
+A:{title:"Urine Culture &amp; Sensitivity Report",
+ meta:[["Patient","Ms R.K., 34 y, F (fictional)"],["Ward / OPD","General OPD"],["Specimen","Clean-catch midstream urine"],["Pregnancy","Not pregnant"],["Renal function","eGFR 70 mL/min"],["Allergies","None known"]],
+ vign:"Dysuria and frequency for 3 days. Afebrile, no flank pain, haemodynamically stable. Urine microscopy: pus cells 40/hpf.",
+ gram:"Gram-negative bacilli",count:">10⁵ CFU/mL (single organism)",
+ org:"Escherichia coli",orgFull:"<b>Escherichia coli</b> — ESBL screen POSITIVE",type:"microbe",
+ method:"Disc diffusion, Mueller-Hinton agar — zone of inhibition in mm",plate:true,
+ drugs:[
+  {n:"Ampicillin",ab:"AMP",res:"6",bp:"S ≥17 / R ≤13",i:"R",q:"none",f:.2,aw:"Access",why:"Zone 6 mm = no inhibition at all. Resistant."},
+  {n:"Amoxicillin-clavulanate",ab:"AMC",res:"15",bp:"S ≥18 / R ≤13",i:"I",q:"part",f:.3,aw:"Access",why:"Intermediate: unreliable for an ESBL producer; avoid when a clearly susceptible option exists."},
+  {n:"Ceftriaxone",ab:"CRO",res:"12",bp:"S ≥23 / R ≤19",i:"R",q:"none",f:.35,aw:"Watch",why:"Resistant — consistent with the ESBL screen. Would also disturb gut flora."},
+  {n:"Ciprofloxacin",ab:"CIP",res:"14",bp:"S ≥26 / R ≤21",i:"R",q:"none",f:.4,aw:"Watch",why:"Resistant (ESBL strains are often co-resistant to quinolones)."},
+  {n:"Co-trimoxazole",ab:"SXT",res:"8",bp:"S ≥16 / R ≤10",i:"R",q:"none",f:.25,aw:"Access",why:"Resistant."},
+  {n:"Nitrofurantoin",ab:"NIT",res:"22",bp:"S ≥17 / R ≤14",i:"S",q:"doc",f:.1,aw:"Access",why:"Susceptible, oral, narrow, reaches high urinary concentration and spares most gut flora. Ideal for uncomplicated cystitis with normal renal function."},
+  {n:"Gentamicin",ab:"GEN",res:"17",bp:"S ≥15 / R ≤12",i:"S",q:"ok",f:.1,aw:"Access",why:"Susceptible, but parenteral and nephro-/ototoxic: not justified when an oral narrow agent is active."},
+  {n:"Meropenem",ab:"MEM",res:"29",bp:"S ≥23 / R ≤19",i:"S",q:"broad",f:.6,aw:"Watch",why:"The biggest zone, but a carbapenem should be saved for situations where nothing narrower works. Heavy impact on normal flora."}],
+ doc:"Nitrofurantoin",
+ pearl:"Do not pick the drug with the largest zone. Zone diameters are compared with each drug’s own breakpoint, never with each other. Choose the narrowest, site-appropriate, safe drug that is reported susceptible. Nitrofurantoin is for lower UTI only (not pyelonephritis or bacteraemia) and needs adequate renal function. Always check your local antibiogram and guideline."},
+B:{title:"Blood Culture Report (Aerobic bottle)",
+ meta:[["Patient","Mr S.D., 58 y, M (fictional)"],["Ward","Surgical ICU"],["Specimen","Peripheral + central line blood culture"],["Day of admission","Day 12 post-laparotomy"],["Renal function","eGFR 55 mL/min"],["Risk factors","TPN, central venous catheter, broad-spectrum antibiotics"]],
+ vign:"Persistent fever for 4 days despite broad-spectrum antibacterials. Hypotension controlled on low-dose vasopressor.",
+ gram:"Budding yeast cells",count:"Positive at 38 h, 2 of 2 sets",
+ org:"Candida glabrata",orgFull:"<b>Candida glabrata</b> (Nakaseomyces glabratus) — yeast",type:"fungus",
+ method:"Broth microdilution — MIC in µg/mL",plate:false,
+ drugs:[
+  {n:"Micafungin",res:"0.03",bp:"S ≤0.06 / R ≥0.25",i:"S",q:"doc",f:.03,aw:"",why:"Echinocandin: first-line for candidaemia in the unstable patient and the preferred class for C. glabrata. Fungicidal, susceptible MIC, minimal effect on bacterial flora."},
+  {n:"Fluconazole",res:"32",bp:"SDD ≤32 / R ≥64",i:"I",q:"part",f:.03,aw:"",why:"Susceptible-dose-dependent: needs high dose and is not reliable first-line in a sick patient with C. glabrata. Step-down option only after clinical response."},
+  {n:"Voriconazole",res:"1",bp:"No CLSI breakpoint",i:"NT",q:"part",f:.03,aw:"",why:"No clinical breakpoint for this species and azole cross-resistance is likely. Not a first choice."},
+  {n:"Amphotericin B (liposomal)",res:"1",bp:"No CLSI breakpoint",i:"NT",q:"ok",f:.04,aw:"",why:"Active alternative, but infusion reactions and nephrotoxicity make it a second-line choice here."},
+  {n:"Meropenem",res:"Not tested",bp:"—",i:"NT",q:"none",f:.5,aw:"Watch",why:"An antibacterial: no activity against yeast, and it further disrupts gut flora, the likely source of this infection."}],
+ doc:"Micafungin",
+ pearl:"Yeast in a blood culture is never a contaminant: treat promptly. Remember the non-drug steps: remove or replace the central line, repeat blood cultures until clear, and arrange a dilated eye examination. Species identification matters, because C. glabrata behaves differently from C. albicans."},
+C:{title:"Respiratory Pathogen PCR Report",
+ meta:[["Patient","Mrs L.M., 68 y, F (fictional)"],["Ward","Medical ward"],["Specimen","Nasopharyngeal swab, multiplex PCR"],["Symptom onset","Day 2"],["Renal function","eGFR 45 mL/min"],["Comorbidity","Type 2 diabetes"]],
+ vign:"Fever, dry cough and breathlessness. SpO₂ 91% on room air, chest X-ray without lobar consolidation.",
+ gram:"Not applicable (nucleic acid test)",count:"Ct value 22 (high viral load)",
+ org:"Influenza A virus",orgFull:"<b>Influenza A virus</b> — H1N1pdm09 subtype",type:"virus",
+ method:"Molecular detection with resistance-marker screen (no disc or MIC testing for viruses)",plate:false,
+ drugs:[
+  {n:"Oseltamivir",res:"NA H275Y not detected",bp:"Genotypic",i:"S",q:"doc",f:.02,aw:"",why:"Neuraminidase inhibitor, oral, recommended for hospitalised influenza; benefit is greatest when started early, so do not wait for further results. Adjust dose for renal function."},
+  {n:"Peramivir (IV)",res:"NA H275Y not detected",bp:"Genotypic",i:"S",q:"ok",f:.02,aw:"",why:"Active alternative if the oral route is not usable; otherwise no advantage over oseltamivir."},
+  {n:"Zanamivir (inhaled)",res:"Susceptible genotype",bp:"Genotypic",i:"S",q:"part",f:.02,aw:"",why:"Inhaled drug is not advised in severe disease or in those at risk of bronchospasm."},
+  {n:"Baloxavir",res:"PA I38T not detected",bp:"Genotypic",i:"S",q:"part",f:.02,aw:"",why:"Evidence is limited for hospitalised patients; not the standard choice here."},
+  {n:"Acyclovir",res:"Not applicable",bp:"—",i:"NT",q:"none",f:.02,aw:"",why:"Active against herpes viruses, not influenza."},
+  {n:"Amoxicillin-clavulanate",res:"Not applicable",bp:"—",i:"NT",q:"none",f:.3,aw:"Access",why:"An antibacterial has no effect on a virus and disturbs flora. Add antibacterials only if bacterial co-infection is suspected (e.g. purulent sputum, consolidation, rising markers)."}],
+ doc:"Oseltamivir",
+ pearl:"A viral PCR does not need an antibiotic. Treat influenza early, assess for secondary bacterial pneumonia separately, and use infection-control precautions. Population units in this game show wild-type virus versus a rare resistant variant."}
+};
+
+function noteDrug(){const ok=state.sc.doc==="none";return {n:"No antimicrobial (supportive care only)",q:ok?"doc":"none",sup:true,f:0,aw:"",why:ok?"Correct: there is no antiviral for this infection. Management is supportive, and antimicrobials would only add harm.":"In this case treatment is indicated; supportive care alone leaves the infection untreated."}}
+
+function plate(drugs){
+ const n=drugs.length,cx=170,cy=170,R=100,k=2.4;let z="",d="";
+ drugs.forEach((g,i)=>{
+  const a=i/n*2*Math.PI-Math.PI/2,x=cx+R*Math.cos(a),y=cy+R*Math.sin(a),zr=Math.max(7.2,parseFloat(g.res)/2*k);
+  const col=g.i==="S"?"#059669":g.i==="I"?"#d97706":"#dc2626";
+  z+=`<circle cx="${x}" cy="${y}" r="${zr}" fill="#f6efd6" stroke="${col}" stroke-width="1.5" stroke-dasharray="3 2"/>`;
+  d+=`<circle cx="${x}" cy="${y}" r="7" fill="#fff" stroke="#94a3b8"/><text x="${x}" y="${y+2.3}" font-size="6" text-anchor="middle" fill="#1e293b">${g.ab}</text><text x="${x}" y="${y+21}" font-size="9.5" font-weight="bold" text-anchor="middle" fill="#1e293b">${g.res}</text>`;
+ });
+ return `<svg class="plate" viewBox="0 0 340 340" role="img" aria-label="Agar plate showing zones of inhibition around antibiotic discs"><circle cx="170" cy="170" r="164" fill="#e8eef5" stroke="#94a3b8" stroke-width="3"/><circle cx="170" cy="170" r="156" fill="#cdb98a"/>${z}${d}</svg><p class="small" style="text-align:center">Mueller-Hinton agar, lawn of growth. Clear zone = inhibition (mm).</p>`;
+}
+function renderReport(){
+ const s=state.sc;
+ const rows=s.drugs.map(g=>`<tr><td>${g.n}</td><td>${g.res}${/^[\d.]+$/.test(g.res)?(s.plate?" mm":" µg/mL"):""}</td><td>${g.bp}</td><td><span class="b ${g.i}">${g.i==="NT"?"—":g.i}</span></td></tr>`).join("");
+ $("labReport").innerHTML=`<h3>🧪 ${s.title}</h3>
+ <div class="meta">${s.meta.map(m=>`<span><strong>${m[0]}:</strong> ${m[1]}</span>`).join("")}</div>
+ <p><strong>Clinical note:</strong> ${s.vign}</p>
+ <p><strong>Gram / direct finding:</strong> ${s.gram} &nbsp;•&nbsp; <strong>Growth:</strong> ${s.count}</p>
+ <p><strong>Organism isolated:</strong> ${s.orgFull}</p>
+ <p><strong>Method:</strong> ${s.method}</p>
+ <div class="split"><div><table class="ast"><tr><th>Antimicrobial</th><th>Result</th><th>Breakpoint</th><th>Interp.</th></tr>${rows}</table>
+ <span class="pill">S = susceptible</span><span class="pill">I = intermediate</span><span class="pill">R = resistant</span></div>
+ ${s.plate?`<div>${plate(s.drugs)}</div>`:""}</div>
+ <p class="small">Normal flora is modelled separately as the community that can be collaterally damaged.</p>`;
+}
+function loadScenario(){
+ state.sc=SC[$("scenario").value];state.idOK=false;state.wrong=0;state.drug=null;
+ renderReport();
+ $("dd1").value="";$("dd2").innerHTML='<option value="">Choose type first…</option>';$("dd2").disabled=true;
+ $("dd3").innerHTML='<option value="">Identify organism first…</option>';$("dd3").disabled=true;
+ $("idFeedback").className="note";$("idFeedback").textContent="Start with the type of pathogen shown in the report.";
+ reset();
+}
+function fillDD2(){
+ const t=$("dd1").value;state.idOK=false;
+ $("dd3").innerHTML='<option value="">Identify organism first…</option>';$("dd3").disabled=true;
+ if(!t){$("dd2").innerHTML='<option value="">Choose type first…</option>';$("dd2").disabled=true;return}
+ $("dd2").innerHTML='<option value="">Choose organism…</option>'+ORG[t].map(o=>`<option>${o}</option>`).join("");
+ $("dd2").disabled=false;
+ $("idFeedback").className="note";
+ $("idFeedback").textContent="Now choose the organism named in the laboratory report.";
+ reset();
+}
+function checkOrganism(){
+ const s=state.sc,fb=$("idFeedback"),t=$("dd1").value,o=$("dd2").value;
+ if(!o)return;
+ if(o===s.org&&t===s.type){
+  state.idOK=true;
+  fb.className="good";fb.textContent="✔ Correct identification: "+s.org+". Now choose the Drug of Choice from the list.";
+  $("dd3").innerHTML='<option value="">Choose the Drug of Choice…</option>'+s.drugs.map((g,i)=>`<option value="${i}">${g.n}</option>`).join("")+'<option value="none">No antimicrobial (supportive care only)</option>';
+  $("dd3").disabled=false;
+ }else{
+  state.idOK=false;state.wrong++;
+  fb.className="alert";fb.textContent="✘ That does not match the report. Re-read the direct finding and the organism line. (Mis-identification attempts: "+state.wrong+")";
+  $("dd3").disabled=true;
+ }
+ reset();
+}
+function setPressureLabel(){
+ const p=Number($("pressure").value);state.pressure=p;
+ $("pressureValue").textContent=["","Low","Medium","High"][p];
+}
+function resetPopulation(){
+ pause();
+ Object.assign(state,{susceptible:900,resistant:100,flora:500,initialFlora:500,time:0,history:[],started:false,log:[]});
+ recordHistory();render();
+ $("status").textContent="Population reset. Choose your Drug of Choice and run the simulation.";
+ $("lessonBox").textContent="The starting population contains a small resistant minority. Resistance is present before the simulated exposure begins.";
+ $("eventLog").textContent="Your simulation events will appear here.";
+ $("scorecard").innerHTML="";
+}
+function recordHistory(){
+ state.history.push({
+  time:state.time,
+  s:state.susceptible,
+  r:state.resistant,
+  f:state.flora
+ });
+ if(state.history.length>100)state.history.shift();
+}
+
+function totalTarget(){return state.susceptible+state.resistant}
+function stepSimulation(){
+ if(state.time>=30){pause();return}
+ state.started=true;
+ const d=state.drug,p=[0,.10,.22,.34][state.pressure];
+ let q=d&&!d.sup?QF[d.q]:[0,0,0],f=d&&d.f!==undefined?d.f:q[2];
+ const sKill=p*q[0],rKill=p*q[1],fKill=p*f*(d&&d.q==="none"&&d.f===0?0:2.2);
+ state.susceptible*=1-sKill;state.resistant*=1-rKill;state.flora*=1-Math.min(.9,fKill);
+ const room=Math.max(0,1200-totalTarget());
+ state.susceptible+=Math.min(room*.025,state.susceptible*.025);
+ state.resistant+=Math.min(room*.045,state.resistant*.045);
+ state.flora+=Math.max(0,(state.initialFlora-state.flora)*.035);
+ state.time++;recordHistory();render();updateLesson();
+ if(state.time===1)addLog(d?d.n+": "+QL[d.q]+".":"No antimicrobial given.");
+ if(state.time===10)addLog("Watch the proportion of resistant organisms, not just their absolute number.");
+ if(state.time===20)addLog("Compare normal flora with its starting level.");
+ if(state.time>=30){pause();$("status").textContent="Simulation complete. Reset and compare with another drug.";showScore()}
+}
+function addLog(t){state.log.unshift("• "+t);$("eventLog").innerHTML=state.log.slice(0,5).map(x=>`<p>${x}</p>`).join("")}
+function updateLesson(){
+ const d=state.drug,tot=totalTarget(),pct=tot?100*state.resistant/tot:0;
+ $("lessonBox").textContent=(d?d.why:"")+" Current resistant proportion in the target population: "+pct.toFixed(1)+"%. This is a model output, not a clinical resistance estimate.";
+}
+function showScore(){
+ const s=state.sc,d=state.drug;if(!d)return;
+ const idp=Math.max(0,2-state.wrong),dp=PTS[d.q],tot=idp+dp;done[$("scenario").value]=tot;updateProgress();
+ const best=s.doc==="none"?{n:"No antimicrobial: supportive care",why:s.noWhy}:s.drugs.find(g=>g.n===s.doc);
+ $("scorecard").innerHTML=`<div class="report"><h3>📋 Stewardship scorecard</h3>
+ <p class="score">${tot} / 10</p>
+ <p><strong>Organism identification:</strong> ${idp} / 2 (${state.wrong} wrong attempt${state.wrong===1?"":"s"})</p>
+ <p><strong>Your drug:</strong> ${d.n} — ${QL[d.q]} (${dp} / 8)${d.aw?` • WHO AWaRe: <span class="pill">${d.aw}</span>`:""}</p>
+ <p><strong>Why:</strong> ${d.why}</p>
+ ${d.q!=="doc"?`<p><strong>Best choice here:</strong> ${best.n}. ${best.why}</p>`:""}
+ <div class="note"><b>Clinical pearl:</b> ${s.pearl}</div><div class="actions"><button class="teal" onclick="nextCase()">Next case →</button></div></div>`;
+}
+function render(){
+ const s=state.susceptible,r=state.resistant,f=state.flora;
+ const total=s+r;
+ const sPct=total?100*s/total:0;
+ const rPct=total?100*r/total:0;
+ const fPct=100*f/state.initialFlora;
+ $("time").textContent=state.time;
+ $("susCount").textContent=Math.round(s);
+ $("resCount").textContent=Math.round(r);
+ $("floraCount").textContent=Math.round(f);
+ $("susPct").textContent=sPct.toFixed(1)+"% of target";
+ $("resPct").textContent=rPct.toFixed(1)+"% of target";
+ $("floraPct").textContent=fPct.toFixed(1)+"% of starting flora";
+ $("susBar").style.width=sPct+"%";
+ $("resBar").style.width=rPct+"%";
+ $("floraBar").style.width=Math.max(0,Math.min(100,fPct))+"%";
+ drawGraph();
+}
+function drawGraph(){
+ const canvas=$("graph");
+ const ctx=canvas.getContext("2d");
+ const rect=canvas.getBoundingClientRect();
+ const dpr=window.devicePixelRatio||1;
+ canvas.width=Math.max(1,rect.width*dpr);
+ canvas.height=Math.max(1,rect.height*dpr);
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ const w=rect.width,h=rect.height;
+ ctx.clearRect(0,0,w,h);
+ const pad={l:42,r:12,t:18,b:30};
+ const pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
+ ctx.strokeStyle="#e2e8f0";ctx.lineWidth=1;
+ for(let i=0;i<=4;i++){
+  const y=pad.t+ph*i/4;
+  ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();
+ }
+ ctx.fillStyle="#64748b";ctx.font="11px Arial";
+ ctx.fillText("Relative population",5,12);
+ ctx.fillText("Time →",w-48,h-7);
+ const max=1200;
+ function plot(key,color){
+  ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.beginPath();
+  state.history.forEach((v,i)=>{
+   const x=pad.l+(state.history.length<=1?0:i/(Math.max(1,state.history.length-1)))*pw;
+   const value=key==="f"?v.f:v[key];
+   const y=pad.t+ph-(Math.min(max,value)/max)*ph;
+   if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+ }
+ plot("s","#3b82f6");plot("r","#dc2626");plot("f","#0f766e");
+}
+function play(){
+ if(state.running||state.time>=30)return;
+ state.running=true;
+ $("status").textContent="Simulation running. Watch the population curves.";
+ state.interval=setInterval(stepSimulation,500);
+}
+function pause(){
+ state.running=false;
+ if(state.interval)clearInterval(state.interval);
+ state.interval=null;
+}
+function reset(){pause();resetPopulation();}
+
+function checkQuiz(){
+ const ids=["q1","q2","q3","q4","q5","q6","q7"];let score=0,answered=0;
+ ids.forEach(id=>{
+  const el=$(id),lab=el.previousElementSibling;
+  let m=lab.querySelector(".qmark");
+  if(!m){m=document.createElement("span");m.className="qmark";lab.appendChild(m)}
+  if(!el.value){m.innerHTML=" ⚠️ <span class='small' style='font-weight:normal'>not answered</span>";return}
+  answered++;const ok=el.value==="right";if(ok)score++;
+  const right=[...el.options].find(o=>o.value==="right").textContent;
+  m.innerHTML=ok?" ✅":" ❌ <span class='small' style='font-weight:normal'>Correct answer: "+right+"</span>";
+ });
+ const r=$("quizResult");r.classList.remove("hidden");
+ r.textContent=answered<7?"Answer all seven questions to see your final score. Marked so far: "+score+" correct.":
+  "You scored "+score+" out of 7. "+(score===7?"Excellent! You understand the key principles.":"Review the ❌ items and try again.");
+}
+document.querySelectorAll("select[id^=q]").forEach(e=>e.addEventListener("change",()=>{const m=e.previousElementSibling.querySelector(".qmark");if(m)m.innerHTML=""}));
+let done={};
+const D=(n,ab,res,bp,i,q,f,aw,why)=>({n,ab,res,bp,i,q,f,aw,why});
+ORG.virus.push("Dengue virus");ORG.fungus.push("Mucorales (Rhizopus / Mucor species)");
+Object.assign(SC,{
+D:{title:"Blood Culture &amp; Sensitivity Report",
+ meta:[["Patient","Mr J.P., 45 y, M (fictional)"],["Ward","Medical ICU, day 8"],["Specimen","Blood culture, 2 of 2 sets + catheter tip"],["Renal function","eGFR 80 mL/min"],["Allergies","None known"],["Device","Central venous catheter"]],
+ vign:"Fever and rigors, erythema at the catheter exit site. Echocardiogram pending. Haemodynamically stable.",
+ gram:"Gram-positive cocci in clusters",count:"Positive at 14 h, 2 of 2 sets",
+ org:"Staphylococcus aureus",orgFull:"<b>Staphylococcus aureus</b> — MRSA (cefoxitin screen resistant)",type:"microbe",
+ method:"Disc diffusion for screening drugs; MIC for vancomycin, daptomycin, teicoplanin",plate:false,
+ drugs:[
+  D("Penicillin","","6 mm","S ≥29 / R ≤28","R","none",.15,"Access","Resistant (penicillinase)."),
+  D("Cefoxitin (MRSA screen)","","14 mm","S ≥22 / R ≤21","R","none",.3,"","Resistant: this is MRSA, so all beta-lactams (except ceftaroline) are unreliable."),
+  D("Erythromycin","","6 mm","S ≥23 / R ≤13","R","none",.3,"Watch","Resistant."),
+  D("Clindamycin","","22 mm","S ≥21 / R ≤14","R","none",.3,"Access","Zone looks susceptible, but the D-test is POSITIVE (inducible resistance). Report as resistant: never use it."),
+  D("Co-trimoxazole","","26 mm","S ≥16 / R ≤10","S","part",.2,"Access","Susceptible, but not for bacteraemia. Oral option for minor skin infection or step-down."),
+  D("Doxycycline","","24 mm","S ≥16 / R ≤12","S","part",.1,"Access","Susceptible, but bacteriostatic and not suitable for MRSA bacteraemia."),
+  D("Linezolid","","25 mm","S ≥21 / R ≤20","S","part",.15,"Reserve","Active, but bacteriostatic and Reserve-group: keep for vancomycin failure or intolerance."),
+  D("Teicoplanin","","2 µg/mL","S ≤8 / R ≥32","S","ok",.1,"Watch","Active glycopeptide alternative where available; less evidence than vancomycin for bacteraemia."),
+  D("Daptomycin","","0.5 µg/mL","S ≤1","S","ok",.1,"Reserve","Active and bactericidal, a good alternative when vancomycin fails or causes toxicity. Reserve-group, so not the first choice."),
+  D("Vancomycin","","1 µg/mL","S ≤2 / R ≥16","S","doc",.1,"Watch","MIC 1 µg/mL: the standard first-line for MRSA bacteraemia, bactericidal, with level and renal monitoring. Remove the infected catheter.")],
+ doc:"Vancomycin",
+ pearl:"Always ask for the D-test when clindamycin looks susceptible but erythromycin is resistant. Disc zones cannot be used for vancomycin: it needs an MIC. In MRSA bacteraemia also look for the source, remove the line, repeat blood cultures and exclude endocarditis."},
+E:{title:"Blood Culture &amp; Sensitivity Report",
+ meta:[["Patient","Mr A.N., 22 y, M (fictional)"],["Setting","Medical ward"],["Specimen","Blood culture, day 6 of fever"],["Renal function","Normal"],["Allergies","None known"],["Status","Eating and drinking, stable"]],
+ vign:"Step-ladder fever for 6 days, abdominal discomfort and relative bradycardia. No ileus, no gastrointestinal bleeding, no confusion.",
+ gram:"Gram-negative bacilli, non-lactose fermenter",count:"Positive at 22 h",
+ org:"Salmonella Typhi",orgFull:"<b>Salmonella Typhi</b> — enteric fever",type:"microbe",
+ method:"Disc diffusion, Mueller-Hinton agar — zone of inhibition in mm",plate:true,
+ drugs:[
+  D("Ampicillin","AMP","20","S ≥17 / R ≤13","S","ok",.2,"Access","Reported susceptible, so older drugs have returned in some regions. Acceptable only where local data and policy support it."),
+  D("Co-trimoxazole","SXT","22","S ≥16 / R ≤10","S","ok",.2,"Access","Susceptible: acceptable alternative, but check the local antibiogram."),
+  D("Chloramphenicol","CHL","22","S ≥18 / R ≤12","S","part",.15,"Access","Susceptible, but marrow toxicity and relapses limit its use."),
+  D("Nalidixic acid","NAL","12","S ≥19 / R ≤13","R","none",0,"","Resistant: a screening marker for reduced fluoroquinolone susceptibility, not a treatment drug."),
+  D("Ciprofloxacin","CIP","24","S ≥31 / R ≤20","I","part",.35,"Watch","Intermediate: this is the usual reason for treatment failure in India. Avoid."),
+  D("Ceftriaxone","CRO","30","S ≥23 / R ≤19","S","ok",.4,"Watch","Susceptible and the right choice for severe or complicated disease needing IV therapy. Not needed when the patient is stable and on oral intake."),
+  D("Azithromycin","AZM","18","S ≥13 / R ≤12","S","doc",.15,"Watch","Susceptible, oral and well tolerated: preferred for uncomplicated enteric fever in a stable patient. Reserve ceftriaxone for toxic or complicated cases.")],
+ doc:"Azithromycin",
+ pearl:"Fluoroquinolone-intermediate Salmonella Typhi is common in India, so cipro results mislead. Nalidixic acid resistance flags it. Choose by severity: oral azithromycin for uncomplicated disease, IV ceftriaxone for complicated disease. Ask the lab about extensively drug-resistant strains if the patient is not improving."},
+F:{title:"Blood Culture &amp; Carbapenemase Report",
+ meta:[["Patient","Mr V.R., 63 y, M (fictional)"],["Ward","Surgical ICU, ventilated"],["Specimen","Blood culture, 2 of 2 sets"],["Renal function","eGFR 40 mL/min"],["Previous therapy","Meropenem for 10 days"],["Status","Septic shock on vasopressor"]],
+ vign:"Third week after necrotising pancreatitis. New fever, rising lactate, worsening shock.",
+ gram:"Gram-negative bacilli, lactose fermenter",count:"Positive at 12 h, 2 of 2 sets",
+ org:"Klebsiella pneumoniae",orgFull:"<b>Klebsiella pneumoniae</b> — carbapenemase PCR: <b>NDM POSITIVE</b>, OXA-48 negative",type:"microbe",
+ method:"Automated MIC (µg/mL) with rapid carbapenemase PCR",plate:false,
+ drugs:[
+  D("Meropenem","",">16","S ≤1 / R ≥4","R","none",.6,"Watch","Resistant (NDM carbapenemase)."),
+  D("Piperacillin-tazobactam","",">128","S ≤8 / R ≥32","R","none",.5,"Watch","Resistant."),
+  D("Ciprofloxacin","",">4","S ≤0.25 / R ≥1","R","none",.4,"Watch","Resistant."),
+  D("Amikacin","",">64","S ≤4 / R ≥64","R","none",.15,"Access","Resistant."),
+  D("Ceftazidime-avibactam","",">16/4","S ≤8 / R ≥16","R","none",.5,"Reserve","Resistant: avibactam does not inhibit metallo-beta-lactamases like NDM. It works for OXA-48, not NDM."),
+  D("Tigecycline","","1","No CLSI breakpoint","NT","part",.35,"Reserve","Low blood levels: poor choice for bacteraemia."),
+  D("Colistin","","1","I ≤2 / R ≥4","I","part",.45,"Reserve","Active in vitro, but nephrotoxic, with unreliable dosing and poor outcomes as monotherapy in a patient with eGFR 40."),
+  D("Ceftazidime-avibactam + aztreonam","","Combination active","Combination testing","S","doc",.35,"Reserve","Avibactam protects aztreonam from the co-produced ESBLs, and aztreonam is stable against NDM. This is the recommended regimen for NDM producers, chosen with the ID and antimicrobial stewardship team.")],
+ doc:"Ceftazidime-avibactam + aztreonam",
+ pearl:"Knowing the carbapenemase type decides the drug: NDM (metallo-beta-lactamase) vs OXA-48 or KPC. Ceftazidime-avibactam alone fails against NDM. Colistin and tigecycline are salvage options, not first-line. Source control, infection-control isolation and stewardship team input are essential. Use local protocols and drug availability."},
+B_:{},
+G:{title:"Tissue Histopathology &amp; Fungal Culture Report",
+ meta:[["Patient","Mr P.N., 52 y, M (fictional)"],["Ward","ENT / ICU"],["Specimen","Endoscopic nasal debridement tissue"],["Renal function","eGFR 70 mL/min"],["Risk factors","Uncontrolled diabetes, DKA, recent steroids"],["Clinical","Black palatal eschar, facial swelling, periorbital pain"]],
+ vign:"Rapidly progressive rhino-orbital disease. MRI shows sinus involvement and early orbital extension.",
+ gram:"KOH/calcofluor: broad, ribbon-like, aseptate hyphae with right-angle branching",count:"Rapid growth on Sabouraud agar",
+ org:"Mucorales (Rhizopus / Mucor species)",orgFull:"<b>Rhizopus arrhizus</b> (Mucorales) — mucormycosis",type:"fungus",
+ method:"Broth microdilution — MIC in µg/mL (no clinical breakpoints for moulds)",plate:false,
+ drugs:[
+  D("Fluconazole","",">64","Intrinsically resistant","R","none",.03,"","No activity against Mucorales."),
+  D("Voriconazole","",">8","Intrinsically resistant","R","none",.03,"","No activity, and may even favour Mucorales in a voriconazole-exposed patient."),
+  D("Micafungin","","Not active","Intrinsically resistant","R","none",.03,"","Echinocandins do not treat mucormycosis."),
+  D("Isavuconazole","","2","No breakpoint","NT","ok",.03,"","Active alternative, especially if amphotericin cannot be used or for step-down."),
+  D("Posaconazole","","1","No breakpoint","NT","ok",.03,"","Active, mainly for salvage or step-down therapy."),
+  D("Amphotericin B (liposomal)","","0.5","No breakpoint (ECV ≤1)","NT","doc",.04,"","First-line for mucormycosis. Start immediately and combine with surgical debridement and control of diabetes and acidosis.")],
+ doc:"Amphotericin B (liposomal)",
+ pearl:"Mucormycosis is a surgical and metabolic emergency: control glucose and acidosis, stop unnecessary steroids, debride, and start liposomal amphotericin B without waiting. Voriconazole, fluconazole and echinocandins are inactive."},
+H:{title:"Blood Culture &amp; Yeast Identification Report",
+ meta:[["Patient","Mrs A.T., 61 y, F (fictional)"],["Ward","Medical ICU, 3 weeks"],["Specimen","Blood culture, central line + peripheral"],["Renal function","eGFR 35 mL/min"],["Previous therapy","Fluconazole 7 days with no response"],["Alert","Identification changed after MALDI-TOF"]],
+ vign:"Persistent fever. An earlier automated system reported Candida haemulonii / Candida famata. MALDI-TOF now reads Candida auris.",
+ gram:"Budding yeast cells",count:"Positive at 30 h",
+ org:"Candida auris",orgFull:"<b>Candida auris</b> — multidrug-resistant yeast (MALDI-TOF confirmed)",type:"fungus",
+ method:"Broth microdilution — MIC in µg/mL (CDC tentative breakpoints)",plate:false,
+ drugs:[
+  D("Fluconazole","",">64","R ≥32 (tentative)","R","none",.03,"","Resistant in most isolates."),
+  D("Voriconazole","","2","No breakpoint","NT","part",.03,"","Cross-resistance to azoles is likely."),
+  D("Amphotericin B","","2","R ≥2 (tentative)","R","none",.04,"","Borderline resistant: avoid."),
+  D("Caspofungin","","0.25","R ≥2 (tentative)","S","doc",.03,"","Susceptible echinocandin: equally acceptable first-line."),
+  D("Micafungin","","0.25","R ≥4 (tentative)","S","doc",.03,"","Susceptible echinocandin: first-line for C. auris candidaemia, with MIC monitoring.")],
+ doc:"Micafungin",
+ pearl:"Identification matters: automated systems can misidentify C. auris as C. haemulonii or C. famata, and the correct species changes both drug choice and infection control. Apply contact precautions and environmental cleaning, and watch for emerging echinocandin resistance on therapy."},
+I:{title:"Dengue Diagnostic Report",
+ meta:[["Patient","Mr S.K., 28 y, M (fictional)"],["Setting","Fever clinic, day 4 of illness"],["Specimen","Serum: NS1 antigen, IgM"],["Platelets","62,000 /µL (falling)"],["Haematocrit","Stable"],["Warning signs","None at present"]],
+ vign:"High fever, retro-orbital pain, myalgia, rash. Tolerating oral fluids. No bleeding, no abdominal pain.",
+ gram:"Not applicable (serology / antigen)",count:"NS1 antigen POSITIVE, IgM negative",
+ org:"Dengue virus",orgFull:"<b>Dengue virus</b> — NS1 antigen positive",type:"virus",
+ method:"Antigen detection. There is no susceptibility testing because there is no specific antiviral.",plate:false,
+ drugs:[
+  D("Oseltamivir","","No target","—","NT","none",.02,"","Acts on influenza neuraminidase, not dengue."),
+  D("Acyclovir","","No target","—","NT","none",.02,"","Acts on herpes viruses, not dengue."),
+  D("Ribavirin","","No proven benefit","—","NT","none",.05,"","No proven clinical benefit in dengue."),
+  D("Doxycycline","","Not indicated","—","NT","none",.15,"Access","Only if scrub typhus or another rickettsial illness is suspected clinically, not as a routine in dengue."),
+  D("Ceftriaxone","","Not indicated","—","NT","none",.4,"Watch","No bacterial infection is shown. It would only disturb normal flora.")],
+ doc:"none",
+ noWhy:"There is no antiviral for dengue. Management is oral or IV fluids, paracetamol, and monitoring of platelets, haematocrit and warning signs.",
+ pearl:"Sometimes the best Drug of Choice is no drug. Give fluids and paracetamol, avoid NSAIDs and aspirin, and monitor around defervescence (days 4 to 6) for warning signs. Give antibiotics only for a documented bacterial co-infection."}
+});
+delete SC.B_;
+function updateProgress(){const n=Object.keys(done).length,t=Object.values(done).reduce((a,b)=>a+b,0);
+ $("progress").innerHTML="🏅 Cases completed: <b>"+n+" / "+Object.keys(SC).length+"</b> • Score: <b>"+t+" / "+(n*10)+"</b>"}
+function nextCase(){const sel=$("scenario"),o=[...sel.options].map(x=>x.value),k=o[(o.indexOf(sel.value)+1)%o.length];
+ sel.value=k;loadScenario();$("labReport").scrollIntoView({behavior:"smooth",block:"start"})}
+
+$("scenario").addEventListener("change",loadScenario);
+$("dd1").addEventListener("change",fillDD2);
+$("dd2").addEventListener("change",checkOrganism);
+$("dd3").addEventListener("change",reset);
+$("pressure").addEventListener("input",()=>{setPressureLabel();reset()});
+$("startBtn").addEventListener("click",()=>{
+ const fb=$("idFeedback");
+ if(!state.idOK){fb.className="alert";fb.textContent="Please identify the organism correctly first (lists ① and ②).";return}
+ const v=$("dd3").value;
+ if(v===""){fb.className="alert";fb.textContent="Choose your Drug of Choice from list ③.";return}
+ state.drug=v==="none"?noteDrug():state.sc.drugs[Number(v)];
+ setPressureLabel();resetPopulation();play();
+ document.getElementById("graph").scrollIntoView({behavior:"smooth",block:"center"});
+});
+$("playBtn").addEventListener("click",play);
+$("pauseBtn").addEventListener("click",pause);
+$("stepBtn").addEventListener("click",()=>{pause();if(state.time<30)stepSimulation()});
+$("resetBtn").addEventListener("click",reset);
+$("resetSimBtn").addEventListener("click",reset);
+setPressureLabel();
+
+// ---------- Step 6: Drug of Choice Challenge ----------
+const DCR={
+virus:[
+"Influenza A / B|Hospitalised adult, febrile, PCR positive|Oseltamivir|Acyclovir;Ribavirin;Tenofovir;Amoxicillin-clavulanate|Neuraminidase inhibitor; start early, do not wait for results.",
+"Herpes simplex virus (HSV)|Herpes encephalitis or genital herpes|Acyclovir|Oseltamivir;Ribavirin;Tenofovir;Sofosbuvir|Acyclovir is activated by viral thymidine kinase. IV for encephalitis, oral for mucocutaneous disease.",
+"Varicella-zoster virus|Herpes zoster in an adult|Acyclovir (valacyclovir orally)|Oseltamivir;Ribavirin;Lamivudine;Sofosbuvir|Start within 72 h of rash; valacyclovir gives better oral bioavailability.",
+"Cytomegalovirus (CMV)|Transplant recipient with CMV disease|Ganciclovir (valganciclovir orally)|Acyclovir;Oseltamivir;Ribavirin;Tenofovir|Acyclovir is poorly active against CMV; ganciclovir needs myelosuppression monitoring.",
+"HIV-1|Newly diagnosed adult, no prior therapy|Tenofovir + lamivudine + dolutegravir|Zidovudine alone;Acyclovir;Oseltamivir;Ribavirin|Combination ART (TLD, as in NACO guidance) is needed to prevent resistance; monotherapy fails.",
+"Hepatitis B virus|Chronic hepatitis B needing treatment|Tenofovir (or entecavir)|Sofosbuvir + velpatasvir;Acyclovir;Oseltamivir;Ribavirin|Nucleos(t)ide analogues with a high barrier to resistance.",
+"Hepatitis C virus|Chronic hepatitis C, treatment-naive|Sofosbuvir + velpatasvir|Tenofovir;Entecavir;Oseltamivir;Acyclovir|Pan-genotypic direct-acting antivirals give over 95% cure in 12 weeks.",
+"SARS-CoV-2|High-risk outpatient within 5 days of symptoms|Nirmatrelvir-ritonavir|Oseltamivir;Ivermectin;Hydroxychloroquine;Acyclovir|Protease inhibitor that reduces hospitalisation in high-risk patients. Check interactions with ritonavir.",
+"Respiratory syncytial virus (RSV)|Bronchiolitis in an infant|Supportive care (oxygen, fluids)|Oseltamivir;Acyclovir;Ganciclovir;Amoxicillin|No routine antiviral; antibiotics only for proven bacterial co-infection.",
+"Dengue virus|NS1 positive, no warning signs|Supportive care (fluids, paracetamol)|Oseltamivir;Ribavirin;Acyclovir;Ceftriaxone|No specific antiviral. Avoid NSAIDs and aspirin; monitor for warning signs."],
+fungus:[
+"Candida albicans (candidaemia)|Bloodstream infection in a sick ICU patient|Micafungin (an echinocandin)|Terbinafine;Griseofulvin;Nystatin (oral);Flucytosine alone|Echinocandins are first-line for invasive candidiasis; remove the central line.",
+"Candida albicans (vulvovaginal)|Uncomplicated vaginal candidiasis|Fluconazole (single oral dose)|Amphotericin B (IV);Griseofulvin;Flucytosine;Caspofungin|Oral fluconazole or a topical azole is enough for mucosal disease.",
+"Candida glabrata / C. auris|Invasive infection, fluconazole-resistant|Micafungin (an echinocandin)|Fluconazole;Nystatin (oral);Griseofulvin;Terbinafine|Azole resistance is common; C. auris also needs contact isolation.",
+"Cryptococcus neoformans|Cryptococcal meningitis in advanced HIV|Amphotericin B + flucytosine|Fluconazole alone;Caspofungin;Voriconazole alone;Terbinafine|Induction with amphotericin plus flucytosine, then fluconazole. Echinocandins are inactive.",
+"Aspergillus fumigatus|Invasive pulmonary aspergillosis|Voriconazole|Fluconazole;Nystatin (oral);Griseofulvin;Terbinafine|Voriconazole is superior to amphotericin B; fluconazole has no mould activity.",
+"Mucorales (Rhizopus / Mucor)|Rhino-orbital mucormycosis in diabetic ketoacidosis|Liposomal amphotericin B|Voriconazole;Fluconazole;Caspofungin;Terbinafine|Start at once with surgical debridement and glycaemic control; voriconazole is inactive.",
+"Histoplasma capsulatum|Mild to moderate chronic pulmonary histoplasmosis|Itraconazole|Caspofungin;Terbinafine;Griseofulvin;Flucytosine|Itraconazole for mild disease; severe disease needs amphotericin B first.",
+"Dermatophytes (Trichophyton rubrum)|Tinea corporis or cruris|Terbinafine|Nystatin;Amphotericin B;Caspofungin;Flucytosine|Fungicidal against dermatophytes. Treatment failure is rising in India, so confirm with KOH and speciation.",
+"Pneumocystis jirovecii|HIV patient with hypoxaemic pneumonia|Co-trimoxazole|Fluconazole;Griseofulvin;Terbinafine;Nystatin|High-dose co-trimoxazole, with steroids if hypoxaemic."],
+microbe:[
+"Streptococcus pyogenes|Pharyngitis, prevention of rheumatic fever|Penicillin (benzathine or V)|Ciprofloxacin;Gentamicin;Metronidazole;Aztreonam|Never resistant to penicillin; narrow and effective.",
+"Streptococcus pneumoniae|Community-acquired pneumonia, penicillin-susceptible|Amoxicillin|Gentamicin;Metronidazole;Colistin;Aztreonam|High-dose amoxicillin is first-line for susceptible pneumococci.",
+"Staphylococcus aureus (MSSA)|Bacteraemia or skin abscess|Cloxacillin (or cefazolin)|Benzylpenicillin;Gentamicin;Metronidazole;Colistin|Anti-staphylococcal beta-lactams outperform vancomycin for MSSA.",
+"Staphylococcus aureus (MRSA)|Bloodstream infection|Vancomycin|Cloxacillin;Cefazolin;Ceftriaxone;Azithromycin|Beta-lactams fail because of altered PBP2a. Vancomycin MIC and trough monitoring.",
+"Enterococcus faecalis|Enterococcal UTI or endocarditis|Ampicillin (amoxicillin)|Ceftriaxone;Cefixime;Clindamycin;Co-trimoxazole|Enterococci are intrinsically resistant to cephalosporins.",
+"Enterococcus faecium (VRE)|Vancomycin-resistant bloodstream infection|Linezolid|Vancomycin;Ampicillin;Ceftriaxone;Gentamicin alone|VRE is resistant to vancomycin and usually ampicillin; linezolid or daptomycin is used.",
+"Clostridioides difficile|Severe antibiotic-associated colitis|Oral vancomycin (or fidaxomicin)|Ceftriaxone;Ciprofloxacin;Clindamycin;Gentamicin|Oral drug is not absorbed and stays in the gut; stop the precipitating antibiotic.",
+"Escherichia coli (uncomplicated cystitis)|Young woman with lower UTI, normal renal function|Nitrofurantoin|Meropenem;Ceftriaxone;Vancomycin;Clindamycin|Narrow, oral, concentrates in urine. Not for pyelonephritis.",
+"ESBL-producing E. coli / Klebsiella|Serious infection, ceftriaxone resistant|Meropenem (carbapenem)|Ceftriaxone;Ciprofloxacin;Piperacillin-tazobactam;Amoxicillin-clavulanate|Carbapenems are preferred for serious ESBL infection (MERINO trial); save for confirmed ESBL.",
+"Klebsiella pneumoniae (carbapenem-resistant, NDM)|ICU bloodstream infection|Ceftazidime-avibactam + aztreonam|Meropenem;Ceftriaxone;Ciprofloxacin;Amikacin|NDM hydrolyses carbapenems; avibactam protects aztreonam from ESBLs.",
+"Klebsiella pneumoniae (susceptible)|Community pneumonia or UTI|Ceftriaxone|Ampicillin;Vancomycin;Clindamycin;Metronidazole|Intrinsically resistant to ampicillin; third-generation cephalosporin works if no ESBL.",
+"Pseudomonas aeruginosa|Hospital-acquired infection, susceptible strain|Piperacillin-tazobactam (or cefepime)|Ceftriaxone;Ertapenem;Co-trimoxazole;Vancomycin|Needs an antipseudomonal agent; ceftriaxone and ertapenem lack activity.",
+"Burkholderia pseudomallei|Melioidosis, severe|Ceftazidime (or meropenem)|Ceftriaxone;Ciprofloxacin;Gentamicin;Amoxicillin|Intensive IV phase for at least 2 weeks, then eradication therapy with co-trimoxazole.",
+"Salmonella Typhi|Uncomplicated enteric fever|Azithromycin|Ciprofloxacin;Gentamicin;Clindamycin;Vancomycin|Fluoroquinolone resistance is very common in India; aminoglycosides are ineffective for this intracellular pathogen.",
+"Vibrio cholerae|Cholera with severe dehydration|Doxycycline (with ORS and fluids)|Gentamicin;Metronidazole;Vancomycin;Clindamycin|Rehydration is the mainstay; a single antibiotic dose shortens illness.",
+"Mycobacterium tuberculosis|Drug-sensitive pulmonary TB|Isoniazid + rifampicin + pyrazinamide + ethambutol|Streptomycin alone;Ciprofloxacin alone;Amoxicillin-clavulanate;Azithromycin alone|2 months of HRZE then 4 months of HR. Never add a single drug to a failing regimen.",
+"Neisseria gonorrhoeae|Uncomplicated urogenital gonorrhoea|Ceftriaxone (single IM dose)|Ciprofloxacin;Penicillin;Azithromycin alone;Doxycycline|Resistance to quinolones and penicillin is widespread.",
+"Neisseria meningitidis|Bacterial meningitis|Ceftriaxone|Azithromycin;Gentamicin;Metronidazole;Doxycycline|Third-generation cephalosporin achieves bactericidal CSF levels.",
+"Treponema pallidum|Primary, secondary or early latent syphilis|Benzathine penicillin G|Co-trimoxazole;Ciprofloxacin;Gentamicin;Metronidazole|Penicillin has never failed; doxycycline only in penicillin allergy.",
+"Chlamydia trachomatis|Urethritis or cervicitis|Doxycycline|Ceftriaxone;Penicillin;Ciprofloxacin;Metronidazole|An intracellular organism: cell-wall active beta-lactams do not work.",
+"Orientia tsutsugamushi (scrub typhus)|Fever with eschar, endemic region|Doxycycline|Penicillin G;Gentamicin;Ciprofloxacin;Co-trimoxazole|Rickettsial infections respond to tetracyclines; start empirically in endemic areas.",
+"Leptospira|Weil disease in the monsoon season|Penicillin G (doxycycline for mild disease)|Gentamicin;Ciprofloxacin;Metronidazole;Co-trimoxazole|IV penicillin or ceftriaxone for severe disease; doxycycline for mild disease.",
+"Bacteroides fragilis|Intra-abdominal or pelvic anaerobic infection|Metronidazole|Gentamicin;Ciprofloxacin;Aztreonam;Co-trimoxazole|Aminoglycosides and aztreonam have no anaerobic activity.",
+"Legionella pneumophila|Severe pneumonia, hotel or cooling-tower exposure|Azithromycin (or levofloxacin)|Amoxicillin;Ceftriaxone;Gentamicin;Vancomycin|Intracellular; beta-lactams are ineffective.",
+"Mycoplasma pneumoniae|Atypical pneumonia in a young adult|Azithromycin (or doxycycline)|Amoxicillin;Ceftriaxone;Penicillin;Cefazolin|No cell wall, so beta-lactams do not work.",
+"Helicobacter pylori|Dyspepsia with positive test|PPI-based combination (e.g. bismuth quadruple)|Amoxicillin alone;Metronidazole alone;Ciprofloxacin alone;Omeprazole alone|Combination regimens prevent resistance; clarithromycin resistance is high in India.",
+"Brucella species|Chronic fever with raw-milk exposure|Doxycycline + rifampicin|Penicillin;Ceftriaxone;Vancomycin;Clindamycin|Prolonged combination (6 weeks) reduces relapse.",
+"Listeria monocytogenes|Meningitis in a neonate or immunocompromised adult|Ampicillin|Ceftriaxone;Ciprofloxacin;Clindamycin;Azithromycin|Listeria is intrinsically resistant to cephalosporins."]
+};
+const DC={};let dcAns={},dcOrd={},dcStreak=0,dcBest=0,dcCur=null;
+Object.keys(DCR).forEach(t=>DC[t]=DCR[t].map(r=>{const a=r.split("|");return{t,n:a[0],c:a[1],doc:a[2],w:a[3].split(";"),why:a[4]}}));
+const dcAll=()=>[].concat(DC.virus,DC.fungus,DC.microbe);
+const dcKey=o=>o.t+"|"+o.n;
+function dcUpdate(){
+ const all=dcAll(),n=Object.keys(dcAns).length,c=Object.values(dcAns).filter(x=>x.ok).length;
+ $("dcAnswered").textContent="Answered "+n+" / "+all.length;$("dcCorrect").textContent="Correct "+c;
+ $("dcStreak").textContent="Streak "+dcStreak+" (best "+dcBest+")";
+ $("dcAcc").textContent="Accuracy "+(n?Math.round(100*c/n)+"%":"–");
+}
+function dcFill2(sel){
+ const t=$("dc1").value,d=$("dc2");
+ if(!t){d.innerHTML='<option value="">Choose type first…</option>';d.disabled=true;return}
+ d.innerHTML='<option value="">Choose organism…</option>'+DC[t].map((o,i)=>{const a=dcAns[dcKey(o)];return `<option value="${i}">${a?(a.ok?"✅ ":"❌ "):""}${o.n}</option>`}).join("");
+ d.disabled=false;if(sel!==undefined)d.value=sel;
+}
+function dcShow(){
+ const t=$("dc1").value,i=$("dc2").value;if(!t||i==="")return;
+ const o=DC[t][i];dcCur=o;const k=dcKey(o),a=dcAns[k];
+ if(!dcOrd[k])dcOrd[k]=[o.doc].concat(o.w).sort(()=>Math.random()-.5);
+ const btn=dcOrd[k].map((x,j)=>{
+  let st="width:100%;text-align:left;margin:4px 0;";
+  if(a){if(x===o.doc)st+="background:#d1fae5;border:2px solid #059669;color:#065f46;";else if(x===a.pick)st+="background:#fee2e2;border:2px solid #dc2626;color:#991b1b;"}
+  return `<button class="secondary" style="${st}" ${a?"disabled":""} data-j="${j}">${a&&x===o.doc?"✅ ":a&&x===a.pick?"❌ ":""}${x}</button>`}).join("");
+ $("dcCard").innerHTML=`<div class="report"><h3>🧫 ${o.n}</h3><p><strong>Setting:</strong> ${o.c}</p><p><strong>What is the Drug of Choice?</strong></p><div id="dcOpts">${btn}</div><div id="dcFb"></div></div>`;
+ document.querySelectorAll("#dcOpts button").forEach(b=>b.addEventListener("click",()=>dcAnswer(dcOrd[k][b.dataset.j])));
+ if(a)dcFeedback(a);
+}
+function dcFeedback(a){
+ const o=dcCur;
+ $("dcFb").innerHTML=`<div class="${a.ok?"good":"alert"}">${a.ok?"✅ Correct!":"❌ Not quite. The Drug of Choice is <b>"+o.doc+"</b>."} ${o.why}</div><div class="actions"><button class="primary" id="dcNext">Next question →</button></div>`;
+ $("dcNext").addEventListener("click",dcNext);
+}
+function dcAnswer(pick){
+ const o=dcCur,k=dcKey(o);if(dcAns[k])return;
+ const ok=pick===o.doc;dcAns[k]={pick,ok};
+ dcStreak=ok?dcStreak+1:0;dcBest=Math.max(dcBest,dcStreak);
+ dcUpdate();const i=$("dc2").value;dcFill2(i);dcShow();
+}
+function dcNext(){
+ const t=$("dc1").value,pool=(t?DC[t]:[]).filter(o=>!dcAns[dcKey(o)]),any=dcAll().filter(o=>!dcAns[dcKey(o)]);
+ const list=pool.length?pool:any;
+ if(!list.length){const n=dcAll().length,c=Object.values(dcAns).filter(x=>x.ok).length;
+  $("dcCard").innerHTML=`<div class="good"><b>🏁 Challenge complete!</b> You scored ${c} out of ${n} (${Math.round(100*c/n)}%). ${c===n?"Outstanding!":"Use “Review missed” to revise."}</div>`;return}
+ const o=pool.length?pool[0]:list[Math.floor(Math.random()*list.length)];
+ $("dc1").value=o.t;dcFill2(DC[o.t].indexOf(o));dcShow();
+}
+function dcSurprise(){
+ const t=$("dc1").value,list=(t?DC[t]:dcAll()).filter(o=>!dcAns[dcKey(o)]);
+ if(!list.length){dcNext();return}
+ const o=list[Math.floor(Math.random()*list.length)];
+ $("dc1").value=o.t;dcFill2(DC[o.t].indexOf(o));dcShow();
+}
+function dcReview(){
+ const m=dcAll().filter(o=>dcAns[dcKey(o)]&&!dcAns[dcKey(o)].ok);
+ $("dcReview").innerHTML=m.length?`<div class="report"><h3>📖 Revise these (${m.length})</h3>${m.map(o=>`<p><b>${o.n}</b> → ${o.doc}<br><span class="small">${o.why}</span></p>`).join("")}</div>`:
+  `<div class="note">${Object.keys(dcAns).length?"No missed answers so far. 🎉":"Answer a few questions first."}</div>`;
+}
+function dcRestart(){dcAns={};dcOrd={};dcStreak=0;dcBest=0;dcCur=null;$("dc1").value="";dcFill2();
+ $("dcCard").textContent="Your question will appear here.";$("dcReview").innerHTML="";dcUpdate()}
+$("dc1").addEventListener("change",()=>{dcFill2();$("dcCard").textContent="Now choose an organism, or press Surprise me."});
+$("dc2").addEventListener("change",dcShow);
+$("dcRand").addEventListener("click",dcSurprise);
+$("dcRev").addEventListener("click",dcReview);
+$("dcRes").addEventListener("click",dcRestart);
+dcUpdate();
+
+loadScenario();updateProgress();
+window.addEventListener("resize",drawGraph);
+</script>
+</body>
+</html>
