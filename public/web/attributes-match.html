@@ -644,7 +644,106 @@
     border-radius: var(--radius-pill);
     font-size: .82rem; font-weight: 700;
   }
-
+  .wrong-link-wrap {
+    text-align: center;
+    margin-top: .25rem;
+  }
+  .wrong-link-btn {
+    appearance: none;
+    background: var(--wrong-soft);
+    color: #a83329;
+    border: 1.5px solid rgba(217, 74, 61, .35);
+    border-radius: var(--radius-pill);
+    padding: .48rem 1.05rem;
+    font-family: inherit;
+    font-size: .85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, transform .12s;
+  }
+  .wrong-link-btn:hover {
+    background: #fad8d4;
+    border-color: var(--wrong);
+    transform: translateY(-1px);
+  }
+  .wrong-list-box {
+    display: none;
+    margin-top: .9rem;
+    border-top: 1px solid var(--line);
+    padding-top: .9rem;
+    text-align: left;
+    max-height: 340px;
+    overflow-y: auto;
+  }
+  .wrong-list-box.open {
+    display: block;
+    animation: fbIn .25s ease both;
+  }
+  .wrong-card-item {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--wrong);
+    border-radius: var(--radius-sm);
+    padding: .7rem .85rem;
+    margin-bottom: .6rem;
+  }
+  .wrong-card-item:last-child {
+    margin-bottom: 0;
+  }
+  .wrong-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: .5rem;
+    margin-bottom: .45rem;
+  }
+  .wrong-card-ar {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    font-size: var(--ar-small);
+    font-weight: 700;
+    color: var(--primary-dark);
+    direction: rtl;
+  }
+  .wrong-card-tr {
+    font-size: .86rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+  .wrong-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .45rem;
+    font-size: .82rem;
+  }
+  @media (max-width: 540px) {
+    .wrong-card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .wrong-pick,
+  .right-pick {
+    border-radius: 8px;
+    padding: .4rem .6rem;
+    line-height: 1.35;
+  }
+  .wrong-pick {
+    background: var(--wrong-soft);
+    color: #a83329;
+  }
+  .right-pick {
+    background: var(--correct-soft);
+    color: #0f6a48;
+  }
+  .wrong-pick span,
+  .right-pick span {
+    display: block;
+    font-size: .66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    margin-bottom: .1rem;
+  }
   .results-actions {
     display: flex; gap: .6rem; justify-content: center;
     flex-wrap: wrap; margin-top: 1.2rem;
@@ -759,6 +858,8 @@
         🔥 Longest streak: <span id="finalStreak">0</span>
       </div>
     </div>
+      
+      <div id="wrongAnswersSection"></div>
 
     <div class="results-actions">
       <button class="btn btn-primary" id="continueFromResults" style="display:none;">Continue to Next Set →</button>
@@ -910,6 +1011,7 @@ const state = {
   longestStreak: 0,
   learnedCount: 0,
   learned: [],        // list of learned attrs
+  mistakes: [],       // wrong attempts in current set
   totalScore: 0,
   totalFirstTries: 0,
   locked: false,
@@ -948,6 +1050,7 @@ function initSet(setIndex) {
   state.longestStreak = 0;
   state.learnedCount = 0;
   state.learned = [];
+  state.mistakes = [];
   state.locked = false;
   state.selected = false;
 
@@ -960,6 +1063,9 @@ function initSet(setIndex) {
   learnedDetails.style.display = 'none';
   learnedDetails.open = false;
 
+  const wrongHost = document.getElementById('wrongAnswersSection');
+  if (wrongHost) wrongHost.innerHTML = '';
+
   nextSetBtn.style.display = 'none';
   resultsOverlay.classList.add('hidden');
   document.body.style.overflow = '';
@@ -968,7 +1074,6 @@ function initSet(setIndex) {
   prepareQuestion();
   updateStats();
 }
-
 /* ═══════════════════ PREPARE A QUESTION ═══════════════════ */
 function prepareQuestion() {
   if (state.currentIdx >= state.deck.length) {
@@ -1153,6 +1258,7 @@ function submitAnswer(chosenMeaning, chosenBox) {
     highlightOptions(false);
 
     chosenBox.classList.add('wrong');
+    recordMistake(currentName, chosenMeaning);
 
     // Reveal correct answer
     document.querySelectorAll('.meaning-box').forEach(b => {
@@ -1278,6 +1384,8 @@ function finishSet() {
   state.totalScore += state.score;
   state.totalFirstTries += total;
 
+  renderWrongAnswersInResults();
+
   resultsOverlay.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 }
@@ -1335,6 +1443,98 @@ document.addEventListener('click', (e) => {
   const tile = document.getElementById('currentTile');
   if (tile) tile.classList.remove('selected');
 });
+
+function recordMistake(nameObj, chosenMeaning) {
+  const alreadyLogged = state.mistakes.some(
+    m => m.ar === nameObj.ar && m.chosen === chosenMeaning
+  );
+  if (!alreadyLogged) {
+    state.mistakes.push({
+      ar: nameObj.ar,
+      tr: nameObj.tr,
+      chosen: chosenMeaning,
+      correct: nameObj.en
+    });
+  }
+}
+
+function escapeText(val) {
+  return String(val ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderWrongAnswersInResults() {
+  const host = document.getElementById('wrongAnswersSection');
+  if (!host) return;
+
+  if (!state.mistakes.length) {
+    host.innerHTML = `
+      <div class="wrong-link-wrap">
+        <span style="font-size:.84rem;font-weight:600;color:#0f6a48;">
+          ✓ No wrong answers in this set!
+        </span>
+      </div>
+    `;
+    return;
+  }
+
+  const cardsHtml = state.mistakes
+    .map(
+      (item, idx) => `
+      <div class="wrong-card-item">
+        <div class="wrong-card-head">
+          <span class="wrong-card-tr">${idx + 1}. ${escapeText(item.tr)}</span>
+          <span class="wrong-card-ar" dir="rtl">${escapeText(item.ar)}</span>
+        </div>
+        <div class="wrong-card-grid">
+          <div class="wrong-pick">
+            <span>✗ Your answer</span>
+            ${escapeText(item.chosen)}
+          </div>
+          <div class="right-pick">
+            <span>✓ Right meaning</span>
+            ${escapeText(item.correct)}
+          </div>
+        </div>
+      </div>
+    `
+    )
+    .join('');
+
+  host.innerHTML = `
+    <div class="wrong-link-wrap">
+      <button
+        type="button"
+        class="wrong-link-btn"
+        id="wrongAnswersLinkBtn"
+        aria-expanded="false"
+        aria-controls="wrongAnswersListBox"
+        onclick="toggleWrongAnswersList()"
+      >
+        View Wrong Answers (${state.mistakes.length})
+      </button>
+    </div>
+    <div class="wrong-list-box" id="wrongAnswersListBox">
+      ${cardsHtml}
+    </div>
+  `;
+}
+
+function toggleWrongAnswersList() {
+  const box = document.getElementById('wrongAnswersListBox');
+  const btn = document.getElementById('wrongAnswersLinkBtn');
+  if (!box || !btn) return;
+
+  const expanded = box.classList.toggle('open');
+  btn.setAttribute('aria-expanded', String(expanded));
+  btn.textContent = expanded
+    ? `Hide Wrong Answers (${state.mistakes.length})`
+    : `View Wrong Answers (${state.mistakes.length})`;
+}
 
 /* ═══════════════════ BOOT ═══════════════════ */
 initSet(0);
